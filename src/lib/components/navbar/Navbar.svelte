@@ -2,7 +2,7 @@
   import { Sheet, SheetContent, SheetTrigger } from "$lib/components/ui/sheet";
   import { Button } from "$lib/components/ui/button";
   import MenuIcon from "@lucide/svelte/icons/menu";
-  import { userData, login, logout } from "$lib/store/user.svelte";
+  import { userData, handleLogIn, logout } from "$lib/store/user.svelte";
   import { toggleMode } from "mode-watcher";
   import SunIcon from "@lucide/svelte/icons/sun";
   import MoonIcon from "@lucide/svelte/icons/moon";
@@ -36,7 +36,7 @@
     {:else if userData.user}
       <Button onclick={logout}>LogOut</Button>
     {:else}
-      <Button onclick={login}>Google LogIn</Button>
+      <Button onclick={handleLogIn}>Google LogIn</Button>
     {/if}
     <Button onclick={toggleMode} variant="outline" size="icon">
       <SunIcon class="h-5 w-5 dark:hidden" />
@@ -69,7 +69,7 @@
           {:else if userData.user}
             <Button onclick={logout}>LogOut</Button>
           {:else}
-            <Button onclick={login}>Google LogIn</Button>
+            <Button onclick={handleLogIn}>Google LogIn</Button>
           {/if}
 
           <Button onclick={toggleMode} variant="outline" size="icon">

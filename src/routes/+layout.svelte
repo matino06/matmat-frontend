@@ -1,27 +1,46 @@
 <script>
   import "../app.css";
   import { ModeWatcher } from "mode-watcher";
-
   import Navbar from "$lib/components/navbar/Navbar.svelte";
-  import { userData, login, logout } from "$lib/store/user.svelte";
+  import { userData } from "$lib/store/user.svelte";
+  import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
+  import { turnstileData } from "$lib/store/user.svelte";
+  import { fade } from "svelte/transition";
 
   let { children } = $props();
 </script>
 
 <ModeWatcher />
+<!-- Turnstile -->
+<div
+  transition:fade
+  class="fixed {turnstileData.isLoaded
+    ? ''
+    : 'hidden'} inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+>
+  <div class="flex flex-col items-center gap-4">
+    <div id="turnstile-container"></div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+{#if userData.loading}
+  <div
+    transition:fade
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+  >
+    <div class="flex flex-col items-center gap-4">
+      <div
+        class="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent"
+      ></div>
+      <p class="text-sm text-white">Učitavanje...</p>
+    </div>
+  </div>
+{/if}
+
+<ErrorAlert />
+
 <div class="px-4">
   <Navbar />
-  {#if userData.loading}
-    <div
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-    >
-      <div class="flex flex-col items-center gap-4">
-        <div
-          class="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent"
-        ></div>
-        <p class="text-sm text-white">Učitavanje...</p>
-      </div>
-    </div>
-  {/if}
   {@render children?.()}
 </div>
