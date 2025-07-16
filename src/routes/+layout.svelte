@@ -6,11 +6,14 @@
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
   import { turnstileData } from "$lib/store/user.svelte";
   import { fade } from "svelte/transition";
+  import { page } from "$app/state";
+  import AuthRequiredMessage from "$lib/components/authRequiredMessage/AuthRequiredMessage.svelte";
 
   let { children } = $props();
 </script>
 
 <ModeWatcher />
+
 <!-- Turnstile -->
 <div
   transition:fade
@@ -40,7 +43,10 @@
 
 <ErrorAlert />
 
-<div class="px-4">
+<div class="m-4">
   <Navbar />
+  {#if page.url.pathname != "/"}
+    <AuthRequiredMessage />
+  {/if}
   {@render children?.()}
 </div>

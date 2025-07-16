@@ -16,7 +16,7 @@
   ];
 </script>
 
-<nav class="flex w-full items-center justify-between px-4 py-2 md:pb-4">
+<nav class="flex w-full items-center justify-between py-2 md:pb-4">
   <!-- Desktop Links -->
   <div class="hidden gap-4 md:flex">
     {#each links as link}
