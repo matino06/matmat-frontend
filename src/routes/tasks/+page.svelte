@@ -1,20 +1,23 @@
 <script>
   import Task from "$lib/components/task/Task.svelte";
   import { auth } from "$lib/config/firebase-config";
-  import { authFetch } from "$lib/api/authFetch";
+  import { apiClient } from "$lib/api/apiClient";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
   let task = $state(null);
 
-  onMount(() => {
+  async function fetchNewTask() {
+    task = null;
+    const response = await apiClient("/task/get-new", { method: "GET" });
+    task = await response.json();
+    task.explanationSteps.sort((a, b) => a.stepNumber - b.stepNumber);
+  }
+
+  $effect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const response = await authFetch(
-          "http://localhost:8080/api/task/get-new",
-        );
-        task = await response.json();
-        console.log(task);
+        fetchNewTask();
       }
     });
 
@@ -27,6 +30,8 @@
     transition:fade
     class="flex min-h-[calc(100vh-92px)] items-center justify-center"
   >
-    <Task {task} />
+    {#key task.id}
+      <Task {task} {fetchNewTask} />
+    {/key}
   </div>
 {/if}

@@ -2,6 +2,10 @@
   import * as RadioGroup from "$lib/components/ui/radio-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import { Button } from "$lib/components/ui/button";
+  import { apiClient } from "$lib/api/apiClient";
+
+  let { task, handleTaskSubmit } = $props();
+  let q = $state(null);
 
   const difficultyLevels = [
     { label: "Potpuni zaborav", value: 0, color: "#ff9800" },
@@ -31,7 +35,7 @@
 
 <div class="">
   <Tooltip.Provider>
-    <RadioGroup.Root class="flex w-full justify-between">
+    <RadioGroup.Root bind:value={q} class="flex w-full justify-between">
       {#each difficultyLevels as difficulty}
         <Tooltip.Root>
           <Tooltip.Trigger>
@@ -48,7 +52,7 @@
           </Tooltip.Content>
         </Tooltip.Root>
       {/each}
-      <Button>Sljedeći</Button>
+      <Button onclick={() => handleTaskSubmit(q)}>Sljedeći</Button>
     </RadioGroup.Root>
   </Tooltip.Provider>
 </div>

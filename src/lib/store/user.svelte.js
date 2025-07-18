@@ -1,6 +1,7 @@
 import { auth, googleProvider } from '$lib/config/firebase-config';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { showErrorAlert } from "$lib/store/errorAlert.svelte";
+import { apiClient } from '$lib/api/apiClient';
 
 export const userData = $state({
     user: null,
@@ -16,6 +17,10 @@ export const login = async () => {
     try {
         userData.loading = true
         await signInWithPopup(auth, googleProvider);
+        const response = await apiClient('/account/exists', { method: 'GET' });
+        if (response.data == "Account does not exist") {
+            await apiClient('/account/create', { method: 'POST' });
+        }
     } catch (err) {
         setTimeout(() => {
             userData.loading = false;
@@ -40,8 +45,8 @@ export const handleLogIn = async () => {
             sitekey: "0x4AAAAAABBBBZ3tdroBV8xr",
             callback: async (token) => {
                 try {
-                    const response = await fetch(
-                        "http://localhost:8080/api/turnstile/verify",
+                    const response = await apiClient(
+                        "/turnstile/verify",
                         {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },

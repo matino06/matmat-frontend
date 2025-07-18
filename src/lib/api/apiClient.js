@@ -1,7 +1,7 @@
 import { auth } from '$lib/config/firebase-config';
-// import { getTurnstileToken } from '$lib/utils/turnstile';
 
-export async function authFetch(input, init = {}) {
+export async function apiClient(path, init = {}) {
+    const url = 'http://localhost:8080/api' + path;
     const user = auth.currentUser;
     const fetchInit = {
         ...init,
@@ -13,7 +13,8 @@ export async function authFetch(input, init = {}) {
     if (user) {
         const token = await user.getIdToken();
         fetchInit.headers['Authorization'] = `Bearer ${token}`;
+        fetchInit.headers['Content-Type'] = 'application/json';
     }
 
-    return fetch(input, fetchInit);
+    return fetch(url, fetchInit);
 }
