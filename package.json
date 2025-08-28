@@ -47,6 +47,7 @@
     "cytoscape": "^3.32.1",
     "cytoscape-dagre": "^2.5.0",
     "firebase": "^11.10.0",
+    "matanim": "link:../../../../Library/pnpm/global/5/node_modules/matanim",
     "mode-watcher": "^1.1.0"
   }
 }
