@@ -31,6 +31,7 @@
     SpeechBubble,
     BubbleWithText,
     FadeOutAnimation,
+    FadeInAnimation
   } from "matanim";
 
   let canvas;
@@ -41,12 +42,12 @@
     const line = new Line(
       [
         { x: 550, y: 130 },
-        { x: 700, y: 420 },
+        { x: 700, y: 420 }
       ],
-      { lineWidth: 5 },
+      { lineWidth: 5 }
     );
     const text = new Text([{ x: 100, y: 300 }], "Funkcije su kao", {
-      fontSize: 72,
+      fontSize: 72
     });
     const mathText = new MathText(
       [{ x: 800, y: 550 }],
@@ -60,19 +61,19 @@
         fontSize: 73,
         lineWidth: 1,
         borderColor: "rgb(250, 250, 250)",
-        fillColor: "rgb(250, 250, 250)",
-      },
+        fillColor: "rgb(250, 250, 250)"
+      }
     );
     const numberLineX = new NumberLine(
       [
         { x: 100, y: 360 },
-        { x: 1150, y: 360 },
+        { x: 1150, y: 360 }
       ],
       [-11, 11],
       {
-        tickStep: 2,
+        tickStep: 2
         // tickLabels: ["-1", "0", "1", "2", "\\pi", "4", "5"],
-      },
+      }
     );
 
     // numberLineX.setTickLabels(["-1", "0", 1, 2, "\\pi", 4, 5]);
@@ -80,16 +81,16 @@
     const numberLineY = new NumberLine(
       [
         { x: 1100, y: 500 },
-        { x: 1100, y: 30 },
+        { x: 1100, y: 30 }
       ],
       [-1, 5],
-      { rotation: 90 },
+      { rotation: 90 }
     );
 
     const coordinateSystem = new CoordinateSystem(
       [
         { x: 100, y: 360 },
-        { x: 1300, y: 360 },
+        { x: 1300, y: 360 }
       ],
       [-11, 11],
       [-6, 6],
@@ -101,8 +102,8 @@
         hasBorder: false,
         hasGrid: true,
         xAxisLabel: "x\\text{-os}",
-        yAxisLabel: "y\\text{-os}",
-      },
+        yAxisLabel: "y\\text{-os}"
+      }
     );
 
     // coordinateSystem.translate({ x: -700, y: 0 });
@@ -111,13 +112,13 @@
       coordinateSystem,
       (x) => 3 * Math.sin(x),
       {
-        dashed: true,
-      },
+        dashed: true
+      }
     );
 
     const vector = new Vector([
       coordinateSystem.pointToCoords(-3, 2),
-      coordinateSystem.pointToCoords(-2, 4),
+      coordinateSystem.pointToCoords(-2, 4)
     ]);
 
     // const eye1 = new Eye([{ x: 45, y: 5 }]);
@@ -160,8 +161,8 @@
       [{ x: 115, y: 490 }],
       "Bok ovo je prva Linija,\n a ovo je druga \\(2\\pi + x = y\\)\n jos jedna",
       {
-        fontSize: 10,
-      },
+        fontSize: 10
+      }
     );
 
     // animationManager.add(new OutlineThanFillAnimation(circle));
@@ -176,16 +177,16 @@
     setTimeout(() => {
       animationManager.add(
         new OutlineThanFillAnimation(bubbleWithText, {
-          duration: 2000,
-        }),
+          duration: 2000
+        })
       );
 
       animationManager.add(
         new TranslateAnimation(piCharacter, {
           delta: { x: 200, y: 0 },
           easingFunction: easeInOutElastic,
-          durations: 500,
-        }),
+          durations: 500
+        })
       );
     }, 3000);
 
@@ -196,8 +197,8 @@
       animationManager.add(
         new WavingRightArmAnimation(piCharacter, {
           easingFunction: easeInOutBack,
-          animationManager: animationManager,
-        }),
+          animationManager: animationManager
+        })
       );
     }, 3800);
 
@@ -213,8 +214,8 @@
           yScale: 2,
           center: coordinateSystem.getCenter(),
           easingFunction: easeInOutElastic,
-          duration: 1000,
-        }),
+          duration: 1000
+        })
       );
       // animationManager.add(
       //   new TranslateAnimation(coordinateSystem, {
@@ -249,9 +250,8 @@
     animationManager.add(
       new OutlineThanFillAnimation(coordinateSystem, {
         duration: 1000,
-        easingFunction: easeInExpo,
-        toTop: false,
-      }),
+        toTop: false
+      })
     );
 
     // setTimeout(() => {
@@ -276,13 +276,13 @@
   });
 </script>
 
-<Separator />
+<Separator class="mt-2" />
 <canvas bind:this={canvas}></canvas>
 
 <style>
   canvas {
     width: 100%;
-    height: calc(100vh - 93px);
+    height: calc(100vh - 93px - 28px);
     display: block;
   }
 </style>
