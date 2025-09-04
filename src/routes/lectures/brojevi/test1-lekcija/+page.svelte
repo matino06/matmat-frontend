@@ -1,6 +1,7 @@
 <script>
   import ObjectivesGraph from "$lib/components/objectivesGraph/ObjectivesGraph.svelte";
   import { Separator } from "$lib/components/ui/separator/index.js";
+  import AnimationController from "$lib/components/animationController/AnimationController.svelte";
   import {
     Scene,
     Circle,
@@ -89,8 +90,8 @@
 
     const coordinateSystem = new CoordinateSystem(
       [
-        { x: 100, y: 360 },
-        { x: 1300, y: 360 }
+        { x: 100, y: 322 },
+        { x: 1300, y: 322 }
       ],
       [-11, 11],
       [-6, 6],
@@ -144,7 +145,7 @@
 
     const piCharacter = new PiCharacter([{ x: -90, y: 0 }]);
     piCharacter.scale(0.4, 0.4);
-    piCharacter.translate({ x: -200, y: 480 });
+    piCharacter.translate({ x: -200, y: 420 });
     // coordinateSystem.translate({ x: 100, y: 0 });
     parabola.translate({ x: 100, y: 0 });
 
@@ -158,7 +159,7 @@
     const animationManager = new AnimationManager(scene);
 
     const bubbleWithText = new BubbleWithText(
-      [{ x: 115, y: 490 }],
+      [{ x: 115, y: 430 }],
       "Bok ovo je prva Linija,\n a ovo je druga \\(2\\pi + x = y\\)\n jos jedna",
       {
         fontSize: 10
@@ -210,8 +211,8 @@
     setTimeout(() => {
       animationManager.add(
         new ScaleAnimation(coordinateSystem, {
-          xScale: 2,
-          yScale: 2,
+          xScale: 1.75,
+          yScale: 1.75,
           center: coordinateSystem.getCenter(),
           easingFunction: easeInOutElastic,
           duration: 1000
@@ -278,11 +279,12 @@
 
 <Separator class="mt-2" />
 <canvas bind:this={canvas}></canvas>
+<AnimationController />
 
 <style>
   canvas {
     width: 100%;
-    height: calc(100vh - 93px - 28px);
+    height: calc(100vh - 93px - 28px - 44px);
     display: block;
   }
 </style>
