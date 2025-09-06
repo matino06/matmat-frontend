@@ -1,2 +1,2 @@
 // +page.js
-export const ssr = false;
+export const ssr = true;
