@@ -165,10 +165,6 @@
 
     animation.addDoBlockToBottom(animBlock1);
 
-    // setTimeout(() => {
-    //   animBlock1.executeDo();
-    // }, 3000);
-
     const animBlock2 = new ActionBlock();
     animBlock2.addDo(() => {
         animationManager.add(new SquintingEyeAnimation(piCharacter.leftEye))
@@ -184,11 +180,6 @@
 
     animation.addDoBlockToBottom(animBlock2);
 
-    // setTimeout(() => {
-    //   animBlock2.executeDo();
-    // }, 3800);
-
-
     const animBlock3 = new ActionBlock();
     animBlock3.addDo(() => {
         animationManager.add(new UnSquintingEyeAnimation(piCharacter.leftEye));
@@ -197,10 +188,6 @@
     );
 
     animation.addDoBlockToBottom(animBlock3);
-
-    // setTimeout(() => {
-    //   animBlock3.executeDo();
-    // }, 4500);
     
   });
 </script>
