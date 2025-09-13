@@ -50,55 +50,51 @@
   });
 </script>
 
-<Card.Root class="mb-8 w-xl">
+<Card.Root class="mb-8 w-full sm:w-4/5 lg:w-3/5">
   <Card.Content>
-    <div id="mathjax-output">
+    <div
+      id="mathjax-output"
+      class="prose prose-sm sm:prose lg:prose-lg text-[0.4rem] sm:text-[0.5rem] md:text-[0.8rem] lg:text-[0.9rem]"
+    >
       {#each parseExplanation(task.taskText1) as paragraph}
-        {#if paragraph === ""}
-          <p class="my-7"></p>
-        {/if}
-        <p>{paragraph}</p>
+        <p class:my-7={paragraph === ""}>{paragraph}</p>
       {/each}
     </div>
 
     {#if task.imageName}
       <img
-        src={`http://localhost:8080/api/image/${step.imageName}`}
+        src={`http://localhost:8080/api/image/${task.imageName}`}
         alt="Slika objašnjenja"
-        class="m-auto my-2 mb-4 max-w-full rounded"
+        class="m-auto my-2 mb-4 h-auto max-w-full rounded"
       />
-    {/if}
-
-    {#if task.taskText2 !== ""}
-      <div id="mathjax-output">
-        {#each parseExplanation(task.taskText2) as paragraph}
-          {#if paragraph === ""}
-            <p class="my-7"></p>
-          {/if}
-          <p>{paragraph}</p>
-        {/each}
-      </div>
     {/if}
   </Card.Content>
   <Card.Footer>
     <Accordion.Root bind:value={open} type="single">
       <Accordion.Item value="item-1">
-        <Accordion.Trigger class="flex w-lg items-center justify-center"
-        ></Accordion.Trigger>
+        <Accordion.Trigger class="flex w-full items-center justify-center" />
         <Accordion.Content>
           {#each task.explanationSteps as step}
             {#if task.explanationSteps.length > 1}
-              <h4 class="scroll-m-20 text-xl font-semibold tracking-tight">
+              <h4
+                class="text-sm font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
+              >
                 {step.stepNumber}.
               </h4>
             {/if}
             <div class="py-4">
-              {#each parseExplanation(step.explanation) as paragraph}
-                {#if paragraph === ""}
-                  <p class="my-7"></p>
-                {/if}
-                <p>{paragraph}</p>
-              {/each}
+              <div
+                class="prose prose-sm sm:prose lg:prose-lg text-[0.4rem] sm:text-[0.5rem] md:text-[0.8rem] lg:text-[0.9rem]"
+              >
+                {#each parseExplanation(step.explanation) as paragraph}
+                  {#if paragraph === ""}
+                    <p class="my-7"></p>
+                  {/if}
+                  <div class="prose prose-sm sm:prose md:prose-lg lg:prose-xl">
+                    <p>{paragraph}</p>
+                  </div>
+                {/each}
+              </div>
             </div>
             {#if step.imageName}
               <img
@@ -108,9 +104,11 @@
               />
             {/if}
           {/each}
-          <h3 class="my-2 scroll-m-20 text-2xl tracking-tight">
-            Odaberi težinu zadatka
-          </h3>
+          <h4
+            class="text-sm font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
+          >
+            Odredi težinu zadatka
+          </h4>
           <TaskDifficultySelector {task} {handleTaskSubmit} />
         </Accordion.Content>
       </Accordion.Item>

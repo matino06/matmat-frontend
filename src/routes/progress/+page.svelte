@@ -20,6 +20,7 @@
       );
 
       objectives = await response.json();
+      console.log(objectives);
     };
 
     setTimeout(() => {

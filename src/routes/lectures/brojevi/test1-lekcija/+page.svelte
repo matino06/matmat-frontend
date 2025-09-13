@@ -33,7 +33,7 @@
     SpeechBubble,
     BubbleWithText,
     FadeOutAnimation,
-    FadeInAnimation
+    FadeInAnimation,
   } from "matanim";
 
   let canvas;
@@ -46,34 +46,26 @@
     const line = new Line(
       [
         { x: 550, y: 130 },
-        { x: 700, y: 420 }
+        { x: 700, y: 420 },
       ],
-      { lineWidth: 5 }
+      { lineWidth: 5 },
     );
-    const text = new Text([{ x: 100, y: 300 }], "Funkcije su kao", {
-      fontSize: 72
+    const text = new Text([{ x: 100, y: 300 }], "Č", {
+      fontSize: 72,
     });
-    const mathText = new MathText(
-      [{ x: 800, y: 550 }],
-      `\\begin{aligned}
-        x + y &= 5 \\\\
-        x + y &= 5 \\\\
-        x &= 2
-      \\end{aligned}
-      `,
-      {
-        fontSize: 73,
-        lineWidth: 1,
-        borderColor: "rgb(250, 250, 250)",
-        fillColor: "rgb(250, 250, 250)"
-      }
-    );
+    const mathText = new MathText([{ x: 800, y: 550 }], "\\text{c}", {
+      fontSize: 73,
+      lineWidth: 1,
+      borderColor: "rgb(250, 250, 250)",
+      fillColor: "rgb(250, 250, 250)",
+    });
 
+    scene.add(text);
 
     const coordinateSystem = new CoordinateSystem(
       [
         { x: 100, y: 322 },
-        { x: 1300, y: 322 }
+        { x: 1300, y: 322 },
       ],
       [-11, 11],
       [-6, 6],
@@ -85,8 +77,8 @@
         hasBorder: false,
         hasGrid: true,
         xAxisLabel: "x\\text{-os}",
-        yAxisLabel: "y\\text{-os}"
-      }
+        yAxisLabel: "y\\text{-os}",
+      },
     );
 
     // coordinateSystem.translate({ x: -700, y: 0 });
@@ -95,15 +87,14 @@
       coordinateSystem,
       (x) => 3 * Math.sin(x),
       {
-        dashed: true
-      }
+        dashed: true,
+      },
     );
 
     const vector = new Vector([
       coordinateSystem.pointToCoords(-3, 2),
-      coordinateSystem.pointToCoords(-2, 4)
+      coordinateSystem.pointToCoords(-2, 4),
     ]);
-
 
     const piCharacter = new PiCharacter([{ x: -90, y: 0 }]);
     piCharacter.scale(0.4, 0.4);
@@ -114,14 +105,14 @@
       [{ x: 115, y: 430 }],
       "Bok ovo je prva Linija,\n a ovo je druga \\(2\\pi + x = y\\)\n jos jedna",
       {
-        fontSize: 10
-      }
+        fontSize: 10,
+      },
     );
 
     ///////////////////
     // ADD ANIMATIONS
     ///////////////////
-    
+
     scene.add(piCharacter);
 
     const animationManager = new AnimationManager(scene);
@@ -129,8 +120,8 @@
     animationManager.add(
       new OutlineThanFillAnimation(coordinateSystem, {
         duration: 1000,
-        toTop: false
-      })
+        toTop: false,
+      }),
     );
 
     setTimeout(() => {
@@ -140,61 +131,57 @@
           yScale: 1.75,
           center: coordinateSystem.getCenter(),
           easingFunction: easeInOutElastic,
-          duration: 1000
-        })
+          duration: 1000,
+        }),
       );
     }, 1500);
 
     const animBlock1 = new ActionBlock();
 
     animBlock1.addDo(() => {
-        animationManager.add(
-          new OutlineThanFillAnimation(bubbleWithText, {
-            duration: 2000
-          })
-        );
-        animationManager.add(
-          new TranslateAnimation(piCharacter, {
-            delta: { x: 200, y: 0 },
-            easingFunction: easeInOutElastic,
-            durations: 500
-          })
-        )
-      }
-    )
+      animationManager.add(
+        new OutlineThanFillAnimation(bubbleWithText, {
+          duration: 2000,
+        }),
+      );
+      animationManager.add(
+        new TranslateAnimation(piCharacter, {
+          delta: { x: 200, y: 0 },
+          easingFunction: easeInOutElastic,
+          durations: 500,
+        }),
+      );
+    });
 
     animation.addDoBlockToBottom(animBlock1);
 
     const animBlock2 = new ActionBlock();
     animBlock2.addDo(() => {
-        animationManager.add(new SquintingEyeAnimation(piCharacter.leftEye))
-        animationManager.add(new SquintingEyeAnimation(piCharacter.rightEye))
-        animationManager.add(
-          new WavingRightArmAnimation(piCharacter, {
-            easingFunction: easeInOutBack,
-            animationManager: animationManager
-          })
-        )
-      }
-    );
+      animationManager.add(new SquintingEyeAnimation(piCharacter.leftEye));
+      animationManager.add(new SquintingEyeAnimation(piCharacter.rightEye));
+      animationManager.add(
+        new WavingRightArmAnimation(piCharacter, {
+          easingFunction: easeInOutBack,
+          animationManager: animationManager,
+        }),
+      );
+    });
 
     animation.addDoBlockToBottom(animBlock2);
 
     const animBlock3 = new ActionBlock();
     animBlock3.addDo(() => {
-        animationManager.add(new UnSquintingEyeAnimation(piCharacter.leftEye));
-        animationManager.add(new UnSquintingEyeAnimation(piCharacter.rightEye));
-      }
-    );
+      animationManager.add(new UnSquintingEyeAnimation(piCharacter.leftEye));
+      animationManager.add(new UnSquintingEyeAnimation(piCharacter.rightEye));
+    });
 
     animation.addDoBlockToBottom(animBlock3);
-    
   });
 </script>
 
 <Separator class="mt-2" />
 <canvas bind:this={canvas}></canvas>
-<AnimationController {animation}/>
+<AnimationController {animation} />
 
 <style>
   canvas {

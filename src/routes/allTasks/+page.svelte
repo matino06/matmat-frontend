@@ -37,7 +37,7 @@
 
   async function fetchAllTasks() {
     const response = await apiClient(
-      `/task/get-all-tasks?objectiveId=${selectedSubfield.id}`,
+      `/task/get-all-tasks?objectiveId=${selectedObjective.objectiveId}`,
       {
         method: "GET",
       },
@@ -54,11 +54,12 @@
   }
 
   function handleObjectiveChange(value) {
-    selectedObjective = objectives.find((o) => o.id === value);
+    selectedObjective = objectives.find((o) => o.objectiveId === value);
   }
 
   function handleTaskChange(value) {
     selectedTask = tasks.find((t) => t.id === value);
+    selectedTask.explanationSteps.sort((a, b) => a.stepNumber - b.stepNumber);
   }
 
   $effect(() => {
@@ -137,7 +138,7 @@
         </Select.Trigger>
         <Select.Content>
           {#each objectives as objective}
-            <Select.Item value={objective.id}
+            <Select.Item value={objective.objectiveId}
               >{objective.objectiveName}</Select.Item
             >
           {/each}
