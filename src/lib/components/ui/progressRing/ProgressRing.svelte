@@ -47,7 +47,7 @@
     ...zagProps,
   }));
   const api = $derived(progress.connect(service, normalizeProps));
-
+  console.log(size);
   // Reactive Classes
   const rxAnimCircle = $derived(api.indeterminate ? "animate-spin" : "");
   const rxAnimMeter = $derived(api.indeterminate ? meterAnimate : "");

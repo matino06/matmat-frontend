@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
   import ProgressRing from "$lib/components/ui/progressRing/ProgressRing.svelte";
 
-  let { objectives } = $props();
+  let { objectives, size } = $props();
 
   const pointsDistributionBySubfield = {
     Brojevi: 10,
@@ -52,7 +52,7 @@
 
 <div class="mt-4 mb-10 flex flex-col justify-center">
   <ProgressRing
-    size="size-110"
+    {size}
     value={progress.current}
     max={100}
     showLabel

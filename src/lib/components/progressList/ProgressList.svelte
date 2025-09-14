@@ -34,9 +34,13 @@
         <Accordion.Trigger>{subfield.subfieldName}</Accordion.Trigger>
         <Accordion.Content class="flex flex-col gap-4 text-balance">
           {#each subfield.objectives as objective}
-            <p class={objective.unlocked ? "text-chart-2" : "text-primary"}>
-              {objective.serialNumber}. {objective.objectiveName}
-            </p>
+            <div
+              class="text-[1rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[0.9rem] xl:text-[0.9rem]"
+            >
+              <p class={objective.unlocked ? "text-chart-2" : "text-primary"}>
+                {objective.serialNumber}. {objective.objectiveName}
+              </p>
+            </div>
           {/each}
         </Accordion.Content>
       </Accordion.Item>
