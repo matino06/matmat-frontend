@@ -165,7 +165,7 @@
     {/if}
 
     {#if selectedTask}
-      <div class="mt-10">
+      <div class="justif mt-10 flex w-full items-center justify-center">
         <Task task={selectedTask} />
       </div>
     {/if}

@@ -50,7 +50,7 @@
   });
 </script>
 
-<Card.Root class="mb-8 w-full sm:w-4/5 lg:w-3/5">
+<Card.Root class="mb-8 w-full sm:w-4/5 lg:w-[700px]">
   <Card.Content>
     <div
       id="mathjax-output"
@@ -70,9 +70,9 @@
     {/if}
   </Card.Content>
   <Card.Footer>
-    <Accordion.Root bind:value={open} type="single">
+    <Accordion.Root bind:value={open} type="single" class="w-full">
       <Accordion.Item value="item-1">
-        <Accordion.Trigger class="flex w-full items-center justify-center" />
+        <Accordion.Trigger class="flex w-full justify-center" />
         <Accordion.Content>
           {#each task.explanationSteps as step}
             {#if task.explanationSteps.length > 1}

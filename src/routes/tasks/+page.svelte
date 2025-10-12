@@ -1,5 +1,6 @@
 <script>
   import Task from "$lib/components/task/Task.svelte";
+  import ChatWindow from "$lib/components/chatWindow/ChatWindow.svelte";
   import { auth } from "$lib/config/firebase-config";
   import { apiClient } from "$lib/api/apiClient";
   import { onMount } from "svelte";
@@ -32,6 +33,7 @@
   >
     {#key task.id}
       <Task {task} {fetchNewTask} />
+      <ChatWindow {task} />
     {/key}
   </div>
 {/if}
