@@ -45,8 +45,10 @@
 
 <div class="m-4">
   <Navbar />
-  {#if page.url.pathname != "/"}
-    <AuthRequiredMessage />
-  {/if}
-  {@render children?.()}
 </div>
+{#if page.url.pathname != "/"}
+  <div class="mx-4">
+    <AuthRequiredMessage />
+  </div>
+{/if}
+{@render children?.()}

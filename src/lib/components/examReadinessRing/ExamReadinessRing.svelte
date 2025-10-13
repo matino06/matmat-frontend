@@ -53,7 +53,7 @@
 <div class="mt-4 mb-10 flex flex-col justify-center">
   <ProgressRing
     {size}
-    value={progress.current}
+    value={progress.target}
     max={100}
     showLabel
     label={"Tvoje Znanje"}

@@ -5,4 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   publicDir: 'public',
   plugins: [tailwindcss(), sveltekit()],
+  optimizeDeps: {
+    force: true
+  }
 });

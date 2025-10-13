@@ -29,7 +29,7 @@
 {#if task}
   <div
     transition:fade
-    class="flex min-h-[calc(100vh-92px)] items-center justify-center"
+    class="m-2 flex min-h-[calc(100vh-92px)] items-center justify-center"
   >
     {#key task.id}
       <Task {task} {fetchNewTask} />

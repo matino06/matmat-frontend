@@ -11,7 +11,7 @@
     { name: "Početna", href: "/" },
     { name: "Lekcije", href: "/lectures" },
     { name: "Zadaci", href: "/tasks" },
-    { name: "Plan", href: "/plan" },
+    // { name: "Plan", href: "/plan" },
     { name: "Napredak", href: "/progress" },
   ];
 </script>
