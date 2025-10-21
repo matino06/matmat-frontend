@@ -6,6 +6,11 @@ export default defineConfig({
   publicDir: 'public',
   plugins: [tailwindcss(), sveltekit()],
   optimizeDeps: {
-    force: true
-  }
+    force: false, // sprječava Vite da sam „re-optimizira” ovisnosti
+  },
+  server: {
+    watch: {
+      usePolling: false,
+    },
+  },
 });

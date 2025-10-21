@@ -11,11 +11,7 @@
   } from "$lib/components/ui/card/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { Badge } from "$lib/components/ui/badge/index.js";
-  import * as Carousel from "$lib/components/ui/carousel/index.js";
   import Check from "@lucide/svelte/icons/check";
-
-  let email = "";
-  let submitted = false;
 
   const features = [
     {
@@ -44,9 +40,91 @@
     },
   ];
 
-  function submitEmail() {
-    submitted = true;
-  }
+  const processSteps = [
+    {
+      number: 1,
+      title: "Dobiješ zadatak i pokušaš ga riješiti",
+      description:
+        "Svaki zadatak je prilagođen tvojoj razini znanja i ciljevima učenja.",
+      image: "/images/task_dark.png",
+      icon: "pencil-alt",
+    },
+    {
+      number: 2,
+      title: "Pročitaš detaljno rješenje",
+      description:
+        "Ako ti ne ide, imaš pristup korak-po-korak objašnjenju s primjerima.",
+      image: "/images/task_solution_dark.png",
+      icon: "book-open",
+    },
+    {
+      number: 3,
+      title: "Upitaš AI asistenta",
+      description: "Ako i dalje imaš problema, naš AI asistent će ti pomoći.",
+      image: "/images/task_ai_dark.jpg",
+      icon: "robot",
+    },
+    {
+      number: 4,
+      title: "Ocijeni težinu zadatka",
+      description:
+        "Tvoj feedback pomaže našem sustavu da odabere optimalne zadatke za tebe.",
+      image: "/images/task_dificulty_dark.png",
+      icon: "star",
+    },
+    {
+      number: 5,
+      title: "Dobiješ novi zadatak",
+      description:
+        "Naš algoritam prilagođava težinu i temu zadataka na temelju tvojih rezultata.",
+      image: "/images/new_task_dark.png",
+      icon: "forward",
+    },
+    {
+      number: 6,
+      title: "Provjeri svoj napredak",
+      description:
+        "Prati svoje rezultate kroz vrijeme i vidi kako se tvoje znanje poboljšava.",
+      image: "/images/progress_dark.png",
+      icon: "chart-bar",
+    },
+  ];
+
+  let visibleSteps = [];
+
+  onMount(() => {
+    // Intersection Observer za fade-in animacije
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const stepNumber = parseInt(entry.target.dataset.step);
+            if (!visibleSteps.includes(stepNumber)) {
+              setTimeout(() => {
+                visibleSteps = [...visibleSteps, stepNumber];
+              }, stepNumber * 100); // svaka kartica kasni 150ms više
+            }
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+
+    // Observaj sve procesne kartice
+    document.querySelectorAll(".process-step").forEach((el) => {
+      observer.observe(el);
+    });
+
+    // Fallback za slike
+    document.querySelectorAll(".process-image").forEach((img) => {
+      img.onerror = function () {
+        this.src =
+          "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMyMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik0xNjAgODBDMTQzLjQgODAgMTMwIDkzLjQgMTMwIDExMEMxMzAgMTI2LjYgMTQzLjQgMTQwIDE2MCAxNDBDMTc2LjYgMTQwIDE5MCAxMjYuNiAxOTAgMTEwQzE5MCA5My40IDE3Ni42IDgwIDE2MCA4MFoiIGZpbGw9IiM5Q0EwQjEiLz4KPHBhdGggZD0iTTE0MCAxNjBIMTgwVjE4MEgxNDBWMTYwWiIgZmlsbD0iIzlDQTBCMSIvPgo8L3N2Zz4K";
+        this.alt = "Slika nije dostupna";
+        this.parentElement.classList.add("bg-muted");
+      };
+    });
+  });
 </script>
 
 <main
@@ -57,7 +135,8 @@
       <div>
         <Badge class=" mb-4">Za maturante</Badge>
         <h1 class="text-4xl leading-tight font-extrabold sm:text-5xl">
-          MatMat — priprema za maturu koja stvarno radi
+          <span class="text-primary">MatMat</span> — priprema za maturu koja stvarno
+          radi
         </h1>
         <p class="text-muted-foreground mt-6 max-w-prose text-lg">
           Brže učiš, pamtiš bolje i rješavaš zadatke s razumijevanjem. MatMat
@@ -105,7 +184,7 @@
               MatMat je jednostavan, učinkovit i <strong
                 class="text-secondary font-[900]">besplatan</strong
               > način da ostvariš rezultat na maturi i upišeš željeni fakultet. Nema
-              registracija – samo klik i kreni!
+              registracije – samo klik i kreni!
             </p>
           </div>
 
@@ -145,7 +224,9 @@
 
   <section class="bg-card text-card-foreground border-t py-12">
     <div class="container mx-auto px-6 lg:px-8">
-      <h2 class="text-2xl font-semibold">Što dobivaš s MatMat</h2>
+      <h2 class="text-center text-3xl font-bold sm:text-4xl">
+        Što dobivaš s <span class="text-primary">MatMat</span>-om?
+      </h2>
       <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {#each features as feature}
           <Card class="bg-card text-card-foreground border-border">
@@ -159,117 +240,68 @@
     </div>
   </section>
 
-  <section class="container mx-auto py-12">
+  <section class="bg-background py-16">
     <div class="container mx-auto px-6 lg:px-8">
-      <h2 class="mb-4 text-2xl font-semibold">Kako učiš s MatMat-om?</h2>
-      <Carousel.Root class="relative">
-        <Carousel.Content class="flex items-center">
-          <Carousel.Item>
-            <div class="mb-4 text-center">
-              <p class="text-sm font-medium sm:text-base">
-                Dobiješ zadatak i pokušaš ga riješiti
-              </p>
-            </div>
-            <div
-              class="border-border bg-card m-auto max-w-2xl rounded-2xl border p-3 shadow-sm"
-            >
-              <img
-                class="h-auto w-full rounded-lg object-contain"
-                src="/images/task_dark.png"
-                alt="Zadatak prikaz"
-              />
-            </div>
-          </Carousel.Item>
+      <div class="mx-auto mb-12 max-w-3xl text-center">
+        <h2 class="text-3xl font-bold sm:text-4xl">
+          Kako učiš s <span class="text-primary">MatMat</span>-om?
+        </h2>
+        <p class="text-muted-foreground mt-4 text-lg">
+          Jednostavan i učinkovit proces koji se prilagođava tvojim potrebama
+        </p>
+      </div>
 
-          <Carousel.Item>
-            <div class="mb-4 text-center">
-              <p class="text-sm font-medium sm:text-base">
-                Ako ti ne ide, pročitaš detaljno napisan postupak rješenja
-              </p>
-            </div>
-            <div
-              class="border-border bg-card m-auto max-w-2xl rounded-2xl border p-3 shadow-sm"
-            >
-              <img
-                class="m-auto h-auto w-full max-w-2xl rounded-2xl object-contain"
-                src="/images/task_solution_dark.png"
-                alt="Rješenje zadatka"
-              />
-            </div>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <div class="mb-4 text-center">
-              <p class="text-sm font-medium sm:text-base">
-                Ako i dalje imaš problema, upitaš AI asistenta za pomoć
-              </p>
-            </div>
-            <div
-              class="border-border bg-card m-auto max-w-2xl rounded-2xl border p-3 shadow-sm"
-            >
-              <img
-                class="m-auto h-auto w-full max-w-2xl rounded-2xl object-contain"
-                src="/images/task_ai_dark.jpg"
-                alt="AI asistent prikaz"
-              />
-            </div>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <div class="mb-4 text-center">
-              <p class="text-sm font-medium sm:text-base">
-                Ocijeni koliko ti je bio težak zadatak i pritisni gumb
-                "Sljedeće"
-              </p>
-            </div>
-            <div
-              class="border-border bg-card m-auto max-w-2xl rounded-2xl border p-3 shadow-sm"
-            >
-              <img
-                class="m-auto h-auto w-full max-w-2xl rounded-2xl object-contain"
-                src="/images/task_dificulty_dark.png"
-                alt="Težina zadatka prikaz"
-              />
-            </div>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <div class="mb-4 text-center">
-              <p class="text-sm font-medium sm:text-base">
-                Dobit ćeš novi zadatak prema svojim prethodnim odgovorima
-              </p>
-            </div>
-            <div
-              class="border-border bg-card m-auto max-w-2xl rounded-2xl border p-3 shadow-sm"
-            >
-              <img
-                class="m-auto h-auto w-full max-w-2xl rounded-2xl object-contain"
-                src="/images/new_task_dark.png"
-                alt="Novi zadatak"
-              />
-            </div></Carousel.Item
+      <div
+        class="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {#each processSteps as step (step.number)}
+          <div
+            class="process-step bg-card border-border hover:border-primary/20 fade-in-hidden rounded-xl border p-6 transition-all duration-300 hover:shadow-md"
+            class:fade-in-visible={visibleSteps.includes(step.number)}
+            data-step={step.number}
           >
-
-          <Carousel.Item>
-            <div class="mb-4 text-center">
-              <p class="text-sm font-medium sm:text-base">
-                Provjeri svoj napredak
-              </p>
+            <div class="mb-4 flex items-start justify-between">
+              <div
+                class="bg-primary text-primary-foreground flex h-12 w-12 items-center justify-center rounded-lg text-lg font-bold"
+              >
+                {step.number}
+              </div>
+              <div class="text-primary text-lg">
+                {#if step.icon === "pencil-alt"}
+                  <i class="fas fa-pencil-alt"></i>
+                {:else if step.icon === "book-open"}
+                  <i class="fas fa-book-open"></i>
+                {:else if step.icon === "robot"}
+                  <i class="fas fa-robot"></i>
+                {:else if step.icon === "star"}
+                  <i class="fas fa-star"></i>
+                {:else if step.icon === "forward"}
+                  <i class="fas fa-forward"></i>
+                {:else if step.icon === "chart-bar"}
+                  <i class="fas fa-chart-bar"></i>
+                {/if}
+              </div>
             </div>
+
+            <h3 class="text-card-foreground mb-3 text-xl font-semibold">
+              {step.title}
+            </h3>
+            <p class="text-muted-foreground mb-4">
+              {step.description}
+            </p>
+
             <div
-              class="border-border bg-card m-auto max-w-2xl rounded-2xl border p-3 shadow-sm"
+              class="bg-muted mt-auto flex h-40 items-center justify-center overflow-hidden rounded-lg"
             >
               <img
-                class="m-auto h-auto w-full max-w-2xl rounded-2xl object-contain"
-                src="/images/progress_dark.png"
-                alt="Praćenje napretka prikaz"
+                src={step.image}
+                alt={step.title}
+                class="process-image h-full w-full object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
-          </Carousel.Item>
-        </Carousel.Content>
-        <Carousel.Previous class="absolute top-1/2 left-2 -translate-y-1/2" />
-        <Carousel.Next class="absolute top-1/2 right-2 -translate-y-1/2" />
-      </Carousel.Root>
+          </div>
+        {/each}
+      </div>
     </div>
   </section>
 
@@ -284,8 +316,8 @@
       </div>
 
       <div>
-        <h3 class="text-xl font-semibold">Zašto to funkcionira</h3>
-        <p class=" mt-4">
+        <h2 class="text-3xl font-bold sm:text-4xl">Zašto to funkcionira</h2>
+        <p class="text-muted-foreground mt-4">
           MatMat kombinira dvije provjerene ideje: <strong
             >retrieval practice</strong
           >
@@ -293,7 +325,7 @@
           Sustav te vodi da aktivno rješavaš i ponavljaš točno kada zaboravljanje
           počinje — takav pristup značajno poboljšava dugoročno pamćenje i razumijevanje.
         </p>
-        <ul class=" mt-6 space-y-3 text-sm">
+        <ul class="text-muted-foreground mt-6 space-y-3 text-sm">
           <li>
             Dokazi pokazuju da je raspoređeno učenje učinkovitije od učenja "s
             jednoć" (cramming).
@@ -308,7 +340,7 @@
   </section>
 
   <section class="container mx-auto px-6 py-12 lg:px-8">
-    <h3 class="text-xl font-semibold">Često postavljana pitanja</h3>
+    <h2 class="text-3xl font-bold sm:text-4xl">Često postavljana pitanja</h2>
     <div class="mt-4 grid gap-4">
       <Card class="bg-card text-card-foreground border-border">
         <CardContent>
@@ -341,6 +373,29 @@
 </main>
 
 <style>
+  .process-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .fade-in-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+
+  .fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+
   .animate-bounce {
     animation: bounce 2s infinite;
   }

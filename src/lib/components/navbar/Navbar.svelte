@@ -48,7 +48,7 @@
   <div class="md:hidden">
     <Sheet>
       <SheetTrigger asChild>
-        <Button onclick={toggleMode} variant="outline" size="icon">
+        <Button variant="outline" size="icon">
           <MenuIcon class="h-5 w-5" />
         </Button>
       </SheetTrigger>

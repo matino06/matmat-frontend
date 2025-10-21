@@ -158,10 +158,17 @@
 
   function toggleChat() {
     isChatOpen = !isChatOpen;
+
+    if (isChatOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
   }
 
   function closeChat() {
     isChatOpen = false;
+    document.body.style.overflow = "";
   }
 
   // MathJax configuration
@@ -227,24 +234,24 @@
   });
 
   // Special effect for chat opening
-  $effect(() => {
-    if (isChatOpen && messages.length > 0) {
-      setTimeout(async () => {
-        await tick();
+  // $effect(() => {
+  //   if (isChatOpen && messages.length > 0) {
+  //     setTimeout(async () => {
+  //       await tick();
 
-        if (window.MathJax?.typesetPromise) {
-          const chatBoard = document.querySelector(".chat__conversation-board");
-          if (chatBoard) {
-            try {
-              await window.MathJax.typesetPromise([chatBoard]);
-            } catch (err) {
-              console.error("MathJax typeset failed on chat open:", err);
-            }
-          }
-        }
-      }, 200);
-    }
-  });
+  //       if (window.MathJax?.typesetPromise) {
+  //         const chatBoard = document.querySelector(".chat__conversation-board");
+  //         if (chatBoard) {
+  //           try {
+  //             await window.MathJax.typesetPromise([chatBoard]);
+  //           } catch (err) {
+  //             console.error("MathJax typeset failed on chat open:", err);
+  //           }
+  //         }
+  //       }
+  //     }, 200);
+  //   }
+  // });
 </script>
 
 <svelte:head>
