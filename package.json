@@ -51,7 +51,6 @@
     "cytoscape-dagre": "^2.5.0",
     "express": "^5.1.0",
     "firebase": "^11.10.0",
-    "matanim": "link:../../../../Library/pnpm/global/5/node_modules/matanim",
     "mode-watcher": "^1.1.0",
     "serverless-http": "^4.0.0",
     "svelte-toolbelt": "0.10.3"
