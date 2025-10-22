@@ -16,17 +16,18 @@
   <title>MatMat — Priprema za maturu iz matematike</title>
   <meta
     name="description"
-    content="Vježbaj matematiku za maturu uz interaktivne zadatke, progres i objašnjenja."
+    content="Vježbaj matematiku za maturu BESPLATNO uz personalizirane zadatke, objašnjenja, AI asistenta i praćenje napretka."
   />
+
   <meta
     property="og:title"
     content="MatMat — Priprema za maturu iz matematike"
   />
   <meta
     property="og:description"
-    content="Pripremi se za maturu kroz praktične zadatke i praćenje napretka."
+    content="Vježbaj matematiku za maturu BESPLATNO uz personalizirane zadatke, objašnjenja, AI asistenta i praćenje napretka."
   />
-  <meta property="og:image" content="https://matmat.online/og-image.jpg" />
+  <!-- <meta property="og:image" content="https://matmat.online/og-image.jpg" /> -->
 </svelte:head>
 
 <ModeWatcher />
