@@ -63,7 +63,7 @@
 
     {#if task.imageName}
       <img
-        src={`http://localhost:8080/api/image/${task.imageName}`}
+        src={`https://api.matmat.online/api/image/${task.imageName}`}
         alt="Slika objašnjenja"
         class="m-auto my-2 mb-4 h-auto max-w-full rounded"
       />
@@ -98,7 +98,7 @@
             </div>
             {#if step.imageName}
               <img
-                src={`http://localhost:8080/api/image/${step.imageName}`}
+                src={`https://api.matmat.online/api/image/${step.imageName}`}
                 alt="Slika objašnjenja"
                 class="m-auto my-2 mb-4 max-w-full rounded"
               />
