@@ -29,6 +29,7 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-svelte": "^3.0.0",
     "globals": "^16.0.0",
+    "layerchart": "2.0.0-next.27",
     "prettier": "^3.4.2",
     "prettier-plugin-svelte": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
@@ -48,12 +49,14 @@
     "@zag-js/progress": "^1.18.3",
     "@zag-js/svelte": "^1.18.3",
     "amplify-adapter": "^1.2.3",
+    "apexcharts": "^5.3.5",
     "cytoscape": "^3.32.1",
     "cytoscape-dagre": "^2.5.0",
     "express": "^5.1.0",
     "firebase": "^11.10.0",
     "mode-watcher": "^1.1.0",
     "serverless-http": "^4.0.0",
+    "svelte-apexcharts": "^1.0.2",
     "svelte-toolbelt": "0.10.3"
   }
 }

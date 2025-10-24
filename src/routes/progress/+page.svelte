@@ -69,7 +69,7 @@
               {/each}
             </div>
           {:else}
-            <ScrollArea class="h-[calc(100vh-92px)] w-full pr-4">
+            <ScrollArea class="h-[calc(100vh-108px)] w-full pr-4">
               <div transition:fade={{ duration: 1000 }}>
                 <ProgressList {objectives} />
               </div></ScrollArea
@@ -77,7 +77,7 @@
           {/if}
         </div>
 
-        <Separator orientation="vertical" class="min-h-[calc(100vh-92px)]" />
+        <Separator orientation="vertical" class="min-h-[calc(100vh-108px)]" />
 
         <div class="flex w-full items-center justify-center">
           {#if objectives.length === 0}
