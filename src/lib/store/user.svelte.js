@@ -1,5 +1,5 @@
 import { auth, googleProvider } from '$lib/config/firebase-config';
-import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithRedirect, signOut } from 'firebase/auth';
 import { showErrorAlert } from "$lib/store/errorAlert.svelte";
 import { apiClient } from '$lib/api/apiClient';
 
@@ -16,7 +16,7 @@ onAuthStateChanged(auth, (u) => {
 export const login = async () => {
     try {
         userData.loading = true
-        await signInWithPopup(auth, googleProvider);
+        await signInWithRedirect(auth, googleProvider);
         const response = await apiClient('/account/exists', { method: 'GET' });
         if (response.data == "Account does not exist") {
             await apiClient('/account/create', { method: 'POST' });
@@ -25,7 +25,7 @@ export const login = async () => {
         setTimeout(() => {
             userData.loading = false;
         }, 2500)
-        showErrorAlert("Greška pri prijavi." + err.message);
+        showErrorAlert("Greška pri prijavi.");
     }
 };
 
