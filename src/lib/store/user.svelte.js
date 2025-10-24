@@ -25,7 +25,7 @@ export const login = async () => {
         setTimeout(() => {
             userData.loading = false;
         }, 2500)
-        showErrorAlert("Greška pri prijavi.");
+        showErrorAlert("Greška pri prijavi." + err.message);
     }
 };
 
