@@ -1,7 +1,7 @@
 import { auth } from '$lib/config/firebase-config';
 
 export async function apiClient(path, init = {}) {
-    const url = 'http://localhost:8080/api' + path;
+    const url = 'https://api.matmat.online/api' + path;
     const user = auth.currentUser;
     const fetchInit = {
         ...init,
