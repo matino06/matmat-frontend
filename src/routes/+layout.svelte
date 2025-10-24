@@ -27,7 +27,12 @@
     property="og:description"
     content="Vježbaj matematiku za maturu BESPLATNO uz personalizirane zadatke, objašnjenja, AI asistenta i praćenje napretka."
   />
-  <meta property="og:image" content="https://matmat.online/images/landing_page_dark.png" />
+  <meta
+    property="og:image"
+    content="https://matmat.online/images/landing_page_dark.png"
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://matmat.online/" />
 </svelte:head>
 
 <ModeWatcher />
