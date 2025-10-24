@@ -58,7 +58,19 @@ export const handleLogIn = async () => {
                         setTimeout(() => {
                             turnstileData.isLoaded = false;
                         }, 2500);
-                        login();
+                        userData.loading = true
+                        const response = await signInWithPopup(auth, googleProvider);
+                        if (response.ok) {
+                            const response = await apiClient('/account/exists', { method: 'GET' });
+                            if (response.data == "Account does not exist") {
+                                await apiClient('/account/create', { method: 'POST' });
+                            }
+                        } else {
+                            setTimeout(() => {
+                                userData.loading = false;
+                            }, 2500)
+                            showErrorAlert("Greška pri prijavi.");
+                        }
                     } else {
                         setTimeout(() => {
                             turnstileData.isLoaded = false;
