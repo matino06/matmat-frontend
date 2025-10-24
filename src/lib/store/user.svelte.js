@@ -81,7 +81,7 @@ export const handleLogIn = async () => {
                     setTimeout(() => {
                         turnstileData.isLoaded = false;
                     }, 2500);
-                    showErrorAlert("Greška prilikom povezivanja sa serverom.");
+                    showErrorAlert("Greška prilikom povezivanja sa serverom." + err.message);
                 }
             },
             "error-callback": () => {
