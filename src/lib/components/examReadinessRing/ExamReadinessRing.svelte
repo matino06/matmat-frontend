@@ -17,7 +17,7 @@
   };
 
   let progress = new Tween(0, {
-    duration: 400,
+    duration: 2000,
     easing: cubicOut,
   });
 
@@ -37,23 +37,28 @@
     },
   );
 
-  let totalProgress = groupedByFieldObjectives.reduce((total, group) => {
-    const distribution = pointsDistributionBySubfield[group.fieldName];
+  $effect(() => {
+    setTimeout(() => {
+      let totalProgress = groupedByFieldObjectives.reduce((total, group) => {
+        const distribution = pointsDistributionBySubfield[group.fieldName];
 
-    return (
-      total +
-      distribution *
-        (group.numberOfMasteredObjectivesInField / group.numOfObjectivesInField)
-    );
-  }, 0);
+        return (
+          total +
+          distribution *
+            (group.numberOfMasteredObjectivesInField /
+              group.numOfObjectivesInField)
+        );
+      }, 0);
 
-  progress.target = totalProgress;
+      progress.target = totalProgress;
+    }, 400);
+  });
 </script>
 
 <div class="mt-4 mb-10 flex flex-col justify-center">
   <ProgressRing
     {size}
-    value={progress.target}
+    value={progress.current}
     max={100}
     showLabel
     label={"Tvoje Znanje"}
