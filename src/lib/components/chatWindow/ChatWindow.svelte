@@ -179,8 +179,8 @@
       script.async = true;
       script.src =
         "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-      document.head.appendChild(script);
 
+      // Postavi konfiguraciju PRIJE učitavanja skripte
       window.MathJax = {
         tex: {
           inlineMath: [
@@ -196,7 +196,16 @@
         options: {
           skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
         },
+        startup: {
+          typeset: false, // Spriječi automatsko typesetanje dok ne želimo
+          ready: () => {
+            console.log("✅ MathJax loaded and ready");
+            window.MathJax.startup.defaultReady();
+          },
+        },
       };
+
+      document.head.appendChild(script);
     }
   });
 
@@ -204,20 +213,30 @@
     if (messages.length === 0) return;
     if (!isChatOpen) return;
 
-    const processMathJax = async () => {
-      await tick(); // Wait for DOM to update
-
-      if (window.MathJax?.typesetPromise) {
-        const chatBoard = document.querySelector(".chat__conversation-board");
-        if (chatBoard) {
-          try {
-            await window.MathJax.typesetPromise([chatBoard]);
-          } catch (err) {
-            console.error("MathJax typeset failed:", err);
-          }
-        }
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
+    script.async = true;
+    script.onload = () => {
+      if (window.MathJax) {
+        window.MathJax.typesetPromise();
       }
     };
+    document.head.appendChild(script);
+
+    // const processMathJax = async () => {
+    //   await tick(); // Wait for DOM to update
+
+    //   if (window.MathJax?.typesetPromise) {
+    //     const chatBoard = document.querySelector(".chat__conversation-board");
+    //     if (chatBoard) {
+    //       try {
+    //         await window.MathJax.typesetPromise([chatBoard]);
+    //       } catch (err) {
+    //         console.error("MathJax typeset failed:", err);
+    //       }
+    //     }
+    //   }
+    // };
 
     const smartScrollToBottom = () => {
       const chatBoard = document.querySelector(".chat__conversation-board");
@@ -228,7 +247,7 @@
 
     // Run with small delay
     setTimeout(() => {
-      processMathJax();
+      // processMathJax();
       smartScrollToBottom();
     }, 50);
   });
