@@ -23,20 +23,20 @@
       desc: "Ugrađeni asistent objašnjava svaki zadatak, pomaže ti razumjeti gdje si pogriješio i daje dodatne primjere kad zapneš.",
     },
     {
-      title: "Praktični zadaci",
-      desc: "Zadaci su usklađeni s ispitnim standardima i dolaze s varijantama za treniranje.",
+      title: "Pomno osmišljeni zadaci",
+      desc: "Svaki zadatak je pažljivo dizajniran da te nauči specifično gradivo korak po korak, strukturiran od temelja do naprednih koncepata.",
     },
     {
-      title: "Praćenje napretka",
-      desc: "Na stranici s napretkom vidiš koliko si spreman za maturu u postotku i koja su poglavlja još zaključana — jasno znaš koliko si napredovao.",
+      title: "Jasan napredak do 100%",
+      desc: "Vidiš svoj napredak u postotcima - kada dosegneš 100%, znaš da si tehnički spreman za svaki zadatak na maturi.",
     },
     {
-      title: "Učenje s razumijevanjem",
-      desc: "Uz objašnjenja korak-po-korak, aplikacija te vodi da stvarno razumiješ matematičke tehnike, ne samo da znaš rješenje.",
+      title: "Učinkovito učenje",
+      desc: "Spaced repetition algoritam maksimizira tvoje znanje u danom vremenu - bolji rezultati s manje napora.",
     },
     {
-      title: "Strukturirani napredak",
-      desc: "Zadaci su raspoređeni tako da prvo svladaš temeljne pojmove.",
+      title: "Opipljivo mjerenje napretka",
+      desc: "Pratiš svoj rast kroz vrijeme s jasnim metrikama koje pokazuju stvarno napredovanje.",
     },
   ];
 
@@ -130,7 +130,7 @@
 <main
   class="bg-background text-foreground min-h-screen transition-colors duration-300"
 >
-  <section class="container mx-auto px-6 pb-16 lg:px-8">
+  <!-- <section class="container mx-auto px-6 pb-16 lg:px-8">
     <div class="grid items-center gap-12 lg:grid-cols-2">
       <div>
         <Badge class=" mb-4">Za maturante</Badge>
@@ -140,17 +140,46 @@
         </h1>
         <p class="text-muted-foreground mt-6 max-w-prose text-lg">
           Brže učiš, pamtiš bolje i rješavaš zadatke s razumijevanjem. MatMat
-          koristi dokazano učinkovite metode — prilagodljivi spaced repetition +
-          fokus na razumijevanje — da tvoju pripremu učini pametnijom, a ne
-          dužom.
+          kombinira <strong>spaced repetition</strong> i
+          <strong>detaljna objašnjenja</strong>
+          da tvoju pripremu učini pametnijom i efikasnijom.
+        </p> -->
+
+  <section class="container mx-auto px-6 pb-16 lg:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <Badge class=" mb-4">Za maturante</Badge>
+        <h1 class="text-4xl leading-tight font-extrabold sm:text-5xl">
+          <span class="text-primary">MatMat</span> — priprema za maturu koja stvarno
+          radi
+        </h1>
+        <p class="text-muted-foreground mt-6 max-w-prose text-lg">
+          Brže učiš, pamtiš bolje. MatMat koristi dokazano učinkovitu metodu —
+          Spaced repetition algoritam koji osigurava da se na maturi <span
+            class="text-primary">pojaviš 100% spreman</span
+          >.
         </p>
+
+        <!-- Dodajemo ovaj naglašeni tekst -->
+        <div
+          class="bg-primary/10 border-primary mt-6 rounded-r-lg border-l-4 p-4"
+        >
+          <p class="text-foreground font-medium">
+            "Ne razmišljaj što učiti - samo se prijavi i rješavaj zadatke koje
+            ti MatMat pripremi."
+          </p>
+        </div>
 
         <div class="text-muted-foreground mt-6 flex flex-wrap gap-4 text-sm">
           <div class="flex items-center gap-2">
             <Check class="text-primary h-4 w-4" />Personalizirani plan učenja
           </div>
           <div class="flex items-center gap-2">
-            <Check class="text-primary h-4 w-4" />Praćenje napretka
+            <Check class="text-primary h-4 w-4" />Napredak do 100% znanja
+          </div>
+          <div class="flex items-center gap-2">
+            <Check class="text-primary h-4 w-4" />Bolji rezultati s manje
+            vremena
           </div>
           <div class="flex items-center gap-2">
             <Check class="text-primary h-4 w-4" />
@@ -220,6 +249,22 @@
         </div>
       </div>
     </section>
+
+    <section class="bg-primary/5 py-12">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <h3 class="mb-4 text-2xl font-bold">
+            Prestani razmišljati o učenju - počni učiti
+          </h3>
+          <p class="text-muted-foreground text-lg">
+            Većina učenika gubi vrijeme pokušavajući odgonetnuti što i kako
+            učiti.
+            <strong>MatMat to rješava umjesto tebe</strong> - ti se samo prijaviš
+            i rješavaš.
+          </p>
+        </div>
+      </div>
+    </section>
   {/if}
 
   <section class="bg-card text-card-foreground border-t py-12">
@@ -227,12 +272,22 @@
       <h2 class="text-center text-3xl font-bold sm:text-4xl">
         Što dobivaš s <span class="text-primary">MatMat</span>-om?
       </h2>
-      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <p
+        class="text-muted-foreground mx-auto mt-4 max-w-2xl text-center text-lg"
+      >
+        Kompletan sustav koji te vodi od početka do potpunog savladavanja
+        gradiva
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {#each features as feature}
-          <Card class="bg-card text-card-foreground border-border">
-            <CardContent>
-              <h3 class="font-semibold">{feature.title}</h3>
-              <p class="text-muted-foreground mt-2 text-sm">{feature.desc}</p>
+          <Card
+            class="bg-card text-card-foreground border-border hover:border-primary/20 transition-colors"
+          >
+            <CardContent class="p-6">
+              <h3 class="text-lg font-semibold">{feature.title}</h3>
+              <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
+                {feature.desc}
+              </p>
             </CardContent>
           </Card>
         {/each}
@@ -305,6 +360,69 @@
     </div>
   </section>
 
+  <section class="bg-primary/5 py-16">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div>
+          <h2 class="text-3xl font-bold sm:text-4xl">
+            Kako doseći <span class="text-primary">100% znanja</span> za maturu?
+          </h2>
+          <div class="mt-6 space-y-4">
+            <div class="flex items-start gap-4">
+              <div
+                class="bg-primary text-primary-foreground mt-1 rounded-full p-2"
+              >
+                <Check class="h-4 w-4" />
+              </div>
+              <div>
+                <h3 class="font-semibold">Samo rješavaj</h3>
+                <p class="text-muted-foreground mt-1 text-sm">
+                  Nema razmišljanja što učiti - sustav automatski odabire
+                  zadatke koji te vode do 100% znanja
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="bg-primary text-primary-foreground mt-1 rounded-full p-2"
+              >
+                <Check class="h-4 w-4" />
+              </div>
+              <div>
+                <h3 class="font-semibold">Strukturirani put</h3>
+                <p class="text-muted-foreground mt-1 text-sm">
+                  Gradivo je podijeljeno na logičke cjeline koje se uče korak po
+                  korak
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div
+                class="bg-primary text-primary-foreground mt-1 rounded-full p-2"
+              >
+                <Check class="h-4 w-4" />
+              </div>
+              <div>
+                <h3 class="font-semibold">Pametno ponavljanje</h3>
+                <p class="text-muted-foreground mt-1 text-sm">
+                  Algoritam određuje optimalno vrijeme za ponavljanje - nema
+                  gubljenja vremena
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <img
+            class="w-full max-w-md rounded-2xl object-contain"
+            src="/images/progress_ring_100_dark.png"
+            alt="Napredak do 100% znanja"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="bg-card mx-auto px-6 py-12">
     <div class="grid items-center gap-8 lg:grid-cols-[1fr_1.3fr]">
       <div class="flex justify-center">
@@ -322,17 +440,29 @@
             >retrieval practice</strong
           >
           (aktivno prisjećanje) i <strong>spaced repetition</strong> (raspršeno ponavljanje).
-          Sustav te vodi da aktivno rješavaš i ponavljaš točno kada zaboravljanje
-          počinje — takav pristup značajno poboljšava dugoročno pamćenje i razumijevanje.
+        </p>
+        <p class="text-muted-foreground mt-4">
+          <strong>Spaced repetition maximizira tvoje znanje:</strong> Umjesto da
+          gubiš vrijeme na nepotrebna ponavljanja, sustav te vodi kroz gradivo točno
+          onda kada ti je potrebno - što rezultira boljim rezultatima s manje vremena
+          uloženog.
+        </p>
+        <p class="text-muted-foreground mt-4">
+          <strong>Pratimo tvoj napredak:</strong> Svaki zadatak koji rješavaš doprinosi
+          tvojoj ukupnoj pripremljenosti. Kada vidiš 100%, znaš da si spreman.
         </p>
         <ul class="text-muted-foreground mt-6 space-y-3 text-sm">
-          <li>
-            Dokazi pokazuju da je raspoređeno učenje učinkovitije od učenja "s
-            jednoć" (cramming).
+          <li class="flex items-start gap-2">
+            <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+            <span>Postigni bolje rezultate nego s tradicionalnim učenjem</span>
           </li>
-          <li>
-            Fokus na razumijevanje smanjuje mehaničko pogađanje rješenja i
-            povećava sposobnost rješavanja novih zadataka.
+          <li class="flex items-start gap-2">
+            <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+            <span>Vidi opipljiv napredak svaki dan</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+            <span>Nema nagađanja - znaš točno gdje stojiš</span>
           </li>
         </ul>
       </div>
