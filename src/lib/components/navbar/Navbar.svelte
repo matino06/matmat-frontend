@@ -9,7 +9,7 @@
 
   const links = [
     { name: "Početna", href: "/" },
-    { name: "Lekcije", href: "/lectures" },
+    { name: "Ciljevi", href: "/goals" },
     { name: "Zadaci", href: "/tasks" },
     // { name: "Plan", href: "/plan" },
     { name: "Napredak", href: "/progress" },
