@@ -362,7 +362,7 @@
 
   <section class="bg-primary/5 py-16">
     <div class="container mx-auto px-6 lg:px-8">
-      <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div class="grid items-center gap-12 lg:grid-cols-2 ">
         <div>
           <h2 class="text-3xl font-bold sm:text-4xl">
             Kako doseći <span class="text-primary">100% znanja</span> za maturu?
@@ -424,7 +424,7 @@
   </section>
 
   <section class="bg-card mx-auto px-6 py-12">
-    <div class="grid items-center gap-8 lg:grid-cols-[1fr_1.3fr]">
+    <div class="grid items-center gap-8 lg:grid-cols-2">
       <div class="flex justify-center">
         <img
           class="m-auto max-h-75 w-auto rounded-2xl object-contain"
