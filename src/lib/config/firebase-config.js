@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCTyxM8OygHlhNlKva6G2JSfUbk-1AT2Bo",
-    authDomain: "matmat.online",
+    authDomain: "edu-sprint-61d87.firebaseapp.com",
     projectId: "edu-sprint-61d87",
     storageBucket: "edu-sprint-61d87.firebasestorage.app",
     messagingSenderId: "221075632416",
