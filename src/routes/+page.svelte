@@ -12,31 +12,57 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import { Badge } from "$lib/components/ui/badge/index.js";
   import Check from "@lucide/svelte/icons/check";
+  import {
+    Calendar,
+    Bot,
+    Puzzle,
+    Target,
+    Zap,
+    TrendingUp,
+    BookOpen,
+    Clock,
+    BarChart3,
+    Brain,
+    GitGraph,
+    CheckCircle,
+  } from "@lucide/svelte/icons";
 
   const features = [
     {
       title: "Personalizirana ponavljanja",
       desc: "Ne radiš sve isto — MatMat uči kako ti učiš i prilagođava raspored ponavljanja tako da pamtiš gradivo dugo nakon zadnje vježbe.",
+      icon: Calendar,
+      color: "text-blue-500",
     },
     {
       title: "AI asistent",
       desc: "Ugrađeni asistent objašnjava svaki zadatak, pomaže ti razumjeti gdje si pogriješio i daje dodatne primjere kad zapneš.",
+      icon: Bot,
+      color: "text-green-500",
     },
     {
       title: "Pomno osmišljeni zadaci",
       desc: "Svaki zadatak je pažljivo dizajniran da te nauči specifično gradivo korak po korak, strukturiran od temelja do naprednih koncepata.",
+      icon: Puzzle,
+      color: "text-purple-500",
     },
     {
       title: "Jasan napredak do 100%",
       desc: "Vidiš svoj napredak u postotcima - kada dosegneš 100%, znaš da si tehnički spreman za svaki zadatak na maturi.",
+      icon: Target,
+      color: "text-red-500",
     },
     {
       title: "Učinkovito učenje",
       desc: "Spaced repetition algoritam maksimizira tvoje znanje u danom vremenu - bolji rezultati s manje napora.",
+      icon: Zap,
+      color: "text-yellow-500",
     },
     {
       title: "Opipljivo mjerenje napretka",
       desc: "Pratiš svoj rast kroz vrijeme s jasnim metrikama koje pokazuju stvarno napredovanje.",
+      icon: TrendingUp,
+      color: "text-indigo-500",
     },
   ];
 
@@ -281,10 +307,24 @@
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {#each features as feature}
           <Card
-            class="bg-card text-card-foreground border-border hover:border-primary/20 transition-colors"
+            class="bg-card text-card-foreground border-border hover:border-primary/20 group transition-all duration-300 hover:shadow-lg"
           >
             <CardContent class="p-6">
-              <h3 class="text-lg font-semibold">{feature.title}</h3>
+              <div class="mb-4 flex items-center justify-between">
+                <div
+                  class="bg-primary/10 rounded-lg p-3 transition-transform duration-300 group-hover:scale-110"
+                >
+                  <svelte:component
+                    this={feature.icon}
+                    class={`h-6 w-6 ${feature.color}`}
+                  />
+                </div>
+              </div>
+              <h3
+                class="group-hover:text-primary text-lg font-semibold transition-colors"
+              >
+                {feature.title}
+              </h3>
               <p class="text-muted-foreground mt-3 text-sm leading-relaxed">
                 {feature.desc}
               </p>
@@ -362,7 +402,7 @@
 
   <section class="bg-primary/5 py-16">
     <div class="container mx-auto px-6 lg:px-8">
-      <div class="grid items-center gap-12 lg:grid-cols-2 ">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
         <div>
           <h2 class="text-3xl font-bold sm:text-4xl">
             Kako doseći <span class="text-primary">100% znanja</span> za maturu?
