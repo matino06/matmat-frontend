@@ -69,7 +69,7 @@
 <div class="m-4">
   <Navbar />
 </div>
-{#if page.url.pathname != "/"}
+{#if page.url.pathname != "/" && page.url.pathname != "/about"}
   <div class="mx-4">
     <AuthRequiredMessage />
   </div>
