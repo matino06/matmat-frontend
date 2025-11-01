@@ -521,6 +521,7 @@
           </p>
         </CardContent>
       </Card>
+
       <Card class="bg-card text-card-foreground border-border">
         <CardContent>
           <h4 class="font-medium">
@@ -529,6 +530,21 @@
           <p class="text-muted-foreground mt-2 text-sm">
             Algoritam bilježi rezultate i ponašanje te procjenjuje optimalni
             trenutak za sljedeće ponavljanje pomoću modela pamćenja.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card class="bg-card text-card-foreground border-border">
+        <CardContent>
+          <h4 class="font-medium">
+            Zašto trebam odabrati težinu zadatka nakon rješavanja?
+          </h4>
+          <p class="text-muted-foreground mt-2 text-sm">
+            Ocjena težine pomaže algoritmu da bolje razumije tvoje trenutno
+            znanje i prilagodi buduće zadatke. Ako ti je zadatak bio težak,
+            sustav će usporiti tempo i ponoviti gradivo dok ga potpuno ne
+            svladaš. Na taj način MatMat uči kako ti učiš — i vodi te prema 100%
+            znanja bez gubljenja vremena.
           </p>
         </CardContent>
       </Card>
