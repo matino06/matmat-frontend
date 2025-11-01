@@ -13,6 +13,7 @@
     { name: "Zadaci", href: "/tasks" },
     // { name: "Plan", href: "/plan" },
     { name: "Napredak", href: "/progress" },
+    { name: "O nama", href: "/about" },
   ];
 </script>
 

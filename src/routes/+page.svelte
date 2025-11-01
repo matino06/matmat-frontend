@@ -550,10 +550,8 @@
       </Card>
     </div>
 
-    <footer class="text-muted-foreground mt-12 border-t pt-8 text-sm">
-      <p>
-        © {new Date().getFullYear()} MatMat — Sretno na maturi!
-      </p>
+    <footer class="text-muted-foreground mt-3 border-t pt-8 text-sm">
+      <p>© {new Date().getFullYear()} MatMat — Uči pametnije, ne duže.</p>
     </footer>
   </section>
 </main>
