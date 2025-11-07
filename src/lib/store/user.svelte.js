@@ -18,8 +18,10 @@ export const login = async () => {
         userData.loading = true
         await signInWithPopup(auth, googleProvider);
         const response = await apiClient('/account/exists', { method: 'GET' });
-        if (response.data == "Account does not exist") {
-            await apiClient('/account/create', { method: 'POST' });
+        const textResponse = await response.text();
+
+        if (textResponse == "Account does not exist") {
+            const tempResponse = await apiClient('/account/create', { method: 'POST' });
         }
     } catch (err) {
         setTimeout(() => {
