@@ -7,10 +7,19 @@
   import { fade } from "svelte/transition";
 
   let task = $state(null);
+  let noMoreTasks = $state(false);
 
   async function fetchNewTask() {
     task = null;
     const response = await apiClient("/task/get-new", { method: "GET" });
+
+    const textResponse = await response.text();
+    if (textResponse == "No more tasks for today!") {
+      noMoreTasks = true;
+      task = null;
+      return;
+    }
+
     task = await response.json();
     task.explanationSteps.sort((a, b) => a.stepNumber - b.stepNumber);
   }
@@ -35,5 +44,17 @@
       <Task {task} {fetchNewTask} />
       <ChatWindow {task} />
     {/key}
+  </div>
+{/if}
+
+{#if noMoreTasks}
+  <div
+    transition:fade
+    class="mx-4 flex min-h-[calc(100vh-92px)] scroll-m-20 items-center justify-items-start"
+  >
+    <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
+      Nema više zadataka za danas. <br />
+      Vratite se sutra!
+    </h1>
   </div>
 {/if}
