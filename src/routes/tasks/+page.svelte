@@ -20,7 +20,7 @@
       return;
     }
 
-    task = await response.json();
+    task = JSON.parse(textResponse);
     task.explanationSteps.sort((a, b) => a.stepNumber - b.stepNumber);
   }
 
