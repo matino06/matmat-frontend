@@ -1,38 +1,109 @@
-# sv
+# MatMat
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+MatMat is an interactive web application designed to help high school students prepare for the Croatian **State Matura Mathematics Exam**. The platform focuses on _learning with understanding_, efficient time usage, and long-term knowledge retention by combining **spaced repetition**, **AI assistance**, and carefully structured math problems.
 
-## Creating a project
+🌐 **Live website:** [https://matmat.online](https://matmat.online)
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
+
+## ✨ Project Overview
+
+MatMat is not just another practice website or flashcard app. It acts as a **personal math tutor**, guiding students step by step from fundamental concepts to advanced exam-level problems.
+
+The main goal is simple but ambitious: **enable students to reach 100% exam readiness** through smart learning instead of longer studying.
+
+---
+
+## 🚀 Key Features
+
+### 🧠 Spaced Repetition Algorithm
+
+MatMat uses a spaced repetition system that schedules problem reviews based on the student's performance. Tasks are repeated **right before the student is likely to forget them**, maximizing long-term retention and learning efficiency.
+
+![Forgeting Curve](images/forgeting_curve.png)
+
+---
+
+### ✏️ Step-by-Step Solutions
+
+Every problem includes **detailed, pedagogically designed solutions** that explain _why_ something works, not just the final answer. The focus is on understanding concepts, not memorization.
+
+![Task with steps](images/new_task_dark.png)
+
+---
+
+### 🤖 AI Assistant
+
+An integrated AI assistant allows students to:
+
+- Ask questions about a specific problem
+- Get additional explanations
+- See alternative examples
+- Receive hints instead of full answers
+
+![AI Asisstant](images/task_ai_dark.jpg)
+
+---
+
+### 📊 Progress Tracking
+
+On the **Progress** page, students can clearly see:
+
+- Their overall knowledge percentage
+- Which chapters are unlocked or locked
+- How close they are to full exam readiness
+
+Reaching **100%** means the student has covered all material required for the math matura.
+
+![Progress dashboard](images/progress_dark.png)
+
+---
+
+### 🧩 Structured Learning Path
+
+Problems are organized so that students naturally progress:
+
+- From basic concepts
+- To more complex and exam-level tasks
+
+This ensures a smooth learning curve without overwhelming the student.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** SvelteKit
+- **UI Components:** shadcn/ui
+- **Styling:** Tailwind CSS
+- **Frontend Hosting:** AWS Amplify
+
+---
+
+### 1. Clone the repository
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+git clone https://github.com/matino06/matmat-frontend.git
+cd matmat-frontend
 ```
 
-## Developing
+### 2. Install dependencies
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Make sure you have **Node.js (v18 or newer)** installed.
+
+```bash
+npm install
+```
+
+### 3. Start the development server
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+The app will be available at:
 
-To create a production version of your app:
-
-```bash
-npm run build
+```
+http://localhost:5173
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+---
