@@ -89,27 +89,15 @@
         use LaTeX format with \\( and \\) for inline mathematical expressions. Do not use single dollar signs 
         $ for mathematical expressions, but you can use double dollar signs $$ $$.`;
 
-      const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": "AIzaSyDnga8rJ1XkUvSDxTPvmG3FGRq8jXHxPnM",
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: systemPrompt,
-                  },
-                ],
-              },
-            ],
-          }),
+      const response = await fetch("/api/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({ systemPrompt }),
+      });
+
+      console.log(response);
 
       const data = await response.json();
 
@@ -137,7 +125,7 @@
           avatarUrl: "/images/AIAvatar.png",
           nickName: "MatMat AI Assistant",
           messages: [
-            "Sorry, there was an error processing your request. Please try again.",
+            "Oprosti, došlo je do pogreške. Molim, pokušaj ponovno kasnije.",
           ],
           type: "ai",
         },
@@ -171,7 +159,7 @@
     document.body.style.overflow = "";
   }
 
-  // MathJax configuration
+  // MathJax configuration fetch
   onMount(() => {
     if (!window.MathJax) {
       const script = document.createElement("script");
