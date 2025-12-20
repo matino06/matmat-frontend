@@ -79,6 +79,8 @@ This ensures a smooth learning curve without overwhelming the student.
 - **UI Components:** shadcn/ui
 - **Styling:** Tailwind CSS
 - **Authentication:** Firebase
+- **AI Integration:** Google AI Studio (Gemini API)
+- **Bot Protection:** Cloudflare Turnstile
 - **Frontend Hosting:** AWS Amplify
 
 ---
