@@ -91,7 +91,6 @@ The MatMat frontend communicates with a custom-built backend via a REST API.
   - Fetching math tasks and solutions
   - Submitting task results
   - Progress and statistics tracking
-  -
 
 ---
 
