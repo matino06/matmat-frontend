@@ -73,9 +73,33 @@ This ensures a smooth learning curve without overwhelming the student.
 ## 🛠️ Tech Stack
 
 - **Framework:** SvelteKit
+- **Language:** JavaScript
 - **UI Components:** shadcn/ui
 - **Styling:** Tailwind CSS
+- **Authentication:** Firebase
 - **Frontend Hosting:** AWS Amplify
+
+---
+
+## 🔗 Backend Integration
+
+The MatMat frontend communicates with a custom-built backend via a REST API.
+
+- **API Base URL:** https://api.matmat.online
+- **Authentication:** Firebase Authentication (JWT-based)
+- **Data Flow:**
+  - Fetching math tasks and solutions
+  - Submitting task results
+  - Progress and statistics tracking
+  -
+
+---
+
+## 🔐 Authentication & Security
+
+- User authentication is handled via **Firebase Authentication**
+- Access to protected routes and API endpoints requires a valid JWT
+- Bot and abuse protection is enforced server-side using **Cloudflare Turnstile**
 
 ---
 
@@ -107,3 +131,11 @@ http://localhost:5173
 ```
 
 ---
+
+## ⚙️ Environment Variables
+
+To run the frontend locally, the following environment variables are required:
+
+```env
+GEMINI_API_KEY=
+```
