@@ -4,6 +4,8 @@ MatMat is an interactive web application designed to help high school students p
 
 🌐 **Live website:** [https://matmat.online](https://matmat.online)
 
+🌐 **Backend Repository:** [https://github.com/matino06/matmat-backend](https://github.com/matino06/matmat-backend)
+
 ---
 
 ## ✨ Project Overview
@@ -77,6 +79,8 @@ This ensures a smooth learning curve without overwhelming the student.
 - **UI Components:** shadcn/ui
 - **Styling:** Tailwind CSS
 - **Authentication:** Firebase
+- **AI Integration:** Google AI Studio (Gemini API)
+- **Bot Protection:** Cloudflare Turnstile
 - **Frontend Hosting:** AWS Amplify
 
 ---
@@ -91,7 +95,6 @@ The MatMat frontend communicates with a custom-built backend via a REST API.
   - Fetching math tasks and solutions
   - Submitting task results
   - Progress and statistics tracking
-  -
 
 ---
 
