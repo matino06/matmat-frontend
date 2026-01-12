@@ -6,6 +6,7 @@
 
   let { task, handleTaskSubmit } = $props();
   let q = $state(null);
+  let isSubmitting = $state(false);
 
   const difficultyLevels = [
     { label: "Potpuni zaborav", value: 0, color: "#ff9800" },
@@ -31,6 +32,19 @@
     },
     { label: "Savršen odgovor", value: 5, color: "#399918" },
   ];
+
+  async function submit() {
+    if (isSubmitting || q === null) return;
+
+    isSubmitting = true;
+
+    try {
+      await handleTaskSubmit(q);
+      q = null;
+    } finally {
+      isSubmitting = false;
+    }
+  }
 </script>
 
 <div class="">
@@ -52,7 +66,9 @@
           </Tooltip.Content>
         </Tooltip.Root>
       {/each}
-      <Button onclick={() => handleTaskSubmit(q)}>Sljedeći</Button>
+      <Button onclick={submit} disabled={isSubmitting || q === null}>
+        {isSubmitting ? "Šaljem..." : "Sljedeći"}
+      </Button>
     </RadioGroup.Root>
   </Tooltip.Provider>
 </div>

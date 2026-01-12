@@ -16,20 +16,32 @@
     endTime: null,
   };
 
+  let isSubmitting = $state(false);
+
   async function handleTaskSubmit(value) {
+    if (isSubmitting || value === null) return;
+
+    isSubmitting = true;
+
     const solvedTask = {
       ...newSolvedTask,
       q: value,
       endTime: new Date().toISOString(),
     };
 
-    const response = await apiClient("/solved-task/set-new", {
-      method: "POST",
-      body: JSON.stringify(solvedTask),
-    });
+    try {
+      const response = await apiClient("/solved-task/set-new", {
+        method: "POST",
+        body: JSON.stringify(solvedTask),
+      });
 
-    if (response.ok) {
-      fetchNewTask();
+      if (response.ok) {
+        fetchNewTask();
+      }
+    } catch (error) {
+      console.error("Greška pri slanju zadatka:", error);
+    } finally {
+      isSubmitting = false;
     }
   }
 
