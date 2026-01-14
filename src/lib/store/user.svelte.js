@@ -1,21 +1,30 @@
 import { auth, googleProvider } from '$lib/config/firebase-config';
-import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import {
+    onAuthStateChanged,
+    signInWithPopup,
+    signOut
+} from 'firebase/auth';
 import { showErrorAlert } from "$lib/store/errorAlert.svelte";
 import { apiClient } from '$lib/api/apiClient';
+import { browser } from '$app/environment';
 
 export const userData = $state({
     user: null,
     loading: true
 });
 
+// 🔐 Auth state listener
 onAuthStateChanged(auth, (u) => {
     userData.user = u;
     userData.loading = false;
 });
 
-export const login = async () => {
+// 🔑 Login - UVIJEK koristi popup
+export const handleLogIn = async () => {
+
+    userData.loading = true;
+
     try {
-        userData.loading = true
         await signInWithPopup(auth, googleProvider);
         const response = await apiClient('/account/exists', { method: 'GET' });
         const textResponse = await response.text();
@@ -24,72 +33,33 @@ export const login = async () => {
             const tempResponse = await apiClient('/account/create', { method: 'POST' });
         }
     } catch (err) {
-        setTimeout(() => {
-            userData.loading = false;
-        }, 2500)
-        showErrorAlert("Greška pri prijavi." + err.message);
+        userData.loading = false;
+
+        // Rukovanje specifičnim greškama
+        if (err.code === 'auth/popup-blocked') {
+            showErrorAlert(
+                "Popup prozor je blokiran. Molimo omogućite popup prozore za ovu stranicu:\n\n" +
+                "1. Kliknite ikonu zaključanja u address baru\n" +
+                "2. Odaberite 'Site settings' ili 'Permissions'\n" +
+                "3. Omogućite 'Pop-ups and redirects'\n" +
+                "4. Pokušajte ponovno"
+            );
+        } else if (err.code === 'auth/popup-closed-by-user') {
+            // Korisnik je zatvorio popup - ne prikazuj error
+            console.log('Korisnik je zatvorio login popup');
+        } else if (err.code === 'auth/cancelled-popup-request') {
+            // Višestruki klikovi - ignoriši
+            console.log('Login request cancelled');
+        } else {
+            // Ostale greške
+            showErrorAlert("Greška pri prijavi: " + (err.message || err.code));
+        }
+
+        console.error('Login error:', err);
     }
 };
 
-export const turnstileData = $state({ isLoaded: false });
-
-export const handleLogIn = async () => {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    if (isMobile) {
-        return login();
-    }
-
-    if (turnstileData.isLoaded) return;
-
-    const container = document.getElementById("turnstile-container");
-    if (container) {
-        container.innerHTML = "";
-    }
-
-    turnstileData.isLoaded = true;
-    if (window.turnstile) {
-        window.turnstile.render("#turnstile-container", {
-            sitekey: "0x4AAAAAABBBBZ3tdroBV8xr",
-            callback: async (token) => {
-                try {
-                    const response = await apiClient(
-                        "/turnstile/verify",
-                        {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ token }),
-                        },
-                    );
-
-                    if (response.ok) {
-                        setTimeout(() => {
-                            turnstileData.isLoaded = false;
-                        }, 2500);
-                        login();
-                    } else {
-                        setTimeout(() => {
-                            turnstileData.isLoaded = false;
-                        }, 2500);
-                        showErrorAlert("Verifikacija nije uspjela. Pokušajte ponovo.");
-                    }
-                } catch (err) {
-                    setTimeout(() => {
-                        turnstileData.isLoaded = false;
-                    }, 2500);
-                    showErrorAlert("Greška prilikom povezivanja sa serverom.");
-                }
-            },
-            "error-callback": () => {
-                setTimeout(() => {
-                    turnstileData.isLoaded = false;
-                }, 2500);
-                showErrorAlert("Cloudflare Turnstile nije uspio učitati.");
-            },
-        });
-    }
-}
-
+// 🔓 Logout
 export const logout = async () => {
     await signOut(auth);
     userData.user = null;
