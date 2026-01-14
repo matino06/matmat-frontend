@@ -4,7 +4,7 @@
   import Navbar from "$lib/components/navbar/Navbar.svelte";
   import { userData } from "$lib/store/user.svelte";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
-  //  import { turnstileData } from "$lib/store/user.svelte";
+  import { turnstileData } from "$lib/store/user.svelte";
   import { fade } from "svelte/transition";
   import { page } from "$app/state";
   import AuthRequiredMessage from "$lib/components/authRequiredMessage/AuthRequiredMessage.svelte";
@@ -38,7 +38,7 @@
 <ModeWatcher />
 
 <!-- Turnstile -->
-<!-- <div
+<div
   transition:fade
   class="fixed {turnstileData.isLoaded
     ? ''
@@ -47,7 +47,7 @@
   <div class="flex flex-col items-center gap-4">
     <div id="turnstile-container"></div>
   </div>
-</div> -->
+</div>
 
 <!-- Loading Overlay -->
 {#if userData.loading}
