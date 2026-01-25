@@ -8,6 +8,15 @@
   import { fade } from "svelte/transition";
   import { page } from "$app/state";
   import AuthRequiredMessage from "$lib/components/authRequiredMessage/AuthRequiredMessage.svelte";
+  import { afterNavigate } from "$app/navigation";
+
+  afterNavigate(() => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("config", "G-E6F6X4X2XG", {
+        page_path: window.location.pathname,
+      });
+    }
+  });
 
   let { children } = $props();
 </script>
