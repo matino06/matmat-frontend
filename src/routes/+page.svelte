@@ -552,6 +552,15 @@
 
     <footer class="text-muted-foreground mt-3 border-t pt-8 text-sm">
       <p>© {new Date().getFullYear()} MatMat — Uči pametnije, ne duže.</p>
+      <p>
+        Kontakt:{" "}
+        <a
+          href="mailto:info.matmat.online@gmail.com"
+          class="hover:text-foreground underline"
+        >
+          info.matmat.online@gmail.com
+        </a>
+      </p>
     </footer>
   </section>
 </main>
