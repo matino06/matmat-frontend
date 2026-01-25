@@ -7,6 +7,8 @@
   import SunIcon from "@lucide/svelte/icons/sun";
   import MoonIcon from "@lucide/svelte/icons/moon";
 
+  let isOpen = false;
+
   const links = [
     { name: "Početna", href: "/" },
     { name: "Ciljevi", href: "/goals" },
@@ -47,7 +49,7 @@
 
   <!-- Mobile Hamburger Menu -->
   <div class="md:hidden">
-    <Sheet>
+    <Sheet bind:open={isOpen}>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon">
           <MenuIcon class="h-5 w-5" />
@@ -58,7 +60,7 @@
           <a
             href={link.href}
             class="text-muted-foreground hover:text-primary text-sm font-medium"
-            onclick={() => {}}
+            onclick={() => (isOpen = false)}
           >
             {link.name}
           </a>
@@ -68,12 +70,29 @@
           {#if userData.loading}
             <p>Učitavanje...</p>
           {:else if userData.user}
-            <Button onclick={logout}>LogOut</Button>
+            <Button
+              onclick={() => {
+                logout();
+                isOpen = false;
+              }}>LogOut</Button
+            >
           {:else}
-            <Button onclick={handleLogIn}>Google LogIn</Button>
+            <Button
+              onclick={() => {
+                handleLogIn();
+                isOpen = false;
+              }}>Google LogIn</Button
+            >
           {/if}
 
-          <Button onclick={toggleMode} variant="outline" size="icon">
+          <Button
+            onclick={() => {
+              toggleMode();
+              isOpen = false;
+            }}
+            variant="outline"
+            size="icon"
+          >
             <SunIcon class="h-5 w-5 dark:hidden" />
             <MoonIcon class="hidden h-5 w-5 dark:block" />
           </Button>
