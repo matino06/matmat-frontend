@@ -122,9 +122,9 @@
   </div>
 
   <div class="mt-3 text-center text-xs text-gray-500">
-    <div class="mb-1 flex flex-wrap justify-center gap-4">
-      <span>0 = Potpuni zaborav</span>
-      <span>5 = Savršeno</span>
+    <div class="gapx-4 mb-1 flex flex-wrap justify-center">
+      <span>0 = Ni nakon pročitanog rješenja mi nije jasno</span>
+      <span>5 = Riješio samostalno bez problema</span>
     </div>
     <p class="text-xs">
       Brojevi predstavljaju razinu težine: manji broj = teže, veći broj = lakše
