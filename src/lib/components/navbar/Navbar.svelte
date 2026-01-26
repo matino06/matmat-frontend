@@ -20,34 +20,7 @@
 </script>
 
 <nav class="flex w-full items-center justify-between py-2 md:pb-4">
-  <!-- Desktop Links -->
-  <div class="hidden gap-4 md:flex">
-    {#each links as link}
-      <a
-        href={link.href}
-        class="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
-      >
-        {link.name}
-      </a>
-    {/each}
-  </div>
-
-  <!-- Desktop Controls -->
-  <div class="hidden items-center gap-4 md:flex">
-    {#if userData.loading}
-      <p>Učitavanje...</p>
-    {:else if userData.user}
-      <Button onclick={logout}>LogOut</Button>
-    {:else}
-      <Button onclick={handleLogIn}>Google LogIn</Button>
-    {/if}
-    <Button onclick={toggleMode} variant="outline" size="icon">
-      <SunIcon class="h-5 w-5 dark:hidden" />
-      <MoonIcon class="hidden h-5 w-5 dark:block" />
-    </Button>
-  </div>
-
-  <!-- Mobile Hamburger Menu -->
+  <!-- Hamburger Menu (mobile only) -->
   <div class="md:hidden">
     <Sheet bind:open={isOpen}>
       <SheetTrigger asChild>
@@ -84,20 +57,40 @@
               }}>Google LogIn</Button
             >
           {/if}
-
-          <Button
-            onclick={() => {
-              toggleMode();
-              isOpen = false;
-            }}
-            variant="outline"
-            size="icon"
-          >
-            <SunIcon class="h-5 w-5 dark:hidden" />
-            <MoonIcon class="hidden h-5 w-5 dark:block" />
-          </Button>
         </div>
       </SheetContent>
     </Sheet>
+  </div>
+
+  <!-- Desktop Links -->
+  <div class="hidden gap-4 md:flex">
+    {#each links as link}
+      <a
+        href={link.href}
+        class="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+      >
+        {link.name}
+      </a>
+    {/each}
+  </div>
+
+  <!-- Controls (right side) -->
+  <div class="flex items-center gap-4">
+    <!-- Theme Toggle Button (always visible) -->
+    <Button onclick={toggleMode} variant="outline" size="icon">
+      <SunIcon class="h-5 w-5 dark:hidden" />
+      <MoonIcon class="hidden h-5 w-5 dark:block" />
+    </Button>
+
+    <!-- Desktop Login/Logout -->
+    <div class="hidden md:block">
+      {#if userData.loading}
+        <p>Učitavanje...</p>
+      {:else if userData.user}
+        <Button onclick={logout}>LogOut</Button>
+      {:else}
+        <Button onclick={handleLogIn}>Google LogIn</Button>
+      {/if}
+    </div>
   </div>
 </nav>
