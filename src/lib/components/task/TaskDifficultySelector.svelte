@@ -2,7 +2,6 @@
   import * as RadioGroup from "$lib/components/ui/radio-group/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
   import { Button } from "$lib/components/ui/button";
-  import { apiClient } from "$lib/api/apiClient";
 
   let { task, handleTaskSubmit } = $props();
   let q = $state(null);
@@ -10,40 +9,46 @@
 
   const difficultyLevels = [
     {
-      label: "Potpuni zaborav",
+      label: "Ni nakon pročitanog rješenja mi nije jasno",
       value: 0,
       color: "#ff9800",
       shortLabel: "Zaborav",
+      category: "neuspjeh",
     },
     {
       label: "Netočno riješeno, rješenje shvaćeno",
       value: 1,
       color: "#ffc107",
       shortLabel: "Netočno",
+      category: "neuspjeh",
     },
     {
       label: "Netočno riješeno, iako se rješenje čini lagan",
       value: 2,
       color: "#ffeb3b",
       shortLabel: "Lako netočno",
+      category: "neuspjeh",
     },
     {
       label: "Točno riješeno, ali s velikim naporom",
       value: 3,
       color: "#cddc39",
       shortLabel: "Napor",
+      category: "uspjeh",
     },
     {
       label: "Točno riješeno nakon malo razmišljanja",
       value: 4,
       color: "#8bc34a",
       shortLabel: "Lako točno",
+      category: "uspjeh",
     },
     {
-      label: "Savršen odgovor",
+      label: "Riješio samostalno bez problema",
       value: 5,
       color: "#399918",
       shortLabel: "Savršeno",
+      category: "uspjeh",
     },
   ];
 
@@ -63,19 +68,39 @@
 
 <div class="w-full">
   <div class="mb-4">
-    <div class="relative mb-8">
-      <div
-        class="absolute top-0 right-0 left-0 text-center text-sm text-gray-600"
-      >
-        <div class="mb-1 flex justify-between">
-          <span class="text-xs">Teže</span>
-          <span class="text-xs">Lakše</span>
+    <div class="relative mb-3">
+      <div class="mb-1 flex justify-between text-sm text-gray-600">
+        <div class="flex flex-col items-center">
+          <span class="text-xs font-medium text-red-600 sm:text-sm"
+            >Nisam uspio samostalno</span
+          >
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-xs font-medium text-green-600 sm:text-sm"
+            >Uspio sam samostalno</span
+          >
         </div>
       </div>
-      <div class="pt-5">
+
+      <div class="relative pt-1">
         <div
-          class="h-2 w-full rounded-full bg-gradient-to-r from-[#C40C0C] to-[#399918]"
+          class="absolute top-0 bottom-0 left-1/2 z-10 w-0.5 bg-gray-400"
+          style="transform: translateX(-50%);"
         ></div>
+
+        <div class="relative h-2 w-full overflow-hidden rounded-full">
+          <div
+            class="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-[#C40C0C] via-[#ffc107] to-[#ffeb3b]"
+          ></div>
+          <div
+            class="absolute top-0 right-0 h-full w-1/2 bg-gradient-to-r from-[#ffeb3b] via-[#8bc34a] to-[#399918]"
+          ></div>
+        </div>
+
+        <div class="mt-1 flex justify-between">
+          <span class="text-xs text-gray-500">0-2</span>
+          <span class="text-xs text-gray-500">3-5</span>
+        </div>
       </div>
     </div>
 
@@ -89,7 +114,7 @@
             <Tooltip.Root>
               <Tooltip.Trigger class="w-full">
                 <div class="flex w-full flex-col items-center space-y-1 px-1">
-                  <div class="flex items-center justify-center">
+                  <div class="relative flex items-center justify-center">
                     <RadioGroup.Item
                       value={difficulty.value}
                       style={`accent-color: ${difficulty.color};`}
@@ -102,7 +127,14 @@
                 </div>
               </Tooltip.Trigger>
               <Tooltip.Content>
-                <p class="max-w-xs text-sm">{difficulty.label}</p>
+                <p class="max-w-xs text-sm">
+                  <span class="font-medium">
+                    {difficulty.category === "neuspjeh"
+                      ? "✗ Nisam uspio:"
+                      : "✓ Uspio sam:"}
+                  </span><br />
+                  {difficulty.label}
+                </p>
               </Tooltip.Content>
             </Tooltip.Root>
           </div>
@@ -111,7 +143,8 @@
     </Tooltip.Provider>
   </div>
 
-  <div class="mt-6 flex justify-center">
+  <!-- Gumb ispod radio buttona -->
+  <div class="mt-2 flex justify-center">
     <Button
       onclick={submit}
       disabled={isSubmitting || q === null}
@@ -121,18 +154,62 @@
     </Button>
   </div>
 
-  <div class="mt-3 text-center text-xs text-gray-500">
-    <div class="gapx-4 mb-1 flex flex-wrap justify-center">
-      <span>0 = Ni nakon pročitanog rješenja mi nije jasno</span>
-      <span>5 = Riješio samostalno bez problema</span>
+  <!-- Legenda s objašnjenjem -->
+  <div class="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-3">
+    <div
+      class="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center"
+    >
+      <!-- Lijeva kategorija -->
+      <div class="flex-1">
+        <div class="mb-1 flex items-center gap-2">
+          <div
+            class="h-3 w-3 rounded-sm bg-gradient-to-r from-[#ff9800] to-[#ffeb3b]"
+          ></div>
+          <span class="text-sm font-medium text-red-600"
+            >Nisam uspio samostalno (0-2)</span
+          >
+        </div>
+        <ul class="space-y-1 pl-5 text-xs text-gray-600">
+          <li class="list-disc">
+            Ni nakon pročitanog rješenja mi nije jasno (0)
+          </li>
+          <li class="list-disc">Netočno riješeno, rješenje shvaćeno (1)</li>
+          <li class="list-disc">
+            Netočno riješeno, iako se rješenje čini lagan (2)
+          </li>
+        </ul>
+      </div>
+
+      <!-- Desna kategorija -->
+      <div class="flex-1">
+        <div class="mb-1 flex items-center gap-2">
+          <div
+            class="h-3 w-3 rounded-sm bg-gradient-to-r from-[#cddc39] to-[#399918]"
+          ></div>
+          <span class="text-sm font-medium text-green-600"
+            >Uspio sam samostalno (3-5)</span
+          >
+        </div>
+        <ul class="space-y-1 pl-5 text-xs text-gray-600">
+          <li class="list-disc">Točno riješeno, ali s velikim naporom (3)</li>
+          <li class="list-disc">Točno riješeno nakon malo razmišljanja (4)</li>
+          <li class="list-disc">Riješio samostalno bez problema (5)</li>
+        </ul>
+      </div>
     </div>
-    <p class="text-xs">
-      Brojevi predstavljaju razinu težine: manji broj = teže, veći broj = lakše
-    </p>
+
+    <!-- Kratki savjet -->
+    <div class="mt-3 border-t border-gray-200 pt-3">
+      <p class="text-center text-xs text-gray-500">
+        Odaberite razinu koja najbolje opisuje vaše iskustvo s rješavanjem
+        zadatka.
+      </p>
+    </div>
   </div>
 </div>
 
 <style>
+  /* Poboljšanja za bolju vidljivost na mobilnim uređajima */
   @media (max-width: 640px) {
     .peer {
       height: 24px;

@@ -117,7 +117,7 @@
             {/if}
           {/each}
           <h4
-            class="text-sm font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
+            class="mt-2 text-sm font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
           >
             Odredi težinu zadatka
           </h4>
