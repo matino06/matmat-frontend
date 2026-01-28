@@ -156,25 +156,11 @@
 <main
   class="bg-background text-foreground min-h-screen transition-colors duration-300"
 >
-  <!-- <section class="container mx-auto px-6 pb-16 lg:px-8">
-    <div class="grid items-center gap-12 lg:grid-cols-2">
-      <div>
-        <Badge class=" mb-4">Za maturante</Badge>
-        <h1 class="text-4xl leading-tight font-extrabold sm:text-5xl">
-          <span class="text-primary">MatMat</span> — priprema za maturu koja stvarno
-          radi
-        </h1>
-        <p class="text-muted-foreground mt-6 max-w-prose text-lg">
-          Brže učiš, pamtiš bolje i rješavaš zadatke s razumijevanjem. MatMat
-          kombinira <strong>spaced repetition</strong> i
-          <strong>detaljna objašnjenja</strong>
-          da tvoju pripremu učini pametnijom i efikasnijom.
-        </p> -->
-
+  <!-- Hero sekcija -->
   <section class="container mx-auto px-6 pb-16 lg:px-8">
     <div class="grid items-center gap-12 lg:grid-cols-2">
       <div>
-        <Badge class=" mb-4">Za maturante</Badge>
+        <Badge class="mb-4">Za maturante</Badge>
         <h1 class="text-4xl leading-tight font-extrabold sm:text-5xl">
           <span class="text-primary">MatMat</span> — priprema za maturu koja stvarno
           radi
@@ -186,9 +172,9 @@
           >.
         </p>
 
-        <!-- Dodajemo ovaj naglašeni tekst -->
+        <!-- Naglašeni tekst -->
         <div
-          class="bg-primary/10 border-primary mt-6 rounded-r-lg border-l-4 p-4"
+          class="border-primary bg-primary/10 mt-6 rounded-r-lg border-l-4 p-4"
         >
           <p class="text-foreground font-medium">
             "Ne razmišljaj što učiti - samo se prijavi i rješavaj zadatke koje
@@ -227,10 +213,10 @@
   </section>
 
   {#if !userData.user}
+    <!-- Prijava sekcija - plava pozadina -->
     <section class="bg-primary text-primary-foreground py-16">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="grid items-center gap-12 lg:grid-cols-2">
-          <!-- Lijeva strana: tekst -->
           <div>
             <h2 class="mb-4 text-3xl font-extrabold sm:text-4xl">
               Samo se prijavi i odmah počni s učenjem
@@ -243,9 +229,8 @@
             </p>
           </div>
 
-          <!-- Desna strana: gumb sa strelicom -->
+          <!-- Gumb sa strelicom -->
           <div class="flex items-center justify-center lg:justify-end">
-            <!-- Strelica tik uz gumb -->
             <div class="mr-8 lg:block">
               <div class="animate-bounce">
                 <svg
@@ -276,6 +261,7 @@
       </div>
     </section>
 
+    <!-- Sekcija s motivacijskim tekstom -->
     <section class="bg-primary/5 py-12">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
@@ -293,6 +279,7 @@
     </section>
   {/if}
 
+  <!-- Značajke sekcija -->
   <section class="bg-card text-card-foreground border-t py-12">
     <div class="container mx-auto px-6 lg:px-8">
       <h2 class="text-center text-3xl font-bold sm:text-4xl">
@@ -307,7 +294,7 @@
       <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {#each features as feature}
           <Card
-            class="bg-card text-card-foreground border-border hover:border-primary/20 group transition-all duration-300 hover:shadow-lg"
+            class="border-border bg-card text-card-foreground group hover:border-primary/20 transition-all duration-300 hover:shadow-lg"
           >
             <CardContent class="p-6">
               <div class="mb-4 flex items-center justify-between">
@@ -335,6 +322,7 @@
     </div>
   </section>
 
+  <!-- Proces učenja sekcija -->
   <section class="bg-background py-16">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="mx-auto mb-12 max-w-3xl text-center">
@@ -346,12 +334,10 @@
         </p>
       </div>
 
-      <div
-        class="mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-      >
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {#each processSteps as step (step.number)}
           <div
-            class="process-step bg-card border-border hover:border-primary/20 fade-in-hidden rounded-xl border p-6 transition-all duration-300 hover:shadow-md"
+            class="process-step fade-in-hidden border-border bg-card hover:border-primary/20 rounded-xl border p-6 transition-all duration-300 hover:shadow-md"
             class:fade-in-visible={visibleSteps.includes(step.number)}
             data-step={step.number}
           >
@@ -400,6 +386,7 @@
     </div>
   </section>
 
+  <!-- 100% znanja sekcija -->
   <section class="bg-primary/5 py-16">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="grid items-center gap-12 lg:grid-cols-2">
@@ -463,56 +450,62 @@
     </div>
   </section>
 
-  <section class="bg-card mx-auto px-6 py-12">
-    <div class="grid items-center gap-8 lg:grid-cols-2">
-      <div class="flex justify-center">
-        <img
-          class="m-auto max-h-75 w-auto rounded-2xl object-contain"
-          src="/images/ilustration3.jpg"
-          alt="ilustration"
-        />
-      </div>
+  <!-- Zašto funkcionira sekcija -->
+  <section class="bg-card text-card-foreground py-12">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid items-center gap-8 lg:grid-cols-2">
+        <div class="flex justify-center">
+          <img
+            class="m-auto max-h-75 w-auto rounded-2xl object-contain"
+            src="/images/ilustration3.jpg"
+            alt="ilustration"
+          />
+        </div>
 
-      <div>
-        <h2 class="text-3xl font-bold sm:text-4xl">Zašto to funkcionira</h2>
-        <p class="text-muted-foreground mt-4">
-          MatMat kombinira dvije provjerene ideje: <strong
-            >retrieval practice</strong
-          >
-          (aktivno prisjećanje) i <strong>spaced repetition</strong> (raspršeno ponavljanje).
-        </p>
-        <p class="text-muted-foreground mt-4">
-          <strong>Spaced repetition maximizira tvoje znanje:</strong> Umjesto da
-          gubiš vrijeme na nepotrebna ponavljanja, sustav te vodi kroz gradivo točno
-          onda kada ti je potrebno - što rezultira boljim rezultatima s manje vremena
-          uloženog.
-        </p>
-        <p class="text-muted-foreground mt-4">
-          <strong>Pratimo tvoj napredak:</strong> Svaki zadatak koji rješavaš doprinosi
-          tvojoj ukupnoj pripremljenosti. Kada vidiš 100%, znaš da si spreman.
-        </p>
-        <ul class="text-muted-foreground mt-6 space-y-3 text-sm">
-          <li class="flex items-start gap-2">
-            <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
-            <span>Postigni bolje rezultate nego s tradicionalnim učenjem</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
-            <span>Vidi opipljiv napredak svaki dan</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
-            <span>Nema nagađanja - znaš točno gdje stojiš</span>
-          </li>
-        </ul>
+        <div>
+          <h2 class="text-3xl font-bold sm:text-4xl">Zašto to funkcionira</h2>
+          <p class="text-muted-foreground mt-4">
+            MatMat kombinira dvije provjerene ideje: <strong
+              >retrieval practice</strong
+            >
+            (aktivno prisjećanje) i <strong>spaced repetition</strong> (raspršeno
+            ponavljanje).
+          </p>
+          <p class="text-muted-foreground mt-4">
+            <strong>Spaced repetition maximizira tvoje znanje:</strong> Umjesto da
+            gubiš vrijeme na nepotrebna ponavljanja, sustav te vodi kroz gradivo
+            točno onda kada ti je potrebno - što rezultira boljim rezultatima s manje
+            vremena uloženog.
+          </p>
+          <p class="text-muted-foreground mt-4">
+            <strong>Pratimo tvoj napredak:</strong> Svaki zadatak koji rješavaš doprinosi
+            tvojoj ukupnoj pripremljenosti. Kada vidiš 100%, znaš da si spreman.
+          </p>
+          <ul class="text-muted-foreground mt-6 space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+              <span>Postigni bolje rezultate nego s tradicionalnim učenjem</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+              <span>Vidi opipljiv napredak svaki dan</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <Check class="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+              <span>Nema nagađanja - znaš točno gdje stojiš</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- FAQ i footer sekcija -->
   <section class="container mx-auto px-6 py-12 lg:px-8">
     <h2 class="text-3xl font-bold sm:text-4xl">Često postavljana pitanja</h2>
     <div class="mt-4 grid gap-4">
-      <Card class="bg-card text-card-foreground border-border">
+      <Card class="border-border bg-card text-card-foreground">
         <CardContent>
           <h4 class="font-medium">Je li MatMat samo flashcard app?</h4>
           <p class="text-muted-foreground mt-2 text-sm">
@@ -522,7 +515,7 @@
         </CardContent>
       </Card>
 
-      <Card class="bg-card text-card-foreground border-border">
+      <Card class="border-border bg-card text-card-foreground">
         <CardContent>
           <h4 class="font-medium">
             Kako aplikacija zna kada sam spreman za ponavljanje?
@@ -534,7 +527,7 @@
         </CardContent>
       </Card>
 
-      <Card class="bg-card text-card-foreground border-border">
+      <Card class="border-border bg-card text-card-foreground">
         <CardContent>
           <h4 class="font-medium">
             Zašto trebam odabrati težinu zadatka nakon rješavanja?

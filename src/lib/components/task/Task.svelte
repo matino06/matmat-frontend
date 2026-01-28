@@ -116,8 +116,13 @@
               />
             {/if}
           {/each}
+          {#if task.solution}
+            <div class="prose prose-sm sm:prose md:prose-lg lg:prose-xl">
+              <p>{task.solution}</p>
+            </div>
+          {/if}
           <h4
-            class="mt-2 text-sm font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
+            class="text-m mt-2 font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
           >
             Odredi težinu zadatka
           </h4>
