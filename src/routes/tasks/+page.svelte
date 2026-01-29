@@ -5,11 +5,15 @@
   import { apiClient } from "$lib/api/apiClient";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
+  import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
 
   let task = $state(null);
   let noMoreTasks = $state(false);
+  let isLoading = $state(false);
 
   async function fetchNewTask() {
+    isLoading = true;
+
     task = null;
     const response = await apiClient("/task/get-new", { method: "GET" });
 
@@ -17,11 +21,14 @@
     if (textResponse == "No more tasks for today!") {
       noMoreTasks = true;
       task = null;
+      isLoading = false;
       return;
     }
 
     task = JSON.parse(textResponse);
     task.explanationSteps.sort((a, b) => a.stepNumber - b.stepNumber);
+
+    isLoading = false;
   }
 
   $effect(() => {
@@ -45,6 +52,13 @@
       <ChatWindow {task} />
     {/key}
   </div>
+{/if}
+
+{#if isLoading}
+  <LoadingOverlay
+    title="Učitavanje zadatka"
+    message="Pripremamo tvoj sljedeći matematički izazov"
+  />
 {/if}
 
 {#if noMoreTasks}

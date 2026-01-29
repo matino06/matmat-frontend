@@ -110,22 +110,4 @@
       </Card>
     </div>
   </section>
-
-  <section
-    class="container mx-auto px-6 pb-20 lg:px-8"
-    in:fade={{ duration: 600 }}
-  >
-    <footer class="text-muted-foreground mt-3 border-t pt-8 text-sm">
-      <p>© {new Date().getFullYear()} MatMat — Uči pametnije, ne duže.</p>
-      <p>
-        Kontakt:{" "}
-        <a
-          href="mailto:info.matmat.online@gmail.com"
-          class="hover:text-foreground underline"
-        >
-          info.matmat.online@gmail.com
-        </a>
-      </p>
-    </footer>
-  </section>
 </main>

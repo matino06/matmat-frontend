@@ -9,6 +9,7 @@
   import { page } from "$app/state";
   import AuthRequiredMessage from "$lib/components/authRequiredMessage/AuthRequiredMessage.svelte";
   import { afterNavigate } from "$app/navigation";
+  import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
 
   afterNavigate(() => {
     if (typeof window !== "undefined" && window.gtag) {
@@ -60,17 +61,10 @@
 
 <!-- Loading Overlay -->
 {#if userData.loading}
-  <div
-    transition:fade
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-  >
-    <div class="flex flex-col items-center gap-4">
-      <div
-        class="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent"
-      ></div>
-      <p class="text-sm text-white">Učitavanje...</p>
-    </div>
-  </div>
+  <LoadingOverlay
+    title="Učitavanje MatMat-a"
+    message="Pripremamo tvoje personalizirano iskustvo učenja"
+  />
 {/if}
 
 <ErrorAlert />
@@ -84,3 +78,21 @@
   </div>
 {/if}
 {@render children?.()}
+
+<footer class="mt-12 border-t py-6">
+  <div class="text-muted-foreground container mx-auto px-4 text-center text-sm">
+    <p>
+      MatMat © {new Date().getFullYear()} — Besplatna priprema za državnu maturu
+      iz matematike
+    </p>
+    <p class="mt-2">
+      Pitanja?{" "}
+      <a
+        href="mailto:info.matmat.online@gmail.com"
+        class="text-primary underline hover:no-underline"
+      >
+        info.matmat.online@gmail.com
+      </a>
+    </p>
+  </div>
+</footer>
