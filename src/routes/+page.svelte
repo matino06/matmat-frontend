@@ -86,7 +86,8 @@
     {
       number: 3,
       title: "Upitaš AI asistenta",
-      description: "Ako i dalje imaš problemi, naš AI asistent će ti pomoći.",
+      description:
+        "Ako i dalje imaš problemi, naš MatMat AI asistent će ti pomoći.",
       image: "/images/task_ai_dark.jpg",
       icon: "robot",
     },
@@ -213,7 +214,6 @@
     </div>
   </section>
 
-  <!-- Na homepage, iza hero sekcije -->
   <section class="bg-gradient-to-r from-blue-50 to-indigo-50 py-16">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="grid items-center gap-12 lg:grid-cols-2">
@@ -598,12 +598,12 @@
             </p>
 
             <div
-              class="bg-muted mt-auto flex h-40 items-center justify-center overflow-hidden rounded-lg"
+              class="bg-muted group mt-auto flex h-40 items-center justify-center overflow-hidden rounded-lg"
             >
               <img
                 src={step.image}
                 alt={step.title}
-                class="process-image h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                class="process-image h-full w-full object-cover"
               />
             </div>
           </div>
@@ -913,6 +913,11 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+  }
+
+  .process-step:hover .process-image {
+    transform: scale(1.1);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .fade-in-hidden {
