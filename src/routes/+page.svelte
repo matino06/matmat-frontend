@@ -516,7 +516,7 @@
             <div class="text-primary text-xl font-bold">250+</div>
           </div>
           <h3 class="mb-2 text-xl font-bold text-gray-700">
-            Maturanti već se prijavilo
+            Maturanata već se prijavilo
           </h3>
           <p class="text-gray-600">Pridruži se rastućoj zajednici</p>
         </div>
