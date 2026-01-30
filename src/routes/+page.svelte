@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { userData, handleLogIn } from "$lib/store/user.svelte";
+  import { goto } from "$app/navigation";
 
   import { Button } from "$lib/components/ui/button/index.js";
   import {
@@ -86,7 +87,7 @@
     {
       number: 3,
       title: "Upitaš AI asistenta",
-      description: "Ako i dalje imaš problema, naš AI asistent će ti pomoći.",
+      description: "Ako i dalje imaš problemi, naš AI asistent će ti pomoći.",
       image: "/images/task_ai_dark.jpg",
       icon: "robot",
     },
@@ -119,7 +120,6 @@
   let visibleSteps = [];
 
   onMount(() => {
-    // Intersection Observer za fade-in animacije
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -128,7 +128,7 @@
             if (!visibleSteps.includes(stepNumber)) {
               setTimeout(() => {
                 visibleSteps = [...visibleSteps, stepNumber];
-              }, stepNumber * 100); // svaka kartica kasni 150ms više
+              }, stepNumber * 100);
             }
           }
         });
@@ -136,12 +136,10 @@
       { threshold: 0.1 },
     );
 
-    // Observaj sve procesne kartice
     document.querySelectorAll(".process-step").forEach((el) => {
       observer.observe(el);
     });
 
-    // Fallback za slike
     document.querySelectorAll(".process-image").forEach((img) => {
       img.onerror = function () {
         this.src =
@@ -151,12 +149,17 @@
       };
     });
   });
+
+  // Function to navigate to tasks page
+  function goToTasks() {
+    goto("/tasks");
+  }
 </script>
 
 <main
   class="bg-background text-foreground min-h-screen transition-colors duration-300"
 >
-  <!-- Hero sekcija -->
+  <!-- Hero section -->
   <section class="container mx-auto px-6 pb-16 lg:px-8">
     <div class="grid items-center gap-12 lg:grid-cols-2">
       <div>
@@ -172,7 +175,6 @@
           >.
         </p>
 
-        <!-- Naglašeni tekst -->
         <div
           class="border-primary bg-primary/10 mt-6 rounded-r-lg border-l-4 p-4"
         >
@@ -213,7 +215,7 @@
   </section>
 
   {#if !userData.user}
-    <!-- Prijava sekcija - plava pozadina -->
+    <!-- SignUp section (only for logged out users) -->
     <section class="bg-primary text-primary-foreground py-16">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="grid items-center gap-12 lg:grid-cols-2">
@@ -229,7 +231,6 @@
             </p>
           </div>
 
-          <!-- Gumb sa strelicom -->
           <div class="flex items-center justify-center lg:justify-end">
             <div class="mr-8 lg:block">
               <div class="animate-bounce">
@@ -261,7 +262,7 @@
       </div>
     </section>
 
-    <!-- Sekcija s motivacijskim tekstom -->
+    <!-- Motivation section (only for logged out users) -->
     <section class="bg-primary/5 py-12">
       <div class="container mx-auto px-6 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
@@ -277,9 +278,57 @@
         </div>
       </div>
     </section>
+  {:else}
+    <!-- Start Solving section (only for logged in users) -->
+    <section class="from-primary/20 to-primary/5 bg-gradient-to-r py-16">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <h2 class="mb-4 text-3xl font-extrabold sm:text-4xl">
+              Počni rješavati zadatke!
+            </h2>
+            <p class="text-lg sm:text-xl">
+              Dobrodošli natrag! Tvoj personalizirani plan učenja te čeka.
+              Nastavi svoje učenje i napreduj prema 100% znanja.
+            </p>
+            <div class="mt-8">
+              <Button
+                onclick={goToTasks}
+                size="xl"
+                class="bg-primary hover:bg-primary/90 text-primary-foreground relative rounded-lg px-12 py-7 text-lg font-bold shadow-lg transition-all duration-150 ease-in-out hover:shadow-xl"
+              >
+                <svg
+                  class="mr-3 h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+                POČNI RJEŠAVATI
+              </Button>
+            </div>
+          </div>
+
+          <div class="flex justify-center">
+            <img
+              class="w-full max-w-md rounded-2xl object-contain shadow-lg"
+              src="/images/ilustration2.jpg"
+              alt="Rješavanje zadataka"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
   {/if}
 
-  <!-- Značajke sekcija -->
+  <!-- Features section -->
   <section class="bg-card text-card-foreground border-t py-12">
     <div class="container mx-auto px-6 lg:px-8">
       <h2 class="text-center text-3xl font-bold sm:text-4xl">
@@ -322,7 +371,7 @@
     </div>
   </section>
 
-  <!-- Proces učenja sekcija -->
+  <!-- Learning process section -->
   <section class="bg-background py-16">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="mx-auto mb-12 max-w-3xl text-center">
@@ -386,7 +435,7 @@
     </div>
   </section>
 
-  <!-- 100% znanja sekcija -->
+  <!-- 100% knowledge section -->
   <section class="bg-primary/5 py-16">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="grid items-center gap-12 lg:grid-cols-2">
@@ -450,7 +499,7 @@
     </div>
   </section>
 
-  <!-- Zašto funkcionira sekcija -->
+  <!-- Why it works section -->
   <section class="bg-card text-card-foreground py-12">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="grid items-center gap-8 lg:grid-cols-2">
@@ -501,7 +550,7 @@
     </div>
   </section>
 
-  <!-- FAQ i footer sekcija -->
+  <!-- FAQ and footer section -->
   <section class="container mx-auto px-6 py-12 lg:px-8">
     <h2 class="text-3xl font-bold sm:text-4xl">Često postavljana pitanja</h2>
     <div class="mt-4 grid gap-4">

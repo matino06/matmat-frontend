@@ -85,13 +85,13 @@
       </div>
 
       <h1 class="mb-4 text-3xl font-bold text-gray-800 md:text-4xl">
-        <span class="block text-green-600">Čestitamo!</span>
-        Danas si završio sve zadatke
+        <span class="block text-green-600">Čestitam!</span>
+        Danas si završio/la sve zadatke
       </h1>
 
       <p class="mb-8 text-lg leading-relaxed text-gray-600">
-        Odlično si obavio posao! Sada je vrijeme za odmor -
-        <span class="font-semibold text-green-700">zaslužio si ga</span>.
+        Odličan posao! Sada je vrijeme za odmor -
+        <span class="font-semibold text-green-700">potpuno zasluženo</span>.
         <br />
         <span class="mt-2 block text-sm text-gray-500">
           Svaki korak te vodi bliže savršenom znanju
@@ -143,7 +143,7 @@
       </div>
 
       <button
-        on:click={() => location.reload()}
+        onclick={() => location.reload()}
         class="transform rounded-full bg-gradient-to-r from-green-500 to-green-600 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-green-600 hover:to-green-700 hover:shadow-xl"
       >
         <div class="flex items-center justify-center">
