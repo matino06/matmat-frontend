@@ -79,7 +79,7 @@
 {/if}
 {@render children?.()}
 
-<footer class="mt-12 border-t py-6">
+<footer class="mt border-t py-6">
   <div class="text-muted-foreground container mx-auto px-4 text-center text-sm">
     <p>
       MatMat © {new Date().getFullYear()} — Besplatna priprema za državnu maturu

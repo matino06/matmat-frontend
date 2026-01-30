@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import { userData, handleLogIn } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
-
   import { Button } from "$lib/components/ui/button/index.js";
   import {
     Card,
@@ -214,6 +213,110 @@
     </div>
   </section>
 
+  <!-- Na homepage, iza hero sekcije -->
+  <section class="bg-gradient-to-r from-blue-50 to-indigo-50 py-16">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div>
+          <Badge class="mb-4 border-none bg-blue-100 text-blue-800"
+            >U medijima</Badge
+          >
+          <h2 class="mb-4 text-3xl font-bold text-gray-800">
+            Pročitajte našu priču na Srednja.hr
+          </h2>
+          <p class="mb-6 text-lg text-gray-600">
+            "U srednjoj nije imao fiziku, ali ju je 'rasturio' na maturi i
+            upisao FER: Sad aplikacijom pomaže maturantima"
+          </p>
+          <div class="space-y-3">
+            <p class="text-gray-500">
+              <strong>Ključni uvidi iz članka:</strong>
+            </p>
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start gap-2">
+                <svg
+                  class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span
+                  >Personalizirano učenje temeljeno na spaced repetition</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <svg
+                  class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span>AI asistent dostupan 24/7</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg
+                  class="mt-0.5 h-4 w-4 flex-shrink-0 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <span>Potpuno besplatno za sve maturante</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 flex gap-4">
+            <Button
+              as="a"
+              href="https://www.srednja.hr/matura/u-srednjoj-nije-imao-fiziku-ali-ju-je-rasturio-na-maturi-i-upisao-fer-sad-aplikacijom-pomaze-maturantima/"
+              class="bg-blue-600 hover:bg-blue-700"
+            >
+              Pročitaj članak
+            </Button>
+            <Button class="text-black" as="a" href="/about" variant="outline"
+              >O nama</Button
+            >
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="relative">
+            <img
+              src="/images/srednja-hr-feature.png"
+              alt="Srednja.hr članak o MatMatu"
+              class="rounded-2xl shadow-2xl"
+            />
+            <div
+              class="absolute -right-4 -bottom-4 rounded-lg bg-white p-3 shadow-lg"
+            >
+              <p class="text-sm font-semibold text-gray-800">Srednja.hr</p>
+              <p class="text-xs text-gray-500">24. siječnja 2026.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   {#if !userData.user}
     <!-- SignUp section (only for logged out users) -->
     <section class="bg-primary text-primary-foreground py-16">
@@ -224,10 +327,11 @@
               Samo se prijavi i odmah počni s učenjem
             </h2>
             <p class="text-primary-foreground/90 text-lg sm:text-xl">
-              MatMat je jednostavan, učinkovit i <strong
-                class="text-secondary font-[900]">besplatan</strong
-              > način da ostvariš rezultat na maturi i upišeš željeni fakultet. Nema
-              registracije – samo klik i kreni!
+              MatMat mijenja način na koji se maturanti pripremaju za maturu. Ne
+              radi se samo o učenju – radi se o <strong
+                class="text-secondary font-[900]"
+                >pametnijem, učinkovitijem i bezbolnijem</strong
+              > putu do 100% znanja.
             </p>
           </div>
 
@@ -367,6 +471,79 @@
             </CardContent>
           </Card>
         {/each}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-secondary py-16">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="mb-12 text-center">
+        <h2 class="mb-4 text-3xl font-bold text-gray-800">
+          MatMat mijenja način pripreme za maturu
+        </h2>
+        <p class="mx-auto max-w-2xl text-lg text-gray-600">
+          Pokretač revolucije u učenju maturanta
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div class="text-center">
+          <div
+            class="bg-primary/10 mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full"
+          >
+            <svg
+              class="text-primary h-8 w-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="mb-2 text-xl font-bold text-gray-700">5x učinkovitije</h3>
+          <p class="text-gray-600">Ne uči duže, uči pametnije</p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="bg-primary/10 mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full"
+          >
+            <div class="text-primary text-xl font-bold">250+</div>
+          </div>
+          <h3 class="mb-2 text-xl font-bold text-gray-700">
+            Maturanti već se prijavilo
+          </h3>
+          <p class="text-gray-600">Pridruži se rastućoj zajednici</p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="bg-primary/10 mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full"
+          >
+            <svg
+              class="text-primary h-8 w-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="mb-2 text-xl font-bold text-gray-700">
+            Znanstveno dokazano
+          </h3>
+          <p class="text-gray-600">Temeljeno na psihologiji učenja</p>
+        </div>
       </div>
     </div>
   </section>
@@ -549,6 +726,142 @@
       </div>
     </div>
   </section>
+
+  {#if !userData.user}
+    <section class="from-primary/5 bg-gradient-to-br to-blue-50 py-16">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <Badge class="bg-primary/10 text-primary mb-4 border-none"
+              >Budućnost učenja</Badge
+            >
+            <h2 class="mb-4 text-3xl font-bold text-gray-800">
+              Želiš biti dio promjene?
+            </h2>
+            <p class="mb-6 text-lg text-gray-600">
+              MatMat nije samo aplikacija za učenje. To je <strong
+                >revolucija u pripremi za maturu</strong
+              > koja mijenja način na koji generacije maturanata uče.
+            </p>
+
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <svg
+                  class="mt-1 h-5 w-5 flex-shrink-0 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="font-medium text-gray-800">
+                    Prvi korak ka modernoj edukaciji
+                  </p>
+                  <p class="text-sm text-gray-600">
+                    Budi dio nečeg novog od samog početka
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <svg
+                  class="mt-1 h-5 w-5 flex-shrink-0 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="font-medium text-gray-800">
+                    250+ maturanata već je odabralo MatMat
+                  </p>
+                  <p class="text-sm text-gray-600">
+                    Pridruži se rastućoj zajednici
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <svg
+                  class="mt-1 h-5 w-5 flex-shrink-0 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                <div>
+                  <p class="font-medium text-gray-800">
+                    Oblikuj budućnost pripreme za maturu
+                  </p>
+                  <p class="text-sm text-gray-600">
+                    Tvoj feedback pomaže nam da budemo još bolji
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <Button
+                onclick={handleLogIn}
+                class="bg-primary hover:bg-primary/90 px-8 py-4 text-white"
+              >
+                <svg
+                  class="mr-2 h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                  ></path>
+                </svg>
+                Pridruži se revoluciji
+              </Button>
+            </div>
+          </div>
+
+          <div class="flex justify-center">
+            <div class="relative">
+              <img
+                src="/images/ilustration2.jpg"
+                alt="Budućnost učenja"
+                class="rounded-2xl shadow-xl"
+              />
+              <div
+                class="absolute -right-4 -bottom-4 rounded-lg bg-white p-4 shadow-lg"
+              >
+                <p class="text-sm font-semibold text-gray-800">
+                  Revolucija u učenju
+                </p>
+                <p class="text-xs text-gray-500">Budi dio promjene</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {/if}
 
   <!-- FAQ and footer section -->
   <section class="container mx-auto px-6 py-12 lg:px-8">
