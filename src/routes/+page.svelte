@@ -478,10 +478,10 @@
   <section class="bg-secondary py-16">
     <div class="container mx-auto px-6 lg:px-8">
       <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-gray-800">
+        <h2 class="text-foreground mb-4 text-3xl font-bold">
           MatMat mijenja način pripreme za maturu
         </h2>
-        <p class="mx-auto max-w-2xl text-lg text-gray-600">
+        <p class="text-muted-foreground mx-auto max-w-2xl text-lg">
           Pokretač revolucije u učenju maturanta
         </p>
       </div>
@@ -505,8 +505,10 @@
               ></path>
             </svg>
           </div>
-          <h3 class="mb-2 text-xl font-bold text-gray-700">5x učinkovitije</h3>
-          <p class="text-gray-600">Ne uči duže, uči pametnije</p>
+          <h3 class="text-muted-foreground-700 mb-2 text-xl font-bold">
+            5x učinkovitije
+          </h3>
+          <p class="text-muted-foreground">Ne uči duže, uči pametnije</p>
         </div>
 
         <div class="text-center">
@@ -515,10 +517,10 @@
           >
             <div class="text-primary text-xl font-bold">250+</div>
           </div>
-          <h3 class="mb-2 text-xl font-bold text-gray-700">
+          <h3 class="text-muted-foreground-700 mb-2 text-xl font-bold">
             Maturanata već se prijavilo
           </h3>
-          <p class="text-gray-600">Pridruži se rastućoj zajednici</p>
+          <p class="text-muted-foreground">Pridruži se rastućoj zajednici</p>
         </div>
 
         <div class="text-center">
@@ -539,10 +541,10 @@
               ></path>
             </svg>
           </div>
-          <h3 class="mb-2 text-xl font-bold text-gray-700">
+          <h3 class="text-muted-foreground-700 mb-2 text-xl font-bold">
             Znanstveno dokazano
           </h3>
-          <p class="text-gray-600">Temeljeno na psihologiji učenja</p>
+          <p class="text-muted-foreground">Temeljeno na psihologiji učenja</p>
         </div>
       </div>
     </div>
