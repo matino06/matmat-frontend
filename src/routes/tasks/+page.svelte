@@ -9,6 +9,7 @@
   import ProgressIncreaseAnimation from "$lib/components/progressIncreaseAnimation/ProgressIncreaseAnimation.svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
+  import { tick } from "svelte";
 
   let task = $state(null);
   let noMoreTasks = $state(false);
@@ -32,6 +33,9 @@
     if (initialProgress !== null && progress > initialProgress) {
       animationInitialProgress = initialProgress;
       animationNewProgress = progress;
+
+      showProgressAnimation = false;
+      await tick();
       showProgressAnimation = true;
     }
 
