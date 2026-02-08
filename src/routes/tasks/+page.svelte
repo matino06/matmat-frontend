@@ -6,13 +6,42 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
+  import ProgressIncreaseAnimation from "$lib/components/progressIncreaseAnimation/ProgressIncreaseAnimation.svelte";
+  import { fetchObjectivesWithStatus } from "$lib/api/objectives";
+  import { calculateExamProgress } from "$lib/utils/progress";
 
   let task = $state(null);
   let noMoreTasks = $state(false);
   let isLoading = $state(false);
 
+  let showProgressAnimation = $state(false);
+
+  async function fetchCurrentProgress() {
+    const objectives = await fetchObjectivesWithStatus();
+
+    return calculateExamProgress(objectives);
+  }
+
+  let animationInitialProgress = $state(0);
+  let animationNewProgress = $state(0);
+  let initialProgress = $state(null);
+
+  async function shouldAnimateProgress() {
+    const progress = await fetchCurrentProgress();
+
+    if (initialProgress !== null && progress > initialProgress) {
+      animationInitialProgress = initialProgress;
+      animationNewProgress = progress;
+      showProgressAnimation = true;
+    }
+
+    initialProgress = progress;
+  }
+
   async function fetchNewTask() {
     isLoading = true;
+
+    await shouldAnimateProgress();
 
     task = null;
     const response = await apiClient("/task/get-new", { method: "GET" });
@@ -41,6 +70,13 @@
     return () => unsubscribe();
   });
 </script>
+
+<ProgressIncreaseAnimation
+  show={showProgressAnimation}
+  initialProgress={animationInitialProgress}
+  newProgress={animationNewProgress}
+  onClose={() => (showProgressAnimation = false)}
+/>
 
 {#if task}
   <div

@@ -1,6 +1,5 @@
 <script>
   import { Separator } from "$lib/components/ui/separator/index.js";
-  import { apiClient } from "$lib/api/apiClient";
   import ProgressList from "$lib/components/progressList/ProgressList.svelte";
   import { userData } from "$lib/store/user.svelte";
   import { Skeleton } from "$lib/components/ui/skeleton/index.js";
@@ -8,47 +7,43 @@
   import ExamReadinessRing from "$lib/components/examReadinessRing/ExamReadinessRing.svelte";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
   import { onMount } from "svelte";
+  import { fetchObjectivesWithStatus } from "$lib/api/objectives";
 
   let objectives = $state([]);
+  let loading = $state(true);
 
   let width = $state(0);
   let size = $state("");
 
   const updateWidth = () => {
     width = window.innerWidth;
-    if (width >= 1024) {
-      size = "size-110";
-    } else if (width >= 768) {
-      size = "size-90";
-    } else if (width >= 640) {
-      size = "size-60";
-    } else {
-      size = "size-70";
-    }
+
+    if (width >= 1024) size = "size-110";
+    else if (width >= 768) size = "size-90";
+    else if (width >= 640) size = "size-60";
+    else size = "size-70";
   };
+
+  async function loadObjectives() {
+    if (!userData.user) return;
+
+    loading = true;
+    objectives = await fetchObjectivesWithStatus();
+    loading = false;
+  }
 
   onMount(() => {
     updateWidth();
     window.addEventListener("resize", updateWidth);
+    loadObjectives();
 
     return () => window.removeEventListener("resize", updateWidth);
   });
 
   $effect(() => {
-    if (!userData.user) return;
-
-    const fetchObjectives = async () => {
-      const response = await apiClient(
-        "/learning-objective/get-objectives-with-status",
-        { method: "GET" },
-      );
-
-      objectives = await response.json();
-    };
-
-    setTimeout(() => {
-      fetchObjectives();
-    }, 500);
+    if (userData.user) {
+      loadObjectives();
+    }
   });
 </script>
 
