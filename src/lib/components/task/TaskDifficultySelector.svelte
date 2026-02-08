@@ -7,6 +7,16 @@
   let q = $state(null);
   let isSubmitting = $state(false);
 
+  let clickAudio = new Audio("/audio/radio-button-change-sound.wav");
+  clickAudio.volume = 0.01;
+  clickAudio.preload = "auto";
+
+  function playSuccessSound() {
+    const audio = new Audio("/audio/submit-sound.wav");
+    audio.volume = 0.3;
+    audio.play().catch(() => {});
+  }
+
   const difficultyLevels = [
     {
       label: "Ni nakon pročitanog rješenja mi nije jasno",
@@ -58,12 +68,38 @@
     isSubmitting = true;
 
     try {
+      playSuccessSound();
       await handleTaskSubmit(q);
       q = null;
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       isSubmitting = false;
     }
   }
+
+  let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function playClickSoundWithVolume(vol = 0.05) {
+    const audio = audioCtx.createBufferSource();
+    fetch("/audio/radio-button-change-sound.wav")
+      .then((res) => res.arrayBuffer())
+      .then((data) => audioCtx.decodeAudioData(data))
+      .then((buffer) => {
+        audio.buffer = buffer;
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = vol;
+        audio.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        audio.start();
+      });
+  }
+
+  $effect(() => {
+    if (q !== null) {
+      playClickSoundWithVolume();
+    }
+  });
 </script>
 
 <div class="w-full">
@@ -143,7 +179,6 @@
     </Tooltip.Provider>
   </div>
 
-  <!-- Gumb ispod radio buttona -->
   <div class="mt-2 flex justify-center">
     <Button
       onclick={submit}
@@ -154,12 +189,10 @@
     </Button>
   </div>
 
-  <!-- Legenda s objašnjenjem -->
   <div class="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-3">
     <div
       class="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center"
     >
-      <!-- Lijeva kategorija -->
       <div class="flex-1">
         <div class="mb-1 flex items-center gap-2">
           <div
@@ -180,7 +213,6 @@
         </ul>
       </div>
 
-      <!-- Desna kategorija -->
       <div class="flex-1">
         <div class="mb-1 flex items-center gap-2">
           <div
@@ -198,7 +230,6 @@
       </div>
     </div>
 
-    <!-- Kratki savjet -->
     <div class="mt-3 border-t border-gray-200 pt-3">
       <p class="text-center text-xs text-gray-500">
         Odaberite razinu koja najbolje opisuje vaše iskustvo s rješavanjem
@@ -209,7 +240,6 @@
 </div>
 
 <style>
-  /* Poboljšanja za bolju vidljivost na mobilnim uređajima */
   @media (max-width: 640px) {
     .peer {
       height: 24px;
