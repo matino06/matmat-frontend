@@ -270,20 +270,7 @@
 
 <!-- Floating Chat Button -->
 <div class="floating-chat-button" on:click={toggleChat}>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-    ></path>
-  </svg>
+  <span class="text-xl text-white">AI</span>
 </div>
 
 <!-- Chat Overlay -->
@@ -405,6 +392,20 @@
     justify-content: center;
     z-index: 1000;
     transition: transform 0.3s ease;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .floating-chat-button {
+    animation: float 3s ease-in-out infinite;
   }
 
   .floating-chat-button:hover {
