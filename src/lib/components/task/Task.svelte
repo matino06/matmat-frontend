@@ -27,6 +27,7 @@
       ...newSolvedTask,
       q: value,
       endTime: new Date().toISOString(),
+      device: getDeviceType(),
     };
 
     try {
@@ -43,6 +44,23 @@
     } finally {
       isSubmitting = false;
     }
+  }
+
+  function getDeviceType() {
+    const ua = navigator.userAgent;
+
+    if (/iPad/i.test(ua)) return "ipad";
+    if (/iPhone/i.test(ua)) return "iphone";
+    if (/Android/i.test(ua)) {
+      if (/Mobile/i.test(ua)) return "android-phone";
+      return "android-tablet";
+    }
+
+    if (/Mac/i.test(ua)) return "mac";
+    if (/Windows/i.test(ua)) return "windows";
+    if (/Linux/i.test(ua)) return "linux";
+
+    return "desktop";
   }
 
   // Load MathJax
