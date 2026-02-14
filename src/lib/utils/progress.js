@@ -1,14 +1,24 @@
 import { groupByKey } from "$lib/utils/grouping";
 
-export const pointsDistributionBySubfield = {
-    Brojevi: 10,
-    "Algebra i funkcije": 50,
-    "Oblik i prostor": 15,
-    Mjerenje: 20,
-    "Podatci, statistika i vjerojatnost": 5,
+export const pointsDistributionByCourse = {
+    1: {
+        Brojevi: 10,
+        "Algebra i funkcije": 50,
+        "Oblik i prostor": 15,
+        Mjerenje: 20,
+        "Podatci, statistika i vjerojatnost": 5,
+    },
+    2: {
+        Brojevi: 20,
+        "Algebra i funkcije": 40,
+        "Oblik i prostor": 15,
+        Mjerenje: 15,
+        "Podatci, statistika i vjerojatnost": 10,
+    },
 };
 
-export function calculateExamProgress(objectives) {
+
+export function calculateExamProgress(objectives, courseId) {
     const grouped = groupByKey(
         objectives,
         "fieldName",
@@ -25,14 +35,20 @@ export function calculateExamProgress(objectives) {
         },
     );
 
-    return Math.ceil(grouped.reduce((total, group) => {
-        const distribution = pointsDistributionBySubfield[group.fieldName] ?? 0;
+    const distributionMap =
+        pointsDistributionByCourse[courseId]
 
-        return (
-            total +
-            distribution *
-            (group.numberOfMasteredObjectivesInField /
-                group.numOfObjectivesInField)
-        );
-    }, 0));
+    return Math.ceil(
+        grouped.reduce((total, group) => {
+            const distribution = distributionMap[group.fieldName] ?? 0;
+
+            return (
+                total +
+                distribution *
+                (group.numberOfMasteredObjectivesInField /
+                    group.numOfObjectivesInField)
+            );
+        }, 0),
+    );
 }
+

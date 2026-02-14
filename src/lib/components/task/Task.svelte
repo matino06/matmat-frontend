@@ -80,7 +80,7 @@
   });
 </script>
 
-<Card.Root class="mb-8 w-full sm:w-4/5 lg:w-[700px]">
+<Card.Root class="mb-8 w-[calc(100vw-16px)] sm:w-4/5 lg:w-[700px]">
   <Card.Content>
     <div
       id="mathjax-output"

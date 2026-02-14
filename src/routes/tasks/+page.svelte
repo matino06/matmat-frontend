@@ -22,7 +22,7 @@
   async function fetchCurrentProgress() {
     const objectives = await fetchObjectivesWithStatus();
 
-    return calculateExamProgress(objectives);
+    return calculateExamProgress(objectives, currentCourse.courseId);
   }
 
   let animationInitialProgress = $state(0);
