@@ -10,7 +10,9 @@
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
   import { tick } from "svelte";
+  import CourseSelector from "$lib/components/courseSelector/CourseSelector.svelte";
 
+  let currentCourse = $state(null);
   let task = $state(null);
   let noMoreTasks = $state(false);
   let isLoading = $state(false);
@@ -42,6 +44,21 @@
     initialProgress = progress;
   }
 
+  async function fetchCurrentCourse() {
+    const response = await apiClient("/account/current-course", {
+      method: "GET",
+    });
+    if (response.ok) {
+      currentCourse = await response.json();
+    }
+  }
+
+  async function handleCourseChange(event) {
+    currentCourse = event.detail.course;
+    initialProgress = null;
+    await fetchNewTask();
+  }
+
   async function fetchNewTask() {
     isLoading = true;
 
@@ -67,10 +84,10 @@
   $effect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        fetchNewTask();
+        await fetchCurrentCourse();
+        await fetchNewTask();
       }
     });
-
     return () => unsubscribe();
   });
 </script>
@@ -84,12 +101,21 @@
 
 {#if task}
   <div
-    transition:fade
-    class="m-2 flex min-h-[calc(100vh-92px)] items-center justify-center"
+    class="m-2 flex min-h-[calc(100vh-120px)] flex-col items-center justify-center"
   >
+    <div class="mb-2 w-full sm:w-4/5 lg:w-[700px]">
+      <CourseSelector
+        {currentCourse}
+        on:courseChange={handleCourseChange}
+        disabled={isLoading}
+      />
+    </div>
+
     {#key task.id}
-      <Task {task} {fetchNewTask} />
-      <ChatWindow {task} />
+      <div transition:fade>
+        <Task {task} {fetchNewTask} />
+        <ChatWindow {task} />
+      </div>
     {/key}
   </div>
 {/if}
