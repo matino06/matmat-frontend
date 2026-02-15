@@ -104,9 +104,9 @@
 
 {#if task}
   <div
-    class="m-2 flex min-h-[calc(100vh-120px)] flex-col items-center justify-center"
+    class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"
   >
-    <div class="mb-2 w-full sm:w-4/5 lg:w-[700px]">
+    <div class="mb-2 w-full max-w-[700px] mx-auto">
       <CourseSelector
         {currentCourse}
         on:courseChange={handleCourseChange}
@@ -115,7 +115,7 @@
     </div>
 
     {#key task.id}
-      <div transition:fade>
+      <div transition:fade class="w-full max-w-[700px] mx-auto">
         <Task {task} {fetchNewTask} />
         <ChatWindow {task} />
       </div>
