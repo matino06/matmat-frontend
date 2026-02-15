@@ -58,7 +58,7 @@
         <div>
           <div class="font-medium">{task.title}</div>
         </div>
-        <div class="text-right">
+        <div class="text-right ml-2">
           <Badge
             variant="outline"
             class="mb-1 {badge.className}"

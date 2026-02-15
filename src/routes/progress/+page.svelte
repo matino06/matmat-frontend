@@ -221,7 +221,7 @@
 
   const todayBadgeRenderer = (task) => ({
     text: "DANAS",
-    className: "bg-primary",
+    className: "bg-primary text-white",
   });
   const upcomingBadgeRenderer = (task) => {
     const [y, m, d] = task.dueDate.split("-");
