@@ -14,7 +14,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
     "@eslint/js": "^9.18.0",
-    "@internationalized/date": "^3.8.2",
+    "@internationalized/date": "^3.11.0",
     "@lucide/svelte": "^0.544.0",
     "@sveltejs/adapter-auto": "^6.0.0",
     "@sveltejs/adapter-node": "^5.4.0",
@@ -22,7 +22,7 @@
     "@sveltejs/kit": "latest",
     "@sveltejs/vite-plugin-svelte": "^6.1.4",
     "@tailwindcss/vite": "^4.0.0",
-    "bits-ui": "^2.11.0",
+    "bits-ui": "^2.15.5",
     "clsx": "^2.1.1",
     "embla-carousel-svelte": "8",
     "eslint": "^9.18.0",
