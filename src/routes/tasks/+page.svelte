@@ -11,6 +11,7 @@
   import { calculateExamProgress } from "$lib/utils/progress";
   import { tick } from "svelte";
   import CourseSelector from "$lib/components/courseSelector/CourseSelector.svelte";
+  import ProgressAnnouncement from "$lib/components/progressAnnouncement/ProgressAnnouncement.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
@@ -91,6 +92,8 @@
     return () => unsubscribe();
   });
 </script>
+
+<ProgressAnnouncement />
 
 <ProgressIncreaseAnimation
   show={showProgressAnimation}
