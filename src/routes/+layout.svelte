@@ -77,7 +77,10 @@
     <AuthRequiredMessage />
   </div>
 {/if}
-{@render children?.()}
+
+{#if userData.user || page.url.pathname == "/" || page.url.pathname == "/about"}
+  {@render children?.()}
+{/if}
 
 <footer class="mt border-t py-6">
   <div class="text-muted-foreground container mx-auto px-4 text-center text-sm">

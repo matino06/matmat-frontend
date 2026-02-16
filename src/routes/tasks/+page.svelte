@@ -125,9 +125,7 @@
 {:else if noMoreTasks}
     <NoMoreTasks/>
 {:else}
-  <div
-    class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"
-  ></div>
+  <div class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"></div>
 {/if}
 
 {#if isLoading}
