@@ -217,11 +217,14 @@
 
   {#if filteredFields.length > 0}
     <Tabs value={activeFiedName} onValueChange={(v) => (activeFiedName = v)}>
-      <TabsList class="mb-6 flex flex-wrap">
+      <TabsList class="mb-6 h-auto flex flex-wrap gap-2 p-2">
         {#each filteredFields as field (field.fieldName)}
-          <TabsTrigger value={field.fieldName} class="flex items-center gap-2">
-            {field.fieldName}
-            <Badge variant="outline" class="ml-1">
+          <TabsTrigger 
+            value={field.fieldName} 
+            class="flex items-center gap-2 whitespace-nowrap"
+          >
+            <span class="truncate">{field.fieldName}</span>
+            <Badge variant="outline" class="ml-1 shrink-0">
               {field.subfields.reduce(
                 (acc, sf) => acc + sf.objectives.length,
                 0,
