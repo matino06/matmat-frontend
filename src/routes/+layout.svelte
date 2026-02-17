@@ -10,6 +10,7 @@
   import AuthRequiredMessage from "$lib/components/authRequiredMessage/AuthRequiredMessage.svelte";
   import { afterNavigate } from "$app/navigation";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
+  import NotificationPreferencesPopup from "$lib/components/notificationPreferencesPopup/NotificationPreferencesPopup.svelte";
 
   afterNavigate(() => {
     if (typeof window !== "undefined" && window.gtag) {
@@ -72,6 +73,9 @@
 <div class="m-4">
   <Navbar />
 </div>
+
+<NotificationPreferencesPopup user={userData.user} />
+
 {#if page.url.pathname != "/" && page.url.pathname != "/about"}
   <div class="mx-4">
     <AuthRequiredMessage />
