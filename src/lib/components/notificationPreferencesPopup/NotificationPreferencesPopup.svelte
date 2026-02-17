@@ -3,8 +3,9 @@
   import { fade, slide } from "svelte/transition";
   import { Button } from "$lib/components/ui/button";
   import { Checkbox } from "$lib/components/ui/checkbox";
+  import { showNotificationPopup } from "$lib/store/user.svelte";
 
-  let {user} = $props();
+  let { user } = $props();
 
   let showPopup = $state(false);
   let learningReminders = $state(false);
@@ -19,10 +20,11 @@
       if (response.ok) {
         const data = await response.json();
 
+        learningReminders = data.learningRemindersEnabled ? data.learningRemindersEnabled : false;
+        featureAnnouncements = data.featureAnnouncementsEnabled ? data.featureAnnouncementsEnabled : false;
+
         if (data.learningRemindersEnabled === null && data.featureAnnouncementsEnabled === null) {
           showPopup = true;
-          learningReminders = false;
-          featureAnnouncements = false;
         } else {
           showPopup = false;
         }
@@ -50,6 +52,7 @@
       });
       if (response.ok) {
         showPopup = false;
+        showNotificationPopup.value = false;
       } else {
         console.error("Failed to save preferences");
       }
@@ -60,6 +63,22 @@
     }
   }
 
+  // Reagiraj na promjenu storea (ručno otvaranje)
+  $effect(() => {
+    if (showNotificationPopup.value) {
+      // Kad se store postavi na true, otvori popup
+      if (user) {
+        // Dohvati trenutne postavke prije otvaranja
+        fetchPreferences().then(() => {
+          showPopup = true;
+        });
+      }
+    } else {
+      showPopup = false;
+    }
+  });
+
+  // Automatsko otvaranje pri prvom login (kad su postavke null) već je pokriveno u fetchPreferences
   $effect(() => {
     if (user) {
       fetchPreferences();
@@ -90,7 +109,10 @@
       </div>
 
       <div class="flex justify-end gap-2">
-        <Button variant="outline" onclick={() => showPopup = false}>Preskoči</Button>
+        <Button variant="outline" onclick={() => {
+          showPopup = false;
+          showNotificationPopup.value = false;
+        }}>Preskoči</Button>
         <Button onclick={submitPreferences} disabled={isSubmitting}>
           {isSubmitting ? "Spremanje..." : "Spremi"}
         </Button>

@@ -15,6 +15,8 @@ export const userData = $state({
 
 export const turnstileData = $state({ isLoaded: false });
 
+export const showNotificationPopup = $state({value: false});
+
 onAuthStateChanged(auth, (u) => {
     userData.user = u;
     userData.loading = false;
