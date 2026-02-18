@@ -1,6 +1,6 @@
 <script>
   import TaskList from "$lib/components/taskList/TaskList.svelte";
-  import TipCard from "$lib/components/tipCard/TipCard.svelte";
+  import TipCard from "$lib/components/tips/TipCard.svelte";
   import { Separator } from "$lib/components/ui/separator/index.js";
   import { Skeleton } from "$lib/components/ui/skeleton/index.js";
   import { fade } from "svelte/transition";

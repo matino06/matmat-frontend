@@ -8,12 +8,10 @@
   export let intervalMs = 9000;
 
   const tips = [
-    "Bolje je 7×3 zadatka nego 2×15 zadataka – kraće i češće učenje daje bolje rezultate.",
+    "Bolje je svaki dan po 3 zadatka nego 2 dana u tjednu 15 zadataka – kraće i češće učenje daje bolje rezultate.",
     "Greške su signal, ne neuspjeh – algoritam ih koristi da te nauči bolje.",
-    "Jedan dan pauze je OK, dva su već navika – vrati se danas.",
-    "Ako ti se danas ne da puno – riješi barem jedan zadatak.",
-    "Ako danas ponavljaš isto gradivo – to znači da ga učvršćuješ, ne da stojiš.",
-    "Ako ti je zadatak bio težak, to je dobro – upravo takvi zadaci najviše grade znanje.",
+    "Jedan dan pauze je OK, dva su već navika – vrati se svaki dan.",
+    "Ako ti se ne da puno – riješi barem jedan zadatak.",
   ];
 
   let currentIndex = 0;

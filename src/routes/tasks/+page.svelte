@@ -13,6 +13,7 @@
   import CourseSelector from "$lib/components/courseSelector/CourseSelector.svelte";
   import ProgressAnnouncement from "$lib/components/progressAnnouncement/ProgressAnnouncement.svelte";
   import NoMoreTasks from "$lib/components/noMoreTasks/NoMoreTasks.svelte";
+  import TaskTip from "$lib/components/tips/TaskTip.svelte";
   
   let currentCourse = $state(null);
   let task = $state(null);
@@ -102,6 +103,8 @@
   newProgress={animationNewProgress}
   onClose={() => (showProgressAnimation = false)}
 />
+
+<TaskTip/>
 
 {#if task}
   <div
