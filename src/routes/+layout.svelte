@@ -70,36 +70,43 @@
 
 <ErrorAlert />
 
-<div class="m-4">
-  <Navbar />
+<div class="min-h-screen flex flex-col">
+  <!-- Header / Navbar / Main content -->
+  <div class="flex-1">
+    <div class="m-4">
+      <Navbar />
+    </div>
+
+    <NotificationPreferencesPopup user={userData.user} />
+
+    {#if page.url.pathname != "/" && page.url.pathname != "/about"}
+      <div class="mx-4">
+        <AuthRequiredMessage />
+      </div>
+    {/if}
+
+    {#if userData.user || page.url.pathname == "/" || page.url.pathname == "/about"}
+      {@render children?.()}
+    {/if}
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt border-t py-6">
+    <div class="text-muted-foreground container mx-auto px-4 text-center text-sm">
+      <p>
+        MatMat © {new Date().getFullYear()} — Besplatna priprema za državnu maturu
+        iz matematike
+      </p>
+      <p class="mt-2">
+        Pitanja?{" "}
+        <a
+          href="mailto:info.matmat.online@gmail.com"
+          class="text-primary underline hover:no-underline"
+        >
+          info.matmat.online@gmail.com
+        </a>
+      </p>
+    </div>
+  </footer>
 </div>
 
-<NotificationPreferencesPopup user={userData.user} />
-
-{#if page.url.pathname != "/" && page.url.pathname != "/about"}
-  <div class="mx-4">
-    <AuthRequiredMessage />
-  </div>
-{/if}
-
-{#if userData.user || page.url.pathname == "/" || page.url.pathname == "/about"}
-  {@render children?.()}
-{/if}
-
-<footer class="mt border-t py-6">
-  <div class="text-muted-foreground container mx-auto px-4 text-center text-sm">
-    <p>
-      MatMat © {new Date().getFullYear()} — Besplatna priprema za državnu maturu
-      iz matematike
-    </p>
-    <p class="mt-2">
-      Pitanja?{" "}
-      <a
-        href="mailto:info.matmat.online@gmail.com"
-        class="text-primary underline hover:no-underline"
-      >
-        info.matmat.online@gmail.com
-      </a>
-    </p>
-  </div>
-</footer>

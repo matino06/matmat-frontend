@@ -72,55 +72,6 @@
   // HARDCODIRANI PODACI – bez poziva prema backendu
   // ============================================================
 
-  // Objektivi (isti format kao prije)
-  const hardcodedObjectives = [
-    {
-      objectiveId: 1,
-      objectiveName: "Linearne funkcije",
-      subfieldName: "Funkcije",
-      fieldName: "Algebra",
-      isMastered: true,
-      learning: false,
-      weak: false,
-    },
-    {
-      objectiveId: 2,
-      objectiveName: "Kvadratne jednadžbe",
-      subfieldName: "Jednadžbe",
-      fieldName: "Algebra",
-      isMastered: false,
-      learning: true,
-      weak: false,
-    },
-    {
-      objectiveId: 3,
-      objectiveName: "Trigonometrijske funkcije",
-      subfieldName: "Trigonometrija",
-      fieldName: "Geometrija",
-      isMastered: false,
-      learning: false,
-      weak: true,
-    },
-    {
-      objectiveId: 4,
-      objectiveName: "Poučak o sinusima",
-      subfieldName: "Trigonometrija",
-      fieldName: "Geometrija",
-      isMastered: false,
-      learning: true,
-      weak: false,
-    },
-    {
-      objectiveId: 5,
-      objectiveName: "Logaritamske jednadžbe",
-      subfieldName: "Funkcije",
-      fieldName: "Algebra",
-      isMastered: false,
-      learning: false,
-      weak: false,
-    },
-  ];
-
   const fields = [
     {
       name: "Brojevi",

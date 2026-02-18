@@ -20,6 +20,7 @@
     Search,
     ShieldAlert,
     ArrowLeft,
+    BookOpen,
   } from "@lucide/svelte/icons";
   import { userData } from "$lib/store/user.svelte";
 
@@ -66,7 +67,6 @@
     }));
   }
 
-
   let fields = $state([]);
   let activeFiedName = $state();
 
@@ -86,48 +86,34 @@
 
   function getObjectiveStatus(objective) {    
     if (objective.isMastered) return "mastered";
-
     if (objective.unlocked) return "learning";
-
     return "not_started";
   }
 
   function getStatusIcon(status) {
     switch (status) {
-      case "mastered":
-        return CircleCheck;
-      case "learning":
-        return LockOpen;
-      case "weak":
-        return ShieldAlert;
-      default:
-        return Lock;
+      case "mastered": return CircleCheck;
+      case "learning": return LockOpen;
+      case "weak": return ShieldAlert;
+      default: return Lock;
     }
   }
 
   function getStatusColor(status) {
     switch (status) {
-      case "mastered":
-        return "text-green-500";
-      case "learning":
-        return "text-blue-500";
-      case "weak":
-        return "text-orange-500";
-      default:
-        return "text-primary";
+      case "mastered": return "text-emerald-500";
+      case "learning": return "text-sky-500";
+      case "weak": return "text-amber-500";
+      default: return "text-red-400";
     }
   }
 
   function getStatusBgClass(status) {
     switch (status) {
-      case "mastered":
-        return "bg-green-500/10";
-      case "learning":
-        return "bg-blue-500/10";
-      case "weak":
-        return "bg-orange-500/10";
-      default:
-        return "bg-primary/15";
+      case "mastered": return "mastered";
+      case "learning": return "learning";
+      case "weak": return "weak";
+      default: return "locked";
     }
   }
 
@@ -169,101 +155,118 @@
   function goBack() {
     goto("/progress");
   }
+
+  function getMasteryStats(field) {
+    const all = field.subfields.flatMap(sf => sf.objectives);
+    const mastered = all.filter(o => getObjectiveStatus(o) === "mastered").length;
+    return { total: all.length, mastered };
+  }
 </script>
 
-<div class="container mx-auto max-w-7xl space-y-6 p-4">
-  <div
-    class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-  >
-    <div class="flex items-center gap-3">
-      <Button variant="ghost" size="icon" onclick={goBack} class="mr-1">
-        <ArrowLeft class="h-5 w-5" />
+<div class="container mx-auto max-w-7xl p-4 space-y-5">
+
+  <!-- Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex items-center gap-2">
+      <Button variant="ghost" size="icon" onclick={goBack} class="shrink-0">
+        <ArrowLeft class="h-4 w-4" />
       </Button>
-      <h1 class="text-2xl font-bold">Cjeline i objektivi</h1>
+      <div>
+        <h1 class="text-xl font-bold leading-tight">Cjeline i objektivi</h1>
+        <p class="text-muted-foreground text-xs mt-0.5">Pregled tvojih nastavnih cjelina</p>
+      </div>
     </div>
-    <div class="relative w-full sm:w-64">
-      <Search
-        class="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
-      />
+
+    <div class="relative w-full sm:w-60">
+      <Search class="text-muted-foreground absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 pointer-events-none" />
       <Input
         type="text"
         placeholder="Pretraži objektive..."
-        class="pl-9"
+        class="pl-9 h-9 text-sm"
         bind:value={searchQuery}
       />
     </div>
   </div>
 
-  <!-- Status Legend -->
-  {#if filteredFields.length > 0}
-    <div
-      class="bg-card flex flex-wrap items-center gap-4 rounded-lg border p-3 text-sm"
-    >
-      <span class="text-muted-foreground mr-2 font-medium">Status:</span>
-      <div class="flex items-center gap-2">
-        <CircleCheck class="h-5 w-5 text-green-500" />
-        <span>Savladano</span>
+  {#if loading}
+    <!-- Skeleton loader -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse">
+      {#each Array(6) as _}
+        <div class="rounded-xl border bg-muted/30 h-48"></div>
+      {/each}
+    </div>
+
+  {:else if filteredFields.length > 0}
+
+    <!-- Legend -->
+    <div class="flex flex-wrap items-center gap-5 text-xs text-muted-foreground">
+      <div class="flex items-center gap-1.5">
+        <span class="legend-dot bg-emerald-500"></span>
+        Savladano
       </div>
-      <div class="flex items-center gap-2">
-        <LockOpen class="h-5 w-5 text-blue-500" />
-        <span>U učenju</span>
+      <div class="flex items-center gap-1.5">
+        <span class="legend-dot bg-sky-500"></span>
+        U učenju
       </div>
-      <div class="flex items-center gap-2">
-        <Lock class="text-primary h-5 w-5" />
-        <span>Zaključano</span>
+      <div class="flex items-center gap-1.5">
+        <span class="legend-dot bg-red-300"></span>
+        Zaključano
       </div>
     </div>
-  {/if}
 
-  {#if filteredFields.length > 0}
+    <!-- Tabs -->
     <Tabs value={activeFiedName} onValueChange={(v) => (activeFiedName = v)}>
-      <TabsList class="mb-6 h-auto flex flex-wrap gap-2 p-2">
+      <TabsList class="h-auto flex flex-wrap gap-1.5 p-1 mb-5 bg-muted/50 rounded-xl">
         {#each filteredFields as field (field.fieldName)}
-          <TabsTrigger 
-            value={field.fieldName} 
-            class="flex items-center gap-2 whitespace-nowrap"
+          {@const stats = getMasteryStats(field)}
+          <TabsTrigger
+            value={field.fieldName}
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all data-[state=active]:shadow-sm"
           >
-            <span class="truncate">{field.fieldName}</span>
-            <Badge variant="outline" class="ml-1 shrink-0">
-              {field.subfields.reduce(
-                (acc, sf) => acc + sf.objectives.length,
-                0,
-              )}
-            </Badge>
+            <span class="truncate max-w-[120px]">{field.fieldName}</span>
+            <span class="text-xs opacity-60 font-normal shrink-0">{stats.mastered}/{stats.total}</span>
           </TabsTrigger>
         {/each}
       </TabsList>
 
       {#each filteredFields as field (field.fieldName)}
-        <TabsContent value={field.fieldName} class="mt-0">
-          <div
-            class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          >
+        {@const stats = getMasteryStats(field)}
+        <TabsContent value={field.fieldName} class="mt-0 field-tab-content">
+
+          <!-- Field progress bar -->
+          <div class="mb-5 flex items-center gap-3">
+            <div class="progress-pill flex-1">
+              <div
+                class="progress-fill"
+                style="width: {stats.total > 0 ? (stats.mastered / stats.total) * 100 : 0}%"
+              ></div>
+            </div>
+            <span class="text-xs text-muted-foreground font-medium shrink-0">
+              {stats.mastered} / {stats.total} savladano
+            </span>
+          </div>
+
+          <!-- Subfields grid -->
+          <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {#each field.subfields as subfield (subfield.subfieldName)}
-              <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                  <h3 class="font-semibold">{subfield.subfieldName}</h3>
-                  <Badge variant="outline">
-                    {subfield.objectives.length}
-                  </Badge>
+              <div class="rounded-xl border bg-card/50 p-4 space-y-2">
+                <div class="subfield-header">
+                  <span class="subfield-name">{subfield.subfieldName}</span>
+                  <span class="subfield-count">{subfield.objectives.length}</span>
                 </div>
+
                 <div class="space-y-2">
                   {#each subfield.objectives as obj (obj.objectiveName)}
                     {@const status = getObjectiveStatus(obj)}
                     {@const Icon = getStatusIcon(status)}
                     {@const colorClass = getStatusColor(status)}
-                    {@const bgClass = getStatusBgClass(status)}
-                    <div
-                      class="group relative flex items-start gap-3 rounded-lg border p-3 transition-all hover:shadow-sm {bgClass} min-h-[5rem]"
-                    >
-                      <Icon class={`h-5 w-5 shrink-0 ${colorClass}`} />
-                      <div class="min-w-0 flex-1">
-                        <p
-                          class="text-sm leading-tight font-medium break-words"
-                        >
-                          {obj.objectiveName}
-                        </p>
+                    <div class="obj-card {getStatusBgClass(status)}">
+                      <div class="icon-wrap {getStatusBgClass(status)}">
+                        <Icon class="h-3.5 w-3.5 {colorClass}" />
                       </div>
+                      <p class="text-sm leading-snug font-medium break-words min-w-0 flex-1 pt-0.5">
+                        {obj.objectiveName}
+                      </p>
                     </div>
                   {/each}
                 </div>
@@ -273,9 +276,134 @@
         </TabsContent>
       {/each}
     </Tabs>
+
   {:else}
-    <div class="text-muted-foreground py-12 text-center">
-      Nema rezultata za tvoj upit.
+    <div class="empty-state">
+      <BookOpen class="h-10 w-10 opacity-30" />
+      <p class="text-sm">Nema rezultata za tvoj upit.</p>
+      {#if searchQuery}
+        <Button variant="ghost" size="sm" onclick={() => searchQuery = ""}>
+          Očisti pretragu
+        </Button>
+      {/if}
     </div>
   {/if}
+
 </div>
+
+<style>
+  .obj-card {
+    position: relative;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 4.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: default;
+    border: 1px solid transparent;
+  }
+
+  .obj-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .obj-card.mastered {
+    background: linear-gradient(135deg, rgba(16,185,129,0.07) 0%, rgba(16,185,129,0.03) 100%);
+    border-color: rgba(16,185,129,0.2);
+  }
+
+  .obj-card.learning {
+    background: linear-gradient(135deg, rgba(14,165,233,0.07) 0%, rgba(14,165,233,0.03) 100%);
+    border-color: rgba(14,165,233,0.2);
+  }
+
+  .obj-card.weak {
+    background: linear-gradient(135deg, rgba(245,158,11,0.07) 0%, rgba(245,158,11,0.03) 100%);
+    border-color: rgba(245,158,11,0.2);
+  }
+
+  .obj-card.locked {
+    background: rgba(131, 12, 12, 0.077);
+    border-color: rgba(148,163,184,0.15);
+  }
+
+  .icon-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .icon-wrap.mastered { background: rgba(16,185,129,0.12); }
+  .icon-wrap.learning { background: rgba(14,165,233,0.12); }
+  .icon-wrap.weak { background: rgba(245, 159, 11, 0.332); }
+  .icon-wrap.locked { background: rgba(255, 0, 0, 0.116); }
+
+  .progress-pill {
+    height: 5px;
+    border-radius: 99px;
+    background: rgba(148,163,184,0.15);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .subfield-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(148,163,184,0.12);
+  }
+
+  .subfield-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground, #94a3b8);
+  }
+
+  .subfield-count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted-foreground, #94a3b8);
+    background: rgba(148,163,184,0.1);
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .field-tab-content {
+    padding: 4px 0;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 80px 20px;
+    color: var(--muted-foreground, #94a3b8);
+  }
+</style>
