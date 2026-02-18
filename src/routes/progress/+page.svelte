@@ -35,6 +35,7 @@
   import { apiClient } from "$lib/api/apiClient";
   import { Tween } from "svelte/motion";
   import { cubicOut } from 'svelte/easing';
+  import { groupByKey } from "$lib/utils/grouping";
 
   let tasksTodayCount = new Tween(0, {
     duration: 2000,
@@ -42,18 +43,33 @@
   });
 
   let objectives = $state([]);
-  let loading = $state(true);
   let size = $state("size-70");
   let showObjectivesNum = $state(3);
   let todayTasks = $state([]);
   let upcomingTasks = $state([]);
+  let fields = $state([])
 
   async function loadObjectives() {
     if (!userData.user) return;
 
-    loading = true;
     objectives = await fetchObjectivesWithStatus();
-    loading = false;
+
+    fields = groupByKey(
+        objectives,
+        "fieldName",
+        (current) => ({
+            fieldName: current.fieldName,
+            totalObjectives: 1,
+            status: "in-progress",
+            mastered: current.isMastered ? 1 : 0,
+        }),
+        (lastGroup, current) => {
+            lastGroup.totalObjectives += 1;
+            if (current.isMastered) {
+                lastGroup.mastered += 1;
+            }
+        },
+    );
   }
 
   async function fetchProgressSummery() {
@@ -68,46 +84,6 @@
     upcomingTasks = res.futureObjectives;
   }
 
-  // ============================================================
-  // HARDCODIRANI PODACI – bez poziva prema backendu
-  // ============================================================
-
-  const fields = [
-    {
-      name: "Brojevi",
-      totalObjectives: 4,
-      mastered: 4,
-      status: "unlocked",
-      unlockCondition: null,
-    },
-    {
-      name: "Algebra i funkcije",
-      totalObjectives: 22,
-      mastered: 5,
-      status: "in-progress",
-      unlockCondition: null,
-    },
-    {
-      name: "Oblik i prostor",
-      totalObjectives: 8,
-      mastered: 2,
-      status: "in-progress",
-      unlockCondition: "Otključava se kada završiš 80% Algebre",
-    },
-    {
-      name: "Analiza",
-      totalObjectives: 10,
-      mastered: 0,
-      status: "in-progress",
-      unlockCondition: "Otključava se kada podigneš cilj 32 na ocjenu 5",
-    },
-  ];
-
-  const totalObjectives = 57;
-
-  // ============================================================
-  // Responzivnost
-  // ============================================================
   let width = $state(0);
 
   const updateWidth = () => {
@@ -220,91 +196,84 @@
 
       <TipCard />
 
-<div class="relative sm:col-span-2">
-  <Card class="w-full">
-    <CardHeader class="flex flex-row items-center justify-between">
-      <CardTitle class="flex items-center gap-2">
-        <Lock class="text-primary h-5 w-5" />
-        Cjeline i otključavanja
-      </CardTitle>
+      <div class="relative sm:col-span-2">
+        <Card class="w-full">
+          <CardHeader class="flex flex-row items-center justify-between">
+            <CardTitle class="flex items-center gap-2">
+              <Lock class="text-primary h-5 w-5" />
+              Cjeline i otključavanja
+            </CardTitle>
 
-      <a
-        href="/cjeline"
-        class="hover:bg-muted inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition"
-      >
-        Detaljno
-        <ArrowRight class="h-4 w-4" />
-      </a>
-    </CardHeader>
-    <CardContent>
-      <div
-        class="grid grid-cols-1 gap-4 sm:grid-cols-{showObjectivesNum} lg:grid-cols-{showObjectivesNum}"
-      >
-        {#each fields.slice(0, showObjectivesNum) as field}
-          {@const progress = Math.round(
-            (field.mastered / field.totalObjectives) * 100,
-          )}
-          <div
-            class="rounded-lg border p-4 transition-all hover:shadow-md"
-            class:border-green-500={field.status === "unlocked"}
-            class:opacity-70={field.status === "locked"}
-          >
-            <div class="mb-3 flex items-center justify-between">
-              <div
-                class="flex h-8 w-8 items-center justify-center rounded-full {field.status ===
-                'unlocked'
-                  ? 'bg-green-500/10'
-                  : ''} {field.status === 'in-progress'
-                  ? 'bg-primary/10'
-                  : ''} {field.status === 'locked' ? 'bg-muted' : ''}"
-              >
-                {#if field.status === "unlocked"}
-                  <Check class="h-4 w-4 text-green-500" />
-                {:else if field.status === "in-progress"}
-                  <TrendingUp class="text-primary h-4 w-4" />
-                {:else}
-                  <Lock class="text-muted-foreground h-4 w-4" />
-                {/if}
-              </div>
-              {#if field.mastered / field.totalObjectives === 1}
-                <Badge
-                  variant="outline"
-                  class="border-green-200 bg-green-50 text-green-600 dark:bg-green-950/20"
-                >
-                  SAVLADANO
-                </Badge>
-              {:else}
-                <Badge variant="default">U TOKU</Badge>
-              {/if}
-            </div>
-            <h4 class="font-medium">{field.name}</h4>
-            <p class="text-muted-foreground text-sm">
-              {field.mastered}/{field.totalObjectives} ciljeva savladano
-            </p>
-            <div class="mt-3">
-              <div class="bg-muted h-2 w-full overflow-hidden rounded-full">
+            <a
+              href="/progress/units"
+              class="hover:bg-muted inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition"
+            >
+              Detaljno
+              <ArrowRight class="h-4 w-4" />
+            </a>
+          </CardHeader>
+          <CardContent>
+            <div
+              class="grid grid-cols-1 gap-4 sm:grid-cols-{showObjectivesNum} lg:grid-cols-{showObjectivesNum}"
+            >
+              {#each fields.slice(0, showObjectivesNum) as field}
+                {@const progress = Math.round(
+                  (field.mastered / field.totalObjectives) * 100,
+                )}
                 <div
-                  class="bg-primary h-full rounded-full"
-                  style="width: {progress}%;"
-                ></div>
-              </div>
-              <div class="text-muted-foreground mt-1 text-xs">
-                {progress}%
-              </div>
+                  class="rounded-lg border p-4 transition-all hover:shadow-md"
+                  class:border-green-500={field.status === "unlocked"}
+                  class:opacity-70={field.status === "locked"}
+                >
+                  <div class="mb-3 flex items-center justify-between">
+                    <div
+                      class="flex h-8 w-8 items-center justify-center rounded-full {field.status ===
+                      'unlocked'
+                        ? 'bg-green-500/10'
+                        : ''} {field.status === 'in-progress'
+                        ? 'bg-primary/10'
+                        : ''} {field.status === 'locked' ? 'bg-muted' : ''}"
+                    >
+                      {#if field.status === "unlocked"}
+                        <Check class="h-4 w-4 text-green-500" />
+                      {:else if field.status === "in-progress"}
+                        <TrendingUp class="text-primary h-4 w-4" />
+                      {:else}
+                        <Lock class="text-muted-foreground h-4 w-4" />
+                      {/if}
+                    </div>
+                    {#if field.mastered / field.totalObjectives === 1}
+                      <Badge
+                        variant="outline"
+                        class="border-green-200 bg-green-50 text-green-600 dark:bg-green-950/20"
+                      >
+                        SAVLADANO
+                      </Badge>
+                    {:else}
+                      <Badge variant="default">U TOKU</Badge>
+                    {/if}
+                  </div>
+                  <h4 class="font-medium">{field.name}</h4>
+                  <p class="text-muted-foreground text-sm">
+                    {field.mastered}/{field.totalObjectives} ciljeva savladano
+                  </p>
+                  <div class="mt-3">
+                    <div class="bg-muted h-2 w-full overflow-hidden rounded-full">
+                      <div
+                        class="bg-primary h-full rounded-full"
+                        style="width: {progress}%;"
+                      ></div>
+                    </div>
+                    <div class="text-muted-foreground mt-1 text-xs">
+                      {progress}%
+                    </div>
+                  </div>
+                </div>
+              {/each}
             </div>
-          </div>
-        {/each}
+          </CardContent>
+        </Card>
       </div>
-    </CardContent>
-  </Card>
-
-  <!-- Overlay with blur -->
-  <div class="absolute inset-0 flex items-center justify-center rounded-lg bg-white/10 backdrop-blur-xs dark:bg-white/10 z-10">
-    <span class="text-2xl font-bold text-gray-800 dark:text-gray-200 drop-shadow-md">
-      ⏳ Uskoro
-    </span>
-  </div>
-</div>
     </div>
   </div>
 
