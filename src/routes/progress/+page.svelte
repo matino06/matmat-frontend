@@ -118,7 +118,12 @@
     goto("/tasks");
   }
 
-  const referenceDate = new Date(2026, 1, 14);
+  const today = new Date();
+  const referenceDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
 
   function parseDate(dateStr) {
     const parts = dateStr.split(".");
@@ -140,9 +145,9 @@
   }
 
   function getBadgeClass(diffDays) {
-    if (diffDays === 1) return "bg-orange-500 text-white";
+    if (diffDays === 1) return "bg-[#FF9600] text-white";
     if (diffDays === 2) return "bg-yellow-600 text-white";
-    if (diffDays > 2) return "bg-green-500 text-white";
+    if (diffDays > 2) return "bg-[#58CC02] text-white";
     return "";
   }
 
@@ -155,7 +160,7 @@
     const taskDate = new Date(y, m - 1, d);
 
     const diffTime = taskDate - referenceDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) - 1;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     return {
       text: getRelativeDateString(diffDays),
       className: getBadgeClass(diffDays),
@@ -222,8 +227,6 @@
                 )}
                 <div
                   class="rounded-lg border p-4 transition-all hover:shadow-md"
-                  class:border-green-500={field.status === "unlocked"}
-                  class:opacity-70={field.status === "locked"}
                 >
                   <div class="mb-3 flex items-center justify-between">
                     <div
@@ -235,7 +238,7 @@
                         : ''} {field.status === 'locked' ? 'bg-muted' : ''}"
                     >
                       {#if field.status === "unlocked"}
-                        <Check class="h-4 w-4 text-green-500" />
+                        <Check class="h-4 w-4 text-primary" />
                       {:else if field.status === "in-progress"}
                         <TrendingUp class="text-primary h-4 w-4" />
                       {:else}
@@ -245,12 +248,12 @@
                     {#if field.mastered / field.totalObjectives === 1}
                       <Badge
                         variant="outline"
-                        class="border-green-200 bg-green-50 text-green-600 dark:bg-green-950/20"
+                        class="border-primary text-white bg-primary"
                       >
                         SAVLADANO
                       </Badge>
                     {:else}
-                      <Badge variant="default">U TOKU</Badge>
+                      <Badge variant="outline" class="default border-primary text-primary">U TOKU</Badge>
                     {/if}
                   </div>
                   <h4 class="font-medium">{field.name}</h4>

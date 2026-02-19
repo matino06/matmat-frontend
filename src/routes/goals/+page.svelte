@@ -1,553 +1,339 @@
 <script>
+  import { onMount } from "svelte";
+  import { Flame, Trophy, Target, Calendar, TrendingUp, Check, Zap } from "@lucide/svelte/icons";
   import {
     Card,
     CardContent,
     CardHeader,
     CardTitle,
   } from "$lib/components/ui/card/index.js";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { Badge } from "$lib/components/ui/badge/index.js";
-  import { Progress } from "$lib/components/ui/progress/index.js";
-  import { Checkbox } from "$lib/components/ui/checkbox/index.js";
-  import { userData } from "$lib/store/user.svelte";
-  import { onMount } from "svelte";
-  import { apiClient } from "$lib/api/apiClient";
+  import { Tween } from "svelte/motion";
+  import { cubicOut } from "svelte/easing";
 
-  let dailyGoals = $state([]);
-  let weeklyGoals = $state([]);
-  let monthlyGoals = $state([]);
-  let achievements = $state([]);
-  let currentStreak = $state(0);
-  let totalPoints = $state(0);
-  let isLoading = $state(true);
+  // --- HARDKODIRANI PODATCI (zamijeniti s pozivima na backend) ---
+  const dailyGoal = 5;
+  const todayCompleted = 3;
+  const currentStreak = 5;
+  const longestStreak = 8;
+  const totalDaysActive = 47;
 
-  // Dummy podaci za početak
-  const initialGoals = {
-    daily: [
-      {
-        id: 1,
-        title: "Riješi 5 zadataka",
-        target: 5,
-        current: 0,
-        completed: false,
-        points: 10,
-        type: "counter",
-      },
-      {
-        id: 2,
-        title: "Uči 30 minuta",
-        target: 30,
-        current: 0,
-        completed: false,
-        points: 15,
-        type: "timer",
-      },
-      {
-        id: 3,
-        title: "Pogledaj 2 objašnjenja",
-        target: 2,
-        current: 0,
-        completed: false,
-        points: 5,
-        type: "counter",
-      },
-    ],
-    weekly: [
-      {
-        id: 1,
-        title: "Riješi 25 zadataka",
-        target: 25,
-        current: 0,
-        completed: false,
-        points: 50,
-        type: "counter",
-      },
-      {
-        id: 2,
-        title: "Postigni 80% točnosti",
-        target: 80,
-        current: 0,
-        completed: false,
-        points: 30,
-        type: "percentage",
-      },
-      {
-        id: 3,
-        title: "Završi 1 poglavlje",
-        target: 1,
-        current: 0,
-        completed: false,
-        points: 40,
-        type: "counter",
-      },
-    ],
-    monthly: [
-      {
-        id: 1,
-        title: "Dosegni 90% znanja",
-        target: 90,
-        current: 0,
-        completed: false,
-        points: 100,
-        type: "percentage",
-      },
-      {
-        id: 2,
-        title: "Riješi 100 zadataka",
-        target: 100,
-        current: 0,
-        completed: false,
-        points: 80,
-        type: "counter",
-      },
-      {
-        id: 3,
-        title: "Održaj 7-dnevni niz",
-        target: 7,
-        current: 0,
-        completed: false,
-        points: 60,
-        type: "streak",
-      },
-    ],
-  };
-
-  const initialAchievements = [
-    {
-      id: 1,
-      name: "Početnik",
-      description: "Riješi prvi zadatak",
-      earned: true,
-      icon: "🎯",
-      points: 10,
-    },
-    {
-      id: 2,
-      name: "Marathonac",
-      description: "Uči 5 dana zaredom",
-      earned: false,
-      icon: "🏃",
-      points: 25,
-    },
-    {
-      id: 3,
-      name: "Genij",
-      description: "Postigni 95% točnosti",
-      earned: false,
-      icon: "🧠",
-      points: 50,
-    },
-    {
-      id: 4,
-      name: "Brzoplet",
-      description: "Riješi 10 zadataka u 1 dan",
-      earned: false,
-      icon: "⚡",
-      points: 30,
-    },
-    {
-      id: 5,
-      name: "Ustrajni",
-      description: "Završi mjesečni cilj",
-      earned: false,
-      icon: "💪",
-      points: 100,
-    },
-  ];
-
-  async function loadGoals() {
-    if (!userData.user) return;
-
-    try {
-      // U stvarnoj aplikaciji, ovo bi bilo API pozive
-      // const response = await apiClient("/goals/user-goals", { method: "GET" });
-      // const data = await response.json();
-
-      // Za sada koristimo dummy podatke
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulacija loadinga
-
-      dailyGoals = initialGoals.daily.map((goal) => ({ ...goal }));
-      weeklyGoals = initialGoals.weekly.map((goal) => ({ ...goal }));
-      monthlyGoals = initialGoals.monthly.map((goal) => ({ ...goal }));
-      achievements = initialAchievements.map((ach) => ({ ...ach }));
-      currentStreak = 3; // Dummy podatak
-      totalPoints = 45; // Dummy podatak
-    } catch (error) {
-      console.error("Error loading goals:", error);
-    } finally {
-      isLoading = false;
+  function generateCalendarData() {
+    const today = new Date();
+    const days = [];
+    for (let i = 15; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const roll = Math.random();
+      const isStreak = i < 12;
+      const goalMet = isStreak ? true : roll > 0.55;
+      const rand2 = Math.random();
+      const partial = !goalMet && rand2 > 0.4;
+      days.push({
+        date,
+        goalMet,
+        partial,
+        completed: goalMet ? dailyGoal : partial ? Math.floor(Math.random() * (dailyGoal - 1)) + 1 : 0,
+      });
     }
+    return days;
   }
 
-  function updateGoalProgress(goalType, goalId, increment = 1) {
-    const goalsMap = {
-      daily: dailyGoals,
-      weekly: weeklyGoals,
-      monthly: monthlyGoals,
-    };
+  const calendarDays = generateCalendarData();
 
-    const goals = goalsMap[goalType];
-    const goal = goals.find((g) => g.id === goalId);
-
-    if (goal && !goal.completed) {
-      goal.current += increment;
-
-      if (goal.current >= goal.target) {
-        goal.completed = true;
-        goal.current = goal.target;
-        totalPoints += goal.points;
-
-        // Provjeri achievemente
-        checkAchievements();
+  function groupByWeek(days) {
+    const weeks = [];
+    let week = [];
+    const firstDay = days[0].date.getDay();
+    const paddingStart = firstDay === 0 ? 6 : firstDay - 1;
+    for (let p = 0; p < paddingStart; p++) week.push(null);
+    for (const day of days) {
+      week.push(day);
+      const dow = day.date.getDay();
+      if (dow === 0) {
+        weeks.push(week);
+        week = [];
       }
     }
+    if (week.length > 0) weeks.push(week);
+    return weeks;
   }
 
-  function checkAchievements() {
-    // Provjeri maraton achievement
-    const marathonAchievement = achievements.find((a) => a.id === 2);
-    if (!marathonAchievement.earned && currentStreak >= 5) {
-      marathonAchievement.earned = true;
-      totalPoints += marathonAchievement.points;
-    }
+  const weeks = groupByWeek(calendarDays);
 
-    // Provjeri brzoplet achievement
-    const speedAchievement = achievements.find((a) => a.id === 4);
-    const dailyTasks = dailyGoals.find((g) => g.title.includes("5 zadataka"));
-    if (!speedAchievement.earned && dailyTasks && dailyTasks.current >= 10) {
-      speedAchievement.earned = true;
-      totalPoints += speedAchievement.points;
-    }
-  }
+  const monthLabels = (() => {
+    const labels = [];
+    let lastMonth = -1;
+    weeks.forEach((week, wi) => {
+      const firstReal = week.find(d => d !== null);
+      if (firstReal) {
+        const m = firstReal.date.getMonth();
+        if (m !== lastMonth) {
+          labels.push({ weekIndex: wi, label: firstReal.date.toLocaleDateString("hr-HR", { month: "short" }) });
+          lastMonth = m;
+        }
+      }
+    });
+    return labels;
+  })();
 
-  function getProgressPercentage(goal) {
-    return Math.min((goal.current / goal.target) * 100, 100);
-  }
-
-  function formatGoalText(goal) {
-    if (goal.type === "percentage") {
-      return `${goal.current}% / ${goal.target}%`;
-    } else if (goal.type === "timer") {
-      return `${goal.current}min / ${goal.target}min`;
-    } else {
-      return `${goal.current} / ${goal.target}`;
-    }
-  }
+  let tweenStreak = new Tween(0, { duration: 1200, easing: cubicOut });
+  let tweenLongest = new Tween(0, { duration: 1400, easing: cubicOut });
+  let tweenTotal = new Tween(0, { duration: 1600, easing: cubicOut });
+  let tweenProgress = new Tween(0, { duration: 1000, easing: cubicOut });
 
   onMount(() => {
-    loadGoals();
+    tweenStreak.target = currentStreak;
+    tweenLongest.target = longestStreak;
+    tweenTotal.target = totalDaysActive;
+    tweenProgress.target = (todayCompleted / dailyGoal) * 100;
   });
 
-  $effect(() => {
-    if (userData.user && !isLoading) {
-      loadGoals();
-    }
-  });
+  const today = new Date();
+  const weekDayNames = ["Pon", "Uto", "Sri", "Čet", "Pet", "Sub", "Ned"];
+
+  function isToday(date) {
+    return date.toDateString() === today.toDateString();
+  }
+
+  function formatDate(date) {
+    return date.toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
+  }
 </script>
 
-{#if userData.user}
-  <section
-    class="bg-background text-foreground flex min-h-[calc(100vh-92px)] flex-col items-center justify-center px-6"
-  >
-    <h1 class="mb-4 text-4xl font-extrabold sm:text-5xl">Stranica u izradi</h1>
-    <p
-      class="text-muted-foreground mb-8 max-w-md text-center text-lg sm:text-xl"
-    >
-      Ova stranica je trenutno u fazi razvoja.
-    </p>
-    <img
-      src="/images/wip_ilustration.jpg"
-      alt="Work in progress ilustracija"
-      class="w-64 rounded-2xl object-contain sm:w-80"
-    />
-  </section>
-{/if}
+<!-- <div class="container mx-auto max-w-7xl space-y-6 p-4">
 
-<!-- <div class="container mx-auto px-4 py-8">
-  {#if !userData.user}
-    <div class="py-12 text-center">
-      <h2 class="text-muted-foreground mb-4 text-2xl font-bold">
-        Prijavi se da pratiš svoje ciljeve
-      </h2>
-      <p class="text-muted-foreground">
-        Pratite svoj napredak, zaradite nagrade i ostvarite svoje ciljeve
-      </p>
+  <div class="flex items-center gap-3">
+    <div class="bg-primary/10 rounded-full p-3">
+      <Flame class="text-primary h-7 w-7" />
     </div>
-  {:else if isLoading}
-    <div class="flex items-center justify-center py-12">
-      <div
-        class="border-primary h-12 w-12 animate-spin rounded-full border-b-2"
-      ></div>
+    <div>
+      <h1 class="text-2xl font-bold">Moj cilj</h1>
+      <p class="text-muted-foreground text-sm">Prati svoju dosljednost i dnevne ciljeve</p>
     </div>
-  {:else}
-    <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-      <Card>
-        <CardContent class="pt-6">
-          <div class="text-center">
-            <div class="text-primary text-3xl font-bold">{currentStreak}</div>
-            <div class="text-muted-foreground text-sm">Dana redom</div>
-          </div>
-        </CardContent>
-      </Card>
+  </div>
 
-      <Card>
-        <CardContent class="pt-6">
-          <div class="text-center">
-            <div class="text-primary text-3xl font-bold">{totalPoints}</div>
-            <div class="text-muted-foreground text-sm">Bodova</div>
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <Card class="relative overflow-hidden transition-all hover:shadow-md">
+      <CardContent class="p-5">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-muted-foreground text-sm">Trenutni niz</p>
+            <p class="text-primary py-2 text-5xl font-extrabold">{Math.round(tweenStreak.current)}</p>
+            <p class="text-muted-foreground text-xs">dana zaredom 🔥</p>
           </div>
-        </CardContent>
-      </Card>
+          <div class="bg-primary/10 rounded-full p-3">
+            <Flame class="text-primary h-6 w-6" />
+          </div>
+        </div>
+        <div class="mt-4 flex gap-1">
+          {#each Array(Math.min(currentStreak, 14)) as _, i}
+            <div class="bg-primary h-2 flex-1 rounded-full" style="opacity: {0.3 + (i / Math.min(currentStreak, 14)) * 0.7}"></div>
+          {/each}
+        </div>
+      </CardContent>
+    </Card>
 
-      <Card>
-        <CardContent class="pt-6">
-          <div class="text-center">
-            <div class="text-primary text-3xl font-bold">
-              {achievements.filter((a) => a.earned)
-                .length}/{achievements.length}
+    <Card class="relative overflow-hidden transition-all hover:shadow-md">
+      <CardContent class="p-5">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-muted-foreground text-sm">Najduži niz</p>
+            <p class="py-2 text-5xl font-extrabold text-yellow-500">{Math.round(tweenLongest.current)}</p>
+            <p class="text-muted-foreground text-xs">dana zaredom 🏆</p>
+          </div>
+          <div class="rounded-full bg-yellow-500/10 p-3">
+            <Trophy class="h-6 w-6 text-yellow-500" />
+          </div>
+        </div>
+        <div class="mt-4 flex gap-1">
+          {#each Array(Math.min(longestStreak, 14)) as _, i}
+            <div class="h-2 flex-1 rounded-full bg-yellow-500" style="opacity: {0.3 + (i / Math.min(longestStreak, 14)) * 0.7}"></div>
+          {/each}
+        </div>
+      </CardContent>
+    </Card>
+
+    <Card class="relative overflow-hidden transition-all hover:shadow-md">
+      <CardContent class="p-5">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-muted-foreground text-sm">Ukupno aktivnih dana</p>
+            <p class="py-2 text-5xl font-extrabold text-green-500">{Math.round(tweenTotal.current)}</p>
+            <p class="text-muted-foreground text-xs">od početka korištenja ✅</p>
+          </div>
+          <div class="rounded-full bg-green-500/10 p-3">
+            <TrendingUp class="h-6 w-6 text-green-500" />
+          </div>
+        </div>
+        <div class="mt-4 flex gap-1">
+          {#each Array(14) as _, i}
+            <div class="h-2 flex-1 rounded-full bg-green-500" style="opacity: {0.2 + Math.random() * 0.8}"></div>
+          {/each}
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 items-stretch">
+
+    <Card class="transition-all hover:shadow-md flex flex-col">
+      <CardHeader class="pb-3">
+        <CardTitle class="flex items-center gap-2">
+          <Target class="text-primary h-5 w-5" />
+          Dnevni cilj
+        </CardTitle>
+      </CardHeader>
+      <CardContent class="flex flex-col flex-1 justify-between">
+        <div>
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-end gap-3">
+              <span class="text-primary text-5xl font-extrabold">{todayCompleted}</span>
+              <span class="text-muted-foreground mb-1 text-2xl font-medium">/ {dailyGoal}</span>
             </div>
-            <div class="text-muted-foreground text-sm">Postignuća</div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-
-    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <div class="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle class="flex items-center gap-2">
-              <span class="text-primary">📅</span>
-              Dnevni ciljevi
-            </CardTitle>
-          </CardHeader>
-          <CardContent class="space-y-4">
-            {#each dailyGoals as goal (goal.id)}
-              <div
-                class="flex items-center justify-between rounded-lg border p-3"
-              >
-                <div class="flex-1">
-                  <div class="mb-2 flex items-center gap-3">
-                    <Checkbox
-                      checked={goal.completed}
-                      on:change={() => updateGoalProgress("daily", goal.id, 1)}
-                    />
-                    <span
-                      class:line-through={goal.completed}
-                      class:opacity-50={goal.completed}
-                    >
-                      {goal.title}
-                    </span>
-                    <Badge variant="secondary" class="ml-2">
-                      {goal.points} bodova
-                    </Badge>
-                  </div>
-                  <div class="flex items-center gap-3 text-sm">
-                    <Progress
-                      value={getProgressPercentage(goal)}
-                      class="flex-1"
-                    />
-                    <span class="text-muted-foreground min-w-20 text-right">
-                      {formatGoalText(goal)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            {/each}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle class="flex items-center gap-2">
-              <span class="text-primary">📊</span>
-              Tjedni ciljevi
-            </CardTitle>
-          </CardHeader>
-          <CardContent class="space-y-4">
-            {#each weeklyGoals as goal (goal.id)}
-              <div
-                class="flex items-center justify-between rounded-lg border p-3"
-              >
-                <div class="flex-1">
-                  <div class="mb-2 flex items-center gap-3">
-                    <Checkbox
-                      checked={goal.completed}
-                      on:change={() => updateGoalProgress("weekly", goal.id, 1)}
-                    />
-                    <span
-                      class:line-through={goal.completed}
-                      class:opacity-50={goal.completed}
-                    >
-                      {goal.title}
-                    </span>
-                    <Badge variant="secondary" class="ml-2">
-                      {goal.points} bodova
-                    </Badge>
-                  </div>
-                  <div class="flex items-center gap-3 text-sm">
-                    <Progress
-                      value={getProgressPercentage(goal)}
-                      class="flex-1"
-                    />
-                    <span class="text-muted-foreground min-w-20 text-right">
-                      {formatGoalText(goal)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            {/each}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle class="flex items-center gap-2">
-              <span class="text-primary">🎯</span>
-              Mjesečni ciljevi
-            </CardTitle>
-          </CardHeader>
-          <CardContent class="space-y-4">
-            {#each monthlyGoals as goal (goal.id)}
-              <div
-                class="flex items-center justify-between rounded-lg border p-3"
-              >
-                <div class="flex-1">
-                  <div class="mb-2 flex items-center gap-3">
-                    <Checkbox
-                      checked={goal.completed}
-                      on:change={() =>
-                        updateGoalProgress("monthly", goal.id, 1)}
-                    />
-                    <span
-                      class:line-through={goal.completed}
-                      class:opacity-50={goal.completed}
-                    >
-                      {goal.title}
-                    </span>
-                    <Badge variant="secondary" class="ml-2">
-                      {goal.points} bodova
-                    </Badge>
-                  </div>
-                  <div class="flex items-center gap-3 text-sm">
-                    <Progress
-                      value={getProgressPercentage(goal)}
-                      class="flex-1"
-                    />
-                    <span class="text-muted-foreground min-w-20 text-right">
-                      {formatGoalText(goal)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            {/each}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div class="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle class="flex items-center gap-2">
-              <span class="text-primary">🏆</span>
-              Tvoja postignuća
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {#each achievements as achievement (achievement.id)}
-                <div class="flex items-center gap-3 rounded-lg border p-3">
-                  <div class="text-2xl">{achievement.icon}</div>
-                  <div class="flex-1">
-                    <div class="font-medium">{achievement.name}</div>
-                    <div class="text-muted-foreground text-sm">
-                      {achievement.description}
-                    </div>
-                    <div class="text-primary text-xs font-medium">
-                      {achievement.points} bodova
-                    </div>
-                  </div>
-                  {#if achievement.earned}
-                    <Badge variant="default" class="bg-green-500">
-                      Osvojeno!
-                    </Badge>
+            <div class="flex gap-2">
+              {#each Array(dailyGoal) as _, i}
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl border-2 transition-all {i < todayCompleted ? 'bg-primary border-primary text-white' : 'border-border bg-muted text-muted-foreground'}">
+                  {#if i < todayCompleted}
+                    <Check class="h-5 w-5" />
                   {:else}
-                    <Badge variant="outline">Zaključano</Badge>
+                    <Zap class="h-5 w-5" />
                   {/if}
                 </div>
               {/each}
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Brze akcije</CardTitle>
-          </CardHeader>
-          <CardContent class="space-y-3">
-            <Button
-              class="w-full justify-start"
-              variant="outline"
-              on:click={() => updateGoalProgress("daily", 1, 1)}
-            >
-              +1 riješeni zadatak
-            </Button>
-            <Button
-              class="w-full justify-start"
-              variant="outline"
-              on:click={() => updateGoalProgress("daily", 2, 5)}
-            >
-              +5 minuta učenja
-            </Button>
-            <Button
-              class="w-full justify-start"
-              variant="outline"
-              on:click={() => {
-                dailyGoals.forEach((goal) => {
-                  if (!goal.completed) {
-                    goal.current = goal.target;
-                    goal.completed = true;
-                    totalPoints += goal.points;
-                  }
-                });
-                checkAchievements();
-              }}
-            >
-              Završi dnevne ciljeve
-            </Button>
-          </CardContent>
-        </Card>
+          <div class="mt-5">
+            <div class="bg-muted h-3 w-full overflow-hidden rounded-full">
+              <div class="bg-primary h-full rounded-full transition-all duration-700" style="width: {tweenProgress.current}%;"></div>
+            </div>
+            <div class="mt-2 flex justify-between">
+              <span class="text-muted-foreground text-xs">
+                {#if todayCompleted >= dailyGoal}
+                  🎉 Cilj ispunjen! Odlično!
+                {:else}
+                  Još {dailyGoal - todayCompleted} {dailyGoal - todayCompleted === 1 ? "zadatak" : "zadatka"} do cilja
+                {/if}
+              </span>
+              <span class="text-muted-foreground text-xs">{Math.round(tweenProgress.current)}%</span>
+            </div>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>💡 Savjeti za uspjeh</CardTitle>
-          </CardHeader>
-          <CardContent class="space-y-2 text-sm">
-            <div class="flex items-start gap-2">
-              <div class="text-primary mt-0.5">•</div>
-              <div>Postižite dnevne ciljeve za održavanje niza</div>
+        <div class="mt-6 rounded-lg bg-primary/5 border border-primary/20 p-4">
+          <p class="text-sm font-medium text-primary">
+            {#if currentStreak >= 10}
+              🔥 Nevjerojatno! Već {currentStreak} dana zaredom — samo nastavi!
+            {:else if currentStreak >= 5}
+              💪 Odlično! {currentStreak} dana niza — ne prekidaj sada!
+            {:else}
+              ⚡ Svaki dan je nova šansa. Počni graditi svoj niz!
+            {/if}
+          </p>
+          <p class="text-muted-foreground text-xs mt-1">Do rekorda ti nedostaje još {longestStreak - currentStreak} dana</p>
+        </div>
+      </CardContent>
+    </Card>
+
+    <Card class="transition-all hover:shadow-md">
+      <CardHeader class="pb-3">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <CardTitle class="flex items-center gap-2">
+            <Calendar class="text-primary h-5 w-5" />
+            Aktivnost
+          </CardTitle>
+          <div class="flex items-center gap-3 text-xs text-muted-foreground">
+            <span class="flex items-center gap-1">
+              <span class="inline-block h-3 w-3 rounded-sm bg-[#58CC02]"></span>
+              Cilj ispunjen
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="inline-block h-3 w-3 rounded-sm bg-[#FF9600]"></span>
+              Djelomično
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="border-border inline-block h-3 w-3 rounded-sm border bg-primary"></span>
+              Nije rješavano
+            </span>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div class="overflow-x-auto">
+          <div class="min-w-[280px]">
+            <div class="mb-1 flex gap-1">
+              <div class="w-8"></div>
+              {#each weekDayNames as name}
+                <div class="w-4 text-center text-[9px] text-muted-foreground">{name[0]}</div>
+              {/each}
             </div>
-            <div class="flex items-start gap-2">
-              <div class="text-primary mt-0.5">•</div>
-              <div>Tjedni ciljevi donose više bodova</div>
+
+            <div class="relative">
+              <div class="mb-1 flex gap-1">
+                <div class="w-8"></div>
+                {#each weeks as week, wi}
+                  <div class="w-4 text-[9px] text-muted-foreground">
+                    {#each monthLabels as ml}
+                      {#if ml.weekIndex === wi}{ml.label}{/if}
+                    {/each}
+                  </div>
+                {/each}
+              </div>
+
+              <div class="flex gap-1">
+                <div class="flex flex-col gap-1">
+                  {#each weekDayNames as name, di}
+                    <div class="flex h-4 w-8 items-center text-[9px] text-muted-foreground">
+                      {di % 2 === 0 ? name : ""}
+                    </div>
+                  {/each}
+                </div>
+
+                {#each weeks as week}
+                  <div class="flex flex-col gap-1">
+                    {#each Array(7) as _, di}
+                      {@const day = week[di]}
+                      {#if day === null || day === undefined}
+                        <div class="h-4 w-4 rounded-sm"></div>
+                      {:else}
+                        <div
+                          class="h-4 w-4 rounded-sm transition-all hover:scale-125 cursor-pointer {day.goalMet ? 'bg-[#58CC02]' : day.partial ? 'bg-[#FF9600]' : 'bg-primary'} {isToday(day.date) ? 'ring-2 ring-[#58CC02] ring-offset-1' : ''}"
+                          title="{formatDate(day.date)}: {day.completed}/{dailyGoal} zadataka"
+                        ></div>
+                      {/if}
+                    {/each}
+                  </div>
+                {/each}
+              </div>
             </div>
-            <div class="flex items-start gap-2">
-              <div class="text-primary mt-0.5">•</div>
-              <div>Mjesečni ciljevi otključavaju posebne nagrade</div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+
+  <Card class="from-primary/10 via-primary/5 bg-gradient-to-r to-transparent p-6">
+    <div class="flex flex-col items-center text-center md:flex-row md:justify-between md:text-left">
+      <div class="mb-4 md:mb-0">
+        <Trophy class="text-primary mb-2 h-12 w-12" />
+        <h2 class="text-xl font-bold">
+          {#if currentStreak >= 10}
+            FANTASTIČNO! VEĆ {currentStreak} DANA ZAREDOM! 🔥
+          {:else if currentStreak >= 5}
+            ODLIČAN NAPREDAK! NE STAJ SADA! 💪
+          {:else}
+            SVAKI DAN JE KORAK BLIŽE MATURI!
+          {/if}
+        </h2>
+        <p class="text-muted-foreground mt-1">
+          {#if currentStreak >= longestStreak - 3}
+            Samo još {longestStreak - currentStreak} dana do osobnog rekorda!
+          {:else}
+            Tvoj trud se isplati — {totalDaysActive} aktivnih dana govori samo za sebe!
+          {/if}
+        </p>
       </div>
     </div>
-  {/if}
+  </Card>
+
 </div> -->
-
-<style>
-  .line-through {
-    text-decoration: line-through;
-  }
-
-  .opacity-50 {
-    opacity: 0.5;
-  }
-</style>
