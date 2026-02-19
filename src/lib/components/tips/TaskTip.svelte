@@ -28,7 +28,7 @@
     if (stored) {
       try {
         const data = JSON.parse(stored);
-        lastIndex = data.index || -1;
+        lastIndex = typeof data.index === 'number' ? data.index : -1;;
         lastTime = data.time || 0;
       } catch (e) {
         console.warn('Failed to parse tip storage', e);
@@ -39,6 +39,7 @@
     const hoursSinceLast = (now - lastTime) / (1000 * 60 * 60);
     if (lastTime === 0 || hoursSinceLast >= intervalHours) {
       // Determine next tip index
+      console.log(lastIndex)
       const nextIndex = (lastIndex + 1) % tips.length;
 
       // Save new index and time
@@ -67,7 +68,7 @@
 
     <div
       transition:fly={{ y: 20, duration: 300 }}
-      class="bg-background border border-border shadow-lg rounded-lg p-4 relative max-w-sm z-10"
+      class="bg-background border border-border shadow-xl rounded-2xl p-8 relative w-[90%] max-w-xl z-10"
     >
       <button
         on:click={close}
