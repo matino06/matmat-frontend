@@ -13,6 +13,8 @@
   import { apiClient } from "$lib/api/apiClient";
   import { goto } from "$app/navigation";
 
+  let calendarDays = $state([]);
+
   // --- HARDKODIRANI PODATCI (zamijeniti s pozivima na backend) ---
   const dailyGoal = 5;
   const todayCompleted = 3;
@@ -27,37 +29,45 @@
     );
 
     const res = await response.json();
-    console.log(res);
+    calendarDays = res.calendarDays;
+    console.log(calendarDays);
   }
 
   fetchUserGoal();
 
-  function generateCalendarData() {
-    const today = new Date();
-    const days = [];
-    for (let i = 15; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(today.getDate() - i);
-      const roll = Math.random();
-      const isStreak = i < 12;
-      const goalMet = isStreak ? true : roll > 0.55;
-      const rand2 = Math.random();
-      const partial = !goalMet && rand2 > 0.4;
-      days.push({
-        date,
-        goalMet,
-        partial,
-        completed: goalMet ? dailyGoal : partial ? Math.floor(Math.random() * (dailyGoal - 1)) + 1 : 0,
-      });
+  function buildCalendarDays(rawDays) {
+    if (!rawDays || rawDays.length === 0) return [];
+
+    const dates = rawDays.map(d => new Date(d.date));
+    const minDate = new Date(Math.min(...dates));
+    const maxDate = new Date();
+
+    const dayMap = {};
+    for (const d of rawDays) {
+      dayMap[d.date] = d;
     }
-    return days;
+
+    const allDays = [];
+    const cursor = new Date(minDate);
+    while (cursor <= maxDate) {
+      const key = cursor.toISOString().slice(0, 10);
+      if (dayMap[key]) {
+        allDays.push({ ...dayMap[key], date: new Date(cursor) });
+      } else {
+        allDays.push({ date: new Date(cursor), goalMet: false, partial: false, completed: 0 });
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+
+    return allDays;
   }
 
-  const calendarDays = generateCalendarData();
-
   function groupByWeek(days) {
+    if (days.length < 1) return [];
+
     const weeks = [];
     let week = [];
+    
     const firstDay = days[0].date.getDay();
     const paddingStart = firstDay === 0 ? 6 : firstDay - 1;
     for (let p = 0; p < paddingStart; p++) week.push(null);
@@ -73,7 +83,7 @@
     return weeks;
   }
 
-  const weeks = groupByWeek(calendarDays);
+  let weeks = $derived(groupByWeek(buildCalendarDays(calendarDays)));
 
   const monthLabels = (() => {
     const labels = [];
@@ -177,16 +187,16 @@
         <div class="flex items-start justify-between">
           <div>
             <p class="text-muted-foreground text-sm">Ukupno aktivnih dana</p>
-            <p class="py-2 text-5xl font-extrabold text-green-500">{Math.round(tweenTotal.current)}</p>
+            <p class="py-2 text-5xl font-extrabold text-[#58CC02]">{Math.round(tweenTotal.current)}</p>
             <p class="text-muted-foreground text-xs">od početka korištenja ✅</p>
           </div>
-          <div class="rounded-full bg-green-500/10 p-3">
-            <TrendingUp class="h-6 w-6 text-green-500" />
+          <div class="rounded-full bg-[#58CC02]/10 p-3">
+            <TrendingUp class="h-6 w-6 text-[#58CC02]" />
           </div>
         </div>
         <div class="mt-4 flex gap-1">
           {#each Array(14) as _, i}
-            <div class="h-2 flex-1 rounded-full bg-green-500" style="opacity: {0.2 + Math.random() * 0.8}"></div>
+            <div class="h-2 flex-1 rounded-full bg-[#58CC02]" style="opacity: {0.2 + Math.random() * 0.8}"></div>
           {/each}
         </div>
       </CardContent>
@@ -267,11 +277,11 @@
               Cilj ispunjen
             </span>
             <span class="flex items-center gap-1">
-              <span class="inline-block h-3 w-3 rounded-sm bg-[#FF9600]"></span>
+              <span class="inline-block h-3 w-3 rounded-sm bg-[#5acc0261]"></span>
               Djelomično
             </span>
             <span class="flex items-center gap-1">
-              <span class="border-border inline-block h-3 w-3 rounded-sm border bg-primary"></span>
+              <span class="border-border inline-block h-3 w-3 rounded-sm border bg-muted"></span>
               Nije rješavano
             </span>
           </div>
@@ -280,13 +290,6 @@
       <CardContent>
         <div class="overflow-x-auto">
           <div class="min-w-[280px]">
-            <div class="mb-1 flex gap-1">
-              <div class="w-8"></div>
-              {#each weekDayNames as name}
-                <div class="w-4 text-center text-[9px] text-muted-foreground">{name[0]}</div>
-              {/each}
-            </div>
-
             <div class="relative">
               <div class="mb-1 flex gap-1">
                 <div class="w-8"></div>
@@ -316,7 +319,7 @@
                         <div class="h-4 w-4 rounded-sm"></div>
                       {:else}
                         <div
-                          class="h-4 w-4 rounded-sm transition-all hover:scale-125 cursor-pointer {day.goalMet ? 'bg-[#58CC02]' : day.partial ? 'bg-[#FF9600]' : 'bg-primary'} {isToday(day.date) ? 'ring-2 ring-[#58CC02] ring-offset-1' : ''}"
+                          class="h-4 w-4 rounded-sm transition-all hover:scale-125 cursor-pointer {day.goalMet ? 'bg-[#58CC02]' : day.partial ? 'bg-[#5acc0261]' : 'bg-muted'} {isToday(day.date) ? 'ring-2 ring-[#58CC02] ring-offset-1' : ''}"
                           title="{formatDate(day.date)}: {day.completed}/{dailyGoal} zadataka"
                         ></div>
                       {/if}
@@ -356,7 +359,7 @@
       </div>
       <Button onclick={goToTasks} size="lg" class="gap-2">
         <PlayCircle class="h-5 w-5" />
-        ZAPOČNI DANASNJE UČENJE
+        ZAPOČNI DANAŠNJE UČENJE
       </Button>
     </div>
   </Card>
