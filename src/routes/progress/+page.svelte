@@ -263,7 +263,7 @@
                   <div class="mt-3">
                     <div class="bg-muted h-2 w-full overflow-hidden rounded-full">
                       <div
-                        class="bg-primary h-full rounded-full"
+                        class="bg-[#58CC02] h-full rounded-full"
                         style="width: {progress}%;"
                       ></div>
                     </div>

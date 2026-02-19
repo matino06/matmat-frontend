@@ -1,14 +1,17 @@
 <script>
   import { onMount } from "svelte";
-  import { Flame, Trophy, Target, Calendar, TrendingUp, Check, Zap } from "@lucide/svelte/icons";
+  import { Flame, PlayCircle, Trophy, Target, Calendar, TrendingUp, Check, Zap } from "@lucide/svelte/icons";
   import {
     Card,
     CardContent,
     CardHeader,
     CardTitle,
   } from "$lib/components/ui/card/index.js";
+  import { Button } from "$lib/components/ui/button/index.js";
   import { Tween } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
+  import { apiClient } from "$lib/api/apiClient";
+  import { goto } from "$app/navigation";
 
   // --- HARDKODIRANI PODATCI (zamijeniti s pozivima na backend) ---
   const dailyGoal = 5;
@@ -16,6 +19,18 @@
   const currentStreak = 5;
   const longestStreak = 8;
   const totalDaysActive = 47;
+
+  async function fetchUserGoal() {
+    const response = await apiClient(
+        "/user-goal",
+        { method: "GET" }
+    );
+
+    const res = await response.json();
+    console.log(res);
+  }
+
+  fetchUserGoal();
 
   function generateCalendarData() {
     const today = new Date();
@@ -98,9 +113,13 @@
   function formatDate(date) {
     return date.toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
   }
+
+  function goToTasks() {
+    goto("/tasks");
+  }
 </script>
 
-<!-- <div class="container mx-auto max-w-7xl space-y-6 p-4">
+<div class="container mx-auto max-w-7xl space-y-6 p-4">
 
   <div class="flex items-center gap-3">
     <div class="bg-primary/10 rounded-full p-3">
@@ -313,7 +332,9 @@
   </div>
 
   <Card class="from-primary/10 via-primary/5 bg-gradient-to-r to-transparent p-6">
-    <div class="flex flex-col items-center text-center md:flex-row md:justify-between md:text-left">
+    <div
+      class="flex flex-col items-center text-center md:flex-row md:justify-between md:text-left"
+    >
       <div class="mb-4 md:mb-0">
         <Trophy class="text-primary mb-2 h-12 w-12" />
         <h2 class="text-xl font-bold">
@@ -333,7 +354,11 @@
           {/if}
         </p>
       </div>
+      <Button onclick={goToTasks} size="lg" class="gap-2">
+        <PlayCircle class="h-5 w-5" />
+        ZAPOČNI DANASNJE UČENJE
+      </Button>
     </div>
   </Card>
 
-</div> -->
+</div>
