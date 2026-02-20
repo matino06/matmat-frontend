@@ -14,7 +14,8 @@
   import Announcement from "$lib/components/announcement/Announcement.svelte";
   import NoMoreTasks from "$lib/components/noMoreTasks/NoMoreTasks.svelte";
   import TaskTip from "$lib/components/tips/TaskTip.svelte";
-  
+  import { Dumbbell } from "@lucide/svelte/icons";
+
   let currentCourse = $state(null);
   let task = $state(null);
   let noMoreTasks = $state(false);
@@ -95,19 +96,21 @@
   });
 </script>
 
-<Announcement 
-  title={"Novi Progress Page! 🎉"}  
-  description={"Prati svoj napredak na novoj, preglednijoj stranici."} 
-  destination={"/progress"} 
-  cta={"Pogledaj progress →"}
-/>
+<div class="fixed bottom-4 left-4 right-4 z-50 flex flex-col gap-3 sm:left-4 sm:right-auto sm:w-96">
+  <Announcement 
+    title="Novi Progress Page! 🎉"
+    description="Prati svoj napredak na novoj, preglednijoj stranici."
+    destination="/progress"
+    cta="Pogledaj progress →"
+  />
 
-<Announcement 
-  title={"Novi Goals Page! 🎉"}  
-  description={"Prati svoj dnevne ciljeve i aktvinost na novoj stranici."} 
-  destination={"/goals"} 
-  cta={"Pogledaj ciljeve →"}
-/>
+  <Announcement 
+    title="Novi Goals Page! 🎉"
+    description="Prati svoj dnevne ciljeve i aktivnost na novoj stranici."
+    destination="/goals"
+    cta="Pogledaj ciljeve →"
+  />
+</div>
 
 <ProgressIncreaseAnimation
   show={showProgressAnimation}
@@ -122,7 +125,17 @@
   <div
     class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"
   >
-    <div class="mb-2 w-full max-w-[700px] mx-auto">
+    <!-- Naslov -->
+    <div class="flex w-full max-w-[700px] mx-auto items-center gap-3 mb-3">
+      <div class="bg-primary/10 rounded-full p-3 shrink-0">
+        <Dumbbell class="text-primary h-7 w-7" />
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold">Vježbaj i napreduj</h1>
+        <p class="text-muted-foreground text-sm">Riješi zadatke i postepeno osvajaj gradivo za maturu</p>
+      </div>
+    </div>
+    <div class="w-full max-w-[700px] mx-auto mb-3">
       <CourseSelector
         {currentCourse}
         on:courseChange={handleCourseChange}

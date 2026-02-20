@@ -26,7 +26,7 @@
 {#if show}
   <div
     transition:fly={{ y: 20, duration: 400 }}
-    class="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md rounded-lg bg-gradient-to-r from-primary to-purple-600 p-1 shadow-2xl sm:left-4 sm:right-auto sm:w-96"
+    class="rounded-lg bg-gradient-to-r from-primary to-purple-600 p-1 shadow-2xl"
   >
     <div class="relative flex flex-col rounded-lg bg-white p-4 dark:bg-gray-900">
       <button
