@@ -2,22 +2,24 @@
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
+  let {title, description, destination, cta} = $props();
+
   let show = $state(false);
 
   onMount(() => {
-    const hidden = localStorage.getItem("hideProgressAnnouncement");
+    const hidden = localStorage.getItem(title);
     if (hidden !== "true") {
       show = true;
     }
   });
 
   function handleClose() {
-    localStorage.setItem("hideProgressAnnouncement", "true");
+    localStorage.setItem(title, "true");
     show = false;
   }
 
   function goToProgress() {
-    window.location.href = "/progress";
+    window.location.href = destination;
   }
 </script>
 
@@ -44,8 +46,8 @@
           </svg>
         </div>
         <div>
-          <h3 class="font-bold text-gray-900 dark:text-white">Novi Progress Page! 🎉</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Prati svoj napredak na novoj, preglednijoj stranici.</p>
+          <h3 class="font-bold text-gray-900 dark:text-white">{title}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{description}</p>
         </div>
       </div>
 
@@ -53,7 +55,7 @@
         onclick={goToProgress}
         class="mt-2 w-full rounded-lg bg-gradient-to-r from-primary to-purple-600 px-4 py-2 text-sm font-semibold text-white transition hover:scale-105 hover:shadow-md"
       >
-        Pogledaj progress →
+        {cta}
       </button>
     </div>
   </div>

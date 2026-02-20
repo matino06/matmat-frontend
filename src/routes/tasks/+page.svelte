@@ -11,7 +11,7 @@
   import { calculateExamProgress } from "$lib/utils/progress";
   import { tick } from "svelte";
   import CourseSelector from "$lib/components/courseSelector/CourseSelector.svelte";
-  import ProgressAnnouncement from "$lib/components/progressAnnouncement/ProgressAnnouncement.svelte";
+  import Announcement from "$lib/components/announcement/Announcement.svelte";
   import NoMoreTasks from "$lib/components/noMoreTasks/NoMoreTasks.svelte";
   import TaskTip from "$lib/components/tips/TaskTip.svelte";
   
@@ -95,7 +95,19 @@
   });
 </script>
 
-<ProgressAnnouncement />
+<Announcement 
+  title={"Novi Progress Page! 🎉"}  
+  description={"Prati svoj napredak na novoj, preglednijoj stranici."} 
+  destination={"/progress"} 
+  cta={"Pogledaj progress →"}
+/>
+
+<Announcement 
+  title={"Novi Goals Page! 🎉"}  
+  description={"Prati svoj dnevne ciljeve i aktvinost na novoj stranici."} 
+  destination={"/goals"} 
+  cta={"Pogledaj ciljeve →"}
+/>
 
 <ProgressIncreaseAnimation
   show={showProgressAnimation}
