@@ -14,13 +14,20 @@
   import { goto } from "$app/navigation";
 
   let calendarDays = $state([]);
+  let dailyGoal = $state(0);
+  let totalDaysActive = $state(0);
+  let last14Days = $state([]);
+  let currentStreak = $state(0);
+  let longestStreak = $state(0);
+  let registrationDate = $state(null);
 
-  // --- HARDKODIRANI PODATCI (zamijeniti s pozivima na backend) ---
-  const dailyGoal = 5;
-  const todayCompleted = 3;
-  const currentStreak = 5;
-  const longestStreak = 8;
-  const totalDaysActive = 47;
+  let weeks = $derived(groupByWeek(buildCalendarDays(calendarDays)));
+  let todayCompleted = $derived(
+    weeks?.length
+      ? weeks[weeks.length - 1]?.[weeks[weeks.length - 1].length - 1].completed
+      : 0
+  );
+
 
   async function fetchUserGoal() {
     const response = await apiClient(
@@ -29,11 +36,53 @@
     );
 
     const res = await response.json();
-    calendarDays = res.calendarDays;
-    console.log(calendarDays);
+    if (res.calendarDays.length > 0) {
+      calendarDays = res.calendarDays;
+    } else {
+      calendarDays = [
+        {date: res.registrationDate, goalMet: false, partial: false, completed: 0}
+      ];
+    }
+    
+    dailyGoal = res.dailyGoal;
+    totalDaysActive = calendarDays.filter(day => day.completed > 0).length;
+    registrationDate = res.registrationDate;
+    findCurrentAndLongestStreak();
   }
 
-  fetchUserGoal();
+  onMount(fetchUserGoal);
+
+  function findCurrentAndLongestStreak() {
+    const days = weeks.flat().filter(day => day !== null);
+
+    let longest = 0;
+    let current = 0;
+
+    for (const day of days) {
+      if (day.goalMet) {
+        current++;
+        if (current > longest) longest = current;
+      } else {
+        current = 0;
+      }
+    }
+
+    longestStreak = longest;
+
+    current = 0;
+    let skipToday = true;
+    for (let i = days.length - 1; i >= 0; i--) {
+      if (days[i].goalMet) {
+        current++;
+      } else if (skipToday) {
+        skipToday = false;
+      } else {
+        break;
+      }
+    }
+
+    currentStreak = current;
+  }
 
   function buildCalendarDays(rawDays) {
     if (!rawDays || rawDays.length === 0) return [];
@@ -45,6 +94,17 @@
     const dayMap = {};
     for (const d of rawDays) {
       dayMap[d.date] = d;
+    }
+
+    if (registrationDate) {
+      const regKey = new Date(registrationDate).toISOString().slice(0, 10);
+      if (!dayMap[regKey]) {
+        dayMap[regKey] = { date: new Date(registrationDate), goalMet: false, partial: false, completed: 0 };
+
+        if (new Date(registrationDate) < minDate) {
+          minDate.setTime(new Date(registrationDate).getTime());
+        }
+      }
     }
 
     const allDays = [];
@@ -83,7 +143,6 @@
     return weeks;
   }
 
-  let weeks = $derived(groupByWeek(buildCalendarDays(calendarDays)));
 
   const monthLabels = (() => {
     const labels = [];
@@ -106,12 +165,28 @@
   let tweenTotal = new Tween(0, { duration: 1600, easing: cubicOut });
   let tweenProgress = new Tween(0, { duration: 1000, easing: cubicOut });
 
-  onMount(() => {
+  $effect(() => {
     tweenStreak.target = currentStreak;
     tweenLongest.target = longestStreak;
     tweenTotal.target = totalDaysActive;
-    tweenProgress.target = (todayCompleted / dailyGoal) * 100;
+    tweenProgress.target = dailyGoal ? (todayCompleted / dailyGoal) * 100 : 0;
   });
+
+  $effect(() => {
+    if (last14Days.length > 0) return;
+
+    let flatDays = weeks.flat().filter(day => {
+      return day !== null;
+    });
+
+    if (flatDays.length >= 14) {
+      last14Days = flatDays.slice(-14);
+    } else {
+      for (let i = 0; i < flatDays.length; i++) {
+        last14Days.push(flatDays[i]);
+      }
+    }
+  })
 
   const today = new Date();
   const weekDayNames = ["Pon", "Uto", "Sri", "Čet", "Pet", "Sub", "Ned"];
@@ -147,17 +222,20 @@
         <div class="flex items-start justify-between">
           <div>
             <p class="text-muted-foreground text-sm">Trenutni niz</p>
-            <p class="text-primary py-2 text-5xl font-extrabold">{Math.round(tweenStreak.current)}</p>
+            <p class="text-[#1CB0F6] py-2 text-5xl font-extrabold">{Math.round(tweenStreak.current)}</p>
             <p class="text-muted-foreground text-xs">dana zaredom 🔥</p>
           </div>
-          <div class="bg-primary/10 rounded-full p-3">
-            <Flame class="text-primary h-6 w-6" />
+          <div class="bg-[#1CB0F6]/10 rounded-full p-3">
+            <Flame class="text-[#1CB0F6] h-6 w-6" />
           </div>
         </div>
         <div class="mt-4 flex gap-1">
           {#each Array(Math.min(currentStreak, 14)) as _, i}
-            <div class="bg-primary h-2 flex-1 rounded-full" style="opacity: {0.3 + (i / Math.min(currentStreak, 14)) * 0.7}"></div>
+            <div class="bg-[#1CB0F6] h-2 flex-1 rounded-full" style="opacity: {0.3 + (i / Math.min(currentStreak, 14)) * 0.7}"></div>
           {/each}
+          {#if currentStreak === 0}
+            <div class="bg-muted h-2 flex-1 rounded-full" ></div>
+          {/if}
         </div>
       </CardContent>
     </Card>
@@ -167,17 +245,20 @@
         <div class="flex items-start justify-between">
           <div>
             <p class="text-muted-foreground text-sm">Najduži niz</p>
-            <p class="py-2 text-5xl font-extrabold text-yellow-500">{Math.round(tweenLongest.current)}</p>
+            <p class="py-2 text-5xl font-extrabold text-[#FF9600]">{Math.round(tweenLongest.current)}</p>
             <p class="text-muted-foreground text-xs">dana zaredom 🏆</p>
           </div>
-          <div class="rounded-full bg-yellow-500/10 p-3">
-            <Trophy class="h-6 w-6 text-yellow-500" />
+          <div class="rounded-full bg-[#FF9600]/10 p-3">
+            <Trophy class="h-6 w-6 text-[#FF9600]" />
           </div>
         </div>
         <div class="mt-4 flex gap-1">
           {#each Array(Math.min(longestStreak, 14)) as _, i}
-            <div class="h-2 flex-1 rounded-full bg-yellow-500" style="opacity: {0.3 + (i / Math.min(longestStreak, 14)) * 0.7}"></div>
+            <div class="h-2 flex-1 rounded-full bg-[#FF9600]" style="opacity: {0.3 + (i / Math.min(longestStreak, 14)) * 0.7}"></div>
           {/each}
+          {#if longestStreak === 0}
+            <div class="bg-muted h-2 flex-1 rounded-full" ></div>
+          {/if}
         </div>
       </CardContent>
     </Card>
@@ -195,8 +276,15 @@
           </div>
         </div>
         <div class="mt-4 flex gap-1">
-          {#each Array(14) as _, i}
-            <div class="h-2 flex-1 rounded-full bg-[#58CC02]" style="opacity: {0.2 + Math.random() * 0.8}"></div>
+          {#each last14Days as day}
+            {@const progress = dailyGoal ? Math.min(day.completed / dailyGoal, 1) : 0}
+
+            <div
+              class="h-2 flex-1 rounded-full"
+              class:bg-[#58CC02]={day.completed > 0}
+              class:bg-muted={!day.completed}
+              style="opacity: {day.completed ? progress : 1}"
+            ></div>
           {/each}
         </div>
       </CardContent>
@@ -251,7 +339,9 @@
 
         <div class="mt-6 rounded-lg bg-primary/5 border border-primary/20 p-4">
           <p class="text-sm font-medium text-primary">
-            {#if currentStreak >= 10}
+            {#if todayCompleted >= dailyGoal}
+              💪 Bravo! Produžio si niz.
+            {:else if currentStreak >= 10}
               🔥 Nevjerojatno! Već {currentStreak} dana zaredom — samo nastavi!
             {:else if currentStreak >= 5}
               💪 Odlično! {currentStreak} dana niza — ne prekidaj sada!
@@ -259,7 +349,15 @@
               ⚡ Svaki dan je nova šansa. Počni graditi svoj niz!
             {/if}
           </p>
-          <p class="text-muted-foreground text-xs mt-1">Do rekorda ti nedostaje još {longestStreak - currentStreak} dana</p>
+          <p class="text-muted-foreground text-xs mt-1">
+            {#if todayCompleted >= dailyGoal}
+              Vrati se sutra i produži svoj niz.
+            {:else if longestStreak === currentStreak}
+              Postavi novi rekord danas!
+            {:else}
+              Do rekorda ti nedostaje još {longestStreak - currentStreak} dana.
+            {/if}
+          </p>
         </div>
       </CardContent>
     </Card>
@@ -350,7 +448,11 @@
           {/if}
         </h2>
         <p class="text-muted-foreground mt-1">
-          {#if currentStreak >= longestStreak - 3}
+          {#if todayCompleted >= dailyGoal}
+            Vrati se sutra i postavi novi rekord!
+          {:else if currentStreak === longestStreak}
+            Postavi novi rekord danas!
+          {:else if currentStreak >= longestStreak - 3}
             Samo još {longestStreak - currentStreak} dana do osobnog rekorda!
           {:else}
             Tvoj trud se isplati — {totalDaysActive} aktivnih dana govori samo za sebe!
