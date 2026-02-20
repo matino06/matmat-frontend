@@ -169,6 +169,15 @@
 </script>
 
 <div class="container mx-auto max-w-7xl space-y-6 p-4">
+  <div class="flex items-center gap-3">
+    <div class="bg-primary/10 rounded-full p-3">
+      <TrendingUp class="text-primary h-7 w-7" />
+    </div>
+    <div>
+      <h1 class="text-2xl font-bold">Moj napredak</h1>
+      <p class="text-muted-foreground text-sm">Prati svoj napredak</p>
+    </div>
+  </div>
   <div class="grid grid-cols-1 items-stretch gap-4 md:grid-cols-3">
     <Card
       class="relative h-full w-full transition-all hover:shadow-md md:row-span-2"
