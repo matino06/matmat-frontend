@@ -94,16 +94,16 @@
   <footer class="mt border-t py-6">
     <div class="text-muted-foreground container mx-auto px-4 text-center text-sm">
       <p>
-        MatMat © {new Date().getFullYear()} — Besplatna priprema za državnu maturu
+        MatMat © {new Date().getFullYear()} — Priprema za državnu maturu
         iz matematike
       </p>
       <p class="mt-2">
         Pitanja?{" "}
         <a
-          href="mailto:info.matmat.online@gmail.com"
+          href="mailto:info@.matmat.online"
           class="text-primary underline hover:no-underline"
         >
-          info.matmat.online@gmail.com
+          info@.matmat.online
         </a>
       </p>
     </div>

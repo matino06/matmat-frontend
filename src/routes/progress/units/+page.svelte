@@ -101,10 +101,10 @@
 
   function getStatusColor(status) {
     switch (status) {
-      case "mastered": return "text-emerald-500";
-      case "learning": return "text-sky-500";
+      case "mastered": return "text-[#58CC02]";
+      case "learning": return "text-[#1CB0F6]";
       case "weak": return "text-amber-500";
-      default: return "text-red-400";
+      default: return "text-[#FF9600]";
     }
   }
 
@@ -201,15 +201,15 @@
     <!-- Legend -->
     <div class="flex flex-wrap items-center gap-5 text-xs text-muted-foreground">
       <div class="flex items-center gap-1.5">
-        <span class="legend-dot bg-emerald-500"></span>
+        <span class="legend-dot bg-[#58CC02]"></span>
         Savladano
       </div>
       <div class="flex items-center gap-1.5">
-        <span class="legend-dot bg-sky-500"></span>
+        <span class="legend-dot bg-[#1CB0F6]"></span>
         U učenju
       </div>
       <div class="flex items-center gap-1.5">
-        <span class="legend-dot bg-red-300"></span>
+        <span class="legend-dot bg-[#FF9600]"></span>
         Zaključano
       </div>
     </div>
@@ -311,13 +311,13 @@
   }
 
   .obj-card.mastered {
-    background: linear-gradient(135deg, rgba(16,185,129,0.07) 0%, rgba(16,185,129,0.03) 100%);
-    border-color: rgba(16,185,129,0.2);
+    background: linear-gradient(135deg, #5acc0219 0%, #90ff3b19 100%);
+    border-color: #5acc0219;
   }
 
   .obj-card.learning {
-    background: linear-gradient(135deg, rgba(14,165,233,0.07) 0%, rgba(14,165,233,0.03) 100%);
-    border-color: rgba(14,165,233,0.2);
+    background: linear-gradient(135deg, #44c0fa1b 0%, #1cb1f61b 100%);
+    border-color: #1cb1f61b;
   }
 
   .obj-card.weak {
@@ -326,7 +326,7 @@
   }
 
   .obj-card.locked {
-    background: rgba(131, 12, 12, 0.077);
+    background: #ff950017;
     border-color: rgba(148,163,184,0.15);
   }
 
@@ -341,10 +341,10 @@
     margin-top: 1px;
   }
 
-  .icon-wrap.mastered { background: rgba(16,185,129,0.12); }
-  .icon-wrap.learning { background: rgba(14,165,233,0.12); }
+  .icon-wrap.mastered { background: #5acc0219; }
+  .icon-wrap.learning { background: #1cb1f61b; }
   .icon-wrap.weak { background: rgba(245, 159, 11, 0.332); }
-  .icon-wrap.locked { background: rgba(255, 0, 0, 0.116); }
+  .icon-wrap.locked { background: #ff95001c; }
 
   .progress-pill {
     height: 5px;
@@ -356,7 +356,7 @@
   .progress-fill {
     height: 100%;
     border-radius: 99px;
-    background: linear-gradient(90deg, #10b981, #34d399);
+    background: linear-gradient(90deg, #8cff33, #58CC02);
     transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
