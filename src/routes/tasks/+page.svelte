@@ -15,11 +15,14 @@
   import NoMoreTasks from "$lib/components/noMoreTasks/NoMoreTasks.svelte";
   import TaskTip from "$lib/components/tips/TaskTip.svelte";
   import { Dumbbell } from "@lucide/svelte/icons";
+  import TempoSelector from "$lib/components/tempoSelector/TempoSelector.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
   let noMoreTasks = $state(false);
   let isLoading = $state(false);
+  let showTooltip = $state(false);
+  let selectedTempo = $state(null);
 
   let showProgressAnimation = $state(false);
 
@@ -94,6 +97,13 @@
     });
     return () => unsubscribe();
   });
+
+  onMount(async () => {
+    const response = await apiClient("/account/tempo", { method: "GET" });
+    if (response.ok) {
+      selectedTempo = await response.json();
+    }
+  });
 </script>
 
 <div class="fixed bottom-4 left-4 right-4 z-50 flex flex-col gap-3 sm:left-4 sm:right-auto sm:w-96">
@@ -135,12 +145,30 @@
         <p class="text-muted-foreground text-sm">Riješi zadatke i postepeno osvajaj gradivo za maturu</p>
       </div>
     </div>
-    <div class="w-full max-w-[700px] mx-auto mb-3">
+    <div class="w-full max-w-[700px] mx-auto mb-3 flex items-center gap-2">
       <CourseSelector
         {currentCourse}
         on:courseChange={handleCourseChange}
         disabled={isLoading}
       />
+      <div class="flex items-center gap-2">
+        <TempoSelector {fetchNewTask} />
+        <div class="relative">
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <span
+            class="text-muted-foreground text-sm cursor-pointer select-none"
+            onclick={() => showTooltip = !showTooltip}
+            onmouseenter={() => showTooltip = true}
+            onmouseleave={() => showTooltip = false}
+          >ⓘ</span>
+          {#if showTooltip}
+            <div class="absolute bottom-full right-0 mb-2 w-56 rounded-lg bg-popover border border-border px-3 py-2 text-xs text-muted-foreground shadow-md z-10">
+              Tempo određuje brzinu otključavanja novih lekcija.
+            </div>
+          {/if}
+        </div>
+      </div>
     </div>
 
     {#key task.id}

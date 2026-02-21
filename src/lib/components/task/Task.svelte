@@ -5,9 +5,18 @@
   import { slide } from "svelte/transition";
   import { apiClient } from "$lib/api/apiClient";
   import { parseExplanation } from "$lib/utils/parseExplanationSteps";
+  import { onMount } from "svelte";
 
   let { task, fetchNewTask } = $props();
   let open = $state("item-1");
+  let currTempo = $state(null);
+
+  onMount(async () => {
+    const response = await apiClient("/account/tempo", { method: "GET" });
+    if (response.ok) {
+      currTempo = await response.json();
+    }
+  });
 
   const newSolvedTask = {
     taskId: task.id,
@@ -28,6 +37,7 @@
       q: value,
       endTime: new Date().toISOString(),
       device: getDeviceType(),
+      tempo: currTempo,
     };
 
     try {
