@@ -15,7 +15,7 @@
   import {
     Lock,
     CircleCheck,
-    LockOpen,
+    Dumbbell,
     AlertCircle,
     Search,
     ShieldAlert,
@@ -93,7 +93,7 @@
   function getStatusIcon(status) {
     switch (status) {
       case "mastered": return CircleCheck;
-      case "learning": return LockOpen;
+      case "learning": return Dumbbell;
       case "weak": return ShieldAlert;
       default: return Lock;
     }
