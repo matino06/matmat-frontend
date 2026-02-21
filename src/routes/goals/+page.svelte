@@ -74,7 +74,7 @@
     for (let i = days.length - 1; i >= 0; i--) {
       if (days[i].goalMet) {
         current++;
-      } else if (skipToday) {
+      } else if (skipToday && i === days.length - 1) {
         skipToday = false;
       } else {
         break;
