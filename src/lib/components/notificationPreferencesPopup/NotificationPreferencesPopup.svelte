@@ -63,12 +63,9 @@
     }
   }
 
-  // Reagiraj na promjenu storea (ručno otvaranje)
   $effect(() => {
     if (showNotificationPopup.value) {
-      // Kad se store postavi na true, otvori popup
       if (user) {
-        // Dohvati trenutne postavke prije otvaranja
         fetchPreferences().then(() => {
           showPopup = true;
         });
@@ -78,7 +75,6 @@
     }
   });
 
-  // Automatsko otvaranje pri prvom login (kad su postavke null) već je pokriveno u fetchPreferences
   $effect(() => {
     if (user) {
       fetchPreferences();

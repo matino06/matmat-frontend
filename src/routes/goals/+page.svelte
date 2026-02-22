@@ -12,6 +12,7 @@
   import { cubicOut } from "svelte/easing";
   import { apiClient } from "$lib/api/apiClient";
   import { goto } from "$app/navigation";
+  import GoalsSettings from "$lib/components/goalsSettings/GoalsSettings.svelte";
 
   let calendarDays = $state([]);
   let dailyGoal = $state(0);
@@ -206,14 +207,17 @@
 
 <div class="container mx-auto max-w-7xl space-y-6 p-4">
 
-  <div class="flex items-center gap-3">
-    <div class="bg-primary/10 rounded-full p-3">
-      <Flame class="text-primary h-7 w-7" />
+  <div class="flex justify-between">
+    <div class="flex items-center gap-3">
+      <div class="bg-primary/10 rounded-full p-3">
+        <Flame class="text-primary h-7 w-7" />
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold">Moj cilj</h1>
+        <p class="text-muted-foreground text-sm">Prati svoju dosljednost i dnevne ciljeve</p>
+      </div>
     </div>
-    <div>
-      <h1 class="text-2xl font-bold">Moj cilj</h1>
-      <p class="text-muted-foreground text-sm">Prati svoju dosljednost i dnevne ciljeve</p>
-    </div>
+    <GoalsSettings/>
   </div>
 
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
