@@ -9,7 +9,7 @@
   --background: #ffffff;
   --foreground: #09090b;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card-foreground: rgb(9, 9, 11);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
   --primary: #ff2056;
