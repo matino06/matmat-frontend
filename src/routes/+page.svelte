@@ -79,7 +79,7 @@
         </h1>
         <p class="text-muted-foreground mt-4 md:mt-6 text-base sm:text-lg md:text-xl max-w-prose mx-auto lg:mx-0">
           Brže učiš, pamtiš bolje. MatMat koristi dokazano učinkoviti algoritam
-          <span class="text-primary"> koji</span> osigurava da se na maturi <span class="text-primary">pojaviš 100% spreman</span>.
+          kojiosigurava da se na maturi <span class="text-primary">pojaviš 100% spreman</span>.
         </p>
 
         <Button
