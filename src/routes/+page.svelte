@@ -44,7 +44,6 @@
       goalsPageImage = "/images/goals_page.png";
     }
 
-    // pratimo promjene dark moda
     const observer = new MutationObserver(() => {
       const dark = document.documentElement.classList.contains('dark');
       if (dark) {
@@ -70,7 +69,7 @@
 <main
   class="bg-background text-foreground min-h-screen transition-colors duration-300"
 >
-  <!-- Hero Section -->
+  <!-- Hero Section (text left, image right) -->
   <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 flex items-center">
     <div class="grid items-center gap-8 md:gap-12 grid-cols-1 lg:grid-cols-2 w-full">
       <div class="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
@@ -79,7 +78,7 @@
         </h1>
         <p class="text-muted-foreground mt-4 md:mt-6 text-base sm:text-lg md:text-xl max-w-prose mx-auto lg:mx-0">
           Brže učiš, pamtiš bolje. MatMat koristi dokazano učinkoviti algoritam
-          kojiosigurava da se na maturi <span class="text-primary">pojaviš 100% spreman</span>.
+          koji osigurava da se na maturi <span class="text-primary">pojaviš 100% spreman</span>.
         </p>
 
         <Button
@@ -91,13 +90,13 @@
         </Button>
       </div>
 
-      <div class="flex justify-center order-first lg:order-last">
+      <div class="flex justify-center">
         <img class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl rounded-2xl object-contain" src="/images/ilustration.jpg" alt="MatMat ilustracija" />
       </div>
     </div>
   </section>
 
-  <!-- Ticker (staticki, bez animacije) -->
+  <!-- Ticker -->
   <div class="w-full bg-muted py-3">
     <div class="flex flex-wrap items-center justify-center gap-2 text-sm sm:text-base md:text-lg">
       <span class="font-semibold text-muted-foreground">Dodana podrška za:</span>
@@ -107,17 +106,10 @@
     </div>
   </div>
 
-  <!-- Koncepti koji kliknu -->
+  <!-- Koncepti koji kliknu (image left on desktop) -->
   <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 flex items-center">
     <div class="grid items-center gap-8 md:gap-12 grid-cols-1 lg:grid-cols-2 w-full">
-      <div class="flex justify-center order-first">
-        <img 
-          src="/images/3d_tasks_photo.png"
-          alt="MatMat ilustracija"
-          class="w-full max-w-sm sm:max-w-md md:max-w-lg rounded-2xl object-contain"
-          style="filter: drop-shadow(0 0 1px rgb(9,9,11)) drop-shadow(0 0 1px rgb(9,9,11))"
-        />      
-      </div>
+      <!-- Text first for mobile -->
       <div class="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight">
           Koncepti koji kliknu
@@ -127,10 +119,19 @@
           najsloženije ideje intuitivnima.
         </p>
       </div>
+      <!-- Image second, but on lg we pull it to left column with order-first -->
+      <div class="flex justify-center lg:order-first">
+        <img 
+          src="/images/3d_tasks_photo.png"
+          alt="MatMat ilustracija"
+          class="w-full max-w-sm sm:max-w-md md:max-w-lg rounded-2xl object-contain"
+          style="filter: drop-shadow(0 0 1px rgb(9,9,11)) drop-shadow(0 0 1px rgb(9,9,11))"
+        />      
+      </div>
     </div>
   </section>
 
-  <!-- Personalizirano učenje -->
+  <!-- Personalizirano učenje (image right on desktop) -->
   <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 flex items-center">
     <div class="grid items-center gap-8 md:gap-12 grid-cols-1 lg:grid-cols-2 w-full">
       <div class="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
@@ -142,7 +143,7 @@
           napretka nudi ti zadatke i prilagođava se tvom tempu.
         </p>
       </div>
-      <div class="flex justify-center order-first lg:order-last">
+      <div class="flex justify-center">
         <img 
           src={personalizedLearningImage}
           alt="MatMat ilustracija"
@@ -152,16 +153,9 @@
     </div>
   </section>
 
-  <!-- Prati svoj napredak -->
+  <!-- Prati svoj napredak (image left on desktop) -->
   <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 flex items-center">
     <div class="grid items-center gap-8 md:gap-12 grid-cols-1 lg:grid-cols-2 w-full">
-      <div class="flex justify-center order-first">
-        <img 
-          src={progressPageImage}
-          alt="MatMat ilustracija"
-          class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl rounded-2xl object-contain"
-        />      
-      </div>
       <div class="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight">
           Prati svoj napredak
@@ -171,10 +165,17 @@
           vidiš lekcije koje si savladao, kao i one na kojima još radiš.
         </p>
       </div>
+      <div class="flex justify-center lg:order-first">
+        <img 
+          src={progressPageImage}
+          alt="MatMat ilustracija"
+          class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl rounded-2xl object-contain"
+        />      
+      </div>
     </div>
   </section>
 
-  <!-- Ostani motiviran -->
+  <!-- Ostani motiviran (image right on desktop) -->
   <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 flex items-center">
     <div class="grid items-center gap-8 md:gap-12 grid-cols-1 lg:grid-cols-2 w-full">
       <div class="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
@@ -185,7 +186,7 @@
           Olakšavamo ti stvaranje navike učenja za maturu, uz izazove i podsjetnike.
         </p>
       </div>
-      <div class="flex justify-center order-first lg:order-last">
+      <div class="flex justify-center">
         <img 
           src={goalsPageImage}
           alt="MatMat ilustracija"
@@ -195,16 +196,9 @@
     </div>
   </section>
 
-  <!-- Potkrijepljeno znanošću -->
+  <!-- Potkrijepljeno znanošću (image left on desktop) -->
   <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 flex items-center">
     <div class="grid items-center gap-8 md:gap-12 grid-cols-1 lg:grid-cols-2 w-full">
-      <div class="flex justify-center order-first">
-        <img 
-          src="/images/ilustration3.jpg"
-          alt="MatMat ilustracija"
-          class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl rounded-2xl object-contain"
-        />      
-      </div>
       <div class="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight">
           Potkrijepljeno znanošću
@@ -215,7 +209,13 @@
           zadataka, razumijevanja koncepata i logičkog zaključivanja.
         </p>
       </div>
+      <div class="flex justify-center lg:order-first">
+        <img 
+          src="/images/ilustration3.jpg"
+          alt="MatMat ilustracija"
+          class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl rounded-2xl object-contain"
+        />      
+      </div>
     </div>
   </section>
-
 </main>

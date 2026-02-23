@@ -7,7 +7,7 @@
   export let tips = [
     "Bolje je svaki dan po 3 zadatka nego 2 dana u tjednu 15 zadataka – kraće i češće učenje daje drastično bolje rezultate.",
     "Greške su signal, ne neuspjeh – algoritam ih koristi da te nauči bolje.",
-    "Jedan dan pauze je OK, dva su već navika – vrati se svaki dan.",
+    "Jedan dan pauze je OK, dva su već navika – vrati se dans.",
     "Ako ti se ne da puno – riješi barem jedan zadatak.",
   ];
 
