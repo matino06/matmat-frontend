@@ -131,8 +131,7 @@
 
 <TaskTip/>
 
-{#if task}
-  <div
+<div
     class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"
   >
     <!-- Naslov -->
@@ -171,18 +170,19 @@
       </div>
     </div>
 
+{#if task}
     {#key task.id}
       <div transition:fade class="w-full max-w-[700px] mx-auto">
         <Task {task} {fetchNewTask} />
         <ChatWindow {task} />
       </div>
     {/key}
-  </div>
 {:else if noMoreTasks}
     <NoMoreTasks/>
 {:else}
   <div class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"></div>
 {/if}
+</div>
 
 {#if isLoading}
   <LoadingOverlay
