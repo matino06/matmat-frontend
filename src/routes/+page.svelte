@@ -3,29 +3,6 @@
   import { userData, handleLogIn } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
   import { Button } from "$lib/components/ui/button/index.js";
-  import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-  } from "$lib/components/ui/card/index.js";
-  import { Input } from "$lib/components/ui/input/index.js";
-  import { Badge } from "$lib/components/ui/badge/index.js";
-  import Check from "@lucide/svelte/icons/check";
-  import {
-    Calendar,
-    Bot,
-    Puzzle,
-    Target,
-    Zap,
-    TrendingUp,
-    BookOpen,
-    Clock,
-    BarChart3,
-    Brain,
-    GitGraph,
-    CheckCircle,
-  } from "@lucide/svelte/icons";
 
   let personalizedLearningImage = $state();
   let progressPageImage = $state();
@@ -217,5 +194,20 @@
         />      
       </div>
     </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="container mx-auto px-4 py-12 md:py-16 lg:py-20 text-center">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight">Spreman za početak?</h2>
+    <p class="text-muted-foreground mt-4 text-lg max-w-2xl mx-auto">
+      Započni s učenjem i osiguraj si odličan rezultat na maturi.
+    </p>
+    <Button
+      onclick={userData.user ? goToTasks : handleLogIn}
+      size="lg"
+      class="mt-8 bg-primary text-white relative rounded-lg px-12 py-6 font-bold shadow-[0_6px_0_0_rgba(255,32,86,0.6)] transition-all duration-150 ease-in-out hover:translate-y-[2px] hover:shadow-[0_3px_0_0_rgba(0,0,0,0.2)] active:translate-y-[4px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.2)]"
+    >
+      ZAPOČNI UČENJE
+    </Button>
   </section>
 </main>
