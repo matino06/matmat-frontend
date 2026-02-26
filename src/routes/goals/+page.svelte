@@ -37,15 +37,16 @@
     );
 
     const res = await response.json();
+    dailyGoal = res.dailyGoal;
+
     if (res.calendarDays.length > 0) {
       calendarDays = res.calendarDays;
     } else {
       calendarDays = [
-        {date: res.registrationDate, goalMet: false, partial: false, completed: 0}
+        {date: res.registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal}
       ];
     }
     
-    dailyGoal = res.dailyGoal;
     totalDaysActive = calendarDays.filter(day => day.completed > 0).length;
     registrationDate = res.registrationDate;
     findCurrentAndLongestStreak();
@@ -100,7 +101,7 @@
     if (registrationDate) {
       const regKey = new Date(registrationDate).toISOString().slice(0, 10);
       if (!dayMap[regKey]) {
-        dayMap[regKey] = { date: new Date(registrationDate), goalMet: false, partial: false, completed: 0 };
+        dayMap[regKey] = { date: new Date(registrationDate), goalMet: false, partial: false, completed: 0, goal: dailyGoal };
 
         if (new Date(registrationDate) < minDate) {
           minDate.setTime(new Date(registrationDate).getTime());
@@ -115,7 +116,7 @@
       if (dayMap[key]) {
         allDays.push({ ...dayMap[key], date: new Date(cursor) });
       } else {
-        allDays.push({ date: new Date(cursor), goalMet: false, partial: false, completed: 0 });
+        allDays.push({ date: new Date(cursor), goalMet: false, partial: false, completed: 0, goal: dailyGoal });
       }
       cursor.setDate(cursor.getDate() + 1);
     }
@@ -414,7 +415,7 @@
                 </div>
 
                 {#each weeks as week}
-                  <div class="flex flex-col gap-1">
+                  <div class="flex flex-col gap-1 pb-2 pr-1">
                     {#each Array(7) as _, di}
                       {@const day = week[di]}
                       {#if day === null || day === undefined}
@@ -422,7 +423,7 @@
                       {:else}
                         <div
                           class="h-4 w-4 rounded-sm transition-all hover:scale-125 cursor-pointer {day.goalMet ? 'bg-[#58CC02]' : day.partial ? 'bg-[#5acc0261]' : 'bg-muted'} {isToday(day.date) ? 'ring-2 ring-[#58CC02] ring-offset-1' : ''}"
-                          title="{formatDate(day.date)}: {day.completed}/{dailyGoal} zadataka"
+                          title="{formatDate(day.date)}: {day.completed}/{day.goal} zadataka"
                         ></div>
                       {/if}
                     {/each}
