@@ -16,6 +16,7 @@
   import TaskTip from "$lib/components/tips/TaskTip.svelte";
   import { Dumbbell } from "@lucide/svelte/icons";
   import TempoSelector from "$lib/components/tempoSelector/TempoSelector.svelte";
+  import GoalProgressToast from "$lib/components/goalProgressToast/GoalProgressToast.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
@@ -23,6 +24,7 @@
   let isLoading = $state(false);
   let showTooltip = $state(false);
   let selectedTempo = $state(null);
+  let showGoal = $state(false);
 
   let showProgressAnimation = $state(false);
 
@@ -88,6 +90,15 @@
     isLoading = false;
   }
 
+  function onTaskSolved() {
+    showGoal = true;
+    setTimeout(() => {
+      showGoal = false;
+    }, 5000)
+
+    fetchNewTask();
+  }
+
   $effect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -121,6 +132,10 @@
     cta="Pogledaj ciljeve →"
   />
 </div>
+
+{#if showGoal}
+  <GoalProgressToast/>
+{/if}
 
 <ProgressIncreaseAnimation
   show={showProgressAnimation}
@@ -173,7 +188,7 @@
 {#if task}
     {#key task.id}
       <div transition:fade class="w-full max-w-[700px] mx-auto">
-        <Task {task} {fetchNewTask} />
+        <Task {task} {onTaskSolved} />
         <ChatWindow {task} />
       </div>
     {/key}

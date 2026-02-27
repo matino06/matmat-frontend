@@ -7,7 +7,7 @@
   import { parseExplanation } from "$lib/utils/parseExplanationSteps";
   import { onMount } from "svelte";
 
-  let { task, fetchNewTask } = $props();
+  let { task, onTaskSolved } = $props();
   let open = $state("item-1");
   let currTempo = $state(null);
 
@@ -47,7 +47,7 @@
       });
 
       if (response.ok) {
-        fetchNewTask();
+        onTaskSolved();
       }
     } catch (error) {
       console.error("Greška pri slanju zadatka:", error);
