@@ -25,7 +25,6 @@
 
   $effect(async () => {
     if (!objectives?.length) return;
-    console.log(objectives)
 
     await fetchCurrentCourse();
     const totalProgress = calculateExamProgress(

@@ -39,7 +39,6 @@
     const hoursSinceLast = (now - lastTime) / (1000 * 60 * 60);
     if (lastTime === 0 || hoursSinceLast >= intervalHours) {
       // Determine next tip index
-      console.log(lastIndex)
       const nextIndex = (lastIndex + 1) % tips.length;
 
       // Save new index and time

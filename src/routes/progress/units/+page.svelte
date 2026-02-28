@@ -71,7 +71,6 @@
   let activeFiedName = $state();
 
   async function loadObjectives() {
-    console.log("Hello")
     if (!userData.user) return;
 
     loading = true;
@@ -80,8 +79,6 @@
 
     fields = buildHierarchy(objectives)
     activeFiedName = fields[0]?.fieldName;
-
-    console.log(objectives)
   }
 
   function getObjectiveStatus(objective) {    
