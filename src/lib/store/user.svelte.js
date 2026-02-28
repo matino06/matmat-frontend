@@ -52,7 +52,7 @@ export const handleLogIn = async () => {
 const loadTurnstile = () => {
   if (!browser || !window.turnstile) {
     const script = document.createElement("script");
-    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.src = "https://challenges.cloudflare.com/turnstile/v4/api.js";
     script.async = true;
     script.defer = true;
     script.onload = () => renderTurnstile();
