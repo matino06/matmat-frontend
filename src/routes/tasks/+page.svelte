@@ -193,7 +193,9 @@
       </div>
     {/key}
 {:else if noMoreTasks}
-    <NoMoreTasks/>
+    <div class="w-full max-w-[700px] mx-auto">
+      <NoMoreTasks />
+    </div>
 {:else}
   <div class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"></div>
 {/if}
