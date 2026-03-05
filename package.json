@@ -21,6 +21,7 @@
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "latest",
     "@sveltejs/vite-plugin-svelte": "^6.1.4",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.0.0",
     "bits-ui": "^2.15.5",
     "clsx": "^2.1.1",
@@ -46,6 +47,7 @@
     ]
   },
   "dependencies": {
+    "@traptitech/markdown-it-katex": "^3.6.0",
     "@zag-js/progress": "^1.18.3",
     "@zag-js/svelte": "^1.18.3",
     "amplify-adapter": "^1.2.3",
@@ -54,6 +56,12 @@
     "cytoscape-dagre": "^2.5.0",
     "express": "^5.1.0",
     "firebase": "^11.10.0",
+    "katex": "^0.16.33",
+    "markdown-it": "^14.1.1",
+    "markdown-it-katex": "^2.0.3",
+    "markdown-it-mathjax": "^2.0.0",
+    "markdown-it-mathjax3": "^5.2.0",
+    "mathjax": "^4.1.1",
     "mode-watcher": "^1.1.0",
     "serverless-http": "^4.0.0",
     "svelte-apexcharts": "^1.0.2",

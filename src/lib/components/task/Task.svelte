@@ -4,12 +4,37 @@
   import TaskDifficultySelector from "./TaskDifficultySelector.svelte";
   import { slide } from "svelte/transition";
   import { apiClient } from "$lib/api/apiClient";
-  import { parseExplanation } from "$lib/utils/parseExplanationSteps";
+  import { md } from "$lib/utils/markdownRenderer";
   import { onMount } from "svelte";
 
   let { task, onTaskSolved } = $props();
   let open = $state("item-1");
   let currTempo = $state(null);
+
+  function normalizeMath(text) {
+    if (!text) return "";
+
+    // Change every '\' for '\\'
+    text = text.replace(/\\/g, "\\\\");
+
+    return text;
+  }
+
+  task.explanationSteps.forEach(step => {
+    console.log(md.render(normalizeMath(step.explanation)))
+  });
+
+  const combinedExplanation = $derived(
+    task.explanationSteps
+      .map((step) => {
+        let markdown = `## ${step.stepNumber}.\n\n${step.explanation}\n\n`;
+        if (step.imageName) {
+          markdown += `<img src="https://api.matmat.online/api/image/${step.imageName}" alt="Slika objašnjenja" class="m-auto my-2 mb-4 max-w-full rounded" />\n\n`;
+        }
+        return markdown;
+      })
+      .join("")
+  );
 
   onMount(async () => {
     const response = await apiClient("/account/tempo", { method: "GET" });
@@ -77,7 +102,6 @@
   return "desktop";
 }
 
-  // Load MathJax
   $effect(() => {
     if (!task) return;
 
@@ -100,9 +124,7 @@
       id="mathjax-output"
       class="prose prose-sm sm:prose lg:prose-lg text-[0.4rem] sm:text-[0.5rem] md:text-[0.8rem] lg:text-[0.9rem]"
     >
-      {#each parseExplanation(task.taskText1) as paragraph}
-        <p class:my-7={paragraph === ""}>{paragraph}</p>
-      {/each}
+      {@html md.render(normalizeMath(task.taskText1))}
     </div>
 
     {#if task.imageName}
@@ -113,9 +135,9 @@
       />
     {/if}
     {#if task.taskText2}
-      {#each parseExplanation(task.taskText2) as paragraph}
-        <p class:my-7={paragraph === ""}>{paragraph}</p>
-      {/each}
+      <div class="prose">
+        {@html md.render(normalizeMath(task.taskText2))}
+      </div>
     {/if}
   </Card.Content>
   <Card.Footer>
@@ -123,41 +145,17 @@
       <Accordion.Item value="item-1">
         <Accordion.Trigger class="flex w-full justify-center" />
         <Accordion.Content>
-          {#each task.explanationSteps as step}
-            {#if task.explanationSteps.length > 1}
-              <h4
-                class="text-sm font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
-              >
-                {step.stepNumber}.
-              </h4>
-            {/if}
-            <div class="py-4">
-              <div
-                class="prose prose-sm sm:prose lg:prose-lg text-[0.4rem] sm:text-[0.5rem] md:text-[0.8rem] lg:text-[0.9rem]"
-              >
-                {#each parseExplanation(step.explanation) as paragraph}
-                  {#if paragraph === ""}
-                    <p class="my-7"></p>
-                  {/if}
-                  <div class="prose prose-sm sm:prose md:prose-lg lg:prose-xl">
-                    <p>{paragraph}</p>
-                  </div>
-                {/each}
-              </div>
-            </div>
-            {#if step.imageName}
-              <img
-                src={`https://api.matmat.online/api/image/${step.imageName}`}
-                alt="Slika objašnjenja"
-                class="m-auto my-2 mb-4 max-w-full rounded"
-              />
-            {/if}
-          {/each}
+          <!-- SVI KORACI OBJAŠNJENJA U JEDNOM BLOKU -->
+          <div class="prose prose-sm sm:prose lg:prose-lg !max-w-none">
+            {@html md.render(normalizeMath(combinedExplanation))}
+          </div>
+
           {#if task.solution}
-            <div class="prose prose-sm sm:prose md:prose-lg lg:prose-xl">
-              <p>{task.solution}</p>
+            <div class="prose prose-sm sm:prose lg:prose-lg !max-w-none mt-4">
+              {@html md.render(normalizeMath(task.solution))}
             </div>
           {/if}
+
           <h4
             class="text-m mt-2 font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"
           >
@@ -169,3 +167,9 @@
     </Accordion.Root>
   </Card.Footer>
 </Card.Root>
+
+<style>
+  .prose {
+    max-width: none;
+  }
+</style>
