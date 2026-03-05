@@ -112,6 +112,11 @@
         class="m-auto my-2 mb-4 h-auto max-w-full rounded"
       />
     {/if}
+    {#if task.taskText2}
+      {#each parseExplanation(task.taskText2) as paragraph}
+        <p class:my-7={paragraph === ""}>{paragraph}</p>
+      {/each}
+    {/if}
   </Card.Content>
   <Card.Footer>
     <Accordion.Root bind:value={open} type="single" class="w-full">
