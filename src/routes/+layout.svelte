@@ -11,13 +11,28 @@
   import { afterNavigate } from "$app/navigation";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
   import NotificationPreferencesPopup from "$lib/components/notificationPreferencesPopup/NotificationPreferencesPopup.svelte";
+  import { onMount } from "svelte";
 
-  afterNavigate(() => {
+  const GA_ID = "G-E6F6X4X2XG";
+
+  function trackPageView() {
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("config", "G-E6F6X4X2XG", {
+      window.gtag("event", "page_view", {
         page_path: window.location.pathname,
+        page_location: window.location.href,
+        page_title: document.title
       });
     }
+  }
+
+  onMount(() => {
+    // first load
+    trackPageView();
+  });
+
+  afterNavigate(() => {
+    // every SPA navigation
+    trackPageView();
   });
 
   let { children } = $props();
@@ -100,10 +115,10 @@
       <p class="mt-2">
         Pitanja?{" "}
         <a
-          href="mailto:info@.matmat.online"
+          href="mailto:info@matmat.online"
           class="text-primary underline hover:no-underline"
         >
-          info@.matmat.online
+          info@matmat.online
         </a>
       </p>
     </div>
