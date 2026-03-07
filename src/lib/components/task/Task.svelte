@@ -20,22 +20,6 @@
     return text;
   }
 
-  task.explanationSteps.forEach(step => {
-    console.log(md.render(normalizeMath(step.explanation)))
-  });
-
-  const combinedExplanation = $derived(
-    task.explanationSteps
-      .map((step) => {
-        let markdown = `## ${step.stepNumber}.\n\n${step.explanation}\n\n`;
-        if (step.imageName) {
-          markdown += `<img src="https://api.matmat.online/api/image/${step.imageName}" alt="Slika objašnjenja" class="m-auto my-2 mb-4 max-w-full rounded" />\n\n`;
-        }
-        return markdown;
-      })
-      .join("")
-  );
-
   onMount(async () => {
     const response = await apiClient("/account/tempo", { method: "GET" });
     if (response.ok) {
@@ -118,43 +102,31 @@
   });
 </script>
 
-<Card.Root class="mb-8 w-full max-w-[700px]">
-  <Card.Content>
+<Card.Root class="mb-8 py-3 md:py-6 w-full max-w-[700px]">
+  <Card.Content class="px-3 md:px-6">
     <div
       id="mathjax-output"
-      class="prose prose-sm sm:prose lg:prose-lg text-[0.4rem] sm:text-[0.5rem] md:text-[0.8rem] lg:text-[0.9rem]"
+      class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
     >
-      {@html md.render(normalizeMath(task.taskText1))}
+      {@html md.render(normalizeMath(task.taskText))}
     </div>
-
-    {#if task.imageName}
-      <img
-        src={`https://api.matmat.online/api/image/${task.imageName}`}
-        alt="Slika objašnjenja"
-        class="m-auto my-2 mb-4 h-auto max-w-full rounded"
-      />
-    {/if}
-    {#if task.taskText2}
-      <div class="prose">
-        {@html md.render(normalizeMath(task.taskText2))}
-      </div>
-    {/if}
   </Card.Content>
-  <Card.Footer>
+  <Card.Footer class="px-3 md:px-6">
     <Accordion.Root bind:value={open} type="single" class="w-full">
       <Accordion.Item value="item-1">
         <Accordion.Trigger class="flex w-full justify-center" />
         <Accordion.Content>
-          <!-- SVI KORACI OBJAŠNJENJA U JEDNOM BLOKU -->
-          <div class="prose prose-sm sm:prose lg:prose-lg !max-w-none">
-            {@html md.render(normalizeMath(combinedExplanation))}
+          <div class="prose !max-w-none dark:prose-invert
+            text-[10px]         /* još manji font za najmanje ekrane */
+            sm:text-s     /* male ekrane */
+            md:text-s    /* srednji ekrani */
+            lg:text-lg      /* veliki ekrani */
+            prose-xs sm:prose-sm md:prose lg:prose-lg
+            !prose-p:my-1   /* smanjuje marginu između paragrafa na malim ekranima */
+            !prose-li:my-0  /* smanjuje marginu između listi na malim ekranima */
+            ">
+            {@html md.render(normalizeMath(task.explanation))}
           </div>
-
-          {#if task.solution}
-            <div class="prose prose-sm sm:prose lg:prose-lg !max-w-none mt-4">
-              {@html md.render(normalizeMath(task.solution))}
-            </div>
-          {/if}
 
           <h4
             class="text-m mt-2 font-semibold tracking-tight sm:text-base md:text-lg lg:text-xl"

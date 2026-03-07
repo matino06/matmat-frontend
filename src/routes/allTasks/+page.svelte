@@ -87,14 +87,13 @@
 {#if userData.user && userData.user.email !== "matino0546@gmail.com"}
   <h1>Nemaš pristup ovoj stranici :(</h1>
 {:else}
-  <div class="mt-10 flex w-full flex-col items-center justify-center">
+  <div class="flex w-full max-w-3xl m-auto justify-center flex-col items-center gap-6 px-4">
     <Select.Root
-      class="flex items-center justify-center"
+      class="flex w-full max-w-2xl flex-col gap-2 sm:flex-row sm:items-center"
       type="single"
       onValueChange={handleFieldChange}
     >
-      <Select.Label class="w-xl pr-2 text-left">Field</Select.Label>
-      <Select.Trigger class="w-xl">
+      <Select.Trigger class="w-full">
         {selectedField ? selectedField.fieldName : "Odaberi field"}
       </Select.Trigger>
       <Select.Content>
@@ -106,12 +105,11 @@
 
     {#if selectedField}
       <Select.Root
-        class="flex items-center justify-center"
+        class="flex w-full max-w-2xl flex-col gap-2 sm:flex-row sm:items-center"
         type="single"
         onValueChange={handleSubfieldChange}
       >
-        <Select.Label class="w-xl pr-2 text-left">Subfield</Select.Label>
-        <Select.Trigger class="w-xl">
+        <Select.Trigger class="w-full">
           {selectedSubfield ? selectedSubfield.subfieldName : "Odaberi field"}
         </Select.Trigger>
         <Select.Content>
@@ -126,21 +124,20 @@
 
     {#if selectedSubfield}
       <Select.Root
-        class="flex items-center justify-center"
+        class="flex w-full max-w-2xl flex-col gap-2 sm:flex-row sm:items-center"
         type="single"
         onValueChange={handleObjectiveChange}
       >
-        <Select.Label class="w-xl pr-2 text-left">Objective</Select.Label>
-        <Select.Trigger class="w-xl">
+        <Select.Trigger class="w-full truncate">
           {selectedObjective
             ? selectedObjective.objectiveName
             : "Odaberi field"}
         </Select.Trigger>
-        <Select.Content>
+        <Select.Content class="w-full">
           {#each objectives as objective}
-            <Select.Item value={objective.objectiveId}
-              >{objective.objectiveName}</Select.Item
-            >
+            <Select.Item class="w-full break-words" value={objective.objectiveId}>
+              {objective.objectiveName}
+            </Select.Item>
           {/each}
         </Select.Content>
       </Select.Root>
@@ -148,12 +145,11 @@
 
     {#if selectedObjective}
       <Select.Root
-        class="flex items-center justify-center"
+        class="flex w-full max-w-2xl flex-col gap-2 sm:flex-row sm:items-center"
         type="single"
         onValueChange={handleTaskChange}
       >
-        <Select.Label class="w-xl pr-2 text-left">Task</Select.Label>
-        <Select.Trigger class="w-xl">
+        <Select.Trigger class="w-full">
           {selectedTask ? selectedTask.id : "Odaberi task"}
         </Select.Trigger>
         <Select.Content>
