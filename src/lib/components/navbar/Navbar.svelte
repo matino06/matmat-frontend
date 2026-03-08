@@ -21,7 +21,7 @@
     { name: "Ciljevi", href: "/goals" },
     { name: "Zadaci", href: "/tasks" },
     { name: "Napredak", href: "/progress" },
-    { name: "O nama", href: "/about" },
+    { name: "Naša metoda", href: "/how-it-works" },
   ];
 
   function openNotificationPreferences() {
