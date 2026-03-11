@@ -53,7 +53,7 @@
 
 <div class="flex items-center gap-2">
   <select
-    class="bg-popover border-border text-foreground focus:border-primary focus:ring-primary rounded-lg border px-3 py-2 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+    class="bg-card border-border text-foreground focus:border-primary focus:ring-primary rounded-lg border px-3 py-2 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
     onchange={handleTempoChange}
     disabled={isLoading}
   >
