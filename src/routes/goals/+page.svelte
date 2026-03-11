@@ -16,6 +16,7 @@
 
   let calendarDays = $state([]);
   let dailyGoal = $state(0);
+  let todayGoal = $state(0);
   let totalDaysActive = $state(0);
   let last14Days = $state([]);
   let currentStreak = $state(0);
@@ -38,6 +39,7 @@
 
     const res = await response.json();
     dailyGoal = res.dailyGoal;
+    todayGoal = res.todayGoal;
 
     if (res.calendarDays.length > 0) {
       calendarDays = res.calendarDays;
@@ -171,7 +173,7 @@
     tweenStreak.target = currentStreak;
     tweenLongest.target = longestStreak;
     tweenTotal.target = totalDaysActive;
-    tweenProgress.target = dailyGoal ? (todayCompleted / dailyGoal) * 100 : 0;
+    tweenProgress.target = todayGoal ? (todayCompleted / todayGoal) * 100 : 0;
   });
 
   $effect(() => {
@@ -282,7 +284,7 @@
         </div>
         <div class="mt-4 flex gap-1">
           {#each last14Days as day}
-            {@const progress = dailyGoal ? Math.min(day.completed / dailyGoal, 1) : 0}
+            {@const progress = todayGoal ? Math.min(day.completed / todayGoal, 1) : 0}
 
             <div
               class="h-2 flex-1 rounded-full"
@@ -310,10 +312,10 @@
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-end gap-3">
               <span class="text-primary text-5xl font-extrabold">{todayCompleted}</span>
-              <span class="text-muted-foreground mb-1 text-2xl font-medium">/ {dailyGoal}</span>
+              <span class="text-muted-foreground mb-1 text-2xl font-medium">/ {todayGoal}</span>
             </div>
             <div class="flex gap-2">
-              {#each Array(dailyGoal) as _, i}
+              {#each Array(todayGoal) as _, i}
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl border-2 transition-all {i < todayCompleted ? 'bg-primary border-primary text-white' : 'border-border bg-muted text-muted-foreground'}">
                   {#if i < todayCompleted}
                     <Check class="h-5 w-5" />
@@ -331,10 +333,10 @@
             </div>
             <div class="mt-2 flex justify-between">
               <span class="text-muted-foreground text-xs">
-                {#if todayCompleted >= dailyGoal}
+                {#if todayCompleted >= todayGoal}
                   🎉 Cilj ispunjen! Odlično!
                 {:else}
-                  Još {dailyGoal - todayCompleted} {dailyGoal - todayCompleted === 1 ? "zadatak" : "zadatka"} do cilja
+                  Još {todayGoal - todayCompleted} {todayGoal - todayCompleted === 1 ? "zadatak" : "zadatka"} do cilja
                 {/if}
               </span>
               <span class="text-muted-foreground text-xs">{Math.round(tweenProgress.current)}%</span>
@@ -344,7 +346,7 @@
 
         <div class="mt-6 rounded-lg bg-primary/5 border border-primary/20 p-4">
           <p class="text-sm font-medium text-primary">
-            {#if todayCompleted >= dailyGoal}
+            {#if todayCompleted >= todayGoal}
               💪 Bravo! Produžio si niz.
             {:else if currentStreak >= 10}
               🔥 Nevjerojatno! Već {currentStreak} dana zaredom — samo nastavi!
@@ -355,7 +357,7 @@
             {/if}
           </p>
           <p class="text-muted-foreground text-xs mt-1">
-            {#if todayCompleted >= dailyGoal}
+            {#if todayCompleted >= todayGoal}
               Vrati se sutra i produži svoj niz.
             {:else if longestStreak === currentStreak}
               Postavi novi rekord danas!
@@ -453,7 +455,7 @@
           {/if}
         </h2>
         <p class="text-muted-foreground mt-1">
-          {#if todayCompleted >= dailyGoal}
+          {#if todayCompleted >= todayGoal}
             Vrati se sutra i postavi novi rekord!
           {:else if currentStreak === longestStreak}
             Postavi novi rekord danas!
