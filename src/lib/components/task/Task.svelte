@@ -90,6 +90,10 @@
     if (!task) return;
 
     open = null;
+    window.MathJax = {
+      options: { enableMenu: false },
+    };
+
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
     script.async = true;
