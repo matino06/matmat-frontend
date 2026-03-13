@@ -66,25 +66,25 @@
   }
 
   function getDeviceType() {
-  const ua = navigator.userAgent;
+    const ua = navigator.userAgent;
 
-  if (/iPad/i.test(ua) || ((/Mac/i.test(ua)) && navigator.maxTouchPoints > 1)) {
-    return "ipad";
+    if (/iPad/i.test(ua) || ((/Mac/i.test(ua)) && navigator.maxTouchPoints > 1)) {
+      return "ipad";
+    }
+
+    if (/iPhone/i.test(ua)) return "iphone";
+
+    if (/Android/i.test(ua)) {
+      if (/Mobile/i.test(ua)) return "android-phone";
+      return "android-tablet";
+    }
+
+    if (/Mac/i.test(ua)) return "mac";
+    if (/Windows/i.test(ua)) return "windows";
+    if (/Linux/i.test(ua)) return "linux";
+
+    return "desktop";
   }
-
-  if (/iPhone/i.test(ua)) return "iphone";
-
-  if (/Android/i.test(ua)) {
-    if (/Mobile/i.test(ua)) return "android-phone";
-    return "android-tablet";
-  }
-
-  if (/Mac/i.test(ua)) return "mac";
-  if (/Windows/i.test(ua)) return "windows";
-  if (/Linux/i.test(ua)) return "linux";
-
-  return "desktop";
-}
 
   $effect(() => {
     if (!task) return;

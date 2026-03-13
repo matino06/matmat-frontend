@@ -17,6 +17,7 @@
   import { Dumbbell } from "@lucide/svelte/icons";
   import TempoSelector from "$lib/components/tempoSelector/TempoSelector.svelte";
   import GoalProgressToast from "$lib/components/goalProgressToast/GoalProgressToast.svelte";
+  import FormulaSheet from "$lib/components/formulaSheet/FormulaSheet.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
@@ -144,6 +145,7 @@
 />
 
 <TaskTip/>
+<FormulaSheet />
 
 <div
     class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"
