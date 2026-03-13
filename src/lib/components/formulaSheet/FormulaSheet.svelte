@@ -73,8 +73,8 @@
       </div>
     </div>
 
-    <!-- PDF embed -->
-    <div class="relative h-full w-full">
+    <!-- PDF embed — desktop -->
+    <div class="relative hidden min-h-0 flex-1 w-full sm:flex">
       <iframe
         src="/pdfs/MAT-FORMULE.pdf"
         class="h-full w-full"
@@ -84,6 +84,23 @@
       {#if dragging}
         <div class="absolute inset-0" style="cursor: col-resize;"></div>
       {/if}
+    </div>
+
+    <!-- Mobile fallback — iframe ne može scrollati unutar fixed containera na iOS -->
+    <div class="flex flex-1 flex-col items-center justify-center gap-5 p-8 sm:hidden">
+      <BookOpen class="h-12 w-12 text-muted-foreground" />
+      <p class="text-center text-sm text-muted-foreground">
+        Ugrađeni prikaz PDFa nije podržan na mobilnim uređajima.
+      </p>
+      <a
+        href="/pdfs/MAT-FORMULE.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow transition hover:bg-primary/90"
+      >
+        <ExternalLink class="h-4 w-4" />
+        Otvori formule
+      </a>
     </div>
 
     <!-- Resize handle -->
