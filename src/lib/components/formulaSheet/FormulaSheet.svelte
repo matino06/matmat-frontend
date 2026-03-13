@@ -3,6 +3,31 @@
   import { slide } from "svelte/transition";
 
   let open = $state(false);
+  let width = $state(480);
+  let dragging = $state(false);
+
+  function onDragStart(e) {
+    dragging = true;
+    e.preventDefault();
+
+    function onMove(e) {
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      width = Math.min(Math.max(clientX, 280), window.innerWidth - 60);
+    }
+
+    function onEnd() {
+      dragging = false;
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onEnd);
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onEnd);
+    }
+
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("touchmove", onMove, { passive: true });
+    window.addEventListener("touchend", onEnd);
+  }
 </script>
 
 <!-- Floating toggle button -->
@@ -19,7 +44,8 @@
 {#if open}
   <div
     transition:slide={{ axis: "x", duration: 300 }}
-    class="fixed left-0 top-0 z-40 flex h-full w-full flex-col bg-background shadow-2xl sm:w-[480px] md:w-[560px]"
+    class="fixed left-0 top-0 z-40 flex h-full flex-col bg-background shadow-2xl"
+    style="width: min({width}px, 100vw)"
   >
     <!-- Header -->
     <div class="flex items-center justify-between border-b px-4 py-3 shrink-0">
@@ -48,11 +74,28 @@
     </div>
 
     <!-- PDF embed -->
-    <iframe
-      src="/pdfs/MAT-FORMULE.pdf"
-      class="h-full w-full"
-      title="Tablice i formule"
-    ></iframe>
+    <div class="relative h-full w-full">
+      <iframe
+        src="/pdfs/MAT-FORMULE.pdf"
+        class="h-full w-full"
+        title="Tablice i formule"
+      ></iframe>
+      <!-- Overlay during drag - prevents iframe from stealing mouse events -->
+      {#if dragging}
+        <div class="absolute inset-0" style="cursor: col-resize;"></div>
+      {/if}
+    </div>
+
+    <!-- Resize handle -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div
+      class="absolute right-0 top-0 h-full w-1.5 cursor-col-resize transition-colors hover:bg-primary/30 {dragging ? 'bg-primary/40' : ''}"
+      onmousedown={onDragStart}
+      ontouchstart={onDragStart}
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Promijeni širinu"
+    ></div>
   </div>
 
   <!-- Backdrop (mobile) -->
