@@ -51,13 +51,27 @@ An integrated AI assistant allows students to:
 
 On the **Progress** page, students can clearly see:
 
-- Their overall knowledge percentage
-- Which chapters are unlocked or locked
-- How close they are to full exam readiness
+- Exam readiness ring showing overall percentage
+- Number of tasks scheduled for today
+- Today's and upcoming tasks grouped by learning objective
+- All learning objectives grouped by field (e.g. Algebra, Geometry), with mastery status
 
 Reaching **100%** means the student has covered all material required for the math matura.
 
-![Progress dashboard](images/progress_dark.png)
+![Progress dashboard](images/progress_page_dark.png)
+
+---
+
+### 🔥 Goals & Streaks
+
+On the **Goals** page, students can track their consistency:
+
+- Set a daily task goal
+- View a full activity calendar from the registration date to today
+- See current and longest streak
+- Track total active days and tasks completed today vs. goal
+
+![Goals dashboard](images/goals_page_dark.png)
 
 ---
 
@@ -69,6 +83,12 @@ Problems are organized so that students naturally progress:
 - To more complex and exam-level tasks
 
 This ensures a smooth learning curve without overwhelming the student.
+
+---
+
+### 📄 Formula Sheet
+
+A floating **Formule** button on the tasks page opens a resizable side panel with the official matura formula sheet (tablice i formule), so students can reference formulas without leaving the page.
 
 ---
 
