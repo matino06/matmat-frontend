@@ -30,7 +30,6 @@
       : 0
   );
 
-
   async function fetchUserGoal() {
     const response = await apiClient(
         "/user-goal",
@@ -50,7 +49,7 @@
     }
     
     totalDaysActive = calendarDays.filter(day => day.completed > 0).length;
-    registrationDate = res.registrationDate;
+    registrationDate = parseLocalDate(res.registrationDate);
     findCurrentAndLongestStreak();
   }
 
@@ -88,33 +87,46 @@
     currentStreak = current;
   }
 
+  function parseLocalDate(dateStr) {
+    if (!dateStr) return null;
+    if (dateStr instanceof Date) return dateStr;
+    const [year, month, day] = String(dateStr).split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  function toLocalKey(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
+
   function buildCalendarDays(rawDays) {
     if (!rawDays || rawDays.length === 0) return [];
 
-    const dates = rawDays.map(d => new Date(d.date));
-    const minDate = new Date(Math.min(...dates));
-    const maxDate = new Date();
-
     const dayMap = {};
     for (const d of rawDays) {
-      dayMap[d.date] = d;
+      const date = parseLocalDate(d.date);
+      const key = toLocalKey(date);
+      dayMap[key] = { ...d, date };
     }
+
+    let minDate = new Date(Math.min(...Object.values(dayMap).map(d => d.date)));
+    const maxDate = new Date();
 
     if (registrationDate) {
-      const regKey = new Date(registrationDate).toISOString().slice(0, 10);
+      const regKey = toLocalKey(registrationDate);
       if (!dayMap[regKey]) {
-        dayMap[regKey] = { date: new Date(registrationDate), goalMet: false, partial: false, completed: 0, goal: dailyGoal };
-
-        if (new Date(registrationDate) < minDate) {
-          minDate.setTime(new Date(registrationDate).getTime());
-        }
+        dayMap[regKey] = { date: registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal };
+      }
+      if (registrationDate < minDate) {
+        minDate = new Date(registrationDate);
       }
     }
+
+    minDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
 
     const allDays = [];
     const cursor = new Date(minDate);
     while (cursor <= maxDate) {
-      const key = cursor.toISOString().slice(0, 10);
+      const key = toLocalKey(cursor);
       if (dayMap[key]) {
         allDays.push({ ...dayMap[key], date: new Date(cursor) });
       } else {
