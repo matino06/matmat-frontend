@@ -7,7 +7,14 @@
 
   let { task } = $props();
 
-  let messages = $state([]);
+  let messages = $state([
+    {
+      id: 0,
+      avatarUrl: "/images/AIAvatar.png",
+      messages: ["Bok! Imaš pitanje o ovom zadatku? Slobodno pitaj — tu sam da pomognem. 🙂"],
+      type: "ai",
+    },
+  ]);
   let newMessage = $state("");
   let isChatOpen = $state(true);
   let isTyping = $state(false);
@@ -298,14 +305,6 @@
 
   <!-- Messages -->
   <div bind:this={boardEl} class="flex-1 space-y-5 overflow-y-auto px-5 py-5">
-    {#if messages.length === 0}
-      <div class="flex h-full flex-col items-center justify-center gap-3 text-center">
-        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-primary/40">
-          <Bot size={24} />
-        </div>
-        <p class="text-xs font-medium text-muted-foreground">Postavi pitanje o ovom zadatku</p>
-      </div>
-    {/if}
 
     {#each messages as message (message.id)}
       {#if message.type === "me"}
@@ -365,7 +364,7 @@
     <div class="mt-3 flex items-center justify-between">
       <div class="flex gap-2">
         <button
-          onclick={() => { messages = []; }}
+          onclick={() => { messages = [{ id: 0, avatarUrl: "/images/AIAvatar.png", messages: ["Bok! Imaš pitanje o ovom zadatku? Slobodno pitaj — tu sam da pomognem. 🙂"], type: "ai" }]; }}
           class="rounded-lg bg-muted p-2 text-muted-foreground transition-colors hover:bg-accent"
           title="Očisti povijest"
         >
@@ -409,15 +408,6 @@
     <div transition:slide={{ duration: 200 }} class="border-t border-border">
       <!-- Messages -->
       <div class="h-80 space-y-5 overflow-y-auto px-4 py-4">
-        {#if messages.length === 0}
-          <div class="flex h-full flex-col items-center justify-center gap-2 text-center">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-primary/40">
-              <Bot size={20} />
-            </div>
-            <p class="text-xs font-medium text-muted-foreground">Postavi pitanje o ovom zadatku</p>
-          </div>
-        {/if}
-
         {#each messages as message (message.id)}
           {#if message.type === "me"}
             <div class="flex flex-col items-end gap-1.5">
