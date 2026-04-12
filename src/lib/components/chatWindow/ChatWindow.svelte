@@ -1,20 +1,22 @@
 <script>
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
+  import { slide } from "svelte/transition";
   import { userData } from "$lib/store/user.svelte";
   import { md } from "$lib/utils/markdownRenderer";
+  import { ChevronDown, ChevronRight, Send, Bot, Clock } from "@lucide/svelte/icons";
 
   let { task } = $props();
 
   let messages = $state([]);
   let newMessage = $state("");
-  let isChatOpen = $state(false);
+  let isChatOpen = $state(true);
   let isTyping = $state(false);
   let isWaitingForAI = $state(false);
+  let boardEl = $state(null);
 
   function normalizeMath(text) {
     if (!text) return "";
-    text = text.replace(/\\/g, "\\\\");
-    return text;
+    return text.replace(/\\/g, "\\\\");
   }
 
   async function addMessage() {
@@ -25,7 +27,6 @@
       {
         id: Date.now(),
         avatarUrl: userData.user.photoURL,
-        nickName: userData.user.displayName,
         messages: [newMessage],
         type: "me",
       },
@@ -38,9 +39,7 @@
 
     setTimeout(async () => {
       await addAIResponse(messageToSend);
-      isTyping = false;
-      isWaitingForAI = false;
-    }, 1000);
+    }, 800);
   }
 
   async function addAIResponse(userQuestion) {
@@ -49,8 +48,7 @@
         .slice(0, -1)
         .map((msg) => {
           const role = msg.type === "me" ? "Student" : "AI Assistant";
-          const content = msg.messages.join("\n");
-          return `${role}: ${content}`;
+          return `${role}: ${msg.messages.join("\n")}`;
         })
         .join("\n\n");
 
@@ -72,15 +70,11 @@
 
       const response = await fetch("/api/ai", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ systemPrompt }),
       });
 
       const data = await response.json();
-      console.log(data);
-
       const aiResponse =
         data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("\n") ||
         data?.error?.message ||
@@ -91,27 +85,21 @@
         {
           id: Date.now() + 1,
           avatarUrl: "/images/AIAvatar.png",
-          nickName: "MatMat AI Assistant",
           messages: [aiResponse],
           type: "ai",
         },
       ];
     } catch (error) {
       console.error("Error fetching AI response:", error);
-
       messages = [
         ...messages,
         {
           id: Date.now() + 1,
           avatarUrl: "/images/AIAvatar.png",
-          nickName: "MatMat AI Assistant",
-          messages: [
-            "Oprosti, došlo je do pogreške. Molim, pokušaj ponovno kasnije.",
-          ],
+          messages: ["Oprosti, došlo je do pogreške. Molim, pokušaj ponovno kasnije."],
           type: "ai",
         },
       ];
-      isWaitingForAI = false;
     } finally {
       isTyping = false;
       isWaitingForAI = false;
@@ -127,634 +115,332 @@
 
   function toggleChat() {
     isChatOpen = !isChatOpen;
-
-    if (isChatOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
   }
 
-  function closeChat() {
-    isChatOpen = false;
-    document.body.style.overflow = "";
+  let panelWidth = $state(520);
+  let isResizing = $state(false);
+
+  function startResize(e) {
+    e.preventDefault();
+    isResizing = true;
+
+    const onMouseMove = (e) => {
+      const newWidth = window.innerWidth - e.clientX;
+      panelWidth = Math.max(320, Math.min(860, newWidth));
+    };
+
+    document.body.style.cursor = "col-resize";
+
+    const onMouseUp = () => {
+      isResizing = false;
+      document.body.style.cursor = "";
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
   }
 
-  // MathJax configuration fetch
   onMount(() => {
     if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"], ["\\(", "\\)"]],
+          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+          processEscapes: true,
+        },
+        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"] },
+        startup: {
+          typeset: false,
+          ready: () => { window.MathJax.startup.defaultReady(); },
+        },
+      };
       const script = document.createElement("script");
       script.id = "MathJax-script";
       script.async = true;
-      script.src =
-        "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-
-      // Postavi konfiguraciju PRIJE učitavanja skripte
-      window.MathJax = {
-        tex: {
-          inlineMath: [
-            ["$", "$"],
-            ["\\(", "\\)"],
-          ],
-          displayMath: [
-            ["$$", "$$"],
-            ["\\[", "\\]"],
-          ],
-          processEscapes: true,
-        },
-        options: {
-          skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
-        },
-        startup: {
-          typeset: false, // Spriječi automatsko typesetanje dok ne želimo
-          ready: () => {
-            console.log("✅ MathJax loaded and ready");
-            window.MathJax.startup.defaultReady();
-          },
-        },
-      };
-
+      script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
       document.head.appendChild(script);
     }
   });
 
   $effect(() => {
     if (messages.length === 0) return;
-    if (!isChatOpen) return;
 
-    const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
-    script.async = true;
-    script.onload = () => {
-      if (window.MathJax) {
+    setTimeout(() => {
+      if (window.MathJax?.typesetPromise) {
         window.MathJax.typesetPromise();
       }
-    };
-    document.head.appendChild(script);
-
-    // const processMathJax = async () => {
-    //   await tick(); // Wait for DOM to update
-
-    //   if (window.MathJax?.typesetPromise) {
-    //     const chatBoard = document.querySelector(".chat__conversation-board");
-    //     if (chatBoard) {
-    //       try {
-    //         await window.MathJax.typesetPromise([chatBoard]);
-    //       } catch (err) {
-    //         console.error("MathJax typeset failed:", err);
-    //       }
-    //     }
-    //   }
-    // };
-
-    const smartScrollToBottom = () => {
-      const chatBoard = document.querySelector(".chat__conversation-board");
-      setTimeout(() => {
-        chatBoard.scrollTop = chatBoard.scrollHeight;
-      }, 100);
-    };
-
-    // Run with small delay
-    setTimeout(() => {
-      // processMathJax();
-      smartScrollToBottom();
-    }, 50);
+      if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
+    }, 150);
   });
-
-  // Special effect for chat opening
-  // $effect(() => {
-  //   if (isChatOpen && messages.length > 0) {
-  //     setTimeout(async () => {
-  //       await tick();
-
-  //       if (window.MathJax?.typesetPromise) {
-  //         const chatBoard = document.querySelector(".chat__conversation-board");
-  //         if (chatBoard) {
-  //           try {
-  //             await window.MathJax.typesetPromise([chatBoard]);
-  //           } catch (err) {
-  //             console.error("MathJax typeset failed on chat open:", err);
-  //           }
-  //         }
-  //       }
-  //     }, 200);
-  //   }
-  // });
 </script>
 
-<svelte:head>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;1400&display=swap"
-    rel="stylesheet"
-  />
-</svelte:head>
+<!-- ===================== DESKTOP SIDEBAR ===================== -->
+<!-- Tab trigger -->
+<button
+  onclick={toggleChat}
+  class="fixed right-0 top-1/2 z-50 -translate-y-1/2 cursor-pointer flex-col items-center gap-2 rounded-l-xl border border-r-0 border-border bg-background px-3 py-5 text-primary shadow-lg transition-all hover:bg-muted active:scale-95 {isChatOpen ? 'hidden' : 'hidden lg:flex'}"
+  aria-label="Otvori AI chat"
+>
+  <Bot size={18} />
+  <span class="tab-label">AI</span>
+</button>
 
-<!-- Floating Chat Button -->
-<div class="floating-chat-button" on:click={toggleChat}>
-  <span class="text-xl text-white">AI</span>
-</div>
+<!-- Sidebar panel -->
+<div
+  class="fixed right-0 top-[60px] z-40 hidden h-[calc(100vh-60px)] flex-col border-l border-border bg-background shadow-none dark:shadow-[0_0_24px_rgba(255,32,86,0.06)] transition-transform duration-300 lg:flex {isChatOpen
+    ? 'translate-x-0'
+    : 'translate-x-full'} {isResizing ? 'select-none' : ''}"
+  style="width: {panelWidth}px"
+>
+  <!-- Resize handle -->
+  <div
+    class="absolute left-0 top-0 h-full w-1.5 cursor-col-resize transition-colors hover:bg-primary/20 {isResizing ? 'bg-primary/30' : ''}"
+    onmousedown={startResize}
+    role="separator"
+    aria-label="Promijeni širinu"
+  ></div>
 
-<!-- Chat Overlay -->
-{#if isChatOpen}
-  <div class="chat-overlay" on:click={closeChat}>
-    <div class="chat-container" on:click|stopPropagation>
-      <div class="chat-header">
-        <h3>MatMat AI Assistant</h3>
-        <button class="close-button" on:click={closeChat}>×</button>
-      </div>
-
-      <div id="chat">
-        <div class="chat__conversation-board">
-          {#each messages as message (message.id)}
-            <div
-              class="chat__conversation-board__message-container {message.type ===
-              'me'
-                ? 'reversed'
-                : ''}"
-            >
-              <div class="chat__conversation-board__message__person">
-                <div class="chat__conversation-board__message__person__avatar">
-                  <img src={message.avatarUrl} alt={message.nickName} />
-                </div>
-                <span
-                  class="chat__conversation-board__message__person__nickname"
-                  >{message.nickName}</span
-                >
-              </div>
-              <div class="chat__conversation-board__message__context">
-                {#each message.messages as text}
-                  <div class="chat__conversation-board__message__bubble">
-                    {#if message.type === "ai"}
-                      <div class="prose prose-sm dark:prose-invert ai-message">
-                        {@html md.render(normalizeMath(text))}
-                      </div>
-                    {:else}
-                      <span>{text}</span>
-                    {/if}
-                  </div>
-                {/each}
-              </div>
-            </div>
-          {/each}
-          <!-- Typing indicator -->
-          {#if isTyping}
-            <div class="chat__conversation-board__message-container">
-              <div class="chat__conversation-board__message__person">
-                <div class="chat__conversation-board__message__person__avatar">
-                  <img src="/images/AIAvatar.png" alt="AI Assistant" />
-                </div>
-                <span
-                  class="chat__conversation-board__message__person__nickname"
-                  >MatMat AI Assistant</span
-                >
-              </div>
-              <div class="chat__conversation-board__message__context">
-                <div class="chat__conversation-board__message__bubble">
-                  <div class="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {/if}
+  <!-- Header -->
+  <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-4">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
+          <Bot size={18} />
         </div>
+        <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-secondary dark:border-background bg-green-500"></div>
+      </div>
+      <div>
+        <div class="text-sm font-black tracking-tight text-primary">MatMat AI</div>
+        <div class="text-[10px] font-bold uppercase tracking-wider text-green-400">Online</div>
+      </div>
+    </div>
+    <button
+      onclick={toggleChat}
+      class="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted"
+      aria-label="Zatvori"
+    >
+      <ChevronRight size={16} />
+    </button>
+  </div>
 
-        <div class="chat__conversation-panel">
-          <div class="chat__conversation-panel__container">
-            <input
-              bind:value={newMessage}
-              on:keypress={handleKeyPress}
-              class="chat__conversation-panel__input panel-item"
-              class:disabled={isWaitingForAI}
-              placeholder="Ask anything"
-              disabled={isWaitingForAI}
-            />
+  <!-- Messages -->
+  <div bind:this={boardEl} class="flex-1 space-y-5 overflow-y-auto px-5 py-5">
+    {#if messages.length === 0}
+      <div class="flex h-full flex-col items-center justify-center gap-3 text-center">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-primary/40">
+          <Bot size={24} />
+        </div>
+        <p class="text-xs font-medium text-muted-foreground">Postavi pitanje o ovom zadatku</p>
+      </div>
+    {/if}
 
-            <button
-              on:click={addMessage}
-              class="chat__conversation-panel__button panel-item btn-icon send-message-button"
-              class:disabled={isWaitingForAI}
-              disabled={isWaitingForAI}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="22" y1="2" x2="11" y2="13" />
-                <polygon points="22 2 15 22 11 13 2 9 22 2" />
-              </svg>
-            </button>
+    {#each messages as message (message.id)}
+      {#if message.type === "me"}
+        <div class="flex flex-col items-end gap-1.5">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Ti</span>
+          <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-sm">
+            {message.messages[0]}
+          </div>
+        </div>
+      {:else}
+        <div class="flex gap-3">
+          <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
+            <Bot size={14} />
+          </div>
+          <div class="prose prose-sm min-w-0 flex-1 pt-0.5 dark:prose-invert">
+            {@html md.render(normalizeMath(message.messages[0]))}
+          </div>
+        </div>
+      {/if}
+    {/each}
+
+    {#if isTyping}
+      <div class="flex gap-3">
+        <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
+          <Bot size={14} />
+        </div>
+        <div class="pt-1.5">
+          <div class="typing-dots">
+            <span></span><span></span><span></span>
           </div>
         </div>
       </div>
+    {/if}
+  </div>
+
+  <!-- Input -->
+  <div class="shrink-0 px-5 py-5">
+    <div class="group relative">
+      <textarea
+        bind:value={newMessage}
+        onkeypress={handleKeyPress}
+        placeholder="Pitaj bilo što..."
+        disabled={isWaitingForAI}
+        rows="1"
+        class="w-full resize-none rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3.5 pl-4 pr-12 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors"
+      ></textarea>
+      <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
+      <button
+        onclick={addMessage}
+        disabled={isWaitingForAI}
+        class="absolute right-3.5 top-1/2 -translate-y-1/2 text-primary transition-colors hover:text-primary/70 disabled:opacity-40"
+        aria-label="Pošalji"
+      >
+        <Send size={16} />
+      </button>
+    </div>
+    <div class="mt-3 flex items-center justify-between">
+      <div class="flex gap-2">
+        <button
+          onclick={() => { messages = []; }}
+          class="rounded-lg bg-muted p-2 text-muted-foreground transition-colors hover:bg-accent"
+          title="Očisti povijest"
+        >
+          <Clock size={14} />
+        </button>
+      </div>
+      <span class="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40">MatMat AI</span>
     </div>
   </div>
-{/if}
+</div>
+
+
+<!-- ===================== MOBILE INLINE PANEL ===================== -->
+<div class="mb-8 overflow-hidden rounded-xl border border-border bg-background shadow-none dark:shadow-[0_0_16px_rgba(255,32,86,0.04)] lg:hidden">
+  <!-- Header / trigger -->
+  <button
+    onclick={toggleChat}
+    class="flex w-full items-center justify-between px-4 py-3 transition-colors hover:bg-muted/50"
+  >
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
+          <Bot size={15} />
+        </div>
+        <div class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-secondary dark:border-background bg-green-500"></div>
+      </div>
+      <div class="text-left">
+        <p class="text-sm font-black tracking-tight text-primary">MatMat AI</p>
+        <p class="text-[10px] font-bold uppercase tracking-wider text-green-400">Online</p>
+      </div>
+    </div>
+    <ChevronDown
+      size={16}
+      class="shrink-0 text-muted-foreground transition-transform duration-200 {isChatOpen
+        ? 'rotate-180'
+        : ''}"
+    />
+  </button>
+
+  {#if isChatOpen}
+    <div transition:slide={{ duration: 200 }} class="border-t border-border">
+      <!-- Messages -->
+      <div class="h-80 space-y-5 overflow-y-auto px-4 py-4">
+        {#if messages.length === 0}
+          <div class="flex h-full flex-col items-center justify-center gap-2 text-center">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-primary/40">
+              <Bot size={20} />
+            </div>
+            <p class="text-xs font-medium text-muted-foreground">Postavi pitanje o ovom zadatku</p>
+          </div>
+        {/if}
+
+        {#each messages as message (message.id)}
+          {#if message.type === "me"}
+            <div class="flex flex-col items-end gap-1.5">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Ti</span>
+              <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-sm">
+                {message.messages[0]}
+              </div>
+            </div>
+          {:else}
+            <div class="flex gap-3">
+              <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
+                <Bot size={14} />
+              </div>
+              <div class="prose prose-sm min-w-0 flex-1 pt-0.5 dark:prose-invert">
+                {@html md.render(normalizeMath(message.messages[0]))}
+              </div>
+            </div>
+          {/if}
+        {/each}
+
+        {#if isTyping}
+          <div class="flex gap-3">
+            <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
+              <Bot size={14} />
+            </div>
+            <div class="pt-1.5">
+              <div class="typing-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        {/if}
+      </div>
+
+      <!-- Input -->
+      <div class="border-t border-border px-4 py-4">
+        <div class="group relative">
+          <textarea
+            bind:value={newMessage}
+            onkeypress={handleKeyPress}
+            placeholder="Pitaj bilo što..."
+            disabled={isWaitingForAI}
+            rows="1"
+            class="w-full resize-none rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3 pl-4 pr-11 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors"
+          ></textarea>
+          <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
+          <button
+            onclick={addMessage}
+            disabled={isWaitingForAI}
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-primary transition-colors hover:text-primary/70 disabled:opacity-40"
+            aria-label="Pošalji"
+          >
+            <Send size={15} />
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
+</div>
 
 <style>
-  /* === FLOATING CHAT BUTTON === */
-  .floating-chat-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--primary);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-
-  .floating-chat-button {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .floating-chat-button:hover {
-    transform: scale(1.1);
-  }
-
-  .floating-chat-button svg {
-    stroke: var(--primary-foreground);
-    width: 24px;
-    height: 24px;
-  }
-
-  /* === CHAT OVERLAY === */
-  .chat-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .chat-container {
-    width: 90%;
-    max-width: 690px;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .chat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    background: var(--card);
-    border-top-left-radius: var(--radius);
-    border-top-right-radius: var(--radius);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .chat-header h3 {
-    margin: 0;
-    color: var(--card-foreground);
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .close-button {
-    background: none;
-    border: none;
-    color: var(--muted-foreground);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .close-button:hover {
-    color: var(--foreground);
-  }
-
-  /* === CHAT WRAPPER === */
-  #chat {
-    background: var(--background);
-    box-sizing: border-box;
-    padding: 1em;
-    border-bottom-left-radius: var(--radius);
-    border-bottom-right-radius: var(--radius);
-    position: relative;
-    overflow: hidden;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* === BUTTON ICON === */
-  #chat .btn-icon {
-    position: relative;
-    cursor: pointer;
-  }
-
-  #chat .btn-icon svg {
-    stroke: var(--foreground);
-    fill: var(--foreground);
-    width: 50%;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  /* DISABLED ELEMENTS STYLE */
-  .chat__conversation-panel__input.disabled,
-  .chat__conversation-panel__input:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .send-message-button.disabled,
-  .send-message-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-  }
-
-  .send-message-button.disabled:hover,
-  .send-message-button:disabled:hover {
-    background: var(--primary);
-    opacity: 0.6;
-    transform: none !important;
-  }
-
-  /* === CHAT CONVERSATION === */
-  .chat__conversation-board {
-    padding: 1em 0 2em;
-    overflow: auto;
-    flex: 1;
-  }
-
-  /* REVERSED MESSAGES (User messages) */
-  .chat__conversation-board__message-container.reversed {
-    flex-direction: row-reverse;
-  }
-
-  .chat__conversation-board__message-container.reversed
-    .chat__conversation-board__message__person {
-    margin: 0 0 0 1.2em;
-  }
-
-  /* MESSAGE CONTAINER */
-  .chat__conversation-board__message-container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-  }
-
-  .chat__conversation-board__message-container:not(:last-child) {
-    margin: 0 0 2em 0;
-  }
-
-  /* PERSON (AVATAR + NAME) */
-  .chat__conversation-board__message__person {
-    text-align: center;
-    margin: 0 1.2em 0 0;
-  }
-
-  .chat__conversation-board__message__person__avatar {
-    height: 35px;
-    width: 35px;
-    overflow: hidden;
-    border-radius: 50%;
-    user-select: none;
-    position: relative;
-    border: 2px solid var(--border);
-  }
-
-  .chat__conversation-board__message__person__avatar img {
-    height: 100%;
-    width: auto;
-  }
-
-  .chat__conversation-board__message__person__nickname {
+  .tab-label {
     font-size: 9px;
-    color: var(--muted-foreground);
-    user-select: none;
-    display: none;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
   }
 
-  /* MESSAGE CONTEXT */
-  .chat__conversation-board__message__context {
-    max-width: 75%;
-    align-self: flex-end;
-  }
-
-  /* MESSAGE BUBBLE */
-  .chat__conversation-board__message__bubble span {
-    width: fit-content;
-    display: inline-table;
-    word-wrap: break-word;
-    background: var(--muted);
-    font-size: 13px;
-    color: var(--accent-foreground);
-    padding: 0.5em 0.8em;
-    white-space: pre-wrap;
-    line-height: 1.5;
-    border-radius: var(--radius);
-    font-family: "Lato", sans-serif;
-    border: 1px solid var(--border);
-  }
-
-  .chat__conversation-board__message__bubble span br {
-    display: block;
-    content: "";
-    margin-bottom: 0.3em;
-  }
-
-  /* User message bubble styling */
-  .chat__conversation-board__message-container.reversed
-    .chat__conversation-board__message__bubble
-    span {
-    background: var(--primary);
-    color: var(--primary-foreground);
-    border-color: var(--primary);
-  }
-
-  .chat__conversation-board__message__bubble:not(:last-child) {
-    margin: 0 0 0.3em;
-  }
-
-  /* CONVERSATION PANEL */
-  .chat__conversation-panel {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 0 1em;
-    height: 55px;
-    margin: 0.5em 0 0;
-    border: 1px solid var(--border);
-  }
-
-  .chat__conversation-panel__container {
+  .typing-dots {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-  }
-
-  .chat__conversation-panel__container .panel-item:not(:last-child) {
-    margin: 0 1em 0 0;
-  }
-
-  /* PANEL BUTTONS */
-  .chat__conversation-panel__button {
-    background: transparent;
-    height: 20px;
-    width: 30px;
-    border: 0;
-    padding: 0;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .chat__conversation-panel .send-message-button {
-    background: var(--primary);
-    height: 30px;
-    margin: 10px 0;
-    min-width: 30px;
-    border-radius: 50%;
-    transition: 0.3s ease;
-  }
-
-  .chat__conversation-panel .send-message-button:hover {
-    background: var(--primary);
-    opacity: 0.9;
-  }
-
-  .chat__conversation-panel .send-message-button:active {
-    transform: scale(0.97);
-  }
-
-  .chat__conversation-panel .send-message-button svg {
-    margin: 1px -1px;
-    stroke: var(--primary-foreground);
-  }
-
-  /* INPUT FIELD */
-  .chat__conversation-panel__input {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    position: relative;
-    color: var(--foreground);
-    font-size: 13px;
-    background: transparent;
-    border: 0;
-    font-family: "Lato", sans-serif;
-    resize: none;
-  }
-
-  .chat__conversation-panel__input::placeholder {
-    color: var(--muted-foreground);
-  }
-
-  /* === RESPONSIVE === */
-  @media only screen and (max-width: 600px) {
-    .chat-container {
-      width: 95%;
-      height: 95vh;
-    }
-  }
-
-  /* AI MESSAGE PROSE BUBBLE */
-  .chat__conversation-board__message__bubble .ai-message {
-    width: fit-content;
-    background: var(--muted);
-    color: var(--accent-foreground);
-    padding: 0.5em 0.8em;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    font-size: 13px;
-    font-family: "Lato", sans-serif;
-    max-width: none;
-  }
-
-  /* MATH FORMULA STYLE */
-  .mjx-chtml {
-    outline: none;
-  }
-
-  .MathJax {
-    font-size: 1.1em !important;
-  }
-
-  /* Typing indicator styles */
-  .typing-indicator {
-    display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 0;
-    line-height: 1;
   }
 
-  .typing-indicator span {
-    width: 4px;
-    aspect-ratio: 1 / 1;
+  .typing-dots span {
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background-color: var(--muted-foreground);
     display: block;
-    animation: typing 1.4s infinite ease-in-out both;
+    animation: bounce 1.4s infinite ease-in-out both;
   }
 
-  .typing-indicator span:nth-child(1) {
-    animation-delay: -0.32s;
+  .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
   }
 
-  .typing-indicator span:nth-child(2) {
-    animation-delay: -0.16s;
-  }
-
-  @keyframes typing {
-    0%,
-    80%,
-    100% {
-      transform: scale(0.8);
-      opacity: 0.5;
-    }
-    40% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  .chat__conversation-board__message__bubble .typing-indicator {
-    margin: 4px 0;
-  }
+  :global(.prose p:first-child) { margin-top: 0; }
+  :global(.prose p:last-child) { margin-bottom: 0; }
+  :global(.mjx-chtml) { outline: none; }
 </style>
