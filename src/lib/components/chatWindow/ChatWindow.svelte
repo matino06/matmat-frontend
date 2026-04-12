@@ -43,6 +43,9 @@
   }
 
   async function addAIResponse(userQuestion) {
+    const aiMsgId = Date.now() + 1;
+    let displayInterval = null;
+
     try {
       const conversationHistory = messages
         .slice(0, -1)
@@ -74,33 +77,102 @@
         body: JSON.stringify({ systemPrompt }),
       });
 
-      const data = await response.json();
-      const aiResponse =
-        data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("\n") ||
-        data?.error?.message ||
-        "No response.";
+      if (!response.ok) {
+        const msg = response.status === 429
+          ? "Asistent je trenutno preopterećen — pokušaj opet za koji trenutak."
+          : "Došlo je do pogreške. Molim, pokušaj ponovo.";
+        throw new Error(msg);
+      }
 
+      // Add empty placeholder message
       messages = [
         ...messages,
-        {
-          id: Date.now() + 1,
-          avatarUrl: "/images/AIAvatar.png",
-          messages: [aiResponse],
-          type: "ai",
-        },
+        { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai" },
       ];
+      isTyping = false;
+
+      // pendingText: received from API but not yet shown
+      // displayedText: what the user sees right now
+      let pendingText = "";
+      let displayedText = "";
+      let streamDone = false;
+
+      // Display ticker — independent of stream speed
+      displayInterval = setInterval(() => {
+        if (pendingText.length === 0) return;
+        // Take a small batch of chars each tick for smoother rendering
+        const batch = pendingText.slice(0, 2);
+        pendingText = pendingText.slice(2);
+        displayedText += batch;
+        messages = messages.map((m) =>
+          m.id === aiMsgId ? { ...m, messages: [displayedText] } : m
+        );
+        if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
+      }, 22);
+
+      // Read stream as fast as possible — no awaits inside the loop
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const data = line.slice(6).trim();
+          if (!data) continue;
+          try {
+            const parsed = JSON.parse(data);
+            const chunk = parsed?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") ?? "";
+            if (chunk) pendingText += chunk;
+          } catch {
+            // incomplete JSON chunk, skip
+          }
+        }
+      }
+      streamDone = true;
+
+      // Wait for display ticker to drain remaining text
+      await new Promise((resolve) => {
+        const check = setInterval(() => {
+          if (pendingText.length === 0) {
+            clearInterval(check);
+            resolve();
+          }
+        }, 50);
+      });
+
+      clearInterval(displayInterval);
+      displayInterval = null;
+
+      // Typeset math once everything is shown
+      if (window.MathJax?.typesetPromise) {
+        await window.MathJax.typesetPromise();
+      }
     } catch (error) {
       console.error("Error fetching AI response:", error);
-      messages = [
-        ...messages,
-        {
-          id: Date.now() + 1,
-          avatarUrl: "/images/AIAvatar.png",
-          messages: ["Oprosti, došlo je do pogreške. Molim, pokušaj ponovno kasnije."],
-          type: "ai",
-        },
-      ];
+      if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
+      // Replace placeholder (if added) or append error message
+      const errorMsg = error.message || "Došlo je do pogreške. Molim, pokušaj ponovo.";
+      const hasPlaceholder = messages.some((m) => m.id === aiMsgId);
+      if (hasPlaceholder) {
+        messages = messages.map((m) =>
+          m.id === aiMsgId ? { ...m, messages: [errorMsg] } : m
+        );
+      } else {
+        messages = [
+          ...messages,
+          { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [errorMsg], type: "ai" },
+        ];
+      }
     } finally {
+      if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
       isTyping = false;
       isWaitingForAI = false;
     }
@@ -117,7 +189,7 @@
     isChatOpen = !isChatOpen;
   }
 
-  let panelWidth = $state(520);
+  let panelWidth = $state(620);
   let isResizing = $state(false);
 
   function startResize(e) {
@@ -165,14 +237,13 @@
   });
 
   $effect(() => {
-    if (messages.length === 0) return;
+    // Only track length so this doesn't fire on every streaming chunk
+    const len = messages.length;
+    if (len === 0) return;
 
     setTimeout(() => {
-      if (window.MathJax?.typesetPromise) {
-        window.MathJax.typesetPromise();
-      }
       if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
-    }, 150);
+    }, 50);
   });
 </script>
 
@@ -240,7 +311,7 @@
       {#if message.type === "me"}
         <div class="flex flex-col items-end gap-1.5">
           <span class="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Ti</span>
-          <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-sm">
+          <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
             {message.messages[0]}
           </div>
         </div>
@@ -249,7 +320,7 @@
           <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
             <Bot size={14} />
           </div>
-          <div class="prose prose-sm min-w-0 flex-1 pt-0.5 dark:prose-invert">
+          <div class="prose prose-base min-w-0 flex-1 pt-0.5 dark:prose-invert">
             {@html md.render(normalizeMath(message.messages[0]))}
           </div>
         </div>
@@ -351,7 +422,7 @@
           {#if message.type === "me"}
             <div class="flex flex-col items-end gap-1.5">
               <span class="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Ti</span>
-              <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-sm">
+              <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
                 {message.messages[0]}
               </div>
             </div>
@@ -360,7 +431,7 @@
               <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
                 <Bot size={14} />
               </div>
-              <div class="prose prose-sm min-w-0 flex-1 pt-0.5 dark:prose-invert">
+              <div class="prose prose-base min-w-0 flex-1 pt-0.5 dark:prose-invert">
                 {@html md.render(normalizeMath(message.messages[0]))}
               </div>
             </div>

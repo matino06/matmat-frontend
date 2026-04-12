@@ -1,11 +1,10 @@
 import { GEMINI_API_KEY } from "$env/static/private";
-import { json } from "@sveltejs/kit";
 
 export async function POST({ request }) {
     const { systemPrompt } = await request.json();
 
     const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse",
         {
             method: "POST",
             headers: {
@@ -22,6 +21,14 @@ export async function POST({ request }) {
         }
     );
 
-    const data = await response.json();
-    return json(data);
+    if (!response.ok) {
+        return new Response(response.body, { status: response.status });
+    }
+
+    return new Response(response.body, {
+        headers: {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+        }
+    });
 }
