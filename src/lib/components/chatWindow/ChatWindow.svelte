@@ -1,6 +1,7 @@
 <script>
   import { onMount, tick } from "svelte";
   import { userData } from "$lib/store/user.svelte";
+  import { md } from "$lib/utils/markdownRenderer";
 
   let { task } = $props();
 
@@ -10,31 +11,10 @@
   let isTyping = $state(false);
   let isWaitingForAI = $state(false);
 
-  function formatMessage(text) {
+  function normalizeMath(text) {
     if (!text) return "";
-
-    // First process bold and italic
-    text = text
-      .replace("\\\\frac", "\\frac")
-      .replace(
-        /\*\*(.*?)\*\*/g,
-        '<strong style="font-weight: 1400;">$1</strong>',
-      )
-      .replace(/\*(.*?)\*/g, "<em>$1</em>")
-      .replace(/`/g, "");
-
-    // Then process new lines and lists
-    return text
-      .split("\n")
-      .map((line) => {
-        const safeLine = line;
-        // Format lists (e.g., "1." or "•")
-        if (/^\s*(\d+\.|\-|\*|\•)\s+/.test(safeLine)) {
-          return `<div style="margin-left: 10px;">${safeLine}</div>`;
-        }
-        return safeLine;
-      })
-      .join("<br>");
+    text = text.replace(/\\/g, "\\\\");
+    return text;
   }
 
   async function addMessage() {
@@ -85,9 +65,10 @@
 
         Student's new question: ${userQuestion}
 
-        Answer clearly and simply, taking into account the entire conversation context. When responding with mathematical equations, 
-        use LaTeX format with \\( and \\) for inline mathematical expressions. Do not use single dollar signs 
-        $ for mathematical expressions, but you can use double dollar signs $$ $$.`;
+        Answer clearly and simply, taking into account the entire conversation context.
+        Format your response using Markdown: use **bold**, bullet lists, numbered lists, and headings where appropriate.
+        When responding with mathematical equations, use LaTeX format with \\( and \\) for inline mathematical expressions.
+        Do not use single dollar signs $ for mathematical expressions, but you can use double dollar signs $$ $$.`;
 
       const response = await fetch("/api/ai", {
         method: "POST",
@@ -97,12 +78,12 @@
         body: JSON.stringify({ systemPrompt }),
       });
 
-      console.log(response);
-
       const data = await response.json();
+      console.log(data);
 
       const aiResponse =
-        data.candidates[0].content.parts.map((p) => p.text).join("\n") ||
+        data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("\n") ||
+        data?.error?.message ||
         "No response.";
 
       messages = [
@@ -303,7 +284,13 @@
               <div class="chat__conversation-board__message__context">
                 {#each message.messages as text}
                   <div class="chat__conversation-board__message__bubble">
-                    <span>{@html formatMessage(text)}</span>
+                    {#if message.type === "ai"}
+                      <div class="prose prose-sm dark:prose-invert ai-message">
+                        {@html md.render(normalizeMath(text))}
+                      </div>
+                    {:else}
+                      <span>{text}</span>
+                    {/if}
                   </div>
                 {/each}
               </div>
@@ -704,6 +691,19 @@
       width: 95%;
       height: 95vh;
     }
+  }
+
+  /* AI MESSAGE PROSE BUBBLE */
+  .chat__conversation-board__message__bubble .ai-message {
+    width: fit-content;
+    background: var(--muted);
+    color: var(--accent-foreground);
+    padding: 0.5em 0.8em;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    font-family: "Lato", sans-serif;
+    max-width: none;
   }
 
   /* MATH FORMULA STYLE */
