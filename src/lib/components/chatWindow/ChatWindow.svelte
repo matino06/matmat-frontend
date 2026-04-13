@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { slide } from "svelte/transition";
   import { userData } from "$lib/store/user.svelte";
   import { md } from "$lib/utils/markdownRenderer";
@@ -12,9 +12,10 @@
       id: 0,
       avatarUrl: "/images/AIAvatar.png",
       messages: [`### Bok! 👋 Tu sam ako ti nešto nije jasno u ovom zadatku.
-      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako 
+      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako
       doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`],
       type: "ai",
+      finalHtml: null,
     },
   ]);
   let newMessage = $state("");
@@ -24,6 +25,11 @@
   let boardEl = $state(null);
   let boardElMobile = $state(null);
   let isMobileFullscreen = $state(false);
+
+  // Progressive rendering state
+  let streamingMsgId = $state(null);
+  let stableHtml = $state("");
+  let currentText = $state("");
 
   $effect(() => {
     document.body.style.overflow = isMobileFullscreen ? "hidden" : "";
@@ -109,9 +115,15 @@
 
       messages = [
         ...messages,
-        { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai" },
+        { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai", finalHtml: null },
       ];
       isTyping = false;
+
+      // Set up progressive rendering state
+      streamingMsgId = aiMsgId;
+      stableHtml = "";
+      currentText = "";
+      let stableRawText = ""; // tracks the raw text already frozen into stableHtml
 
       let pendingText = "";
       let displayedText = "";
@@ -122,10 +134,28 @@
         const batch = pendingText.slice(0, 2);
         pendingText = pendingText.slice(2);
         displayedText += batch;
-        messages = messages.map((m) =>
-          m.id === aiMsgId ? { ...m, messages: [displayedText] } : m
-        );
+
+        // Check for paragraph boundary (\n\n)
+        const lastBoundary = displayedText.lastIndexOf("\n\n");
+        if (lastBoundary >= 0 && lastBoundary >= stableRawText.length) {
+          const newStableRaw = displayedText.slice(0, lastBoundary);
+          if (newStableRaw !== stableRawText) {
+            stableRawText = newStableRaw;
+            stableHtml = md.render(normalizeMath(newStableRaw));
+            // Typeset the stable paragraphs after DOM update; tex2jax_ignore on currentText div
+            // prevents MathJax from touching the live-updating portion
+            tick().then(() => {
+              if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+            });
+          }
+          currentText = displayedText.slice(lastBoundary + 2);
+        } else {
+          // Still inside the first paragraph — no stable content yet
+          currentText = displayedText;
+        }
+
         if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
+        if (boardElMobile) boardElMobile.scrollTop = boardElMobile.scrollHeight;
       }, 22);
 
       // Read SSE stream as fast as possible
@@ -168,21 +198,36 @@
       clearInterval(displayInterval);
       displayInterval = null;
 
-      // Typeset math once everything is shown
+      // Freeze the complete response as finalHtml so future renders are static
+      const finalHtml = md.render(normalizeMath(displayedText));
+      messages = messages.map((m) =>
+        m.id === aiMsgId ? { ...m, messages: [displayedText], finalHtml } : m
+      );
+
+      // Clear streaming state — template switches to finalHtml branch
+      streamingMsgId = null;
+      stableHtml = "";
+      currentText = "";
+
+      // Final MathJax pass over the newly-frozen message
+      await tick();
       if (window.MathJax?.typesetPromise) {
         await window.MathJax.typesetPromise();
       }
     } catch (error) {
       console.error("Error fetching AI response:", error);
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
+      streamingMsgId = null;
+      stableHtml = "";
+      currentText = "";
       const errorMsg = error.message || "Došlo je do pogreške. Molim, pokušaj ponovo.";
       const hasPlaceholder = messages.some((m) => m.id === aiMsgId);
       if (hasPlaceholder) {
         messages = messages.map((m) =>
-          m.id === aiMsgId ? { ...m, messages: [errorMsg] } : m
+          m.id === aiMsgId ? { ...m, messages: [errorMsg], finalHtml: null } : m
         );
       } else {
-        messages = [...messages, { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [errorMsg], type: "ai" }];
+        messages = [...messages, { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [errorMsg], type: "ai", finalHtml: null }];
       }
     } finally {
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
@@ -331,6 +376,15 @@
             {message.messages[0]}
           </div>
         </div>
+      {:else if message.id === streamingMsgId}
+        <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+          {@html stableHtml}
+          <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
+        </div>
+      {:else if message.finalHtml != null}
+        <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+          {@html message.finalHtml}
+        </div>
       {:else}
         <div class="prose prose-base min-w-0 w-full dark:prose-invert">
           {@html md.render(normalizeMath(message.messages[0]))}
@@ -371,8 +425,8 @@
       <div class="flex gap-2">
         <button
           onclick={() => { messages = [{ id: 0, avatarUrl: "/images/AIAvatar.png", messages: [`### Bok! 👋 Tu sam ako ti nešto nije jasno u ovom zadatku.
-      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako 
-      doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`], type: "ai" }]; }}
+      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako
+      doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`], type: "ai", finalHtml: null }]; }}
           class="rounded-lg bg-muted p-2 text-muted-foreground transition-colors hover:bg-accent"
           title="Očisti povijest"
         >
@@ -429,6 +483,15 @@
             <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
               {message.messages[0]}
             </div>
+          </div>
+        {:else if message.id === streamingMsgId}
+          <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+            {@html stableHtml}
+            <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
+          </div>
+        {:else if message.finalHtml != null}
+          <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+            {@html message.finalHtml}
           </div>
         {:else}
           <div class="prose prose-base min-w-0 w-full dark:prose-invert">
@@ -507,6 +570,15 @@
               <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
                 {message.messages[0]}
               </div>
+            </div>
+          {:else if message.id === streamingMsgId}
+            <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+              {@html stableHtml}
+              <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
+            </div>
+          {:else if message.finalHtml != null}
+            <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+              {@html message.finalHtml}
             </div>
           {:else}
             <div class="prose prose-base min-w-0 w-full dark:prose-invert">
