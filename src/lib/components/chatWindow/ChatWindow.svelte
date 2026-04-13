@@ -141,6 +141,21 @@
         }
       }
 
+      // Flush any remaining data that didn't end with a newline
+      if (buffer.trim()) {
+        const line = buffer.trim();
+        if (line.startsWith("data: ")) {
+          const data = line.slice(6).trim();
+          if (data) {
+            try {
+              const parsed = JSON.parse(data);
+              const chunk = parsed?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") ?? "";
+              if (chunk) fullText += chunk;
+            } catch { /* skip */ }
+          }
+        }
+      }
+
       // Full text received — add the placeholder message and start typing animation
       messages = [
         ...messages,
