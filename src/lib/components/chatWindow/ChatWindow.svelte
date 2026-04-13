@@ -3,7 +3,7 @@
   import { slide } from "svelte/transition";
   import { userData } from "$lib/store/user.svelte";
   import { md } from "$lib/utils/markdownRenderer";
-  import { ChevronDown, ChevronRight, Send, Bot, Clock } from "@lucide/svelte/icons";
+  import { ChevronDown, ChevronRight, Send, Bot, Trash2 } from "@lucide/svelte/icons";
 
   let { task } = $props();
 
@@ -11,7 +11,9 @@
     {
       id: 0,
       avatarUrl: "/images/AIAvatar.png",
-      messages: ["Bok! Imaš pitanje o ovom zadatku? Slobodno pitaj — tu sam da pomognem. 🙂"],
+      messages: [`### Bok! 👋 Tu sam ako ti nešto nije jasno u ovom zadatku.
+      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako 
+      doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`],
       type: "ai",
     },
   ]);
@@ -41,6 +43,7 @@
 
     const messageToSend = newMessage;
     newMessage = "";
+    document.querySelectorAll("textarea").forEach((el) => { el.style.height = "auto"; });
     isTyping = true;
     isWaitingForAI = true;
 
@@ -91,23 +94,18 @@
         throw new Error(msg);
       }
 
-      // Add empty placeholder message
       messages = [
         ...messages,
         { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai" },
       ];
       isTyping = false;
 
-      // pendingText: received from API but not yet shown
-      // displayedText: what the user sees right now
       let pendingText = "";
       let displayedText = "";
-      let streamDone = false;
 
-      // Display ticker — independent of stream speed
+      // Display ticker — reads from pendingText buffer at a fixed pace
       displayInterval = setInterval(() => {
         if (pendingText.length === 0) return;
-        // Take a small batch of chars each tick for smoother rendering
         const batch = pendingText.slice(0, 2);
         pendingText = pendingText.slice(2);
         displayedText += batch;
@@ -117,7 +115,7 @@
         if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
       }, 22);
 
-      // Read stream as fast as possible — no awaits inside the loop
+      // Read SSE stream as fast as possible
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
@@ -143,9 +141,8 @@
           }
         }
       }
-      streamDone = true;
 
-      // Wait for display ticker to drain remaining text
+      // Wait for display ticker to drain remaining pendingText
       await new Promise((resolve) => {
         const check = setInterval(() => {
           if (pendingText.length === 0) {
@@ -165,7 +162,6 @@
     } catch (error) {
       console.error("Error fetching AI response:", error);
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
-      // Replace placeholder (if added) or append error message
       const errorMsg = error.message || "Došlo je do pogreške. Molim, pokušaj ponovo.";
       const hasPlaceholder = messages.some((m) => m.id === aiMsgId);
       if (hasPlaceholder) {
@@ -173,16 +169,18 @@
           m.id === aiMsgId ? { ...m, messages: [errorMsg] } : m
         );
       } else {
-        messages = [
-          ...messages,
-          { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [errorMsg], type: "ai" },
-        ];
+        messages = [...messages, { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [errorMsg], type: "ai" }];
       }
     } finally {
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
       isTyping = false;
       isWaitingForAI = false;
     }
+  }
+
+  function autoResize(el) {
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
   }
 
   function handleKeyPress(event) {
@@ -309,33 +307,20 @@
     {#each messages as message (message.id)}
       {#if message.type === "me"}
         <div class="flex flex-col items-end gap-1.5">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Ti</span>
           <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
             {message.messages[0]}
           </div>
         </div>
       {:else}
-        <div class="flex gap-3">
-          <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
-            <Bot size={14} />
-          </div>
-          <div class="prose prose-base min-w-0 flex-1 pt-0.5 dark:prose-invert">
-            {@html md.render(normalizeMath(message.messages[0]))}
-          </div>
+        <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+          {@html md.render(normalizeMath(message.messages[0]))}
         </div>
       {/if}
     {/each}
 
     {#if isTyping}
-      <div class="flex gap-3">
-        <div class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
-          <Bot size={14} />
-        </div>
-        <div class="pt-1.5">
-          <div class="typing-dots">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
+      <div class="typing-dots pt-1">
+        <span></span><span></span><span></span>
       </div>
     {/if}
   </div>
@@ -346,10 +331,11 @@
       <textarea
         bind:value={newMessage}
         onkeypress={handleKeyPress}
+        oninput={(e) => autoResize(e.currentTarget)}
         placeholder="Pitaj bilo što..."
         disabled={isWaitingForAI}
         rows="1"
-        class="w-full resize-none rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3.5 pl-4 pr-12 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors"
+        class="w-full resize-none overflow-hidden rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3.5 pl-4 pr-12 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors max-h-40"
       ></textarea>
       <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
       <button
@@ -364,11 +350,13 @@
     <div class="mt-3 flex items-center justify-between">
       <div class="flex gap-2">
         <button
-          onclick={() => { messages = [{ id: 0, avatarUrl: "/images/AIAvatar.png", messages: ["Bok! Imaš pitanje o ovom zadatku? Slobodno pitaj — tu sam da pomognem. 🙂"], type: "ai" }]; }}
+          onclick={() => { messages = [{ id: 0, avatarUrl: "/images/AIAvatar.png", messages: [`### Bok! 👋 Tu sam ako ti nešto nije jasno u ovom zadatku.
+      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako 
+      doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`], type: "ai" }]; }}
           class="rounded-lg bg-muted p-2 text-muted-foreground transition-colors hover:bg-accent"
           title="Očisti povijest"
         >
-          <Clock size={14} />
+          <Trash2 size={14} />
         </button>
       </div>
       <span class="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40">MatMat AI</span>
@@ -448,10 +436,11 @@
           <textarea
             bind:value={newMessage}
             onkeypress={handleKeyPress}
+            oninput={(e) => autoResize(e.currentTarget)}
             placeholder="Pitaj bilo što..."
             disabled={isWaitingForAI}
             rows="1"
-            class="w-full resize-none rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3 pl-4 pr-11 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors"
+            class="w-full resize-none overflow-hidden rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3 pl-4 pr-11 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors max-h-40"
           ></textarea>
           <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
           <button
