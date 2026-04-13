@@ -113,55 +113,11 @@
         throw new Error(msg);
       }
 
-      messages = [
-        ...messages,
-        { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai", finalHtml: null },
-      ];
-      isTyping = false;
-
-      // Set up progressive rendering state
-      streamingMsgId = aiMsgId;
-      stableHtml = "";
-      currentText = "";
-      let stableRawText = ""; // tracks the raw text already frozen into stableHtml
-
-      let pendingText = "";
-      let displayedText = "";
-
-      // Display ticker — reads from pendingText buffer at a fixed pace
-      displayInterval = setInterval(() => {
-        if (pendingText.length === 0) return;
-        const batch = pendingText.slice(0, 2);
-        pendingText = pendingText.slice(2);
-        displayedText += batch;
-
-        // Check for paragraph boundary (\n\n)
-        const lastBoundary = displayedText.lastIndexOf("\n\n");
-        if (lastBoundary >= 0 && lastBoundary >= stableRawText.length) {
-          const newStableRaw = displayedText.slice(0, lastBoundary);
-          if (newStableRaw !== stableRawText) {
-            stableRawText = newStableRaw;
-            stableHtml = md.render(normalizeMath(newStableRaw));
-            // Typeset the stable paragraphs after DOM update; tex2jax_ignore on currentText div
-            // prevents MathJax from touching the live-updating portion
-            tick().then(() => {
-              if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-            });
-          }
-          currentText = displayedText.slice(lastBoundary + 2);
-        } else {
-          // Still inside the first paragraph — no stable content yet
-          currentText = displayedText;
-        }
-
-        if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
-        if (boardElMobile) boardElMobile.scrollTop = boardElMobile.scrollHeight;
-      }, 22);
-
-      // Read SSE stream as fast as possible
+      // Collect the full response before starting the typing animation
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
+      let fullText = "";
 
       while (true) {
         const { done, value } = await reader.read();
@@ -178,14 +134,57 @@
           try {
             const parsed = JSON.parse(data);
             const chunk = parsed?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") ?? "";
-            if (chunk) pendingText += chunk;
+            if (chunk) fullText += chunk;
           } catch {
             // incomplete JSON chunk, skip
           }
         }
       }
 
-      // Wait for display ticker to drain remaining pendingText
+      // Full text received — add the placeholder message and start typing animation
+      messages = [
+        ...messages,
+        { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai", finalHtml: null },
+      ];
+      isTyping = false;
+
+      // Set up progressive rendering state
+      streamingMsgId = aiMsgId;
+      stableHtml = "";
+      currentText = "";
+      let stableRawText = "";
+
+      let pendingText = fullText;
+      let displayedText = "";
+
+      // Display ticker — types out the complete response with paragraph-based rendering
+      displayInterval = setInterval(() => {
+        if (pendingText.length === 0) return;
+        const batch = pendingText.slice(0, 2);
+        pendingText = pendingText.slice(2);
+        displayedText += batch;
+
+        // Check for paragraph boundary (\n\n)
+        const lastBoundary = displayedText.lastIndexOf("\n\n");
+        if (lastBoundary >= 0 && lastBoundary >= stableRawText.length) {
+          const newStableRaw = displayedText.slice(0, lastBoundary);
+          if (newStableRaw !== stableRawText) {
+            stableRawText = newStableRaw;
+            stableHtml = md.render(normalizeMath(newStableRaw));
+            tick().then(() => {
+              if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+            });
+          }
+          currentText = displayedText.slice(lastBoundary + 2);
+        } else {
+          currentText = displayedText;
+        }
+
+        if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
+        if (boardElMobile) boardElMobile.scrollTop = boardElMobile.scrollHeight;
+      }, 22);
+
+      // Wait for display ticker to finish typing
       await new Promise((resolve) => {
         const check = setInterval(() => {
           if (pendingText.length === 0) {
