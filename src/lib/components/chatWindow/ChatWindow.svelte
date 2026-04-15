@@ -122,36 +122,47 @@
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
         buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() ?? "";
 
-        for (const line of lines) {
+        let newlineIdx;
+        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+          const line = buffer.slice(0, newlineIdx).trim();
+          buffer = buffer.slice(newlineIdx + 1);
+
           if (!line.startsWith("data: ")) continue;
           const data = line.slice(6).trim();
           if (!data) continue;
           try {
             const parsed = JSON.parse(data);
-            const chunk = parsed?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") ?? "";
+            const chunk =
+              parsed?.candidates?.[0]?.content?.parts
+                ?.map((p) => p.text)
+                .join("") ?? "";
             if (chunk) fullText += chunk;
           } catch {
-            // incomplete JSON chunk, skip
+            // incomplete JSON — skip
           }
         }
       }
 
-      // Flush any remaining data that didn't end with a newline
+      // Flush the decoder and process any remaining buffer
+      buffer += decoder.decode();
       if (buffer.trim()) {
-        const line = buffer.trim();
-        if (line.startsWith("data: ")) {
-          const data = line.slice(6).trim();
-          if (data) {
-            try {
-              const parsed = JSON.parse(data);
-              const chunk = parsed?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") ?? "";
-              if (chunk) fullText += chunk;
-            } catch { /* skip */ }
+        const remainingLines = buffer.split("\n");
+        for (const line of remainingLines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith("data: ")) continue;
+          const data = trimmed.slice(6).trim();
+          if (!data) continue;
+          try {
+            const parsed = JSON.parse(data);
+            const chunk =
+              parsed?.candidates?.[0]?.content?.parts
+                ?.map((p) => p.text)
+                .join("") ?? "";
+            if (chunk) fullText += chunk;
+          } catch {
+            // skip
           }
         }
       }
