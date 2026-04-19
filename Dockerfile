@@ -13,4 +13,4 @@ ENV GEMINI_API_KEY=$GEMINI_API_KEY
 RUN npm run build
 
 EXPOSE 3000
-CMD ["node", "build/index.js"]
+CMD ["node", "build/compute/default/index.js"]
