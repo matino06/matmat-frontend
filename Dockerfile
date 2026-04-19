@@ -15,5 +15,8 @@ ENV HOST=0.0.0.0
 
 RUN npm run build
 
+RUN cp -r build/static build/compute/default/static && \
+    cp -r build/static/_app build/compute/default/client
+
 EXPOSE 3000
 CMD ["node", "build/compute/default/index.js"]
