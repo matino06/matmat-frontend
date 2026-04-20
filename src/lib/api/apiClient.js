@@ -1,7 +1,7 @@
 import { auth } from "$lib/config/firebase-config";
 
 export async function apiClient(path, init = {}) {
-  const url = "https://matmat-backend-production.up.railway.app/api" + path;
+  const url = "https://api.matmat.online/api" + path;
   const user = auth.currentUser;
   const fetchInit = {
     ...init,
