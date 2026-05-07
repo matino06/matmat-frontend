@@ -1,104 +1,87 @@
 <script>
   import { onMount, tick } from "svelte";
-  import { slide } from "svelte/transition";
   import { userData } from "$lib/store/user.svelte";
+  import { currentTaskState } from "$lib/store/currentTask.svelte.js";
   import { md } from "$lib/utils/markdownRenderer";
-  import { ChevronDown, ChevronRight, Send, Bot, Trash2, Maximize2, Minimize2, X } from "@lucide/svelte/icons";
-
-  let { task } = $props();
 
   let messages = $state([
     {
       id: 0,
-      avatarUrl: "/images/AIAvatar.png",
-      messages: [`### Bok! 👋 Tu sam ako ti nešto nije jasno u ovom zadatku.
-      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako
-      doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`],
-      type: "ai",
+      role: "ai",
+      content: `Bok! Tu sam ako ti nešto nije jasno. Pitaj bilo što o zadatku, rješenju ili matematičkom konceptu.`,
       finalHtml: null,
     },
   ]);
-  let newMessage = $state("");
-  let isChatOpen = $state(true);
+  let draft = $state("");
   let isTyping = $state(false);
-  let isWaitingForAI = $state(false);
+  let isWaiting = $state(false);
   let boardEl = $state(null);
-  let boardElMobile = $state(null);
-  let isMobileFullscreen = $state(false);
 
-  // Progressive rendering state
   let streamingMsgId = $state(null);
   let stableHtml = $state("");
   let currentText = $state("");
 
-  $effect(() => {
-    document.body.style.overflow = isMobileFullscreen ? "hidden" : "";
-    if (isMobileFullscreen) {
-      setTimeout(() => {
-        if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-        if (boardElMobile) boardElMobile.scrollTop = boardElMobile.scrollHeight;
-      }, 50);
-    }
-    return () => { document.body.style.overflow = ""; };
-  });
+  const SUGGESTIONS = [
+    "Objasni mi prvi korak",
+    "Daj hint bez rješenja",
+    "Zašto se koristi ova formula?",
+  ];
 
   function normalizeMath(text) {
     if (!text) return "";
     return text.replace(/\\/g, "\\\\");
   }
 
-  async function addMessage() {
-    if (newMessage.trim() === "") return;
-
-    messages = [
-      ...messages,
-      {
-        id: Date.now(),
-        avatarUrl: userData.user.photoURL,
-        messages: [newMessage],
-        type: "me",
-      },
-    ];
-
-    const messageToSend = newMessage;
-    newMessage = "";
-    document.querySelectorAll("textarea").forEach((el) => { el.style.height = "auto"; });
-    isTyping = true;
-    isWaitingForAI = true;
-
-    setTimeout(async () => {
-      await addAIResponse(messageToSend);
-    }, 800);
+  function autoResize(el) {
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
   }
 
-  async function addAIResponse(userQuestion) {
+  async function sendMessage() {
+    if (!draft.trim() || isWaiting) return;
+
+    const userMsg = draft.trim();
+    draft = "";
+    document.querySelectorAll("textarea").forEach(el => { el.style.height = "auto"; });
+
+    messages = [...messages, { id: Date.now(), role: "user", content: userMsg, finalHtml: null }];
+    isTyping = true;
+    isWaiting = true;
+
+    setTimeout(async () => {
+      await fetchAIResponse(userMsg);
+    }, 400);
+  }
+
+  async function fetchAIResponse(userQuestion) {
     const aiMsgId = Date.now() + 1;
     let displayInterval = null;
 
     try {
-      const conversationHistory = messages
+      const history = messages
         .slice(0, -1)
-        .map((msg) => {
-          const role = msg.type === "me" ? "Student" : "AI Assistant";
-          return `${role}: ${msg.messages.join("\n")}`;
-        })
+        .map(m => `${m.role === "user" ? "Student" : "AI Assistant"}: ${m.content}`)
         .join("\n\n");
 
+      const task = currentTaskState.task;
+      const taskBlock = task
+        ? `Task and solution:\n${JSON.stringify(task, null, 2)}`
+        : `The student is not currently solving a specific task — answer general math questions.`;
+
       const systemPrompt = `You are MatMat AI Assistant, a mathematics expert. A student has sent you a task and has a question about the solution.
-        Please answer their question and keep the response as brief as possible unless the student requests otherwise.
-        The task and solution are written in LaTeX (MathJax). This is the conversation history:
+Please answer their question and keep the response as brief as possible unless the student requests otherwise.
+The task and solution are written in LaTeX (MathJax). This is the conversation history:
 
-        ${conversationHistory}
+${history}
 
-        Task and solution:
-        ${JSON.stringify(task, null, 2)}
+${taskBlock}
 
-        Student's new question: ${userQuestion}
+Student's new question: ${userQuestion}
 
-        Answer clearly and simply, taking into account the entire conversation context.
-        Format your response using Markdown: use **bold**, bullet lists, numbered lists, and headings where appropriate.
-        When responding with mathematical equations, use LaTeX format with \\( and \\) for inline mathematical expressions.
-        Do not use single dollar signs $ for mathematical expressions, but you can use double dollar signs $$ $$.`;
+Answer clearly and simply in Croatian, taking into account the entire conversation context.
+Format your response using Markdown: use **bold**, bullet lists, numbered lists, and headings where appropriate.
+When responding with mathematical equations, use LaTeX format with \\( and \\) for inline mathematical expressions.
+Do not use single dollar signs $ for mathematical expressions, but you can use double dollar signs $$ $$.`;
 
       const response = await fetch("/api/ai", {
         method: "POST",
@@ -108,12 +91,11 @@
 
       if (!response.ok) {
         const msg = response.status === 429
-          ? "Asistent je trenutno preopterećen — pokušaj opet za koji trenutak."
-          : "Došlo je do pogreške. Molim, pokušaj ponovo.";
+          ? "Asistent je preopterećen — pokušaj za koji trenutak."
+          : "Došlo je do pogreške. Pokušaj ponovo.";
         throw new Error(msg);
       }
 
-      // Collect the full response before starting the typing animation
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
@@ -123,83 +105,57 @@
         const { done, value } = await reader.read();
         if (done) break;
         buffer += decoder.decode(value, { stream: true });
-
-        let newlineIdx;
-        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
-          const line = buffer.slice(0, newlineIdx).trim();
-          buffer = buffer.slice(newlineIdx + 1);
-
+        let idx;
+        while ((idx = buffer.indexOf("\n")) !== -1) {
+          const line = buffer.slice(0, idx).trim();
+          buffer = buffer.slice(idx + 1);
           if (!line.startsWith("data: ")) continue;
           const data = line.slice(6).trim();
           if (!data) continue;
           try {
             const parsed = JSON.parse(data);
-            const chunk =
-              parsed?.candidates?.[0]?.content?.parts
-                ?.map((p) => p.text)
-                .join("") ?? "";
+            const chunk = parsed?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") ?? "";
             if (chunk) fullText += chunk;
-          } catch {
-            // incomplete JSON — skip
-          }
+          } catch {}
         }
       }
 
-      // Flush the decoder and process any remaining buffer
       buffer += decoder.decode();
       if (buffer.trim()) {
-        const remainingLines = buffer.split("\n");
-        for (const line of remainingLines) {
-          const trimmed = line.trim();
-          if (!trimmed.startsWith("data: ")) continue;
-          const data = trimmed.slice(6).trim();
-          if (!data) continue;
+        for (const line of buffer.split("\n")) {
+          const t = line.trim();
+          if (!t.startsWith("data: ")) continue;
           try {
-            const parsed = JSON.parse(data);
-            const chunk =
-              parsed?.candidates?.[0]?.content?.parts
-                ?.map((p) => p.text)
-                .join("") ?? "";
+            const parsed = JSON.parse(t.slice(6).trim());
+            const chunk = parsed?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") ?? "";
             if (chunk) fullText += chunk;
-          } catch {
-            // skip
-          }
+          } catch {}
         }
       }
 
-      // Full text received — add the placeholder message and start typing animation
-      messages = [
-        ...messages,
-        { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [""], type: "ai", finalHtml: null },
-      ];
+      messages = [...messages, { id: aiMsgId, role: "ai", content: "", finalHtml: null }];
       isTyping = false;
 
-      // Set up progressive rendering state
       streamingMsgId = aiMsgId;
       stableHtml = "";
       currentText = "";
       let stableRawText = "";
-
       let pendingText = fullText;
       let displayedText = "";
 
-      // Display ticker — types out the complete response with paragraph-based rendering
       displayInterval = setInterval(() => {
-        if (pendingText.length === 0) return;
+        if (!pendingText.length) return;
         const batch = pendingText.slice(0, 2);
         pendingText = pendingText.slice(2);
         displayedText += batch;
 
-        // Check for paragraph boundary (\n\n)
         const lastBoundary = displayedText.lastIndexOf("\n\n");
         if (lastBoundary >= 0 && lastBoundary >= stableRawText.length) {
-          const newStableRaw = displayedText.slice(0, lastBoundary);
-          if (newStableRaw !== stableRawText) {
-            stableRawText = newStableRaw;
-            stableHtml = md.render(normalizeMath(newStableRaw));
-            tick().then(() => {
-              if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-            });
+          const newStable = displayedText.slice(0, lastBoundary);
+          if (newStable !== stableRawText) {
+            stableRawText = newStable;
+            stableHtml = md.render(normalizeMath(newStable));
+            tick().then(() => { if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise(); });
           }
           currentText = displayedText.slice(lastBoundary + 2);
         } else {
@@ -207,468 +163,175 @@
         }
 
         if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
-        if (boardElMobile) boardElMobile.scrollTop = boardElMobile.scrollHeight;
       }, 22);
 
-      // Wait for display ticker to finish typing
-      await new Promise((resolve) => {
+      await new Promise(resolve => {
         const check = setInterval(() => {
-          if (pendingText.length === 0) {
-            clearInterval(check);
-            resolve();
-          }
+          if (!pendingText.length) { clearInterval(check); resolve(); }
         }, 50);
       });
 
       clearInterval(displayInterval);
       displayInterval = null;
 
-      // Freeze the complete response as finalHtml so future renders are static
       const finalHtml = md.render(normalizeMath(displayedText));
-      messages = messages.map((m) =>
-        m.id === aiMsgId ? { ...m, messages: [displayedText], finalHtml } : m
-      );
+      messages = messages.map(m => m.id === aiMsgId ? { ...m, content: displayedText, finalHtml } : m);
 
-      // Clear streaming state — template switches to finalHtml branch
       streamingMsgId = null;
       stableHtml = "";
       currentText = "";
 
-      // Final MathJax pass over the newly-frozen message
       await tick();
-      if (window.MathJax?.typesetPromise) {
-        await window.MathJax.typesetPromise();
-      }
+      if (window.MathJax?.typesetPromise) await window.MathJax.typesetPromise();
+
     } catch (error) {
-      console.error("Error fetching AI response:", error);
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
-      streamingMsgId = null;
-      stableHtml = "";
-      currentText = "";
-      const errorMsg = error.message || "Došlo je do pogreške. Molim, pokušaj ponovo.";
-      const hasPlaceholder = messages.some((m) => m.id === aiMsgId);
-      if (hasPlaceholder) {
-        messages = messages.map((m) =>
-          m.id === aiMsgId ? { ...m, messages: [errorMsg], finalHtml: null } : m
-        );
+      streamingMsgId = null; stableHtml = ""; currentText = "";
+      const errMsg = error.message || "Greška. Pokušaj ponovo.";
+      const has = messages.some(m => m.id === aiMsgId);
+      if (has) {
+        messages = messages.map(m => m.id === aiMsgId ? { ...m, content: errMsg } : m);
       } else {
-        messages = [...messages, { id: aiMsgId, avatarUrl: "/images/AIAvatar.png", messages: [errorMsg], type: "ai", finalHtml: null }];
+        messages = [...messages, { id: aiMsgId, role: "ai", content: errMsg, finalHtml: null }];
       }
     } finally {
-      if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
       isTyping = false;
-      isWaitingForAI = false;
+      isWaiting = false;
     }
   }
 
-  function autoResize(el) {
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + "px";
-  }
-
-  function handleKeyPress(event) {
-    if (event.key === "Enter" && !event.shiftKey && !isWaitingForAI) {
-      event.preventDefault();
-      addMessage();
+  function handleKey(e) {
+    if (e.key === "Enter" && !e.shiftKey && !isWaiting) {
+      e.preventDefault();
+      sendMessage();
     }
   }
 
-  function toggleChat() {
-    isChatOpen = !isChatOpen;
+  function initials(name) {
+    if (!name) return 'Ti';
+    return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
   }
-
-  let panelWidth = $state(620);
-  let isResizing = $state(false);
-
-  function startResize(e) {
-    e.preventDefault();
-    isResizing = true;
-
-    const onMouseMove = (e) => {
-      const newWidth = window.innerWidth - e.clientX;
-      panelWidth = Math.max(320, Math.min(860, newWidth));
-    };
-
-    document.body.style.cursor = "col-resize";
-
-    const onMouseUp = () => {
-      isResizing = false;
-      document.body.style.cursor = "";
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
-
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
-  }
-
-  onMount(() => {
-    if (!window.MathJax) {
-      window.MathJax = {
-        tex: {
-          inlineMath: [["$", "$"], ["\\(", "\\)"]],
-          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-          processEscapes: true,
-        },
-        options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"] },
-        startup: {
-          typeset: false,
-          ready: () => { window.MathJax.startup.defaultReady(); },
-        },
-      };
-      const script = document.createElement("script");
-      script.id = "MathJax-script";
-      script.async = true;
-      script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-      document.head.appendChild(script);
-    }
-  });
 
   $effect(() => {
-    // Only track length so this doesn't fire on every streaming chunk
     const len = messages.length;
-    if (len === 0) return;
-
-    setTimeout(() => {
-      if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
-      if (boardElMobile) boardElMobile.scrollTop = boardElMobile.scrollHeight;
-    }, 50);
+    if (!len) return;
+    setTimeout(() => { if (boardEl) boardEl.scrollTop = boardEl.scrollHeight; }, 50);
   });
 </script>
 
-<!-- ===================== DESKTOP TRIGGER ===================== -->
-{#if !isChatOpen}
-  <button
-    onclick={toggleChat}
-    class="mt-4 hidden w-full items-center justify-between rounded-lg border border-border/50 bg-muted/30 px-4 py-3 text-sm text-muted-foreground transition-all hover:border-primary/30 hover:bg-muted/50 hover:text-foreground lg:flex"
-    aria-label="Otvori AI chat za pomoć"
-  >
-    <div class="flex items-center gap-2.5">
-      <div class="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-primary">
-        <Bot size={13} />
-      </div>
-      <span>Trebaš pomoć? Pitaj AI asistenta</span>
-    </div>
-    <span class="text-primary">→</span>
-  </button>
-{/if}
-
-<!-- Sidebar panel -->
-<div
-  class="fixed right-0 top-[60px] z-40 hidden h-[calc(100vh-60px)] flex-col border-l border-border bg-background shadow-none dark:shadow-[0_0_24px_rgba(255,32,86,0.06)] transition-transform duration-300 lg:flex {isChatOpen
-    ? 'translate-x-0'
-    : 'translate-x-full'} {isResizing ? 'select-none' : ''}"
-  style="width: {panelWidth}px"
->
-  <!-- Resize handle -->
-  <div
-    class="absolute left-0 top-0 h-full w-1.5 cursor-col-resize transition-colors hover:bg-primary/20 {isResizing ? 'bg-primary/30' : ''}"
-    onmousedown={startResize}
-    role="separator"
-    aria-label="Promijeni širinu"
-  ></div>
-
-  <!-- Header -->
-  <div class="flex shrink-0 items-center justify-between border-b border-border px-5 py-4">
-    <div class="flex items-center gap-3">
-      <div class="relative">
-        <div class="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
-          <Bot size={18} />
-        </div>
-        <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-secondary dark:border-background bg-green-500"></div>
-      </div>
-      <div>
-        <div class="text-sm font-black tracking-tight text-primary">MatMat AI</div>
-        <div class="text-[10px] font-bold uppercase tracking-wider text-green-400">Online</div>
-      </div>
-    </div>
-    <button
-      onclick={toggleChat}
-      class="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted"
-      aria-label="Zatvori"
-    >
-      <ChevronRight size={16} />
-    </button>
+<!-- Messages board -->
+<div bind:this={boardEl} class="chat-board">
+  <div style="font-size:12px;color:var(--text-faint);margin-bottom:10px;display:flex;align-items:center;gap:6px">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+    Gemini · kontekst: Matematika
   </div>
 
-  <!-- Messages -->
-  <div bind:this={boardEl} class="flex-1 space-y-5 overflow-y-auto px-5 py-5">
-
-    {#each messages as message (message.id)}
-      {#if message.type === "me"}
-        <div class="flex flex-col items-end gap-1.5">
-          <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
-            {message.messages[0]}
-          </div>
-        </div>
-      {:else if message.id === streamingMsgId}
-        <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-          {@html stableHtml}
-          <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
-        </div>
-      {:else if message.finalHtml != null}
-        <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-          {@html message.finalHtml}
-        </div>
-      {:else}
-        <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-          {@html md.render(normalizeMath(message.messages[0]))}
-        </div>
-      {/if}
-    {/each}
-
-    {#if isTyping}
-      <div class="typing-dots pt-1">
-        <span></span><span></span><span></span>
+  {#each messages as msg (msg.id)}
+    <div class="chat-msg {msg.role}">
+      <div class="ava">
+        {#if msg.role === "user" && userData.user?.photoURL}
+          <img src={userData.user.photoURL} alt="avatar"/>
+        {:else if msg.role === "user"}
+          {initials(userData.user?.displayName ?? '')}
+        {:else}
+          AI
+        {/if}
       </div>
-    {/if}
-  </div>
-
-  <!-- Input -->
-  <div class="shrink-0 px-5 py-5">
-    <div class="group relative">
-      <textarea
-        bind:value={newMessage}
-        onkeypress={handleKeyPress}
-        oninput={(e) => autoResize(e.currentTarget)}
-        placeholder="Pitaj bilo što..."
-        disabled={isWaitingForAI}
-        rows="1"
-        class="w-full resize-none overflow-hidden rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3.5 pl-4 pr-12 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors max-h-40"
-      ></textarea>
-      <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
-      <button
-        onclick={addMessage}
-        disabled={isWaitingForAI}
-        class="absolute right-3.5 top-1/2 -translate-y-1/2 text-primary transition-colors hover:text-primary/70 disabled:opacity-40"
-        aria-label="Pošalji"
-      >
-        <Send size={16} />
-      </button>
-    </div>
-    <div class="mt-3 flex items-center justify-between">
-      <div class="flex gap-2">
-        <button
-          onclick={() => { messages = [{ id: 0, avatarUrl: "/images/AIAvatar.png", messages: [`### Bok! 👋 Tu sam ako ti nešto nije jasno u ovom zadatku.
-      \n\n Ako ti nešto nije jasno, slobodno pitaj. Na primjer:\n\n - *Objasni mi kako
-      doći do prvog koraka* \n\n - *Zašto se ovdje koristi ova formula?* \n\n- *Daj mi hint bez da mi odaš rješenje* \n\nSamo napiši što te muči. 🙂`], type: "ai", finalHtml: null }]; }}
-          class="rounded-lg bg-muted p-2 text-muted-foreground transition-colors hover:bg-accent"
-          title="Očisti povijest"
-        >
-          <Trash2 size={14} />
-        </button>
-      </div>
-      <span class="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40">MatMat AI</span>
-    </div>
-  </div>
-</div>
-
-
-<!-- ===================== MOBILE INLINE PANEL ===================== -->
-<!-- ===================== MOBILE FULLSCREEN OVERLAY ===================== -->
-{#if isMobileFullscreen}
-  <div class="fixed inset-0 z-50 flex flex-col bg-background lg:hidden">
-    <!-- Header -->
-    <div class="flex shrink-0 items-center justify-between border-b border-border px-4 py-3">
-      <div class="flex items-center gap-3">
-        <div class="relative">
-          <div class="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
-            <Bot size={15} />
-          </div>
-          <div class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-background bg-green-500"></div>
-        </div>
-        <div>
-          <p class="text-sm font-black tracking-tight text-primary">MatMat AI</p>
-          <p class="text-[10px] font-bold uppercase tracking-wider text-green-400">Online</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-1">
-        <button
-          onclick={() => (isMobileFullscreen = false)}
-          class="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted"
-          aria-label="Smanji"
-        >
-          <Minimize2 size={16} />
-        </button>
-        <button
-          onclick={() => { isMobileFullscreen = false; isChatOpen = false; }}
-          class="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted"
-          aria-label="Zatvori"
-        >
-          <X size={16} />
-        </button>
-      </div>
-    </div>
-
-    <!-- Messages -->
-    <div bind:this={boardElMobile} class="flex-1 space-y-5 overflow-y-auto px-4 py-4">
-      {#each messages as message (message.id)}
-        {#if message.type === "me"}
-          <div class="flex flex-col items-end gap-1.5">
-            <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
-              {message.messages[0]}
-            </div>
-          </div>
-        {:else if message.id === streamingMsgId}
-          <div class="prose prose-base min-w-0 w-full dark:prose-invert">
+      <div class="bubble">
+        <div class="role">{msg.role === "ai" ? "Asistent" : "Ti"}</div>
+        {#if msg.id === streamingMsgId}
+          <div class="prose-content">
             {@html stableHtml}
             <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
           </div>
-        {:else if message.finalHtml != null}
-          <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-            {@html message.finalHtml}
-          </div>
+        {:else if msg.finalHtml}
+          <div class="prose-content">{@html msg.finalHtml}</div>
         {:else}
-          <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-            {@html md.render(normalizeMath(message.messages[0]))}
-          </div>
-        {/if}
-      {/each}
-      {#if isTyping}
-        <div class="typing-dots pt-1"><span></span><span></span><span></span></div>
-      {/if}
-    </div>
-
-    <!-- Input -->
-    <div class="shrink-0 border-t border-border px-4 py-4">
-      <div class="group relative">
-        <textarea
-          bind:value={newMessage}
-          onkeypress={handleKeyPress}
-          oninput={(e) => autoResize(e.currentTarget)}
-          placeholder="Pitaj bilo što..."
-          disabled={isWaitingForAI}
-          rows="1"
-          class="w-full resize-none overflow-hidden rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3 pl-4 pr-11 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors max-h-40"
-        ></textarea>
-        <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
-        <button onclick={addMessage} disabled={isWaitingForAI}
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-primary transition-colors hover:text-primary/70 disabled:opacity-40"
-          aria-label="Pošalji"><Send size={15} /></button>
-      </div>
-    </div>
-  </div>
-{/if}
-
-<!-- ===================== MOBILE INLINE PANEL ===================== -->
-<div class="mb-8 overflow-hidden rounded-xl border border-border bg-background shadow-none dark:shadow-[0_0_16px_rgba(255,32,86,0.04)] lg:hidden">
-  <!-- Header / trigger -->
-  <div class="flex w-full items-center justify-between px-4 py-3">
-    <button
-      onclick={toggleChat}
-      class="flex flex-1 items-center gap-3"
-    >
-      <div class="relative">
-        <div class="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-muted text-primary">
-          <Bot size={15} />
-        </div>
-        <div class="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-secondary dark:border-background bg-green-500"></div>
-      </div>
-      <div class="text-left">
-        <p class="text-sm font-black tracking-tight text-primary">MatMat AI</p>
-        <p class="text-[10px] font-bold uppercase tracking-wider text-green-400">Online</p>
-      </div>
-    </button>
-    <div class="flex items-center gap-1">
-      {#if isChatOpen}
-        <button
-          onclick={() => (isMobileFullscreen = true)}
-          class="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted"
-          aria-label="Full screen"
-        >
-          <Maximize2 size={15} />
-        </button>
-      {/if}
-      <button onclick={toggleChat} class="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted">
-        <ChevronDown size={16} class="transition-transform duration-200 {isChatOpen ? 'rotate-180' : ''}" />
-      </button>
-    </div>
-  </div>
-
-  {#if isChatOpen}
-    <div transition:slide={{ duration: 200 }} class="border-t border-border">
-      <!-- Messages -->
-      <div class="h-80 space-y-5 overflow-y-auto px-4 py-4">
-        {#each messages as message (message.id)}
-          {#if message.type === "me"}
-            <div class="flex flex-col items-end gap-1.5">
-              <div class="max-w-[85%] rounded-xl rounded-tr-none border-r-2 border-primary bg-primary/10 px-4 py-3 text-base">
-                {message.messages[0]}
-              </div>
-            </div>
-          {:else if message.id === streamingMsgId}
-            <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-              {@html stableHtml}
-              <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
-            </div>
-          {:else if message.finalHtml != null}
-            <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-              {@html message.finalHtml}
-            </div>
-          {:else}
-            <div class="prose prose-base min-w-0 w-full dark:prose-invert">
-              {@html md.render(normalizeMath(message.messages[0]))}
-            </div>
-          {/if}
-        {/each}
-
-        {#if isTyping}
-          <div class="typing-dots pt-1"><span></span><span></span><span></span></div>
+          <div class="prose-content">{@html md.render(normalizeMath(msg.content))}</div>
         {/if}
       </div>
+    </div>
+  {/each}
 
-      <!-- Input -->
-      <div class="border-t border-border px-4 py-4">
-        <div class="group relative">
-          <textarea
-            bind:value={newMessage}
-            onkeypress={handleKeyPress}
-            oninput={(e) => autoResize(e.currentTarget)}
-            placeholder="Pitaj bilo što..."
-            disabled={isWaitingForAI}
-            rows="1"
-            class="w-full resize-none overflow-hidden rounded-xl border border-border/30 bg-background dark:bg-muted/30 py-3 pl-4 pr-11 text-sm placeholder:text-muted-foreground/40 focus:border-primary/30 focus:outline-none disabled:opacity-50 transition-colors max-h-40"
-          ></textarea>
-          <div class="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-b-xl bg-primary transition-transform group-focus-within:scale-x-100"></div>
-          <button
-            onclick={addMessage}
-            disabled={isWaitingForAI}
-            class="absolute right-3 top-1/2 -translate-y-1/2 text-primary transition-colors hover:text-primary/70 disabled:opacity-40"
-            aria-label="Pošalji"
-          >
-            <Send size={15} />
-          </button>
-        </div>
-      </div>
+  {#if isTyping}
+    <div style="display:flex;align-items:center;gap:4px;padding:10px 0">
+      <div class="typing-dot"></div>
+      <div class="typing-dot" style="animation-delay:.16s"></div>
+      <div class="typing-dot" style="animation-delay:.32s"></div>
     </div>
   {/if}
 </div>
 
+<!-- Bottom: suggestions + input pinned to bottom of panel -->
+<div class="chat-bottom">
+  <div class="chat-suggestions">
+    {#each SUGGESTIONS as s (s)}
+      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+      <div class="chip" onclick={() => { draft = s; sendMessage(); }}>{s}</div>
+    {/each}
+  </div>
+
+  <div class="chat-input-wrap">
+    <textarea
+      bind:value={draft}
+      onkeydown={handleKey}
+      oninput={(e) => autoResize(e.currentTarget)}
+      placeholder="Pitaj o zadatku…"
+      disabled={isWaiting}
+      rows="1"
+      class="chat-input"
+    ></textarea>
+    <button class="btn btn-primary" onclick={sendMessage} disabled={isWaiting} style="align-self:flex-end;padding:8px 10px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
 <style>
-  .typing-dots {
+  .chat-board {
+    flex: 1;
+    overflow-y: auto;
     display: flex;
-    align-items: center;
-    gap: 4px;
+    flex-direction: column;
+    gap: 0;
+    min-height: 0;
   }
 
-  .typing-dots span {
+  .chat-bottom {
+    flex-shrink: 0;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .typing-dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background-color: var(--muted-foreground);
-    display: block;
+    background: var(--text-faint);
     animation: bounce 1.4s infinite ease-in-out both;
   }
-
-  .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-  .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
-
   @keyframes bounce {
     0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
     40% { transform: scale(1); opacity: 1; }
   }
 
-  :global(.prose p:first-child) { margin-top: 0; }
-  :global(.prose p:last-child) { margin-bottom: 0; }
-  :global(.mjx-chtml) { outline: none; }
+  .prose-content { font-size: 15.5px; line-height: 1.7; }
+  .prose-content :global(p:first-child) { margin-top: 0; }
+  .prose-content :global(p:last-child) { margin-bottom: 0; }
+  .prose-content :global(mjx-container) { outline: none; font-size: 1.05em !important; }
+  .prose-content :global(p) { margin: 0 0 .85em; font-size: 15.5px; line-height: 1.7; }
+  .prose-content :global(ul), .prose-content :global(ol) { padding-left: 1.4em; margin: .55em 0; }
+  .prose-content :global(li) { font-size: 15.5px; line-height: 1.65; margin: .25em 0; }
+  .prose-content :global(h1) { font-size: 19px; font-weight: 600; margin: .5em 0 .4em; }
+  .prose-content :global(h2) { font-size: 17px; font-weight: 600; margin: .5em 0 .4em; }
+  .prose-content :global(h3) { font-size: 16px; font-weight: 600; margin: .5em 0 .35em; }
+  .prose-content :global(code) { font-family: var(--font-mono); font-size: 13.5px; background: var(--bg-elev-2); padding: 1px 5px; border-radius: 4px; }
+  .prose-content :global(pre) { background: var(--bg-elev-2); padding: 12px; border-radius: var(--r-md); overflow-x: auto; font-size: 13.5px; }
+  .prose-content :global(strong) { font-weight: 600; color: var(--text); }
 </style>

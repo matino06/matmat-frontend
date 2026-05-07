@@ -1,210 +1,383 @@
 <script>
-  import Task from "$lib/components/task/Task.svelte";
-  import ChatWindow from "$lib/components/chatWindow/ChatWindow.svelte";
   import { auth } from "$lib/config/firebase-config";
   import { apiClient } from "$lib/api/apiClient";
-  import { onMount } from "svelte";
-  import { fade } from "svelte/transition";
-  import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
-  import ProgressIncreaseAnimation from "$lib/components/progressIncreaseAnimation/ProgressIncreaseAnimation.svelte";
+  import { onMount, onDestroy, tick } from "svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
-  import { tick } from "svelte";
-  import CourseSelector from "$lib/components/courseSelector/CourseSelector.svelte";
-  import Announcement from "$lib/components/announcement/Announcement.svelte";
-  import NoMoreTasks from "$lib/components/noMoreTasks/NoMoreTasks.svelte";
-  import TaskTip from "$lib/components/tips/TaskTip.svelte";
-  import { Dumbbell } from "@lucide/svelte/icons";
-  import TempoSelector from "$lib/components/tempoSelector/TempoSelector.svelte";
-  import GoalProgressToast from "$lib/components/goalProgressToast/GoalProgressToast.svelte";
-  import FormulaSheet from "$lib/components/formulaSheet/FormulaSheet.svelte";
+  import { md } from "$lib/utils/markdownRenderer";
+  import { panelState } from "$lib/store/panels.svelte";
+  import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
+  import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
+  import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
   let noMoreTasks = $state(false);
   let isLoading = $state(false);
-  let showTooltip = $state(false);
-  let selectedTempo = $state(null);
-  let showGoal = $state(false);
+  let revealed = $state(false);
+  let answered = $state(false);
+  let completedToday = $state(0);
+  let showToast = $state(false);
+  let showCelebration = $state(false);
+  let progressBump = $state(null);
+  let readinessPct = $state(0);
+  let dailyGoal = $state(8);
+  let startTime = $state(null);
 
-  let showProgressAnimation = $state(false);
+  async function fetchDailyGoal() {
+    try {
+      const r = await apiClient("/user-goal", { method: "GET" });
+      if (r.ok) {
+        const data = await r.json();
+        if (typeof data?.dailyGoal === "number" && data.dailyGoal > 0) {
+          dailyGoal = data.dailyGoal;
+        }
+      }
+    } catch {}
+  }
 
   async function fetchCurrentProgress() {
     const objectives = await fetchObjectivesWithStatus();
-
-    return calculateExamProgress(objectives, currentCourse.courseId);
+    return calculateExamProgress(objectives, currentCourse?.courseId);
   }
 
-  let animationInitialProgress = $state(0);
-  let animationNewProgress = $state(0);
   let initialProgress = $state(null);
 
-  async function shouldAnimateProgress() {
+  async function checkProgressBump() {
     const progress = await fetchCurrentProgress();
-
     if (initialProgress !== null && progress > initialProgress) {
-      animationInitialProgress = initialProgress;
-      animationNewProgress = progress;
-
-      showProgressAnimation = false;
-      await tick();
-      showProgressAnimation = true;
+      progressBump = { from: initialProgress, to: progress, key: Date.now() };
     }
-
     initialProgress = progress;
+    readinessPct = progress ?? 0;
   }
 
   async function fetchCurrentCourse() {
-    const response = await apiClient("/account/current-course", {
-      method: "GET",
-    });
-    if (response.ok) {
-      currentCourse = await response.json();
-    }
-  }
-
-  async function handleCourseChange(event) {
-    currentCourse = event.detail.course;
-    initialProgress = null;
-    await fetchNewTask();
+    const response = await apiClient("/account/current-course", { method: "GET" });
+    if (response.ok) currentCourse = await response.json();
   }
 
   async function fetchNewTask() {
     isLoading = true;
-
-    await shouldAnimateProgress();
-
+    await checkProgressBump();
     task = null;
-    const response = await apiClient("/task/get-new", { method: "GET" });
+    revealed = false;
+    answered = false;
 
-    const textResponse = await response.text();
-    if (textResponse == "No more tasks for today!") {
+    const response = await apiClient("/task/get-new", { method: "GET" });
+    const text = await response.text();
+
+    if (text === "No more tasks for today!") {
       noMoreTasks = true;
       task = null;
       isLoading = false;
       return;
     }
 
-    task = JSON.parse(textResponse);
-
+    task = JSON.parse(text);
+    setCurrentTask(task);
+    startTime = Date.now();
     isLoading = false;
   }
 
-  function onTaskSolved() {
-    showGoal = true;
-    setTimeout(() => {
-      showGoal = false;
-    }, 5000)
+  async function handleRate(rating) {
+    if (!task) return;
+    answered = true;
 
-    fetchNewTask();
+    const endTime = Date.now();
+    const device = getDeviceType();
+
+    await apiClient("/solved-task/set-new", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        taskId: task.id,
+        q: rating.k,
+        startTime,
+        endTime,
+        device,
+        tempo: null,
+      }),
+    });
+
+    const newCount = completedToday + 1;
+    completedToday = newCount;
+
+    if (newCount >= dailyGoal) {
+      setTimeout(() => setShowCelebration(), 400);
+    } else {
+      showToast = false;
+      await tick();
+      showToast = true;
+      setTimeout(() => showToast = false, 2200);
+    }
+
+    setTimeout(fetchNewTask, 600);
+  }
+
+  function setShowCelebration() {
+    showCelebration = true;
+  }
+
+  function getDeviceType() {
+    const ua = navigator.userAgent;
+    if (/iPad/.test(ua)) return "ipad";
+    if (/iPhone/.test(ua)) return "iphone";
+    if (/Android/.test(ua)) return "android";
+    return "desktop";
+  }
+
+  function normalizeMath(text) {
+    if (!text) return "";
+    return text.replace(/\\/g, "\\\\");
+  }
+
+  function renderSolution(text) {
+    if (!text) return "";
+    return md.render(normalizeMath(text));
+  }
+
+  function typesetMath() {
+    tick().then(() => {
+      if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+    });
   }
 
   $effect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        await fetchCurrentCourse();
-        await fetchNewTask();
-      }
-    });
-    return () => unsubscribe();
+    if (task) typesetMath();
+  });
+
+  $effect(() => {
+    if (revealed) typesetMath();
   });
 
   onMount(async () => {
-    const response = await apiClient("/account/tempo", { method: "GET" });
-    if (response.ok) {
-      selectedTempo = await response.json();
-    }
+    const unsub = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await Promise.all([fetchCurrentCourse(), fetchDailyGoal()]);
+        await fetchNewTask();
+      }
+    });
+    return () => unsub();
   });
+
+  onDestroy(() => {
+    clearCurrentTask();
+  });
+
+  let remaining = $derived(Math.max(0, dailyGoal - completedToday));
+  let toastPct = $derived(Math.min(completedToday / dailyGoal * 100, 100));
+
+  function handleSpaceReveal(e) {
+    if (e.code === "Space" && !revealed && e.target.tagName !== "TEXTAREA" && e.target.tagName !== "INPUT") {
+      e.preventDefault();
+      revealed = true;
+    }
+  }
 </script>
 
-<div class="fixed bottom-4 left-4 right-4 z-50 flex flex-col gap-3 sm:left-4 sm:right-auto sm:w-96">
-  <Announcement 
-    title="Novi Progress Page! 🎉"
-    description="Prati svoj napredak na novoj, preglednijoj stranici."
-    destination="/progress"
-    cta="Pogledaj progress →"
-  />
+<svelte:window onkeydown={handleSpaceReveal}/>
 
-  <Announcement 
-    title="Novi Goals Page! 🎉"
-    description="Prati svoj dnevne ciljeve i aktivnost na novoj stranici."
-    destination="/goals"
-    cta="Pogledaj ciljeve →"
+{#if showCelebration}
+  <GoalCelebration
+    onDone={() => showCelebration = false}
+    tasksCompleted={completedToday}
+    streak={0}
+    readinessPct={readinessPct}
   />
-</div>
-
-{#if showGoal}
-  <GoalProgressToast/>
 {/if}
 
-<ProgressIncreaseAnimation
-  show={showProgressAnimation}
-  initialProgress={animationInitialProgress}
-  newProgress={animationNewProgress}
-  onClose={() => (showProgressAnimation = false)}
-/>
+{#if progressBump}
+  <div class="progress-bump" key={progressBump.key}>
+    <div class="progress-bump-val">+{progressBump.to - progressBump.from}%</div>
+    <div class="progress-bump-sub">{progressBump.from}% → {progressBump.to}% spreman</div>
+  </div>
+{/if}
 
-<TaskTip/>
-<FormulaSheet />
+{#if showToast}
+  <div class="task-toast">
+    <div class="task-toast-top">
+      <span style="font-size:13px; font-weight:600;">{completedToday} / {dailyGoal} zadataka danas</span>
+      <span style="font-size:12px; color:var(--text-faint)">{remaining > 0 ? `još ${remaining}` : 'cilj ispunjen!'}</span>
+    </div>
+    <div class="task-toast-bar">
+      <div class="task-toast-fill" style="width:{toastPct}%; background: {completedToday >= dailyGoal ? 'var(--success)' : 'var(--primary)'}"></div>
+    </div>
+  </div>
+{/if}
 
-<div
-    class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"
-  >
-    <!-- Naslov -->
-    <div class="flex w-full max-w-[700px] mx-auto items-center gap-3 mb-3">
-      <div class="bg-primary/10 rounded-full p-3 shrink-0">
-        <Dumbbell class="text-primary h-7 w-7" />
-      </div>
-      <div>
-        <h1 class="text-2xl font-bold">Vježbaj i napreduj</h1>
-        <p class="text-muted-foreground text-sm">Riješi zadatke i postepeno osvajaj gradivo za maturu</p>
+<div class="page">
+  <div class="zadaci-head">
+    <div>
+      <h1>Zadaci za danas</h1>
+      <div class="sub">
+        Matematika · {dailyGoal} zadataka planirano · {completedToday} riješeno ·
+        <span class="mono">{remaining}</span> preostalo ·
+        <span class="mono" style="color:var(--success)">{readinessPct}% spreman</span>
       </div>
     </div>
-    <div class="w-full max-w-[700px] mx-auto mb-3 flex items-center gap-2">
-      <CourseSelector
-        {currentCourse}
-        on:courseChange={handleCourseChange}
-        disabled={isLoading}
-      />
-      <div class="flex items-center gap-2">
-        <TempoSelector {fetchNewTask} />
-        <div class="relative">
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <span
-            class="text-muted-foreground text-sm cursor-pointer select-none"
-            onclick={() => showTooltip = !showTooltip}
-            onmouseenter={() => showTooltip = true}
-            onmouseleave={() => showTooltip = false}
-          >ⓘ</span>
-          {#if showTooltip}
-            <div class="absolute bottom-full right-0 mb-2 w-56 rounded-lg bg-popover border border-border px-3 py-2 text-xs text-muted-foreground shadow-md z-10">
-              Tempo određuje brzinu otključavanja novih lekcija.
+  </div>
+
+  {#if panelState.pomoVisible}
+    <PomoWidget onClose={() => panelState.pomoVisible = false}/>
+  {/if}
+
+  {#if isLoading}
+    <div class="card card-pad" style="display:flex;align-items:center;gap:12px;color:var(--text-faint)">
+      <div class="spinner"></div>
+      Učitavanje zadatka…
+    </div>
+
+  {:else if noMoreTasks}
+    <div class="card card-pad" style="text-align:center;padding:48px;">
+      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Nema više zadataka za danas!</h2>
+      <p style="color:var(--text-dim)">Algoritam je planirao sve zadatke. Vrati se sutra.</p>
+    </div>
+
+  {:else if task}
+    <article class="card task-card">
+      <div class="task-meta">
+        <span class="badge mono">#{task.id ?? '—'}</span>
+        <span class="badge">{currentCourse.courseId == 1 ? "A" : "B"} razina</span>
+        <span class="badge badge-dim">Matematika</span>
+      </div>
+
+      <div
+        id="mathjax-output"
+        class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
+      >
+        {@html task.taskText ?? ''}
+      </div>
+
+      {#if !revealed}
+        <div style="margin-top:24px;display:flex;gap:10px;align-items:center">
+          <button class="btn btn-primary btn-lg" onclick={() => revealed = true}>
+            Pokaži rješenje
+          </button>
+          <span style="color:var(--text-faint);font-size:12px">
+            Pokušaj sam · <span class="kbd-chip">Space</span> za rješenje
+          </span>
+        </div>
+      {:else}
+        <div class="solution">
+          <div class="solution-header"><h3>Rješenje</h3></div>
+          <div class="prose !max-w-none dark:prose-invert
+            text-[10px]         /* još manji font za najmanje ekrane */
+            sm:text-s     /* male ekrane */
+            md:text-s    /* srednji ekrani */
+            lg:text-lg      /* veliki ekrani */
+            prose-xs sm:prose-sm md:prose lg:prose-lg
+            !prose-p:my-1   /* smanjuje marginu između paragrafa na malim ekranima */
+            !prose-li:my-0  /* smanjuje marginu između listi na malim ekranima */
+            ">
+            {@html renderSolution(task.explanation ?? '')}
+          </div>
+
+          {#if !answered}
+            <div class="rating-row">
+              <div class="rating-label">Kako ti je išlo?</div>
+              <RatingPicker onSelect={handleRate}/>
+            </div>
+          {:else}
+            <div style="margin-top:18px;display:flex;gap:10px;align-items:center;color:var(--success)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Zabilježeno.
             </div>
           {/if}
         </div>
-      </div>
-    </div>
+      {/if}
+    </article>
 
-{#if task}
-    {#key task.id}
-      <div transition:fade class="w-full max-w-[700px] mx-auto">
-        <Task {task} {onTaskSolved} />
-        <ChatWindow {task} />
-      </div>
-    {/key}
-{:else if noMoreTasks}
-    <div class="w-full max-w-[700px] mx-auto">
-      <NoMoreTasks />
+    <div class="task-bottom">
+      <div style="color:var(--text-faint);font-size:12px">Kategorija je skrivena dok ne procijeniš zadatak.</div>
     </div>
-{:else}
-  <div class="m-2 flex min-h-[calc(100vh-102px)] flex-col items-center justify-center"></div>
-{/if}
+  {/if}
 </div>
 
-{#if isLoading}
-  <LoadingOverlay
-    title="Učitavanje zadatka"
-    message="Pripremamo tvoj sljedeći matematički izazov"
-  />
-{/if}
+<style>
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .progress-bump {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 199;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bumpIn .4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+  .progress-bump-val {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--success);
+    animation: bumpFloat 2s ease forwards;
+    text-shadow: 0 0 40px oklch(0.65 0.2 160 / 0.6);
+    font-family: var(--font-mono);
+  }
+  .progress-bump-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    animation: bumpFloat 2s ease forwards;
+  }
+  @keyframes bumpFloat {
+    0%   { opacity:0; transform: translateY(10px) scale(0.8); }
+    15%  { opacity:1; transform: translateY(0) scale(1.05); }
+    60%  { opacity:1; transform: translateY(-8px) scale(1); }
+    100% { opacity:0; transform: translateY(-32px) scale(0.9); }
+  }
+
+  .task-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    min-width: 280px;
+    max-width: 380px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    animation: toastIn .3s cubic-bezier(0.34,1.4,0.64,1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .task-toast-top { display: flex; align-items: center; justify-content: space-between; }
+  .task-toast-bar { height: 6px; border-radius: 99px; background: var(--border); overflow: hidden; }
+  .task-toast-fill { height: 100%; border-radius: 99px; transition: width .4s cubic-bezier(0.34,1.2,0.64,1); }
+  @keyframes toastIn {
+    from { opacity:0; transform: translateX(-50%) translateY(16px) scale(0.96); }
+    to   { opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+
+  .kbd-chip {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--bg-elev-2);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+</style>

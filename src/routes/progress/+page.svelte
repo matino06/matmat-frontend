@@ -1,329 +1,383 @@
 <script>
-  import TaskList from "$lib/components/taskList/TaskList.svelte";
-  import TipCard from "$lib/components/tips/TipCard.svelte";
-  import { Separator } from "$lib/components/ui/separator/index.js";
-  import { Skeleton } from "$lib/components/ui/skeleton/index.js";
-  import { fade } from "svelte/transition";
-  import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
-  import { onMount } from "svelte";
-  import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-  } from "$lib/components/ui/card/index.js";
-  import { Badge } from "$lib/components/ui/badge/index.js";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import {
-    Calendar,
-    Star,
-    Bolt,
-    CalendarCheck,
-    TrendingUp,
-    Lock,
-    LockOpen,
-    Trophy,
-    PlayCircle,
-    Check,
-    ArrowRight,
-  } from "@lucide/svelte/icons";
   import { userData } from "$lib/store/user.svelte";
-  import { goto } from "$app/navigation";
-  import ExamReadinessRing from "$lib/components/examReadinessRing/ExamReadinessRing.svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
   import { apiClient } from "$lib/api/apiClient";
-  import { Tween } from "svelte/motion";
-  import { cubicOut } from 'svelte/easing';
-  import { groupByKey } from "$lib/utils/grouping";
-
-  let tasksTodayCount = new Tween(0, {
-    duration: 2000,
-    easing: cubicOut,
-  });
 
   let objectives = $state([]);
-  let size = $state("size-70");
-  let showObjectivesNum = $state(3);
   let todayTasks = $state([]);
   let upcomingTasks = $state([]);
-  let fields = $state([])
+  let examProgress = $state(0);
+  let currentCourse = $state(null);
+  let loading = $state(true);
+  let activeArea = $state("Sve");
 
-  async function loadObjectives() {
+  let dailyGoal = $state(8);
+
+  async function loadAll() {
     if (!userData.user) return;
-
-    objectives = await fetchObjectivesWithStatus();
-
-    fields = groupByKey(
-        objectives,
-        "fieldName",
-        (current) => ({
-            fieldName: current.fieldName,
-            totalObjectives: 1,
-            status: "in-progress",
-            mastered: current.isMastered ? 1 : 0,
-        }),
-        (lastGroup, current) => {
-            lastGroup.totalObjectives += 1;
-            if (current.isMastered) {
-                lastGroup.mastered += 1;
-            }
-        },
-    );
-  }
-
-  async function fetchProgressSummery() {
-    const response = await apiClient(
-        "/progress",
-        { method: "GET" }
-    );
-
-    const res = await response.json();
-    todayTasks = res.todayObjectives;
-    tasksTodayCount.target = todayTasks.length;
-    upcomingTasks = res.futureObjectives;
-  }
-
-  let width = $state(0);
-
-  const updateWidth = () => {
-    width = window.innerWidth;
-
-    if (width >= 1100) size = "size-70";
-    else if (width >= 768) size = "size-55";
-    else if (width >= 640) size = "size-60";
-    else size = "size-70";
-
-    if (width <= 1024) {
-      showObjectivesNum = 2;
-    } else {
-      showObjectivesNum = 3;
+    loading = true;
+    try {
+      const [courseRes, objs, userGoalRes] = await Promise.all([
+        apiClient("/account/current-course", { method: "GET" }),
+        fetchObjectivesWithStatus(),
+        apiClient("/user-goal", { method: "GET" }),
+      ]);
+      if (courseRes.ok) currentCourse = await courseRes.json();
+      objectives = objs;
+      if (currentCourse?.courseId) {
+        examProgress = calculateExamProgress(objs, currentCourse.courseId);
+      }
+      if (userGoalRes.ok) {
+        const ug = await userGoalRes.json();
+        if (typeof ug?.dailyGoal === "number" && ug.dailyGoal > 0) {
+          dailyGoal = ug.dailyGoal;
+        }
+      }
+      const progressRes = await apiClient("/progress", { method: "GET" });
+      if (progressRes.ok) {
+        const res = await progressRes.json();
+        todayTasks = res.todayObjectives ?? [];
+        upcomingTasks = res.futureObjectives ?? [];
+      }
+    } finally {
+      loading = false;
     }
-  };
-
-  onMount(async () => {
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  });
-
-  $effect(async () => {
-    if (userData.user) {
-      fetchProgressSummery();
-      loadObjectives();
-    }
-  })
-
-  function goToTasks() {
-    goto("/tasks");
   }
 
-  const today = new Date();
-  const referenceDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
+  $effect(() => { if (userData.user) loadAll(); });
+
+  // Locked objectives (not yet unlocked) are hidden from the list,
+  // since they have no due date / nothing to display per row.
+  let visibleObjectives = $derived(objectives.filter(o => o.unlocked));
+
+  let areas = $derived(["Sve", ...new Set(visibleObjectives.map(o => o.fieldName).filter(Boolean))]);
+
+  let totalMastered = $derived(objectives.filter(o => o.isMastered).length);
+  let totalLearning = $derived(objectives.filter(o => !o.isMastered && o.unlocked).length);
+  let totalNew = $derived(objectives.filter(o => !o.isMastered && !o.unlocked).length);
+
+  // Build a map objectiveName → dueDate from today/upcoming lists.
+  // /progress returns tasks keyed by title (= objectiveName), not by ID.
+  let dueDateMap = $derived(
+    new Map(
+      [...todayTasks, ...upcomingTasks]
+        .filter(t => t.dueDate && t.title)
+        .map(t => [t.title, t.dueDate])
+    )
   );
 
-  function parseDate(dateStr) {
-    const parts = dateStr.split(".");
-    if (parts.length >= 3) {
-      const day = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const year = parseInt(parts[2], 10);
-      return new Date(year, month, day);
+  const today = new Date();
+  const refDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+  function parseDate(s) {
+    if (!s) return null;
+    // YYYY-MM-DD (API format)
+    if (s.includes("-")) {
+      const [y, m, d] = s.split("-");
+      return new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
     }
-    return null;
+    // DD.MM.YYYY fallback
+    const p = s.split(".");
+    return new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
   }
 
-  function getRelativeDateString(diffDays) {
-    if (diffDays === 0) return "danas";
-    if (diffDays === 1) return "sutra";
-    if (diffDays === 2) return "prekosutra";
-    if (diffDays > 0) return `za ${diffDays} dana`;
-    if (diffDays < 0) return `prije ${Math.abs(diffDays)} dana`;
+  function diffLabel(s) {
+    const d = parseDate(s);
+    if (!d) return "";
+    const diff = Math.floor((d - refDate) / 86400000);
+    if (diff <= 0) return "danas";
+    if (diff === 1) return "sutra";
+    if (diff === 2) return "prekosutra";
+    return `za ${diff} dana`;
   }
 
-  function getBadgeClass(diffDays) {
-    if (diffDays === 1) return "bg-[#FF9600] text-white";
-    if (diffDays === 2) return "bg-yellow-600 text-white";
-    if (diffDays > 2) return "bg-[#58CC02] text-white";
-    return "";
+  function getStatus(o) {
+    if (o.isMastered) return "mastered";
+    if (o.unlocked) return "learning";
+    return "new";
   }
 
-  const todayBadgeRenderer = (task) => ({
-    text: "DANAS",
-    className: "bg-primary text-white",
-  });
-  const upcomingBadgeRenderer = (task) => {
-    const [y, m, d] = task.dueDate.split("-");
-    const taskDate = new Date(y, m - 1, d);
+  // 5-dot mastery scale
+  function getProgress(o) {
+    if (o.isMastered) return 5;
+    if (o.unlocked && !o.isWeak) return 3;
+    if (o.unlocked && o.isWeak) return 1;
+    return 0;
+  }
 
-    const diffTime = taskDate - referenceDate;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    return {
-      text: getRelativeDateString(diffDays),
-      className: getBadgeClass(diffDays),
-    };
-  };
+  // Ring SVG
+  const SIZE = 180;
+  const STROKE = 10;
+  const R = (SIZE - STROKE) / 2;
+  const CIRC = 2 * Math.PI * R;
+  let ringDash = $derived(CIRC * (examProgress / 100));
+
+  let shownObjectives = $derived(
+    activeArea === "Sve"
+      ? visibleObjectives
+      : visibleObjectives.filter(o => o.fieldName === activeArea)
+  );
+
+  let areaCount = $derived((a) =>
+    a === "Sve" ? visibleObjectives.length : visibleObjectives.filter(o => o.fieldName === a).length
+  );
+
+  let todayDue = $derived(todayTasks.length);
+  let todayBarPct = $derived(Math.min((todayDue / dailyGoal) * 100, 100));
 </script>
 
-<div class="container mx-auto max-w-7xl space-y-6 p-4">
-  <div class="flex items-center gap-3">
-    <div class="bg-primary/10 rounded-full p-3">
-      <TrendingUp class="text-primary h-7 w-7" />
-    </div>
+<div class="page">
+  <div class="zadaci-head" style="margin-bottom: 18px">
     <div>
-      <h1 class="text-2xl font-bold">Moj napredak</h1>
-      <p class="text-muted-foreground text-sm">Prati svoj napredak</p>
+      <h1>Napredak</h1>
+      <div class="sub">Tvoja priprema za maturu · Matematika</div>
     </div>
   </div>
-  <div class="grid grid-cols-1 items-stretch gap-4 md:grid-cols-3">
-    <Card
-      class="relative h-full w-full transition-all hover:shadow-md md:row-span-2"
-    >
-      <CardContent class="flex h-full items-center justify-center p-4">
-        <div transition:fade={{ duration: 500 }}>
-          <ExamReadinessRing {objectives} {size} />
-        </div>
 
-        <div class="bg-primary/10 absolute top-3 right-3 rounded-full p-2">
-          <TrendingUp class="text-primary h-5 w-5" />
-        </div>
-      </CardContent>
-    </Card>
+  {#if loading}
+    <div style="color:var(--text-faint);display:flex;align-items:center;gap:10px;padding:24px 0">
+      <div class="spinner"></div> Učitavanje…
+    </div>
+  {:else}
+    <div class="progress-top">
 
-    <div
-      class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:col-span-2 md:row-span-2"
-    >
-      <Card class="relative h-full w-full transition-all hover:shadow-md">
-        <CardContent class="p-4">
-          <p class="text-muted-foreground text-sm">Današnji zadaci</p>
-          <p class="py-3 text-6xl font-bold">{Math.round(tasksTodayCount.current)}</p>
-          <p class="text-muted-foreground text-xs">Nije potrebno riješiti sve zadatke!</p>
-
-          <div class="bg-primary/10 absolute top-3 right-3 rounded-full p-2">
-            <Bolt class="text-primary h-5 w-5" />
-          </div>
-        </CardContent>
-      </Card>
-
-      <TipCard />
-
-      <div class="relative sm:col-span-2">
-        <Card class="w-full">
-          <CardHeader class="flex flex-row items-center justify-between">
-            <CardTitle class="flex items-center gap-2">
-              <Lock class="text-primary h-5 w-5" />
-              Cjeline i otključavanja
-            </CardTitle>
-
-            <a
-              href="/progress/units"
-              class="hover:bg-muted inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition"
-            >
-              Detaljno
-              <ArrowRight class="h-4 w-4" />
-            </a>
-          </CardHeader>
-          <CardContent>
-            <div
-              class="grid grid-cols-1 gap-4 sm:grid-cols-{showObjectivesNum} lg:grid-cols-{showObjectivesNum}"
-            >
-              {#each fields.slice(0, showObjectivesNum) as field}
-                {@const progress = Math.round(
-                  (field.mastered / field.totalObjectives) * 100,
-                )}
-                <div
-                  class="rounded-lg border p-4 transition-all hover:shadow-md"
-                >
-                  <div class="mb-3 flex items-center justify-between">
-                    <div
-                      class="flex h-8 w-8 items-center justify-center rounded-full {field.status ===
-                      'unlocked'
-                        ? 'bg-green-500/10'
-                        : ''} {field.status === 'in-progress'
-                        ? 'bg-primary/10'
-                        : ''} {field.status === 'locked' ? 'bg-muted' : ''}"
-                    >
-                      {#if field.status === "unlocked"}
-                        <Check class="h-4 w-4 text-primary" />
-                      {:else if field.status === "in-progress"}
-                        <TrendingUp class="text-primary h-4 w-4" />
-                      {:else}
-                        <Lock class="text-muted-foreground h-4 w-4" />
-                      {/if}
-                    </div>
-                    {#if field.mastered / field.totalObjectives === 1}
-                      <Badge
-                        variant="outline"
-                        class="border-primary text-white bg-primary"
-                      >
-                        SAVLADANO
-                      </Badge>
-                    {:else}
-                      <Badge variant="outline" class="default border-primary text-primary">U TOKU</Badge>
-                    {/if}
-                  </div>
-                  <h4 class="font-medium">{field.name}</h4>
-                  <p class="text-muted-foreground text-sm">
-                    {field.mastered}/{field.totalObjectives} ciljeva savladano
-                  </p>
-                  <div class="mt-3">
-                    <div class="bg-muted h-2 w-full overflow-hidden rounded-full">
-                      <div
-                        class="bg-[#58CC02] h-full rounded-full"
-                        style="width: {progress}%;"
-                      ></div>
-                    </div>
-                    <div class="text-muted-foreground mt-1 text-xs">
-                      {progress}%
-                    </div>
-                  </div>
-                </div>
-              {/each}
+      <!-- Ring card -->
+      <div class="card ring-card">
+        <div class="ring-wrap">
+          <svg width={SIZE} height={SIZE} style="transform:rotate(-90deg)">
+            <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none" stroke="var(--bg-elev-2)" stroke-width={STROKE}/>
+            <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none"
+              stroke="var(--primary)" stroke-width={STROKE} stroke-linecap="round"
+              stroke-dasharray="{ringDash} {CIRC - ringDash}"
+              style="transition: stroke-dasharray 1s ease"/>
+          </svg>
+          <div class="ring-inner">
+            <div>
+              <div class="pct">{examProgress}<span class="pct-unit">%</span></div>
+              <div class="pct-sub">Spremnost</div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+        <div class="ring-meta">
+          <h2>Spremnost za maturu</h2>
+          <p>Savladao si <b class="mono">{totalMastered}</b> od <b class="mono">{objectives.length}</b> ishoda.</p>
+          <div class="ring-stats">
+            <div class="stat"><div class="v" style="color:var(--success)">{totalMastered}</div><div class="l">Savladano</div></div>
+            <div class="stat"><div class="v" style="color:var(--warn)">{totalLearning}</div><div class="l">U tijeku</div></div>
+            <div class="stat"><div class="v" style="color:var(--text-faint)">{totalNew}</div><div class="l">Neobrađeno</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today card -->
+      <div class="card today-card card-pad">
+        <h2>Zadaci za danas</h2>
+        <div class="today-num">{todayDue}<sub>/ {dailyGoal}</sub></div>
+        <div class="today-meta">{todayDue} {todayDue === 1 ? "zadatak planiran" : "zadataka planirano"}</div>
+        <div class="today-bar"><div class="fill" style="width:{todayBarPct}%"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:18px;font-size:12px;color:var(--text-faint)">
+          <span>Dnevni cilj</span><span class="mono">{dailyGoal} zadataka</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:18px">
+          <a href="/tasks" class="btn btn-primary">
+            Riješi zadatke
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Lists of tasks -->
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 items-start">
-    <TaskList
-      tasks={todayTasks}
-      title="Današnji zadaci"
-      icon={Calendar}
-      badgeRenderer={todayBadgeRenderer}
-      maxDisplay={5}
-    />
-    <TaskList
-      tasks={upcomingTasks}
-      title="Zakazano za budućnost"
-      icon={CalendarCheck}
-      badgeRenderer={upcomingBadgeRenderer}
-      maxDisplay={5}
-    />
-  </div>
-
-  <Card
-    class="from-primary/10 via-primary/5 bg-gradient-to-r to-transparent p-6"
-  >
-    <div
-      class="flex flex-col items-center text-center md:flex-row md:justify-between md:text-left"
-    >
-      <div class="mb-4 md:mb-0">
-        <Trophy class="text-primary mb-2 h-12 w-12" />
-        <h2 class="text-xl font-bold">
-          TI SI NA PUTU DO POTPUNE SPREMNOSTI ZA MATURU!
-        </h2>
-        <p class="text-muted-foreground mt-1">Tvoj trud se isplati!</p>
-      </div>
-      <Button onclick={goToTasks} size="lg" class="gap-2">
-        <PlayCircle class="h-5 w-5" />
-        ZAPOČNI DANASNJE UČENJE
-      </Button>
+    <!-- Section header -->
+    <div class="section-head">
+      <h2>Nastavna područja i ishodi</h2>
+      <div class="side">{visibleObjectives.length} ishoda</div>
     </div>
-  </Card>
+
+    <!-- Area tabs -->
+    <div class="area-tabs">
+      {#each areas as a (a)}
+        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+        <div class="area-tab {activeArea === a ? 'active' : ''}" onclick={() => activeArea = a}>
+          {a} <span class="c">{areaCount(a)}</span>
+        </div>
+      {/each}
+    </div>
+
+    <!-- Ishod list -->
+    <div class="ishod-list">
+      {#each shownObjectives as obj (obj.objectiveId)}
+        {@const status = getStatus(obj)}
+        {@const prog = getProgress(obj)}
+        {@const when = dueDateMap.get(obj.objectiveName)}
+        <div class="ishod-row">
+          <div class="ishod-status {status}"></div>
+          <div class="ishod-title">
+            <span class="code">#{obj.objectiveId}</span>{obj.objectiveName}
+          </div>
+          <div class="ishod-mini">
+            {#each [0,1,2,3,4] as j (j)}
+              <div class="dot {j < prog ? 'filled' : ''}"></div>
+            {/each}
+          </div>
+          <div class="ishod-when">{diffLabel(when)}</div>
+        </div>
+      {/each}
+    </div>
+  {/if}
 </div>
+
+<style>
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .progress-top {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Ring card */
+  .ring-card {
+    padding: var(--pad-5, 24px);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .ring-wrap {
+    position: relative;
+    width: 180px; height: 180px;
+    flex-shrink: 0;
+  }
+  .ring-inner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+  .pct {
+    font-size: 36px; font-weight: 600; letter-spacing: -0.02em;
+    font-family: var(--font-mono);
+    line-height: 1;
+  }
+  .pct-unit { font-size: 18px; color: var(--text-faint); margin-left: 2px; }
+  .pct-sub {
+    font-size: 11px; color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: .08em;
+    margin-top: 6px;
+  }
+  .ring-meta h2 { margin: 0 0 6px; font-size: 16px; font-weight: 500; }
+  .ring-meta p { margin: 0 0 0; color: var(--text-dim); font-size: 13px; line-height: 1.6; }
+  .ring-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .stat .v { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; font-family: var(--font-mono); }
+  .stat .l { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-faint); margin-top: 2px; }
+
+  /* Today card */
+  .today-card h2 { font-size: 14px; font-weight: 500; color: var(--text-dim); margin: 0 0 14px; }
+  .today-num {
+    font-size: 48px; font-weight: 600; letter-spacing: -0.03em;
+    font-family: var(--font-mono); line-height: 1;
+  }
+  .today-num sub { font-size: 16px; color: var(--text-faint); font-weight: 400; margin-left: 8px; vertical-align: baseline; }
+  .today-meta { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
+  .today-bar {
+    height: 6px; border-radius: 999px;
+    background: var(--bg-elev-2); margin-top: 20px;
+    overflow: hidden; border: 1px solid var(--border);
+  }
+  .today-bar .fill {
+    height: 100%; background: var(--primary); border-radius: 999px;
+    transition: width .6s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* Section head */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 28px 0 12px;
+  }
+  .section-head h2 { margin: 0; font-size: 15px; font-weight: 500; }
+  .section-head .side { font-size: 12px; color: var(--text-faint); }
+
+  /* Area tabs */
+  .area-tabs {
+    display: flex; gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+    overflow-x: auto;
+  }
+  .area-tab {
+    padding: 10px 14px; font-size: 13px;
+    color: var(--text-dim); cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    white-space: nowrap; display: flex; gap: 8px; align-items: center;
+    transition: color .12s;
+  }
+  .area-tab:hover { color: var(--text); }
+  .area-tab.active { color: var(--text); border-bottom-color: var(--primary); }
+  .area-tab .c { color: var(--text-faint); font-family: var(--font-mono); font-size: 11px; }
+
+  /* Ishod list */
+  .ishod-list { display: flex; flex-direction: column; }
+  .ishod-row {
+    display: grid;
+    grid-template-columns: 20px 1fr auto auto;
+    gap: 14px; align-items: center;
+    padding: 14px 20px;
+    border: 1px solid var(--border); border-top-width: 0;
+    background: var(--bg-elev);
+    transition: background .1s;
+  }
+  .ishod-row:first-child { border-top-width: 1px; border-top-left-radius: var(--r-lg); border-top-right-radius: var(--r-lg); }
+  .ishod-row:last-child { border-bottom-left-radius: var(--r-lg); border-bottom-right-radius: var(--r-lg); }
+  .ishod-row:hover { background: var(--bg-hover); }
+
+  .ishod-status {
+    width: 10px; height: 10px;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+  .ishod-status.learning { background: var(--warn); }
+  .ishod-status.mastered { background: var(--success); }
+  .ishod-status.scheduled { background: var(--primary); }
+
+  .ishod-title { font-size: 14px; }
+  .ishod-title .code { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-right: 10px; }
+
+  .ishod-mini { display: flex; gap: 3px; }
+  .ishod-mini .dot {
+    width: 16px; height: 6px; border-radius: 2px;
+    background: var(--bg-elev-2); border: 1px solid var(--border);
+  }
+  .ishod-mini .dot.filled { background: var(--primary); border-color: transparent; }
+
+  .ishod-when {
+    color: var(--text-dim); font-size: 12px;
+    font-family: var(--font-mono);
+    min-width: 72px; text-align: right;
+  }
+
+  @media (max-width: 700px) {
+    .progress-top { grid-template-columns: 1fr; }
+    .ring-card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .ring-stats { justify-items: center; }
+    .ishod-row { grid-template-columns: 20px 1fr auto; }
+    .ishod-when { display: none; }
+  }
+</style>

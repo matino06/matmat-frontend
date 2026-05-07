@@ -3,11 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/favicon.ico" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/400.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/500.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/600.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.0.1/400.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.0.1/500.css" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('mm-theme') || 'dark';
+          document.documentElement.dataset.theme = t;
+        } catch(e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
     %sveltekit.head%
     <script
       src="https://challenges.cloudflare.com/turnstile/v0/api.js"

@@ -1,91 +1,23 @@
 <script>
   import { onMount } from "svelte";
-  import { Flame, PlayCircle, Trophy, Target, Calendar, TrendingUp, Check, Zap } from "@lucide/svelte/icons";
-  import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-  } from "$lib/components/ui/card/index.js";
-  import { Button } from "$lib/components/ui/button/index.js";
-  import { Tween } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
   import { apiClient } from "$lib/api/apiClient";
   import { goto } from "$app/navigation";
-  import GoalsSettings from "$lib/components/goalsSettings/GoalsSettings.svelte";
 
   let calendarDays = $state([]);
-  let dailyGoal = $state(0);
+  let dailyGoal = $state(8);
   let todayGoal = $state(0);
   let totalDaysActive = $state(0);
-  let last14Days = $state([]);
   let currentStreak = $state(0);
   let longestStreak = $state(0);
   let registrationDate = $state(null);
+  let savingGoal = $state(false);
 
-  let weeks = $derived(groupByWeek(buildCalendarDays(calendarDays)));
-  let todayCompleted = $derived(
-    weeks?.length
-      ? weeks[weeks.length - 1]?.[weeks[weeks.length - 1].length - 1].completed
-      : 0
-  );
+  // Goals array from /account/goals — each item: { course: { courseId, courseName }, dailyGoal }
+  let goals = $state([]);
+  let currentCourseId = $state(null);
 
-  async function fetchUserGoal() {
-    const response = await apiClient(
-        "/user-goal",
-        { method: "GET" }
-    );
-
-    const res = await response.json();
-    dailyGoal = res.dailyGoal;
-    todayGoal = res.todayGoal;
-
-    if (res.calendarDays.length > 0) {
-      calendarDays = res.calendarDays;
-    } else {
-      calendarDays = [
-        {date: res.registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal}
-      ];
-    }
-    
-    totalDaysActive = calendarDays.filter(day => day.completed > 0).length;
-    registrationDate = parseLocalDate(res.registrationDate);
-    findCurrentAndLongestStreak();
-  }
-
-  onMount(fetchUserGoal);
-
-  function findCurrentAndLongestStreak() {
-    const days = weeks.flat().filter(day => day !== null);
-
-    let longest = 0;
-    let current = 0;
-
-    for (const day of days) {
-      if (day.goalMet) {
-        current++;
-        if (current > longest) longest = current;
-      } else {
-        current = 0;
-      }
-    }
-
-    longestStreak = longest;
-
-    current = 0;
-    let skipToday = true;
-    for (let i = days.length - 1; i >= 0; i--) {
-      if (days[i].goalMet) {
-        current++;
-      } else if (skipToday && i === days.length - 1) {
-        skipToday = false;
-      } else {
-        break;
-      }
-    }
-
-    currentStreak = current;
-  }
+  // Slider value — kept in sync with the active course goal
+  let sliderValue = $state(8);
 
   function parseLocalDate(dateStr) {
     if (!dateStr) return null;
@@ -100,7 +32,6 @@
 
   function buildCalendarDays(rawDays) {
     if (!rawDays || rawDays.length === 0) return [];
-
     const dayMap = {};
     for (const d of rawDays) {
       const date = parseLocalDate(d.date);
@@ -113,376 +44,330 @@
 
     if (registrationDate) {
       const regKey = toLocalKey(registrationDate);
-      if (!dayMap[regKey]) {
-        dayMap[regKey] = { date: registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal };
-      }
-      if (registrationDate < minDate) {
-        minDate = new Date(registrationDate);
-      }
+      if (!dayMap[regKey]) dayMap[regKey] = { date: registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal };
+      if (registrationDate < minDate) minDate = new Date(registrationDate);
     }
 
     minDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
-
     const allDays = [];
     const cursor = new Date(minDate);
     while (cursor <= maxDate) {
       const key = toLocalKey(cursor);
-      if (dayMap[key]) {
-        allDays.push({ ...dayMap[key], date: new Date(cursor) });
-      } else {
-        allDays.push({ date: new Date(cursor), goalMet: false, partial: false, completed: 0, goal: dailyGoal });
-      }
+      allDays.push(dayMap[key]
+        ? { ...dayMap[key], date: new Date(cursor) }
+        : { date: new Date(cursor), goalMet: false, partial: false, completed: 0, goal: dailyGoal }
+      );
       cursor.setDate(cursor.getDate() + 1);
     }
-
     return allDays;
   }
 
   function groupByWeek(days) {
-    if (days.length < 1) return [];
-
+    if (!days.length) return [];
     const weeks = [];
     let week = [];
-    
-    const firstDay = days[0].date.getDay();
-    const paddingStart = firstDay === 0 ? 6 : firstDay - 1;
-    for (let p = 0; p < paddingStart; p++) week.push(null);
+    const firstDow = days[0].date.getDay();
+    const pad = firstDow === 0 ? 6 : firstDow - 1;
+    for (let p = 0; p < pad; p++) week.push(null);
     for (const day of days) {
       week.push(day);
-      const dow = day.date.getDay();
-      if (dow === 0) {
-        weeks.push(week);
-        week = [];
-      }
+      if (day.date.getDay() === 0) { weeks.push(week); week = []; }
     }
-    if (week.length > 0) weeks.push(week);
+    if (week.length) weeks.push(week);
     return weeks;
   }
 
+  function findStreaks(weeks) {
+    const days = weeks.flat().filter(Boolean);
+    let longest = 0, cur = 0;
+    for (const d of days) {
+      if (d.goalMet) { cur++; if (cur > longest) longest = cur; }
+      else cur = 0;
+    }
+    longestStreak = longest;
 
-  const monthLabels = (() => {
-    const labels = [];
-    let lastMonth = -1;
-    weeks.forEach((week, wi) => {
-      const firstReal = week.find(d => d !== null);
-      if (firstReal) {
-        const m = firstReal.date.getMonth();
-        if (m !== lastMonth) {
-          labels.push({ weekIndex: wi, label: firstReal.date.toLocaleDateString("hr-HR", { month: "short" }) });
-          lastMonth = m;
-        }
+    cur = 0;
+    let skipToday = true;
+    for (let i = days.length - 1; i >= 0; i--) {
+      if (days[i].goalMet) { cur++; }
+      else if (skipToday && i === days.length - 1) { skipToday = false; }
+      else break;
+    }
+    currentStreak = cur;
+  }
+
+  async function fetchUserGoal() {
+    const [userGoalRes, goalsRes, courseRes] = await Promise.all([
+      apiClient("/user-goal", { method: "GET" }),
+      apiClient("/account/goals", { method: "GET" }),
+      apiClient("/account/current-course", { method: "GET" }),
+    ]);
+
+    const data = await userGoalRes.json();
+    dailyGoal = data.dailyGoal;
+    todayGoal = data.todayGoal;
+    calendarDays = data.calendarDays?.length
+      ? data.calendarDays
+      : [{ date: data.registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal }];
+    totalDaysActive = calendarDays.filter(d => d.completed > 0).length;
+    registrationDate = parseLocalDate(data.registrationDate);
+
+    if (goalsRes.ok) goals = await goalsRes.json();
+    if (courseRes.ok) {
+      const course = await courseRes.json();
+      currentCourseId = course.courseId;
+    }
+
+    // Sync slider to the active course's goal
+    const activeGoal = goals.find(g => g.course?.courseId === currentCourseId);
+    sliderValue = activeGoal?.dailyGoal ?? dailyGoal;
+  }
+
+  async function updateGoal() {
+    // Update the matching goal in the array before submitting
+    const g = goals.find(g => g.course?.courseId === currentCourseId);
+    if (g) g.dailyGoal = sliderValue;
+
+    savingGoal = true;
+    try {
+      const res = await apiClient("/account/goals", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userCourseGoalsNew: goals }),
+      });
+      if (res.ok) {
+        dailyGoal = sliderValue;
+        todayGoal = sliderValue;
       }
-    });
-    return labels;
-  })();
+    } finally {
+      savingGoal = false;
+    }
+  }
 
-  let tweenStreak = new Tween(0, { duration: 1200, easing: cubicOut });
-  let tweenLongest = new Tween(0, { duration: 1400, easing: cubicOut });
-  let tweenTotal = new Tween(0, { duration: 1600, easing: cubicOut });
-  let tweenProgress = new Tween(0, { duration: 1000, easing: cubicOut });
+  onMount(fetchUserGoal);
+
+  let weeks = $derived(groupByWeek(buildCalendarDays(calendarDays)));
 
   $effect(() => {
-    tweenStreak.target = currentStreak;
-    tweenLongest.target = longestStreak;
-    tweenTotal.target = totalDaysActive;
-    tweenProgress.target = todayGoal ? (todayCompleted / todayGoal) * 100 : 0;
+    if (weeks.length > 0) findStreaks(weeks);
   });
 
-  $effect(() => {
-    if (last14Days.length > 0) return;
+  let todayCompleted = $derived(
+    weeks.length ? (weeks[weeks.length - 1]?.findLast(d => d !== null)?.completed ?? 0) : 0
+  );
 
-    let flatDays = weeks.flat().filter(day => {
-      return day !== null;
-    });
-
-    if (flatDays.length >= 14) {
-      last14Days = flatDays.slice(-14);
-    } else {
-      for (let i = 0; i < flatDays.length; i++) {
-        last14Days.push(flatDays[i]);
-      }
-    }
-  })
-
+  const DAY_LETTERS = ["P","U","S","Č","P","S","N"];
   const today = new Date();
-  const weekDayNames = ["Pon", "Uto", "Sri", "Čet", "Pet", "Sub", "Ned"];
 
-  function isToday(date) {
-    return date.toDateString() === today.toDateString();
+  function isToday(date) { return date?.toDateString() === today.toDateString(); }
+
+  function cellLevel(day) {
+    if (!day || !todayGoal) return 0;
+    const pct = day.completed / todayGoal;
+    if (pct <= 0) return 0;
+    if (pct < 0.33) return 1;
+    if (pct < 0.67) return 2;
+    if (pct < 1) return 3;
+    return 4;
   }
 
-  function formatDate(date) {
-    return date.toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
-  }
 
-  function goToTasks() {
-    goto("/tasks");
-  }
 </script>
 
-<div class="container mx-auto max-w-7xl space-y-6 p-4">
+<div class="page">
+  <div class="zadaci-head" style="margin-bottom:20px">
+    <div>
+      <h1>Ciljevi i navika</h1>
+      <div class="sub">Konzistentnost &gt; intenzitet</div>
+    </div>
+  </div>
 
-  <div class="flex justify-between">
-    <div class="flex items-center gap-3">
-      <div class="bg-primary/10 rounded-full p-3">
-        <Flame class="text-primary h-7 w-7" />
+  <div class="ciljevi-grid">
+    <!-- Streak card -->
+    <div class="card streak-card card-pad">
+      <div style="display:flex;align-items:center;gap:8px;color:var(--text-dim);font-size:13px;margin-bottom:10px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        Trenutni streak
       </div>
-      <div>
-        <h1 class="text-2xl font-bold">Moj cilj</h1>
-        <p class="text-muted-foreground text-sm">Prati svoju dosljednost i dnevne ciljeve</p>
+      <div class="streak-val">
+        <div class="n">{currentStreak}</div>
+        <div class="u">dana zaredom</div>
+      </div>
+      <div class="streak-stats" style="margin-top:16px">
+        <div class="stat">
+          <div class="v">{longestStreak}</div>
+          <div class="l">Najdulji streak</div>
+        </div>
+        <div class="stat">
+          <div class="v">{totalDaysActive}</div>
+          <div class="l">Aktivnih dana</div>
+        </div>
+        <div class="stat">
+          <div class="v">{calendarDays.reduce((sum, d) => sum + (d.completed ?? 0), 0)}</div>
+          <div class="l">Ukupno zadataka</div>
+        </div>
       </div>
     </div>
-    <GoalsSettings/>
+
+    <!-- Daily goal card -->
+    <div class="card daily-card card-pad">
+      <h3 style="font-size:14px;font-weight:600;margin:0 0 12px">Dnevni cilj</h3>
+      <div class="daily-target">
+        <div class="n">{sliderValue}</div>
+        <div class="u">zadataka / dan</div>
+      </div>
+
+      <div class="today-bar" style="margin-top:16px">
+        <div class="fill" style="width:{todayGoal ? Math.min(100, todayCompleted/todayGoal*100) : 0}%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--text-faint)">
+        <span>Danas: <b class="mono" style="color:var(--text)">{todayCompleted}</b> / {todayGoal}</span>
+        <span>{todayGoal ? Math.round(todayCompleted/todayGoal*100) : 0}%</span>
+      </div>
+
+      <!-- Slider -->
+      <div class="slider-row" style="margin-top:16px">
+        <span style="font-size:11px;color:var(--text-faint)">1</span>
+        <input
+          type="range"
+          min="1" max="5" step="1"
+          bind:value={sliderValue}
+          class="slider"
+          onchange={updateGoal}
+          style="--pct: {((sliderValue - 1) / 4) * 100}%"
+        />
+        <span style="font-size:11px;color:var(--text-faint)">5</span>
+      </div>
+      {#if savingGoal}
+        <div style="text-align:center;font-size:11px;color:var(--text-faint);margin-top:4px">Spremanje…</div>
+      {/if}
+
+      <button class="btn btn-primary" style="margin-top:14px;width:100%;justify-content:center" onclick={() => goto('/tasks')}>
+        Riješi zadatke danas →
+      </button>
+    </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-    <Card class="relative overflow-hidden transition-all hover:shadow-md">
-      <CardContent class="p-5">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-muted-foreground text-sm">Trenutni niz</p>
-            <p class="text-[#1CB0F6] py-2 text-5xl font-extrabold">{Math.round(tweenStreak.current)}</p>
-            <p class="text-muted-foreground text-xs">dana zaredom 🔥</p>
-          </div>
-          <div class="bg-[#1CB0F6]/10 rounded-full p-3">
-            <Flame class="text-[#1CB0F6] h-6 w-6" />
-          </div>
-        </div>
-        <div class="mt-4 flex gap-1">
-          {#each Array(Math.min(currentStreak, 14)) as _, i}
-            <div class="bg-[#1CB0F6] h-2 flex-1 rounded-full" style="opacity: {0.3 + (i / Math.min(currentStreak, 14)) * 0.7}"></div>
-          {/each}
-          {#if currentStreak === 0}
-            <div class="bg-muted h-2 flex-1 rounded-full" ></div>
-          {/if}
-        </div>
-      </CardContent>
-    </Card>
+  <!-- Heatmap -->
+  <div class="card card-pad" style="margin-top:16px">
+    <div style="font-size:14px;font-weight:600;margin-bottom:16px">Aktivnost</div>
 
-    <Card class="relative overflow-hidden transition-all hover:shadow-md">
-      <CardContent class="p-5">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-muted-foreground text-sm">Najduži niz</p>
-            <p class="py-2 text-5xl font-extrabold text-[#FF9600]">{Math.round(tweenLongest.current)}</p>
-            <p class="text-muted-foreground text-xs">dana zaredom 🏆</p>
-          </div>
-          <div class="rounded-full bg-[#FF9600]/10 p-3">
-            <Trophy class="h-6 w-6 text-[#FF9600]" />
-          </div>
-        </div>
-        <div class="mt-4 flex gap-1">
-          {#each Array(Math.min(longestStreak, 14)) as _, i}
-            <div class="h-2 flex-1 rounded-full bg-[#FF9600]" style="opacity: {0.3 + (i / Math.min(longestStreak, 14)) * 0.7}"></div>
-          {/each}
-          {#if longestStreak === 0}
-            <div class="bg-muted h-2 flex-1 rounded-full" ></div>
-          {/if}
-        </div>
-      </CardContent>
-    </Card>
-
-    <Card class="relative overflow-hidden transition-all hover:shadow-md">
-      <CardContent class="p-5">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-muted-foreground text-sm">Ukupno aktivnih dana</p>
-            <p class="py-2 text-5xl font-extrabold text-[#58CC02]">{Math.round(tweenTotal.current)}</p>
-            <p class="text-muted-foreground text-xs">od početka korištenja ✅</p>
-          </div>
-          <div class="rounded-full bg-[#58CC02]/10 p-3">
-            <TrendingUp class="h-6 w-6 text-[#58CC02]" />
-          </div>
-        </div>
-        <div class="mt-4 flex gap-1">
-          {#each last14Days as day}
-            {@const progress = todayGoal ? Math.min(day.completed / todayGoal, 1) : 0}
-
-            <div
-              class="h-2 flex-1 rounded-full"
-              class:bg-[#58CC02]={day.completed > 0}
-              class:bg-muted={!day.completed}
-              style="opacity: {day.completed ? progress : 1}"
-            ></div>
-          {/each}
-        </div>
-      </CardContent>
-    </Card>
-  </div>
-
-  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 items-stretch">
-
-    <Card class="transition-all hover:shadow-md flex flex-col">
-      <CardHeader class="pb-3">
-        <CardTitle class="flex items-center gap-2">
-          <Target class="text-primary h-5 w-5" />
-          Dnevni cilj
-        </CardTitle>
-      </CardHeader>
-      <CardContent class="flex flex-col flex-1 justify-between">
-        <div>
-          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div class="flex items-end gap-3">
-              <span class="text-primary text-5xl font-extrabold">{todayCompleted}</span>
-              <span class="text-muted-foreground mb-1 text-2xl font-medium">/ {todayGoal}</span>
+    <div class="heatmap-wrap">
+      <div style="display:flex;gap:4px">
+        <!-- Day letters -->
+        <div style="display:flex;flex-direction:column;gap:2px;width:28px;flex-shrink:0">
+          {#each DAY_LETTERS as letter, i (i)}
+            <div style="height:14px;font-size:9px;color:var(--text-faint);display:flex;align-items:center;line-height:1">
+              {i % 2 === 0 ? letter : ''}
             </div>
-            <div class="flex gap-2">
-              {#each Array(todayGoal) as _, i}
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl border-2 transition-all {i < todayCompleted ? 'bg-primary border-primary text-white' : 'border-border bg-muted text-muted-foreground'}">
-                  {#if i < todayCompleted}
-                    <Check class="h-5 w-5" />
-                  {:else}
-                    <Zap class="h-5 w-5" />
-                  {/if}
-                </div>
+          {/each}
+        </div>
+
+        <!-- Weeks grid -->
+        <div style="display:flex;gap:2px;overflow-x:auto;flex:1">
+          {#each weeks as week, wi (wi)}
+            <div style="display:flex;flex-direction:column;gap:2px">
+              {#each week as day, di (di)}
+                {#if day}
+                  <div
+                    class="hm-cell l{cellLevel(day)}"
+                    class:hm-today={isToday(day.date)}
+                    title="{day.date.toLocaleDateString('hr-HR')}: {day.completed ?? 0} zadataka"
+                  ></div>
+                {:else}
+                  <div class="hm-cell" style="opacity:0"></div>
+                {/if}
               {/each}
             </div>
-          </div>
-
-          <div class="mt-5">
-            <div class="bg-muted h-3 w-full overflow-hidden rounded-full">
-              <div class="bg-primary h-full rounded-full transition-all duration-700" style="width: {tweenProgress.current}%;"></div>
-            </div>
-            <div class="mt-2 flex justify-between">
-              <span class="text-muted-foreground text-xs">
-                {#if todayCompleted >= todayGoal}
-                  🎉 Cilj ispunjen! Odlično!
-                {:else}
-                  Još {todayGoal - todayCompleted} {todayGoal - todayCompleted === 1 ? "zadatak" : "zadatka"} do cilja
-                {/if}
-              </span>
-              <span class="text-muted-foreground text-xs">{Math.round(tweenProgress.current)}%</span>
-            </div>
-          </div>
+          {/each}
         </div>
-
-        <div class="mt-6 rounded-lg bg-primary/5 border border-primary/20 p-4">
-          <p class="text-sm font-medium text-primary">
-            {#if todayCompleted >= todayGoal}
-              💪 Bravo! Produžio si niz.
-            {:else if currentStreak >= 10}
-              🔥 Nevjerojatno! Već {currentStreak} dana zaredom — samo nastavi!
-            {:else if currentStreak >= 5}
-              💪 Odlično! {currentStreak} dana niza — ne prekidaj sada!
-            {:else}
-              ⚡ Svaki dan je nova šansa. Počni graditi svoj niz!
-            {/if}
-          </p>
-          <p class="text-muted-foreground text-xs mt-1">
-            {#if todayCompleted >= todayGoal}
-              Vrati se sutra i produži svoj niz.
-            {:else if longestStreak === currentStreak}
-              Postavi novi rekord danas!
-            {:else}
-              Do rekorda ti nedostaje još {longestStreak - currentStreak} dana.
-            {/if}
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-
-    <Card class="transition-all hover:shadow-md">
-      <CardHeader class="pb-3">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <CardTitle class="flex items-center gap-2">
-            <Calendar class="text-primary h-5 w-5" />
-            Aktivnost
-          </CardTitle>
-          <div class="flex items-center gap-3 text-xs text-muted-foreground">
-            <span class="flex items-center gap-1">
-              <span class="inline-block h-3 w-3 rounded-sm bg-[#58CC02]"></span>
-              Cilj ispunjen
-            </span>
-            <span class="flex items-center gap-1">
-              <span class="inline-block h-3 w-3 rounded-sm bg-[#5acc0261]"></span>
-              Djelomično
-            </span>
-            <span class="flex items-center gap-1">
-              <span class="border-border inline-block h-3 w-3 rounded-sm border bg-muted"></span>
-              Nije rješavano
-            </span>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div class="overflow-x-auto">
-          <div class="min-w-[280px]">
-            <div class="relative">
-              <div class="mb-1 flex gap-1">
-                <div class="w-8"></div>
-                {#each weeks as week, wi}
-                  <div class="w-4 text-[9px] text-muted-foreground">
-                    {#each monthLabels as ml}
-                      {#if ml.weekIndex === wi}{ml.label}{/if}
-                    {/each}
-                  </div>
-                {/each}
-              </div>
-
-              <div class="flex gap-1">
-                <div class="flex flex-col gap-1">
-                  {#each weekDayNames as name, di}
-                    <div class="flex h-4 w-8 items-center text-[9px] text-muted-foreground">
-                      {di % 2 === 0 ? name : ""}
-                    </div>
-                  {/each}
-                </div>
-
-                {#each weeks as week}
-                  <div class="flex flex-col gap-1 pb-2 pr-1">
-                    {#each Array(7) as _, di}
-                      {@const day = week[di]}
-                      {#if day === null || day === undefined}
-                        <div class="h-4 w-4 rounded-sm"></div>
-                      {:else}
-                        <div
-                          class="h-4 w-4 rounded-sm transition-all hover:scale-125 cursor-pointer {day.goalMet ? 'bg-[#58CC02]' : day.partial ? 'bg-[#5acc0261]' : 'bg-muted'} {isToday(day.date) ? 'ring-2 ring-[#58CC02] ring-offset-1' : ''}"
-                          title="{formatDate(day.date)}: {day.completed}/{day.goal} zadataka"
-                        ></div>
-                      {/if}
-                    {/each}
-                  </div>
-                {/each}
-              </div>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  </div>
-
-  <Card class="from-primary/10 via-primary/5 bg-gradient-to-r to-transparent p-6">
-    <div
-      class="flex flex-col items-center text-center md:flex-row md:justify-between md:text-left"
-    >
-      <div class="mb-4 md:mb-0">
-        <Trophy class="text-primary mb-2 h-12 w-12" />
-        <h2 class="text-xl font-bold">
-          {#if currentStreak >= 10}
-            FANTASTIČNO! VEĆ {currentStreak} DANA ZAREDOM! 🔥
-          {:else if currentStreak >= 5}
-            ODLIČAN NAPREDAK! NE STAJ SADA! 💪
-          {:else}
-            SVAKI DAN JE KORAK BLIŽE MATURI!
-          {/if}
-        </h2>
-        <p class="text-muted-foreground mt-1">
-          {#if todayCompleted >= todayGoal}
-            Vrati se sutra i postavi novi rekord!
-          {:else if currentStreak === longestStreak}
-            Postavi novi rekord danas!
-          {:else if currentStreak >= longestStreak - 3}
-            Samo još {longestStreak - currentStreak} dana do osobnog rekorda!
-          {:else}
-            Tvoj trud se isplati — {totalDaysActive} aktivnih dana govori samo za sebe!
-          {/if}
-        </p>
       </div>
-      <Button onclick={goToTasks} size="lg" class="gap-2">
-        <PlayCircle class="h-5 w-5" />
-        ZAPOČNI DANAŠNJE UČENJE
-      </Button>
-    </div>
-  </Card>
 
+      <!-- Legend -->
+      <div style="display:flex;align-items:center;gap:4px;margin-top:12px;font-size:11px;color:var(--text-faint)">
+        <span>Manje</span>
+        <div class="hm-cell"></div>
+        <div class="hm-cell l1"></div>
+        <div class="hm-cell l2"></div>
+        <div class="hm-cell l3"></div>
+        <div class="hm-cell l4"></div>
+        <span>Više</span>
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+  .heatmap-wrap { overflow-x: auto; }
+  .daily-target {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .daily-target .n {
+    font-size: 40px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    letter-spacing: -0.04em;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .daily-target .u { font-size: 13px; color: var(--text-faint); }
+
+  .streak-val {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .streak-val .n {
+    font-size: 52px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+  .streak-val .u { font-size: 13px; color: var(--text-faint); }
+
+  .streak-stats {
+    display: flex;
+    gap: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .streak-stats .stat .v {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--text);
+  }
+  .streak-stats .stat .l { font-size: 11px; color: var(--text-faint); }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .slider {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 5px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--primary) var(--pct, 50%), var(--border) var(--pct, 50%));
+    outline: none;
+    cursor: pointer;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-dim);
+    cursor: grab;
+  }
+  .slider::-webkit-slider-thumb:active { cursor: grabbing; }
+</style>
