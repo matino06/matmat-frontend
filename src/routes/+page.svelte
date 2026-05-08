@@ -1,6 +1,7 @@
 <script>
   import { userData, handleLogIn } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
+  import MarketingNav from "$lib/components/marketingNav/MarketingNav.svelte";
 
   function start() {
     if (userData.user) goto("/tasks");
@@ -36,12 +37,6 @@
     },
   ];
 
-  const TESTIMONIALS = [
-    { q: "Jedina aplikacija na kojoj sam stvarno naučio derivacije — ne samo zapamtio postupak. Prošao s odličnim.", name: "Matej", meta: "Matura 2025 · A razina · 5", grad: "oklch(0.5 0.2 270)" },
-    { q: "Svaki dan 10 zadataka i streak od 40 dana. Matematiku sam nekad mrzio, sad mi je ok. Čudo od app.", name: "Iva", meta: "Matura 2025 · B razina · 4", grad: "oklch(0.5 0.2 200)" },
-    { q: "Točno mi govori što treba ponoviti. Algoritam je bolji od mene kad odlučujem što učiti.", name: "Tomislav", meta: "Matura 2024 · A razina · 5", grad: "oklch(0.5 0.18 290)" },
-  ];
-
   const SR_BARS = [
     { label: "Derivacije", pct: 82, color: "oklch(0.65 0.2 270)" },
     { label: "Integrali", pct: 54, color: "oklch(0.65 0.2 250)" },
@@ -57,21 +52,7 @@
 
 <div class="lp">
 
-  <!-- Nav -->
-  <nav class="lp-nav">
-    <div class="lp-nav-brand">
-      <div class="brand-mark">M</div>
-      <div class="lp-brand-name">MatMat</div>
-    </div>
-    <div class="lp-nav-links">
-      <a href="#kako" class="lp-nav-link">Kako radi</a>
-      <a href="#programi" class="lp-nav-link">Programi</a>
-      <!-- svelte-ignore a11y_consider_explicit_label -->
-      <button class="btn btn-ghost" onclick={start}>Prijava</button>
-      <!-- svelte-ignore a11y_consider_explicit_label -->
-      <button class="btn btn-primary" onclick={start}>Počni besplatno</button>
-    </div>
-  </nav>
+  <MarketingNav />
 
   <!-- Hero -->
   <section class="lp-hero">
@@ -101,7 +82,7 @@
         </svg>
         Počni s Googleom — besplatno
       </button>
-      <a href="#kako" class="btn-ghost-lp">Pogledaj kako radi →</a>
+      <a href="/kako-radi" class="btn-ghost-lp">Pogledaj kako radi →</a>
     </div>
 
     <div class="lp-hero-note">Bez kreditne kartice · Radi u pregledniku · Hrvatski kurikulum</div>
@@ -424,29 +405,6 @@
     </div>
   </div>
 
-  <!-- Testimonials -->
-  <section class="lp-testimonials">
-    <div style="text-align:center;margin-bottom:0">
-      <div class="lp-section-kicker">Recenzije</div>
-      <h2 class="lp-section-h2">Učenici koji su prošli maturu</h2>
-    </div>
-    <div class="lp-testi-grid">
-      {#each TESTIMONIALS as t, i (i)}
-        <div class="lp-testi">
-          <div class="stars">★★★★★</div>
-          <div class="quote">"{t.q}"</div>
-          <div class="author">
-            <div class="av" style="background:{t.grad}">{t.name[0]}</div>
-            <div>
-              <div class="name">{t.name}</div>
-              <div class="meta">{t.meta}</div>
-            </div>
-          </div>
-        </div>
-      {/each}
-    </div>
-  </section>
-
   <!-- Final CTA -->
   <section class="lp-cta-section">
     <h2>Koliko dana do mature?</h2>
@@ -471,7 +429,7 @@
       <span>MatMat · matmat.online</span>
     </div>
     <div class="lp-footer-links">
-      <a href="mailto:info@matmat.online">Kontakt</a>
+      <a href="mailto:info@matmat.online">info@matmat.online</a>
     </div>
     <span>© {new Date().getFullYear()} MatMat</span>
   </footer>
@@ -487,34 +445,6 @@
     scroll-behavior: smooth;
     font-family: var(--font-sans);
   }
-
-  /* Nav */
-  .lp-nav {
-    position: sticky; top: 0; z-index: 50;
-    display: flex; align-items: center;
-    justify-content: space-between;
-    padding: 0 48px;
-    height: 64px;
-    background: rgba(13,13,16,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .lp-nav-brand { display: flex; align-items: center; gap: 10px; }
-  .lp-nav-brand .brand-mark {
-    width: 32px; height: 32px; border-radius: 10px;
-    background: var(--primary);
-    display: grid; place-items: center;
-    color: #fff; font-weight: 700;
-    font-family: var(--font-mono); font-size: 13px;
-  }
-  .lp-brand-name { font-weight: 700; font-size: 16px; letter-spacing: -0.02em; }
-  .lp-nav-links { display: flex; gap: 6px; align-items: center; }
-  .lp-nav-link {
-    font-size: 14px; color: rgba(255,255,255,0.5);
-    padding: 6px 14px; border-radius: 8px;
-    transition: color .15s; text-decoration: none;
-  }
-  .lp-nav-link:hover { color: #fff; }
 
   /* Hero */
   .lp-hero {
@@ -872,41 +802,6 @@
   }
   .lp-prog-chip .chk { color: var(--success); }
 
-  /* Testimonials */
-  .lp-testimonials {
-    padding: 120px 60px;
-    max-width: 1100px; margin: 0 auto;
-  }
-  .lp-testi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 56px;
-  }
-  .lp-testi {
-    padding: 28px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    display: flex; flex-direction: column; gap: 16px;
-    transition: border-color .15s;
-  }
-  .lp-testi:hover { border-color: rgba(255,255,255,0.15); }
-  .lp-testi .stars { color: var(--warn); font-size: 14px; letter-spacing: 2px; }
-  .lp-testi .quote { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; }
-  .lp-testi .author {
-    display: flex; gap: 12px; align-items: center;
-    margin-top: auto; padding-top: 16px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  .lp-testi .av {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: grid; place-items: center;
-    color: #fff; font-size: 13px; font-weight: 700;
-  }
-  .lp-testi .name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); }
-  .lp-testi .meta { font-size: 12px; color: rgba(255,255,255,0.3); }
-
   /* Final CTA */
   .lp-cta-section {
     margin: 0 60px 80px;
@@ -945,18 +840,15 @@
   @media (max-width: 900px) {
     .lp-feature-row { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
     .lp-feature-row-rev { direction: ltr; }
-    .lp-testi-grid { grid-template-columns: 1fr; }
     .lp-prog-cards { grid-template-columns: 1fr; }
     .lp-screen-frame { height: auto; flex-direction: column; }
     .lp-screen-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); flex-direction: row; height: auto; padding: 10px; flex-wrap: wrap; }
   }
   @media (max-width: 700px) {
-    .lp-nav { padding: 0 20px; }
-    .lp-nav-links .lp-nav-link { display: none; }
     .lp-proof { padding: 20px; gap: 12px; }
     .lp-proof-div { display: none; }
     .lp-proof-stat { padding: 0 16px; }
-    .lp-programs-section, .lp-testimonials { padding: 60px 20px; }
+    .lp-programs-section { padding: 60px 20px; }
     .lp-cta-section { margin: 0 16px 48px; padding: 60px 24px; }
     .lp-footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
   }

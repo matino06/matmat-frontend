@@ -1,7 +1,7 @@
 <script>
   import "../app.css";
   import { page } from '$app/state';
-  import { afterNavigate } from "$app/navigation";
+  import { afterNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { userData, turnstileData } from "$lib/store/user.svelte";
   import { panelState, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
@@ -10,6 +10,7 @@
   import Sidebar from "$lib/components/layout/Sidebar.svelte";
   import Panel from "$lib/components/panel/Panel.svelte";
   import ChatWindow from "$lib/components/chatWindow/ChatWindow.svelte";
+  import Onboarding from "$lib/components/onboarding/Onboarding.svelte";
 
   const GA_ID = "G-E6F6X4X2XG";
 
@@ -47,8 +48,15 @@
   let { children } = $props();
 
   let path = $derived(page.url.pathname);
-  let isLanding = $derived(path === "/");
+  const MARKETING_PATHS = ["/", "/kako-radi"];
+  let isLanding = $derived(MARKETING_PATHS.includes(path));
   let showSidebar = $derived(!isLanding && !!userData.user);
+
+  $effect(() => {
+    if (!userData.loading && !userData.user && !isLanding) {
+      goto("/");
+    }
+  });
 
   let formulasPdfUrl = "/pdfs/MAT-FORMULE.pdf";
 
@@ -85,7 +93,9 @@
 
 <ErrorAlert/>
 
-{#if isLanding}
+{#if userData.needsOnboarding && userData.user}
+  <Onboarding/>
+{:else if isLanding}
   {@render children?.()}
 {:else if showSidebar}
   <div class="app">
@@ -170,9 +180,6 @@
     </div>
   </Panel>
 
-{:else if !userData.loading}
-  <!-- Not logged in, not landing — show children anyway (landing will redirect) -->
-  {@render children?.()}
 {/if}
 
 <style>

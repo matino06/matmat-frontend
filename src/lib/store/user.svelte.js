@@ -7,6 +7,8 @@ import { browser } from "$app/environment";
 export const userData = $state({
   user: null,
   loading: true,
+  isAdmin: false,
+  needsOnboarding: false,
 });
 
 export const turnstileData = $state({ isLoaded: false });
@@ -16,6 +18,10 @@ export const showNotificationPopup = $state({ value: false });
 onAuthStateChanged(auth, (u) => {
   userData.user = u;
   userData.loading = false;
+  if (!u) {
+    userData.isAdmin = false;
+    userData.needsOnboarding = false;
+  }
 });
 
 export const handleLogIn = async () => {
@@ -67,8 +73,12 @@ const login = async () => {
   const textResponse = await response.text();
 
   if (textResponse == "Account does not exist") {
-    const tempResponse = await apiClient("/account/create", { method: "POST" });
+    await apiClient("/account/create", { method: "POST" });
+    userData.needsOnboarding = true;
   }
+
+  const adminRes = await apiClient("/account/is-admin", { method: "GET" });
+  if (adminRes.ok) userData.isAdmin = await adminRes.json();
 };
 
 const renderTurnstile = () => {
@@ -127,4 +137,6 @@ const renderTurnstile = () => {
 export const logout = async () => {
   await signOut(auth);
   userData.user = null;
+  userData.isAdmin = false;
+  userData.needsOnboarding = false;
 };

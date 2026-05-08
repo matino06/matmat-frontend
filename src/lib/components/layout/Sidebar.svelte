@@ -8,10 +8,11 @@
 
   let currentCourse = $state(null);
   let psOpen = $state(false);
+  let avatarFailed = $state(false);
 
   const PROGRAMS = [
-    { id: 'matura-mat-a', label: 'Matematika A razina', badge: 'MA', color: '239' },
-    { id: 'matura-mat-b', label: 'Matematika B razina', badge: 'MB', color: '215' },
+    { id: 1, label: 'Matematika A razina', badge: 'MA', color: '239' },
+    { id: 2, label: 'Matematika B razina', badge: 'MB', color: '215' },
   ];
 
   async function loadCourse() {
@@ -149,7 +150,7 @@
     Pomodoro
   </div>
 
-  {#if userData.user?.email === 'matino0546@gmail.com'}
+  {#if userData.isAdmin}
     <div class="nav-group-label">Admin</div>
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
     <div class="nav-item {path === '/all-tasks' ? 'active' : ''}" onclick={() => goto('/all-tasks')}>
@@ -172,8 +173,15 @@
 
   <!-- Sidebar footer -->
   <div class="sidebar-foot">
-    {#if userData.user?.photoURL}
-      <div class="avatar"><img src={userData.user.photoURL} alt="avatar"/></div>
+    {#if userData.user?.photoURL && !avatarFailed}
+      <div class="avatar">
+        <img
+          src={userData.user.photoURL}
+          alt="avatar"
+          referrerpolicy="no-referrer"
+          onerror={() => avatarFailed = true}
+        />
+      </div>
     {:else}
       <div class="avatar">{initials(userData.user?.displayName ?? '')}</div>
     {/if}

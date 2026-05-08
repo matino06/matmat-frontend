@@ -4,9 +4,6 @@
   import { apiClient } from "$lib/api/apiClient";
   import { md } from "$lib/utils/markdownRenderer";
 
-  // TODO: replace with /account/is-admin endpoint when available
-  const ADMIN_EMAIL = "matino0546@gmail.com";
-
   let fields = $state([]);
   let subfields = $state([]);
   let objectives = $state([]);
@@ -28,7 +25,7 @@
   let loadingObjectives = $state(false);
   let loadingTasks = $state(false);
 
-  let isAdmin = $derived(userData.user?.email === ADMIN_EMAIL);
+  let isAdmin = $derived(userData.isAdmin);
 
   async function fetchFields() {
     loadingFields = true;
