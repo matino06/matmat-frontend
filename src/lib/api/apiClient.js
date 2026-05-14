@@ -13,7 +13,8 @@ export async function apiClient(path, init = {}) {
   if (user) {
     const token = await user.getIdToken();
     fetchInit.headers["Authorization"] = `Bearer ${token}`;
-    if (!fetchInit.headers["Content-Type"]) {
+    const isFormData = init.body instanceof FormData;
+    if (!isFormData && !fetchInit.headers["Content-Type"]) {
       fetchInit.headers["Content-Type"] = "application/json";
     }
   }

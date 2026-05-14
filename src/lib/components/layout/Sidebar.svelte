@@ -3,12 +3,23 @@
   import { goto } from '$app/navigation';
   import { userData } from '$lib/store/user.svelte';
   import { panelState, openAI, openFormule, showPomoWidget } from '$lib/store/panels.svelte';
+  import { closeSidebar } from '$lib/store/ui.svelte';
   import { apiClient } from '$lib/api/apiClient';
   import { onMount } from 'svelte';
+
+  let { open = false } = $props();
 
   let currentCourse = $state(null);
   let psOpen = $state(false);
   let avatarFailed = $state(false);
+
+  function nav(path) {
+    goto(path);
+    closeSidebar();
+  }
+
+  function openAIAndClose() { openAI(); closeSidebar(); }
+  function openFormuleAndClose() { openFormule(); closeSidebar(); }
 
   const PROGRAMS = [
     { id: 1, label: 'Matematika A razina', badge: 'MA', color: '239' },
@@ -51,10 +62,11 @@
   function handlePomodoro() {
     showPomoWidget();
     if (path !== '/tasks') goto('/tasks');
+    closeSidebar();
   }
 </script>
 
-<nav class="sidebar">
+<nav class="sidebar" class:sidebar-open={open}>
   <div class="brand">
     <div class="brand-mark">M</div>
     <div class="brand-name">MatMat</div>
@@ -93,7 +105,7 @@
   <div class="nav-group-label">Učenje</div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/progress/units' ? 'active' : ''}" onclick={() => goto('/progress/units')}>
+  <div class="nav-item {path === '/progress/units' ? 'active' : ''}" onclick={() => nav('/progress/units')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
     </svg>
@@ -101,7 +113,7 @@
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/tasks' ? 'active' : ''}" onclick={() => goto('/tasks')}>
+  <div class="nav-item {path === '/tasks' ? 'active' : ''}" onclick={() => nav('/tasks')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
     </svg>
@@ -109,25 +121,36 @@
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/progress' ? 'active' : ''}" onclick={() => goto('/progress')}>
+  <div class="nav-item {path === '/progress' ? 'active' : ''}" onclick={() => nav('/progress')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
     </svg>
     Napredak <span class="kbd">3</span>
   </div>
-
+  
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/goals' ? 'active' : ''}" onclick={() => goto('/goals')}>
+  <div class="nav-item {path === '/goals' ? 'active' : ''}" onclick={() => nav('/goals')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
     </svg>
     Ciljevi <span class="kbd">4</span>
   </div>
+  
+  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+  <div class="nav-item {path === '/mock-exam' || path.startsWith('/mock-exam/') ? 'active' : ''}" onclick={() => nav('/mock-exam')}>
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="9" y1="13" x2="15" y2="13"/>
+      <line x1="9" y1="17" x2="15" y2="17"/>
+    </svg>
+    Probna matura <span class="kbd">5</span>
+  </div>
 
   <div class="nav-group-label">Alati</div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item" onclick={openFormule}>
+  <div class="nav-item" onclick={openFormuleAndClose}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
     </svg>
@@ -135,7 +158,7 @@
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item" onclick={openAI}>
+  <div class="nav-item" onclick={openAIAndClose}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/><path d="M20 19.5v-.5a7 7 0 0 0-14 0v.5"/>
     </svg>
@@ -147,13 +170,13 @@
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M12 3v1M12 20v1M3 12H2M22 12h-1M5.6 5.6l-.7-.7M19.1 19.1l-.7-.7M5.6 18.4l-.7.7M19.1 4.9l-.7.7"/>
     </svg>
-    Pomodoro
+    Pomodoro <span class="kbd">P</span>
   </div>
 
   {#if userData.isAdmin}
     <div class="nav-group-label">Admin</div>
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="nav-item {path === '/all-tasks' ? 'active' : ''}" onclick={() => goto('/all-tasks')}>
+    <div class="nav-item {path === '/all-tasks' ? 'active' : ''}" onclick={() => nav('/all-tasks')}>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
         <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
@@ -161,7 +184,7 @@
       Svi zadaci
     </div>
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="nav-item {path === '/create-tasks' ? 'active' : ''}" onclick={() => goto('/create-tasks')}>
+    <div class="nav-item {path === '/create-tasks' ? 'active' : ''}" onclick={() => nav('/create-tasks')}>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="17 8 12 3 7 8"/>
@@ -192,7 +215,7 @@
     <button
       class="btn btn-quiet"
       style="padding: 5px 7px; margin-left: auto; flex-shrink: 0;"
-      onclick={() => goto('/settings')}
+      onclick={() => nav('/settings')}
       title="Postavke"
     >
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

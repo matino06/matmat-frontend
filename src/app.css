@@ -2568,3 +2568,65 @@ svg {
   height: 100vh;
   overflow: auto;
 }
+
+/* ─── Responsive shell ─── */
+.body-lock { overflow: hidden; touch-action: none; }
+.topbar-hamburger { display: none; }
+
+/* Backdrop: fixed on every screen so it never participates in `.app` grid flow.
+   Hidden on desktop via display:none; the mobile media query flips it to block. */
+.sidebar-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 55;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.18s;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .app {
+    grid-template-columns: 1fr;
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(280px, 86vw);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.22s cubic-bezier(.2,.8,.2,1);
+  }
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+  }
+
+  .sidebar-backdrop { display: block; }
+  .sidebar-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .topbar { padding: var(--pad-2) var(--pad-3); }
+  .topbar-actions { gap: 4px; }
+  .topbar-actions .btn-ghost { padding: 6px 10px; font-size: 12px; }
+  .topbar-actions .ai-label { display: none; }
+  .topbar-hamburger { display: inline-flex; }
+
+  .page { padding: var(--pad-3) var(--pad-3) var(--pad-5); }
+
+  .task-card { padding: var(--pad-3); }
+  .solution { margin-top: var(--pad-4); padding-top: var(--pad-4); }
+
+  .panel { width: 100vw !important; max-width: 100vw; border-left: 0; }
+
+  .ciljevi-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 479px) {
+  .rp-btns { flex-wrap: wrap; }
+  .rp-btn { flex: 1 1 calc(33.333% - 8px); min-width: 0; padding: 10px 4px; }
+  .topbar-title span:not(:last-child) { display: none; }
+  .topbar-title b { font-size: 13px; }
+  .zadaci-head h1 { font-size: 18px; }
+}

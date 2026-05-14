@@ -24,6 +24,8 @@
   let readinessPct = $state(0);
   let dailyGoal = $state(8);
   let startTime = $state(null);
+  let pendingRating = $state(null);
+  let ratingKey = $state(0);
 
   async function fetchDailyGoal() {
     try {
@@ -64,6 +66,7 @@
     task = null;
     revealed = false;
     answered = false;
+    pendingRating = null;
 
     const response = await apiClient("/task/get-new", { method: "GET" });
     const text = await response.text();
@@ -170,9 +173,9 @@
   let toastPct = $derived(Math.min(completedToday / dailyGoal * 100, 100));
 
   function handleSpaceReveal(e) {
-    if (e.code === "Space" && !revealed && e.target.tagName !== "TEXTAREA" && e.target.tagName !== "INPUT") {
+    if (e.code === "Space" && e.target.tagName !== "TEXTAREA" && e.target.tagName !== "INPUT") {
       e.preventDefault();
-      revealed = true;
+      revealed = !revealed;
     }
   }
 </script>
@@ -262,7 +265,15 @@
         </div>
       {:else}
         <div class="solution">
-          <div class="solution-header"><h3>Rješenje</h3></div>
+          <div class="solution-header">
+            <h3>Rješenje</h3>
+            <button class="btn btn-ghost solution-close" onclick={() => revealed = false} title="Sakrij rješenje">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              Sakrij
+            </button>
+          </div>
           <div class="prose !max-w-none dark:prose-invert
             text-[10px]         /* još manji font za najmanje ekrane */
             sm:text-s     /* male ekrane */
@@ -278,7 +289,25 @@
           {#if !answered}
             <div class="rating-row">
               <div class="rating-label">Kako ti je išlo?</div>
-              <RatingPicker onSelect={handleRate}/>
+              {#if pendingRating}
+                <div class="rating-confirm">
+                  <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
+                    {pendingRating.k} — {pendingRating.t}
+                  </span>
+                  <div class="rating-confirm-btns">
+                    <button class="btn btn-primary" onclick={() => { handleRate(pendingRating); pendingRating = null; }}>
+                      Potvrdi i nastavi
+                    </button>
+                    <button class="btn btn-ghost" onclick={() => { pendingRating = null; ratingKey++; }}>
+                      Promijeni
+                    </button>
+                  </div>
+                </div>
+              {:else}
+                {#key ratingKey}
+                  <RatingPicker onSelect={(r) => pendingRating = r} />
+                {/key}
+              {/if}
             </div>
           {:else}
             <div style="margin-top:18px;display:flex;gap:10px;align-items:center;color:var(--success)">
@@ -379,5 +408,35 @@
     font-family: var(--font-mono);
     font-size: 11px;
   }
+
+  .rating-confirm {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .rating-confirm-chosen {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .rating-confirm-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .solution-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .solution-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-faint);
+    padding: 4px 10px;
+  }
+  .solution-close:hover { color: var(--text); }
 
 </style>

@@ -73,4 +73,8 @@
     transition: none !important;
     user-select: none;
   }
+
+  @media (max-width: 767px) {
+    .panel-resize { display: none; }
+  }
 </style>
