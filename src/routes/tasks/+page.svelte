@@ -7,12 +7,14 @@
   import { md } from "$lib/utils/markdownRenderer";
   import { panelState } from "$lib/store/panels.svelte";
   import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
+  import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
   import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
+  let selectedTempo = $state(null);
   let noMoreTasks = $state(false);
   let isLoading = $state(false);
   let revealed = $state(false);
@@ -27,13 +29,16 @@
   let pendingRating = $state(null);
   let ratingKey = $state(0);
 
-  async function fetchDailyGoal() {
+  async function fetchUserGoal() {
     try {
       const r = await apiClient("/user-goal", { method: "GET" });
       if (r.ok) {
         const data = await r.json();
         if (typeof data?.dailyGoal === "number" && data.dailyGoal > 0) {
           dailyGoal = data.dailyGoal;
+        }
+        if (typeof data?.todayGoal === "number") {
+          completedToday = data.todayGoal;
         }
       }
     } catch {}
@@ -91,25 +96,39 @@
     const endTime = Date.now();
     const device = getDeviceType();
 
-    await apiClient("/solved-task/set-new", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        taskId: task.id,
-        q: rating.k,
-        startTime,
-        endTime,
-        device,
-        tempo: null,
-      }),
-    });
+    let response;
+    try {
+      response = await apiClient("/solved-task/set-new", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          taskId: task.id,
+          q: rating.k,
+          startTime: new Date(startTime).toISOString(),
+          endTime: new Date(endTime).toISOString(),
+          device,
+          tempo: selectedTempo,
+        }),
+      });
+    } catch {
+      showErrorAlert("Nema veze sa serverom. Pokušaj ponovo.");
+      answered = false;
+      return;
+    }
 
-    const newCount = completedToday + 1;
-    completedToday = newCount;
+    if (!response.ok) {
+      showErrorAlert("Spremanje zadatka nije uspjelo. Pokušaj ponovo.");
+      answered = false;
+      return;
+    }
 
-    if (newCount >= dailyGoal) {
+    const oldCount = completedToday;
+    await fetchUserGoal();
+    const justReachedGoal = oldCount < dailyGoal && completedToday >= dailyGoal;
+
+    if (justReachedGoal) {
       setTimeout(() => setShowCelebration(), 400);
-    } else {
+    } else if (completedToday < dailyGoal) {
       showToast = false;
       await tick();
       showToast = true;
@@ -156,9 +175,14 @@
   });
 
   onMount(async () => {
+    const response = await apiClient("/account/tempo", { method: "GET" });
+    if (response.ok) {
+      selectedTempo = await response.json();
+    }
+
     const unsub = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        await Promise.all([fetchCurrentCourse(), fetchDailyGoal()]);
+        await Promise.all([fetchCurrentCourse(), fetchUserGoal()]);
         await fetchNewTask();
       }
     });
@@ -192,10 +216,12 @@
 {/if}
 
 {#if progressBump}
-  <div class="progress-bump" key={progressBump.key}>
-    <div class="progress-bump-val">+{progressBump.to - progressBump.from}%</div>
-    <div class="progress-bump-sub">{progressBump.from}% → {progressBump.to}% spreman</div>
-  </div>
+  {#key progressBump.key}
+    <div class="progress-bump">
+      <div class="progress-bump-val">+{progressBump.to - progressBump.from}%</div>
+      <div class="progress-bump-sub">{progressBump.from}% → {progressBump.to}% spreman</div>
+    </div>
+  {/key}
 {/if}
 
 {#if showToast}

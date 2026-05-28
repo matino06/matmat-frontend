@@ -50,7 +50,7 @@
 <div class="page">
   <div class="zadaci-head">
     <div>
-      <h1>Probna matura</h1>
+      <h1>Probna matura <span class="beta-pill">Beta</span></h1>
       <div class="sub">Odaberi probnu maturu i riješi je u stilu prave državne mature.</div>
     </div>
   </div>
@@ -110,6 +110,20 @@
 </div>
 
 <style>
+  .beta-pill {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg-elev);
+    color: var(--text-faint);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
   .exam-grid {
     display: grid;
     grid-template-columns: 1fr;
