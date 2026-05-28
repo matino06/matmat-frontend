@@ -94,7 +94,7 @@
     }
     const msg =
       `Predati maturu? ${answeredCount} od ${totalAnswerable} pitanja je odgovoreno.\n\n` +
-      "Nakon predaje ne možeš mijenjati odgovore. Ocjenjivanje traje 5–30 sekundi.";
+      "Nakon predaje ne možeš mijenjati odgovore. Ocjenjivanje traje nekoliko minuta.";
     if (!confirm(msg)) return;
 
     submitError = null;
@@ -191,7 +191,7 @@
 
 <style>
   .exam-page {
-    padding: var(--pad-5) var(--pad-5) var(--pad-6);
+    padding: var(--pad-5) var(--pad-5) 12px;
     max-width: 1280px;
     margin: 0 auto;
   }

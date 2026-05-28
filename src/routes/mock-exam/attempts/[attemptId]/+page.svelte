@@ -8,8 +8,9 @@
 
   const attemptId = $derived(page.params.attemptId);
 
-  const POLL_INTERVAL_MS = 3000;
-  const POLL_HARD_CAP_MS = 90 * 1000;
+  const POLL_INITIAL_DELAY_MS = 60 * 1000;
+  const POLL_INTERVAL_MS = 15 * 1000;
+  const POLL_HARD_CAP_MS = 5 * 60 * 1000;
 
   let attempt = $state(null);
   let loading = $state(true);
@@ -18,6 +19,7 @@
   let retrying = $state(false);
   let retryError = $state(null);
 
+  let initialDelayId = null;
   let intervalId = null;
   let timeoutId = null;
 
@@ -43,10 +45,13 @@
   function startPolling() {
     stopPolling();
     pollTimedOut = false;
-    intervalId = setInterval(async () => {
-      await load();
-      if (attempt?.gradingStatus !== "PENDING") stopPolling();
-    }, POLL_INTERVAL_MS);
+    initialDelayId = setTimeout(() => {
+      initialDelayId = null;
+      intervalId = setInterval(async () => {
+        await load();
+        if (attempt?.gradingStatus !== "PENDING") stopPolling();
+      }, POLL_INTERVAL_MS);
+    }, POLL_INITIAL_DELAY_MS);
     timeoutId = setTimeout(() => {
       stopPolling();
       pollTimedOut = true;
@@ -54,8 +59,10 @@
   }
 
   function stopPolling() {
+    if (initialDelayId) clearTimeout(initialDelayId);
     if (intervalId) clearInterval(intervalId);
     if (timeoutId) clearTimeout(timeoutId);
+    initialDelayId = null;
     intervalId = null;
     timeoutId = null;
   }

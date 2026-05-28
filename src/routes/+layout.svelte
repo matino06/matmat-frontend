@@ -82,6 +82,11 @@
   let showSidebar = $derived(!isLanding && !!userData.user);
 
   $effect(() => {
+    if (typeof document === "undefined") return;
+    document.body.classList.toggle("app-shell", showSidebar);
+  });
+
+  $effect(() => {
     if (!userData.loading && !userData.user && !isLanding) {
       goto("/");
     }

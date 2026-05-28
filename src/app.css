@@ -86,6 +86,10 @@ body,
 #svelte {
   height: 100%;
 }
+body.app-shell,
+body.app-shell #svelte {
+  overflow: hidden;
+}
 body {
   margin: 0;
   background: var(--bg);

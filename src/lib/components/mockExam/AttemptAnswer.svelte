@@ -37,6 +37,10 @@
     }
   }
 
+  const questionImages = $derived(
+    (answer.questionImages ?? []).filter((i) => i.imageContext === "question"),
+  );
+
   const optionImages = $derived(
     (answer.questionImages ?? []).reduce((acc, img) => {
       if (img.imageContext?.startsWith("option_")) acc[img.imageContext] = img;
@@ -85,6 +89,14 @@
   </header>
 
   <div class="ans-q">{@html renderMath(answer.questionText ?? "")}</div>
+
+  {#if questionImages.length}
+    <div class="ans-q-images">
+      {#each questionImages as img (img.imageUrl)}
+        <img src={imageUrl(img.imageUrl)} alt={img.altText ?? ""} />
+      {/each}
+    </div>
+  {/if}
 
   {#if answer.questionType === "multiple_choice"}
     <div class="mc-options">
@@ -272,6 +284,18 @@
 
   .ans-q { color: var(--text); font-size: 14px; line-height: 1.55; }
   .ans-q :global(p) { margin: 0 0 4px; }
+
+  .ans-q-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .ans-q-images img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--r-md);
+    background: #fff;
+  }
 
   .mc-body {
     flex: 1;
