@@ -28,6 +28,7 @@
   let startTime = $state(null);
   let pendingRating = $state(null);
   let ratingKey = $state(0);
+  let switchingTempo = $state(false);
 
   async function fetchUserGoal() {
     try {
@@ -140,6 +141,29 @@
 
   function setShowCelebration() {
     showCelebration = true;
+  }
+
+  async function switchToUbrzaniAndRetry() {
+    if (switchingTempo) return;
+    switchingTempo = true;
+    try {
+      const r = await apiClient("/account/tempo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(1),
+      });
+      if (!r.ok) {
+        showErrorAlert("Promjena tempa nije uspjela. Pokušaj ponovo.");
+        return;
+      }
+      selectedTempo = 1;
+      noMoreTasks = false;
+      await fetchNewTask();
+    } catch {
+      showErrorAlert("Nema veze sa serverom. Pokušaj ponovo.");
+    } finally {
+      switchingTempo = false;
+    }
   }
 
   function getDeviceType() {
@@ -263,6 +287,14 @@
       <div style="font-size:48px;margin-bottom:12px">🎉</div>
       <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Nema više zadataka za danas!</h2>
       <p style="color:var(--text-dim)">Algoritam je planirao sve zadatke. Vrati se sutra.</p>
+      {#if selectedTempo === 2}
+        <div class="no-tasks-offer">
+          <p>Trenutno koristiš <strong>Temeljiti</strong> tempo. Prelaskom na <strong>Ubrzani</strong> tempo možda ima još zadataka za danas.</p>
+          <button class="btn btn-primary" onclick={switchToUbrzaniAndRetry} disabled={switchingTempo}>
+            {switchingTempo ? "Mijenjam tempo…" : "Prijeđi na Ubrzani tempo"}
+          </button>
+        </div>
+      {/if}
     </div>
 
   {:else if task}
@@ -465,4 +497,15 @@
   }
   .solution-close:hover { color: var(--text); }
 
+  .no-tasks-offer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .no-tasks-offer p {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 14px;
+    line-height: 1.55;
+  }
 </style>
