@@ -1,6 +1,7 @@
 <script>
   import { renderMath, renderMathInline } from "$lib/utils/mockExamRenderer";
   import { imageUrl } from "$lib/utils/imageUrl";
+  import { fitMath } from "$lib/utils/fitMath";
 
   let { answer, onRefresh } = $props();
 
@@ -198,7 +199,7 @@
         Obrazloženje rješenja
       </button>
       {#if explanationOpen}
-        <div class="explanation-body">
+        <div class="explanation-body" use:fitMath>
           {@html renderMath(answer.solutionExplanation)}
         </div>
       {/if}
@@ -243,6 +244,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
   }
   .ans-head { display: flex; align-items: center; }
   .ans-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -428,6 +430,7 @@
     color: var(--text);
     font-size: 13px;
     line-height: 1.55;
+    overflow-x: auto;
   }
   .explanation-body :global(p) { margin: 0 0 6px; }
   .explanation-body :global(p:last-child) { margin-bottom: 0; }

@@ -672,6 +672,7 @@ svg {
   height: auto;
   border-radius: var(--r-md);
 }
+
 .task-meta {
   display: flex;
   align-items: center;
