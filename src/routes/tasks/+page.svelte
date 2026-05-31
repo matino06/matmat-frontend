@@ -5,6 +5,7 @@
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
   import { md } from "$lib/utils/markdownRenderer";
+  import { fitMath } from "$lib/utils/fitMath";
   import { panelState } from "$lib/store/panels.svelte";
   import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
@@ -308,6 +309,7 @@
       <div
         id="mathjax-output"
         class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
+        use:fitMath
       >
         {@html task.taskText ?? ''}
       </div>
@@ -340,7 +342,9 @@
             prose-xs sm:prose-sm md:prose lg:prose-lg
             !prose-p:my-1   /* smanjuje marginu između paragrafa na malim ekranima */
             !prose-li:my-0  /* smanjuje marginu između listi na malim ekranima */
-            ">
+            "
+            use:fitMath
+          >
             {@html renderSolution(task.explanation ?? '')}
           </div>
 
