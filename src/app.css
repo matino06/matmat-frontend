@@ -673,6 +673,40 @@ svg {
   border-radius: var(--r-md);
 }
 
+/* Markdown-rendered tables in mock-exam content. markdown-it emits plain
+   <table>/<th>/<td> with no class, so without this they fall back to the
+   browser default (no borders). Styled to match the hand-written .crit table. */
+.q-text table,
+.ans-q table,
+.sa-value table,
+.feedback-body table,
+.explanation-body table,
+.container-text table {
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 0.95em;
+}
+.q-text :is(th, td),
+.ans-q :is(th, td),
+.sa-value :is(th, td),
+.feedback-body :is(th, td),
+.explanation-body :is(th, td),
+.container-text :is(th, td) {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+}
+.q-text thead th,
+.ans-q thead th,
+.sa-value thead th,
+.feedback-body thead th,
+.explanation-body thead th,
+.container-text thead th {
+  background: var(--bg-elev);
+  color: var(--text);
+  font-weight: 600;
+}
+
 .task-meta {
   display: flex;
   align-items: center;
