@@ -5,6 +5,7 @@
   import { fetchMockExamAttempt, retryGrading } from "$lib/api/mockExam";
   import AttemptAnswer from "$lib/components/mockExam/AttemptAnswer.svelte";
   import { renderMath } from "$lib/utils/mockExamRenderer";
+  import { imageUrl } from "$lib/utils/imageUrl";
 
   const attemptId = $derived(page.params.attemptId);
 
@@ -230,6 +231,13 @@
                 {/if}
               </div>
               <div class="container-text">{@html renderMath(ans.questionText ?? "")}</div>
+              {#if ans.questionImages?.length}
+                <div class="container-images">
+                  {#each ans.questionImages as img (img.imageUrl)}
+                    <img src={imageUrl(img.imageUrl)} alt={img.altText ?? ""} />
+                  {/each}
+                </div>
+              {/if}
               <div class="container-subs">
                 {#each ans.subAnswers as sub (sub.questionId)}
                   <AttemptAnswer answer={sub} onRefresh={refreshNow} />
@@ -432,6 +440,17 @@
   }
   .container-text :global(p) { margin: 0 0 6px; }
   .container-text :global(p:last-child) { margin-bottom: 0; }
+  .container-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .container-images img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--r-md);
+    background: #fff;
+  }
   .container-subs {
     display: flex;
     flex-direction: column;
