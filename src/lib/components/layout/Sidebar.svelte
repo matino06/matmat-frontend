@@ -35,6 +35,10 @@
   }
 
   async function switchCourse(prog) {
+    if (prog.id === currentCourse?.courseId) {
+      psOpen = false;
+      return;
+    }
     try {
       await apiClient('/account/current-course', {
         method: 'POST',
@@ -42,6 +46,11 @@
         body: JSON.stringify({ courseId: prog.id }),
       });
       currentCourse = { courseId: prog.id };
+      psOpen = false;
+      // The current page's content (next task, mock exams, units, progress) is
+      // course-specific and fetched in each page's onMount, so reload to refetch
+      // everything for the newly selected course.
+      window.location.reload();
     } catch {}
     psOpen = false;
   }
