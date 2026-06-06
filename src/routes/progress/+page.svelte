@@ -67,6 +67,15 @@
     )
   );
 
+  // Build a map objectiveName → lastQ (last solved question index, 0-4) from today/upcoming lists.
+  let lastQMap = $derived(
+    new Map(
+      [...todayTasks, ...upcomingTasks]
+        .filter(t => t.title)
+        .map(t => [t.title, t.lastQ])
+    )
+  );
+
   const today = new Date();
   const refDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
@@ -210,12 +219,12 @@
     <div class="ishod-list">
       {#each shownObjectives as obj (obj.objectiveId)}
         {@const status = getStatus(obj)}
-        {@const prog = getProgress(obj)}
+        {@const prog = lastQMap.has(obj.objectiveName) ? (lastQMap.get(obj.objectiveName) ?? 0) : getProgress(obj)}
         {@const when = dueDateMap.get(obj.objectiveName)}
         <div class="ishod-row">
           <div class="ishod-status {status}"></div>
           <div class="ishod-title">
-            <span class="code">#{obj.objectiveId}</span>{obj.objectiveName}
+            {obj.objectiveName}
           </div>
           <div class="ishod-mini">
             {#each [0,1,2,3,4] as j (j)}
