@@ -74,17 +74,23 @@ export function fitMath(node) {
 
   const apply = () => {
     node.querySelectorAll(".katex-display").forEach(processKatex);
-    node.querySelectorAll('mjx-container[display="true"]').forEach(processMathJax);
+    node
+      .querySelectorAll('mjx-container[display="true"]')
+      .forEach(processMathJax);
   };
 
   const reapply = () => {
     node
-      .querySelectorAll('.katex-display[data-fitted], mjx-container[display="true"][data-fitted]')
+      .querySelectorAll(
+        '.katex-display[data-fitted], mjx-container[display="true"][data-fitted]',
+      )
       .forEach((el) => {
         delete el.dataset.fitted;
-        el.querySelectorAll(":scope > .katex, .katex-html, mjx-math").forEach((inner) => {
-          inner.style.width = "";
-        });
+        el.querySelectorAll(":scope > .katex, .katex-html, mjx-math").forEach(
+          (inner) => {
+            inner.style.width = "";
+          },
+        );
       });
     apply();
   };

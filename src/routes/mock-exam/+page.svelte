@@ -117,10 +117,10 @@
     padding: 2px 8px;
     border: 1px solid var(--border);
     border-radius: var(--r-pill);
-    background: var(--bg-elev);
-    color: var(--text-faint);
-    font-size: 11px;
-    font-weight: 500;
+    background: var(--danger);
+    color: var(--bg);
+    font-size: 13px;
+    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
