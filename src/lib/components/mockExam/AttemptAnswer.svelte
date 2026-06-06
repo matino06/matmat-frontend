@@ -246,6 +246,9 @@
     gap: 12px;
     min-width: 0;
   }
+  @media (max-width: 767px) {
+    .ans { padding: 14px 16px; }
+  }
   .ans-head { display: flex; align-items: center; }
   .ans-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .ans-num { color: var(--text-faint); font-weight: 600; font-size: 13px; }

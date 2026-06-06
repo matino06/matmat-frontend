@@ -259,6 +259,10 @@
     max-width: 980px;
     margin: 0 auto;
   }
+  @media (max-width: 767px) {
+    .result-page { padding: var(--pad-3) var(--pad-3) var(--pad-4); }
+    .container-group { padding: 14px 16px; }
+  }
   .result-top {
     display: flex;
     justify-content: space-between;

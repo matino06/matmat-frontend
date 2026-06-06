@@ -133,4 +133,8 @@
     gap: 12px;
     margin-top: 14px;
   }
+  @media (max-width: 767px) {
+    .q { padding: 14px 16px; }
+    .q-sub { padding: 10px 12px; }
+  }
 </style>

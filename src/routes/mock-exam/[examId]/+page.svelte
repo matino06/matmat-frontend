@@ -222,6 +222,9 @@
   @media (min-width: 980px) {
     .exam-layout { grid-template-columns: minmax(0, 1fr) 240px; }
   }
+  @media (max-width: 767px) {
+    .exam-page { padding: var(--pad-3) var(--pad-3) 12px; }
+  }
   .exam-questions {
     display: flex;
     flex-direction: column;
