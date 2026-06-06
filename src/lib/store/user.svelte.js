@@ -104,7 +104,13 @@ const renderTurnstile = () => {
               turnstileData.isLoaded = false;
             }, 2500);
 
-            login();
+            login().catch((loginErr) => {
+              showErrorAlert(
+                "Greška pri dovršavanju prijave: " +
+                  (loginErr.message || loginErr),
+              );
+              console.error("Post-login account setup error:", loginErr);
+            });
           } else {
             // Turnstile verification failed – log out the user
             await signOut(auth);

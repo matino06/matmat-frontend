@@ -6,7 +6,7 @@
 
 {#if errorData.showError}
   <div
-    class="fixed bottom-4 left-4 z-50"
+    class="fixed bottom-4 left-4 z-[9100]"
     transition:fly={{ x: -200, duration: 300 }}
   >
     <Alert.Root variant="destructive">

@@ -9,7 +9,7 @@
 
 <div
   transition:fade
-  class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md"
+  class="fixed inset-0 z-[9000] flex flex-col items-center justify-center bg-black/80 backdrop-blur-md"
 >
   <div class="mb-8 text-center">
     <div class="bg-primary/20 mb-4 inline-flex rounded-full p-4">
