@@ -434,6 +434,16 @@
   }
   .explanation-body :global(p) { margin: 0 0 6px; }
   .explanation-body :global(p:last-child) { margin-bottom: 0; }
+  /* Images embedded in the markdown explanation: center them (the API ships
+     `m-auto`, but margin:auto does not center an inline <img>, so force block),
+     constrain to the container width, and round the corners. */
+  .explanation-body :global(img) {
+    display: block;
+    margin: 8px auto 12px;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--r-md);
+  }
 
   .feedback {
     background: var(--bg);
