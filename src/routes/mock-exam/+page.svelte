@@ -51,7 +51,35 @@
   <div class="zadaci-head">
     <div>
       <h1>Probna matura <span class="beta-pill">Beta</span></h1>
-      <div class="sub">Odaberi probnu maturu i riješi je u stilu prave državne mature.</div>
+      <div class="sub">Simuliraj pravi ispit i vidi gdje stojiš prije prave mature.</div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <div class="hiw-step card">
+      <div class="hiw-num">01</div>
+      <div class="hiw-title">Odaberi ispit</div>
+      <div class="hiw-desc">Pravi zadaci iz prethodnih godina državne mature</div>
+    </div>
+    <div class="hiw-arrow" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </div>
+    <div class="hiw-step card">
+      <div class="hiw-num">02</div>
+      <div class="hiw-title">Rješavaj pitanja</div>
+      <div class="hiw-desc">Jedno po jedno — preskači i vraćaj se slobodno</div>
+    </div>
+    <div class="hiw-arrow" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </div>
+    <div class="hiw-step card">
+      <div class="hiw-num">03</div>
+      <div class="hiw-title">Vidi rezultat</div>
+      <div class="hiw-desc">Bodovi, točni odgovori i pregled svake greške</div>
     </div>
   </div>
 
@@ -124,6 +152,51 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
+
+  .how-it-works {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .hiw-step {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .hiw-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .hiw-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .hiw-desc {
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.5;
+  }
+  .hiw-arrow {
+    color: var(--text-faint);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  @media (max-width: 600px) {
+    .how-it-works {
+      grid-template-columns: 1fr;
+    }
+    .hiw-arrow { display: none; }
+  }
+
   .exam-grid {
     display: grid;
     grid-template-columns: 1fr;
