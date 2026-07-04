@@ -165,6 +165,10 @@
             <b>Ciljevi</b>
           {:else if path === '/settings'}
             <b>Postavke</b>
+          {:else if path === '/admin'}
+            <span style="color:var(--text-faint)">Admin</span>
+            <span style="color:var(--text-faint); margin: 0 6px">/</span>
+            <b>Nadzorna ploča</b>
           {:else if path === '/all-tasks'}
             <span style="color:var(--text-faint)">Admin</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>

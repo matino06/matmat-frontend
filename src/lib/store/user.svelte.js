@@ -8,6 +8,7 @@ export const userData = $state({
   user: null,
   loading: true,
   isAdmin: false,
+  adminChecked: false,
   needsOnboarding: false,
 });
 
@@ -20,9 +21,23 @@ onAuthStateChanged(auth, (u) => {
   userData.loading = false;
   if (!u) {
     userData.isAdmin = false;
+    userData.adminChecked = false;
     userData.needsOnboarding = false;
   }
 });
+
+// Verifies admin status via the backend endpoint and caches it in the store.
+// Needed because login() (which sets isAdmin) only runs during the full
+// sign-in flow, not on page reload — admin pages call this on mount.
+export const verifyIsAdmin = async () => {
+  if (!userData.user) return false;
+  try {
+    const res = await apiClient("/account/is-admin", { method: "GET" });
+    if (res.ok) userData.isAdmin = await res.json();
+  } catch {}
+  userData.adminChecked = true;
+  return userData.isAdmin;
+};
 
 export const handleLogIn = async () => {
   userData.loading = true;

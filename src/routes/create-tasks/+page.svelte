@@ -1,11 +1,8 @@
 <script>
   import { tick } from "svelte";
-  import { userData } from "$lib/store/user.svelte";
+  import { userData, verifyIsAdmin } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import { md } from "$lib/utils/markdownRenderer";
-
-  // TODO: replace with /account/is-admin endpoint when available
-  const ADMIN_EMAIL = "matino0546@gmail.com";
 
   let fileInput = $state(null);
   let isDragging = $state(false);
@@ -16,7 +13,10 @@
   let submitResults = $state([]);
   let submitted = $state(false);
 
-  let isAdmin = $derived(userData.user?.email === ADMIN_EMAIL);
+  // Verify admin via backend once auth resolves (also covers page reload).
+  $effect(() => {
+    if (userData.user && !userData.adminChecked) verifyIsAdmin();
+  });
 
   // ── Parser ──────────────────────────────────────────────────────────────
 
@@ -134,9 +134,9 @@
 </script>
 
 <div class="page">
-  {#if !userData.user}
+  {#if userData.loading || (userData.user && !userData.adminChecked)}
     <div style="padding:80px 20px;text-align:center;color:var(--text-faint)">Učitavanje…</div>
-  {:else if !isAdmin}
+  {:else if !userData.isAdmin}
     <div class="card card-pad" style="text-align:center;padding:60px 24px">
       <div style="font-size:42px;margin-bottom:10px">🔒</div>
       <h2 style="margin:0 0 6px;font-size:18px;font-weight:600">Pristup ograničen</h2>
