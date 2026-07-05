@@ -120,8 +120,10 @@
 
     // Assign a distinct hue to each field, using golden-angle rotation.
     const fieldIds = [...new Set(graphData.nodes.map((n) => n.fieldId))];
+    // Comma-separated hsl with an integer hue — Cytoscape's color parser
+    // requires this form (the modern space-separated syntax renders no color).
     const colorFor = (fieldId) =>
-      `hsl(${(fieldIds.indexOf(fieldId) * 137.5) % 360} 65% 55%)`;
+      `hsl(${Math.round((fieldIds.indexOf(fieldId) * 137.5) % 360)}, 65%, 55%)`;
 
     // Legend: unique field → color (fieldIds is already de-duplicated).
     legend = fieldIds.map((fieldId) => ({
