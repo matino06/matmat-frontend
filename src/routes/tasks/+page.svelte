@@ -180,6 +180,11 @@
     return text.replace(/\\/g, "\\\\");
   }
 
+  function renderTask(text) {
+    if (!text) return "";
+    return md.render(normalizeMath(text));
+  }
+
   function renderSolution(text) {
     if (!text) return "";
     return md.render(normalizeMath(text));
@@ -311,7 +316,7 @@
         class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
         use:fitMath
       >
-        {@html task.taskText ?? ''}
+        {@html renderTask(task.taskText ?? '')}
       </div>
 
       {#if !revealed}
