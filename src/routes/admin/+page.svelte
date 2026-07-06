@@ -430,7 +430,7 @@
                   <span class="badge mono">Zadatak {i + 1}</span>
                 </div>
                 <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert">
-                  {@html task.taskText}
+                  {@html md.render(normalizeMath(task.taskText))}
                 </div>
                 {#if task.explanation}
                   <div class="solution">

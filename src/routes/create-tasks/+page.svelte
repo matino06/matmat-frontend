@@ -252,7 +252,7 @@
             </div>
 
             <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert">
-              {@html task.taskText}
+              {@html md.render(normalizeMath(task.taskText))}
             </div>
 
             <div class="solution">
