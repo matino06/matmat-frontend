@@ -1,8 +1,7 @@
 <script>
-  import { tick } from "svelte";
   import { userData, verifyIsAdmin } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
-  import { md } from "$lib/utils/markdownRenderer";
+  import { renderMd } from "$lib/utils/markdownRenderer";
 
   let fileInput = $state(null);
   let isDragging = $state(false);
@@ -45,11 +44,6 @@
       taskText: extractTaskText(block),
       explanation: extractExplanation(block),
     }));
-  }
-
-  function normalizeMath(t) {
-    if (!t) return "";
-    return t.replace(/\\/g, "\\\\");
   }
 
   // ── File handling ───────────────────────────────────────────────────────
@@ -123,14 +117,6 @@
   let successCount = $derived(submitResults.filter(r => r.status === "success").length);
   let errorCount = $derived(submitResults.filter(r => r.status === "error").length);
 
-  // Re-typeset MathJax when parsed tasks change
-  $effect(() => {
-    if (parsedTasks.length > 0) {
-      tick().then(() => {
-        if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-      });
-    }
-  });
 </script>
 
 <div class="page">
@@ -252,13 +238,13 @@
             </div>
 
             <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert">
-              {@html md.render(normalizeMath(task.taskText))}
+              {@html renderMd(task.taskText)}
             </div>
 
             <div class="solution">
               <div class="solution-header"><h3>Rješenje</h3></div>
               <div class="prose !max-w-none dark:prose-invert">
-                {@html md.render(normalizeMath(task.explanation))}
+                {@html renderMd(task.explanation)}
               </div>
             </div>
 

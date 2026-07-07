@@ -1,8 +1,8 @@
 <script>
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
   import { userData } from "$lib/store/user.svelte";
   import { currentTaskState } from "$lib/store/currentTask.svelte.js";
-  import { md } from "$lib/utils/markdownRenderer";
+  import { renderMd } from "$lib/utils/markdownRenderer";
 
   let messages = $state([
     {
@@ -26,11 +26,6 @@
     "Daj hint bez rješenja",
     "Zašto se koristi ova formula?",
   ];
-
-  function normalizeMath(text) {
-    if (!text) return "";
-    return text.replace(/\\/g, "\\\\");
-  }
 
   function autoResize(el) {
     el.style.height = "auto";
@@ -154,8 +149,7 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
           const newStable = displayedText.slice(0, lastBoundary);
           if (newStable !== stableRawText) {
             stableRawText = newStable;
-            stableHtml = md.render(normalizeMath(newStable));
-            tick().then(() => { if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise(); });
+            stableHtml = renderMd(newStable);
           }
           currentText = displayedText.slice(lastBoundary + 2);
         } else {
@@ -174,15 +168,12 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
       clearInterval(displayInterval);
       displayInterval = null;
 
-      const finalHtml = md.render(normalizeMath(displayedText));
+      const finalHtml = renderMd(displayedText);
       messages = messages.map(m => m.id === aiMsgId ? { ...m, content: displayedText, finalHtml } : m);
 
       streamingMsgId = null;
       stableHtml = "";
       currentText = "";
-
-      await tick();
-      if (window.MathJax?.typesetPromise) await window.MathJax.typesetPromise();
 
     } catch (error) {
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
@@ -244,12 +235,12 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
         {#if msg.id === streamingMsgId}
           <div class="prose-content">
             {@html stableHtml}
-            <span class="tex2jax_ignore">{@html md.render(normalizeMath(currentText))}</span>
+            {@html renderMd(currentText)}
           </div>
         {:else if msg.finalHtml}
           <div class="prose-content">{@html msg.finalHtml}</div>
         {:else}
-          <div class="prose-content">{@html md.render(normalizeMath(msg.content))}</div>
+          <div class="prose-content">{@html renderMd(msg.content)}</div>
         {/if}
       </div>
     </div>

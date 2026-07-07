@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import { userData, verifyIsAdmin } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
-  import { md } from "$lib/utils/markdownRenderer";
+  import { renderMd } from "$lib/utils/markdownRenderer";
 
   // ── View state ─────────────────────────────────────────────────────────
   let view = $state("dashboard"); // 'dashboard' | 'graph'
@@ -234,11 +234,6 @@
     selectedObjective = null;
   }
 
-  function normalizeMath(t) {
-    if (!t) return "";
-    return t.replace(/\\/g, "\\\\");
-  }
-
   async function loadTasks(objectiveId) {
     tasks = [];
     tasksError = "";
@@ -256,10 +251,6 @@
       tasksError = err.message;
     }
     tasksLoading = false;
-
-    // Re-typeset math for the freshly rendered tasks.
-    await tick();
-    if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
   }
 
   onDestroy(() => {
@@ -430,13 +421,13 @@
                   <span class="badge mono">Zadatak {i + 1}</span>
                 </div>
                 <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert">
-                  {@html md.render(normalizeMath(task.taskText))}
+                  {@html renderMd(task.taskText)}
                 </div>
                 {#if task.explanation}
                   <div class="solution">
                     <div class="solution-header"><h3>Rješenje</h3></div>
                     <div class="prose !max-w-none dark:prose-invert">
-                      {@html md.render(normalizeMath(task.explanation))}
+                      {@html renderMd(task.explanation)}
                     </div>
                   </div>
                 {/if}

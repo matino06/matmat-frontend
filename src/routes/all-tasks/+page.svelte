@@ -1,8 +1,7 @@
 <script>
-  import { tick } from "svelte";
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
-  import { md } from "$lib/utils/markdownRenderer";
+  import { renderMd } from "$lib/utils/markdownRenderer";
 
   let fields = $state([]);
   let subfields = $state([]);
@@ -105,28 +104,11 @@
   $effect(() => {
     if (selectedTask) {
       revealed = false;
-      tick().then(() => {
-        if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-      });
     }
   });
-
-  $effect(() => {
-    if (revealed) {
-      tick().then(() => {
-        if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-      });
-    }
-  });
-
-  function normalizeMath(t) {
-    if (!t) return "";
-    return t.replace(/\\/g, "\\\\");
-  }
 
   function renderSolution(t) {
-    if (!t) return "";
-    return md.render(normalizeMath(t));
+    return renderMd(t);
   }
 </script>
 
@@ -213,7 +195,7 @@
           id="mathjax-output"
           class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert"
         >
-          {@html selectedTask.taskText ?? ''}
+          {@html renderSolution(selectedTask.taskText ?? '')}
         </div>
 
         {#if !revealed}

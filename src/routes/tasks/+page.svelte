@@ -4,7 +4,7 @@
   import { onMount, onDestroy, tick } from "svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
-  import { md } from "$lib/utils/markdownRenderer";
+  import { renderMd } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
   import { panelState } from "$lib/store/panels.svelte";
   import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
@@ -175,34 +175,13 @@
     return "desktop";
   }
 
-  function normalizeMath(text) {
-    if (!text) return "";
-    return text.replace(/\\/g, "\\\\");
-  }
-
   function renderTask(text) {
-    if (!text) return "";
-    return md.render(normalizeMath(text));
+    return renderMd(text);
   }
 
   function renderSolution(text) {
-    if (!text) return "";
-    return md.render(normalizeMath(text));
+    return renderMd(text);
   }
-
-  function typesetMath() {
-    tick().then(() => {
-      if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
-    });
-  }
-
-  $effect(() => {
-    if (task) typesetMath();
-  });
-
-  $effect(() => {
-    if (revealed) typesetMath();
-  });
 
   onMount(async () => {
     const response = await apiClient("/account/tempo", { method: "GET" });
