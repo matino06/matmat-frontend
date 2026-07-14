@@ -151,6 +151,10 @@
             <span style="color:var(--text-faint)">Matematika</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Cjeline</b>
+          {:else if path === '/mapa'}
+            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint); margin: 0 6px">/</span>
+            <b>Mapa gradiva</b>
           {:else if path === '/tasks'}
             <span style="color:var(--text-faint)">Matematika</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
