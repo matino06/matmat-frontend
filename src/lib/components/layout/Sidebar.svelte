@@ -22,8 +22,9 @@
   function openFormuleAndClose() { openFormule(); closeSidebar(); }
 
   const PROGRAMS = [
-    { id: 1, label: 'Matematika A razina', badge: 'MA', color: '239' },
-    { id: 2, label: 'Matematika B razina', badge: 'MB', color: '215' },
+    { id: 1, label: 'Matematika A razina', badge: 'MA', color: '239', sub: 'Državna matura' },
+    { id: 2, label: 'Matematika B razina', badge: 'MB', color: '215', sub: 'Državna matura' },
+    { id: 3, label: 'Ekonomska Matematika EFZG', badge: 'EF', color: '160', sub: 'Ekonomska Matematika na fakultetu EFZG' },
   ];
 
   async function loadCourse() {
@@ -88,7 +89,7 @@
       <div class="badge-sq" style="background: hsl({activeProg.color} 75% 55%)">{activeProg.badge}</div>
       <div class="ps-meta">
         <div class="ps-name">{activeProg.label}</div>
-        <div class="ps-sub">Državna matura</div>
+        <div class="ps-sub">{activeProg.sub}</div>
       </div>
       <svg class="ps-chevron {psOpen ? 'ps-chevron-open' : ''}" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="6 9 12 15 18 9"/>
