@@ -115,19 +115,11 @@
   <div class="nav-group-label">Učenje</div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/progress/units' ? 'active' : ''}" onclick={() => nav('/progress/units')}>
-    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-    </svg>
-    Cjeline <span class="kbd">1</span>
-  </div>
-
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="nav-item {path === '/mapa' ? 'active' : ''}" onclick={() => nav('/mapa')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
     </svg>
-    Mapa
+    Mapa <span class="kbd">1</span>
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->

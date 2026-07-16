@@ -147,11 +147,7 @@
               <line x1="4" y1="18" x2="20" y2="18"/>
             </svg>
           </button>
-          {#if path === '/progress/units'}
-            <span style="color:var(--text-faint)">Matematika</span>
-            <span style="color:var(--text-faint); margin: 0 6px">/</span>
-            <b>Cjeline</b>
-          {:else if path === '/mapa'}
+          {#if path === '/mapa'}
             <span style="color:var(--text-faint)">Matematika</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Mapa gradiva</b>

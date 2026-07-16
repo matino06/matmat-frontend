@@ -101,7 +101,7 @@
               <div class="sb-logo"></div>
               <div class="sb-name">MatMat</div>
             </div>
-            {#each ["Cjeline","Zadaci","Napredak","Ciljevi"] as nav, i (nav)}
+            {#each ["Mapa","Zadaci","Napredak","Ciljevi"] as nav, i (nav)}
               <div class="lp-sb-item {i === 1 ? 'active' : ''}">
                 <div class="lp-sb-dot {i === 1 ? 'accent' : ''}"></div>
                 {nav}
