@@ -200,17 +200,26 @@
 
   let didAutoScroll = false;
   $effect(() => {
-    if (!loading && laidOut.length > 0 && currentId != null && !didAutoScroll) {
+    if (!loading && laidOut.length > 0 && !didAutoScroll) {
       didAutoScroll = true;
+      const returnId = sessionStorage.getItem("mapaReturnObjectiveId");
+      const targetId = returnId ?? currentId;
+      if (returnId != null) sessionStorage.removeItem("mapaReturnObjectiveId");
+      if (targetId == null) return;
       requestAnimationFrame(() => {
-        document.getElementById("mapa-current")?.scrollIntoView({ block: "center" });
+        document.getElementById("mapa-node-" + targetId)?.scrollIntoView({ block: "center" });
       });
     }
   });
 
   function openObjective(node) {
     if (node.state === "locked") return;
-    goto("/tasks");
+    sessionStorage.setItem("mapaReturnObjectiveId", node.o.objectiveId);
+    const q = new URLSearchParams({
+      objectiveId: node.o.objectiveId,
+      name: node.o.objectiveName ?? "",
+    });
+    goto(`/ponavljanje?${q}`);
   }
 </script>
 
@@ -290,7 +299,7 @@
                 onfocusout={() => { if (hoveredId === item.o.objectiveId) hoveredId = null; }}
               >
                 <button
-                  id={isCurrent ? "mapa-current" : undefined}
+                  id={"mapa-node-" + item.o.objectiveId}
                   class="node node-{item.state}"
                   class:node-current={isCurrent}
                   style="--face:{item.bg}; --bevel:{item.bevel}"

@@ -155,6 +155,10 @@
             <span style="color:var(--text-faint)">Matematika</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Zadaci</b>
+          {:else if path === '/ponavljanje'}
+            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint); margin: 0 6px">/</span>
+            <b>Ponavljanje</b>
           {:else if path === '/progress'}
             <span style="color:var(--text-faint)">Matematika</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
