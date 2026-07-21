@@ -15,6 +15,12 @@ export function normalizeMathDelims(text) {
   return text
     .replace(/\\\[\s*([\s\S]+?)\s*\\\]/g, (_, m) => `$$${m}$$`) // \[…\] -> $$…$$
     .replace(/\\\(\s*([\s\S]+?)\s*\\\)/g, (_, m) => `$${m}$`) // \(…\) -> $…$
+    // Bare LaTeX environments (authored without $$…$$) -> wrap in $$…$$ so KaTeX renders them.
+    // Guard (^|[^$]) skips environments already immediately after $ / $$ (no double-wrap).
+    .replace(
+      /(^|[^$])(\\begin\{(aligned|align\*?|alignat\*?|gathered|gather\*?|cases|split|array|[bBpvV]?matrix|smallmatrix)\}[\s\S]*?\\end\{\3\})/g,
+      (_, pre, env) => `${pre}\n\n$$${env}$$\n\n`,
+    )
     .replace(/\$\$\s*([\s\S]+?)\s*\$\$/g, (_, m) => `\n\n$$${m}$$\n\n`); // force every $$…$$ to block
 }
 
