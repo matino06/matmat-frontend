@@ -4,6 +4,7 @@
   import { userData, verifyIsAdmin } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import { renderMd } from "$lib/utils/markdownRenderer";
+  import { fitMath } from "$lib/utils/fitMath";
 
   // ── View state ─────────────────────────────────────────────────────────
   let view = $state("dashboard"); // 'dashboard' | 'graph'
@@ -420,13 +421,13 @@
                 <div class="task-meta">
                   <span class="badge mono">Zadatak {i + 1}</span>
                 </div>
-                <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert">
+                <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert" use:fitMath>
                   {@html renderMd(task.taskText)}
                 </div>
                 {#if task.explanation}
                   <div class="solution">
                     <div class="solution-header"><h3>Rješenje</h3></div>
-                    <div class="prose !max-w-none dark:prose-invert">
+                    <div class="prose !max-w-none dark:prose-invert" use:fitMath>
                       {@html renderMd(task.explanation)}
                     </div>
                   </div>

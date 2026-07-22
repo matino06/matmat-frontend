@@ -30,6 +30,59 @@ const INNER_STYLE_BASE = {
 export function fitMath(node) {
   const processKatex = (d) => {
     if (d.dataset.fitted) return;
+    // A tagged equation (\tag{…}) renders its tag `position:absolute; right:0` inside
+    // .katex-html. The tag takes no layout width, so we must reserve room for it —
+    // otherwise right:0 lands on top of the formula. Measure equation + tag:
+    //  • fits → leave KaTeX's native full-width layout (equation centered, tag flush right);
+    //  • too wide → widen the box to equation+tag+gap, left-align the equation, and scroll
+    //    (the tag then sits after the formula and is reachable by scrolling).
+    const tag = d.querySelector(".tag");
+    if (tag) {
+      d.dataset.fitted = "1";
+      const tagged = d.querySelectorAll(".base");
+      let we = 0;
+      tagged.forEach((b) => {
+        const bw = b.getBoundingClientRect().width;
+        if (bw > we) we = bw;
+      });
+      const containerW = d.getBoundingClientRect().width;
+      const contentW = Math.ceil(we + tag.getBoundingClientRect().width + 24);
+      const katex = d.querySelector(":scope > .katex");
+      const katexHtml = d.querySelector(".katex-html");
+      if (contentW > containerW) {
+        Object.assign(d.style, SCROLL_STYLE);
+        if (katex)
+          Object.assign(katex.style, {
+            ...INNER_STYLE_BASE,
+            display: "inline-block",
+            width: contentW + "px",
+          });
+        if (katexHtml) katexHtml.style.textAlign = "left";
+      } else {
+        // Reset to native (in case a resize took it from wide back to fitting).
+        Object.assign(d.style, {
+          display: "",
+          justifyContent: "",
+          overflowX: "",
+          overflowY: "",
+          maxWidth: "",
+          minWidth: "",
+          paddingBottom: "",
+        });
+        if (katex)
+          Object.assign(katex.style, {
+            flexShrink: "",
+            maxWidth: "",
+            display: "",
+            width: "",
+          });
+        if (katexHtml) {
+          katexHtml.style.width = "";
+          katexHtml.style.textAlign = "";
+        }
+      }
+      return;
+    }
     const bases = d.querySelectorAll(".base");
     if (!bases.length) return;
     // Measure the fractional width (getBoundingClientRect) and round UP. KaTeX
@@ -89,6 +142,7 @@ export function fitMath(node) {
         el.querySelectorAll(":scope > .katex, .katex-html, mjx-math").forEach(
           (inner) => {
             inner.style.width = "";
+            inner.style.textAlign = "";
           },
         );
       });

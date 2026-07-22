@@ -1,0 +1,70 @@
+## 1.
+
+Iskoristimo pravilo
+$$\log_{\textcolor{red}{b}}{\textcolor{green}{x}^\textcolor{blue}{y}} = \textcolor{blue}{y}\log_{\textcolor{red}{b}}{\textcolor{green}{x}} \tag{formule str. 2}$$
+i primijenimo ga na \(\log_{49}{a^4}\).
+$$\log_{\textcolor{red}{49}}{\textcolor{green}{{a}}^{\textcolor{blue}{4}}} = \textcolor{blue}{4}\log_{\textcolor{red}{49}}{\textcolor{green}{a}}$$
+Sada zamijenimo to u jednadžbi:
+\begin{align*}
+\log_{7}{b} &= \log_{49}{a^4} + \log_{7}{a} \\
+\log_{7}{b} &= 4\log_{49}{a} + \log_{7}{a}
+\end{align*}
+
+
+## 2.
+
+Znamo da je \(49\) isto što i \(7^2\) pa primjećujemo da se \(4\log_{49}{a}\) može zapisati kao \(4\log_{7^2}{a}\) pa dobijemo sljedeće.
+\begin{align*}
+\log_{7}{b} &= 4\log_{49}{a} + \log_{7}{a} \\
+\log_{7}{b} &= 4\log_{7^2}{a} + \log_{7}{a}
+\end{align*}
+Sada uzmimo pravilo
+$$\log_{\textcolor{red}{b}^\textcolor{blue}{y}}{\textcolor{green}{x}} = \frac{1}{\textcolor{blue}{y}}\log_{\textcolor{red}{b}}{\textcolor{green}{x}}$$
+i iskoristimo ga na \(4\log_{7^2}{a}\).
+$$4\log_{\textcolor{red}{7}^{\textcolor{blue}{2}}}{\textcolor{green}{{a}}} = 4 \frac{1}{\textcolor{blue}{2}}\log_{\textcolor{red}{7}}{\textcolor{green}{a}}$$
+Zamijenimo to u jednadžbi:
+\begin{align*}
+\log_{7}{b} &= 4\log_{49}{a} + \log_{7}{a} \\
+\log_{7}{b} &= 4\frac{1}{2}\log_{7}{a} + \log_{7}{a} \\
+\log_{7}{b} &= 2\log_{7}{a} + \log_{7}{a} \\
+\log_{7}{b} &= 3\log_{7}{a}
+\end{align*}
+
+
+## 3.
+
+Primijenit ćemo sljedeće pravilo.
+$$\log_{\textcolor{red}{b}}{\textcolor{green}{{a}}} = \textcolor{blue}{x} \iff \textcolor{green}{a} = \textcolor{red}{b}^\textcolor{blue}{x} \tag{formule str. 2}$$
+Izvucimo sada iz jednakosti
+$$\log_{\textcolor{red}{7}}{\textcolor{green}{b}} = \textcolor{blue}{3\log_{7}{a}}$$
+varijable \(\textcolor{red}{b}\), \(\textcolor{green}{a}\) i \(\textcolor{blue}{x}\).
+$$\textcolor{red}{b} = 7$$
+$$\textcolor{green}{a} = b$$
+$$\textcolor{blue}{x} = 3\log_{7}{a}$$
+Sada zapišimo u obliku \(\textcolor{green}{a} = \textcolor{red}{b}^\textcolor{blue}{x}\).
+$$b = 7^{3\log_{7}{a}} $$
+
+
+## 4.
+
+Izrazili smo \(b\) sada nam je još ostalo da se riješimo logaritma u eksponentu. Iskoristimo opet pravilo
+$$\log_{\textcolor{red}{b}}{\textcolor{green}{x}^\textcolor{blue}{y}} = \textcolor{blue}{y}\log_{\textcolor{red}{b}}{\textcolor{green}{x}} \tag{formule str. 2}$$
+i primijenimo ga na \(3\log_{7}{a}\).
+$$\textcolor{blue}{3}\log_{\textcolor{red}{7}}{\textcolor{green}{{a}}} = \log_{\textcolor{red}{7}}{\textcolor{green}{{a}}^{\textcolor{blue}{3}}}$$
+Sada imamo
+$$b = 7^{3\log_{7}{a}} $$
+$$b = 7^{\log_{7}{a^3}} $$
+pa na izraz \(7^{\log_{7}{a^3}}\) možemo primijeniti sljedeće pravilo.
+$$\textcolor{red}{b}^{\log_{\textcolor{red}{b}}{\textcolor{blue}{x}}} = \textcolor{blue}{x} \tag{formule str. 2}$$
+Tako vrijedi
+$$\textcolor{red}{7}^{\log_{\textcolor{red}{7}}{\textcolor{blue}{a^3}}} = \textcolor{blue}{a^3} $$
+pa sada imamo:
+\begin{align*}
+b &= 7^{\log_{7}{a^3}} \\
+b &= a^3
+\end{align*}
+
+
+
+
+\(=> b = a^3\)
