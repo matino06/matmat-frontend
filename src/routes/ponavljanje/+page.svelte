@@ -19,11 +19,15 @@
   let pendingRating = $state(null);
   let ratingKey = $state(0);
   let startTime = $state(null);
-  let objectiveNoTask = $state(false);
+  let noTask = $state(false);
 
   // Objective-practice mode: /ponavljanje?objectiveId=123&name=...
   let objectiveId = $derived($page.url.searchParams.get("objectiveId"));
   let objectiveName = $derived($page.url.searchParams.get("name"));
+  // Field-practice mode: /ponavljanje?fieldId=5&fieldName=...
+  let fieldId = $derived($page.url.searchParams.get("fieldId"));
+  let fieldName = $derived($page.url.searchParams.get("fieldName"));
+  let fieldMode = $derived(!!fieldId);
 
   async function fetchCurrentCourse() {
     const response = await apiClient("/account/current-course", { method: "GET" });
@@ -31,8 +35,8 @@
   }
 
   async function fetchTask() {
-    if (!objectiveId) {
-      objectiveNoTask = true;
+    if (!fieldId && !objectiveId) {
+      noTask = true;
       return;
     }
 
@@ -41,15 +45,26 @@
     revealed = false;
     answered = false;
     pendingRating = null;
-    objectiveNoTask = false;
+    noTask = false;
 
-    const response = await apiClient(`/task/get-from-objective/${objectiveId}`, { method: "GET" });
-
-    if (response.status === 404) {
-      objectiveNoTask = true;
-      task = null;
-      isLoading = false;
-      return;
+    let response;
+    if (fieldMode) {
+      response = await apiClient(`/task/get-new-from-field/${fieldId}`, { method: "GET" });
+      if (response.status === 204) {
+        // nema više zadataka iz ovog područja
+        noTask = true;
+        task = null;
+        isLoading = false;
+        return;
+      }
+    } else {
+      response = await apiClient(`/task/get-from-objective/${objectiveId}`, { method: "GET" });
+      if (response.status === 404) {
+        noTask = true;
+        task = null;
+        isLoading = false;
+        return;
+      }
     }
 
     if (!response.ok) {
@@ -97,11 +112,14 @@
       return;
     }
 
-    if (rating.k === 5) {
-      // Savršeno → natrag na mapu (na isti node gdje je korisnik bio)
+    if (fieldMode) {
+      // Field način: uvijek sljedeći zadatak područja dok backend ne vrati 204
+      setTimeout(fetchTask, 600);
+    } else if (rating.k === 5) {
+      // Objective: savršeno → natrag na mapu (na isti node gdje je korisnik bio)
       setTimeout(() => goto("/mapa"), 600);
     } else {
-      // < 5 → novi zadatak istog objectiva
+      // Objective: < 5 → novi zadatak istog objectiva
       setTimeout(fetchTask, 600);
     }
   }
@@ -156,10 +174,17 @@
       </svg>
     </button>
     <div>
-      <h1>Ponavljanje{objectiveName ? `: ${objectiveName}` : ""}</h1>
-      <div class="sub">
-        Rješavaj dok ne ocijeniš zadatak sa <span class="mono">5</span> (Savršeno) — tada se vraćaš na mapu.
-      </div>
+      {#if fieldMode}
+        <h1>Ponavljanje{fieldName ? `: ${fieldName}` : " područja"}</h1>
+        <div class="sub">
+          Vježbaš cijelo područje — zadaci se nižu redom prema tvom napretku.{#if task?.objective?.objectiveName} Trenutni cilj: <span class="mono">{task.objective.objectiveName}</span>.{/if}
+        </div>
+      {:else}
+        <h1>Ponavljanje{objectiveName ? `: ${objectiveName}` : ""}</h1>
+        <div class="sub">
+          Rješavaj dok ne ocijeniš zadatak sa <span class="mono">5</span> (Savršeno) — tada se vraćaš na mapu.
+        </div>
+      {/if}
     </div>
   </div>
 
@@ -169,11 +194,17 @@
       Učitavanje zadatka…
     </div>
 
-  {:else if objectiveNoTask}
+  {:else if noTask}
     <div class="card card-pad" style="text-align:center;padding:48px;">
-      <div style="font-size:48px;margin-bottom:12px">📭</div>
-      <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Nema dostupnih zadataka za ovaj cilj</h2>
-      <p style="color:var(--text-dim);margin-bottom:20px">Trenutno nema zadatka za vježbanje ovog cilja.</p>
+      {#if fieldMode}
+        <div style="font-size:48px;margin-bottom:12px">🎉</div>
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Nema više zadataka iz ovog područja</h2>
+        <p style="color:var(--text-dim);margin-bottom:20px">Za sada si prošao sve dostupne zadatke iz ovog područja.</p>
+      {:else}
+        <div style="font-size:48px;margin-bottom:12px">📭</div>
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Nema dostupnih zadataka za ovaj cilj</h2>
+        <p style="color:var(--text-dim);margin-bottom:20px">Trenutno nema zadatka za vježbanje ovog cilja.</p>
+      {/if}
       <button class="btn btn-primary" onclick={() => goto("/mapa")}>Natrag na mapu</button>
     </div>
 
@@ -183,6 +214,9 @@
         <span class="badge mono">#{task.id ?? '—'}</span>
         <span class="badge">{currentCourse?.courseId == 1 ? "A" : "B"} razina</span>
         <span class="badge badge-dim">Matematika</span>
+        {#if fieldMode && task.objective?.objectiveName}
+          <span class="badge badge-dim">{task.objective.objectiveName}</span>
+        {/if}
       </div>
 
       <div

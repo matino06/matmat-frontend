@@ -212,14 +212,43 @@
     }
   });
 
-  function openObjective(node) {
-    if (node.state === "locked") return;
+  // Pending "svejedno nastavi" confirmation.
+  // { kind: "objective", node } | { kind: "field", block, firstNode }
+  let confirmPrompt = $state(null);
+
+  function goToObjective(node) {
     sessionStorage.setItem("mapaReturnObjectiveId", node.o.objectiveId);
     const q = new URLSearchParams({
       objectiveId: node.o.objectiveId,
       name: node.o.objectiveName ?? "",
     });
     goto(`/ponavljanje?${q}`);
+  }
+
+  function openObjective(node) {
+    if (node.state === "locked") return; // klik na krug zaključanog nodea = bez efekta
+    goToObjective(node);
+  }
+
+  function studyField(block, firstNode) {
+    confirmPrompt = { kind: "field", block, firstNode };
+  }
+
+  function goToField(block, firstNode) {
+    if (firstNode) sessionStorage.setItem("mapaReturnObjectiveId", firstNode.o.objectiveId); // scroll natrag na polje
+    const q = new URLSearchParams({
+      fieldId: block.fieldId,
+      fieldName: block.fieldName ?? "",
+    });
+    goto(`/ponavljanje?${q}`);
+  }
+
+  function proceedConfirm() {
+    const p = confirmPrompt;
+    confirmPrompt = null;
+    if (!p) return;
+    if (p.kind === "objective") goToObjective(p.node);
+    else goToField(p.block, p.firstNode);
   }
 </script>
 
@@ -253,13 +282,21 @@
             </div>
             <div class="bn-name">{lb.block.fieldName}</div>
           </div>
-          {#if lb.block.unlocked}
-            <div class="bn-pill">{lb.mastered}/{lb.total}</div>
-          {:else}
-            <svg class="bn-lock" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
-          {/if}
+          <div class="bn-right">
+            {#if lb.block.unlocked}
+              <div class="bn-pill">{lb.mastered}/{lb.total}</div>
+            {:else}
+              <svg class="bn-lock" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            {/if}
+            <button class="bn-study" onclick={() => studyField(lb.block, lb.nodes[0])} title="Vježbaj cijelo područje">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                <polygon points="8 5 19 12 8 19"/>
+              </svg>
+              Uči
+            </button>
+          </div>
         </div>
 
         <!-- Winding path -->
@@ -343,14 +380,15 @@
                         {/each}
                       </div>
                     {/if}
-                    {#if item.state !== "locked"}
-                      <button class="hc-play" onclick={() => openObjective(item)}>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                          <polygon points="8 5 19 12 8 19"/>
-                        </svg>
-                        Ponovi
-                      </button>
-                    {/if}
+                    <button
+                      class="hc-play"
+                      onclick={() => (item.state === "locked" ? (confirmPrompt = { kind: "objective", node: item }) : openObjective(item))}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                        <polygon points="8 5 19 12 8 19"/>
+                      </svg>
+                      Ponovi
+                    </button>
                   </div>
                 {/if}
               </div>
@@ -455,6 +493,39 @@
   </aside>
   </div>
 </div>
+
+<svelte:window onkeydown={(e) => { if (e.key === "Escape" && confirmPrompt) confirmPrompt = null; }} />
+
+{#if confirmPrompt}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div class="lock-backdrop" onclick={() => (confirmPrompt = null)}>
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class="lock-modal" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="lock-title" onclick={(e) => e.stopPropagation()}>
+      <div class="lock-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      {#if confirmPrompt.kind === "field"}
+        <h2 id="lock-title" class="lock-title">Područje možda ovisi o drugom gradivu</h2>
+        <p class="lock-text">
+          Za vježbanje područja <strong>{confirmPrompt.block.fieldName}</strong> mogu se pojaviti zadaci koji ovise o gradivu iz drugih područja koje još nisi svladao. Želiš li svejedno nastaviti?
+        </p>
+      {:else}
+        <h2 id="lock-title" class="lock-title">Gradivo još nije otključano</h2>
+        <p class="lock-text">
+          Za rješavanje cilja <strong>{confirmPrompt.node.o.objectiveName}</strong> s razumijevanjem potrebno je znanje iz prethodnih zadataka koje još nisi svladao. Želiš li svejedno nastaviti?
+        </p>
+      {/if}
+      <div class="lock-actions">
+        <button class="btn btn-quiet" onclick={() => (confirmPrompt = null)}>Odustani</button>
+        <button class="btn btn-primary" onclick={proceedConfirm}>Svejedno nastavi</button>
+      </div>
+    </div>
+  </div>
+{/if}
 
 <style>
   .map-layout {
@@ -756,6 +827,41 @@
     color: var(--text-faint);
     flex-shrink: 0;
   }
+  .bn-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .bn-study {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: none;
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.12s, transform 0.12s;
+  }
+  .bn-study:hover {
+    background: rgba(255, 255, 255, 0.34);
+    transform: translateY(-1px);
+  }
+  .banner-locked .bn-study {
+    background: var(--bg-elev-2);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .banner-locked .bn-study:hover {
+    color: var(--text);
+  }
 
   /* ── Path ── */
 
@@ -1043,5 +1149,65 @@
     color: var(--text-faint);
     margin-top: 3px;
     text-align: center;
+  }
+
+  /* Locked-objective confirmation popup */
+  .lock-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: lockFade 0.15s ease;
+  }
+  .lock-modal {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.6);
+    padding: 28px 26px;
+    animation: lockPop 0.18s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  .lock-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elev-2);
+    color: var(--text-faint);
+  }
+  .lock-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 14px 0 8px;
+  }
+  .lock-text {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0 0 22px;
+  }
+  .lock-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  @keyframes lockFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes lockPop {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+    to { opacity: 1; transform: none; }
   }
 </style>
