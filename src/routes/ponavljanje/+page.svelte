@@ -1,9 +1,9 @@
 <script>
-  import { auth } from "$lib/config/firebase-config";
+  import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import { onMount, onDestroy } from "svelte";
+  import { onDestroy } from "svelte";
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
   import { mathjaxTypeset } from "$lib/utils/mathjax";
@@ -141,16 +141,19 @@
     return renderTaskHtml(text, task?.id);
   }
 
-  onMount(() => {
-    const unsub = auth.onAuthStateChanged(async (user) => {
-      if (user) {
+  // Load user-specific data once the user is authenticated (Auth0 has no
+  // onAuthStateChanged listener, so we react to the store instead).
+  let loaded = false;
+  $effect(() => {
+    if (userData.user && !loaded) {
+      loaded = true;
+      (async () => {
         const tempoRes = await apiClient("/account/tempo", { method: "GET" });
         if (tempoRes.ok) selectedTempo = await tempoRes.json();
         await fetchCurrentCourse();
         await fetchTask();
-      }
-    });
-    return () => unsub();
+      })();
+    }
   });
 
   onDestroy(() => {

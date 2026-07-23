@@ -1,5 +1,5 @@
 <script>
-  import { auth } from "$lib/config/firebase-config";
+  import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import { onMount, onDestroy, tick } from "svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
@@ -189,14 +189,19 @@
     if (response.ok) {
       selectedTempo = await response.json();
     }
+  });
 
-    const unsub = auth.onAuthStateChanged(async (user) => {
-      if (user) {
+  // Load user-specific data once the user is authenticated (Auth0 has no
+  // onAuthStateChanged listener, so we react to the store instead).
+  let loaded = false;
+  $effect(() => {
+    if (userData.user && !loaded) {
+      loaded = true;
+      (async () => {
         await Promise.all([fetchCurrentCourse(), fetchUserGoal()]);
         await fetchNewTask();
-      }
-    });
-    return () => unsub();
+      })();
+    }
   });
 
   onDestroy(() => {

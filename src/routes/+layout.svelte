@@ -3,7 +3,7 @@
   import { page } from '$app/state';
   import { afterNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { userData, turnstileData } from "$lib/store/user.svelte";
+  import { userData, turnstileData, initAuth } from "$lib/store/user.svelte";
   import { panelState, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar } from "$lib/store/ui.svelte";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
@@ -27,6 +27,7 @@
 
   onMount(() => {
     trackPageView();
+    initAuth();
 
     function onKey(e) {
       if (e.key === "Escape") {

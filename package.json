@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 5173 --strictPort",
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
@@ -48,6 +48,7 @@
     ]
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^2.24.0",
     "@traptitech/markdown-it-katex": "^3.6.0",
     "@zag-js/progress": "^1.18.3",
     "@zag-js/svelte": "^1.18.3",
@@ -56,7 +57,6 @@
     "cytoscape": "^3.32.1",
     "cytoscape-dagre": "^2.5.0",
     "express": "^5.1.0",
-    "firebase": "^11.10.0",
     "heic2any": "^0.0.4",
     "katex": "^0.16.33",
     "markdown-it": "^14.1.1",
