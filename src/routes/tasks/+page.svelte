@@ -4,8 +4,9 @@
   import { onMount, onDestroy, tick } from "svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { calculateExamProgress } from "$lib/utils/progress";
-  import { renderMd } from "$lib/utils/markdownRenderer";
+  import { renderTaskHtml } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
+  import { mathjaxTypeset } from "$lib/utils/mathjax";
   import { panelState } from "$lib/store/panels.svelte";
   import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
@@ -176,11 +177,11 @@
   }
 
   function renderTask(text) {
-    return renderMd(text);
+    return renderTaskHtml(text, task?.id);
   }
 
   function renderSolution(text) {
-    return renderMd(text);
+    return renderTaskHtml(text, task?.id);
   }
 
   onMount(async () => {
@@ -294,6 +295,7 @@
         id="mathjax-output"
         class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
         use:fitMath
+        use:mathjaxTypeset={task.id}
       >
         {@html renderTask(task.taskText ?? '')}
       </div>
@@ -328,6 +330,7 @@
             !prose-li:my-0  /* smanjuje marginu između listi na malim ekranima */
             "
             use:fitMath
+            use:mathjaxTypeset={task.id}
           >
             {@html renderSolution(task.explanation ?? '')}
           </div>

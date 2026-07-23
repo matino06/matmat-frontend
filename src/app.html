@@ -27,6 +27,21 @@
       defer
     ></script>
 
+    <!--
+      Old tasks (id <= 335) are rendered with raw MathJax delimiters and typeset by MathJax via the
+      mathjaxTypeset action. Disable MathJax's automatic page scan so it never touches the KaTeX
+      output used by newer tasks; we typeset the old-task containers ourselves. Default delimiters
+      (\(…\), \[…\], $$…$$ — but not single $) are kept, matching the pre-migration behaviour.
+    -->
+    <script>
+      window.MathJax = {
+        // \cancel and \textcolor/\color aren't in the base tex-mml-chtml bundle; preload them so
+        // they're available up front instead of lazily autoloading during typesetting.
+        loader: { load: ["[tex]/cancel", "[tex]/color"] },
+        tex: { packages: { "[+]": ["cancel", "color"] } },
+        startup: { typeset: false },
+      };
+    </script>
     <script
       type="text/javascript"
       id="MathJax-script"

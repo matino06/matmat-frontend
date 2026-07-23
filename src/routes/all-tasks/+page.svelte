@@ -1,7 +1,8 @@
 <script>
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
-  import { renderMd } from "$lib/utils/markdownRenderer";
+  import { renderTaskHtml } from "$lib/utils/markdownRenderer";
+  import { mathjaxTypeset } from "$lib/utils/mathjax";
 
   let fields = $state([]);
   let subfields = $state([]);
@@ -108,7 +109,7 @@
   });
 
   function renderSolution(t) {
-    return renderMd(t);
+    return renderTaskHtml(t, selectedTask?.id);
   }
 </script>
 
@@ -194,6 +195,7 @@
         <div
           id="mathjax-output"
           class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert"
+          use:mathjaxTypeset={selectedTask.id}
         >
           {@html renderSolution(selectedTask.taskText ?? '')}
         </div>
@@ -207,7 +209,7 @@
         {:else}
           <div class="solution">
             <div class="solution-header"><h3>Rješenje</h3></div>
-            <div class="prose !max-w-none dark:prose-invert">
+            <div class="prose !max-w-none dark:prose-invert" use:mathjaxTypeset={selectedTask.id}>
               {#if selectedTask.explanation}
                 {@html renderSolution(selectedTask.explanation)}
               {:else if selectedTask.explanationSteps?.length}

@@ -39,11 +39,13 @@ export function fitMath(node) {
     const tag = d.querySelector(".tag");
     if (tag) {
       d.dataset.fitted = "1";
+      // KaTeX splits display math into multiple sibling `.base` spans (one per
+      // binary-op / relation group), laid out horizontally. The equation's true
+      // width is their SUM, not the max of any single one.
       const tagged = d.querySelectorAll(".base");
       let we = 0;
       tagged.forEach((b) => {
-        const bw = b.getBoundingClientRect().width;
-        if (bw > we) we = bw;
+        we += b.getBoundingClientRect().width;
       });
       const containerW = d.getBoundingClientRect().width;
       const contentW = Math.ceil(we + tag.getBoundingClientRect().width + 24);
@@ -57,7 +59,14 @@ export function fitMath(node) {
             display: "inline-block",
             width: contentW + "px",
           });
-        if (katexHtml) katexHtml.style.textAlign = "left";
+        if (katexHtml) {
+          // Pin katex-html to the full content width too (not just the parent
+          // .katex). The tag is position:absolute; right:0 relative to
+          // katex-html, so this is what pushes it past the equation + gap
+          // instead of leaving it at the equation's right edge (overlap).
+          katexHtml.style.width = contentW + "px";
+          katexHtml.style.textAlign = "left";
+        }
       } else {
         // Reset to native (in case a resize took it from wide back to fitting).
         Object.assign(d.style, {
@@ -85,14 +94,15 @@ export function fitMath(node) {
     }
     const bases = d.querySelectorAll(".base");
     if (!bases.length) return;
-    // Measure the fractional width (getBoundingClientRect) and round UP. KaTeX
-    // lays glyphs out at sub-pixel widths, so the integer offsetWidth is often
-    // ~0.5px too small — the real content then spills past the right edge of the
-    // pinned box, pushing centered display math slightly off-center to the right.
+    // KaTeX splits display math into multiple sibling `.base` spans (one per
+    // binary-op / relation group), tiled horizontally — so the true content
+    // width is their SUM. Measure fractional widths (getBoundingClientRect) and
+    // round UP: KaTeX lays glyphs out at sub-pixel widths, so an integer width is
+    // often ~0.5px too small and the content then spills past the pinned box,
+    // pushing centered display math slightly off-center to the right.
     let w = 0;
     bases.forEach((b) => {
-      const bw = b.getBoundingClientRect().width;
-      if (bw > w) w = bw;
+      w += b.getBoundingClientRect().width;
     });
     if (w <= 0) return;
     w = Math.ceil(w);
@@ -153,5 +163,29 @@ export function fitMath(node) {
   if (document.fonts?.ready) document.fonts.ready.then(reapply);
   const obs = new MutationObserver(apply);
   obs.observe(node, { childList: true, subtree: true });
-  return { destroy: () => obs.disconnect() };
+
+  // Resize handling. Non-tagged math is resize-proof (fixed inner width +
+  // overflow:auto scrolls purely in CSS), but a tagged equation's fits-vs-scroll
+  // decision is width-dependent and computed only once. Without recomputation,
+  // narrowing the viewport leaves the native layout in place and the \tag{}
+  // (position:absolute; right:0) slides over the formula instead of scrolling.
+  // Re-run whenever the container's width actually changes.
+  let lastWidth = node.getBoundingClientRect().width;
+  let raf = 0;
+  const ro = new ResizeObserver(() => {
+    const w = node.getBoundingClientRect().width;
+    if (w === lastWidth) return;
+    lastWidth = w;
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(reapply);
+  });
+  ro.observe(node);
+
+  return {
+    destroy: () => {
+      obs.disconnect();
+      ro.disconnect();
+      if (raf) cancelAnimationFrame(raf);
+    },
+  };
 }
