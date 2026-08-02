@@ -68,28 +68,43 @@
     if (response.ok) currentCourse = await response.json();
   }
 
+  // The session-expiry path already shows its own message and redirects, so
+  // only report a load failure while the user is still signed in.
+  function reportTaskLoadError(err) {
+    console.error("Task load error:", err);
+    if (userData.user) {
+      showErrorAlert("Dohvaćanje zadatka nije uspjelo. Pokušaj ponovo.");
+    }
+  }
+
   async function fetchNewTask() {
     isLoading = true;
-    await checkProgressBump();
-    task = null;
-    revealed = false;
-    answered = false;
-    pendingRating = null;
-
-    const response = await apiClient("/task/get-new", { method: "GET" });
-    const text = await response.text();
-
-    if (text === "No more tasks for today!") {
-      noMoreTasks = true;
+    try {
+      await checkProgressBump();
       task = null;
-      isLoading = false;
-      return;
-    }
+      revealed = false;
+      answered = false;
+      pendingRating = null;
 
-    task = JSON.parse(text);
-    setCurrentTask(task);
-    startTime = Date.now();
-    isLoading = false;
+      const response = await apiClient("/task/get-new", { method: "GET" });
+      const text = await response.text();
+
+      if (text === "No more tasks for today!") {
+        noMoreTasks = true;
+        task = null;
+        return;
+      }
+
+      if (!response.ok) throw new Error("Task fetch failed: " + response.status);
+
+      task = JSON.parse(text);
+      setCurrentTask(task);
+      startTime = Date.now();
+    } finally {
+      // Always drop the spinner — an expired session used to leave the page
+      // stuck on "Učitavanje zadatka…" forever.
+      isLoading = false;
+    }
   }
 
   async function handleRate(rating) {
@@ -138,7 +153,7 @@
       setTimeout(() => showToast = false, 2200);
     }
 
-    setTimeout(fetchNewTask, 600);
+    setTimeout(() => fetchNewTask().catch(reportTaskLoadError), 600);
   }
 
   function setShowCelebration() {
@@ -198,8 +213,13 @@
     if (userData.user && !loaded) {
       loaded = true;
       (async () => {
-        await Promise.all([fetchCurrentCourse(), fetchUserGoal()]);
-        await fetchNewTask();
+        try {
+          await Promise.all([fetchCurrentCourse(), fetchUserGoal()]);
+          await fetchNewTask();
+        } catch (err) {
+          loaded = false;
+          reportTaskLoadError(err);
+        }
       })();
     }
   });

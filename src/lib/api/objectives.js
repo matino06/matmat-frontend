@@ -6,5 +6,9 @@ export async function fetchObjectivesWithStatus() {
         { method: "GET" }
     );
 
+    if (!response.ok) {
+        throw new Error("Objectives fetch failed: " + response.status);
+    }
+
     return response.json();
 }

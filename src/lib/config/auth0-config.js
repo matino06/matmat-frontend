@@ -16,6 +16,10 @@ export function getAuth0Client() {
         redirect_uri: window.location.origin,
       },
       useRefreshTokens: true,
+      // Auth0 runs on auth.matmat.online (same site as the app), so when a
+      // refresh token dies the silent-auth iframe can still renew the session
+      // instead of dropping the user straight to the login screen.
+      useRefreshTokensFallback: true,
       cacheLocation: "localstorage",
     });
   }

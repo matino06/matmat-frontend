@@ -1,6 +1,10 @@
 import { getAuth0Client } from "$lib/config/auth0-config";
 import { showErrorAlert } from "$lib/store/errorAlert.svelte";
 import { apiClient } from "$lib/api/apiClient";
+import {
+  isSessionExpiredError,
+  setSessionExpiredHandler,
+} from "$lib/auth/session";
 import { browser } from "$app/environment";
 
 export const userData = $state({
@@ -22,17 +26,58 @@ const normalizeUser = (u) =>
 
 // Auth0 has no persistent auth-state listener like Firebase, so we hydrate the
 // store once on startup. Called from the root layout's onMount (browser only).
+//
+// isAuthenticated() only proves there is a cached profile in localStorage — it
+// never checks expiry — so a days-old dead session still reads as logged in.
+// getTokenSilently() is the actual proof the session is alive, so we require it
+// before showing the app shell.
 export const initAuth = async () => {
   if (!browser) return;
   try {
     const client = await getAuth0Client();
     if (await client.isAuthenticated()) {
+      await client.getTokenSilently();
       userData.user = normalizeUser(await client.getUser());
     }
   } catch (err) {
-    console.error("Auth init error:", err);
+    if (isSessionExpiredError(err)) {
+      // Stale cache from an expired session — drop it, the user stays on the
+      // landing page. No toast: they never saw a logged-in UI to lose.
+      await clearSession();
+    } else {
+      console.error("Auth init error:", err);
+    }
   }
   userData.loading = false;
+};
+
+// Called whenever a live session turns out to be dead (token refresh failed, or
+// the backend answered 401). Clearing userData.user is enough to get the user
+// out: the root layout's guard effect redirects to "/" on its own.
+let handlingExpiry = false;
+export const handleSessionExpired = async () => {
+  if (handlingExpiry || !userData.user) return;
+  handlingExpiry = true;
+  try {
+    await clearSession();
+    showErrorAlert("Sesija je istekla. Prijavi se ponovo.");
+  } finally {
+    handlingExpiry = false;
+  }
+};
+
+setSessionExpiredHandler(handleSessionExpired);
+
+// Re-checks a session that looked valid earlier — used when the tab regains
+// focus, since the session can die while the tab sits open in the background.
+export const validateSession = async () => {
+  if (!browser || !userData.user) return;
+  try {
+    const client = await getAuth0Client();
+    await client.getTokenSilently();
+  } catch (err) {
+    if (isSessionExpiredError(err)) await handleSessionExpired();
+  }
 };
 
 // Verifies admin status via the backend endpoint and caches it in the store.
@@ -95,11 +140,14 @@ const loadTurnstile = () => {
 };
 
 const login = async () => {
-  const response = await apiClient("/account/exists", { method: "GET" });
+  // A 401 here can mean "no account yet" rather than a dead session, so this
+  // bootstrap pair opts out of the global session-expiry handling.
+  const noAuthHandling = { handleUnauthorized: false };
+  const response = await apiClient("/account/exists", { method: "GET" }, noAuthHandling);
   const textResponse = await response.text();
 
   if (textResponse == "Account does not exist") {
-    await apiClient("/account/create", { method: "POST" });
+    await apiClient("/account/create", { method: "POST" }, noAuthHandling);
     userData.needsOnboarding = true;
   }
 
@@ -107,14 +155,21 @@ const login = async () => {
   if (adminRes.ok) userData.isAdmin = await adminRes.json();
 };
 
-// Clears the local Auth0 session without a full-page redirect. Used on the
-// Turnstile failure paths to invalidate a login that didn't pass verification.
-const clearSession = async () => {
+// Clears the local Auth0 session (cached tokens + profile) without a full-page
+// redirect, and resets everything derived from it. Used on the Turnstile
+// failure paths, on an expired session, and by logout().
+export const clearSession = async () => {
+  // Reset the store first (synchronously) so the layout guard redirects and
+  // in-flight callers see a logged-out state right away; purge the Auth0
+  // cache after.
+  userData.user = null;
+  userData.isAdmin = false;
+  userData.adminChecked = false;
+  userData.needsOnboarding = false;
   try {
     const client = await getAuth0Client();
     await client.logout({ openUrl: false });
   } catch {}
-  userData.user = null;
 };
 
 const renderTurnstile = () => {
@@ -177,9 +232,7 @@ const renderTurnstile = () => {
 };
 
 export const logout = async () => {
-  userData.user = null;
-  userData.isAdmin = false;
-  userData.needsOnboarding = false;
+  await clearSession();
   const client = await getAuth0Client();
   await client.logout({ logoutParams: { returnTo: window.location.origin } });
 };

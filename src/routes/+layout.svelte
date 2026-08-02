@@ -3,7 +3,7 @@
   import { page } from '$app/state';
   import { afterNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { userData, turnstileData, initAuth } from "$lib/store/user.svelte";
+  import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
   import { panelState, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar } from "$lib/store/ui.svelte";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
@@ -47,8 +47,18 @@
       try { localStorage.setItem("mm-theme", t); } catch {}
     }
 
+    // The Auth0 session can expire while the tab sits open in the background,
+    // so re-check it whenever the user comes back to it.
+    function onVisibility() {
+      if (document.visibilityState === "visible") validateSession();
+    }
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   });
 
   afterNavigate(() => {
