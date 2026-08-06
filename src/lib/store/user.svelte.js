@@ -38,6 +38,10 @@ export const initAuth = async () => {
     if (await client.isAuthenticated()) {
       await client.getTokenSilently();
       userData.user = normalizeUser(await client.getUser());
+      // Not awaited: admin status gates UI (sidebar nav, course switcher) that
+      // defaults to the non-admin view anyway, so it can settle a beat later
+      // rather than delaying the whole app shell by another round-trip.
+      verifyIsAdmin();
     }
   } catch (err) {
     if (isSessionExpiredError(err)) {

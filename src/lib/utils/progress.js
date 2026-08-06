@@ -34,7 +34,11 @@ export function calculateExamProgress(objectives, courseId) {
     },
   );
 
+  // Only the two Matura math courses have a published points distribution.
+  // Anything else (EFZG, Fizika) has no weighting to score against, so report
+  // 0 instead of throwing — add an entry above once a course gets one.
   const distributionMap = pointsDistributionByCourse[courseId];
+  if (!distributionMap) return 0;
 
   return Math.ceil(
     grouped.reduce((total, group) => {

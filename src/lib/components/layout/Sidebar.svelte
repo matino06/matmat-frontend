@@ -24,7 +24,8 @@
   const PROGRAMS = [
     { id: 1, label: 'Matematika A razina', badge: 'MA', color: '239', sub: 'Državna matura' },
     { id: 2, label: 'Matematika B razina', badge: 'MB', color: '215', sub: 'Državna matura' },
-    { id: 3, label: 'Ekonomska Matematika EFZG', badge: 'EF', color: '160', sub: 'Ekonomska Matematika na fakultetu EFZG' },
+    { id: 3, label: 'Ekonomska Matematika EFZG', badge: 'EF', color: '160', sub: 'Ekonomska Matematika na fakultetu EFZG', adminOnly: true },
+    { id: 4, label: 'Fizika', badge: 'FIZ', color: '280', sub: 'Državna matura', adminOnly: true },
   ];
 
   async function loadCourse() {
@@ -58,8 +59,16 @@
 
   onMount(loadCourse);
 
+  // Non-admins only get the two Matura math programs; the rest are internal.
+  let visiblePrograms = $derived(
+    PROGRAMS.filter(p => !p.adminOnly || userData.isAdmin)
+  );
+
+  // Looked up in the full list, not the visible one: a user sitting on an
+  // admin-only course still gets its real name in the header instead of being
+  // mislabelled as "Matematika A razina".
   let activeProg = $derived(
-    PROGRAMS.find(p => p.id === currentCourse?.courseId) ?? PROGRAMS[0]
+    PROGRAMS.find(p => p.id === currentCourse?.courseId) ?? visiblePrograms[0]
   );
 
   let path = $derived(page.url.pathname);
@@ -98,7 +107,7 @@
 
     {#if psOpen}
       <div class="ps-dropdown">
-        {#each PROGRAMS as prog (prog.id)}
+        {#each visiblePrograms as prog (prog.id)}
           <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
           <div
             class="ps-option {currentCourse?.courseId === prog.id ? 'ps-option-active' : ''}"
