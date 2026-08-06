@@ -6,6 +6,8 @@
   import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
   import { panelState, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar } from "$lib/store/ui.svelte";
+  import { courseState, loadCurrentCourse } from "$lib/store/course.svelte";
+  import { getProgram } from "$lib/config/programs";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
   import Sidebar from "$lib/components/layout/Sidebar.svelte";
@@ -103,7 +105,17 @@
     }
   });
 
-  let formulasPdfUrl = "/pdfs/MAT-FORMULE.pdf";
+  // The course drives the formula sheet PDF and every subject label in the
+  // shell, so load it as soon as there is a user to load it for.
+  $effect(() => {
+    if (userData.user && !courseState.loaded) loadCurrentCourse();
+  });
+
+  let program = $derived(getProgram(courseState.courseId));
+  // Falls back to maths while the course is still loading — that is what the
+  // shell showed unconditionally before, and it lasts one fetch.
+  let courseLabel = $derived(program?.short ?? "Matematika");
+  let formulasPdfUrl = $derived(program?.pdf ?? "/pdfs/MAT-FORMULE.pdf");
 
   function toggleTheme() {
     const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
@@ -159,23 +171,23 @@
             </svg>
           </button>
           {#if path === '/mapa'}
-            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Mapa gradiva</b>
           {:else if path === '/tasks'}
-            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Zadaci</b>
           {:else if path === '/ponavljanje'}
-            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Ponavljanje</b>
           {:else if path === '/progress'}
-            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Napredak</b>
           {:else if path === '/goals'}
-            <span style="color:var(--text-faint)">Matematika</span>
+            <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Ciljevi</b>
           {:else if path === '/settings'}
@@ -230,7 +242,7 @@
     open={panelState.formuleOpen}
     onClose={closeFormule}
     title="Maturalne tablice i formule"
-    meta="Matematika"
+    meta={courseLabel}
     wide={true}
   >
     <div class="pdf-viewer-wrap">

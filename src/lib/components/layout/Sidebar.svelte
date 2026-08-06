@@ -4,12 +4,12 @@
   import { userData } from '$lib/store/user.svelte';
   import { panelState, openAI, openFormule, showPomoWidget } from '$lib/store/panels.svelte';
   import { closeSidebar } from '$lib/store/ui.svelte';
+  import { courseState, setCurrentCourse } from '$lib/store/course.svelte';
+  import { PROGRAMS } from '$lib/config/programs';
   import { apiClient } from '$lib/api/apiClient';
-  import { onMount } from 'svelte';
 
   let { open = false } = $props();
 
-  let currentCourse = $state(null);
   let psOpen = $state(false);
   let avatarFailed = $state(false);
 
@@ -21,23 +21,8 @@
   function openAIAndClose() { openAI(); closeSidebar(); }
   function openFormuleAndClose() { openFormule(); closeSidebar(); }
 
-  const PROGRAMS = [
-    { id: 1, label: 'Matematika A razina', badge: 'MA', color: '239', sub: 'Državna matura' },
-    { id: 2, label: 'Matematika B razina', badge: 'MB', color: '215', sub: 'Državna matura' },
-    { id: 3, label: 'Ekonomska Matematika EFZG', badge: 'EF', color: '160', sub: 'Ekonomska Matematika na fakultetu EFZG', adminOnly: true },
-    { id: 4, label: 'Fizika', badge: 'FIZ', color: '280', sub: 'Državna matura', adminOnly: true },
-  ];
-
-  async function loadCourse() {
-    if (!userData.user) return;
-    try {
-      const res = await apiClient('/account/current-course', { method: 'GET' });
-      if (res.ok) currentCourse = await res.json();
-    } catch {}
-  }
-
   async function switchCourse(prog) {
-    if (prog.id === currentCourse?.courseId) {
+    if (prog.id === courseState.courseId) {
       psOpen = false;
       return;
     }
@@ -47,7 +32,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ courseId: prog.id }),
       });
-      currentCourse = { courseId: prog.id };
+      setCurrentCourse(prog.id);
       psOpen = false;
       // The current page's content (next task, mock exams, units, progress) is
       // course-specific and fetched in each page's onMount, so reload to refetch
@@ -56,8 +41,6 @@
     } catch {}
     psOpen = false;
   }
-
-  onMount(loadCourse);
 
   // Non-admins only get the two Matura math programs; the rest are internal.
   let visiblePrograms = $derived(
@@ -68,7 +51,7 @@
   // admin-only course still gets its real name in the header instead of being
   // mislabelled as "Matematika A razina".
   let activeProg = $derived(
-    PROGRAMS.find(p => p.id === currentCourse?.courseId) ?? visiblePrograms[0]
+    PROGRAMS.find(p => p.id === courseState.courseId) ?? visiblePrograms[0]
   );
 
   let path = $derived(page.url.pathname);
@@ -110,7 +93,7 @@
         {#each visiblePrograms as prog (prog.id)}
           <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
           <div
-            class="ps-option {currentCourse?.courseId === prog.id ? 'ps-option-active' : ''}"
+            class="ps-option {courseState.courseId === prog.id ? 'ps-option-active' : ''}"
             onclick={() => switchCourse(prog)}
           >
             <div class="badge-sq badge-sq-sm" style="background: hsl({prog.color} 75% 55%)">{prog.badge}</div>
