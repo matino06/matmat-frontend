@@ -36,11 +36,7 @@
         closeSidebar();
         closeAI();
         closeFormule();
-        return;
       }
-      if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT") return;
-      if (e.key === "f" || e.key === "F") panelState.formuleOpen = !panelState.formuleOpen;
-      if (e.key === "a" || e.key === "A") panelState.aiOpen = !panelState.aiOpen;
     }
 
     function onTheme() {

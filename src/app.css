@@ -218,12 +218,6 @@ svg {
   flex: 0 0 16px;
   color: currentColor;
 }
-.sidebar .nav-item .kbd {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-faint);
-}
 .sidebar .nav-item.nav-item-featured {
   color: var(--text);
   background: color-mix(in oklab, hsl(38 90% 55%) 8%, transparent);
