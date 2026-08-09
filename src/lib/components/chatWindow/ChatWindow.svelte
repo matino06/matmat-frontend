@@ -1,8 +1,13 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { userData } from "$lib/store/user.svelte";
   import { currentTaskState } from "$lib/store/currentTask.svelte.js";
+  import { aiQuoteState, clearAiQuote } from "$lib/store/aiQuote.svelte.js";
+  import { taskImages, mergeImages } from "$lib/utils/taskImages.js";
   import { renderMd } from "$lib/utils/markdownRenderer";
+
+  // Kept in step with MAX_IMAGES in src/routes/api/ai/+server.js.
+  const MAX_IMAGES = 4;
 
   let messages = $state([
     {
@@ -10,12 +15,14 @@
       role: "ai",
       content: `Bok! Tu sam ako ti nešto nije jasno. Pitaj bilo što o zadatku, rješenju ili matematičkom konceptu.`,
       finalHtml: null,
+      quote: null,
     },
   ]);
   let draft = $state("");
   let isTyping = $state(false);
   let isWaiting = $state(false);
   let boardEl = $state(null);
+  let inputEl = $state(null);
 
   let streamingMsgId = $state(null);
   let stableHtml = $state("");
@@ -32,36 +39,81 @@
     el.style.height = el.scrollHeight + "px";
   }
 
-  async function sendMessage() {
-    if (!draft.trim() || isWaiting) return;
+  // The student quoted a part of the task from the page — pin it above the input
+  // and put the cursor there so they only have to type the question.
+  $effect(() => {
+    if (!aiQuoteState.quote) return;
+    tick().then(() => {
+      inputEl?.focus();
+    });
+  });
 
-    const userMsg = draft.trim();
+  function truncate(text, max = 120) {
+    if (!text) return "";
+    return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
+  }
+
+  async function sendMessage() {
+    const quote = aiQuoteState.quote;
+    if ((!draft.trim() && !quote) || isWaiting) return;
+
+    // A quote on its own is a complete request — the highlight says what it's about.
+    const userMsg = draft.trim() || "Objasni mi ovaj dio.";
     draft = "";
+    clearAiQuote();
     document.querySelectorAll("textarea").forEach(el => { el.style.height = "auto"; });
 
-    messages = [...messages, { id: Date.now(), role: "user", content: userMsg, finalHtml: null }];
+    messages = [...messages, { id: Date.now(), role: "user", content: userMsg, finalHtml: null, quote }];
     isTyping = true;
     isWaiting = true;
 
     setTimeout(async () => {
-      await fetchAIResponse(userMsg);
+      await fetchAIResponse(userMsg, quote);
     }, 400);
   }
 
-  async function fetchAIResponse(userQuestion) {
+  async function fetchAIResponse(userQuestion, quote = null) {
     const aiMsgId = Date.now() + 1;
     let displayInterval = null;
 
     try {
       const history = messages
         .slice(0, -1)
-        .map(m => `${m.role === "user" ? "Student" : "AI Assistant"}: ${m.content}`)
+        .map(m => {
+          const who = m.role === "user" ? "Student" : "AI Assistant";
+          // Keep past highlights in the transcript so follow-up questions like
+          // "and the next step?" still know what was being pointed at.
+          const q = m.quote?.text ? `[highlighted: ${truncate(m.quote.text, 300)}] ` : "";
+          return `${who}: ${q}${m.content}`;
+        })
         .join("\n\n");
 
       const task = currentTaskState.task;
       const taskBlock = task
         ? `Task and solution:\n${JSON.stringify(task, null, 2)}`
         : `The student is not currently solving a specific task — answer general math questions.`;
+
+      const where = quote?.source === "solution" ? "solution" : "task";
+
+      // Attach the task's own figures too, not just anything the student happened
+      // to highlight — otherwise a question about a graph reaches the model as the
+      // <img> tag inside the task JSON, and it answers by reciting the URL.
+      const images = mergeImages(quote?.images ?? [], taskImages(task), MAX_IMAGES);
+
+      const quoteBlock = quote?.text
+        ? `\nThe student highlighted this specific part of the ${where} and their question is about it:\n"""\n${quote.text}\n"""\n`
+        : "";
+
+      // Only claimed once the server has actually attached the bytes — otherwise a
+      // failed fetch would leave the model describing an image it never received.
+      const many = images.length > 1;
+      const imageNote = images.length
+        ? `The task JSON above contains raw <img> tags. The image${many ? "s" : ""} ${many ? "they" : "it"} reference${many ? "" : "s"} ${many ? "are" : "is"} attached to this message as ${many ? "actual images" : "an actual image"} — look at ${many ? "them" : "it"} directly instead of describing the URL${many ? "s" : ""}.${
+            quote?.images?.length
+              ? ` The student specifically highlighted the first ${quote.images.length > 1 ? "ones" : "one"} in the ${where}.`
+              : ""
+          }`
+        : "";
 
       const systemPrompt = `You are MatMat AI Assistant, a mathematics expert. A student has sent you a task and has a question about the solution.
 Please answer their question and keep the response as brief as possible unless the student requests otherwise.
@@ -70,7 +122,7 @@ The task and solution are written in LaTeX (MathJax). This is the conversation h
 ${history}
 
 ${taskBlock}
-
+${quoteBlock}
 Student's new question: ${userQuestion}
 
 Answer clearly and simply in Croatian, taking into account the entire conversation context.
@@ -81,7 +133,13 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
       const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ systemPrompt }),
+        body: JSON.stringify({
+          systemPrompt,
+          imageNote,
+          // Only the current message's images — resending the whole history's
+          // attachments on every turn would blow up the request.
+          images: images.map(i => ({ url: i.src })),
+        }),
       });
 
       if (!response.ok) {
@@ -90,6 +148,11 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
           : "Došlo je do pogreške. Pokušaj ponovo.";
         throw new Error(msg);
       }
+
+      // A dropped image used to be invisible: the model would answer as if there
+      // were no figure and nothing said otherwise. Say so instead.
+      const attachedCount = Number(response.headers.get("X-Images-Attached") ?? 0);
+      const imagesLost = images.length > 0 && attachedCount < images.length;
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -168,8 +231,11 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
       clearInterval(displayInterval);
       displayInterval = null;
 
-      const finalHtml = renderMd(displayedText);
-      messages = messages.map(m => m.id === aiMsgId ? { ...m, content: displayedText, finalHtml } : m);
+      const finalText = imagesLost
+        ? `${displayedText}\n\n*Napomena: slika iz zadatka nije uspjela stići do asistenta, pa odgovor ne uzima u obzir što je na njoj.*`
+        : displayedText;
+      const finalHtml = renderMd(finalText);
+      messages = messages.map(m => m.id === aiMsgId ? { ...m, content: finalText, finalHtml } : m);
 
       streamingMsgId = null;
       stableHtml = "";
@@ -232,6 +298,20 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
       </div>
       <div class="bubble">
         <div class="role">{msg.role === "ai" ? "Asistent" : "Ti"}</div>
+        {#if msg.quote}
+          <div class="msg-quote">
+            {#if msg.quote.images.length}
+              <div class="quote-thumbs">
+                {#each msg.quote.images as img (img.src)}
+                  <img src={img.src} alt={img.alt || "označena slika"}/>
+                {/each}
+              </div>
+            {/if}
+            {#if msg.quote.text}
+              <div class="quote-text">{@html renderMd(msg.quote.text)}</div>
+            {/if}
+          </div>
+        {/if}
         {#if msg.id === streamingMsgId}
           <div class="prose-content">
             {@html stableHtml}
@@ -264,8 +344,36 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
     {/each}
   </div>
 
+  {#if aiQuoteState.quote}
+    <div class="pending-quote">
+      {#if aiQuoteState.quote.images.length}
+        <div class="quote-thumbs">
+          {#each aiQuoteState.quote.images as img (img.src)}
+            <img src={img.src} alt={img.alt || "označena slika"}/>
+          {/each}
+        </div>
+      {/if}
+      <div class="pending-quote-body">
+        <span class="pending-quote-label">
+          Iz {aiQuoteState.quote.source === "solution" ? "rješenja" : "zadatka"}
+        </span>
+        <span class="pending-quote-text">
+          {aiQuoteState.quote.text
+            ? truncate(aiQuoteState.quote.text)
+            : `${aiQuoteState.quote.images.length > 1 ? "Slike" : "Slika"} iz zadatka`}
+        </span>
+      </div>
+      <button class="pending-quote-x" onclick={clearAiQuote} title="Makni citat" aria-label="Makni citat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  {/if}
+
   <div class="chat-input-wrap">
     <textarea
+      bind:this={inputEl}
       bind:value={draft}
       onkeydown={handleKey}
       oninput={(e) => autoResize(e.currentTarget)}
@@ -310,6 +418,78 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
   @keyframes bounce {
     0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
     40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* The part of the task the student highlighted, shown above their message. */
+  .msg-quote {
+    border-left: 2px solid var(--primary);
+    padding: 2px 0 2px 10px;
+    margin: 0 0 8px;
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.55;
+    max-height: 180px;
+    overflow: auto;
+  }
+  .msg-quote :global(p) { margin: 0 0 .4em; }
+  .msg-quote :global(p:last-child) { margin-bottom: 0; }
+
+  .quote-thumbs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .quote-thumbs img {
+    max-height: 56px;
+    max-width: 96px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border);
+    background: #fff;
+    object-fit: contain;
+  }
+
+  /* Pinned quote sitting above the input, waiting to be sent. */
+  .pending-quote {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--primary);
+    border-radius: var(--r-md);
+    background: var(--bg-elev-2);
+  }
+  .pending-quote .quote-thumbs { margin-bottom: 0; }
+  .pending-quote-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pending-quote-label {
+    font-size: 11px;
+    color: var(--primary);
+    font-weight: 500;
+  }
+  .pending-quote-text {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .pending-quote-x {
+    flex-shrink: 0;
+    display: inline-flex;
+    padding: 3px;
+    border-radius: var(--r-sm);
+    color: var(--text-faint);
+    cursor: pointer;
+  }
+  .pending-quote-x:hover {
+    background: var(--bg-hover);
+    color: var(--text);
   }
 
   .prose-content { font-size: 15.5px; line-height: 1.7; }

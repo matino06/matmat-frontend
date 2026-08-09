@@ -13,6 +13,7 @@
   import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
+  import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
@@ -232,7 +233,10 @@
   let toastPct = $derived(Math.min(completedToday / dailyGoal * 100, 100));
 
   function handleSpaceReveal(e) {
-    if (e.code === "Space" && e.target.tagName !== "TEXTAREA" && e.target.tagName !== "INPUT") {
+    // Space activates a focused button — don't hijack it (preventDefault would
+    // swallow the activation and toggle the solution instead).
+    const tag = e.target.tagName;
+    if (e.code === "Space" && tag !== "TEXTAREA" && tag !== "INPUT" && tag !== "BUTTON") {
       e.preventDefault();
       revealed = !revealed;
     }
@@ -240,6 +244,8 @@
 </script>
 
 <svelte:window onkeydown={handleSpaceReveal}/>
+
+<AskAiSelection/>
 
 {#if showCelebration}
   <GoalCelebration

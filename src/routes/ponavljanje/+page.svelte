@@ -10,6 +10,7 @@
   import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
   import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
 
   let currentCourse = $state(null);
   let task = $state(null);
@@ -161,7 +162,10 @@
   });
 
   function handleSpaceReveal(e) {
-    if (e.code === "Space" && e.target.tagName !== "TEXTAREA" && e.target.tagName !== "INPUT") {
+    // Space activates a focused button — don't hijack it (preventDefault would
+    // swallow the activation and toggle the solution instead).
+    const tag = e.target.tagName;
+    if (e.code === "Space" && tag !== "TEXTAREA" && tag !== "INPUT" && tag !== "BUTTON") {
       e.preventDefault();
       revealed = !revealed;
     }
@@ -169,6 +173,8 @@
 </script>
 
 <svelte:window onkeydown={handleSpaceReveal}/>
+
+<AskAiSelection/>
 
 <div class="page">
   <div class="zadaci-head">
