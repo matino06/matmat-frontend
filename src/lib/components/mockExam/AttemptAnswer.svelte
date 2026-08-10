@@ -2,13 +2,20 @@
   import { renderMath, renderMathInline } from "$lib/utils/mockExamRenderer";
   import { imageUrl } from "$lib/utils/imageUrl";
   import { fitMath } from "$lib/utils/fitMath";
+  import { openAI } from "$lib/store/panels.svelte.js";
+  import { setAiQuote } from "$lib/store/aiQuote.svelte.js";
+  import { buildExamQuestionContext } from "$lib/utils/examQuestionContext";
+  import { compressImage } from "$lib/utils/imageCompress";
 
-  let { answer, onRefresh } = $props();
+  // `parent` is the container question when this is a sub-question — without its
+  // shared intro a sub-question often makes no sense on its own.
+  let { answer, onRefresh, parent = null, examMeta = null } = $props();
 
   let imgFailed = $state(false);
   let imgSrc = $state(null);
   let converting = $state(false);
   let explanationOpen = $state(false);
+  let preparingAsk = $state(false);
 
   $effect(() => {
     const url = answer.answerImageUrl;
@@ -69,6 +76,42 @@
   const isImageType =
     answer.questionType === "extended_answer" ||
     answer.questionType === "short_answer_graph";
+
+  // The student's photo is a presigned S3 URL: it expires, and its host isn't on
+  // the server's allowlist, so we can't just hand over the URL. Fetch it here —
+  // the browser is already allowed to (convertHeic does the same) — and inline it
+  // as a data URI, which /api/ai accepts without an allowlist.
+  async function studentAnswerDataUrl() {
+    // Reuse the blob: URL when HEIC was already converted for display.
+    const src = imgSrc?.startsWith("blob:") ? imgSrc : answer.answerImageUrl;
+    if (!src || imgFailed) return null;
+    try {
+      const blob = await (await fetch(src)).blob();
+      // compressImage returns a data URL; wrap in a File so its HEIC branch, which
+      // reads .name, still works if we got the unconverted original.
+      return await compressImage(new File([blob], "odgovor.jpg", { type: blob.type }), {
+        maxDim: 1600,
+      });
+    } catch {
+      return null; // never lose the whole question's context over the photo
+    }
+  }
+
+  async function askAI() {
+    if (preparingAsk) return;
+    preparingAsk = true;
+    try {
+      const { text, context, images } = buildExamQuestionContext(answer, parent, examMeta);
+      const photo = await studentAnswerDataUrl();
+      // First in line: it's the student's own work, the thing they're asking about,
+      // and the only image whose content isn't also available as text.
+      if (photo) images.unshift({ src: photo, alt: "Tvoje rješenje" });
+      setAiQuote({ text, context, images, source: "exam" });
+      openAI();
+    } finally {
+      preparingAsk = false;
+    }
+  }
 </script>
 
 <section class="ans">
@@ -87,6 +130,13 @@
         <span class="ai-failed">AI ocjenjivanje nije uspjelo</span>
       {/if}
     </div>
+
+    <button class="btn btn-ghost ask-ai-btn" type="button" onclick={askAI} disabled={preparingAsk}>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/><path d="M20 19.5v-.5a7 7 0 0 0-14 0v.5"/>
+      </svg>
+      {preparingAsk ? "Pripremam…" : "Pitaj AI"}
+    </button>
   </header>
 
   <div class="ans-q">{@html renderMath(answer.questionText ?? "")}</div>
@@ -249,7 +299,16 @@
   @media (max-width: 767px) {
     .ans { padding: 14px 16px; }
   }
-  .ans-head { display: flex; align-items: center; }
+  .ans-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  /* Smaller than a standard .btn so it sits inside the question header without
+     competing with the score. Mirrors the topbar's .btn-ghost sizing. */
+  .ask-ai-btn {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 12px;
+    gap: 5px;
+  }
+  .ask-ai-btn:disabled { opacity: .6; cursor: default; }
   .ans-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .ans-num { color: var(--text-faint); font-weight: 600; font-size: 13px; }
   .ans-score {

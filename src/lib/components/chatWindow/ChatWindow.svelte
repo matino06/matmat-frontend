@@ -89,9 +89,14 @@
         .join("\n\n");
 
       const task = currentTaskState.task;
+      // An exam quote carries the whole question itself, so the "no task" fallback
+      // would contradict it.
+      const isExam = quote?.source === "exam";
       const taskBlock = task
         ? `Task and solution:\n${JSON.stringify(task, null, 2)}`
-        : `The student is not currently solving a specific task — answer general math questions.`;
+        : isExam
+          ? ""
+          : `The student is not currently solving a specific task — answer general math questions.`;
 
       const where = quote?.source === "solution" ? "solution" : "task";
 
@@ -100,20 +105,28 @@
       // <img> tag inside the task JSON, and it answers by reciting the URL.
       const images = mergeImages(quote?.images ?? [], taskImages(task), MAX_IMAGES);
 
-      const quoteBlock = quote?.text
-        ? `\nThe student highlighted this specific part of the ${where} and their question is about it:\n"""\n${quote.text}\n"""\n`
+      // The pinned text is a short label for exam questions; the model gets the
+      // full question, answer and marking instead.
+      const quoted = quote?.context ?? quote?.text;
+      const quoteBlock = quoted
+        ? isExam
+          ? `\nThis is a question from a past Matura exam the student has already sat and had graded, shown to them with their own answer, the official solution and the grader's feedback. Their question is about it:\n"""\n${quoted}\n"""\n`
+          : `\nThe student highlighted this specific part of the ${where} and their question is about it:\n"""\n${quoted}\n"""\n`
         : "";
 
       // Only claimed once the server has actually attached the bytes — otherwise a
       // failed fetch would leave the model describing an image it never received.
       const many = images.length > 1;
-      const imageNote = images.length
-        ? `The task JSON above contains raw <img> tags. The image${many ? "s" : ""} ${many ? "they" : "it"} reference${many ? "" : "s"} ${many ? "are" : "is"} attached to this message as ${many ? "actual images" : "an actual image"} — look at ${many ? "them" : "it"} directly instead of describing the URL${many ? "s" : ""}.${
-            quote?.images?.length
-              ? ` The student specifically highlighted the first ${quote.images.length > 1 ? "ones" : "one"} in the ${where}.`
-              : ""
-          }`
-        : "";
+      let imageNote = "";
+      if (images.length && isExam) {
+        imageNote = `The image${many ? "s" : ""} attached to this message ${many ? "are" : "is"} from this exam question — the figure, the student's own handwritten answer, and/or the official solution. Look at ${many ? "them" : "it"} directly.`;
+      } else if (images.length) {
+        imageNote = `The task JSON above contains raw <img> tags. The image${many ? "s" : ""} ${many ? "they" : "it"} reference${many ? "" : "s"} ${many ? "are" : "is"} attached to this message as ${many ? "actual images" : "an actual image"} — look at ${many ? "them" : "it"} directly instead of describing the URL${many ? "s" : ""}.${
+          quote?.images?.length
+            ? ` The student specifically highlighted the first ${quote.images.length > 1 ? "ones" : "one"} in the ${where}.`
+            : ""
+        }`;
+      }
 
       const systemPrompt = `You are MatMat AI Assistant, a mathematics expert. A student has sent you a task and has a question about the solution.
 Please answer their question and keep the response as brief as possible unless the student requests otherwise.
@@ -355,7 +368,11 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
       {/if}
       <div class="pending-quote-body">
         <span class="pending-quote-label">
-          Iz {aiQuoteState.quote.source === "solution" ? "rješenja" : "zadatka"}
+          {aiQuoteState.quote.source === "exam"
+            ? "Iz probne mature"
+            : aiQuoteState.quote.source === "solution"
+              ? "Iz rješenja"
+              : "Iz zadatka"}
         </span>
         <span class="pending-quote-text">
           {aiQuoteState.quote.text

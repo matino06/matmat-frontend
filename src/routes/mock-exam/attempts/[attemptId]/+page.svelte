@@ -120,6 +120,12 @@
     return result;
   });
 
+  const examMeta = $derived(
+    attempt
+      ? { title: attempt.examTitle, year: attempt.examYear, term: attempt.examTerm }
+      : null,
+  );
+
   function formatDate(iso) {
     if (!iso) return "—";
     try {
@@ -240,12 +246,12 @@
               {/if}
               <div class="container-subs">
                 {#each ans.subAnswers as sub (sub.questionId)}
-                  <AttemptAnswer answer={sub} onRefresh={refreshNow} />
+                  <AttemptAnswer answer={sub} parent={ans} {examMeta} onRefresh={refreshNow} />
                 {/each}
               </div>
             </div>
           {:else}
-            <AttemptAnswer answer={ans} onRefresh={refreshNow} />
+            <AttemptAnswer answer={ans} {examMeta} onRefresh={refreshNow} />
           {/if}
         {/each}
       </div>
