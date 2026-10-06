@@ -3,9 +3,8 @@ import { imageUrl } from "./imageUrl.js";
 // Builds the AI context for one graded mock-exam question.
 //
 // The attempt endpoint returns a flat list whose images live in structured arrays
-// (questionImages / correctAnswerImages), not as <img> inside the text — so
-// taskImages() from the /tasks path doesn't apply here and we assemble both the
-// prose context and the image list ourselves.
+// (questionImages / correctAnswerImages), not as <img> inside the text — so we
+// assemble both the prose context and the image list ourselves.
 
 function questionImagesOf(answer) {
   return (answer?.questionImages ?? []).filter((i) => i.imageContext === "question");

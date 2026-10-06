@@ -1,23 +1,31 @@
 <script>
-  import { onMount, tick } from "svelte";
+  import { onDestroy, tick } from "svelte";
   import { userData } from "$lib/store/user.svelte";
   import { currentTaskState } from "$lib/store/currentTask.svelte.js";
   import { aiQuoteState, clearAiQuote } from "$lib/store/aiQuote.svelte.js";
-  import { taskImages, mergeImages } from "$lib/utils/taskImages.js";
+  import { apiClient } from "$lib/api/apiClient";
   import { renderMd } from "$lib/utils/markdownRenderer";
 
-  // Kept in step with MAX_IMAGES in src/routes/api/ai/+server.js.
+  // The backend attaches at most this many images per request.
   const MAX_IMAGES = 4;
 
-  let messages = $state([
-    {
+  const GENERIC_ERROR = "Došlo je do pogreške. Pokušaj ponovo.";
+
+  // An error whose message is written for the student. Anything else (a network
+  // TypeError, an abort) is shown as GENERIC_ERROR instead of raw English text.
+  class ChatError extends Error {}
+
+  function greeting() {
+    return {
       id: 0,
       role: "ai",
       content: `Bok! Tu sam ako ti nešto nije jasno. Pitaj bilo što o zadatku, rješenju ili matematičkom konceptu.`,
       finalHtml: null,
       quote: null,
-    },
-  ]);
+    };
+  }
+
+  let messages = $state([greeting()]);
   let draft = $state("");
   let isTyping = $state(false);
   let isWaiting = $state(false);
@@ -27,6 +35,12 @@
   let streamingMsgId = $state(null);
   let stableHtml = $state("");
   let currentText = $state("");
+
+  // The backend's stored conversation for this chat, set from the `meta` event.
+  // It's tied to one task — the backend 404s if the two don't match.
+  let conversationId = null;
+  // AbortController of the reply currently being fetched or typed out.
+  let activeRun = null;
 
   const SUGGESTIONS = [
     "Objasni mi prvi korak",
@@ -48,6 +62,30 @@
     });
   });
 
+  function resetChat() {
+    activeRun?.abort();
+    activeRun = null;
+    messages = [greeting()];
+    conversationId = null;
+    streamingMsgId = null;
+    stableHtml = "";
+    currentText = "";
+    isTyping = false;
+    isWaiting = false;
+  }
+
+  // A chat is about one task: moving to another task (or leaving the task page)
+  // starts a fresh one. Closing and reopening the panel keeps it.
+  let chatTaskId = currentTaskState.task?.id ?? null;
+  $effect(() => {
+    const id = currentTaskState.task?.id ?? null;
+    if (id === chatTaskId) return;
+    chatTaskId = id;
+    resetChat();
+  });
+
+  onDestroy(() => activeRun?.abort());
+
   function truncate(text, max = 120) {
     if (!text) return "";
     return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
@@ -67,152 +105,89 @@
     isTyping = true;
     isWaiting = true;
 
-    setTimeout(async () => {
-      await fetchAIResponse(userMsg, quote);
+    const run = new AbortController();
+    activeRun = run;
+    setTimeout(() => {
+      if (!run.signal.aborted) fetchAIResponse(userMsg, quote, run);
     }, 400);
   }
 
-  async function fetchAIResponse(userQuestion, quote = null) {
-    const aiMsgId = Date.now() + 1;
-    let displayInterval = null;
+  // Reads the backend's SSE stream, calling onEvent(name, data) for each event.
+  // Spring writes "data:{...}" with no space after the colon; one space is
+  // accepted too. An event can be split across chunks, hence the buffer.
+  async function readSse(response, onEvent) {
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let event = "message";
+    let data = [];
+
+    function dispatch() {
+      if (data.length) {
+        let parsed = null;
+        try {
+          parsed = JSON.parse(data.join("\n"));
+        } catch {
+          // malformed event, skip it
+        }
+        if (parsed) onEvent(event, parsed);
+      }
+      event = "message";
+      data = [];
+    }
+
+    function feed(line) {
+      if (line.endsWith("\r")) line = line.slice(0, -1);
+      if (!line) return dispatch();
+      if (line.startsWith(":")) return;
+      const colon = line.indexOf(":");
+      const field = colon === -1 ? line : line.slice(0, colon);
+      let value = colon === -1 ? "" : line.slice(colon + 1);
+      if (value.startsWith(" ")) value = value.slice(1);
+      if (field === "event") event = value;
+      else if (field === "data") data.push(value);
+    }
 
     try {
-      const history = messages
-        .slice(0, -1)
-        .map(m => {
-          const who = m.role === "user" ? "Student" : "AI Assistant";
-          // Keep past highlights in the transcript so follow-up questions like
-          // "and the next step?" still know what was being pointed at.
-          const q = m.quote?.text ? `[highlighted: ${truncate(m.quote.text, 300)}] ` : "";
-          return `${who}: ${q}${m.content}`;
-        })
-        .join("\n\n");
-
-      const task = currentTaskState.task;
-      // An exam quote carries the whole question itself, so the "no task" fallback
-      // would contradict it.
-      const isExam = quote?.source === "exam";
-      const taskBlock = task
-        ? `Task and solution:\n${JSON.stringify(task, null, 2)}`
-        : isExam
-          ? ""
-          : `The student is not currently solving a specific task — answer general math questions.`;
-
-      const where = quote?.source === "solution" ? "solution" : "task";
-
-      // Attach the task's own figures too, not just anything the student happened
-      // to highlight — otherwise a question about a graph reaches the model as the
-      // <img> tag inside the task JSON, and it answers by reciting the URL.
-      const images = mergeImages(quote?.images ?? [], taskImages(task), MAX_IMAGES);
-
-      // The pinned text is a short label for exam questions; the model gets the
-      // full question, answer and marking instead.
-      const quoted = quote?.context ?? quote?.text;
-      const quoteBlock = quoted
-        ? isExam
-          ? `\nThis is a question from a past Matura exam the student has already sat and had graded, shown to them with their own answer, the official solution and the grader's feedback. Their question is about it:\n"""\n${quoted}\n"""\n`
-          : `\nThe student highlighted this specific part of the ${where} and their question is about it:\n"""\n${quoted}\n"""\n`
-        : "";
-
-      // Only claimed once the server has actually attached the bytes — otherwise a
-      // failed fetch would leave the model describing an image it never received.
-      const many = images.length > 1;
-      let imageNote = "";
-      if (images.length && isExam) {
-        imageNote = `The image${many ? "s" : ""} attached to this message ${many ? "are" : "is"} from this exam question — the figure, the student's own handwritten answer, and/or the official solution. Look at ${many ? "them" : "it"} directly.`;
-      } else if (images.length) {
-        imageNote = `The task JSON above contains raw <img> tags. The image${many ? "s" : ""} ${many ? "they" : "it"} reference${many ? "" : "s"} ${many ? "are" : "is"} attached to this message as ${many ? "actual images" : "an actual image"} — look at ${many ? "them" : "it"} directly instead of describing the URL${many ? "s" : ""}.${
-          quote?.images?.length
-            ? ` The student specifically highlighted the first ${quote.images.length > 1 ? "ones" : "one"} in the ${where}.`
-            : ""
-        }`;
-      }
-
-      const systemPrompt = `You are MatMat AI Assistant, a mathematics expert. A student has sent you a task and has a question about the solution.
-Please answer their question and keep the response as brief as possible unless the student requests otherwise.
-The task and solution are written in LaTeX (MathJax). This is the conversation history:
-
-${history}
-
-${taskBlock}
-${quoteBlock}
-Student's new question: ${userQuestion}
-
-Answer clearly and simply in Croatian, taking into account the entire conversation context.
-Format your response using Markdown: use **bold**, bullet lists, numbered lists, and headings where appropriate.
-When responding with mathematical equations, use LaTeX format with \\( and \\) for inline mathematical expressions.
-Do not use single dollar signs $ for mathematical expressions, but you can use double dollar signs $$ $$.`;
-
-      const response = await fetch("/api/ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemPrompt,
-          imageNote,
-          // Only the current message's images — resending the whole history's
-          // attachments on every turn would blow up the request.
-          images: images.map(i => ({ url: i.src })),
-        }),
-      });
-
-      if (!response.ok) {
-        const msg = response.status === 429
-          ? "Asistent je preopterećen — pokušaj za koji trenutak."
-          : "Došlo je do pogreške. Pokušaj ponovo.";
-        throw new Error(msg);
-      }
-
-      // A dropped image used to be invisible: the model would answer as if there
-      // were no figure and nothing said otherwise. Say so instead.
-      const attachedCount = Number(response.headers.get("X-Images-Attached") ?? 0);
-      const imagesLost = images.length > 0 && attachedCount < images.length;
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let fullText = "";
-
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         buffer += decoder.decode(value, { stream: true });
         let idx;
         while ((idx = buffer.indexOf("\n")) !== -1) {
-          const line = buffer.slice(0, idx).trim();
+          feed(buffer.slice(0, idx));
           buffer = buffer.slice(idx + 1);
-          if (!line.startsWith("data: ")) continue;
-          const data = line.slice(6).trim();
-          if (!data) continue;
-          try {
-            const parsed = JSON.parse(data);
-            const chunk = parsed?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") ?? "";
-            if (chunk) fullText += chunk;
-          } catch {}
         }
       }
-
       buffer += decoder.decode();
-      if (buffer.trim()) {
-        for (const line of buffer.split("\n")) {
-          const t = line.trim();
-          if (!t.startsWith("data: ")) continue;
-          try {
-            const parsed = JSON.parse(t.slice(6).trim());
-            const chunk = parsed?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") ?? "";
-            if (chunk) fullText += chunk;
-          } catch {}
-        }
-      }
+      if (buffer) feed(buffer);
+      dispatch();
+    } catch (err) {
+      reader.cancel().catch(() => {});
+      throw err;
+    }
+  }
 
+  async function fetchAIResponse(question, quote, run) {
+    const { signal } = run;
+    const aiMsgId = Date.now() + 1;
+    let displayInterval = null;
+    let started = false;
+
+    let stableRawText = "";
+    let pendingText = "";
+    let displayedText = "";
+
+    // Called on the first delta: the bubble appears and starts typing while the
+    // rest of the answer is still streaming in.
+    function startTyping() {
+      started = true;
       messages = [...messages, { id: aiMsgId, role: "ai", content: "", finalHtml: null }];
       isTyping = false;
 
       streamingMsgId = aiMsgId;
       stableHtml = "";
       currentText = "";
-      let stableRawText = "";
-      let pendingText = fullText;
-      let displayedText = "";
 
       displayInterval = setInterval(() => {
         if (!pendingText.length) return;
@@ -234,21 +209,93 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
 
         if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
       }, 22);
+    }
 
+    try {
+      // An exam quote is about a past exam question, not about any open task.
+      const taskId = quote?.source === "exam" ? null : (currentTaskState.task?.id ?? null);
+
+      // The backend only reads this for chats without a task — task conversations
+      // are stored on its side. The last message is the question itself.
+      const history = messages
+        .slice(0, -1)
+        .filter(m => m.id !== 0 && !m.error)
+        .map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.content }));
+
+      const response = await apiClient("/ai/chat", {
+        method: "POST",
+        signal,
+        body: JSON.stringify({
+          conversationId: taskId === null ? null : conversationId,
+          taskId,
+          question,
+          quote: quote
+            ? {
+                source: quote.source,
+                // The pinned text is a short label for exam questions; the model
+                // gets the full question, answer and marking instead.
+                text: quote.context ?? quote.text,
+                imageUrls: quote.images.map(i => i.src),
+              }
+            : null,
+          history,
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new ChatError("Dosegnut je dnevni limit od 30 pitanja. Pokušaj ponovo sutra.");
+        }
+        // The conversation doesn't exist or belongs to another task — start a
+        // new one with the next question.
+        if (response.status === 404) conversationId = null;
+        throw new ChatError(GENERIC_ERROR);
+      }
+
+      let imagesAttached = 0;
+      let messageId = null;
+
+      await readSse(response, (event, data) => {
+        if (event === "meta") {
+          conversationId = data.conversationId ?? null;
+          imagesAttached = Number(data.imagesAttached) || 0;
+        } else if (event === "delta") {
+          if (!data.text) return;
+          if (!started) startTyping();
+          pendingText += data.text;
+        } else if (event === "done") {
+          messageId = data.messageId ?? null;
+        } else if (event === "error") {
+          throw new ChatError(data.message || GENERIC_ERROR);
+        }
+      });
+
+      if (!started) throw new ChatError(GENERIC_ERROR);
+
+      // The stream is done; let the typing catch up with what's left.
       await new Promise(resolve => {
         const check = setInterval(() => {
-          if (!pendingText.length) { clearInterval(check); resolve(); }
+          if (!pendingText.length || signal.aborted) { clearInterval(check); resolve(); }
         }, 50);
       });
+      signal.throwIfAborted();
 
       clearInterval(displayInterval);
       displayInterval = null;
 
-      const finalText = imagesLost
-        ? `${displayedText}\n\n*Napomena: slika iz zadatka nije uspjela stići do asistenta, pa odgovor ne uzima u obzir što je na njoj.*`
-        : displayedText;
-      const finalHtml = renderMd(finalText);
-      messages = messages.map(m => m.id === aiMsgId ? { ...m, content: finalText, finalHtml } : m);
+      // A dropped image used to be invisible: the model would answer as if there
+      // were no figure and nothing said otherwise. Say so instead.
+      const imagesLost =
+        quote?.images?.length > 0 && imagesAttached < Math.min(quote.images.length, MAX_IMAGES);
+      const finalHtml = renderMd(
+        imagesLost
+          ? `${displayedText}\n\n*Napomena: slika iz zadatka nije uspjela stići do asistenta, pa odgovor ne uzima u obzir što je na njoj.*`
+          : displayedText,
+      );
+      // content stays the bare answer — it's what goes back as history.
+      messages = messages.map(m =>
+        m.id === aiMsgId ? { ...m, content: displayedText, finalHtml, messageId, rating: null } : m,
+      );
 
       streamingMsgId = null;
       stableHtml = "";
@@ -256,17 +303,48 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
 
     } catch (error) {
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
+      // The chat was reset under this reply; resetChat already cleaned up.
+      if (signal.aborted) return;
       streamingMsgId = null; stableHtml = ""; currentText = "";
-      const errMsg = error.message || "Greška. Pokušaj ponovo.";
-      const has = messages.some(m => m.id === aiMsgId);
-      if (has) {
-        messages = messages.map(m => m.id === aiMsgId ? { ...m, content: errMsg } : m);
-      } else {
-        messages = [...messages, { id: aiMsgId, role: "ai", content: errMsg, finalHtml: null }];
-      }
+      const errMsg = {
+        id: aiMsgId,
+        role: "ai",
+        content: error instanceof ChatError ? error.message : GENERIC_ERROR,
+        finalHtml: null,
+        error: true,
+      };
+      messages = started
+        ? messages.map(m => (m.id === aiMsgId ? errMsg : m))
+        : [...messages, errMsg];
     } finally {
-      isTyping = false;
-      isWaiting = false;
+      // An aborted run must not unlock the input for a newer one.
+      if (activeRun === run) {
+        activeRun = null;
+        isTyping = false;
+        isWaiting = false;
+      }
+    }
+  }
+
+  async function rate(msg, rating) {
+    if (msg.rating === rating) return;
+    const { id, messageId } = msg;
+    const previous = msg.rating ?? null;
+    messages = messages.map(m => (m.id === id ? { ...m, rating } : m));
+
+    let ok = false;
+    try {
+      const res = await apiClient(`/ai/message/${messageId}/rating`, {
+        method: "POST",
+        body: JSON.stringify({ rating }),
+      });
+      ok = res.ok;
+    } catch {
+      // handled below
+    }
+    // Undo — unless a later click has already replaced this rating.
+    if (!ok) {
+      messages = messages.map(m => (m.id === id && m.rating === rating ? { ...m, rating: previous } : m));
     }
   }
 
@@ -295,7 +373,7 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
     </svg>
-    Gemini · kontekst: Matematika
+    MatMat AI
   </div>
 
   {#each messages as msg (msg.id)}
@@ -334,6 +412,26 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
           <div class="prose-content">{@html msg.finalHtml}</div>
         {:else}
           <div class="prose-content">{@html renderMd(msg.content)}</div>
+        {/if}
+        {#if msg.role === "ai" && msg.messageId != null}
+          <div class="msg-rating">
+            <button
+              class="btn btn-quiet"
+              class:selected={msg.rating === 1}
+              aria-pressed={msg.rating === 1}
+              title="Koristan odgovor"
+              aria-label="Koristan odgovor"
+              onclick={() => rate(msg, 1)}
+            >👍</button>
+            <button
+              class="btn btn-quiet"
+              class:selected={msg.rating === -1}
+              aria-pressed={msg.rating === -1}
+              title="Nije koristan odgovor"
+              aria-label="Nije koristan odgovor"
+              onclick={() => rate(msg, -1)}
+            >👎</button>
+          </div>
         {/if}
       </div>
     </div>
@@ -507,6 +605,24 @@ Do not use single dollar signs $ for mathematical expressions, but you can use d
   .pending-quote-x:hover {
     background: var(--bg-hover);
     color: var(--text);
+  }
+
+  /* Thumbs up/down under a stored answer. */
+  .msg-rating {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .msg-rating .btn {
+    padding: 4px 7px;
+    font-size: 13px;
+    opacity: 0.55;
+  }
+  .msg-rating .btn:hover { opacity: 1; }
+  .msg-rating .btn.selected {
+    opacity: 1;
+    background: var(--primary-dim);
+    border-color: var(--primary);
   }
 
   .prose-content { font-size: 15.5px; line-height: 1.7; }

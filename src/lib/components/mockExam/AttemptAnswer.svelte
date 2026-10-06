@@ -77,10 +77,10 @@
     answer.questionType === "extended_answer" ||
     answer.questionType === "short_answer_graph";
 
-  // The student's photo is a presigned S3 URL: it expires, and its host isn't on
-  // the server's allowlist, so we can't just hand over the URL. Fetch it here —
-  // the browser is already allowed to (convertHeic does the same) — and inline it
-  // as a data URI, which /api/ai accepts without an allowlist.
+  // The student's photo is a presigned S3 URL: it expires, and the backend only
+  // fetches our own /image/ URLs, so we can't just hand over the URL. Fetch it
+  // here — the browser is already allowed to (convertHeic does the same) — and
+  // inline it as a data URI, which the backend accepts in quote.imageUrls.
   async function studentAnswerDataUrl() {
     // Reuse the blob: URL when HEIC was already converted for display.
     const src = imgSrc?.startsWith("blob:") ? imgSrc : answer.answerImageUrl;

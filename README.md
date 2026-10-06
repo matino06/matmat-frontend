@@ -99,7 +99,7 @@ A floating **Formule** button on the tasks page opens a resizable side panel wit
 - **UI Components:** shadcn/ui
 - **Styling:** Tailwind CSS
 - **Authentication:** Firebase
-- **AI Integration:** Google AI Studio (Gemini API)
+- **AI Integration:** MatMat backend (`/ai/chat`, streamed over SSE)
 - **Bot Protection:** Cloudflare Turnstile
 - **Frontend Hosting:** AWS Amplify
 
@@ -151,14 +151,4 @@ The app will be available at:
 
 ```
 http://localhost:5173
-```
-
----
-
-## ⚙️ Environment Variables
-
-To run the frontend locally, the following environment variables are required:
-
-```env
-GEMINI_API_KEY=
 ```
