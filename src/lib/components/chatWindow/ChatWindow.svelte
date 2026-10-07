@@ -5,11 +5,32 @@
   import { aiQuoteState, clearAiQuote } from "$lib/store/aiQuote.svelte.js";
   import { apiClient } from "$lib/api/apiClient";
   import { renderMd } from "$lib/utils/markdownRenderer";
+  import { splitSketches, sketchSrc, nextShown, stableEnd } from "$lib/utils/aiSketch.js";
 
   // The backend attaches at most this many images per request.
   const MAX_IMAGES = 4;
 
   const GENERIC_ERROR = "Došlo je do pogreške. Pokušaj ponovo.";
+
+  const RETRY_SKETCH = "Skica se prekinula. Nacrtaj je ponovo, jednostavniju i kraću.";
+
+  const PENCIL_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+  const SKETCH_PENDING = `<div class="ai-sketch ai-sketch-pending">${PENCIL_ICON}<span>Crtam skicu…</span></div>`;
+  const SKETCH_FAILED = `<div class="ai-sketch ai-sketch-failed">${PENCIL_ICON}<span>Skica se nije uspjela dovršiti.</span><button type="button" class="btn btn-ghost" data-sketch-retry>Nacrtaj ponovo</button></div>`;
+
+  // An AI answer as HTML: markdown as usual, each SVG sketch as an image. A
+  // sketch still streaming in shows the "drawing" card; one that never finished
+  // (or is broken) shows the fallback card with a retry button.
+  function renderAnswer(text, { final = false } = {}) {
+    return splitSketches(text)
+      .map(seg => {
+        if (seg.type === "md") return renderMd(seg.text);
+        const src = seg.complete ? sketchSrc(seg.svg) : null;
+        if (src) return `<figure class="ai-sketch"><img alt="Skica" src="${src}"/></figure>`;
+        return final || seg.complete ? SKETCH_FAILED : SKETCH_PENDING;
+      })
+      .join("");
+  }
 
   // An error whose message is written for the student. Anything else (a network
   // TypeError, an abort) is shown as GENERIC_ERROR instead of raw English text.
@@ -174,9 +195,12 @@
     let displayInterval = null;
     let started = false;
 
+    // Typing works on positions: `received` is everything streamed in so far,
+    // `shown` how much of it is on screen.
+    let received = "";
+    let shown = 0;
+    let streaming = true;
     let stableRawText = "";
-    let pendingText = "";
-    let displayedText = "";
 
     // Called on the first delta: the bubble appears and starts typing while the
     // rest of the answer is still streaming in.
@@ -190,22 +214,20 @@
       currentText = "";
 
       displayInterval = setInterval(() => {
-        if (!pendingText.length) return;
-        const batch = pendingText.slice(0, 2);
-        pendingText = pendingText.slice(2);
-        displayedText += batch;
+        const next = nextShown(received, shown, streaming);
+        if (next === shown) return;
+        shown = next;
 
-        const lastBoundary = displayedText.lastIndexOf("\n\n");
-        if (lastBoundary >= 0 && lastBoundary >= stableRawText.length) {
-          const newStable = displayedText.slice(0, lastBoundary);
-          if (newStable !== stableRawText) {
-            stableRawText = newStable;
-            stableHtml = renderMd(newStable);
-          }
-          currentText = displayedText.slice(lastBoundary + 2);
-        } else {
-          currentText = displayedText;
+        // Everything before the last paragraph break or finished sketch is
+        // rendered once; only the tail is re-rendered on each tick.
+        const text = received.slice(0, shown);
+        const cut = stableEnd(text);
+        const newStable = text.slice(0, cut);
+        if (newStable !== stableRawText) {
+          stableRawText = newStable;
+          stableHtml = renderAnswer(newStable);
         }
+        currentText = text.slice(cut);
 
         if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
       }, 22);
@@ -254,6 +276,7 @@
 
       let imagesAttached = 0;
       let messageId = null;
+      let truncated = false;
 
       await readSse(response, (event, data) => {
         if (event === "meta") {
@@ -262,9 +285,10 @@
         } else if (event === "delta") {
           if (!data.text) return;
           if (!started) startTyping();
-          pendingText += data.text;
+          received += data.text;
         } else if (event === "done") {
           messageId = data.messageId ?? null;
+          truncated = data.truncated === true;
         } else if (event === "error") {
           throw new ChatError(data.message || GENERIC_ERROR);
         }
@@ -273,9 +297,10 @@
       if (!started) throw new ChatError(GENERIC_ERROR);
 
       // The stream is done; let the typing catch up with what's left.
+      streaming = false;
       await new Promise(resolve => {
         const check = setInterval(() => {
-          if (!pendingText.length || signal.aborted) { clearInterval(check); resolve(); }
+          if (shown >= received.length || signal.aborted) { clearInterval(check); resolve(); }
         }, 50);
       });
       signal.throwIfAborted();
@@ -283,18 +308,21 @@
       clearInterval(displayInterval);
       displayInterval = null;
 
+      const notes = [];
       // A dropped image used to be invisible: the model would answer as if there
       // were no figure and nothing said otherwise. Say so instead.
-      const imagesLost =
-        quote?.images?.length > 0 && imagesAttached < Math.min(quote.images.length, MAX_IMAGES);
-      const finalHtml = renderMd(
-        imagesLost
-          ? `${displayedText}\n\n*Napomena: slika iz zadatka nije uspjela stići do asistenta, pa odgovor ne uzima u obzir što je na njoj.*`
-          : displayedText,
-      );
+      if (quote?.images?.length > 0 && imagesAttached < Math.min(quote.images.length, MAX_IMAGES)) {
+        notes.push("*Napomena: slika iz zadatka nije uspjela stići do asistenta, pa odgovor ne uzima u obzir što je na njoj.*");
+      }
+      if (truncated) {
+        notes.push("*Odgovor je prekinut jer je bio predug. Napiši „nastavi” ili postavi kraće pitanje.*");
+      }
+      // Notes are rendered apart: appended to the text they'd disappear into a
+      // sketch that was cut off.
+      const finalHtml = renderAnswer(received, { final: true }) + renderMd(notes.join("\n\n"));
       // content stays the bare answer — it's what goes back as history.
       messages = messages.map(m =>
-        m.id === aiMsgId ? { ...m, content: displayedText, finalHtml, messageId, rating: null } : m,
+        m.id === aiMsgId ? { ...m, content: received, finalHtml, messageId, rating: null } : m,
       );
 
       streamingMsgId = null;
@@ -348,6 +376,13 @@
     }
   }
 
+  // The fallback card comes in through {@html}, so its button is handled here.
+  function onBoardClick(e) {
+    if (!e.target.closest?.("[data-sketch-retry]") || isWaiting) return;
+    draft = RETRY_SKETCH;
+    sendMessage();
+  }
+
   function handleKey(e) {
     if (e.key === "Enter" && !e.shiftKey && !isWaiting) {
       e.preventDefault();
@@ -368,7 +403,8 @@
 </script>
 
 <!-- Messages board -->
-<div bind:this={boardEl} class="chat-board">
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+<div bind:this={boardEl} class="chat-board" onclick={onBoardClick}>
   <div style="font-size:12px;color:var(--text-faint);margin-bottom:10px;display:flex;align-items:center;gap:6px">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
@@ -406,7 +442,7 @@
         {#if msg.id === streamingMsgId}
           <div class="prose-content">
             {@html stableHtml}
-            {@html renderMd(currentText)}
+            {@html renderAnswer(currentText)}
           </div>
         {:else if msg.finalHtml}
           <div class="prose-content">{@html msg.finalHtml}</div>
@@ -623,6 +659,57 @@
     opacity: 1;
     background: var(--primary-dim);
     border-color: var(--primary);
+  }
+
+  /* SVG sketches in answers — the markup comes through {@html}, hence :global. */
+  .prose-content :global(.ai-sketch) {
+    max-width: 520px;
+    margin: 0.6em 0 0.9em;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+  }
+  /* White paper in both themes: the model draws in black. */
+  .prose-content :global(figure.ai-sketch) {
+    padding: 10px;
+    background: #fff;
+  }
+  .prose-content :global(.ai-sketch img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .prose-content :global(.ai-sketch-pending),
+  .prose-content :global(.ai-sketch-failed) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .prose-content :global(.ai-sketch-pending) {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-elev-2);
+  }
+  .prose-content :global(.ai-sketch-pending::after) {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, var(--primary-dim), transparent);
+    transform: translateX(-100%);
+    animation: ai-sketch-shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes -global-ai-sketch-shimmer {
+    to { transform: translateX(100%); }
+  }
+  .prose-content :global(.ai-sketch-failed) {
+    flex-wrap: wrap;
+    border-style: dashed;
+  }
+  .prose-content :global(.ai-sketch-failed .btn) {
+    margin-left: auto;
+    padding: 6px 12px;
   }
 
   .prose-content { font-size: 15.5px; line-height: 1.7; }
