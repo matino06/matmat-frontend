@@ -2,10 +2,11 @@
   import { onMount } from "svelte";
   import { openAI } from "$lib/store/panels.svelte.js";
   import { setAiQuote } from "$lib/store/aiQuote.svelte.js";
-  import { serializeRange, collectImagesInRange } from "$lib/utils/selectionToLatex.js";
+  import { serializeRange, collectImagesInRange, mathJaxInRange } from "$lib/utils/selectionToLatex.js";
 
   // Only task/solution content is quotable.
   const CONTAINER = ".task-card";
+  const MATH_SELECTED = "mm-math-selected";
   const GAP = 10; // px between the anchor and the button
   const EDGE = 8; // keep the button this far from the viewport edges
   const INSET = 8; // px inside an image's corner when overlaying it
@@ -24,6 +25,9 @@
   let selectionTimer = 0;
   let hideTimer = 0;
   let frame = 0;
+  // MathJax formulas currently marked as selected (see markSelectedMath).
+  let marked = [];
+  let markFrame = 0;
 
   function elementOf(node) {
     return node?.nodeType === Node.ELEMENT_NODE ? node : (node?.parentElement ?? null);
@@ -110,9 +114,27 @@
     showAt(range.getBoundingClientRect());
   }
 
+  // MathJax draws its glyphs with CSS, so the browser's selection highlight skips
+  // formulas and they look left out of the selection even though the quote has
+  // them. Mark the ones the selection covers so they light up with the text.
+  function markSelectedMath() {
+    const sel = document.getSelection();
+    let next = [];
+    if (sel && !sel.isCollapsed && sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0);
+      next = mathJaxInRange(range, elementOf(range.commonAncestorContainer)?.closest(CONTAINER));
+    }
+    for (const el of marked) if (!next.includes(el)) el.classList.remove(MATH_SELECTED);
+    for (const el of next) el.classList.add(MATH_SELECTED);
+    marked = next;
+  }
+
   function onSelectionChange() {
     clearTimeout(selectionTimer);
     selectionTimer = setTimeout(readSelection, 120);
+    // Not debounced like the button: the highlight has to follow the drag.
+    cancelAnimationFrame(markFrame);
+    markFrame = requestAnimationFrame(markSelectedMath);
   }
 
   function showForImage(img) {
@@ -212,6 +234,8 @@
       clearTimeout(selectionTimer);
       clearTimeout(hideTimer);
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(markFrame);
+      for (const el of marked) el.classList.remove(MATH_SELECTED);
       document.removeEventListener("selectionchange", onSelectionChange);
       document.removeEventListener("mouseup", readSelection);
       document.removeEventListener("touchend", onSelectionChange);
@@ -294,6 +318,14 @@
   }
   .ask-ai-float.overlay:active {
     transform: translate(-100%, 0) scale(0.97);
+  }
+
+  /* A MathJax formula inside the selection (see markSelectedMath). mjx-math is the
+     glyph box, so display math gets a box around the formula, not a full-width
+     bar. Highlight is the system colour the browser selects text with. */
+  :global(mjx-container.mm-math-selected > mjx-math) {
+    background-color: Highlight;
+    border-radius: 2px;
   }
 
   @keyframes ask-ai-in {

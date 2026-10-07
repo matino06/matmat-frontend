@@ -91,7 +91,8 @@ function texFor(el, mathMap) {
     return { tex: tex || el.textContent.trim(), display };
   }
   if (el.tagName === "MJX-CONTAINER") {
-    const tex = mathMap.get(el)?.trim();
+    // data-tex is stamped by the mathjaxTypeset action; the math list is the fallback.
+    const tex = (el.dataset.tex ?? mathMap.get(el))?.trim();
     return {
       tex: tex || el.getAttribute("aria-label") || el.textContent.trim(),
       display: el.getAttribute("display") === "true",
@@ -130,7 +131,11 @@ export function serializeRange(range) {
 
     const math = texFor(node, mathMap);
     if (math) {
-      out.push(math.display ? `\n\\[${math.tex}\\]\n` : `\\(${math.tex}\\)`);
+      // Old tasks use an empty $$$$ as a spacer. Emitted as \[\] it would be paired
+      // with the next \] by the chat's renderer and garble the quote, so an empty
+      // formula only keeps its line break.
+      if (math.tex) out.push(math.display ? `\n\\[${math.tex}\\]\n` : `\\(${math.tex}\\)`);
+      else if (math.display) out.push("\n");
       return;
     }
 
@@ -156,6 +161,20 @@ export function serializeRange(range) {
     .trim();
 
   return text.length > MAX_LENGTH ? text.slice(0, MAX_LENGTH) + "…" : text;
+}
+
+/**
+ * The MathJax formulas a selection covers — exactly the ones serializeRange puts
+ * in the quote. MathJax draws its glyphs with CSS, so the browser's own selection
+ * highlight skips them; these are the ones to highlight by hand.
+ * @param {Range} range
+ * @param {Element} root element to search within
+ * @returns {Element[]}
+ */
+export function mathJaxInRange(range, root) {
+  if (!range || range.collapsed || !root) return [];
+  const expanded = expandToWholeMath(range);
+  return [...root.querySelectorAll("mjx-container")].filter((el) => overlaps(expanded, el));
 }
 
 /**

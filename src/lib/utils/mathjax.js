@@ -1,5 +1,17 @@
 import { usesMathJax } from "./markdownCore.js";
 
+// Stamp each typeset formula's TeX on its <mjx-container>, so the selection
+// serializer (selectionToLatex.js) can recover it even if MathJax's own math list
+// no longer has the item.
+function keepTex(MJ, node) {
+  const items = MJ.startup?.document?.getMathItemsWithin?.([node]) ?? [];
+  for (const item of items) {
+    if (item?.typesetRoot?.dataset && typeof item.math === "string") {
+      item.typesetRoot.dataset.tex = item.math;
+    }
+  }
+}
+
 // Svelte action: typeset the browser MathJax fallback inside `node`, but ONLY for old tasks
 // (id ≤ MATHJAX_MAX_ID) whose content is rendered with raw MathJax delimiters. Newer tasks are
 // rendered by KaTeX and must never be handed to MathJax, so this is a no-op for them.
@@ -17,7 +29,9 @@ export function mathjaxTypeset(node, id) {
     const MJ = typeof window !== "undefined" && window.MathJax;
     if (MJ && MJ.typesetPromise) {
       MJ.typesetClear && MJ.typesetClear([node]);
-      MJ.typesetPromise([node]).catch(() => {});
+      MJ.typesetPromise([node])
+        .then(() => keepTex(MJ, node))
+        .catch(() => {});
     } else {
       setTimeout(attempt, 200); // MathJax CDN not loaded yet — try again shortly
     }
