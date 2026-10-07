@@ -11,6 +11,9 @@
   const MAX_IMAGES = 4;
 
   const GENERIC_ERROR = "Došlo je do pogreške. Pokušaj ponovo.";
+  // A thinking model can spend the whole token limit thinking and write nothing.
+  const NO_ANSWER_ERROR =
+    "AI je predugo razmišljao i nije stigao odgovoriti. Pokušaj ponovo ili postavi jednostavnije pitanje.";
 
   const RETRY_SKETCH = "Skica se prekinula. Nacrtaj je ponovo, jednostavniju i kraću.";
 
@@ -294,7 +297,7 @@
         }
       });
 
-      if (!started) throw new ChatError(GENERIC_ERROR);
+      if (!started) throw new ChatError(truncated ? NO_ANSWER_ERROR : GENERIC_ERROR);
 
       // The stream is done; let the typing catch up with what's left.
       streaming = false;
