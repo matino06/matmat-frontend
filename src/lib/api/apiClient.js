@@ -23,7 +23,10 @@ export async function apiClient(path, init = {}, options = {}) {
       // call instead of firing an unauthenticated request the backend will 401.
       if (isSessionExpiredError(err)) {
         if (handleUnauthorized) notifySessionExpired();
-        return new Response(null, { status: 401, statusText: "Session expired" });
+        return new Response(null, {
+          status: 401,
+          statusText: "Session expired",
+        });
       }
       console.error("Token error:", err);
     }

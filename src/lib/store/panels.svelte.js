@@ -5,12 +5,15 @@ export const panelState = $state({
   pomoVisible: false,
 });
 
-export function toggleAI() { panelState.aiOpen = !panelState.aiOpen; }
-export function openAI() { panelState.aiOpen = true; }
+// The AI chat and the formula sheet share the right-hand side (a column next to
+// the page on wide screens), so opening one closes the other. Closing only hides
+// a panel — the chat keeps its conversation.
+export function toggleAI() { panelState.aiOpen ? closeAI() : openAI(); }
+export function openAI() { panelState.formuleOpen = false; panelState.aiOpen = true; }
 export function closeAI() { panelState.aiOpen = false; }
 
-export function toggleFormule() { panelState.formuleOpen = !panelState.formuleOpen; }
-export function openFormule() { panelState.formuleOpen = true; }
+export function toggleFormule() { panelState.formuleOpen ? closeFormule() : openFormule(); }
+export function openFormule() { panelState.aiOpen = false; panelState.formuleOpen = true; }
 export function closeFormule() { panelState.formuleOpen = false; }
 
 export function togglePomo() { panelState.pomoOpen = !panelState.pomoOpen; }

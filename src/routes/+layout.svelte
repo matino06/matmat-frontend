@@ -4,7 +4,7 @@
   import { afterNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
-  import { panelState, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
+  import { panelState, openAI, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar } from "$lib/store/ui.svelte";
   import { courseState, loadCurrentCourse } from "$lib/store/course.svelte";
   import { getProgram } from "$lib/config/programs";
@@ -210,7 +210,7 @@
               <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
             </svg>
           </button>
-          <button class="btn btn-ghost" onclick={() => panelState.aiOpen = true}>
+          <button class="btn btn-ghost" onclick={openAI}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/><path d="M20 19.5v-.5a7 7 0 0 0-14 0v.5"/>
             </svg>
@@ -221,34 +221,39 @@
 
       {@render children?.()}
     </main>
+
+    <!-- Panels live inside .app so that on wide screens the open one becomes a
+         grid column next to the page (see the split view in app.css); below that
+         they're fixed overlays and their place here doesn't matter. -->
+
+    <!-- AI Panel -->
+    <Panel
+      id="ai"
+      open={panelState.aiOpen}
+      onClose={closeAI}
+      bare={true}
+    >
+      <ChatWindow/>
+    </Panel>
+
+    <!-- Formule Panel -->
+    <Panel
+      id="formule"
+      open={panelState.formuleOpen}
+      onClose={closeFormule}
+      title="Maturalne tablice i formule"
+      meta={courseLabel}
+      wide={true}
+    >
+      <div class="pdf-viewer-wrap">
+        <iframe
+          src={formulasPdfUrl}
+          title="Maturalne tablice i formule"
+          style="width:100%; height:100%; border:none; border-radius: var(--r-md);"
+        ></iframe>
+      </div>
+    </Panel>
   </div>
-
-  <!-- AI Panel -->
-  <Panel
-    open={panelState.aiOpen}
-    onClose={closeAI}
-    title="AI asistent"
-    meta="zna što rješavaš"
-  >
-    <ChatWindow/>
-  </Panel>
-
-  <!-- Formule Panel -->
-  <Panel
-    open={panelState.formuleOpen}
-    onClose={closeFormule}
-    title="Maturalne tablice i formule"
-    meta={courseLabel}
-    wide={true}
-  >
-    <div class="pdf-viewer-wrap">
-      <iframe
-        src={formulasPdfUrl}
-        title="Maturalne tablice i formule"
-        style="width:100%; height:100%; border:none; border-radius: var(--r-md);"
-      ></iframe>
-    </div>
-  </Panel>
 
 {/if}
 

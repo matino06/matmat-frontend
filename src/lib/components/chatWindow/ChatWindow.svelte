@@ -1,6 +1,6 @@
 <script>
   import { onDestroy, tick } from "svelte";
-  import { userData } from "$lib/store/user.svelte";
+  import { closeAI } from "$lib/store/panels.svelte.js";
   import { currentTaskState } from "$lib/store/currentTask.svelte.js";
   import { aiQuoteState, clearAiQuote } from "$lib/store/aiQuote.svelte.js";
   import { apiClient } from "$lib/api/apiClient";
@@ -43,7 +43,7 @@
     return {
       id: 0,
       role: "ai",
-      content: `Bok! Tu sam ako ti nešto nije jasno. Pitaj bilo što o zadatku, rješenju ili matematičkom konceptu.`,
+      content: `Bok! Tu sam ako ti nešto nije jasno. Pitaj bilo što o zadatku, rješenju ili konceptu iza njega.`,
       finalHtml: null,
       quote: null,
     };
@@ -71,6 +71,10 @@
     "Daj hint bez rješenja",
     "Zašto se koristi ova formula?",
   ];
+
+  // Suggestions are a way to start, so they only show before the first question.
+  let showSuggestions = $derived(messages.length <= 1);
+  let canSend = $derived(!isWaiting && (draft.trim().length > 0 || !!aiQuoteState.quote));
 
   function autoResize(el) {
     el.style.height = "auto";
@@ -393,11 +397,6 @@
     }
   }
 
-  function initials(name) {
-    if (!name) return 'Ti';
-    return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  }
-
   $effect(() => {
     const len = messages.length;
     if (!len) return;
@@ -405,163 +404,261 @@
   });
 </script>
 
-<!-- Messages board -->
-<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-<div bind:this={boardEl} class="chat-board" onclick={onBoardClick}>
-  <div style="font-size:12px;color:var(--text-faint);margin-bottom:10px;display:flex;align-items:center;gap:6px">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-    </svg>
-    MatMat AI
-  </div>
-
-  {#each messages as msg (msg.id)}
-    <div class="chat-msg {msg.role}">
-      <div class="ava">
-        {#if msg.role === "user" && userData.user?.photoURL}
-          <img src={userData.user.photoURL} alt="avatar"/>
-        {:else if msg.role === "user"}
-          {initials(userData.user?.displayName ?? '')}
-        {:else}
-          AI
-        {/if}
-      </div>
-      <div class="bubble">
-        <div class="role">{msg.role === "ai" ? "Asistent" : "Ti"}</div>
-        {#if msg.quote}
-          <div class="msg-quote">
-            {#if msg.quote.images.length}
-              <div class="quote-thumbs">
-                {#each msg.quote.images as img (img.src)}
-                  <img src={img.src} alt={img.alt || "označena slika"}/>
-                {/each}
-              </div>
-            {/if}
-            {#if msg.quote.text}
-              <div class="quote-text">{@html renderMd(msg.quote.text)}</div>
-            {/if}
-          </div>
-        {/if}
-        {#if msg.id === streamingMsgId}
-          <div class="prose-content">
-            {@html stableHtml}
-            {@html renderAnswer(currentText)}
-          </div>
-        {:else if msg.finalHtml}
-          <div class="prose-content">{@html msg.finalHtml}</div>
-        {:else}
-          <div class="prose-content">{@html renderMd(msg.content)}</div>
-        {/if}
-        {#if msg.role === "ai" && msg.messageId != null}
-          <div class="msg-rating">
-            <button
-              class="btn btn-quiet"
-              class:selected={msg.rating === 1}
-              aria-pressed={msg.rating === 1}
-              title="Koristan odgovor"
-              aria-label="Koristan odgovor"
-              onclick={() => rate(msg, 1)}
-            >👍</button>
-            <button
-              class="btn btn-quiet"
-              class:selected={msg.rating === -1}
-              aria-pressed={msg.rating === -1}
-              title="Nije koristan odgovor"
-              aria-label="Nije koristan odgovor"
-              onclick={() => rate(msg, -1)}
-            >👎</button>
-          </div>
-        {/if}
-      </div>
+<div class="chat">
+  <header class="chat-head">
+    <div class="chat-head-ico" aria-hidden="true">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 10l-5 3.6L16.5 20 12 16.4 7.5 20 9 13.6 4 10l6.1-1.2z"/></svg>
     </div>
-  {/each}
-
-  {#if isTyping}
-    <div style="display:flex;align-items:center;gap:4px;padding:10px 0">
-      <div class="typing-dot"></div>
-      <div class="typing-dot" style="animation-delay:.16s"></div>
-      <div class="typing-dot" style="animation-delay:.32s"></div>
+    <div class="chat-head-title">
+      <span class="chat-head-name">AI asistent</span>
     </div>
-  {/if}
-</div>
+    <button class="chat-head-btn" onclick={resetChat} title="Novi razgovor" aria-label="Novi razgovor">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+    </button>
+    <button class="chat-head-btn" onclick={closeAI} title="Zatvori" aria-label="Zatvori">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </header>
 
-<!-- Bottom: suggestions + input pinned to bottom of panel -->
-<div class="chat-bottom">
-  <div class="chat-suggestions">
-    {#each SUGGESTIONS as s (s)}
-      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-      <div class="chip" onclick={() => { draft = s; sendMessage(); }}>{s}</div>
-    {/each}
-  </div>
-
-  {#if aiQuoteState.quote}
-    <div class="pending-quote">
-      {#if aiQuoteState.quote.images.length}
-        <div class="quote-thumbs">
-          {#each aiQuoteState.quote.images as img (img.src)}
-            <img src={img.src} alt={img.alt || "označena slika"}/>
-          {/each}
+  <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+  <div bind:this={boardEl} class="chat-board" onclick={onBoardClick}>
+    {#each messages as msg (msg.id)}
+      {#if msg.role === "user"}
+        <div class="msg-user">
+          {#if msg.quote}
+            <div class="msg-quote">
+              {#if msg.quote.images.length}
+                <div class="quote-thumbs">
+                  {#each msg.quote.images as img (img.src)}
+                    <img src={img.src} alt={img.alt || "označena slika"}/>
+                  {/each}
+                </div>
+              {/if}
+              {#if msg.quote.text}
+                <div class="quote-text">{@html renderMd(msg.quote.text)}</div>
+              {/if}
+            </div>
+          {/if}
+          <div class="msg-user-bubble">{@html renderMd(msg.content)}</div>
+        </div>
+      {:else}
+        <div class="msg-ai">
+          <div class="msg-ai-label">MatMat AI</div>
+          {#if msg.id === streamingMsgId}
+            <div class="prose-content">
+              {@html stableHtml}
+              {@html renderAnswer(currentText)}
+            </div>
+          {:else if msg.finalHtml}
+            <div class="prose-content">{@html msg.finalHtml}</div>
+          {:else}
+            <div class="prose-content">{@html renderMd(msg.content)}</div>
+          {/if}
+          {#if msg.messageId != null}
+            <div class="msg-rating">
+              <button
+                class="btn btn-quiet"
+                class:selected={msg.rating === 1}
+                aria-pressed={msg.rating === 1}
+                title="Koristan odgovor"
+                aria-label="Koristan odgovor"
+                onclick={() => rate(msg, 1)}
+              >👍</button>
+              <button
+                class="btn btn-quiet"
+                class:selected={msg.rating === -1}
+                aria-pressed={msg.rating === -1}
+                title="Nije koristan odgovor"
+                aria-label="Nije koristan odgovor"
+                onclick={() => rate(msg, -1)}
+              >👎</button>
+            </div>
+          {/if}
         </div>
       {/if}
-      <div class="pending-quote-body">
-        <span class="pending-quote-label">
-          {aiQuoteState.quote.source === "exam"
-            ? "Iz probne mature"
-            : aiQuoteState.quote.source === "solution"
-              ? "Iz rješenja"
-              : "Iz zadatka"}
-        </span>
-        <span class="pending-quote-text">
-          {aiQuoteState.quote.text
-            ? truncate(aiQuoteState.quote.text)
-            : `${aiQuoteState.quote.images.length > 1 ? "Slike" : "Slika"} iz zadatka`}
-        </span>
+    {/each}
+
+    {#if isTyping}
+      <div class="msg-ai">
+        <div class="msg-ai-label">MatMat AI</div>
+        <div class="typing" aria-label="Asistent piše">
+          <div class="typing-dot"></div>
+          <div class="typing-dot" style="animation-delay:.16s"></div>
+          <div class="typing-dot" style="animation-delay:.32s"></div>
+        </div>
       </div>
-      <button class="pending-quote-x" onclick={clearAiQuote} title="Makni citat" aria-label="Makni citat">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+    {/if}
+  </div>
+
+  <!-- Bottom: suggestions + input pinned to bottom of panel -->
+  <div class="chat-bottom">
+    {#if showSuggestions}
+      <div class="chat-suggestions">
+        {#each SUGGESTIONS as s (s)}
+          <button type="button" class="chat-chip" disabled={isWaiting} onclick={() => { draft = s; sendMessage(); }}>{s}</button>
+        {/each}
+      </div>
+    {/if}
+
+    {#if aiQuoteState.quote}
+      <div class="pending-quote">
+        {#if aiQuoteState.quote.images.length}
+          <div class="quote-thumbs">
+            {#each aiQuoteState.quote.images as img (img.src)}
+              <img src={img.src} alt={img.alt || "označena slika"}/>
+            {/each}
+          </div>
+        {/if}
+        <div class="pending-quote-body">
+          <span class="pending-quote-label">
+            {aiQuoteState.quote.source === "exam"
+              ? "Iz probne mature"
+              : aiQuoteState.quote.source === "solution"
+                ? "Iz rješenja"
+                : "Iz zadatka"}
+          </span>
+          <span class="pending-quote-text">
+            {aiQuoteState.quote.text
+              ? truncate(aiQuoteState.quote.text)
+              : `${aiQuoteState.quote.images.length > 1 ? "Slike" : "Slika"} iz zadatka`}
+          </span>
+        </div>
+        <button class="pending-quote-x" onclick={clearAiQuote} title="Makni citat" aria-label="Makni citat">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    {/if}
+
+    <div class="chat-input-wrap">
+      <textarea
+        bind:this={inputEl}
+        bind:value={draft}
+        onkeydown={handleKey}
+        oninput={(e) => autoResize(e.currentTarget)}
+        placeholder="Pitaj o zadatku…"
+        disabled={isWaiting}
+        rows="1"
+        class="chat-input"
+      ></textarea>
+      <button class="chat-send" class:ready={canSend} onclick={sendMessage} disabled={isWaiting} title="Pošalji" aria-label="Pošalji">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
       </button>
     </div>
-  {/if}
-
-  <div class="chat-input-wrap">
-    <textarea
-      bind:this={inputEl}
-      bind:value={draft}
-      onkeydown={handleKey}
-      oninput={(e) => autoResize(e.currentTarget)}
-      placeholder="Pitaj o zadatku…"
-      disabled={isWaiting}
-      rows="1"
-      class="chat-input"
-    ></textarea>
-    <button class="btn btn-primary" onclick={sendMessage} disabled={isWaiting} style="align-self:flex-end;padding:8px 10px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-      </svg>
-    </button>
   </div>
 </div>
 
 <style>
+  .chat {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header: a fresh start, close. Same height as the page's .topbar beside it in
+     split view — same vertical padding, and 32px buttons like the topbar's —
+     so the two bottom borders line up. */
+  .chat-head {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: var(--pad-3) 12px var(--pad-3) 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .chat-head-ico {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--primary-dim);
+    color: var(--primary);
+  }
+  .chat-head-title {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chat-head-name {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .chat-head-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: var(--r-md);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+  .chat-head-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+
   .chat-board {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    min-height: 0;
+    gap: 16px;
+    padding: 20px 16px;
   }
 
-  .chat-bottom {
-    flex-shrink: 0;
-    margin-top: 12px;
+  /* The assistant writes on the page; the student's messages are bubbles. */
+  .msg-ai {
+    max-width: 92%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
   }
+  .msg-ai-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .msg-user {
+    align-self: flex-end;
+    max-width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .msg-user-bubble {
+    padding: 10px 14px;
+    border-radius: 16px 16px 4px 16px;
+    background: var(--primary);
+    color: var(--on-primary);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .msg-user-bubble :global(p) { margin: 0 0 .5em; }
+  .msg-user-bubble :global(p:last-child) { margin-bottom: 0; }
+  .msg-user-bubble :global(strong) { color: inherit; }
 
+  .typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 0;
+  }
   .typing-dot {
     width: 5px;
     height: 5px;
@@ -574,11 +671,89 @@
     40% { transform: scale(1); opacity: 1; }
   }
 
+  .chat-bottom {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 16px 16px;
+  }
+  .chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .chat-chip {
+    height: 30px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg);
+    color: var(--text-dim);
+    font: inherit;
+    font-size: 12.5px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .12s, border-color .12s, color .12s;
+  }
+  .chat-chip:hover:not(:disabled) {
+    background: var(--bg-hover);
+    border-color: var(--primary-border);
+    color: var(--text);
+  }
+  .chat-chip:disabled { opacity: .5; cursor: default; }
+
+  .chat-input-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 6px 6px 6px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    background: var(--bg);
+    transition: border-color .12s;
+  }
+  .chat-input-wrap:focus-within { border-color: var(--primary-border); }
+  .chat-input {
+    flex: 1;
+    min-width: 0;
+    max-height: 120px;
+    padding: 7px 0;
+    border: none;
+    outline: none;
+    resize: none;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-y: auto;
+  }
+  .chat-send {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 10px;
+    background: var(--bg-elev-2);
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .chat-send.ready {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .chat-send:disabled { cursor: default; }
+
   /* The part of the task the student highlighted, shown above their message. */
   .msg-quote {
+    align-self: stretch;
     border-left: 2px solid var(--primary);
     padding: 2px 0 2px 10px;
-    margin: 0 0 8px;
+    margin: 0;
     color: var(--text-dim);
     font-size: 13.5px;
     line-height: 1.55;
@@ -650,7 +825,7 @@
   .msg-rating {
     display: flex;
     gap: 4px;
-    margin-top: 8px;
+    margin-top: 2px;
   }
   .msg-rating .btn {
     padding: 4px 7px;
@@ -715,14 +890,14 @@
     padding: 6px 12px;
   }
 
-  .prose-content { font-size: 15.5px; line-height: 1.7; }
+  .prose-content { font-size: 15.5px; font-weight: 500; line-height: 1.65; color: var(--text); }
   .prose-content :global(p:first-child) { margin-top: 0; }
   .prose-content :global(p:last-child) { margin-bottom: 0; }
   .prose-content :global(mjx-container) { outline: none; font-size: 1.05em !important; }
-  .prose-content :global(p) { margin: 0 0 .85em; font-size: 15.5px; line-height: 1.7; }
+  .prose-content :global(p) { margin: 0 0 .75em; font-size: 15.5px; line-height: 1.65; }
   .prose-content :global(ul), .prose-content :global(ol) { padding-left: 1.4em; margin: .55em 0; }
   .prose-content :global(li) { font-size: 15.5px; line-height: 1.65; margin: .25em 0; }
-  .prose-content :global(h1) { font-size: 19px; font-weight: 600; margin: .5em 0 .4em; }
+  .prose-content :global(h1) { font-size: 18px; font-weight: 600; margin: .5em 0 .4em; }
   .prose-content :global(h2) { font-size: 17px; font-weight: 600; margin: .5em 0 .4em; }
   .prose-content :global(h3) { font-size: 16px; font-weight: 600; margin: .5em 0 .35em; }
   .prose-content :global(code) { font-family: var(--font-mono); font-size: 13.5px; background: var(--bg-elev-2); padding: 1px 5px; border-radius: 4px; }
