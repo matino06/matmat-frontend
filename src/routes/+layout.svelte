@@ -200,6 +200,10 @@
             <span style="color:var(--text-faint)">Admin</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Kreiraj zadatke</b>
+          {:else if path === '/ai-settings'}
+            <span style="color:var(--text-faint)">Admin</span>
+            <span style="color:var(--text-faint); margin: 0 6px">/</span>
+            <b>AI postavke</b>
           {:else}
             <b>MatMat</b>
           {/if}

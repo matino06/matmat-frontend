@@ -273,7 +273,8 @@
 
       if (!response.ok) {
         if (response.status === 429) {
-          throw new ChatError("Dosegnut je dnevni limit od 30 pitanja. Pokušaj ponovo sutra.");
+          // The limit is set on the admin AI settings page, so no number here.
+          throw new ChatError("Dosegnut je dnevni limit pitanja za AI asistenta. Pokušaj ponovo sutra.");
         }
         // The conversation doesn't exist or belongs to another task — start a
         // new one with the next question.
