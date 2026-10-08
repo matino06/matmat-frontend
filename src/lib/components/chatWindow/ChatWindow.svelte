@@ -444,7 +444,6 @@
         </div>
       {:else}
         <div class="msg-ai">
-          <div class="msg-ai-label">MatMat AI</div>
           {#if msg.id === streamingMsgId}
             <div class="prose-content">
               {@html stableHtml}
@@ -481,7 +480,6 @@
 
     {#if isTyping}
       <div class="msg-ai">
-        <div class="msg-ai-label">MatMat AI</div>
         <div class="typing" aria-label="Asistent piše">
           <div class="typing-dot"></div>
           <div class="typing-dot" style="animation-delay:.16s"></div>
@@ -624,13 +622,6 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-  }
-  .msg-ai-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-faint);
   }
   .msg-user {
     align-self: flex-end;
