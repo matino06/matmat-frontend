@@ -4,10 +4,13 @@
 
   // On wide screens the open panel is a column next to the page (split view)
   // instead of an overlay. Kept in step with the split-view media query in app.css.
-  const SPLIT_QUERY = '(min-width: 1200px)';
+  const SPLIT_QUERY = '(min-width: 1320px)';
   const SIDEBAR_W = 240;
   const MIN_PAGE_W = 480; // the task never gets narrower than this in split view
   const MIN_W = 360;
+  // Split-view panel bounds — kept in step with min-/max-width in app.css.
+  const SPLIT_MIN_W = 600;
+  const SPLIT_MAX_W = 800;
 
   let width = $state(savedWidth());
   let resizing = $state(false);
@@ -29,10 +32,11 @@
   }
 
   function clampWidth(w) {
-    const max = window.matchMedia(SPLIT_QUERY).matches
-      ? window.innerWidth - SIDEBAR_W - MIN_PAGE_W
-      : window.innerWidth - 80;
-    return Math.max(MIN_W, Math.min(w, max));
+    if (window.matchMedia(SPLIT_QUERY).matches) {
+      const max = Math.min(SPLIT_MAX_W, window.innerWidth - SIDEBAR_W - MIN_PAGE_W);
+      return Math.max(SPLIT_MIN_W, Math.min(w, max));
+    }
+    return Math.max(MIN_W, Math.min(w, window.innerWidth - 80));
   }
 
   function startResize(e) {
@@ -76,12 +80,14 @@
   {#if bare}
     {@render children?.()}
   {:else}
+    <!-- One line and a 32px button, so it's as tall as the page's .topbar beside
+         it in split view (same vertical padding) — like the chat's header. -->
     <div class="panel-head">
-      <div>
+      <div class="panel-head-title">
         <h3>{title}</h3>
-        {#if meta}<div class="meta">{meta}</div>{/if}
+        {#if meta}<span class="meta">{meta}</span>{/if}
       </div>
-      <button class="btn btn-quiet" onclick={onClose} style="padding: 6px 8px;">
+      <button class="panel-close" onclick={onClose} title="Zatvori" aria-label="Zatvori">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
@@ -99,6 +105,39 @@
 </div>
 
 <style>
+  .panel-head-title {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .panel-head-title h3 {
+    white-space: nowrap;
+  }
+  .panel-head-title .meta {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .panel-close {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: var(--r-md);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+  .panel-close:hover {
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+
   .panel-resize {
     position: absolute;
     left: -3px;

@@ -665,7 +665,6 @@ svg {
   margin: 0 0 14px;
 }
 
-
 .solution {
   margin-top: var(--pad-5);
   border-top: 1px dashed var(--border);
@@ -2549,43 +2548,62 @@ svg {
 }
 
 /* ─── Responsive shell ─── */
-.body-lock { overflow: hidden; touch-action: none; }
-.topbar-hamburger { display: none; }
+.body-lock {
+  overflow: hidden;
+  touch-action: none;
+}
+.topbar-hamburger {
+  display: none;
+}
 
 /* Backdrop: fixed on every screen so it never participates in `.app` grid flow.
    Hidden on desktop via display:none; the mobile media query flips it to block. */
 .sidebar-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
   z-index: 55;
-  opacity: 0; pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.18s;
   display: none;
 }
 
 /* Split view: on wide screens the open panel (AI chat or formulas) takes a column
    next to the page instead of covering it; its left edge is the draggable divider.
-   Breakpoint kept in step with SPLIT_QUERY in Panel.svelte. Below it the panels
-   stay overlays. With no panel open the `auto` column is 0 wide. */
-@media (min-width: 1200px) {
-  .app { grid-template-columns: 240px minmax(0, 1fr) auto; }
-  .panel-backdrop { display: none; }
+   Breakpoint kept in step with SPLIT_QUERY in Panel.svelte: 1320px = 240 sidebar
+   + 480 min page + 600 min panel. Below it the panels stay overlays. With no
+   panel open the `auto` column is 0 wide. */
+@media (min-width: 1320px) {
+  .app {
+    grid-template-columns: 240px minmax(0, 1fr) auto;
+  }
+  .panel-backdrop {
+    display: none;
+  }
   .panel {
     position: relative;
     grid-row: 1;
     grid-column: 3;
-    min-width: 360px;
-    /* The page never gets narrower than 480px, even as the window shrinks. */
-    max-width: calc(100vw - 240px - 480px);
+    /* 600–800px, kept in step with SPLIT_MIN_W / SPLIT_MAX_W in Panel.svelte. The
+       page also never gets narrower than 480px, which caps the panel below 800px
+       on windows narrower than 1520px. */
+    min-width: 600px;
+    max-width: min(800px, calc(100vw - 240px - 480px));
     transform: none;
     transition: none;
     z-index: auto;
     animation: panel-split-in 0.18s ease-out;
   }
-  .panel:not(.open) { display: none; }
+  .panel:not(.open) {
+    display: none;
+  }
 }
 @keyframes panel-split-in {
-  from { opacity: 0; transform: translateX(16px); }
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
 }
 
 @media (max-width: 767px) {
@@ -2601,36 +2619,77 @@ svg {
     width: min(280px, 86vw);
     z-index: 60;
     transform: translateX(-100%);
-    transition: transform 0.22s cubic-bezier(.2,.8,.2,1);
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .sidebar.sidebar-open {
     transform: translateX(0);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
   }
 
-  .sidebar-backdrop { display: block; }
-  .sidebar-backdrop.open { opacity: 1; pointer-events: auto; }
+  .sidebar-backdrop {
+    display: block;
+  }
+  .sidebar-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-  .topbar { padding: var(--pad-2) var(--pad-3); }
-  .topbar-actions { gap: 4px; }
-  .topbar-actions .btn-ghost { padding: 6px 10px; font-size: 12px; }
-  .topbar-actions .ai-label { display: none; }
-  .topbar-hamburger { display: inline-flex; }
+  .topbar {
+    padding: var(--pad-2) var(--pad-3);
+  }
+  .topbar-actions {
+    gap: 4px;
+  }
+  .topbar-actions .btn-ghost {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .topbar-actions .ai-label {
+    display: none;
+  }
+  .topbar-hamburger {
+    display: inline-flex;
+  }
 
-  .page { padding: var(--pad-3) var(--pad-3) var(--pad-5); }
+  .page {
+    padding: var(--pad-3) var(--pad-3) var(--pad-5);
+  }
 
-  .task-card { padding: var(--pad-3); }
-  .solution { margin-top: var(--pad-4); padding-top: var(--pad-4); }
+  .task-card {
+    padding: var(--pad-3);
+  }
+  .solution {
+    margin-top: var(--pad-4);
+    padding-top: var(--pad-4);
+  }
 
-  .panel { width: 100vw !important; max-width: 100vw; border-left: 0; }
+  .panel {
+    width: 100vw !important;
+    max-width: 100vw;
+    border-left: 0;
+  }
 
-  .ciljevi-grid { grid-template-columns: 1fr; }
+  .ciljevi-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 479px) {
-  .rp-btns { flex-wrap: wrap; }
-  .rp-btn { flex: 1 1 calc(33.333% - 8px); min-width: 0; padding: 10px 4px; }
-  .topbar-title span:not(:last-child) { display: none; }
-  .topbar-title b { font-size: 13px; }
-  .zadaci-head h1 { font-size: 18px; }
+  .rp-btns {
+    flex-wrap: wrap;
+  }
+  .rp-btn {
+    flex: 1 1 calc(33.333% - 8px);
+    min-width: 0;
+    padding: 10px 4px;
+  }
+  .topbar-title span:not(:last-child) {
+    display: none;
+  }
+  .topbar-title b {
+    font-size: 13px;
+  }
+  .zadaci-head h1 {
+    font-size: 18px;
+  }
 }
