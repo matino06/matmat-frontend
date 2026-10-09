@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
   import { userData } from '$lib/store/user.svelte';
   import { panelState, openAI, openFormule, showPomoWidget } from '$lib/store/panels.svelte';
-  import { closeSidebar } from '$lib/store/ui.svelte';
+  import { uiState, closeSidebar, setSidebarCollapsed, toggleSidebarCollapsed } from '$lib/store/ui.svelte';
   import { courseState, setCurrentCourse } from '$lib/store/course.svelte';
   import { PROGRAMS } from '$lib/config/programs';
   import { apiClient } from '$lib/api/apiClient';
@@ -20,6 +20,19 @@
 
   function openAIAndClose() { openAI(); closeSidebar(); }
   function openFormuleAndClose() { openFormule(); closeSidebar(); }
+
+  // In the collapsed icon rail the labels are hidden, so each item names itself on hover.
+  const tip = (label) => (uiState.sidebarCollapsed ? label : undefined);
+
+  // The program dropdown needs the full width, so from the rail it expands the sidebar first.
+  function onSwitcherClick() {
+    if (uiState.sidebarCollapsed) {
+      setSidebarCollapsed(false);
+      psOpen = true;
+      return;
+    }
+    psOpen = !psOpen;
+  }
 
   async function switchCourse(prog) {
     if (prog.id === courseState.courseId) {
@@ -72,12 +85,23 @@
   <div class="brand">
     <div class="brand-mark">M</div>
     <div class="brand-name">MatMat</div>
+    <button
+      class="btn btn-quiet sb-collapse"
+      onclick={toggleSidebarCollapsed}
+      aria-label={uiState.sidebarCollapsed ? 'Proširi navigaciju' : 'Sklopi navigaciju'}
+      aria-expanded={!uiState.sidebarCollapsed}
+      title={uiState.sidebarCollapsed ? 'Proširi navigaciju' : 'Sklopi navigaciju'}
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
+      </svg>
+    </button>
   </div>
 
   <!-- Program switcher -->
   <div style="margin-bottom: 10px; position: relative;">
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="prog-switcher" onclick={() => psOpen = !psOpen}>
+    <div class="prog-switcher" onclick={onSwitcherClick} title={tip(activeProg.label)}>
       <div class="badge-sq" style="background: hsl({activeProg.color} 75% 55%)">{activeProg.badge}</div>
       <div class="ps-meta">
         <div class="ps-name">{activeProg.label}</div>
@@ -107,110 +131,110 @@
   <div class="nav-group-label">Učenje</div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/mapa' ? 'active' : ''}" onclick={() => nav('/mapa')}>
+  <div class="nav-item {path === '/mapa' ? 'active' : ''}" onclick={() => nav('/mapa')} title={tip('Mapa')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
     </svg>
-    Mapa
+    <span class="nav-label">Mapa</span>
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/tasks' ? 'active' : ''}" onclick={() => nav('/tasks')}>
+  <div class="nav-item {path === '/tasks' ? 'active' : ''}" onclick={() => nav('/tasks')} title={tip('Zadaci')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
     </svg>
-    Zadaci
+    <span class="nav-label">Zadaci</span>
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/progress' ? 'active' : ''}" onclick={() => nav('/progress')}>
+  <div class="nav-item {path === '/progress' ? 'active' : ''}" onclick={() => nav('/progress')} title={tip('Napredak')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
     </svg>
-    Napredak
+    <span class="nav-label">Napredak</span>
   </div>
   
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/goals' ? 'active' : ''}" onclick={() => nav('/goals')}>
+  <div class="nav-item {path === '/goals' ? 'active' : ''}" onclick={() => nav('/goals')} title={tip('Ciljevi')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
     </svg>
-    Ciljevi
+    <span class="nav-label">Ciljevi</span>
   </div>
   
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item nav-item-featured {path === '/mock-exam' || path.startsWith('/mock-exam/') ? 'active' : ''}" onclick={() => nav('/mock-exam')}>
+  <div class="nav-item nav-item-featured {path === '/mock-exam' || path.startsWith('/mock-exam/') ? 'active' : ''}" onclick={() => nav('/mock-exam')} title={tip('Probna matura')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
       <polyline points="14 2 14 8 20 8"/>
       <line x1="9" y1="13" x2="15" y2="13"/>
       <line x1="9" y1="17" x2="15" y2="17"/>
     </svg>
-    Probna matura
+    <span class="nav-label">Probna matura</span>
     <span class="nav-novo">novo</span>
   </div>
 
   <div class="nav-group-label">Alati</div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item" onclick={openFormuleAndClose}>
+  <div class="nav-item" onclick={openFormuleAndClose} title={tip('Formule')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
     </svg>
-    Formule
+    <span class="nav-label">Formule</span>
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item" onclick={openAIAndClose}>
+  <div class="nav-item" onclick={openAIAndClose} title={tip('AI asistent')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/><path d="M20 19.5v-.5a7 7 0 0 0-14 0v.5"/>
     </svg>
-    AI asistent
+    <span class="nav-label">AI asistent</span>
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item" onclick={handlePomodoro}>
+  <div class="nav-item" onclick={handlePomodoro} title={tip('Pomodoro')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M12 3v1M12 20v1M3 12H2M22 12h-1M5.6 5.6l-.7-.7M19.1 19.1l-.7-.7M5.6 18.4l-.7.7M19.1 4.9l-.7.7"/>
     </svg>
-    Pomodoro
+    <span class="nav-label">Pomodoro</span>
   </div>
 
   {#if userData.isAdmin}
     <div class="nav-group-label">Admin</div>
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="nav-item {path === '/admin' ? 'active' : ''}" onclick={() => nav('/admin')}>
+    <div class="nav-item {path === '/admin' ? 'active' : ''}" onclick={() => nav('/admin')} title={tip('Nadzorna ploča')}>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>
       </svg>
-      Nadzorna ploča
+      <span class="nav-label">Nadzorna ploča</span>
     </div>
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="nav-item {path === '/all-tasks' ? 'active' : ''}" onclick={() => nav('/all-tasks')}>
+    <div class="nav-item {path === '/all-tasks' ? 'active' : ''}" onclick={() => nav('/all-tasks')} title={tip('Svi zadaci')}>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
         <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
       </svg>
-      Svi zadaci
+      <span class="nav-label">Svi zadaci</span>
     </div>
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="nav-item {path === '/create-tasks' ? 'active' : ''}" onclick={() => nav('/create-tasks')}>
+    <div class="nav-item {path === '/create-tasks' ? 'active' : ''}" onclick={() => nav('/create-tasks')} title={tip('Kreiraj zadatke')}>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="17 8 12 3 7 8"/>
         <line x1="12" y1="3" x2="12" y2="15"/>
       </svg>
-      Kreiraj zadatke
+      <span class="nav-label">Kreiraj zadatke</span>
     </div>
     <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-    <div class="nav-item {path === '/ai-settings' ? 'active' : ''}" onclick={() => nav('/ai-settings')}>
+    <div class="nav-item {path === '/ai-settings' ? 'active' : ''}" onclick={() => nav('/ai-settings')} title={tip('AI postavke')}>
       <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/>
         <line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/>
         <line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/>
         <line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/>
       </svg>
-      AI postavke
+      <span class="nav-label">AI postavke</span>
     </div>
   {/if}
 
@@ -233,8 +257,7 @@
       <div class="sub">Matura · {activeProg.badge} razina</div>
     </div>
     <button
-      class="btn btn-quiet"
-      style="padding: 5px 7px; margin-left: auto; flex-shrink: 0;"
+      class="btn btn-quiet settings-btn"
       onclick={() => nav('/settings')}
       title="Postavke"
     >
@@ -307,4 +330,36 @@
   }
   .ps-option:hover { background: var(--bg-hover); }
   .ps-option-active { color: var(--primary); }
+
+  .sb-collapse {
+    margin-left: auto;
+    padding: 6px;
+    color: var(--text-faint);
+  }
+  .sb-collapse:hover { color: var(--text); }
+  .settings-btn {
+    padding: 5px 7px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Collapsed icon rail (desktop only; the rest of it lives in app.css). */
+  @media (min-width: 768px) {
+    :global(html[data-sidebar="collapsed"]) .prog-switcher {
+      justify-content: center;
+      padding: 6px 0;
+    }
+    :global(html[data-sidebar="collapsed"]) .ps-meta,
+    :global(html[data-sidebar="collapsed"]) .ps-chevron {
+      display: none;
+    }
+    :global(html[data-sidebar="collapsed"]) .sb-collapse,
+    :global(html[data-sidebar="collapsed"]) .settings-btn {
+      margin-left: 0;
+    }
+  }
+  /* On phones the sidebar is a slide-over closed from the backdrop, so no collapse. */
+  @media (max-width: 767px) {
+    .sb-collapse { display: none; }
+  }
 </style>

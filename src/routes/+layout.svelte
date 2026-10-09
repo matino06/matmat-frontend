@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
   import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
   import { panelState, openAI, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
-  import { uiState, toggleSidebar, closeSidebar } from "$lib/store/ui.svelte";
+  import { uiState, toggleSidebar, closeSidebar, initSidebarCollapsed } from "$lib/store/ui.svelte";
   import { courseState, loadCurrentCourse } from "$lib/store/course.svelte";
   import { getProgram } from "$lib/config/programs";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
@@ -30,6 +30,7 @@
   onMount(() => {
     trackPageView();
     initAuth();
+    initSidebarCollapsed();
 
     function onKey(e) {
       if (e.key === "Escape") {

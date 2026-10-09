@@ -2606,6 +2606,51 @@ svg {
   }
 }
 
+/* Collapsed sidebar: a 64px icon rail on desktop. <html data-sidebar="collapsed"> is
+   set by app.html before first paint and toggled from the sidebar (ui.svelte.js).
+   Phones keep the slide-over, so none of this applies below 768px. */
+@media (min-width: 768px) {
+  html[data-sidebar="collapsed"] .app {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+  html[data-sidebar="collapsed"] .sidebar {
+    padding-inline: 10px;
+    overflow-x: hidden;
+  }
+  html[data-sidebar="collapsed"] .brand {
+    flex-direction: column;
+    gap: 8px;
+    padding: var(--pad-2) 0 var(--pad-3);
+  }
+  html[data-sidebar="collapsed"] .brand-name,
+  html[data-sidebar="collapsed"] .nav-label,
+  html[data-sidebar="collapsed"] .nav-novo,
+  html[data-sidebar="collapsed"] .avatar-meta {
+    display: none;
+  }
+  /* Group titles turn into plain dividers. */
+  html[data-sidebar="collapsed"] .nav-group-label {
+    height: 1px;
+    margin: var(--pad-2) 6px;
+    padding: 0;
+    background: var(--border);
+    font-size: 0;
+  }
+  html[data-sidebar="collapsed"] .sidebar .nav-item {
+    justify-content: center;
+    padding: 9px 0;
+  }
+  html[data-sidebar="collapsed"] .sidebar-foot {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+@media (min-width: 1320px) {
+  html[data-sidebar="collapsed"] .app {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+  }
+}
+
 @media (max-width: 767px) {
   .app {
     grid-template-columns: 1fr;
