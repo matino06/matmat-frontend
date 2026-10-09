@@ -12,27 +12,18 @@
   let loading = $state(true);
   let activeArea = $state("Sve");
 
-  let dailyGoal = $state(8);
-
   async function loadAll() {
     if (!userData.user) return;
     loading = true;
     try {
-      const [courseRes, objs, userGoalRes] = await Promise.all([
+      const [courseRes, objs] = await Promise.all([
         apiClient("/account/current-course", { method: "GET" }),
         fetchObjectivesWithStatus(),
-        apiClient("/user-goal", { method: "GET" }),
       ]);
       if (courseRes.ok) currentCourse = await courseRes.json();
       objectives = objs;
       if (currentCourse?.courseId) {
         examProgress = calculateExamProgress(objs, currentCourse.courseId);
-      }
-      if (userGoalRes.ok) {
-        const ug = await userGoalRes.json();
-        if (typeof ug?.dailyGoal === "number" && ug.dailyGoal > 0) {
-          dailyGoal = ug.dailyGoal;
-        }
       }
       const progressRes = await apiClient("/progress", { method: "GET" });
       if (progressRes.ok) {
@@ -53,9 +44,21 @@
 
   let areas = $derived(["Sve", ...new Set(visibleObjectives.map(o => o.fieldName).filter(Boolean))]);
 
-  let totalMastered = $derived(objectives.filter(o => o.isMastered).length);
-  let totalLearning = $derived(objectives.filter(o => !o.isMastered && o.unlocked).length);
-  let totalNew = $derived(objectives.filter(o => !o.isMastered && !o.unlocked).length);
+  // Per-field mastery % next to the ring — same mastered/total ratio as the
+  // Mapa banners, so the numbers match. Keyed object (not groupByKey) so fields
+  // don't have to arrive in consecutive order.
+  function fieldStats(objs) {
+    const byField = {};
+    for (const o of objs) {
+      if (!o.fieldName) continue;
+      const f = (byField[o.fieldName] ??= { name: o.fieldName, total: 0, mastered: 0 });
+      f.total += 1;
+      if (o.isMastered) f.mastered += 1;
+    }
+    return Object.values(byField).map(f => ({ ...f, pct: Math.round((f.mastered / f.total) * 100) }));
+  }
+
+  let fieldProgress = $derived(fieldStats(objectives));
 
   // Build a map objectiveName → dueDate from today/upcoming lists.
   // /progress returns tasks keyed by title (= objectiveName), not by ID.
@@ -116,8 +119,8 @@
   }
 
   // Ring SVG
-  const SIZE = 180;
-  const STROKE = 10;
+  const SIZE = 220;
+  const STROKE = 12;
   const R = (SIZE - STROKE) / 2;
   const CIRC = 2 * Math.PI * R;
   let ringDash = $derived(CIRC * (examProgress / 100));
@@ -131,9 +134,6 @@
   let areaCount = $derived((a) =>
     a === "Sve" ? visibleObjectives.length : visibleObjectives.filter(o => o.fieldName === a).length
   );
-
-  let todayDue = $derived(todayTasks.length);
-  let todayBarPct = $derived(Math.min((todayDue / dailyGoal) * 100, 100));
 </script>
 
 <div class="page">
@@ -149,52 +149,35 @@
       <div class="spinner"></div> Učitavanje…
     </div>
   {:else}
-    <div class="progress-top">
-
-      <!-- Ring card -->
-      <div class="card ring-card">
-        <div class="ring-wrap">
-          <svg width={SIZE} height={SIZE} style="transform:rotate(-90deg)">
-            <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none" stroke="var(--bg-elev-2)" stroke-width={STROKE}/>
-            <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none"
-              stroke="var(--primary)" stroke-width={STROKE} stroke-linecap="round"
-              stroke-dasharray="{ringDash} {CIRC - ringDash}"
-              style="transition: stroke-dasharray 1s ease"/>
-          </svg>
-          <div class="ring-inner">
-            <div>
-              <div class="pct">{examProgress}<span class="pct-unit">%</span></div>
-              <div class="pct-sub">Spremnost</div>
-            </div>
-          </div>
-        </div>
-        <div class="ring-meta">
-          <h2>Spremnost za maturu</h2>
-          <p>Savladao si <b class="mono">{totalMastered}</b> od <b class="mono">{objectives.length}</b> ishoda.</p>
-          <div class="ring-stats">
-            <div class="stat"><div class="v" style="color:var(--success)">{totalMastered}</div><div class="l">Savladano</div></div>
-            <div class="stat"><div class="v" style="color:var(--warn)">{totalLearning}</div><div class="l">U tijeku</div></div>
-            <div class="stat"><div class="v" style="color:var(--text-faint)">{totalNew}</div><div class="l">Neobrađeno</div></div>
+    <!-- Ring card -->
+    <div class="card ring-card">
+      <div class="ring-wrap">
+        <svg width={SIZE} height={SIZE} style="transform:rotate(-90deg)">
+          <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none" stroke="var(--bg-elev-2)" stroke-width={STROKE}/>
+          <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none"
+            stroke="var(--primary)" stroke-width={STROKE} stroke-linecap="round"
+            stroke-dasharray="{ringDash} {CIRC - ringDash}"
+            style="transition: stroke-dasharray 1s ease"/>
+        </svg>
+        <div class="ring-inner">
+          <div>
+            <div class="pct">{examProgress}<span class="pct-unit">%</span></div>
+            <div class="pct-sub">Spremnost</div>
           </div>
         </div>
       </div>
-
-      <!-- Today card -->
-      <div class="card today-card card-pad">
-        <h2>Zadaci za danas</h2>
-        <div class="today-num">{todayDue}<sub>/ {dailyGoal}</sub></div>
-        <div class="today-meta">{todayDue} {todayDue === 1 ? "zadatak planiran" : "zadataka planirano"}</div>
-        <div class="today-bar"><div class="fill" style="width:{todayBarPct}%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin-top:18px;font-size:12px;color:var(--text-faint)">
-          <span>Dnevni cilj</span><span class="mono">{dailyGoal} zadataka</span>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:18px">
-          <a href="/tasks" class="btn btn-primary">
-            Riješi zadatke
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
+      <div class="ring-meta">
+        <h2>Spremnost za maturu</h2>
+        <div class="field-list">
+          {#each fieldProgress as f (f.name)}
+            <div class="field-row">
+              <div class="field-top">
+                <span class="field-name">{f.name}</span>
+                <span class="field-pct">{f.pct}%</span>
+              </div>
+              <div class="field-bar"><div class="fill" style="width:{f.pct}%"></div></div>
+            </div>
+          {/each}
         </div>
       </div>
     </div>
@@ -249,24 +232,18 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .progress-top {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
   /* Ring card */
   .ring-card {
-    padding: var(--pad-5, 24px);
+    padding: 32px;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 24px;
+    gap: 48px;
     align-items: center;
+    margin-bottom: 16px;
   }
   .ring-wrap {
     position: relative;
-    width: 180px; height: 180px;
+    width: 220px; height: 220px;
     flex-shrink: 0;
   }
   .ring-inner {
@@ -277,41 +254,31 @@
     text-align: center;
   }
   .pct {
-    font-size: 36px; font-weight: 600; letter-spacing: -0.02em;
+    font-size: 44px; font-weight: 600; letter-spacing: -0.02em;
     font-family: var(--font-mono);
     line-height: 1;
   }
-  .pct-unit { font-size: 18px; color: var(--text-faint); margin-left: 2px; }
+  .pct-unit { font-size: 22px; color: var(--text-faint); margin-left: 2px; }
   .pct-sub {
     font-size: 11px; color: var(--text-faint);
     text-transform: uppercase; letter-spacing: .08em;
-    margin-top: 6px;
+    margin-top: 8px;
   }
-  .ring-meta h2 { margin: 0 0 6px; font-size: 16px; font-weight: 500; }
-  .ring-meta p { margin: 0 0 0; color: var(--text-dim); font-size: 13px; line-height: 1.6; }
-  .ring-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-top: 20px;
+  .ring-meta { min-width: 0; }
+  .ring-meta h2 { margin: 0 0 20px; font-size: 17px; font-weight: 500; }
+  .field-list { display: flex; flex-direction: column; gap: 16px; }
+  .field-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; font-size: 14px;
   }
-  .stat .v { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; font-family: var(--font-mono); }
-  .stat .l { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-faint); margin-top: 2px; }
-
-  /* Today card */
-  .today-card h2 { font-size: 14px; font-weight: 500; color: var(--text-dim); margin: 0 0 14px; }
-  .today-num {
-    font-size: 48px; font-weight: 600; letter-spacing: -0.03em;
-    font-family: var(--font-mono); line-height: 1;
-  }
-  .today-num sub { font-size: 16px; color: var(--text-faint); font-weight: 400; margin-left: 8px; vertical-align: baseline; }
-  .today-meta { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
-  .today-bar {
-    height: 6px; border-radius: 999px;
-    background: var(--bg-elev-2); margin-top: 20px;
+  .field-name { color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .field-pct { font-family: var(--font-mono); font-size: 13px; color: var(--text); flex-shrink: 0; }
+  .field-bar {
+    height: 8px; border-radius: 999px;
+    background: var(--bg-elev-2); margin-top: 7px;
     overflow: hidden; border: 1px solid var(--border);
   }
-  .today-bar .fill {
+  .field-bar .fill {
     height: 100%; background: var(--primary); border-radius: 999px;
     transition: width .6s cubic-bezier(.2,.8,.2,1);
   }
@@ -383,9 +350,9 @@
   }
 
   @media (max-width: 700px) {
-    .progress-top { grid-template-columns: 1fr; }
-    .ring-card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-    .ring-stats { justify-items: center; }
+    .ring-card { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 28px; padding: 24px; }
+    .ring-meta { width: 100%; }
+    .field-list { text-align: left; }
     .ishod-row { grid-template-columns: 20px 1fr auto; }
     .ishod-when { display: none; }
   }
