@@ -99,6 +99,15 @@
   let goalPct = $derived(dailyGoal ? Math.min(100, Math.round((completedToday / dailyGoal) * 100)) : 0);
   let goalRemaining = $derived(Math.max(0, dailyGoal - completedToday));
 
+  // Croatian count forms: 1 zadatak, 2–4 zadatka, 5+ zadataka (11–14 take the last form).
+  function plural(n, one, few, many) {
+    const d = n % 10;
+    const dd = n % 100;
+    if (d === 1 && dd !== 11) return one;
+    if (d >= 2 && d <= 4 && (dd < 12 || dd > 14)) return few;
+    return many;
+  }
+
   // Keep the sticky section banners offset exactly below the (also-sticky) topbar.
   $effect(() => {
     const measure = () => {
@@ -118,11 +127,17 @@
   const PAD_TOP = 16;
   const PATTERN = [0, 1, 1.7, 1, 0, -1, -1.7, -1];
 
+  const LABEL_GAP = 14;
+  const LABEL_MAX = 220;
+
   // Per-field decorative colours (theme-independent). c = node/banner face, d = 3D bevel.
+  // One per field of the maths courses, so no two fields share a colour.
   const PALETTE = [
     { c: "oklch(0.60 0.19 150)", d: "oklch(0.45 0.19 150)" },
     { c: "oklch(0.58 0.19 235)", d: "oklch(0.43 0.19 235)" },
     { c: "oklch(0.58 0.18 300)", d: "oklch(0.43 0.18 300)" },
+    { c: "oklch(0.64 0.17 55)", d: "oklch(0.49 0.17 55)" },
+    { c: "oklch(0.60 0.20 355)", d: "oklch(0.45 0.20 355)" },
   ];
 
   function nodeState(block, o) {
@@ -147,12 +162,20 @@
       }
       const state = nodeState(block, o);
       const locked = state === "locked";
+      const p = phase % PATTERN.length;
+      const x = cx + PATTERN[p] * step;
+      // Name goes on the side the path is swinging away from, so it stays off the line.
+      const side = PATTERN[p] > 0 || (PATTERN[p] === 0 && PATTERN[(p + 1) % PATTERN.length] > 0) ? "left" : "right";
+      const room = side === "left" ? x : width - x;
       const node = {
         type: "node",
         o,
         state,
-        x: cx + PATTERN[phase % PATTERN.length] * step,
+        x,
         y: y + NODE_R + 6,
+        side,
+        // 46 = half of the (larger) current node, 6 = breathing room at the column edge
+        labelMax: Math.max(90, Math.min(LABEL_MAX, room - 46 - LABEL_GAP - 6)),
         bg: locked ? "var(--bg-elev-2)" : pal.c,
         bevel: locked ? "var(--border-strong)" : pal.d,
       };
@@ -329,7 +352,7 @@
               <div
                 class="node-wrap"
                 class:node-wrap-hovered={hoveredId === item.o.objectiveId}
-                style="left:{item.x}px; top:{item.y}px"
+                style="left:{item.x}px; top:{item.y}px; --label-max:{item.labelMax}px"
                 onmouseenter={() => (hoveredId = item.o.objectiveId)}
                 onmouseleave={() => { if (hoveredId === item.o.objectiveId) hoveredId = null; }}
                 onfocusin={() => (hoveredId = item.o.objectiveId)}
@@ -366,9 +389,15 @@
                   {/if}
                 </button>
 
+                <!-- Always-visible name (the button's aria-label already reads it) -->
+                <span
+                  class="node-label node-label-{item.side}"
+                  class:node-label-locked={item.state === "locked"}
+                  aria-hidden="true"
+                >{item.o.objectiveName}</span>
+
                 {#if hoveredId === item.o.objectiveId}
                   <div class="node-hovercard">
-                    <div class="hc-name">{item.o.objectiveName}</div>
                     {#if item.o.lastQ == null}
                       <div class="hc-empty">Još nije rješavano</div>
                     {:else}
@@ -453,7 +482,7 @@
       </div>
       <div class="rail-stat">
         <div class="rail-stat-n">{streak}</div>
-        <div class="rail-stat-l">{streak === 1 ? "dan u nizu" : "dana u nizu"}</div>
+        <div class="rail-stat-l">{plural(streak, "dan", "dana", "dana")} u nizu</div>
       </div>
     </div>
 
@@ -470,7 +499,7 @@
         {#if dailyGoal > 0 && completedToday >= dailyGoal}
           Dnevni cilj postignut!
         {:else}
-          Još {goalRemaining} {goalRemaining === 1 ? "zadatak" : "zadataka"} do cilja
+          Još {goalRemaining} {plural(goalRemaining, "zadatak", "zadatka", "zadataka")} do cilja
         {/if}
       </div>
     </div>
@@ -940,7 +969,38 @@
   .node-current {
     width: 92px;
     height: 92px;
-    animation: dgPulse 1.8s ease-in-out infinite;
+  }
+
+  /* Objective name beside the node, on the side away from the path. */
+  .node-label {
+    position: absolute;
+    top: calc(50% + 3px); /* centre on face + bevel */
+    width: max-content;
+    max-width: var(--label-max);
+    transform: translateY(-50%);
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+    text-shadow: 0 0 4px var(--bg), 0 0 4px var(--bg);
+    pointer-events: none;
+  }
+  .node-label-right {
+    left: calc(100% + 14px);
+    text-align: left;
+  }
+  .node-label-left {
+    right: calc(100% + 14px);
+    text-align: right;
+  }
+  .node-label-locked {
+    font-weight: 500;
+    color: var(--text-faint);
+  }
+  @media (max-width: 600px) {
+    .node-label {
+      font-size: 12.5px;
+    }
   }
 
   .crown {
@@ -964,7 +1024,7 @@
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
-    animation: dgGlow 2s ease-in-out infinite;
+    opacity: 0.7;
   }
   .ring {
     position: absolute;
@@ -974,7 +1034,6 @@
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
-    animation: dgSpin 9s linear infinite;
   }
   .kreni {
     position: absolute;
@@ -1026,12 +1085,6 @@
     border-left: 1px solid var(--border);
     border-top: 1px solid var(--border);
   }
-  .hc-name {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text);
-    text-align: center;
-  }
   .hc-empty {
     font-size: 11px;
     color: var(--text-faint);
@@ -1067,23 +1120,13 @@
     transform: translateY(-1px);
   }
 
-  @keyframes dgPulse {
-    0%, 100% { box-shadow: 0 7px 0 var(--bevel), 0 0 0 0 rgba(255, 255, 255, 0.35); }
-    50% { box-shadow: 0 7px 0 var(--bevel), 0 0 0 8px rgba(255, 255, 255, 0); }
-  }
+  /* The bobbing KRENI bubble is the map's only ambient motion; the glow and ring stay still. */
   @keyframes dgBob {
     0%, 100% { transform: translate(-50%, -100%) translateY(0); }
     50% { transform: translate(-50%, -100%) translateY(-6px); }
   }
-  @keyframes dgGlow {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); }
-  }
-  @keyframes dgSpin {
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .node-current, .kreni, .glow, .ring { animation: none; }
+    .kreni { animation: none; }
   }
 
   /* ── Checkpoint ── */
