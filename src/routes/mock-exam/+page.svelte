@@ -2,8 +2,10 @@
   import { onMount } from "svelte";
   import {
     fetchAvailableMockExams,
+    fetchAdminMockExams,
     fetchMockExamAttempts,
   } from "$lib/api/mockExam";
+  import { userData } from "$lib/store/user.svelte";
   import ExamCard from "$lib/components/mockExam/ExamCard.svelte";
   import AttemptCard from "$lib/components/mockExam/AttemptCard.svelte";
 
@@ -20,11 +22,30 @@
 
   onMount(async () => {
     try {
-      exams = await fetchAvailableMockExams();
+      const list = await fetchAvailableMockExams();
+      if (!adminExamsShown) exams = list;
     } catch (e) {
-      examsError = e?.message ?? String(e);
+      if (!adminExamsShown) examsError = e?.message ?? String(e);
     } finally {
       examsLoading = false;
+    }
+  });
+
+  // Admin status settles after mount, so admins get the full list (unpublished
+  // included) in a second fetch that replaces the student one.
+  let adminExamsRequested = false;
+  let adminExamsShown = false;
+  $effect(() => {
+    if (userData.isAdmin && !adminExamsRequested) {
+      adminExamsRequested = true;
+      fetchAdminMockExams()
+        .then((list) => {
+          adminExamsShown = true;
+          exams = list;
+          examsError = null;
+          examsLoading = false;
+        })
+        .catch((e) => console.error("admin mock exams:", e));
     }
   });
 
@@ -111,7 +132,7 @@
     {:else}
       <div class="exam-grid">
         {#each exams as exam (exam.examId)}
-          <ExamCard {exam} />
+          <ExamCard {exam} editable={userData.isAdmin} />
         {/each}
       </div>
     {/if}

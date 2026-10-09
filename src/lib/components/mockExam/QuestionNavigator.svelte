@@ -1,5 +1,6 @@
 <script>
-  let { items = [], answers = {}, activeId = null } = $props();
+  // `showCount` off hides the answered counter (the admin editor has no answers).
+  let { items = [], answers = {}, activeId = null, showCount = true } = $props();
 
   function jump(questionId) {
     const el = document.getElementById(`q-${questionId}`);
@@ -17,7 +18,7 @@
 <aside class="qn">
   <div class="qn-head">
     <span class="qn-title">Pitanja</span>
-    <span class="qn-count mono">{answeredCount}/{items.length}</span>
+    {#if showCount}<span class="qn-count mono">{answeredCount}/{items.length}</span>{/if}
   </div>
   <div class="qn-grid">
     {#each items as item (item.questionId)}

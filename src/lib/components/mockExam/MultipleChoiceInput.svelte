@@ -2,16 +2,17 @@
   import { renderMathInline } from "$lib/utils/mockExamRenderer";
   import { imageUrl } from "$lib/utils/imageUrl";
 
-  let { value = null, onChange, options = [], optionImages = {} } = $props();
+  // `readonly` shows `value` as the marked option without letting it change (admin preview).
+  let { value = null, onChange, options = [], optionImages = {}, readonly = false } = $props();
 
   const LETTERS = ["A", "B", "C", "D"];
 
   function pick(letter) {
-    onChange?.(letter);
+    if (!readonly) onChange?.(letter);
   }
 </script>
 
-<div class="mc">
+<div class="mc" class:readonly>
   {#each LETTERS as letter, i (letter)}
     {@const text = options[i]}
     {@const img = optionImages[`option_${letter.toLowerCase()}`]}
@@ -58,6 +59,13 @@
   .mc-opt:hover {
     background: var(--bg-hover);
     border-color: var(--border-strong);
+  }
+  .readonly .mc-opt {
+    cursor: default;
+  }
+  .readonly .mc-opt:not(.selected):hover {
+    background: var(--bg-elev);
+    border-color: var(--border);
   }
   .mc-opt.selected {
     background: var(--primary-dim);

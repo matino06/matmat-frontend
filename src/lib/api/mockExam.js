@@ -40,6 +40,33 @@ export async function fetchMockExam(examId) {
   return response.json();
 }
 
+// Admin: all exams of the current course, unpublished ones included (each has `isPublished`).
+export async function fetchAdminMockExams() {
+  const response = await apiClient("/admin/mock-exams", { method: "GET" });
+  if (!response.ok) throw new Error(`admin/mock-exams: ${response.status}`);
+  return response.json();
+}
+
+// Admin: one exam with answers, solution explanations and answer images.
+export async function fetchAdminMockExam(examId) {
+  const response = await apiClient(`/admin/mock-exams/${examId}`, { method: "GET" });
+  if (!response.ok) throw new Error(`admin/mock-exams/${examId}: ${response.status}`);
+  return response.json();
+}
+
+// Admin: replaces a question's text fields; resolves to the saved question (no subQuestions).
+export async function updateMockExamQuestion(questionId, body) {
+  const response = await apiClient(`/admin/mock-exams/questions/${questionId}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`Spremanje nije uspjelo (${response.status})${text ? `: ${text}` : ""}`);
+  }
+  return response.json();
+}
+
 export async function fetchMockExamAttempt(attemptId) {
   const response = await apiClient(`/mock-exam/attempts/${attemptId}`, {
     method: "GET",
