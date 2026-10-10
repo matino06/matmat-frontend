@@ -7,7 +7,7 @@
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
   import { mathjaxTypeset } from "$lib/utils/mathjax";
-  import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
+  import { setCurrentTask, setSolutionRevealed, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
   import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
@@ -155,6 +155,11 @@
         await fetchTask();
       })();
     }
+  });
+
+  // The AI panel answers with hints until the solution is open.
+  $effect(() => {
+    setSolutionRevealed(revealed);
   });
 
   onDestroy(() => {

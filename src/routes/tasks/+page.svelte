@@ -8,7 +8,7 @@
   import { fitMath } from "$lib/utils/fitMath";
   import { mathjaxTypeset } from "$lib/utils/mathjax";
   import { panelState } from "$lib/store/panels.svelte";
-  import { setCurrentTask, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
+  import { setCurrentTask, setSolutionRevealed, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
   import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
@@ -223,6 +223,11 @@
         }
       })();
     }
+  });
+
+  // The AI panel answers with hints until the solution is open.
+  $effect(() => {
+    setSolutionRevealed(revealed);
   });
 
   onDestroy(() => {

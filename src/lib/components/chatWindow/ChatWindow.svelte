@@ -1,14 +1,18 @@
 <script>
-  import { onDestroy, tick } from "svelte";
+  import { onDestroy, onMount, tick } from "svelte";
   import { closeAI } from "$lib/store/panels.svelte.js";
   import { currentTaskState } from "$lib/store/currentTask.svelte.js";
   import { aiQuoteState, clearAiQuote } from "$lib/store/aiQuote.svelte.js";
   import { apiClient } from "$lib/api/apiClient";
-  import { renderMd } from "$lib/utils/markdownRenderer";
+  import { renderChatMd } from "$lib/utils/markdownRenderer";
   import { splitSketches, sketchSrc, nextShown, stableEnd } from "$lib/utils/aiSketch.js";
 
   // The backend attaches at most this many images per request.
   const MAX_IMAGES = 4;
+  // Below this many questions left, the count shows under the input.
+  const SHOW_REMAINING_AT = 5;
+  // The board follows new text only while the student is within this many px of the bottom.
+  const STICK_THRESHOLD = 48;
 
   const GENERIC_ERROR = "Došlo je do pogreške. Pokušaj ponovo.";
   // A thinking model can spend the whole token limit thinking and write nothing.
@@ -27,7 +31,7 @@
   function renderAnswer(text, { final = false } = {}) {
     return splitSketches(text)
       .map(seg => {
-        if (seg.type === "md") return renderMd(seg.text);
+        if (seg.type === "md") return renderChatMd(seg.text);
         const src = seg.complete ? sketchSrc(seg.svg) : null;
         if (src) return `<figure class="ai-sketch"><img alt="Skica" src="${src}"/></figure>`;
         return final || seg.complete ? SKETCH_FAILED : SKETCH_PENDING;
@@ -37,7 +41,13 @@
 
   // An error whose message is written for the student. Anything else (a network
   // TypeError, an abort) is shown as GENERIC_ERROR instead of raw English text.
-  class ChatError extends Error {}
+  // `retryable: false` for errors that asking again won't fix, like the limit.
+  class ChatError extends Error {
+    constructor(message, { retryable = true } = {}) {
+      super(message);
+      this.retryable = retryable;
+    }
+  }
 
   function greeting() {
     return {
@@ -49,6 +59,10 @@
     };
   }
 
+  // Message flags beyond role/content:
+  //   user `failed`  — got no answer; left out of the history sent to the model
+  //   ai `error`     — an error notice, with `retry` = { question, quote, userId } if asking again may help
+  //   ai `stopped`   — the student stopped it; a partial answer still goes into the history
   let messages = $state([greeting()]);
   let draft = $state("");
   let isTyping = $state(false);
@@ -60,11 +74,18 @@
   let stableHtml = $state("");
   let currentText = $state("");
 
+  // { limit, remaining, resetAt } from GET /ai/usage; null until loaded.
+  let usage = $state(null);
+
+  let nextId = 1;
   // The backend's stored conversation for this chat, set from the `meta` event.
   // It's tied to one task — the backend 404s if the two don't match.
   let conversationId = null;
-  // AbortController of the reply currently being fetched or typed out.
+  // AbortController of the reply currently being fetched or typed out. Its
+  // `stopped` flag tells the student's Stop apart from a reset of the chat.
   let activeRun = null;
+  // Whether the board should follow new text — false once the student scrolls up to read.
+  let stickToBottom = true;
 
   const SUGGESTIONS = [
     "Objasni mi prvi korak",
@@ -75,10 +96,53 @@
   // Suggestions are a way to start, so they only show before the first question.
   let showSuggestions = $derived(messages.length <= 1);
   let canSend = $derived(!isWaiting && (draft.trim().length > 0 || !!aiQuoteState.quote));
+  let usageNote = $derived(usageText(usage));
 
   function autoResize(el) {
     el.style.height = "auto";
     el.style.height = el.scrollHeight + "px";
+  }
+
+  // "u 14:05" or "sutra u 14:05" — the limit is a rolling 24 hours, so a slot
+  // frees up today or tomorrow, never later.
+  function whenText(iso) {
+    const at = new Date(iso);
+    const time = at.toLocaleTimeString("hr-HR", { hour: "2-digit", minute: "2-digit" });
+    return at.toDateString() === new Date().toDateString() ? `u ${time}` : `sutra u ${time}`;
+  }
+
+  function usageText(u) {
+    if (!u || u.remaining > SHOW_REMAINING_AT) return "";
+    if (u.remaining === 0) {
+      return u.resetAt ? `Limit pitanja je potrošen · sljedeće ${whenText(u.resetAt)}` : "Limit pitanja je potrošen";
+    }
+    const word = u.remaining % 10 === 1 && u.remaining % 100 !== 11 ? "pitanje" : "pitanja";
+    return `Još ${u.remaining} ${word} · limit je ${u.limit} u 24 sata`;
+  }
+
+  function limitMessage() {
+    const when = usage?.resetAt ? ` Sljedeće pitanje možeš postaviti ${whenText(usage.resetAt)}.` : "";
+    return `Dosegnut je limit pitanja za AI asistenta.${when}`;
+  }
+
+  async function refreshUsage() {
+    try {
+      // Not a reason to sign out: a backend without this endpoint can answer 401 instead of 404.
+      const res = await apiClient("/ai/usage", { method: "GET" }, { handleUnauthorized: false });
+      if (res.ok) usage = await res.json();
+    } catch {
+      // The count is a hint; the chat works without it.
+    }
+  }
+
+  onMount(refreshUsage);
+
+  function scrollToBottom() {
+    if (boardEl && stickToBottom) boardEl.scrollTop = boardEl.scrollHeight;
+  }
+
+  function onBoardScroll() {
+    stickToBottom = boardEl.scrollHeight - boardEl.scrollTop - boardEl.clientHeight < STICK_THRESHOLD;
   }
 
   // The student quoted a part of the task from the page — pin it above the input
@@ -100,6 +164,7 @@
     currentText = "";
     isTyping = false;
     isWaiting = false;
+    stickToBottom = true;
   }
 
   // A chat is about one task: moving to another task (or leaving the task page)
@@ -119,25 +184,52 @@
     return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
   }
 
-  async function sendMessage() {
+  // Sends `text`, or the draft when called without it (a suggestion or a sketch
+  // retry must not take or clear what the student is typing).
+  function sendMessage(text) {
+    const fromDraft = text === undefined;
     const quote = aiQuoteState.quote;
-    if ((!draft.trim() && !quote) || isWaiting) return;
+    const typed = (fromDraft ? draft : text).trim();
+    if ((!typed && !quote) || isWaiting) return;
 
     // A quote on its own is a complete request — the highlight says what it's about.
-    const userMsg = draft.trim() || "Objasni mi ovaj dio.";
-    draft = "";
+    const userMsg = typed || "Objasni mi ovaj dio.";
+    if (fromDraft) {
+      draft = "";
+      if (inputEl) inputEl.style.height = "auto";
+    }
     clearAiQuote();
-    document.querySelectorAll("textarea").forEach(el => { el.style.height = "auto"; });
 
-    messages = [...messages, { id: Date.now(), role: "user", content: userMsg, finalHtml: null, quote }];
+    const userId = nextId++;
+    messages = [...messages, { id: userId, role: "user", content: userMsg, finalHtml: null, quote }];
+    startRun(userMsg, quote, userId);
+  }
+
+  function startRun(question, quote, userId) {
     isTyping = true;
     isWaiting = true;
-
+    // Asking means wanting to see the answer, even after scrolling up.
+    stickToBottom = true;
     const run = new AbortController();
     activeRun = run;
-    setTimeout(() => {
-      if (!run.signal.aborted) fetchAIResponse(userMsg, quote, run);
-    }, 400);
+    fetchAIResponse(question, quote, userId, run);
+  }
+
+  function stopReply() {
+    if (!activeRun) return;
+    activeRun.stopped = true;
+    activeRun.abort();
+  }
+
+  // Asks the failed question again. Only offered on the last message, so the
+  // question is still the last one in the history.
+  function retry(msg) {
+    if (isWaiting || !msg.retry) return;
+    const { question, quote, userId } = msg.retry;
+    messages = messages
+      .filter(m => m.id !== msg.id)
+      .map(m => (m.id === userId ? { ...m, failed: false } : m));
+    startRun(question, quote, userId);
   }
 
   // Reads the backend's SSE stream, calling onEvent(name, data) for each event.
@@ -196,9 +288,9 @@
     }
   }
 
-  async function fetchAIResponse(question, quote, run) {
+  async function fetchAIResponse(question, quote, userId, run) {
     const { signal } = run;
-    const aiMsgId = Date.now() + 1;
+    const aiMsgId = nextId++;
     let displayInterval = null;
     let started = false;
 
@@ -236,7 +328,7 @@
         }
         currentText = text.slice(cut);
 
-        if (boardEl) boardEl.scrollTop = boardEl.scrollHeight;
+        scrollToBottom();
       }, 22);
     }
 
@@ -245,10 +337,11 @@
       const taskId = quote?.source === "exam" ? null : (currentTaskState.task?.id ?? null);
 
       // The backend only reads this for chats without a task — task conversations
-      // are stored on its side. The last message is the question itself.
+      // are stored on its side, and it leaves out the same messages. The last
+      // message is the question itself.
       const history = messages
         .slice(0, -1)
-        .filter(m => m.id !== 0 && !m.error)
+        .filter(m => m.id !== 0 && !m.error && !m.failed && m.content.trim())
         .map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.content }));
 
       const response = await apiClient("/ai/chat", {
@@ -257,6 +350,8 @@
         body: JSON.stringify({
           conversationId: taskId === null ? null : conversationId,
           taskId,
+          // Read by the backend only with a task: before the solution is open the AI hints instead of solving.
+          solutionRevealed: taskId === null ? null : currentTaskState.revealed,
           question,
           quote: quote
             ? {
@@ -273,8 +368,9 @@
 
       if (!response.ok) {
         if (response.status === 429) {
-          // The limit is set on the admin AI settings page, so no number here.
-          throw new ChatError("Dosegnut je dnevni limit pitanja za AI asistenta. Pokušaj ponovo sutra.");
+          // The limit is set on the admin AI settings page; usage says when it frees up.
+          await refreshUsage();
+          throw new ChatError(limitMessage(), { retryable: false });
         }
         // The conversation doesn't exist or belongs to another task — start a
         // new one with the next question.
@@ -327,7 +423,7 @@
       }
       // Notes are rendered apart: appended to the text they'd disappear into a
       // sketch that was cut off.
-      const finalHtml = renderAnswer(received, { final: true }) + renderMd(notes.join("\n\n"));
+      const finalHtml = renderAnswer(received, { final: true }) + renderChatMd(notes.join("\n\n"));
       // content stays the bare answer — it's what goes back as history.
       messages = messages.map(m =>
         m.id === aiMsgId ? { ...m, content: received, finalHtml, messageId, rating: null } : m,
@@ -340,24 +436,43 @@
     } catch (error) {
       if (displayInterval) { clearInterval(displayInterval); displayInterval = null; }
       // The chat was reset under this reply; resetChat already cleaned up.
-      if (signal.aborted) return;
+      if (signal.aborted && !run.stopped) return;
       streamingMsgId = null; stableHtml = ""; currentText = "";
+
+      if (run.stopped) {
+        // Whatever arrived stays, typed out or not. With nothing at all, the
+        // question drops out of the history, as it does on the backend.
+        const stopped = {
+          id: aiMsgId,
+          role: "ai",
+          content: received,
+          finalHtml: (received ? renderAnswer(received, { final: true }) : "") + renderChatMd("*Zaustavljeno.*"),
+          stopped: true,
+        };
+        messages = started ? messages.map(m => (m.id === aiMsgId ? stopped : m)) : [...messages, stopped];
+        if (!received.trim()) messages = messages.map(m => (m.id === userId ? { ...m, failed: true } : m));
+        return;
+      }
+
+      const retryable = !(error instanceof ChatError) || error.retryable;
       const errMsg = {
         id: aiMsgId,
         role: "ai",
         content: error instanceof ChatError ? error.message : GENERIC_ERROR,
         finalHtml: null,
         error: true,
+        retry: retryable ? { question, quote, userId } : null,
       };
-      messages = started
-        ? messages.map(m => (m.id === aiMsgId ? errMsg : m))
-        : [...messages, errMsg];
+      messages = (started ? messages.map(m => (m.id === aiMsgId ? errMsg : m)) : [...messages, errMsg]).map(m =>
+        m.id === userId ? { ...m, failed: true } : m,
+      );
     } finally {
       // An aborted run must not unlock the input for a newer one.
       if (activeRun === run) {
         activeRun = null;
         isTyping = false;
         isWaiting = false;
+        refreshUsage();
       }
     }
   }
@@ -387,21 +502,21 @@
   // The fallback card comes in through {@html}, so its button is handled here.
   function onBoardClick(e) {
     if (!e.target.closest?.("[data-sketch-retry]") || isWaiting) return;
-    draft = RETRY_SKETCH;
-    sendMessage();
+    sendMessage(RETRY_SKETCH);
   }
 
   function handleKey(e) {
-    if (e.key === "Enter" && !e.shiftKey && !isWaiting) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      // Typing goes on while an answer streams in; sending waits for it.
+      if (!isWaiting) sendMessage();
     }
   }
 
   $effect(() => {
     const len = messages.length;
     if (!len) return;
-    setTimeout(() => { if (boardEl) boardEl.scrollTop = boardEl.scrollHeight; }, 50);
+    setTimeout(scrollToBottom, 50);
   });
 </script>
 
@@ -422,8 +537,8 @@
   </header>
 
   <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-  <div bind:this={boardEl} class="chat-board" onclick={onBoardClick}>
-    {#each messages as msg (msg.id)}
+  <div bind:this={boardEl} class="chat-board" onclick={onBoardClick} onscroll={onBoardScroll}>
+    {#each messages as msg, i (msg.id)}
       {#if msg.role === "user"}
         <div class="msg-user">
           {#if msg.quote}
@@ -436,11 +551,11 @@
                 </div>
               {/if}
               {#if msg.quote.text}
-                <div class="quote-text">{@html renderMd(msg.quote.text)}</div>
+                <div class="quote-text">{@html renderChatMd(msg.quote.text)}</div>
               {/if}
             </div>
           {/if}
-          <div class="msg-user-bubble">{@html renderMd(msg.content)}</div>
+          <div class="msg-user-bubble">{@html renderChatMd(msg.content)}</div>
         </div>
       {:else}
         <div class="msg-ai">
@@ -452,7 +567,14 @@
           {:else if msg.finalHtml}
             <div class="prose-content">{@html msg.finalHtml}</div>
           {:else}
-            <div class="prose-content">{@html renderMd(msg.content)}</div>
+            <div class="prose-content">{@html renderChatMd(msg.content)}</div>
+          {/if}
+          {#if msg.retry && i === messages.length - 1}
+            <div class="msg-retry">
+              <button type="button" class="btn btn-ghost" disabled={isWaiting} onclick={() => retry(msg)}>
+                Pokušaj ponovo
+              </button>
+            </div>
           {/if}
           {#if msg.messageId != null}
             <div class="msg-rating">
@@ -494,7 +616,7 @@
     {#if showSuggestions}
       <div class="chat-suggestions">
         {#each SUGGESTIONS as s (s)}
-          <button type="button" class="chat-chip" disabled={isWaiting} onclick={() => { draft = s; sendMessage(); }}>{s}</button>
+          <button type="button" class="chat-chip" disabled={isWaiting} onclick={() => sendMessage(s)}>{s}</button>
         {/each}
       </div>
     {/if}
@@ -537,14 +659,22 @@
         onkeydown={handleKey}
         oninput={(e) => autoResize(e.currentTarget)}
         placeholder="Pitaj o zadatku…"
-        disabled={isWaiting}
         rows="1"
         class="chat-input"
       ></textarea>
-      <button class="chat-send" class:ready={canSend} onclick={sendMessage} disabled={isWaiting} title="Pošalji" aria-label="Pošalji">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
-      </button>
+      {#if isWaiting}
+        <button class="chat-send ready" onclick={stopReply} title="Zaustavi" aria-label="Zaustavi odgovor">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>
+        </button>
+      {:else}
+        <button class="chat-send" class:ready={canSend} onclick={() => sendMessage()} title="Pošalji" aria-label="Pošalji">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </button>
+      {/if}
     </div>
+    {#if usageNote}
+      <div class="chat-usage" class:empty={usage?.remaining === 0}>{usageNote}</div>
+    {/if}
   </div>
 </div>
 
@@ -811,6 +941,20 @@
   .pending-quote-x:hover {
     background: var(--bg-hover);
     color: var(--text);
+  }
+
+  .chat-usage {
+    margin-top: -4px;
+    padding: 0 4px;
+    font-size: 11.5px;
+    color: var(--text-faint);
+  }
+  .chat-usage.empty { color: var(--text-dim); }
+
+  /* Ask a failed question again — under the error notice. */
+  .msg-retry .btn {
+    padding: 6px 12px;
+    font-size: 13px;
   }
 
   /* Thumbs up/down under a stored answer. */

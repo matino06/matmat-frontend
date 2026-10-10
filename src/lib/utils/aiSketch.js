@@ -115,18 +115,22 @@ export function typeLimit(text) {
 }
 
 /**
- * One typing step: the next length of `text` to show. Markdown is typed `step`
- * characters at a time; a sketch is never typed out — the step jumps to its end,
- * or to everything received so far if it's still streaming in.
+ * One typing step: the next length of `text` to show. Markdown is typed a few
+ * characters at a time, more the further typing lags behind, so it keeps up with
+ * the stream instead of holding back text that has already arrived; a sketch is
+ * never typed out — the step jumps to its end, or to everything received so far
+ * if it's still streaming in.
  * @param {string} text everything received so far
  * @param {number} shown how much of it is already shown
  * @param {boolean} streaming whether more text may still arrive
  */
-export function nextShown(text, shown, streaming, step = 2) {
+export function nextShown(text, shown, streaming) {
   const limit = streaming ? typeLimit(text) : text.length;
   for (const seg of splitSketches(text)) {
     if (seg.end <= shown) continue;
     if (seg.type === "sketch") return seg.complete ? seg.end : text.length;
+    // Any backlog is gone within ~8 ticks; 2 characters is the floor that keeps a slow stream smooth.
+    const step = Math.max(2, Math.ceil((limit - shown) / 8));
     return Math.max(shown, Math.min(shown + step, seg.end, limit));
   }
   return shown;

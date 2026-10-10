@@ -46,6 +46,12 @@ html[data-theme="light"] {
   --danger: #dc2626;
 }
 
+/* \textcolor{green} marks a final result. KaTeX writes it inline as color:green
+   (#008000), which is hard to read on the dark background — hence !important. */
+html[data-theme="dark"] .katex [style*="color:green"] {
+  color: var(--success) !important;
+}
+
 :root {
   --primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
   --primary-hover: hsl(

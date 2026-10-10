@@ -28,6 +28,19 @@ export function renderMd(text) {
   return text ? md.render(normalizeMathDelims(text)) : "";
 }
 
+// AI chat: same rendering, but raw HTML is shown as text. Task content needs its
+// HTML; chat text doesn't, and there "x<3 i y>2" was read as a <3 i y> tag and
+// vanished — as would anything a model could be talked into writing.
+const chatMd = new MarkdownIt({
+  html: false,
+  linkify: true,
+  typographer: true,
+}).use(katex, { throwOnError: false, strict: false });
+
+export function renderChatMd(text) {
+  return text ? chatMd.render(normalizeMathDelims(text)) : "";
+}
+
 export function renderMdInline(text) {
   return text ? md.renderInline(normalizeMathDelims(text)) : "";
 }
