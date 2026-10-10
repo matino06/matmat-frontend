@@ -253,11 +253,11 @@
 <svelte:window onkeydown={onKey} />
 
 {#snippet ico(paths)}
-  <svg class="ad-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{@html paths}</svg>
+  <svg class="pv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{@html paths}</svg>
 {/snippet}
 
 <div
-  class="ad"
+  class="pv"
   class:with-panel={panel}
   class:collapsed
   class:light
@@ -267,82 +267,82 @@
   role="region"
   aria-label="Probna verzija aplikacije MatMat"
 >
-  <button class="ad-backdrop" class:open={sideOpen} onclick={() => (sideOpen = false)} tabindex="-1" aria-label="Zatvori navigaciju"></button>
+  <button class="pv-backdrop" class:open={sideOpen} onclick={() => (sideOpen = false)} tabindex="-1" aria-label="Zatvori navigaciju"></button>
 
-  <aside class="ad-side" class:open={sideOpen} aria-label="Navigacija aplikacije">
-    <div class="ad-brand">
+  <aside class="pv-side" class:open={sideOpen} aria-label="Navigacija aplikacije">
+    <div class="pv-brand">
       <div class="brand-mark">M</div>
-      <span class="ad-label">MatMat</span>
-      <button class="ad-rail-btn" onclick={() => (collapsed = !collapsed)} aria-label={collapsed ? "Proširi navigaciju" : "Sklopi navigaciju"} title={collapsed ? "Proširi navigaciju" : "Sklopi navigaciju"}>
+      <span class="pv-label">MatMat</span>
+      <button class="pv-rail-btn" onclick={() => (collapsed = !collapsed)} aria-label={collapsed ? "Proširi navigaciju" : "Sklopi navigaciju"} title={collapsed ? "Proširi navigaciju" : "Sklopi navigaciju"}>
         {@render ico(ICON_RAIL)}
       </button>
     </div>
 
-    <div class="ad-prog-wrap">
-      <button class="ad-prog" onclick={onSwitcher} aria-expanded={switcherOpen} title={level.label}>
-        <span class="badge-sq ad-badge" style="background: hsl({level.color} 75% 55%)">{level.badge}</span>
-        <span class="ad-prog-meta ad-label">
-          <span class="ad-prog-name">{level.label}</span>
-          <span class="ad-prog-sub">Državna matura</span>
+    <div class="pv-prog-wrap">
+      <button class="pv-prog" onclick={onSwitcher} aria-expanded={switcherOpen} title={level.label}>
+        <span class="badge-sq pv-badge" style="background: hsl({level.color} 75% 55%)">{level.badge}</span>
+        <span class="pv-prog-meta pv-label">
+          <span class="pv-prog-name">{level.label}</span>
+          <span class="pv-prog-sub">Državna matura</span>
         </span>
-        <svg class="ad-chev ad-label" class:open={switcherOpen} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+        <svg class="pv-chev pv-label" class:open={switcherOpen} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
       </button>
       {#if switcherOpen}
-        <div class="ad-drop">
+        <div class="pv-drop">
           {#each LEVELS as l (l.id)}
-            <button class="ad-drop-opt" class:active={l.id === level.id} onclick={() => pickLevel(l)}>
-              <span class="badge-sq ad-badge-sm" style="background: hsl({l.color} 75% 55%)">{l.badge}</span>
+            <button class="pv-drop-opt" class:active={l.id === level.id} onclick={() => pickLevel(l)}>
+              <span class="badge-sq pv-badge-sm" style="background: hsl({l.color} 75% 55%)">{l.badge}</span>
               {l.label}
-              {#if l.id === level.id}<span class="ad-check" aria-hidden="true">✓</span>{/if}
+              {#if l.id === level.id}<span class="pv-check" aria-hidden="true">✓</span>{/if}
             </button>
           {/each}
         </div>
       {/if}
     </div>
 
-    <div class="ad-group"><span class="ad-label">Učenje</span></div>
-    <button class="ad-item" onclick={() => showNotice("Mapa gradiva otvara se nakon prijave.")} title="Mapa">{@render ico(ICON_MAP)} <span class="ad-label">Mapa</span></button>
+    <div class="pv-group"><span class="pv-label">Učenje</span></div>
+    <button class="pv-item" onclick={() => showNotice("Mapa gradiva otvara se nakon prijave.")} title="Mapa">{@render ico(ICON_MAP)} <span class="pv-label">Mapa</span></button>
     {#each NAV as n (n.id)}
-      <button class="ad-item" class:active={view === n.id} aria-current={view === n.id ? "page" : undefined} onclick={() => go(n.id)} title={n.label}>
-        {@render ico(n.icon)} <span class="ad-label">{n.label}</span>
+      <button class="pv-item" class:active={view === n.id} aria-current={view === n.id ? "page" : undefined} onclick={() => go(n.id)} title={n.label}>
+        {@render ico(n.icon)} <span class="pv-label">{n.label}</span>
       </button>
     {/each}
-    <button class="ad-item ad-item-featured" class:active={view === "exams"} aria-current={view === "exams" ? "page" : undefined} onclick={() => go("exams")} title="Probna matura">
-      {@render ico(ICON_EXAM)} <span class="ad-label">Probna matura</span> <span class="nav-novo ad-label">novo</span>
+    <button class="pv-item pv-item-featured" class:active={view === "exams"} aria-current={view === "exams" ? "page" : undefined} onclick={() => go("exams")} title="Probna matura">
+      {@render ico(ICON_EXAM)} <span class="pv-label">Probna matura</span> <span class="nav-novo pv-label">novo</span>
     </button>
 
-    <div class="ad-group"><span class="ad-label">Alati</span></div>
-    <button class="ad-item" class:active={panel === "formule"} onclick={() => togglePanel("formule")} title="Formule">{@render ico(ICON_BOOK)} <span class="ad-label">Formule</span></button>
-    <button class="ad-item" class:active={panel === "ai"} onclick={() => togglePanel("ai")} title="AI asistent">{@render ico(ICON_AI)} <span class="ad-label">AI asistent</span></button>
-    <button class="ad-item" class:active={pomo} onclick={openPomo} title="Pomodoro">{@render ico(ICON_POMO)} <span class="ad-label">Pomodoro</span></button>
+    <div class="pv-group"><span class="pv-label">Alati</span></div>
+    <button class="pv-item" class:active={panel === "formule"} onclick={() => togglePanel("formule")} title="Formule">{@render ico(ICON_BOOK)} <span class="pv-label">Formule</span></button>
+    <button class="pv-item" class:active={panel === "ai"} onclick={() => togglePanel("ai")} title="AI asistent">{@render ico(ICON_AI)} <span class="pv-label">AI asistent</span></button>
+    <button class="pv-item" class:active={pomo} onclick={openPomo} title="Pomodoro">{@render ico(ICON_POMO)} <span class="pv-label">Pomodoro</span></button>
 
-    <div class="ad-foot">
+    <div class="pv-foot">
       <div class="avatar">L</div>
-      <div class="ad-label">
+      <div class="pv-label">
         <div>Lana</div>
-        <div class="ad-foot-sub">4. razred</div>
+        <div class="pv-foot-sub">4. razred</div>
       </div>
     </div>
   </aside>
 
-  <div class="ad-main">
-    <div class="ad-top">
-      <div class="ad-crumb">
-        <button class="btn btn-quiet ad-burger" onclick={() => (sideOpen = true)} aria-label="Otvori navigaciju">
+  <div class="pv-main">
+    <div class="pv-top">
+      <div class="pv-crumb">
+        <button class="btn btn-quiet pv-burger" onclick={() => (sideOpen = true)} aria-label="Otvori navigaciju">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="20" y2="18" /></svg>
         </button>
-        <span class="ad-crumb-course">Matematika</span><span class="ad-sep">/</span><b>{TITLES[view]}</b>
+        <span class="pv-crumb-course">Matematika</span><span class="pv-sep">/</span><b>{TITLES[view]}</b>
       </div>
-      <div class="ad-top-actions">
+      <div class="pv-top-actions">
         <button class="btn btn-quiet" onclick={() => (light = !light)} title="Promijeni temu" aria-label="Promijeni temu">{@render ico(ICON_SUN)}</button>
-        <button class="btn btn-ghost" class:ad-top-on={panel === "ai"} onclick={() => togglePanel("ai")}>
-          {@render ico(ICON_AI)} <span class="ad-ai-label">AI asistent</span>
+        <button class="btn btn-ghost" class:pv-top-on={panel === "ai"} onclick={() => togglePanel("ai")}>
+          {@render ico(ICON_AI)} <span class="pv-ai-label">AI asistent</span>
         </button>
       </div>
     </div>
 
-    <div class="ad-scroll" bind:this={scrollEl}>
-      <div class="ad-page">
+    <div class="pv-scroll" bind:this={scrollEl}>
+      <div class="pv-page">
         {#if view === "tasks"}
           <div class="zadaci-head">
             <div>
@@ -360,33 +360,33 @@
           {/if}
 
           {#if doneForToday}
-            <div class="card card-pad ad-done">
-              <div class="ad-done-emoji">🎉</div>
+            <div class="card card-pad pv-done">
+              <div class="pv-done-emoji">🎉</div>
               <h2>Nema više zadataka za danas!</h2>
               <p>Algoritam je planirao sve zadatke. Sutra te čekaju novi, složeni prema tome kako si ih danas ocijenio.</p>
-              <div class="ad-done-btns">
+              <div class="pv-done-btns">
                 <button class="btn btn-primary btn-lg" onclick={handleLogIn}>Prijavi se i nastavi sutra</button>
                 <button class="btn btn-ghost btn-lg" onclick={restart}>Kreni ispočetka</button>
               </div>
             </div>
           {:else if loading}
-            <div class="card card-pad ad-loading">
-              <div class="ad-spinner"></div>
+            <div class="card card-pad pv-loading">
+              <div class="pv-spinner"></div>
               Učitavanje zadatka…
             </div>
           {:else}
             {#key taskIdx}
-              <article class="card task-card ad-task" bind:this={taskEl}>
+              <article class="card task-card pv-task" bind:this={taskEl}>
                 <div class="task-meta">
                   <span class="badge mono">#{task.id}</span>
                   <span class="badge">{level.id} razina</span>
                   <span class="badge badge-dim">Matematika</span>
                 </div>
 
-                <div class="task-text ad-math">{@html renderMd(task.text)}</div>
+                <div class="task-text pv-math">{@html renderMd(task.text)}</div>
 
                 {#if !revealed}
-                  <div class="ad-reveal">
+                  <div class="pv-reveal">
                     <button class="btn btn-primary btn-lg" onclick={() => reveal()}>Pokaži rješenje</button>
                     <span>Pokušaj sam · <span class="kbd-chip">Space</span> za rješenje</span>
                   </div>
@@ -395,13 +395,13 @@
                     <div class="solution-header">
                       <h3>Rješenje</h3>
                       {#if !rated}
-                        <button class="btn btn-ghost ad-hide" onclick={() => reveal(false)} title="Sakrij rješenje">
+                        <button class="btn btn-ghost pv-hide" onclick={() => reveal(false)} title="Sakrij rješenje">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                           Sakrij
                         </button>
                       {/if}
                     </div>
-                    <ol class="ad-steps ad-math">
+                    <ol class="pv-steps pv-math">
                       {#each task.steps as s, i (i)}
                         <li data-step={i}>{@html renderMd(s)}</li>
                       {/each}
@@ -411,10 +411,10 @@
                       <div class="rating-row">
                         <div class="rating-label">Kako ti je išlo?</div>
                         {#if pending}
-                          <div class="ad-confirm">
-                            <span class="ad-confirm-chosen" style="color:{pending.color}">{pending.k} — {pending.t}</span>
-                            <span class="ad-confirm-when">Vraća se {pending.sub}</span>
-                            <div class="ad-confirm-btns">
+                          <div class="pv-confirm">
+                            <span class="pv-confirm-chosen" style="color:{pending.color}">{pending.k} — {pending.t}</span>
+                            <span class="pv-confirm-when">Vraća se {pending.sub}</span>
+                            <div class="pv-confirm-btns">
                               <button class="btn btn-primary" onclick={confirmRating}>Potvrdi i nastavi</button>
                               <button class="btn btn-ghost" onclick={() => { pending = null; ratingKey++; }}>Promijeni</button>
                             </div>
@@ -426,7 +426,7 @@
                         {/if}
                       </div>
                     {:else}
-                      <div class="ad-rated">
+                      <div class="pv-rated">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
                         Zabilježeno. <span>{task.objective} se vraća {rated.sub}.</span>
                       </div>
@@ -454,18 +454,18 @@
   </div>
 
   {#if panel}
-    <div class="ad-panel">
+    <div class="pv-panel">
       {#if panel === "ai"}
         {#key task.id}
           <DemoChat {task} {quote} onClearQuote={() => (quote = null)} onClose={() => (panel = null)} />
         {/key}
       {:else}
-        <div class="ad-pdf-head">
+        <div class="pv-pdf-head">
           <div>
-            <div class="ad-pdf-title">Maturalne tablice i formule</div>
-            <div class="ad-pdf-meta">Matematika</div>
+            <div class="pv-pdf-title">Maturalne tablice i formule</div>
+            <div class="pv-pdf-meta">Matematika</div>
           </div>
-          <button class="ad-pdf-close" onclick={() => (panel = null)} aria-label="Zatvori formule">
+          <button class="pv-pdf-close" onclick={() => (panel = null)} aria-label="Zatvori formule">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
           </button>
         </div>
@@ -476,7 +476,7 @@
 
   {#if ask}
     <button
-      class="ad-ask"
+      class="pv-ask"
       class:below={ask.below}
       style="left:{ask.x}px; top:{ask.y}px"
       onmousedown={(e) => e.preventDefault()}
@@ -487,29 +487,29 @@
     </button>
   {/if}
 
-  <!-- The real page's feedback, held inside the preview window (see .ad
+  <!-- The real page's feedback, held inside the preview window (see .pv
        .task-toast and .celebration-overlay in the style). -->
   {#if bump}
     {#key bump.key}
-      <div class="ad-bump" aria-hidden="true">
-        <div class="ad-bump-val">+{bump.to - bump.from}%</div>
-        <div class="ad-bump-sub">{bump.from}% → {bump.to}% spreman</div>
+      <div class="pv-bump" aria-hidden="true">
+        <div class="pv-bump-val">+{bump.to - bump.from}%</div>
+        <div class="pv-bump-sub">{bump.from}% → {bump.to}% spreman</div>
       </div>
     {/key}
   {/if}
 
   {#if toast}
     <div class="task-toast" role="status">
-      <div class="ad-toast-top">
+      <div class="pv-toast-top">
         <span style="font-size:13px; font-weight:600;">{solved} / {GOAL} zadataka danas</span>
         <span style="font-size:12px; color:var(--text-faint)">{remaining > 0 ? `još ${remaining}` : "cilj ispunjen!"}</span>
       </div>
-      <div class="ad-toast-bar"><div style="width:{toastPct}%; background:{solved >= GOAL ? 'var(--success)' : 'var(--primary)'}"></div></div>
+      <div class="pv-toast-bar"><div style="width:{toastPct}%; background:{solved >= GOAL ? 'var(--success)' : 'var(--primary)'}"></div></div>
     </div>
   {/if}
 
   {#if notice}
-    <div class="task-toast ad-notice" role="status">{notice}</div>
+    <div class="task-toast pv-notice" role="status">{notice}</div>
   {/if}
 
   {#if celebrate}
@@ -518,7 +518,7 @@
 </div>
 
 <style>
-  .ad {
+  .pv {
     position: relative;
     display: grid;
     grid-template-columns: 240px minmax(0, 1fr);
@@ -532,12 +532,12 @@
     scroll-margin-top: 80px;
     transition: grid-template-columns 0.2s ease;
   }
-  .ad.with-panel { grid-template-columns: 240px minmax(0, 1fr) 360px; }
-  .ad.collapsed { grid-template-columns: 64px minmax(0, 1fr); }
-  .ad.collapsed.with-panel { grid-template-columns: 64px minmax(0, 1fr) 360px; }
+  .pv.with-panel { grid-template-columns: 240px minmax(0, 1fr) 360px; }
+  .pv.collapsed { grid-template-columns: 64px minmax(0, 1fr); }
+  .pv.collapsed.with-panel { grid-template-columns: 64px minmax(0, 1fr) 360px; }
 
   /* Light theme tokens from app.css, scoped to the preview. */
-  .ad.light {
+  .pv.light {
     --bg: #fafafa;
     --bg-elev: #ffffff;
     --bg-elev-2: #f4f4f5;
@@ -555,7 +555,7 @@
 
   /* Sidebar — mirrors Sidebar.svelte, not reusing .sidebar: on phones that class
      turns into a page-wide slide-over. */
-  .ad-side {
+  .pv-side {
     border-right: 1px solid var(--border);
     background: var(--bg);
     padding: 14px;
@@ -566,8 +566,8 @@
     min-width: 0;
     overflow: hidden;
   }
-  .ad-brand { display: flex; align-items: center; gap: 10px; padding: 6px 4px 14px 8px; font-weight: 600; font-size: 15px; }
-  .ad-rail-btn {
+  .pv-brand { display: flex; align-items: center; gap: 10px; padding: 6px 4px 14px 8px; font-weight: 600; font-size: 15px; }
+  .pv-rail-btn {
     margin-left: auto;
     width: 28px;
     height: 28px;
@@ -576,10 +576,10 @@
     border-radius: var(--r-md);
     color: var(--text-faint);
   }
-  .ad-rail-btn:hover { background: var(--bg-hover); color: var(--text); }
+  .pv-rail-btn:hover { background: var(--bg-hover); color: var(--text); }
 
-  .ad-prog-wrap { position: relative; margin-bottom: 6px; }
-  .ad-prog {
+  .pv-prog-wrap { position: relative; margin-bottom: 6px; }
+  .pv-prog {
     width: 100%;
     display: flex;
     align-items: center;
@@ -590,15 +590,15 @@
     background: var(--bg-elev);
     text-align: left;
   }
-  .ad-prog:hover { border-color: var(--border-strong); }
-  .ad-badge { width: 28px; height: 28px; }
-  .ad-badge-sm { width: 22px; height: 22px; }
-  .ad-prog-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
-  .ad-prog-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ad-prog-sub { font-size: 11px; color: var(--text-faint); }
-  .ad-chev { color: var(--text-faint); transition: transform 0.15s; flex-shrink: 0; }
-  .ad-chev.open { transform: rotate(180deg); }
-  .ad-drop {
+  .pv-prog:hover { border-color: var(--border-strong); }
+  .pv-badge { width: 28px; height: 28px; }
+  .pv-badge-sm { width: 22px; height: 22px; }
+  .pv-prog-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+  .pv-prog-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pv-prog-sub { font-size: 11px; color: var(--text-faint); }
+  .pv-chev { color: var(--text-faint); transition: transform 0.15s; flex-shrink: 0; }
+  .pv-chev.open { transform: rotate(180deg); }
+  .pv-drop {
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
@@ -609,9 +609,9 @@
     border-radius: var(--r-md);
     background: var(--bg-elev);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-    animation: ad-fade 0.12s ease-out;
+    animation: pv-fade 0.12s ease-out;
   }
-  .ad-drop-opt {
+  .pv-drop-opt {
     width: 100%;
     display: flex;
     align-items: center;
@@ -622,11 +622,11 @@
     color: var(--text-dim);
     text-align: left;
   }
-  .ad-drop-opt:hover { background: var(--bg-hover); color: var(--text); }
-  .ad-drop-opt.active { color: var(--text); }
-  .ad-check { margin-left: auto; color: var(--primary); }
+  .pv-drop-opt:hover { background: var(--bg-hover); color: var(--text); }
+  .pv-drop-opt.active { color: var(--text); }
+  .pv-check { margin-left: auto; color: var(--primary); }
 
-  .ad-group {
+  .pv-group {
     padding: 14px 10px 6px;
     font-size: 11px;
     text-transform: uppercase;
@@ -635,7 +635,7 @@
     font-weight: 500;
     white-space: nowrap;
   }
-  .ad-item {
+  .pv-item {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -648,14 +648,14 @@
     white-space: nowrap;
     transition: background 0.12s, color 0.12s;
   }
-  .ad-item:hover { background: var(--bg-hover); color: var(--text); }
-  .ad-item.active { background: var(--bg-elev); color: var(--text); box-shadow: 0 0 0 1px var(--border) inset; }
-  .ad-item-featured { color: var(--text); background: color-mix(in oklab, hsl(38 90% 55%) 8%, transparent); }
-  .ad-item-featured:hover { background: color-mix(in oklab, hsl(38 90% 55%) 14%, transparent); }
-  .ad-item-featured .ad-ico { color: hsl(38 90% 60%); }
-  .ad-item .nav-novo { margin-left: auto; }
-  .ad-ico { width: 16px; height: 16px; flex: 0 0 16px; }
-  .ad-foot {
+  .pv-item:hover { background: var(--bg-hover); color: var(--text); }
+  .pv-item.active { background: var(--bg-elev); color: var(--text); box-shadow: 0 0 0 1px var(--border) inset; }
+  .pv-item-featured { color: var(--text); background: color-mix(in oklab, hsl(38 90% 55%) 8%, transparent); }
+  .pv-item-featured:hover { background: color-mix(in oklab, hsl(38 90% 55%) 14%, transparent); }
+  .pv-item-featured .pv-ico { color: hsl(38 90% 60%); }
+  .pv-item .nav-novo { margin-left: auto; }
+  .pv-ico { width: 16px; height: 16px; flex: 0 0 16px; }
+  .pv-foot {
     margin-top: auto;
     border-top: 1px solid var(--border);
     padding-top: 12px;
@@ -666,20 +666,20 @@
     line-height: 1.2;
     white-space: nowrap;
   }
-  .ad-foot-sub { font-size: 11px; color: var(--text-faint); }
+  .pv-foot-sub { font-size: 11px; color: var(--text-faint); }
 
   /* Collapsed icon rail, as html[data-sidebar="collapsed"] in app.css. */
-  .collapsed .ad-side { padding-inline: 10px; }
-  .collapsed .ad-label { display: none; }
-  .collapsed .ad-brand { flex-direction: column; gap: 8px; padding: 6px 0 12px; }
-  .collapsed .ad-rail-btn { margin-left: 0; }
-  .collapsed .ad-prog { justify-content: center; padding: 6px 0; border-color: transparent; background: none; }
-  .collapsed .ad-group { height: 1px; margin: 10px 6px; padding: 0; background: var(--border); }
-  .collapsed .ad-item { justify-content: center; padding: 9px 0; }
-  .collapsed .ad-foot { justify-content: center; }
+  .collapsed .pv-side { padding-inline: 10px; }
+  .collapsed .pv-label { display: none; }
+  .collapsed .pv-brand { flex-direction: column; gap: 8px; padding: 6px 0 12px; }
+  .collapsed .pv-rail-btn { margin-left: 0; }
+  .collapsed .pv-prog { justify-content: center; padding: 6px 0; border-color: transparent; background: none; }
+  .collapsed .pv-group { height: 1px; margin: 10px 6px; padding: 0; background: var(--border); }
+  .collapsed .pv-item { justify-content: center; padding: 9px 0; }
+  .collapsed .pv-foot { justify-content: center; }
 
-  .ad-main { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-  .ad-top {
+  .pv-main { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+  .pv-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -688,28 +688,28 @@
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
-  .ad-crumb { display: flex; align-items: center; min-width: 0; font-size: 14px; color: var(--text-faint); white-space: nowrap; }
-  .ad-crumb b { color: var(--text); font-weight: 500; }
-  .ad-sep { margin: 0 6px; }
-  .ad-burger { display: none; padding: 6px 8px; margin-right: 6px; }
-  .ad-top-actions { display: flex; gap: 6px; align-items: center; }
-  .ad-top-actions .btn { padding: 7px 10px; }
-  .ad-top-on { color: var(--text); border-color: var(--primary-border); }
-  .ad-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
-  .ad-page { max-width: 760px; margin: 0 auto; padding: 26px 28px 40px; }
+  .pv-crumb { display: flex; align-items: center; min-width: 0; font-size: 14px; color: var(--text-faint); white-space: nowrap; }
+  .pv-crumb b { color: var(--text); font-weight: 500; }
+  .pv-sep { margin: 0 6px; }
+  .pv-burger { display: none; padding: 6px 8px; margin-right: 6px; }
+  .pv-top-actions { display: flex; gap: 6px; align-items: center; }
+  .pv-top-actions .btn { padding: 7px 10px; }
+  .pv-top-on { color: var(--text); border-color: var(--primary-border); }
+  .pv-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+  .pv-page { max-width: 760px; margin: 0 auto; padding: 26px 28px 40px; }
 
-  .ad-task { padding: 32px; animation: ad-fade 0.25s ease-out; }
-  .ad-math :global(p) { margin: 0; }
-  .ad-math :global(.katex) { font-size: 1.08em; }
-  .ad-reveal { margin-top: 24px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
-  .ad-reveal > span { color: var(--text-faint); font-size: 12px; }
+  .pv-task { padding: 32px; animation: pv-fade 0.25s ease-out; }
+  .pv-math :global(p) { margin: 0; }
+  .pv-math :global(.katex) { font-size: 1.08em; }
+  .pv-reveal { margin-top: 24px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .pv-reveal > span { color: var(--text-faint); font-size: 12px; }
   /* No keyboard on touch screens, so no Space hint. */
   @media (hover: none) {
-    .ad-reveal > span { display: none; }
+    .pv-reveal > span { display: none; }
   }
   .solution-header { justify-content: space-between; }
-  .ad-hide { padding: 6px 10px; font-size: 12px; }
-  .ad-steps {
+  .pv-hide { padding: 6px 10px; font-size: 12px; }
+  .pv-steps {
     margin: 0;
     padding-left: 22px;
     display: flex;
@@ -718,12 +718,12 @@
     font-size: 15px;
     color: var(--text);
   }
-  .ad-steps li::marker { color: var(--text-faint); font-family: var(--font-mono); font-size: 12px; }
-  .ad-confirm { display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; }
-  .ad-confirm-chosen { font-size: 15px; font-weight: 600; }
-  .ad-confirm-when { font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); }
-  .ad-confirm-btns { display: flex; gap: 8px; margin-left: auto; }
-  .ad-rated {
+  .pv-steps li::marker { color: var(--text-faint); font-family: var(--font-mono); font-size: 12px; }
+  .pv-confirm { display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; }
+  .pv-confirm-chosen { font-size: 15px; font-weight: 600; }
+  .pv-confirm-when { font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); }
+  .pv-confirm-btns { display: flex; gap: 8px; margin-left: auto; }
+  .pv-rated {
     margin-top: 18px;
     display: flex;
     align-items: center;
@@ -732,25 +732,25 @@
     color: var(--success);
     font-size: 14px;
   }
-  .ad-rated span { color: var(--text-dim); }
+  .pv-rated span { color: var(--text-dim); }
 
-  .ad-loading { display: flex; align-items: center; gap: 12px; color: var(--text-faint); }
-  .ad-spinner {
+  .pv-loading { display: flex; align-items: center; gap: 12px; color: var(--text-faint); }
+  .pv-spinner {
     width: 20px;
     height: 20px;
     border: 2px solid var(--border);
     border-top-color: var(--primary);
     border-radius: 50%;
-    animation: ad-spin 0.8s linear infinite;
+    animation: pv-spin 0.8s linear infinite;
   }
-  @keyframes ad-spin { to { transform: rotate(360deg); } }
-  .ad-done { text-align: center; padding: 40px 28px; }
-  .ad-done-emoji { font-size: 44px; margin-bottom: 10px; }
-  .ad-done h2 { margin: 0 0 8px; font-size: 20px; font-weight: 700; }
-  .ad-done p { margin: 0 auto; max-width: 30em; color: var(--text-dim); font-size: 14px; }
-  .ad-done-btns { margin-top: 22px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  @keyframes pv-spin { to { transform: rotate(360deg); } }
+  .pv-done { text-align: center; padding: 40px 28px; }
+  .pv-done-emoji { font-size: 44px; margin-bottom: 10px; }
+  .pv-done h2 { margin: 0 0 8px; font-size: 20px; font-weight: 700; }
+  .pv-done p { margin: 0 auto; max-width: 30em; color: var(--text-dim); font-size: 14px; }
+  .pv-done-btns { margin-top: 22px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-  .ad-ask {
+  .pv-ask {
     position: absolute;
     z-index: 6;
     transform: translate(-50%, -100%);
@@ -767,13 +767,13 @@
     line-height: 1;
     white-space: nowrap;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-    animation: ad-fade 0.12s ease-out;
+    animation: pv-fade 0.12s ease-out;
   }
-  .ad-ask.below { transform: translate(-50%, 0); }
-  .ad-ask:hover { background: var(--primary); color: var(--on-primary); border-color: transparent; }
+  .pv-ask.below { transform: translate(-50%, 0); }
+  .pv-ask:hover { background: var(--primary); color: var(--on-primary); border-color: transparent; }
 
   /* The real page's progress bump and toast, scaled to the window. */
-  .ad-bump {
+  .pv-bump {
     position: absolute;
     top: 45%;
     left: 50%;
@@ -785,17 +785,17 @@
     align-items: center;
     gap: 6px;
   }
-  .ad-bump-val {
+  .pv-bump-val {
     font-size: 44px;
     font-weight: 900;
     letter-spacing: -0.04em;
     color: var(--success);
     font-family: var(--font-mono);
     text-shadow: 0 0 40px oklch(0.65 0.2 160 / 0.6);
-    animation: ad-bump-float 2s ease forwards;
+    animation: pv-bump-float 2s ease forwards;
   }
-  .ad-bump-sub { font-size: 13px; color: var(--text-dim); animation: ad-bump-float 2s ease forwards; }
-  @keyframes ad-bump-float {
+  .pv-bump-sub { font-size: 13px; color: var(--text-dim); animation: pv-bump-float 2s ease forwards; }
+  @keyframes pv-bump-float {
     0% { opacity: 0; transform: translateY(10px) scale(0.8); }
     15% { opacity: 1; transform: translateY(0) scale(1.05); }
     60% { opacity: 1; transform: translateY(-8px) scale(1); }
@@ -803,57 +803,57 @@
   }
   /* The real toast and goal celebration are position: fixed (page-wide); here
      they belong to the window. */
-  .ad .task-toast { position: absolute; bottom: 24px; }
-  .ad :global(.celebration-overlay) { position: absolute; z-index: 20; }
-  .ad-toast-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .ad-toast-bar { height: 6px; border-radius: 99px; background: var(--border); overflow: hidden; }
-  .ad-toast-bar > div { height: 100%; border-radius: 99px; transition: width 0.4s cubic-bezier(0.34, 1.2, 0.64, 1); }
-  .ad .ad-notice { min-width: 0; font-size: 13px; color: var(--text-dim); white-space: nowrap; }
+  .pv .task-toast { position: absolute; bottom: 24px; }
+  .pv :global(.celebration-overlay) { position: absolute; z-index: 20; }
+  .pv-toast-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .pv-toast-bar { height: 6px; border-radius: 99px; background: var(--border); overflow: hidden; }
+  .pv-toast-bar > div { height: 100%; border-radius: 99px; transition: width 0.4s cubic-bezier(0.34, 1.2, 0.64, 1); }
+  .pv .pv-notice { min-width: 0; font-size: 13px; color: var(--text-dim); white-space: nowrap; }
 
-  .ad-panel {
+  .pv-panel {
     border-left: 1px solid var(--border);
     background: var(--bg-elev);
     display: flex;
     flex-direction: column;
     min-height: 0;
     min-width: 0;
-    animation: ad-panel-in 0.18s ease-out;
+    animation: pv-panel-in 0.18s ease-out;
   }
-  @keyframes ad-panel-in { from { opacity: 0; transform: translateX(16px); } }
-  @keyframes ad-fade { from { opacity: 0; } }
-  .ad-pdf-head {
+  @keyframes pv-panel-in { from { opacity: 0; transform: translateX(16px); } }
+  @keyframes pv-fade { from { opacity: 0; } }
+  .pv-pdf-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 11px 12px 11px 16px;
     border-bottom: 1px solid var(--border);
   }
-  .ad-pdf-title { font-size: 14px; font-weight: 500; }
-  .ad-pdf-meta { font-size: 12px; color: var(--text-faint); }
-  .ad-pdf-close { width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--r-md); color: var(--text-dim); }
-  .ad-pdf-close:hover { background: var(--bg-hover); color: var(--text); }
-  .ad-panel iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+  .pv-pdf-title { font-size: 14px; font-weight: 500; }
+  .pv-pdf-meta { font-size: 12px; color: var(--text-faint); }
+  .pv-pdf-close { width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--r-md); color: var(--text-dim); }
+  .pv-pdf-close:hover { background: var(--bg-hover); color: var(--text); }
+  .pv-panel iframe { flex: 1; width: 100%; border: 0; background: #fff; }
 
-  .ad-backdrop { display: none; }
+  .pv-backdrop { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    .ad, .ad-panel, .ad-task, .ad-drop, .ad-ask { animation: none; transition: none; }
+    .pv, .pv-panel, .pv-task, .pv-drop, .pv-ask { animation: none; transition: none; }
   }
 
   /* Narrower than the desktop split view: the panel covers the page like it does in the app. */
   @media (max-width: 1080px) {
-    .ad.with-panel { grid-template-columns: 240px minmax(0, 1fr); }
-    .ad.collapsed.with-panel { grid-template-columns: 64px minmax(0, 1fr); }
-    .ad-panel { position: absolute; inset: 0 0 0 auto; width: min(360px, 100%); z-index: 8; box-shadow: -20px 0 40px rgba(0, 0, 0, 0.4); }
+    .pv.with-panel { grid-template-columns: 240px minmax(0, 1fr); }
+    .pv.collapsed.with-panel { grid-template-columns: 64px minmax(0, 1fr); }
+    .pv-panel { position: absolute; inset: 0 0 0 auto; width: min(360px, 100%); z-index: 8; box-shadow: -20px 0 40px rgba(0, 0, 0, 0.4); }
   }
   /* Phones get the app's mobile layout: the sidebar becomes a slide-over behind
      the hamburger. */
   @media (max-width: 760px) {
     /* Grows with the page instead of scrolling inside a fixed box, so nothing
        sits in an empty frame and the page scrolls as usual. */
-    .ad, .ad.with-panel, .ad.collapsed, .ad.collapsed.with-panel { grid-template-columns: minmax(0, 1fr); height: auto; min-height: 440px; }
-    .ad-scroll { overflow: visible; }
-    .ad-side {
+    .pv, .pv.with-panel, .pv.collapsed, .pv.collapsed.with-panel { grid-template-columns: minmax(0, 1fr); height: auto; min-height: 440px; }
+    .pv-scroll { overflow: visible; }
+    .pv-side {
       position: absolute;
       inset: 0 auto 0 0;
       width: min(260px, 82%);
@@ -861,8 +861,8 @@
       transform: translateX(-100%);
       transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-    .ad-side.open { transform: none; box-shadow: 16px 0 48px rgba(0, 0, 0, 0.35); }
-    .ad-backdrop {
+    .pv-side.open { transform: none; box-shadow: 16px 0 48px rgba(0, 0, 0, 0.35); }
+    .pv-backdrop {
       display: block;
       position: absolute;
       inset: 0;
@@ -872,15 +872,15 @@
       pointer-events: none;
       transition: opacity 0.2s;
     }
-    .ad-backdrop.open { opacity: 1; pointer-events: auto; }
-    .ad-rail-btn { display: none; }
-    .collapsed .ad-label { display: revert; }
-    .ad-burger { display: inline-flex; }
-    .ad-crumb-course, .ad-crumb .ad-sep, .ad-ai-label { display: none; }
-    .ad-top { padding: 8px 12px; }
-    .ad-page { padding: 18px 14px 32px; }
-    .ad-task { padding: 18px; }
-    .ad-panel { width: 100%; }
-    .ad-confirm-btns { margin-left: 0; }
+    .pv-backdrop.open { opacity: 1; pointer-events: auto; }
+    .pv-rail-btn { display: none; }
+    .collapsed .pv-label { display: revert; }
+    .pv-burger { display: inline-flex; }
+    .pv-crumb-course, .pv-crumb .pv-sep, .pv-ai-label { display: none; }
+    .pv-top { padding: 8px 12px; }
+    .pv-page { padding: 18px 14px 32px; }
+    .pv-task { padding: 18px; }
+    .pv-panel { width: 100%; }
+    .pv-confirm-btns { margin-left: 0; }
   }
 </style>
