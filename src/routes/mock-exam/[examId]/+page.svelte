@@ -11,6 +11,7 @@
     loadMockExamAnswers,
     saveMockExamAnswers,
     clearMockExamAnswers,
+    ensureMockExamStartedAt,
   } from "$lib/utils/mockExamStorage";
   import Question from "$lib/components/mockExam/Question.svelte";
   import QuestionNavigator from "$lib/components/mockExam/QuestionNavigator.svelte";
@@ -22,6 +23,7 @@
   let error = $state(null);
   let answers = $state({});
   let activeId = $state(null);
+  let startedAt = null;
 
   let submitting = $state(false);
   let submitError = $state(null);
@@ -32,6 +34,7 @@
     try {
       exam = await fetchMockExam(examId);
       answers = loadMockExamAnswers(examId);
+      startedAt = ensureMockExamStartedAt(examId);
     } catch (e) {
       error = e?.message ?? String(e);
     } finally {
@@ -79,6 +82,7 @@
     if (!confirm("Obrisati sve odgovore za ovu maturu?")) return;
     answers = {};
     clearMockExamAnswers(examId);
+    startedAt = ensureMockExamStartedAt(examId);
   }
 
   const answeredCount = $derived(
@@ -100,7 +104,7 @@
     submitError = null;
     submitting = true;
     try {
-      const { attemptId } = await submitMockExam(examId, exam, answers);
+      const { attemptId } = await submitMockExam(examId, exam, answers, startedAt);
       clearMockExamAnswers(examId);
       goto(`/mock-exam/attempts/${attemptId}`);
     } catch (e) {

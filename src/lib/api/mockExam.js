@@ -88,7 +88,7 @@ export async function retryGrading(attemptId) {
   if (!response.ok) throw new Error(`retry grading: ${response.status}`);
 }
 
-export async function submitMockExam(examId, exam, answers) {
+export async function submitMockExam(examId, exam, answers, startedAt) {
   const payload = buildAnswersPayload(exam, answers);
   if (payload.length === 0) {
     throw new Error("Nema odgovora za predaju.");
@@ -112,7 +112,13 @@ export async function submitMockExam(examId, exam, answers) {
   }
 
   const fd = new FormData();
-  fd.append("data", JSON.stringify({ answers: payload }));
+  fd.append(
+    "data",
+    JSON.stringify({
+      answers: payload,
+      startedAt: startedAt ? new Date(startedAt).toISOString() : null,
+    }),
+  );
   for (const [partName, blob] of Object.entries(blobsByPart)) {
     const ext = extensionForMime(blob.type);
     fd.append(partName, blob, `${partName}.${ext}`);
