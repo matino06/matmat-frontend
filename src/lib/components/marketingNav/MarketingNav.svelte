@@ -76,4 +76,7 @@
     .mn-nav { padding: 0 20px; }
     .mn-link { display: none; }
   }
+  @media (max-width: 420px) {
+    .mn-btn-outline { display: none; }
+  }
 </style>
