@@ -7,6 +7,7 @@
   import DemoView from "$lib/components/landing/DemoView.svelte";
   import DemoChat from "$lib/components/landing/DemoChat.svelte";
   import HeroTiles from "$lib/components/landing/HeroTiles.svelte";
+  import { rememberLevel } from "$lib/utils/levelChoice";
   import { DEMO_TASKS } from "$lib/components/landing/demoData";
 
   function start() {
@@ -18,26 +19,62 @@
     if (!userData.loading && userData.user) goto("/tasks");
   });
 
+  // Picking a level signs in like the other buttons; a new account's onboarding
+  // then opens on that level. Existing accounts keep the course they have.
+  function toDemo(e) {
+    e.preventDefault();
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.getElementById("demo")?.scrollIntoView({ behavior: still ? "auto" : "smooth" });
+  }
+
+  function chooseLevel(level) {
+    rememberLevel(level);
+    start();
+  }
+
+  const LEVELS = [
+    {
+      id: "A",
+      name: "Viša razina",
+      badge: "MA",
+      color: "239",
+      text: "Za učenike koji polažu A razinu. Sve gradivo, a algebra i funkcije nose pola bodova, pa ih dobivaš najčešće.",
+    },
+    {
+      id: "B",
+      name: "Osnovna razina",
+      badge: "MB",
+      color: "215",
+      text: "Za učenike koji polažu B razinu. Zadaci prate bodovanje B ispita, s više brojeva i statistike.",
+    },
+  ];
+
+  // `lead` is the one-line benefit, readable without opening the item; `text`
+  // is the detail shown for the open one.
   const FEATURES = [
     {
       id: "objectives",
       title: "Ponavljanje u pravo vrijeme",
+      lead: "MatMat pamti koje zadatke znaš, a koje trebaš ponoviti.",
       text: "Ocjena od 0 do 5 odlučuje kad se ishod vraća: loše riješen već sutra, savršeno riješen za 14 dana. Ono što već znaš ne vrti se u krug.",
     },
     {
       id: "readiness",
       title: "Spremnost za maturu",
+      lead: "U svakom trenutku vidiš koliko si spreman za ispit.",
       text: "Napredak se računa po ishodima i boduje kao na ispitu. Algebra i funkcije nose pola bodova A razine, pa i pola tvoje spremnosti.",
     },
     {
       id: "ai",
       title: "AI asistent uz svaki zadatak",
-      text: "Zna koji zadatak rješavaš. Prvo ti da hint, a cijelo rješenje tek kad ga zatražiš. Piše na hrvatskom.",
+      lead: "Pomoć baš za zadatak koji upravo rješavaš.",
+      text: "Prvo ti da hint, a cijelo rješenje tek kad ga zatražiš. Označi dio rješenja i pitaj ga baš za taj korak. Piše na hrvatskom.",
     },
     {
       id: "exams",
       title: "Probna matura",
-      text: "Prošli ispiti državne mature, pitanje po pitanje. Na kraju vidiš bodove, točne odgovore i pregled svake greške.",
+      lead: "Prošli ispiti državne mature, riješeni kao na pravom ispitu.",
+      text: "Rješavaš pitanje po pitanje, a na kraju vidiš bodove, točne odgovore i pregled svake greške.",
     },
   ];
 
@@ -94,7 +131,7 @@
 
     <p class="hm-try hm-wrap">Ispod je aplikacija kakvu vidiš nakon prijave. Riješi zadatak i ocijeni ga, ili označi dio zadatka i pitaj AI.</p>
 
-    <div class="hm-stage">
+    <div class="hm-stage" id="demo">
       <div class="hm-window hm-wrap-wide">
         <AppDemo />
       </div>
@@ -124,6 +161,7 @@
                 onclick={() => (feature = f.id)}
               >
                 <span class="hm-feat-title">{f.title}</span>
+                <span class="hm-feat-lead">{f.lead}</span>
                 <span class="hm-feat-text">{f.text}</span>
               </button>
               {#if feature === f.id}
@@ -146,6 +184,7 @@
                 onkeydown={(e) => onTabKey(e, i)}
               >
                 <span class="hm-feat-title">{f.title}</span>
+                <span class="hm-feat-lead">{f.lead}</span>
                 <span class="hm-feat-text">{f.text}</span>
               </button>
             {/each}
@@ -159,35 +198,48 @@
     </section>
 
     <section class="hm-levels hm-wrap" aria-labelledby="hm-levels-h">
-      <h2 id="hm-levels-h">A ili B razina</h2>
+      <h2 id="hm-levels-h">Koju razinu polažeš?</h2>
       <div class="hm-levels-grid">
-        <div>
-          <h3><span class="badge-sq" style="background: hsl(239 75% 55%)">MA</span> Matematika A razina</h3>
-          <p>Sve gradivo više razine. Algebra i funkcije nose pola bodova, pa ih dobivaš najčešće.</p>
-        </div>
-        <div>
-          <h3><span class="badge-sq" style="background: hsl(215 75% 55%)">MB</span> Matematika B razina</h3>
-          <p>Zadaci prilagođeni osnovnoj razini, s više brojeva i statistike, kako se i boduje na B ispitu.</p>
-        </div>
+        {#each LEVELS as l (l.id)}
+          <button class="hm-level" onclick={() => chooseLevel(l.id)}>
+            <span class="hm-level-head">
+              <span class="badge-sq" style="background: hsl({l.color} 75% 55%)">{l.badge}</span>
+              <span class="hm-level-title">
+                <span class="hm-level-name">{l.id} razina</span>
+                <span class="hm-level-kind">{l.name}</span>
+              </span>
+            </span>
+            <span class="hm-level-text">{l.text}</span>
+            <span class="hm-level-cta">
+              Odaberi {l.id} razinu
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+            </span>
+          </button>
+        {/each}
       </div>
-      <p class="hm-levels-note">Razinu možeš promijeniti bilo kad, napredak za svaku se vodi posebno.</p>
     </section>
 
     <section class="hm-final hm-wrap">
       <h2>Prvi zadatak te čeka.</h2>
-      <p>Prijava traje pola minute, a odmah nakon nje dobiješ današnje zadatke.</p>
-      {@render googleButton("Nastavi s Googleom")}
+      <p>MatMat je besplatan i radi u pregledniku. Prijavi se Googleom i odmah dobiješ današnje zadatke.</p>
+      <div class="hm-final-actions">
+        {@render googleButton("Nastavi s Googleom")}
+        <a class="hm-ghost" href="#demo" onclick={toDemo}>Isprobaj aplikaciju</a>
+      </div>
     </section>
   </main>
 
-  <footer class="hm-footer hm-wrap">
-    <div class="hm-footer-brand">
-      <div class="brand-mark">M</div>
-      MatMat
+  <footer class="hm-footer">
+    <div class="hm-footer-inner">
+      <div class="hm-footer-brand">
+        <div class="brand-mark">M</div>
+        © {new Date().getFullYear()} MatMat
+      </div>
+      <nav class="hm-footer-links" aria-label="Podnožje">
+        <a href="/kako-radi">Kako radi</a>
+        <a href="mailto:info@matmat.online">Kontakt</a>
+      </nav>
     </div>
-    <a href="/kako-radi">Kako radi</a>
-    <a href="mailto:info@matmat.online">info@matmat.online</a>
-    <span>© {new Date().getFullYear()} MatMat</span>
   </footer>
 </div>
 
@@ -308,6 +360,7 @@
   /* The app preview sits on a lit floor, like a product on a table. */
   .hm-stage {
     position: relative;
+    scroll-margin-top: 88px;
     margin-top: 20px;
     padding: 0 24px 96px;
   }
@@ -357,9 +410,11 @@
   }
   .hm-feat-tab:hover { border-left-color: var(--border-strong); }
   .hm-feat-tab.active { border-left-color: var(--primary); }
-  .hm-feat-title { font-size: 17px; font-weight: 500; color: var(--text-dim); }
-  .hm-feat-tab.active .hm-feat-title, .hm-feat-tab:hover .hm-feat-title { color: var(--text); }
-  .hm-feat-text { font-size: 14px; line-height: 1.6; color: var(--text-faint); }
+  .hm-feat-title { font-size: 13px; font-weight: 500; color: var(--text-faint); }
+  .hm-feat-tab.active .hm-feat-title { color: var(--primary); }
+  .hm-feat-lead { font-size: 17px; font-weight: 500; line-height: 1.4; color: var(--text-dim); text-wrap: pretty; }
+  .hm-feat-tab.active .hm-feat-lead, .hm-feat-tab:hover .hm-feat-lead { color: var(--text); }
+  .hm-feat-text { margin-top: 2px; font-size: 15.5px; line-height: 1.6; color: var(--text-dim); }
   .hm-feat-tab:not(.active) .hm-feat-text { display: none; }
   .hm-feat-panel {
     min-height: 400px;
@@ -383,29 +438,101 @@
 
   /* Levels */
   .hm-levels { padding-top: 64px; padding-bottom: 120px; border-top: 1px solid var(--border); }
-  .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .hm-levels .badge-sq { width: 26px; height: 26px; }
-  .hm-levels h3 { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; font-size: 17px; font-weight: 500; }
-  .hm-levels p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-dim); max-width: 34em; }
+  .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .hm-levels .badge-sq { width: 32px; height: 32px; font-size: 11px; }
+  /* The whole column is the button: no card fill until hover, so the section
+     stays as light as the rest of the page. */
+  .hm-level {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 22px 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .hm-level:hover { background: var(--bg-elev); border-color: var(--primary-border); }
+  .hm-level-head { display: flex; align-items: center; gap: 12px; }
+  .hm-level-title { display: flex; flex-direction: column; line-height: 1.25; }
+  .hm-level-name { font-size: 17px; font-weight: 500; color: var(--text); }
+  .hm-level-kind { font-size: 13px; color: var(--text-faint); }
+  .hm-level-text { font-size: 15px; line-height: 1.6; color: var(--text-dim); max-width: 34em; }
+  .hm-level-cta {
+    margin-top: auto;
+    padding-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--primary);
+  }
+  .hm-level-cta svg { transition: transform 0.15s; }
+  .hm-level:hover .hm-level-cta svg { transform: translateX(3px); }
   .hm-levels .hm-levels-note { margin-top: 28px; font-size: 14px; color: var(--text-faint); }
 
-  /* Closing */
-  .hm-final { padding-top: 96px; padding-bottom: 120px; border-top: 1px solid var(--border); }
-  .hm-final h2 { font-size: clamp(32px, 4.4vw, 52px); letter-spacing: -0.035em; line-height: 1.05; }
-  .hm-final p { margin: 16px 0 32px; font-size: 18px; color: var(--text-dim); max-width: 30em; }
+  /* Closing — centred, with a faint glow rising from the footer edge. */
+  .hm-final {
+    position: relative;
+    padding-top: 128px;
+    padding-bottom: 136px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hm-final::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: min(100vw, 1100px);
+    height: 160px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 50% 100% at 50% 100%, hsl(var(--primary-h) 70% 55% / 0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .hm-final h2 {
+    font-size: clamp(36px, 5.6vw, 68px);
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .hm-final p { margin: 20px 0 36px; font-size: 18px; line-height: 1.6; color: var(--text-dim); max-width: 31em; text-wrap: pretty; }
+  .hm-final-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .hm-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 13px 22px;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--border-strong);
+    color: var(--text-dim);
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.12s, background 0.12s, border-color 0.12s;
+  }
+  .hm-ghost:hover { color: var(--text); background: var(--bg-elev); border-color: var(--text-faint); }
 
-  .hm-footer {
+  .hm-footer { border-top: 1px solid var(--border); font-size: 13px; color: var(--text-faint); }
+  /* As wide as the app preview and the nav bar. */
+  .hm-footer-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-inline: 24px;
+    box-sizing: content-box;
     display: flex;
     align-items: center;
-    gap: 28px;
-    padding-top: 28px;
-    padding-bottom: 28px;
-    border-top: 1px solid var(--border);
-    font-size: 13px;
-    color: var(--text-faint);
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 26px;
+    padding-bottom: 26px;
   }
-  .hm-footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-dim); font-weight: 500; margin-right: auto; }
-  .hm-footer-brand .brand-mark { width: 22px; height: 22px; font-size: 11px; border-radius: 6px; }
+  .hm-footer-brand { display: flex; align-items: center; gap: 10px; }
+  .hm-footer-brand .brand-mark { width: 20px; height: 20px; font-size: 10px; border-radius: 6px; }
+  .hm-footer-links { display: flex; gap: 22px; }
   .hm-footer a:hover { color: var(--text); }
 
   .hm-feat-inline { padding: 4px 0 20px 20px; border-left: 2px solid var(--primary); animation: hm-fade 0.2s ease-out; }
@@ -422,14 +549,18 @@
     .hm-wrap { padding-inline: 20px; }
     .hm-hero { padding-top: 64px; }
     .hm-lead { font-size: 16px; }
-    .hm-stage { padding: 0 12px 64px; }
+    .hm-stage { padding: 0 16px 64px; }
+    .hm-footer-inner { padding-inline: 16px; }
     .hm-try { margin-top: 40px; }
     .hm-features, .hm-levels { padding-top: 48px; padding-bottom: 72px; }
-    .hm-final { padding-top: 64px; padding-bottom: 80px; }
+    .hm-final { padding-top: 80px; padding-bottom: 96px; }
     .hm-final p { font-size: 16px; }
-    .hm-feat-title { font-size: 16px; }
-    .hm-levels-grid { grid-template-columns: 1fr; gap: 28px; }
-    .hm-footer { flex-wrap: wrap; gap: 12px 20px; }
-    .hm-footer-brand { flex-basis: 100%; }
+    .hm-final-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
+    .hm-final-actions > * { justify-content: center; }
+    .hm-feat-lead { font-size: 16px; }
+    .hm-feat-text { font-size: 15px; }
+    .hm-levels-grid { grid-template-columns: 1fr; gap: 12px; }
+    .hm-level { padding: 18px 20px; }
+
   }
 </style>

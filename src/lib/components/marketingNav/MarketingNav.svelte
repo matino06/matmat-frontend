@@ -12,27 +12,35 @@
 </script>
 
 <nav class="mn-nav">
-  <a class="mn-brand" href="/">
-    <div class="mn-mark">M</div>
-    <div class="mn-name">MatMat</div>
-  </a>
-  <div class="mn-links">
-    <a class="mn-link" class:active={path === '/kako-radi'} href="/kako-radi">Kako radi</a>
-    <button class="mn-btn-outline" onclick={start}>Prijava</button>
-    <button class="mn-btn-primary" onclick={start}>Počni besplatno</button>
+  <div class="mn-inner">
+    <a class="mn-brand" href="/">
+      <div class="mn-mark">M</div>
+      <div class="mn-name">MatMat</div>
+    </a>
+    <div class="mn-links">
+      <a class="mn-link" class:active={path === '/kako-radi'} href="/kako-radi">Kako radi</a>
+      <button class="mn-btn-outline" onclick={start}>Prijava</button>
+      <button class="mn-btn-primary" onclick={start}>Počni besplatno</button>
+    </div>
   </div>
 </nav>
 
 <style>
   .mn-nav {
     position: sticky; top: 0; z-index: 50;
-    display: flex; align-items: center;
-    justify-content: space-between;
-    padding: 0 5%;
-    height: 64px;
+    padding: 0 24px;
     background: rgba(13,13,16,0.88);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  /* Same width as the landing page's app preview, so the logo and the buttons
+     line up with its frame (and with the footer). */
+  .mn-inner {
+    max-width: 1240px;
+    height: 64px;
+    margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between;
   }
   .mn-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .mn-mark {
@@ -73,7 +81,7 @@
   .mn-btn-primary:hover { background: oklch(0.64 0.22 270); }
 
   @media (max-width: 800px) {
-    .mn-nav { padding: 0 20px; }
+    .mn-nav { padding: 0 16px; }
     .mn-link { display: none; }
   }
   @media (max-width: 420px) {

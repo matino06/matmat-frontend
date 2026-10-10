@@ -2,9 +2,13 @@
   import { apiClient } from "$lib/api/apiClient";
   import { userData } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
+  import { readRememberedLevel, clearRememberedLevel } from "$lib/utils/levelChoice";
 
-  let step = $state(0);
-  let level = $state("A");
+  // A level picked on the landing page skips straight to the confirmation;
+  // "Nazad" still lets the student change it.
+  const chosen = readRememberedLevel();
+  let step = $state(chosen ? 1 : 0);
+  let level = $state(chosen ?? "A");
   let saving = $state(false);
 
   async function finish() {
@@ -16,6 +20,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ courseId }),
       });
+      clearRememberedLevel();
       userData.needsOnboarding = false;
       goto("/tasks");
     } finally {

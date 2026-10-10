@@ -256,7 +256,7 @@ export const DEMO_OBJECTIVES = [
   { name: "Logaritmi", status: "scheduled", dots: 3, when: "sutra" },
   { name: "Funkcije i graf funkcije", status: "scheduled", dots: 4, when: "za 6 dana" },
   { name: "Trigonometrijske jednadžbe", status: "learning", dots: 1, when: "danas" },
-  { name: "Kvadratna funkcija", status: "mastered", dots: 5, when: "za 14 dana" },
+  { name: "Kvadratna funkcija", status: "mastered", dots: 5, when: "za 32 dana" },
   { name: "Volumen i oplošje tijela", status: "scheduled", dots: 3, when: "za 3 dana" },
 ];
 
