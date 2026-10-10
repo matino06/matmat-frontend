@@ -146,6 +146,10 @@ svg {
 .app {
   display: grid;
   grid-template-columns: 240px 1fr;
+  /* One row exactly as tall as the app. An `auto` row grows with its tallest
+     item, so a long AI chat in the split-view column stretched the whole app
+     past the screen, and then neither the chat nor the page could scroll. */
+  grid-template-rows: minmax(0, 1fr);
   height: 100vh;
   min-height: 720px;
 }

@@ -11,8 +11,8 @@
   const MAX_IMAGES = 4;
   // Below this many questions left, the count shows under the input.
   const SHOW_REMAINING_AT = 5;
-  // The board follows new text only while the student is within this many px of the bottom.
-  const STICK_THRESHOLD = 48;
+  // Within this many px of the bottom counts as being at the bottom (subpixel slack).
+  const AT_BOTTOM = 4;
 
   const GENERIC_ERROR = "Došlo je do pogreške. Pokušaj ponovo.";
   // A thinking model can spend the whole token limit thinking and write nothing.
@@ -86,6 +86,7 @@
   let activeRun = null;
   // Whether the board should follow new text — false once the student scrolls up to read.
   let stickToBottom = true;
+  let touchY = 0;
 
   const SUGGESTIONS = [
     "Objasni mi prvi korak",
@@ -141,8 +142,32 @@
     if (boardEl && stickToBottom) boardEl.scrollTop = boardEl.scrollHeight;
   }
 
+  // Leaving the bottom is read from the student's own input, not from scroll
+  // events: typing scrolls the board every tick, and a scroll event can't tell
+  // that apart from a small trackpad flick up in the same frame.
+  function onBoardWheel(e) {
+    if (e.deltaY < 0) stickToBottom = false;
+  }
+
+  function onBoardTouchStart(e) {
+    touchY = e.touches[0].clientY;
+  }
+
+  // A finger moving down scrolls the content up.
+  function onBoardTouchMove(e) {
+    const y = e.touches[0].clientY;
+    if (y > touchY) stickToBottom = false;
+    touchY = y;
+  }
+
+  // Grabbing the scrollbar.
+  function onBoardPointerDown(e) {
+    if (e.target === boardEl && e.offsetX >= boardEl.clientWidth) stickToBottom = false;
+  }
+
+  // Back at the bottom, by any means: follow again.
   function onBoardScroll() {
-    stickToBottom = boardEl.scrollHeight - boardEl.scrollTop - boardEl.clientHeight < STICK_THRESHOLD;
+    if (boardEl.scrollHeight - boardEl.scrollTop - boardEl.clientHeight < AT_BOTTOM) stickToBottom = true;
   }
 
   // The student quoted a part of the task from the page — pin it above the input
@@ -328,7 +353,8 @@
         }
         currentText = text.slice(cut);
 
-        scrollToBottom();
+        // After the DOM has the new text, or it scrolls to the old bottom.
+        tick().then(scrollToBottom);
       }, 22);
     }
 
@@ -537,7 +563,13 @@
   </header>
 
   <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-  <div bind:this={boardEl} class="chat-board" onclick={onBoardClick} onscroll={onBoardScroll}>
+  <div bind:this={boardEl} class="chat-board" onclick={onBoardClick}
+    onscroll={onBoardScroll}
+    onwheel={onBoardWheel}
+    ontouchstart={onBoardTouchStart}
+    ontouchmove={onBoardTouchMove}
+    onpointerdown={onBoardPointerDown}
+  >
     {#each messages as msg, i (msg.id)}
       {#if msg.role === "user"}
         <div class="msg-user">
