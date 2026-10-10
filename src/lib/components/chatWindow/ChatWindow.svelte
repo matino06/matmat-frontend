@@ -79,7 +79,8 @@
 
   let nextId = 1;
   // The backend's stored conversation for this chat, set from the `meta` event.
-  // It's tied to one task — the backend 404s if the two don't match.
+  // Every chat is stored: one about a task is tied to it, the backend 404s if the
+  // two don't match; one without a task (exam or general) can't move onto a task.
   let conversationId = null;
   // AbortController of the reply currently being fetched or typed out. Its
   // `stopped` flag tells the student's Stop apart from a reset of the chat.
@@ -361,20 +362,14 @@
     try {
       // An exam quote is about a past exam question, not about any open task.
       const taskId = quote?.source === "exam" ? null : (currentTaskState.task?.id ?? null);
+      const exam = quote?.source === "exam";
 
-      // The backend only reads this for chats without a task — task conversations
-      // are stored on its side, and it leaves out the same messages. The last
-      // message is the question itself.
-      const history = messages
-        .slice(0, -1)
-        .filter(m => m.id !== 0 && !m.error && !m.failed && m.content.trim())
-        .map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.content }));
-
+      // The history is read from the backend's stored conversation.
       const response = await apiClient("/ai/chat", {
         method: "POST",
         signal,
         body: JSON.stringify({
-          conversationId: taskId === null ? null : conversationId,
+          conversationId,
           taskId,
           // Read by the backend only with a task: before the solution is open the AI hints instead of solving.
           solutionRevealed: taskId === null ? null : currentTaskState.revealed,
@@ -388,7 +383,8 @@
                 imageUrls: quote.images.map(i => i.src),
               }
             : null,
-          history,
+          mockExamAttemptId: exam ? (quote.attemptId ?? null) : null,
+          mockExamQuestionId: exam ? (quote.questionId ?? null) : null,
         }),
       });
 
@@ -398,8 +394,8 @@
           await refreshUsage();
           throw new ChatError(limitMessage(), { retryable: false });
         }
-        // The conversation doesn't exist or belongs to another task — start a
-        // new one with the next question.
+        // The conversation doesn't exist, belongs to another task or the exam
+        // question isn't found — start a new one with the next question.
         if (response.status === 404) conversationId = null;
         throw new ChatError(GENERIC_ERROR);
       }

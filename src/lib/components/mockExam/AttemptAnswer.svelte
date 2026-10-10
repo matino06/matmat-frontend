@@ -9,7 +9,8 @@
 
   // `parent` is the container question when this is a sub-question — without its
   // shared intro a sub-question often makes no sense on its own.
-  let { answer, onRefresh, parent = null, examMeta = null } = $props();
+  // `attemptId` goes with an AI question so the backend can tie the chat to this attempt.
+  let { answer, onRefresh, parent = null, examMeta = null, attemptId = null } = $props();
 
   let imgFailed = $state(false);
   let imgSrc = $state(null);
@@ -106,7 +107,7 @@
       // First in line: it's the student's own work, the thing they're asking about,
       // and the only image whose content isn't also available as text.
       if (photo) images.unshift({ src: photo, alt: "Tvoje rješenje" });
-      setAiQuote({ text, context, images, source: "exam" });
+      setAiQuote({ text, context, images, source: "exam", attemptId, questionId: answer.questionId });
       openAI();
     } finally {
       preparingAsk = false;

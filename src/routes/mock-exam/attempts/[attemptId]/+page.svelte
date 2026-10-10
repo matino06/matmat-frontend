@@ -246,12 +246,12 @@
               {/if}
               <div class="container-subs">
                 {#each ans.subAnswers as sub (sub.questionId)}
-                  <AttemptAnswer answer={sub} parent={ans} {examMeta} onRefresh={refreshNow} />
+                  <AttemptAnswer answer={sub} parent={ans} {examMeta} attemptId={attempt.attemptId} onRefresh={refreshNow} />
                 {/each}
               </div>
             </div>
           {:else}
-            <AttemptAnswer answer={ans} {examMeta} onRefresh={refreshNow} />
+            <AttemptAnswer answer={ans} {examMeta} attemptId={attempt.attemptId} onRefresh={refreshNow} />
           {/if}
         {/each}
       </div>

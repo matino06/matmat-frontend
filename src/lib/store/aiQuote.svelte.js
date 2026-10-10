@@ -8,6 +8,7 @@
 //             // whole exam question be sent without dumping it into the UI.
 //   images,   // [{ src, alt }] — attached to the request as real images
 //   source,   // "task" | "solution" | "exam"
+//   attemptId, questionId, // exam only: what the chat is about, stored with it on the backend
 // }
 export const aiQuoteState = $state({
   quote: null,
