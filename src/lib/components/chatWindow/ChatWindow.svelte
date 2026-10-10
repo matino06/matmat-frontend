@@ -76,6 +76,8 @@
 
   // { limit, remaining, resetAt } from GET /ai/usage; null until loaded.
   let usage = $state(null);
+  // The sketch shown enlarged: { src, ratio } (ratio = height / width), or null.
+  let zoomed = $state(null);
 
   let nextId = 1;
   // The backend's stored conversation for this chat, set from the `meta` event.
@@ -521,11 +523,43 @@
     }
   }
 
-  // The fallback card comes in through {@html}, so its button is handled here.
+  // Sketches and the fallback card come in through {@html}, so their clicks are handled here.
   function onBoardClick(e) {
+    const img = e.target.closest?.("figure.ai-sketch img");
+    if (img) {
+      // The SVG has no size of its own, only a viewBox; the shape it has in the
+      // chat sizes the enlarged one.
+      const { width, height } = img.getBoundingClientRect();
+      zoomed = { src: img.src, ratio: width ? height / width : 0.7 };
+      return;
+    }
     if (!e.target.closest?.("[data-sketch-retry]") || isWaiting) return;
     sendMessage(RETRY_SKETCH);
   }
+
+  function closeZoom() {
+    zoomed = null;
+  }
+
+  // The panel slides with a transform, which would trap a position: fixed
+  // overlay inside it — so the enlarged sketch lives in <body>.
+  function portal(node) {
+    document.body.appendChild(node);
+    return { destroy: () => node.remove() };
+  }
+
+  // Esc closes the sketch, not the whole AI panel: caught on the way down,
+  // before the layout's own Esc handler sees it.
+  $effect(() => {
+    if (!zoomed) return;
+    function onKey(e) {
+      if (e.key !== "Escape") return;
+      e.stopImmediatePropagation();
+      closeZoom();
+    }
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  });
 
   function handleKey(e) {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -706,6 +740,16 @@
   </div>
 </div>
 
+
+{#if zoomed}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <div class="sketch-zoom" use:portal role="dialog" aria-modal="true" aria-label="Uvećana skica" onclick={closeZoom}>
+    <img src={zoomed.src} alt="Skica" style="--ratio: {zoomed.ratio}"/>
+    <button type="button" class="sketch-zoom-x" onclick={closeZoom} title="Zatvori" aria-label="Zatvori">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+{/if}
 <style>
   .chat {
     flex: 1;
@@ -1019,6 +1063,50 @@
     display: block;
     width: 100%;
     height: auto;
+    cursor: zoom-in;
+  }
+
+  /* Enlarged sketch over the whole app; click anywhere or Esc closes it. */
+  .sketch-zoom {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.72);
+    cursor: zoom-out;
+    animation: sketch-zoom-in 0.14s ease-out;
+  }
+  /* As big as fits, keeping the sketch's shape: 92% of the width, or less if
+     that would make it taller than 88% of the screen. */
+  .sketch-zoom img {
+    width: min(92vw, calc(88vh / var(--ratio)), 1400px);
+    height: auto;
+    padding: 16px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  }
+  .sketch-zoom-x {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+  }
+  .sketch-zoom-x:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+  @keyframes sketch-zoom-in {
+    from { opacity: 0; }
   }
   .prose-content :global(.ai-sketch-pending),
   .prose-content :global(.ai-sketch-failed) {
