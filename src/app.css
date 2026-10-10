@@ -46,10 +46,29 @@ html[data-theme="light"] {
   --danger: #dc2626;
 }
 
-/* \textcolor{green} marks a final result. KaTeX writes it inline as color:green
-   (#008000), which is hard to read on the dark background — hence !important. */
-html[data-theme="dark"] .katex [style*="color:green"] {
+/* \textcolor{green|red|blue} in tasks, explanations and the AI chat. The named
+   colours are made for white paper (#008000, #FF0000, #0000FF) and are hard to
+   read on the dark background, so they get lighter shades. KaTeX writes them
+   inline as "color:green", MathJax (tasks up to id 335) as "color: green" on
+   <mjx-mstyle> — inline styles, hence !important. */
+html[data-theme="dark"]
+  :is(.katex, mjx-container)
+  :is(
+    [style^="color:green"],
+    [style^="color: green"],
+    [style*=";color:green"]
+  ) {
   color: var(--success) !important;
+}
+html[data-theme="dark"]
+  :is(.katex, mjx-container)
+  :is([style^="color:red"], [style^="color: red"], [style*=";color:red"]) {
+  color: var(--danger) !important;
+}
+html[data-theme="dark"]
+  :is(.katex, mjx-container)
+  :is([style^="color:blue"], [style^="color: blue"], [style*=";color:blue"]) {
+  color: #60a5fa !important;
 }
 
 :root {
