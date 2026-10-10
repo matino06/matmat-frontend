@@ -487,8 +487,8 @@
     </button>
   {/if}
 
-  <!-- The real page's feedback, held inside the preview window (.ad contains
-       position: fixed, see the style). -->
+  <!-- The real page's feedback, held inside the preview window (see .ad
+       .task-toast and .celebration-overlay in the style). -->
   {#if bump}
     {#key bump.key}
       <div class="ad-bump" aria-hidden="true">
@@ -529,9 +529,6 @@
     line-height: 1.55;
     text-align: left;
     overflow: hidden;
-    /* Makes this box the containing block for position: fixed, so the real
-       toast and the goal celebration stay inside the window. */
-    contain: layout paint;
     scroll-margin-top: 80px;
     transition: grid-template-columns 0.2s ease;
   }
@@ -804,7 +801,10 @@
     60% { opacity: 1; transform: translateY(-8px) scale(1); }
     100% { opacity: 0; transform: translateY(-32px) scale(0.9); }
   }
-  .ad .task-toast { bottom: 24px; }
+  /* The real toast and goal celebration are position: fixed (page-wide); here
+     they belong to the window. */
+  .ad .task-toast { position: absolute; bottom: 24px; }
+  .ad :global(.celebration-overlay) { position: absolute; z-index: 20; }
   .ad-toast-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .ad-toast-bar { height: 6px; border-radius: 99px; background: var(--border); overflow: hidden; }
   .ad-toast-bar > div { height: 100%; border-radius: 99px; transition: width 0.4s cubic-bezier(0.34, 1.2, 0.64, 1); }
