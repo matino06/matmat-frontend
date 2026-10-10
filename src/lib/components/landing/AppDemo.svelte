@@ -1,6 +1,8 @@
 <script>
   import { onMount, onDestroy, tick } from "svelte";
-  import { renderMd } from "$lib/utils/markdownRenderer";
+  import { renderTaskHtml } from "$lib/utils/markdownRenderer";
+  import { fitMath } from "$lib/utils/fitMath";
+  import { mathjaxTypeset } from "$lib/utils/mathjax";
   import { serializeRange } from "$lib/utils/selectionToLatex.js";
   import { handleLogIn } from "$lib/store/user.svelte";
   import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
@@ -58,6 +60,12 @@
   let timers = [];
 
   let task = $derived(DEMO_TASKS[taskIdx]);
+  // The explanation's "## N." sections, kept apart so a highlighted passage can be
+  // traced back to its step for the AI reply (data-step).
+  let sections = $derived(task.explanation.split(/^(?=## \d+\.)/m).filter((p) => p.trim()));
+  // Same typography as /tasks; the landing page is dark, so invert unless the
+  // preview itself was switched to light.
+  let prose = $derived(light ? "prose" : "prose prose-invert");
   let remaining = $derived(Math.max(0, GOAL - solved));
   let toastPct = $derived(Math.min((solved / GOAL) * 100, 100));
 
@@ -383,7 +391,9 @@
                   <span class="badge badge-dim">Matematika</span>
                 </div>
 
-                <div class="task-text pv-math">{@html renderMd(task.text)}</div>
+                <div class="{prose} prose-sm lg:prose-lg !max-w-none pv-math" use:fitMath use:mathjaxTypeset={task.id}>
+                  {@html renderTaskHtml(task.text, task.id)}
+                </div>
 
                 {#if !revealed}
                   <div class="pv-reveal">
@@ -401,11 +411,11 @@
                         </button>
                       {/if}
                     </div>
-                    <ol class="pv-steps pv-math">
-                      {#each task.steps as s, i (i)}
-                        <li data-step={i}>{@html renderMd(s)}</li>
+                    <div class="{prose} prose-sm lg:prose-base !max-w-none pv-math pv-explanation" use:fitMath use:mathjaxTypeset={task.id}>
+                      {#each sections as sec, i (i)}
+                        <section data-step={i}>{@html renderTaskHtml(sec, task.id)}</section>
                       {/each}
-                    </ol>
+                    </div>
 
                     {#if !rated}
                       <div class="rating-row">
@@ -699,8 +709,7 @@
   .pv-page { max-width: 760px; margin: 0 auto; padding: 26px 28px 40px; }
 
   .pv-task { padding: 32px; animation: pv-fade 0.25s ease-out; }
-  .pv-math :global(p) { margin: 0; }
-  .pv-math :global(.katex) { font-size: 1.08em; }
+  .pv-math { color: var(--text); }
   .pv-reveal { margin-top: 24px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
   .pv-reveal > span { color: var(--text-faint); font-size: 12px; }
   /* No keyboard on touch screens, so no Space hint. */
@@ -709,16 +718,14 @@
   }
   .solution-header { justify-content: space-between; }
   .pv-hide { padding: 6px 10px; font-size: 12px; }
-  .pv-steps {
-    margin: 0;
-    padding-left: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 15px;
-    color: var(--text);
-  }
-  .pv-steps li::marker { color: var(--text-faint); font-family: var(--font-mono); font-size: 12px; }
+  .pv-explanation :global(h2) { margin-top: 1.4em; }
+  .pv-explanation :global(section:first-child h2) { margin-top: 0; }
+  /* \textcolor{green|red|blue} in the explanations are made for white paper;
+     on the dark preview they get the app's lighter shades (see app.css, which
+     only does this when the whole app is in the dark theme). */
+  .pv:not(.light) :global(:is(.katex, mjx-container) :is([style^="color:green"], [style^="color: green"], [style*=";color:green"])) { color: var(--success) !important; }
+  .pv:not(.light) :global(:is(.katex, mjx-container) :is([style^="color:red"], [style^="color: red"], [style*=";color:red"])) { color: var(--danger) !important; }
+  .pv:not(.light) :global(:is(.katex, mjx-container) :is([style^="color:blue"], [style^="color: blue"], [style*=";color:blue"])) { color: #60a5fa !important; }
   .pv-confirm { display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; }
   .pv-confirm-chosen { font-size: 15px; font-weight: 600; }
   .pv-confirm-when { font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); }
@@ -849,10 +856,10 @@
   /* Phones get the app's mobile layout: the sidebar becomes a slide-over behind
      the hamburger. */
   @media (max-width: 760px) {
-    /* Grows with the page instead of scrolling inside a fixed box, so nothing
-       sits in an empty frame and the page scrolls as usual. */
+    /* Shrinks to short content instead of leaving an empty frame, but a long
+       solution scrolls inside the window rather than stretching the page. */
     .pv, .pv.with-panel, .pv.collapsed, .pv.collapsed.with-panel { grid-template-columns: minmax(0, 1fr); height: auto; min-height: 440px; }
-    .pv-scroll { overflow: visible; }
+    .pv-scroll { max-height: min(640px, 75vh); }
     .pv-side {
       position: absolute;
       inset: 0 auto 0 0;
