@@ -68,8 +68,13 @@
   }
   const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Phones have no inner scroll (the preview grows with its content), so when a
+  // new page or task starts above the screen, bring the preview's top back.
   function scrollTop() {
     scrollEl?.scrollTo({ top: 0 });
+    if (rootEl && rootEl.getBoundingClientRect().top < 0) {
+      rootEl.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
+    }
   }
 
   // ── Task flow, as on /tasks ──
@@ -527,6 +532,7 @@
     /* Makes this box the containing block for position: fixed, so the real
        toast and the goal celebration stay inside the window. */
     contain: layout paint;
+    scroll-margin-top: 80px;
     transition: grid-template-columns 0.2s ease;
   }
   .ad.with-panel { grid-template-columns: 240px minmax(0, 1fr) 360px; }
@@ -700,6 +706,10 @@
   .ad-math :global(.katex) { font-size: 1.08em; }
   .ad-reveal { margin-top: 24px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
   .ad-reveal > span { color: var(--text-faint); font-size: 12px; }
+  /* No keyboard on touch screens, so no Space hint. */
+  @media (hover: none) {
+    .ad-reveal > span { display: none; }
+  }
   .solution-header { justify-content: space-between; }
   .ad-hide { padding: 6px 10px; font-size: 12px; }
   .ad-steps {
@@ -839,7 +849,10 @@
   /* Phones get the app's mobile layout: the sidebar becomes a slide-over behind
      the hamburger. */
   @media (max-width: 760px) {
-    .ad, .ad.with-panel, .ad.collapsed, .ad.collapsed.with-panel { grid-template-columns: minmax(0, 1fr); height: 600px; }
+    /* Grows with the page instead of scrolling inside a fixed box, so nothing
+       sits in an empty frame and the page scrolls as usual. */
+    .ad, .ad.with-panel, .ad.collapsed, .ad.collapsed.with-panel { grid-template-columns: minmax(0, 1fr); height: auto; min-height: 440px; }
+    .ad-scroll { overflow: visible; }
     .ad-side {
       position: absolute;
       inset: 0 auto 0 0;

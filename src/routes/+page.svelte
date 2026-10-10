@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { userData, handleLogIn } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
   import MarketingNav from "$lib/components/marketingNav/MarketingNav.svelte";
@@ -41,6 +42,17 @@
   ];
 
   let feature = $state("objectives");
+
+  // On narrow screens the list becomes an accordion: the part of the app opens
+  // right under the item that was tapped instead of below the whole list.
+  let narrow = $state(false);
+  onMount(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => (narrow = mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  });
 
   function onTabKey(e, i) {
     const d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
@@ -91,35 +103,58 @@
     <section class="hm-features hm-wrap" aria-labelledby="hm-features-h">
       <h2 id="hm-features-h">Ti rješavaš zadatke. MatMat vodi računa o svemu ostalom.</h2>
 
-      <div class="hm-feat">
-        <div class="hm-feat-list" role="tablist" aria-orientation="vertical" aria-label="Mogućnosti">
-          {#each FEATURES as f, i (f.id)}
-            <button
-              id="feat-tab-{f.id}"
-              role="tab"
-              class="hm-feat-tab"
-              class:active={feature === f.id}
-              aria-selected={feature === f.id}
-              aria-controls="feat-panel"
-              tabindex={feature === f.id ? 0 : -1}
-              onclick={() => (feature = f.id)}
-              onkeydown={(e) => onTabKey(e, i)}
-            >
-              <span class="hm-feat-title">{f.title}</span>
-              <span class="hm-feat-text">{f.text}</span>
-            </button>
-          {/each}
-        </div>
+      {#snippet featPart()}
+        {#if feature === "ai"}
+          <div class="hm-feat-chat">
+            <DemoChat task={DEMO_TASKS[0]} scripted />
+          </div>
+        {:else}
+          <DemoView part={feature} />
+        {/if}
+      {/snippet}
 
-        <div class="hm-feat-panel" id="feat-panel" role="tabpanel" aria-labelledby="feat-tab-{feature}">
-          {#if feature === "ai"}
-            <div class="hm-feat-chat">
-              <DemoChat task={DEMO_TASKS[0]} scripted />
-            </div>
-          {:else}
-            <DemoView part={feature} />
-          {/if}
-        </div>
+      <div class="hm-feat">
+        {#if narrow}
+          <div class="hm-feat-list">
+            {#each FEATURES as f (f.id)}
+              <button
+                class="hm-feat-tab"
+                class:active={feature === f.id}
+                aria-expanded={feature === f.id}
+                onclick={() => (feature = f.id)}
+              >
+                <span class="hm-feat-title">{f.title}</span>
+                <span class="hm-feat-text">{f.text}</span>
+              </button>
+              {#if feature === f.id}
+                <div class="hm-feat-inline">{@render featPart()}</div>
+              {/if}
+            {/each}
+          </div>
+        {:else}
+          <div class="hm-feat-list" role="tablist" aria-orientation="vertical" aria-label="Mogućnosti">
+            {#each FEATURES as f, i (f.id)}
+              <button
+                id="feat-tab-{f.id}"
+                role="tab"
+                class="hm-feat-tab"
+                class:active={feature === f.id}
+                aria-selected={feature === f.id}
+                aria-controls="feat-panel"
+                tabindex={feature === f.id ? 0 : -1}
+                onclick={() => (feature = f.id)}
+                onkeydown={(e) => onTabKey(e, i)}
+              >
+                <span class="hm-feat-title">{f.title}</span>
+                <span class="hm-feat-text">{f.text}</span>
+              </button>
+            {/each}
+          </div>
+
+          <div class="hm-feat-panel" id="feat-panel" role="tabpanel" aria-labelledby="feat-tab-{feature}">
+            {@render featPart()}
+          </div>
+        {/if}
       </div>
     </section>
 
@@ -188,7 +223,7 @@
     outline-offset: 2px;
   }
 
-  .hm-wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+  .hm-wrap { max-width: 1120px; margin: 0 auto; padding-inline: 40px; }
   .hm-wrap-wide { max-width: 1240px; margin: 0 auto; }
 
   h1, h2 { margin: 0; font-weight: 600; color: var(--text); }
@@ -207,11 +242,15 @@
   .hm-hero::before {
     content: "";
     position: absolute;
-    inset: 0 -200px -160px;
+    top: 0;
+    bottom: -160px;
+    left: 50%;
+    width: min(100vw, 1600px);
+    transform: translateX(-50%);
     z-index: -1;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
     background-size: 56px 56px;
     background-position: center top;
     mask-image: radial-gradient(ellipse 60% 70% at 50% 35%, #000 30%, transparent 75%);
@@ -345,6 +384,7 @@
   /* Levels */
   .hm-levels { padding-top: 64px; padding-bottom: 120px; border-top: 1px solid var(--border); }
   .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .hm-levels .badge-sq { width: 26px; height: 26px; }
   .hm-levels h3 { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; font-size: 17px; font-weight: 500; }
   .hm-levels p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-dim); max-width: 34em; }
   .hm-levels .hm-levels-note { margin-top: 28px; font-size: 14px; color: var(--text-faint); }
@@ -368,18 +408,28 @@
   .hm-footer-brand .brand-mark { width: 22px; height: 22px; font-size: 11px; border-radius: 6px; }
   .hm-footer a:hover { color: var(--text); }
 
+  .hm-feat-inline { padding: 4px 0 20px 20px; border-left: 2px solid var(--primary); animation: hm-fade 0.2s ease-out; }
+  @keyframes hm-fade { from { opacity: 0; } }
+
   @media (max-width: 900px) {
-    .hm-feat { grid-template-columns: 1fr; gap: 24px; }
-    .hm-feat-panel { min-height: 0; }
+    .hm-feat { grid-template-columns: 1fr; margin-top: 32px; }
+    .hm-feat-tab { padding: 16px 0 12px 18px; }
+    .hm-feat-tab.active { padding-bottom: 14px; }
+    .hm-feat-inline { padding-left: 18px; }
+    .hm-feat-chat { max-width: none; }
   }
   @media (max-width: 640px) {
-    .hm-wrap { padding: 0 20px; }
+    .hm-wrap { padding-inline: 20px; }
     .hm-hero { padding-top: 64px; }
     .hm-lead { font-size: 16px; }
     .hm-stage { padding: 0 12px 64px; }
     .hm-try { margin-top: 40px; }
-    .hm-feat-panel { padding: 16px; }
+    .hm-features, .hm-levels { padding-top: 48px; padding-bottom: 72px; }
+    .hm-final { padding-top: 64px; padding-bottom: 80px; }
+    .hm-final p { font-size: 16px; }
+    .hm-feat-title { font-size: 16px; }
     .hm-levels-grid { grid-template-columns: 1fr; gap: 28px; }
-    .hm-footer { flex-wrap: wrap; gap: 14px 20px; }
+    .hm-footer { flex-wrap: wrap; gap: 12px 20px; }
+    .hm-footer-brand { flex-basis: 100%; }
   }
 </style>

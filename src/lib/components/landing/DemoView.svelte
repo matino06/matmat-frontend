@@ -207,6 +207,8 @@
   .dv-exam-meta { display: flex; gap: 6px; }
 
   @media (max-width: 600px) {
+    .dv-ishod { grid-template-columns: 8px 1fr auto; gap: 12px; padding: 11px 14px; }
+    .dv-dots { display: none; }
     .dv-ring { grid-template-columns: 1fr; justify-items: center; gap: 20px; }
     .dv-fields { width: 100%; }
     .dv-goals { grid-template-columns: 1fr; }

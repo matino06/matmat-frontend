@@ -38,6 +38,30 @@
   });
 </script>
 
+{#snippet glyph(t)}
+  {#if t.svg === "wave"}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
+      <path d="M5 24c4.5-11 9-11 13.5 0s9 11 13.5 0 9-11 11-5" />
+    </svg>
+  {:else if t.svg === "triangle"}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round">
+      <path d="M9 38h30L9 12z" />
+      <path d="M9 31h7v7" stroke-width="2.2" />
+    </svg>
+  {:else}
+    <span class="ht-tex">{@html renderMdInline(t.tex)}</span>
+  {/if}
+{/snippet}
+
+<!-- Phones: no room around the headline, so the tiles line up above it. -->
+<div class="ht-row" aria-hidden="true">
+  {#each TILES as t, i (t.label)}
+    <div class="ht-tile" style="--c: {t.color}; --s: 46px; --r: {i % 2 ? 6 : -6}deg; --k: {t.scale ?? 1}; animation-delay: {0.15 + i * 0.06}s;">
+      {@render glyph(t)}
+    </div>
+  {/each}
+</div>
+
 <div class="ht" aria-hidden="true">
   {#each TILES as t, i (t.label)}
     <div
@@ -49,18 +73,7 @@
         title={t.label}
         style="--c: {t.color}; --s: {t.size}px; --r: {t.rot}deg; --k: {t.scale ?? 1}; animation-delay: {0.25 + i * 0.07}s;"
       >
-        {#if t.svg === "wave"}
-          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round">
-            <path d="M5 24c4.5-11 9-11 13.5 0s9 11 13.5 0 9-11 11-5" />
-          </svg>
-        {:else if t.svg === "triangle"}
-          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round">
-            <path d="M9 38h30L9 12z" />
-            <path d="M9 31h7v7" stroke-width="2.2" />
-          </svg>
-        {:else}
-          <span class="ht-tex">{@html renderMdInline(t.tex)}</span>
-        {/if}
+        {@render glyph(t)}
       </div>
     </div>
   {/each}
@@ -81,14 +94,15 @@
     border-radius: calc(var(--s) * 0.26);
     color: hsl(var(--c));
     background:
-      radial-gradient(120% 90% at 30% 0%, hsl(var(--c) / 0.16), transparent 60%),
-      linear-gradient(180deg, #1c1c21, #111114);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+      radial-gradient(120% 90% at 30% 0%, hsl(var(--c) / 0.3), transparent 65%),
+      linear-gradient(180deg, #26262c, #16161a);
+    border: 1px solid hsl(var(--c) / 0.28);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 1px 0 rgba(255, 255, 255, 0.14) inset,
       0 -1px 0 rgba(0, 0, 0, 0.4) inset,
       0 18px 40px rgba(0, 0, 0, 0.55),
-      0 0 0 6px rgba(255, 255, 255, 0.015);
+      0 0 32px hsl(var(--c) / 0.14),
+      0 0 0 6px rgba(255, 255, 255, 0.02);
     transform: rotate(var(--r));
     animation: ht-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
@@ -103,8 +117,15 @@
     .ht-tile { animation: none; }
     .ht-pos { transition: none; }
   }
+  .ht-row { display: none; }
   /* Below this the headline fills the width and the tiles would sit on it. */
   @media (max-width: 960px) {
     .ht { display: none; }
+    .ht-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+    .ht-row .ht-tile { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.14) inset, 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 20px hsl(var(--c) / 0.12); }
+  }
+  @media (max-width: 380px) {
+    .ht-row { gap: 9px; }
+    .ht-row .ht-tile { --s: 40px !important; }
   }
 </style>
