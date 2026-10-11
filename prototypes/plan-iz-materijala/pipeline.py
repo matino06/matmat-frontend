@@ -444,7 +444,8 @@ def step_compare():
 
 def step_report():
     plan = load("plan.json")
-    cov, ass, cmp_, jev = load("coverage.json"), load("assumptions.json"), load("compare.json"), load("merge_jev.json")
+    cov, ass, cmp_ = load("coverage.json"), load("assumptions.json"), load("compare.json")
+    jev = load("merge_jev.json") if (OUT / "merge_jev.json").exists() else []
     pages = load("pages.json")
     costs = {}
     for line in (CACHE / "costs.jsonl").read_text().splitlines():
@@ -466,7 +467,7 @@ def step_report():
             if l["id"] in bad: flags.append("⚠️ nulta pretpostavka: " + "; ".join(bad[l["id"]]))
             md += [f"**{l['id']} {l['naziv']}** · zadataka s ispita: {used.get(l['id'], 0)}"
                    + (f" · spojeno iz {', '.join(l['spojeno_iz'])}" if l.get("spojeno_iz") else ""),
-                   f"- Koncept: {l['koncept']}", f"- Zadatak: {l.get('zadatak', '')} ({l.get('tezina', '')})",
+                   f"- Koncept: {l['koncept']}", f"- Stavke ({len(l.get('stavke', []))}): {l['zasto_nova']}" if l.get("stavke") else "", f"- Zadatak: {l.get('zadatak', '')} ({l.get('tezina', '')})",
                    f"- Zašto nova: {l['zasto_nova']}",
                    f"- Preduvjeti: {', '.join(l['preduvjeti']) or '—'}"] + [f"- {f}" for f in flags] + [""]
     (OUT / "plan.md").write_text("\n".join(md))
@@ -475,7 +476,7 @@ def step_report():
     nista = [r for r in cmp_ if r["pokriveno"] == "nista"]
     ok_cls = sum(p["kind"] == p["truth"] for p in pages)
     rep = ["# Mjerenja prototipa", "",
-           f"- Lekcija: **{len(plan['lekcije'])}** (nacrt prije spajanja: {len(load('plan_draft.json')['lekcije'])}, ručni: {len(manual_plan())})",
+           f"- Lekcija: **{len(plan['lekcije'])}** (ručni: {len(manual_plan())})",
            f"- Zadaci s ispita pokriveni: **{len(cov) - len(unc)}/{len(cov)}**",
            f"- Lekcije koje ne treba nijedan zadatak s ispita: {sum(1 for l in plan['lekcije'] if not used.get(l['id']))}",
            f"- Nulta pretpostavka prekršena: {len(bad)} lekcija",
@@ -491,12 +492,142 @@ def step_report():
     (OUT / "mjerenja.md").write_text("\n".join(rep))
     print((OUT / "mjerenja.md").read_text()[:1500])
 
+# ================================================================ v4: stavke znanja → grupiranje
+
+BUDGET = (4, 6)  # stavki po lekciji
+
+POINT_RULES = """Stavka znanja je najsitnija stvar koju učenik mora znati ili umjeti: jedna formula, jedna
+definicija veličine, jedna pojava, jedan postupak ili jedna tipična zamka. Primjeri dobrih stavki:
+„W = qU: rad električne sile pri premještanju naboja“, „napon je razlika potencijala U = φ1 − φ2“,
+„elektronvolt: 1 eV = 1,602·10⁻¹⁹ J“, „zamka: pri adijabatskom procesu ne vrijedi pV = konst.“.
+Stavka NIJE: isti zakon u drugom kontekstu, obrat iste formule, isti zadatak s drugim brojevima.
+Predznanje je samo osnovnoškolska matematika; sve iz fizike je stavka.
+Konstante i tablične vrijednosti iz knjižice formula NISU stavke (učenik ih pronađe u knjižici),
+ali značenje veličine i kada se formula koristi jesu."""
+
+
+def step_points():
+    ishodi, zadaci = load("ishodi.json"), load("zadaci.json")
+    zad = "\n".join(f"- [{z['rok']} {z['broj']}] {z['sazetak']} | treba: {', '.join(z.get('potrebno_znanje', []))}"
+                    for z in zadaci)
+    others = "\n".join(f"- {x['oznaka']}: {x['naslov']}" for x in ishodi)
+
+    def one(ix):
+        i, ish = ix
+        out = chat("points", M_PLAN,
+            "Izvlačiš stavke znanja za JEDAN ishod ispitnog kataloga fizike.\n" + POINT_RULES +
+            "\nUzmi samo stavke koje pripadaju OVOM ishodu (ostali ishodi imaju svoje pozive). Uključi sve što "
+            "traži razrada i sve što zadaci s ispita iz ovog područja zahtijevaju. Poredaj ih redom učenja. "
+            'Vrati JSON {"stavke":[{"tekst":"…","vrsta":"formula|definicija|pojava|postupak|zamka"}]}',
+            f"OVAJ ISHOD:\n{json.dumps(ish, ensure_ascii=False)}\n\nSVI ISHODI (da znaš granice):\n{others}\n\n"
+            f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}", max_tokens=12000, reasoning="medium")["stavke"]
+        return [{"id": f"S{i:02d}.{k:02d}", "ishod": ish["oznaka"] or "ostalo", "ishod_naslov": ish["naslov"], **x}
+                for k, x in enumerate(out, 1)]
+
+    pts = [p for ps in pmap(one, list(enumerate(ishodi, 1)), workers=8) for p in ps]
+    save("stavke.json", pts)
+    print(f"Stavke: {len(pts)} iz {len(ishodi)} ishoda")
+
+
+def step_edges():
+    pts = load("stavke.json")
+    allp = "\n".join(f"{p['id']} {p['tekst']}" for p in pts)
+    dup = chat("dedupe", M_PLAN,
+        "Ovo je popis stavki znanja iz fizike izvučen po ishodima, pa se neke ponavljaju. Nađi grupe stavki koje "
+        "su ISTA stvar (ista formula ili definicija). Vrati JSON "
+        '{"duplikati":[{"zadrzi":"id","ukloni":["id"]}]}',
+        allp, max_tokens=12000)["duplikati"]
+    gone = {x for d in dup for x in d["ukloni"] if x != d["zadrzi"]}
+    pts = [p for p in pts if p["id"] not in gone]
+    alias = {x: d["zadrzi"] for d in dup for x in d["ukloni"]}
+    allp = "\n".join(f"{p['id']} {p['tekst']}" for p in pts)
+    batches = [pts[i:i + 40] for i in range(0, len(pts), 40)]
+
+    def one(batch):
+        b = "\n".join(f"{p['id']} {p['tekst']}" for p in batch)
+        return chat("edges", M_PLAN,
+            "Za svaku stavku iz SERIJE navedi njezine IZRAVNE preduvjete: stavke s CIJELOG popisa bez kojih se ona "
+            "ne može razumjeti. Samo izravne (ne tranzitivne), obično 0–3. Predznanje (osnovnoškolska matematika) "
+            'nije stavka. Vrati JSON {"preduvjeti":{"id":["id"]}}',
+            f"CIJELI POPIS:\n{allp}\n\nSERIJA:\n{b}", max_tokens=8000, reasoning="low")["preduvjeti"]
+
+    edges = {}
+    for out in pmap(one, batches, workers=6):
+        edges.update(out)
+    ids = {p["id"] for p in pts}
+    for p in pts:
+        pre = [alias.get(x, x) for x in edges.get(p["id"], [])]
+        p["preduvjeti"] = sorted({x for x in pre if x in ids and x != p["id"]})
+    save("stavke.json", pts)
+    print(f"Rubovi: {len(gone)} duplikata uklonjeno, {len(pts)} stavki, "
+          f"{sum(len(p['preduvjeti']) for p in pts)} veza preduvjeta")
+
+
+def step_group():
+    pts = load("stavke.json")
+    P = {p["id"]: p for p in pts}
+    by = {}
+    for p in pts:
+        by.setdefault(p["ishod"], []).append(p)
+
+    def one(item):
+        ish, ps = item
+        lst = "\n".join(f"{p['id']} [{p['vrsta']}] {p['tekst']} | preduvjeti: {', '.join(p['preduvjeti']) or '—'}"
+                        for p in ps)
+        return chat("group", M_PLAN,
+            f"Grupiraj stavke znanja jednog ishoda u LEKCIJE. Svaka lekcija ima {BUDGET[0]}–{BUDGET[1]} stavki "
+            "(manje samo ako ishod nema dovoljno stavki), stavke u lekciji čine povezanu cjelinu, i lekcija se uči "
+            "JEDNIM zadatkom s podzadacima A–D (svaki podzadatak vodi kroz jednu ili dvije stavke). Svaka stavka je "
+            "u točno jednoj lekciji. Preduvjet stavke mora biti u ranijoj lekciji ili u istoj lekciji. Poredaj "
+            "lekcije redom učenja. Vrati JSON "
+            '{"lekcije":[{"naziv":"…","koncept":"jedna rečenica: što lekcija uči","zadatak":"jedna rečenica: '
+            'koji zadatak A–D je uči","stavke":["id"]}]}',
+            f"ISHOD: {ish} {ps[0]['ishod_naslov']}\n\nSTAVKE:\n{lst}", max_tokens=8000, reasoning="medium")["lekcije"]
+
+    items = list(by.items())
+    lessons, blocks = [], []
+    for bi, ((ish, ps), out) in enumerate(zip(items, pmap(one, items, workers=8)), 1):
+        bid = f"B{bi:02d}"
+        blocks.append({"id": bid, "naziv": f"{ish} {ps[0]['ishod_naslov']}"})
+        for k, l in enumerate(out, 1):
+            lessons.append({"id": f"{bid}.{k:02d}", "blok": bid, "naziv": l["naziv"], "koncept": l["koncept"],
+                            "zadatak": l["zadatak"], "stavke": [x for x in l["stavke"] if x in P],
+                            "ishodi": [ish], "tezina": ""})
+    owner = {}
+    for l in lessons:
+        for x in l["stavke"]:
+            owner.setdefault(x, l["id"])
+    missing = [x for x in P if x not in owner]
+    order = {l["id"]: i for i, l in enumerate(lessons)}
+    back = 0
+    for l in lessons:
+        pre = set()
+        for x in l["stavke"]:
+            for y in P[x]["preduvjeti"]:
+                o = owner.get(y)
+                if o and o != l["id"]:
+                    pre.add(o)
+                    if order[o] > order[l["id"]]: back += 1
+        l["preduvjeti"] = sorted(pre, key=order.get)
+        l["zasto_nova"] = "; ".join(P[x]["tekst"] for x in l["stavke"])
+    sizes = [len(l["stavke"]) for l in lessons]
+    plan = {"predznanje": ["osnovnoškolska matematika"], "blokovi": blocks, "lekcije": lessons}
+    save("plan.json", plan)
+    import collections
+    print(f"Grupiranje: {len(lessons)} lekcija iz {len(P)} stavki; veličine {sorted(collections.Counter(sizes).items())}; "
+          f"{len(missing)} stavki bez lekcije; {back} preduvjeta pokazuje unaprijed (kasnija lekcija)")
+
+
 
 STEPS = ["ocr", "classify", "scope", "draft", "merge", "coverage", "assumptions", "compare", "report"]
+STEPS_V4 = ["points", "edges", "group", "coverage", "assumptions", "compare", "report"]
 
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else "all"
     # "all" = sve; "merge+" = od tog koraka do kraja; "merge" = samo taj korak
-    steps = STEPS if arg == "all" else STEPS[STEPS.index(arg[:-1]):] if arg.endswith("+") else [arg]
+    if arg == "v4":
+        steps = STEPS_V4
+    else:
+        steps = STEPS if arg == "all" else STEPS[STEPS.index(arg[:-1]):] if arg.endswith("+") else [arg]
     for s in steps:
         globals()[f"step_{s}"]()
