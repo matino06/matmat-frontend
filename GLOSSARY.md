@@ -16,6 +16,10 @@ _Avoid_: creator, power user, premium korisnik
 Datoteka koju kreator uploada za vlastiti predmet: skripta, kurikulum, stari ispit. Određuje opseg i dubinu gradiva, ali se iz njega nikad ne preuzimaju zadaci.
 _Avoid_: dokument, izvor, upload
 
+**Materijal dostupan na ispitu**:
+Materijal koji učenik smije koristiti na ispitu, npr. knjižica formula. Ono što je u njemu učenik ne pamti nego zna gdje to pronaći; značenje veličine i dalje traži lekciju.
+_Avoid_: šalabahter, podsjetnik
+
 **Plan**:
 Uređeni skup lekcija s preduvjetima koji pokriva cijelo gradivo vlastitog predmeta. Kreator ga može uređivati prije nego krenu zadaci.
 _Avoid_: kurikulum, syllabus, roadmap
@@ -23,7 +27,7 @@ _Avoid_: kurikulum, syllabus, roadmap
 ## Gradivo
 
 **Lekcija**:
-Jedinica plana koja uvodi točno jedan novi koncept. Novi tip zadatka nije razlog za novu lekciju.
+Mali zalogaj plana: najviše jedna nova ideja, koju učenik nauči iz jednog zadatka i njegovog objašnjenja. Složen koncept dijeli se na lekciju s laganim zadatkom i lekciju sa složenijim zadatkom koja joj je preduvjet; novi kontekst ili obrat formule nisu razlog za novu lekciju.
 _Avoid_: ishod, cilj, objective, tema
 
 **Koncept**:
@@ -35,7 +39,7 @@ Lekcija čiji se koncept koristi u drugoj lekciji. Lekcija smije koristiti samo 
 _Avoid_: prerequisite, ovisnost
 
 **Zadatak**:
-Jedna od pet varijacija kojima lekcija uči svoj koncept, moguće s podzadacima a, b, c. Učenik pri svakom ponavljanju lekcije dobije sljedeći. Nikad nije preuzet iz materijala.
+Ono čime lekcija uči svoju ideju, moguće s podzadacima a, b, c. Lekcija ima pet varijacija istog zadatka (drugi brojevi i kontekst), da ponavljanje ne bude uvijek isti zadatak; za učenje je dovoljna jedna. Nikad nije preuzet iz materijala.
 _Avoid_: pitanje, vježba
 
 **Lekcija primjene**:
@@ -43,7 +47,7 @@ Lekcija bez novog koncepta koja uči primijeniti već naučeni koncept u drugom 
 _Avoid_: vježba, primjer
 
 **Pretpostavljeno predznanje**:
-Koncepti izvan materijala koje plan smije koristiti bez lekcije. Kreator ga uređuje; ono što ne zna prebacuje u plan kao lekciju.
+Koncepti izvan materijala koje plan smije koristiti bez lekcije; po defaultu samo matematika iz ranijih razreda, nikad gradivo samog predmeta. Kreator ga uređuje; ono što ne zna prebacuje u plan kao lekciju.
 _Avoid_: predznanje, prerequisites
 
 **Način učenja**:
