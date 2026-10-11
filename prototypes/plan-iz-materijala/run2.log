@@ -1,0 +1,35 @@
+Nacrt: 201 lekcija, 7 stavki predznanja
+Spajanje: 188 lekcija nakon spajanja (prije 201). Jev označio 48/397 parova, LLM spojio 13 grupa, preklapanje 12
+Pokrivenost: 170/182 zadataka pokriveno; 26 lekcija ne treba nijedan zadatak s ispita
+Nulta pretpostavka: 123 lekcija s problemom
+Usporedba s ručnim (97 lekcija): {'cijelo': 51, 'djelomicno': 46, 'nista': 0}
+# Mjerenja prototipa
+
+- Lekcija: **188** (nacrt prije spajanja: 201, ručni: 97)
+- Zadaci s ispita pokriveni: **170/182**
+- Lekcije koje ne treba nijedan zadatak s ispita: 26
+- Nulta pretpostavka prekršena: 123 lekcija
+- Ručne lekcije koje generirani plan uopće ne pokriva: 0
+- Jev razvrstavanje stranica: 191/283 slaže se s nazivom datoteke
+- Jev parovi „nova ideja?“: 397, označeno za spajanje 48
+
+## Trošak po koraku (USD)
+
+- assume: 0.142
+- classify: 0.009
+- compare: 0.487
+- coverage: 0.052
+- draft: 1.044
+- merge-jev: 0.011
+- merge-llm: 0.187
+- ocr: 0.098
+- scope-catalog: 0.120
+- scope-exam: 0.031
+- **ukupno: 2.18**
+
+## Nepokriveni zadaci s ispita
+
+- [FIZ22ljeto 26] Koliki je upadni kut svjetlosti pri prijelazu iz zraka u staklo indeksa loma 1,5 ako je kut loma 30°? → Inverzna trigonometrijska funkcija (arcsin) na džepnom kalkulatoru nije navedena u predznanju
+- [FIZ22ljeto 27] Kolika je gustoća tijela koje pluta između ulja i vode ako je 45 % njegova volumena u vodi? → Tablična gustoća ulja (ako nije zadana u tekstu zadatka)
+- [FIZ22ljeto 29] Koliki je napon U izvora ako se naboj na pločama kondenzatora kapaciteta 44 pF promijeni za 35 nC pri stavljanju u ulje? → Relativna permitivnost ulja (tablična vrijednost, ako nije zadana u tekstu zadatka)
+- [FIZ23ljeto1 32] Koliko je vremena potrebno da se prazna bačva volumena 50 litara napuni vodom iz cijevi, ako je razlika statičkih tlakova 500 Pa? → gustoća vode (ρ ≈ 1000 kg/m³) nije navedena ni u jednoj lekciji ni u predznanju nit

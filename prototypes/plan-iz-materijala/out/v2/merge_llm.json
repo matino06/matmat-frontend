@@ -1,0 +1,122 @@
+{
+ "spajanja": [
+  {
+   "zadrzi": "G03",
+   "spoji": [
+    "G04"
+   ],
+   "novi_naziv": "Centripetalna akceleracija i sila",
+   "novi_koncept": "Pri kružnom gibanju brzina stalno mijenja smjer, pa postoji akceleracija a = v²/r prema središtu. Prema II. Newtonovu zakonu ukupna sila prema središtu je F = mv²/r.",
+   "razlog": "Centripetalna sila je samo F = ma s a = v²/r, dakle nema nove ideje. Jedan zadatak (zavoj ili kuglica na niti) pokriva obje veličine."
+  },
+  {
+   "zadrzi": "K07",
+   "spoji": [
+    "K08"
+   ],
+   "novi_naziv": "Put pri jednoliko ubrzanom gibanju i graf x(t)",
+   "novi_koncept": "Pri stalnoj akceleraciji je s = v₀t + at²/2 (i v² = v₀² + 2as). Zato je graf x(t) zakrivljen: nagib tangente je brzina, a promjena nagiba je akceleracija.",
+   "razlog": "Zakrivljeni x(t) graf je grafički prikaz formule za put i nagiba iz K03. To nije nova ideja, nego čitanje grafa."
+  },
+  {
+   "zadrzi": "T07",
+   "spoji": [
+    "T08"
+   ],
+   "novi_naziv": "Toplina, specifični toplinski kapacitet i Q–Δt graf",
+   "novi_koncept": "Toplina za zagrijavanje je Q = mcΔt. Na grafu Q(Δt) nagib je mc, pa pri jednakim masama veći nagib znači veći c.",
+   "razlog": "Nagib grafa je ista formula Q = mcΔt pročitana s grafa (alat). To ne traži zasebnu lekciju."
+  },
+  {
+   "zadrzi": "T14",
+   "spoji": [
+    "T15"
+   ],
+   "novi_naziv": "Srednja kinetička energija molekula i unutarnja energija plina",
+   "novi_koncept": "Srednja kinetička energija molekule idealnog plina je 3kT/2. Unutarnja energija jednoatomnog plina je zbroj tih energija, U = 3NkT/2, i ovisi samo o T.",
+   "razlog": "U = N·(3kT/2) je samo množenje brojem čestica, bez nove ideje."
+  },
+  {
+   "zadrzi": "T17",
+   "spoji": [
+    "T18"
+   ],
+   "novi_naziv": "Izotermna i izobarna promjena plina",
+   "novi_koncept": "Posebni slučajevi pV = nRT: pri stalnoj T je pV = konst., a pri stalnom p je V/T = konst. (graf V(T) je pravac kroz ishodište).",
+   "razlog": "Oba zakona izravno slijede iz jednadžbe stanja uz konstantnu veličinu. Jedan zadatak s plinom pokriva oba."
+  },
+  {
+   "zadrzi": "F16",
+   "spoji": [
+    "F17"
+   ],
+   "novi_naziv": "Defekt mase i energija vezanja",
+   "novi_koncept": "Masa jezgre manja je od zbroja nukleona, a razlika je energija vezanja E = Δm·c². Ukupna energija vezanja jednaka je broju nukleona pomnoženom energijom vezanja po nukleonu.",
+   "razlog": "Energija po nukleonu je samo omjer ili umnožak iste veličine. Nema nove formule ni zasebne ideje."
+  },
+  {
+   "zadrzi": "F05",
+   "spoji": [
+    "F06"
+   ],
+   "novi_naziv": "De Broglieva valna duljina",
+   "novi_koncept": "Čestice imaju valnu duljinu λ = h/p. Za ubrzanu česticu p = √(2mE_k), pa λ ∝ 1/√E_k.",
+   "razlog": "p = √(2mE_k) je izvod iz E_k = p²/2m i definicije p. To je samo preuređivanje formule, a zadatak je isti kao u F05."
+  },
+  {
+   "zadrzi": "E11",
+   "spoji": [
+    "E12"
+   ],
+   "novi_naziv": "Nabijena čestica u homogenom polju",
+   "novi_koncept": "Nabijena čestica u polju ima akceleraciju a = qE/m i dobiva energiju qU. Ako ulijeće okomito na silnice, putanja je parabola (neovisne komponente gibanja).",
+   "razlog": "Okomiti ulaz u polje isto je što i horizontalni hitac s akceleracijom qE/m. To je ista ideja u drugom kontekstu."
+  },
+  {
+   "zadrzi": "M07",
+   "spoji": [
+    "M08"
+   ],
+   "novi_naziv": "Lorentzova sila i gibanje čestice u magnetskom polju",
+   "novi_koncept": "Na naboj u polju djeluje F = qvB sinα, okomita na v i B. Ako je okomita na v, ona je centripetalna sila, pa je r = mv/(qB).",
+   "razlog": "r = mv/(qB) dobiva se izjednačavanjem Lorentzove sile s centripetalnom silom, bez nove formule ili zakona."
+  },
+  {
+   "zadrzi": "M05",
+   "spoji": [
+    "M20"
+   ],
+   "novi_naziv": "Amperova sila i elektromotor",
+   "novi_koncept": "Na vodič sa strujom u polju djeluje sila F = BIℓ sinα (pravilo lijeve ruke). Zbog nje se petlja sa strujom u polju zakreće, što je načelo elektromotora.",
+   "razlog": "Elektromotor je samo primjena Amperove sile na petlju."
+  },
+  {
+   "zadrzi": "M13",
+   "spoji": [
+    "M14"
+   ],
+   "novi_naziv": "Generator i izmjenična struja",
+   "novi_koncept": "Rotirajuća petlja u polju mijenja tok pa daje sinusni napon, i = i₀ sin(ωt) s ω = 2πf. To je načelo generatora.",
+   "razlog": "Zapis i = i₀ sin(ωt) je ista jednadžba harmonijskog titranja (O02) primijenjena na struju. Nema nove ideje."
+  },
+  {
+   "zadrzi": "O06",
+   "spoji": [
+    "O18"
+   ],
+   "novi_naziv": "Energija titranja i energija vala",
+   "novi_koncept": "Ukupna energija titranja je E = kA²/2, a E_k i E_p se izmjenjuju. Zato je energija titranja, pa i vala, razmjerna kvadratu amplitude.",
+   "razlog": "Razmjernost kvadratu amplitude slijedi izravno iz E = kA²/2 i već je dio zadatka o dvostrukoj amplitudi."
+  },
+  {
+   "zadrzi": "P04",
+   "spoji": [
+    "P06"
+   ],
+   "novi_naziv": "Snellov zakon loma i planparalelna ploča",
+   "novi_koncept": "Na granici sredstava vrijedi sinα/sinβ = n₂/n₁. Kroz planparalelnu ploču zraka izlazi usporedno s upadnom, bočno pomaknuta, jer se lomi dvaput.",
+   "razlog": "Planparalelna ploča je dvostruka primjena Snellova zakona, bez nove veličine ili zakona."
+  }
+ ],
+ "brisanja": []
+}
