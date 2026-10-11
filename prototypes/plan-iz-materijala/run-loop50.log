@@ -1,0 +1,12 @@
+# Haiku (medium) piše, GPT-6.1 Sol (low) provjerava — 50 lekcija
+
+- Greške u izvođenju: 1
+- Dobar odmah (Sol prihvatio prvu verziju): **8/49**
+- Dobar nakon ispravaka: **47/49**
+- Broj ispravaka po lekciji: [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3]
+- KaTeX greške u završnim verzijama: 0
+- Medijan trajanja po lekciji: 92 s
+
+## Trošak (USD)
+
+- loop-fix: 0.282
