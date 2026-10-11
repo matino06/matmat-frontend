@@ -1,17 +1,48 @@
 <script module>
   // Also read by /kako-radi, which lists what each rating means.
+  // `sub` is the backend's SM-2 interval for the first rating of a new objective
+  // (AccountObjectiveService.nextInterval). With a taskId the picker shows the
+  // user's real interval instead.
   export const RATINGS = [
-    { k: 0, t: "Zaborav",      desc: "Ni rješenje mi nije jasno",                 sub: "za 1 dan",   color: "#ef4444", gain: 0 },
-    { k: 1, t: "Netočno",      desc: "Netočno riješeno, rješenje shvaćeno",        sub: "za 1 dan",   color: "#f97316", gain: 0 },
-    { k: 2, t: "Lako netočno", desc: "Netočno, ali rješenje izgleda jednostavno",  sub: "za 2 dana",  color: "#eab308", gain: 0 },
-    { k: 3, t: "Napor",        desc: "Točno, ali s velikim naporom",               sub: "za 4 dana",  color: "#84cc16", gain: 2 },
-    { k: 4, t: "Lako točno",   desc: "Točno nakon malo razmišljanja",              sub: "za 8 dana",  color: "#22c55e", gain: 4 },
-    { k: 5, t: "Savršeno",     desc: "Riješio samostalno bez problema",            sub: "za 14 dana", color: "#16a34a", gain: 6 },
+    { k: 0, t: "Zaborav",      desc: "Ni rješenje mi nije jasno",                 sub: "za 1 dan",  color: "#ef4444", gain: 0 },
+    { k: 1, t: "Netočno",      desc: "Netočno riješeno, rješenje shvaćeno",        sub: "za 1 dan",  color: "#f97316", gain: 0 },
+    { k: 2, t: "Lako netočno", desc: "Netočno, ali rješenje izgleda jednostavno",  sub: "za 1 dan",  color: "#eab308", gain: 0 },
+    { k: 3, t: "Napor",        desc: "Točno, ali s velikim naporom",               sub: "za 1 dan",  color: "#84cc16", gain: 2 },
+    { k: 4, t: "Lako točno",   desc: "Točno nakon malo razmišljanja",              sub: "za 1 dan",  color: "#22c55e", gain: 4 },
+    { k: 5, t: "Savršeno",     desc: "Riješio samostalno bez problema",            sub: "za 6 dana", color: "#16a34a", gain: 6 },
   ];
+
+  function formatDays(n) {
+    const unit = n % 10 === 1 && n % 100 !== 11 ? "dan" : "dana";
+    return `za ${n} ${unit}`;
+  }
 </script>
 
 <script>
-  let { onSelect } = $props();
+  import { apiClient } from "$lib/api/apiClient";
+
+  // taskId: when set, "Ponovi za …" shows the backend's real SM-2 interval for
+  // this user; without it (marketing demos) the static RATINGS values are shown.
+  let { onSelect, taskId = null } = $props();
+
+  // Days until the objective returns, indexed by rating; null until loaded.
+  let intervals = $state(null);
+
+  $effect(() => {
+    intervals = null;
+    if (taskId == null) return;
+    let cancelled = false;
+    apiClient(`/solved-task/next-intervals/${taskId}`, { method: "GET" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((days) => { if (!cancelled) intervals = days; })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  });
+
+  function subFor(r) {
+    if (taskId == null) return r.sub;
+    return intervals ? formatDays(intervals[r.k]) : null;
+  }
 
   let hovered = $state(null);
   let selected = $state(null);
@@ -52,7 +83,9 @@
     {#if activeR}
       <span class="rp-desc-name" style="color: {activeR.color}">{activeR.k} — {activeR.t}</span>
       <span class="rp-desc-text">{activeR.desc}</span>
-      <span class="rp-desc-sub">Ponovi {activeR.sub}</span>
+      {#if subFor(activeR)}
+        <span class="rp-desc-sub">Ponovi {subFor(activeR)}</span>
+      {/if}
     {:else}
       <span class="rp-desc-name" style="color: var(--text-faint)">0–2</span>
       <span class="rp-desc-text">Nisam riješio · zadatak se vraća uskoro</span>

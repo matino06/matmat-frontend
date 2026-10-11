@@ -58,7 +58,7 @@
       id: "objectives",
       title: "Ponavljanje u pravo vrijeme",
       lead: "MatMat pamti koje zadatke znaš, a koje trebaš ponoviti.",
-      text: "Ocjena od 0 do 5 odlučuje kad se ishod vraća: loše riješen već sutra, savršeno riješen za 14 dana. Ono što već znaš ne vrti se u krug.",
+      text: "Ocjena od 0 do 5 odlučuje kad se ishod vraća: loše riješen već sutra, a svako iduće dobro rješenje razmak produljuje, od 6 dana do nekoliko tjedana. Ono što već znaš ne vrti se u krug.",
     },
     {
       id: "readiness",

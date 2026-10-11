@@ -297,7 +297,7 @@
                 </div>
               {:else}
                 {#key ratingKey}
-                  <RatingPicker onSelect={(r) => pendingRating = r} />
+                  <RatingPicker taskId={task.id} onSelect={(r) => pendingRating = r} />
                 {/key}
               {/if}
             </div>
