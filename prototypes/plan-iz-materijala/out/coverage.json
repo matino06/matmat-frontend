@@ -10,12 +10,9 @@
    "smjer i jakost električnog polja"
   ],
   "lekcije": [
-   "E04",
-   "E05",
-   "E06",
-   "E07"
+   "B13.04"
   ],
-  "nedostaje": ""
+  "nedostaje": "Tekst zadatka nije dostupan (na stranici je samo slika sheme), pa se potrebno znanje ne može pouzdano procijeniti."
  },
  {
   "rok": "FIZ-katalog-2026.pdf",
@@ -28,8 +25,9 @@
    "zaključak da je stalna akceleracija posljedica stalne ukupne sile različite od nule"
   ],
   "lekcije": [
-   "K04",
-   "D04"
+   "B03.01",
+   "B03.02",
+   "B01.03"
   ],
   "nedostaje": ""
  },
@@ -45,8 +43,8 @@
    "čitanje parametara iz zapisa jednadžbe titranja"
   ],
   "lekcije": [
-   "O01",
-   "O02"
+   "B19.01",
+   "B19.02"
   ],
   "nedostaje": ""
  },
@@ -64,9 +62,9 @@
    "crtanje i usporedba grafova Ek = f(f) za različite metale"
   ],
   "lekcije": [
-   "F02",
-   "F03",
-   "F04"
+   "B25.01",
+   "B25.02",
+   "B25.03"
   ],
   "nedostaje": ""
  },
@@ -81,8 +79,9 @@
    "ubrzano gibanje: rastuća brzina, zakrivljena krivulja x(t)"
   ],
   "lekcije": [
-   "K03",
-   "K07"
+   "B01.01",
+   "B01.03",
+   "B01.04"
   ],
   "nedostaje": ""
  },
@@ -97,9 +96,9 @@
    "sila teža i normalna sila podloge"
   ],
   "lekcije": [
-   "D01",
-   "D02",
-   "D03"
+   "B03.01",
+   "B02.01",
+   "B02.02"
   ],
   "nedostaje": ""
  },
@@ -113,8 +112,8 @@
    "period minutne kazaljke 1 h, satne 12 h"
   ],
   "lekcije": [
-   "G01",
-   "G02"
+   "B06.01",
+   "B06.02"
   ],
   "nedostaje": ""
  },
@@ -129,8 +128,8 @@
    "homogeni planet: gustoća i volumen"
   ],
   "lekcije": [
-   "G05",
-   "G06"
+   "B07.01",
+   "B07.02"
   ],
   "nedostaje": ""
  },
@@ -144,8 +143,7 @@
    "jednaka duljina i jednako produljenje"
   ],
   "lekcije": [
-   "T04",
-   "T05"
+   "B10.03"
   ],
   "nedostaje": ""
  },
@@ -159,8 +157,8 @@
    "srednja kinetička energija ovisi samo o temperaturi: E_k = 3/2·kT"
   ],
   "lekcije": [
-   "T01",
-   "T14"
+   "B11.01",
+   "B11.04"
   ],
   "nedostaje": ""
  },
@@ -175,7 +173,7 @@
    "jednake mase: veći nagib znači veći specifični toplinski kapacitet"
   ],
   "lekcije": [
-   "T07"
+   "B12.02"
   ],
   "nedostaje": ""
  },
@@ -189,7 +187,7 @@
    "korisnost raste s porastom temperature toplijeg spremnika"
   ],
   "lekcije": [
-   "T27"
+   "B12.08"
   ],
   "nedostaje": ""
  },
@@ -204,9 +202,8 @@
    "električno polje je usmjereno od + prema −"
   ],
   "lekcije": [
-   "E04",
-   "E05",
-   "E07"
+   "B13.02",
+   "B13.04"
   ],
   "nedostaje": ""
  },
@@ -220,9 +217,8 @@
    "pri stalnom naponu U vrijedi Q = C·U"
   ],
   "lekcije": [
-   "E15",
-   "E16",
-   "E17"
+   "B13.08",
+   "B14.01"
   ],
   "nedostaje": ""
  },
@@ -236,8 +232,7 @@
    "otpor žice R = ρℓ/S, S ovisi o promjeru"
   ],
   "lekcije": [
-   "S02",
-   "S03"
+   "B15.02"
   ],
   "nedostaje": ""
  },
@@ -253,9 +248,8 @@
    "inducirana struja konstantna dok petlja ulazi, nula kad je potpuno unutra"
   ],
   "lekcije": [
-   "M10",
-   "M11",
-   "M12"
+   "B18.02",
+   "B18.03"
   ],
   "nedostaje": ""
  },
@@ -270,9 +264,8 @@
    "u ravnotežnom položaju brzina maksimalna, akceleracija nula"
   ],
   "lekcije": [
-   "O03",
-   "O04",
-   "O07"
+   "B19.02",
+   "B19.05"
   ],
   "nedostaje": ""
  },
@@ -286,8 +279,8 @@
    "frekvencija se pri prijelazu ne mijenja"
   ],
   "lekcije": [
-   "O10",
-   "O11"
+   "B20.02",
+   "B20.05"
   ],
   "nedostaje": ""
  },
@@ -301,7 +294,7 @@
    "brzina zvuka raste od plinova prema tekućinama i čvrstim tijelima"
   ],
   "lekcije": [
-   "O19"
+   "B21.01"
   ],
   "nedostaje": ""
  },
@@ -315,7 +308,7 @@
    "okomito upadna zraka se vraća sama u sebe"
   ],
   "lekcije": [
-   "P01"
+   "B22.01"
   ],
   "nedostaje": ""
  },
@@ -329,7 +322,7 @@
    "razmak pruga Δy = λ·L/d, proporcionalan udaljenosti L do zastora"
   ],
   "lekcije": [
-   "P11"
+   "B23.01"
   ],
   "nedostaje": ""
  },
@@ -343,7 +336,7 @@
    "E, B i smjer širenja međusobno su okomiti"
   ],
   "lekcije": [
-   "P15"
+   "B24.01"
   ],
   "nedostaje": ""
  },
@@ -357,7 +350,8 @@
    "masa elektrona 9,11·10⁻³¹ kg"
   ],
   "lekcije": [
-   "F05"
+   "B25.05",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -372,8 +366,9 @@
    "ljubičasta svjetlost ima najveću energiju fotona među navedenim linijama"
   ],
   "lekcije": [
-   "F01",
-   "F09"
+   "B24.02",
+   "B26.04",
+   "B26.05"
   ],
   "nedostaje": ""
  },
@@ -387,7 +382,8 @@
    "tricij ima 3 nukleona"
   ],
   "lekcije": [
-   "F16"
+   "B27.01",
+   "B27.02"
   ],
   "nedostaje": ""
  },
@@ -402,9 +398,8 @@
    "α raspad: A se smanjuje za 4, Z za 2"
   ],
   "lekcije": [
-   "F11",
-   "F12",
-   "F13"
+   "B27.04",
+   "B27.01"
   ],
   "nedostaje": ""
  },
@@ -419,10 +414,9 @@
    "frekvencija mjerena iz drugoga sustava je manja pri udaljavanju"
   ],
   "lekcije": [
-   "R01",
-   "R02",
-   "O02",
-   "O05"
+   "B19.01",
+   "B19.03",
+   "B29.01"
   ],
   "nedostaje": ""
  },
@@ -436,7 +430,7 @@
    "vidljiva tvar čini manje od 10 % svemira"
   ],
   "lekcije": [
-   "V04"
+   "B30.02"
   ],
   "nedostaje": ""
  },
@@ -450,8 +444,8 @@
    "računanje s relativnim promjenama tlaka"
   ],
   "lekcije": [
-   "T16",
-   "T17"
+   "B11.01",
+   "B11.02"
   ],
   "nedostaje": ""
  },
@@ -466,10 +460,10 @@
    "inverzna funkcija sinusa"
   ],
   "lekcije": [
-   "P03",
-   "P04"
+   "B22.03",
+   "B22.04"
   ],
-  "nedostaje": "Inverzna trigonometrijska funkcija (arcsin) na džepnom kalkulatoru nije navedena u predznanju"
+  "nedostaje": ""
  },
  {
   "rok": "FIZ22ljeto",
@@ -482,12 +476,11 @@
    "plutanje: ukupni uzgon jednak težini tijela"
   ],
   "lekcije": [
-   "H01",
-   "H06",
-   "H07",
-   "H08"
+   "B08.01",
+   "B08.04",
+   "B08.05"
   ],
-  "nedostaje": "Tablična gustoća ulja (ako nije zadana u tekstu zadatka)"
+  "nedostaje": "gustoća ulja i vode, ako nisu zadane u tekstu zadatka (nisu u knjižici)"
  },
  {
   "rok": "FIZ22ljeto",
@@ -501,9 +494,10 @@
    "normirani atmosferski tlak 101 325 Pa"
   ],
   "lekcije": [
-   "T17",
-   "T21",
-   "T23"
+   "B12.01",
+   "B12.04",
+   "B12.06",
+   "B11.02"
   ],
   "nedostaje": ""
  },
@@ -518,11 +512,10 @@
    "pri stalnom naponu promjena naboja ΔQ = ΔC·U"
   ],
   "lekcije": [
-   "E15",
-   "E16",
-   "E17"
+   "B13.08",
+   "B13.02"
   ],
-  "nedostaje": "Relativna permitivnost ulja (tablična vrijednost, ako nije zadana u tekstu zadatka)"
+  "nedostaje": "relativna permitivnost ulja, ako nije zadana u tekstu zadatka (nije u knjižici)"
  },
  {
   "rok": "FIZ22ljeto",
@@ -535,10 +528,10 @@
    "energija fotona E = hc/λ"
   ],
   "lekcije": [
-   "F01",
-   "F02",
-   "F03",
-   "F04"
+   "B25.01",
+   "B25.02",
+   "B25.03",
+   "B24.02"
   ],
   "nedostaje": ""
  },
@@ -553,9 +546,8 @@
    "snaga P = E/t"
   ],
   "lekcije": [
-   "Z07",
-   "Z11",
-   "Z12"
+   "B05.05",
+   "B05.02"
   ],
   "nedostaje": ""
  },
@@ -570,12 +562,11 @@
    "jednoliko ubrzano gibanje pod utjecajem sile teže"
   ],
   "lekcije": [
-   "K04",
-   "K07",
-   "K09",
-   "K10",
-   "Z03",
-   "Z13"
+   "B01.05",
+   "B03.04",
+   "B04.02",
+   "B04.03",
+   "B04.04"
   ],
   "nedostaje": ""
  },
@@ -590,9 +581,9 @@
    "žarulje moraju raditi pri nazivnom naponu i struji"
   ],
   "lekcije": [
-   "S02",
-   "S04",
-   "S06"
+   "B15.02",
+   "B15.03",
+   "B15.04"
   ],
   "nedostaje": ""
  },
@@ -607,9 +598,9 @@
    "harmonijska sila F = −k·x"
   ],
   "lekcije": [
-   "O02",
-   "O04",
-   "D04"
+   "B19.01",
+   "B19.02",
+   "B19.03"
   ],
   "nedostaje": ""
  },
@@ -623,7 +614,8 @@
    "razlika od Lorentzove sile (naboj u gibanju) i Coulombove sile"
   ],
   "lekcije": [
-   "M05"
+   "B17.02",
+   "B16.02"
   ],
   "nedostaje": ""
  },
@@ -638,8 +630,8 @@
    "F ⊥ I i F ⊥ B"
   ],
   "lekcije": [
-   "M01",
-   "M05"
+   "B16.03",
+   "B17.02"
   ],
   "nedostaje": ""
  },
@@ -654,7 +646,7 @@
    "pretvorba cm u m"
   ],
   "lekcije": [
-   "M05"
+   "B17.02"
   ],
   "nedostaje": ""
  },
@@ -670,10 +662,8 @@
    "razlika između položaja i puta"
   ],
   "lekcije": [
-   "K03",
-   "K04",
-   "K05",
-   "K07"
+   "B01.01",
+   "B01.04"
   ],
   "nedostaje": ""
  },
@@ -687,7 +677,7 @@
    "sile međudjelovanja su jednakog iznosa i suprotnog smjera"
   ],
   "lekcije": [
-   "D06"
+   "B04.01"
   ],
   "nedostaje": ""
  },
@@ -701,9 +691,8 @@
    "veza između količine gibanja i kinetičke energije (E_k = p²/2m)"
   ],
   "lekcije": [
-   "Z01",
-   "Z02",
-   "Z06"
+   "B04.02",
+   "B05.02"
   ],
   "nedostaje": ""
  },
@@ -718,7 +707,7 @@
    "omjer masa i udaljenosti (r_X : r_Y = 1 : 2)"
   ],
   "lekcije": [
-   "G05"
+   "B07.01"
   ],
   "nedostaje": ""
  },
@@ -733,8 +722,8 @@
    "ukupni tlak uključuje atmosferski tlak (graf ne prolazi kroz ishodište)"
   ],
   "lekcije": [
-   "H03",
-   "H04"
+   "B08.01",
+   "B08.02"
   ],
   "nedostaje": ""
  },
@@ -748,7 +737,7 @@
    "relativno produljenje i postotak"
   ],
   "lekcije": [
-   "T04"
+   "B10.03"
   ],
   "nedostaje": ""
  },
@@ -763,8 +752,8 @@
    "izohorna promjena i ovisnost tlaka o temperaturi"
   ],
   "lekcije": [
-   "T12",
-   "T16"
+   "B11.01",
+   "B11.02"
   ],
   "nedostaje": ""
  },
@@ -778,8 +767,8 @@
    "idealni plin, neovisnost o vrsti plina"
   ],
   "lekcije": [
-   "T01",
-   "T14"
+   "B11.04",
+   "B31.04"
   ],
   "nedostaje": ""
  },
@@ -794,9 +783,9 @@
    "rad na plinu povećava unutarnju energiju i temperaturu"
   ],
   "lekcije": [
-   "T23",
-   "T24",
-   "T25"
+   "B12.06",
+   "B11.03",
+   "B12.01"
   ],
   "nedostaje": ""
  },
@@ -811,9 +800,8 @@
    "jedinice tlaka i volumena (l u m³)"
   ],
   "lekcije": [
-   "T20",
-   "T21",
-   "T22"
+   "B12.04",
+   "B12.08"
   ],
   "nedostaje": ""
  },
@@ -827,9 +815,7 @@
    "omjeri naboja i kvadrata udaljenosti"
   ],
   "lekcije": [
-   "E01",
-   "E02",
-   "E03"
+   "B13.02"
   ],
   "nedostaje": ""
  },
@@ -844,10 +830,9 @@
    "promjena polariteta ne mijenja iznos polja"
   ],
   "lekcije": [
-   "E09",
-   "E10",
-   "E15",
-   "E16"
+   "B13.04",
+   "B13.08",
+   "B14.01"
   ],
   "nedostaje": ""
  },
@@ -862,9 +847,8 @@
    "W = qΔU, veza između napona i razmaka ploča"
   ],
   "lekcije": [
-   "E08",
-   "E09",
-   "E11"
+   "B13.05",
+   "B13.06"
   ],
   "nedostaje": ""
  },
@@ -879,11 +863,9 @@
    "serijski spoj: jednaka struja, veća snaga kod većeg otpora"
   ],
   "lekcije": [
-   "S02",
-   "S04",
-   "S05",
-   "S06",
-   "M15"
+   "B15.03",
+   "B15.04",
+   "B18.05"
   ],
   "nedostaje": ""
  },
@@ -898,9 +880,8 @@
    "Lenzovo pravilo za predznak"
   ],
   "lekcije": [
-   "M09",
-   "M10",
-   "M11"
+   "B18.01",
+   "B18.02"
   ],
   "nedostaje": ""
  },
@@ -915,9 +896,8 @@
    "f ∝ 1/√m"
   ],
   "lekcije": [
-   "O01",
-   "O02",
-   "O05"
+   "B19.01",
+   "B19.03"
   ],
   "nedostaje": ""
  },
@@ -932,11 +912,8 @@
    "izračun energije u međupoložaju"
   ],
   "lekcije": [
-   "O06",
-   "O07",
-   "Z06",
-   "Z07",
-   "Z09"
+   "B19.05",
+   "B05.03"
   ],
   "nedostaje": ""
  },
@@ -951,9 +928,9 @@
    "λ = λ0/n"
   ],
   "lekcije": [
-   "P03",
-   "P16",
-   "O11"
+   "B20.02",
+   "B22.03",
+   "B24.02"
   ],
   "nedostaje": ""
  },
@@ -968,9 +945,9 @@
    "totalna refleksija (granični kut)"
   ],
   "lekcije": [
-   "P03",
-   "P04",
-   "D09"
+   "B22.01",
+   "B22.03",
+   "B22.04"
   ],
   "nedostaje": ""
  },
@@ -984,8 +961,9 @@
    "longitudinalni valovi (npr. zvuk) se ne mogu polarizirati"
   ],
   "lekcije": [
-   "O10",
-   "P13"
+   "B20.01",
+   "B23.03",
+   "B24.01"
   ],
   "nedostaje": ""
  },
@@ -1000,8 +978,8 @@
    "veća frekvencija znači manja valna duljina"
   ],
   "lekcije": [
-   "F02",
-   "F03"
+   "B25.01",
+   "B25.02"
   ],
   "nedostaje": ""
  },
@@ -1016,8 +994,8 @@
    "Z se povećava za 1, a N smanjuje za 1"
   ],
   "lekcije": [
-   "F11",
-   "F13"
+   "B27.01",
+   "B27.04"
   ],
   "nedostaje": ""
  },
@@ -1032,8 +1010,8 @@
    "beskonačna energija potrebna za ubrzanje tijela do brzine svjetlosti"
   ],
   "lekcije": [
-   "R01",
-   "R05"
+   "B29.01",
+   "B29.05"
   ],
   "nedostaje": ""
  },
@@ -1048,7 +1026,8 @@
    "supernova i neutronska zvijezda nastaju od masivnih zvijezda"
   ],
   "lekcije": [
-   "V03"
+   "B30.05",
+   "B30.06"
   ],
   "nedostaje": ""
  },
@@ -1063,9 +1042,8 @@
    "pretvorba jedinica km/h u m/s"
   ],
   "lekcije": [
-   "K02",
-   "G01",
-   "G02"
+   "B06.01",
+   "B06.02"
   ],
   "nedostaje": ""
  },
@@ -1080,8 +1058,8 @@
    "nerelativistički računa za male brzine"
   ],
   "lekcije": [
-   "F05",
-   "Z01"
+   "B25.05",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1096,8 +1074,9 @@
    "kut između brzine i polja (smjer sile)"
   ],
   "lekcije": [
-   "M02",
-   "M07"
+   "B16.03",
+   "B16.04",
+   "B17.01"
   ],
   "nedostaje": ""
  },
@@ -1112,8 +1091,9 @@
    "obrnuta proporcionalnost između duljine žice i snage"
   ],
   "lekcije": [
-   "S03",
-   "S06"
+   "B12.02",
+   "B15.02",
+   "B15.04"
   ],
   "nedostaje": ""
  },
@@ -1128,8 +1108,9 @@
    "pretvorba minuta u sekunde"
   ],
   "lekcije": [
-   "F14",
-   "F15"
+   "B28.01",
+   "B28.02",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1144,8 +1125,8 @@
    "realna slika je obrnuta i uvećana ili umanjena ovisno o položaju predmeta"
   ],
   "lekcije": [
-   "P07",
-   "P08"
+   "B22.07",
+   "B22.09"
   ],
   "nedostaje": ""
  },
@@ -1160,8 +1141,8 @@
    "izbor ispravnog mjerenja analizom omjera"
   ],
   "lekcije": [
-   "P09",
-   "P10"
+   "B22.07",
+   "B22.08"
   ],
   "nedostaje": ""
  },
@@ -1176,10 +1157,8 @@
    "napetost niti iz jednadžbe za pojedino tijelo"
   ],
   "lekcije": [
-   "D04",
-   "D08",
-   "D11",
-   "D12"
+   "B03.02",
+   "B03.04"
   ],
   "nedostaje": ""
  },
@@ -1194,11 +1173,11 @@
    "protok q = V/t = Sv"
   ],
   "lekcije": [
-   "H09",
-   "H10",
-   "H11"
+   "B09.01",
+   "B09.02",
+   "B09.03"
   ],
-  "nedostaje": "gustoća vode (ρ ≈ 1000 kg/m³) nije navedena ni u jednoj lekciji ni u predznanju niti u knjižici formula"
+  "nedostaje": ""
  },
  {
   "rok": "FIZ23ljeto1",
@@ -1211,13 +1190,9 @@
    "rad na izohorama jednak je nuli"
   ],
   "lekcije": [
-   "T14",
-   "T16",
-   "T17",
-   "T20",
-   "T21",
-   "T22",
-   "T23"
+   "B11.04",
+   "B12.04",
+   "B12.06"
   ],
   "nedostaje": ""
  },
@@ -1232,9 +1207,9 @@
    "kombinacija dviju jednadžbi za određivanje q"
   ],
   "lekcije": [
-   "E08",
-   "Z06",
-   "M07"
+   "B13.05",
+   "B17.04",
+   "B17.05"
   ],
   "nedostaje": ""
  },
@@ -1249,11 +1224,11 @@
    "razlika razina kao logaritamski omjer intenziteta"
   ],
   "lekcije": [
-   "O20",
-   "O21",
-   "O22"
+   "B20.03",
+   "B21.01",
+   "B31.05"
   ],
-  "nedostaje": "Površina sfere S = 4πr² nije u knjižici formula ni u predznanju (predznanje navodi samo volumen kugle). Također logaritam (log) nije eksplicitno u predznanju, iako ga kalkulator podržava."
+  "nedostaje": "logaritamski račun (logaritmi, log) za izračun razine zvuka u decibelima"
  },
  {
   "rok": "FIZ24prvi",
@@ -1266,9 +1241,9 @@
    "Rastav gibanja na komponente"
   ],
   "lekcije": [
-   "D03",
-   "D04",
-   "D14"
+   "B01.01",
+   "B03.01",
+   "B03.02"
   ],
   "nedostaje": ""
  },
@@ -1283,9 +1258,8 @@
    "Promjena impulsa = m v - (-m v) = 2mv"
   ],
   "lekcije": [
-   "Z01",
-   "Z02",
-   "Z13"
+   "B04.02",
+   "B04.04"
   ],
   "nedostaje": ""
  },
@@ -1300,11 +1274,8 @@
    "Napetost je usmjerena suprotno pomaku (rad negativan), gravitacija u smjeru pomaka (rad pozitivan)"
   ],
   "lekcije": [
-   "Z04",
-   "Z05",
-   "D01",
-   "D02",
-   "D11"
+   "B02.02",
+   "B05.01"
   ],
   "nedostaje": ""
  },
@@ -1319,10 +1290,9 @@
    "Sila je okomita na brzinu, mijenja smjer, ne iznos brzine"
   ],
   "lekcije": [
-   "G01",
-   "G03",
-   "G05",
-   "G07"
+   "B06.02",
+   "B07.01",
+   "B07.03"
   ],
   "nedostaje": ""
  },
@@ -1337,9 +1307,9 @@
    "U užem dijelu veća brzina, veći dinamički tlak, manji statički tlak"
   ],
   "lekcije": [
-   "H09",
-   "H10",
-   "H11"
+   "B09.01",
+   "B09.02",
+   "B09.03"
   ],
   "nedostaje": ""
  },
@@ -1354,7 +1324,7 @@
    "Gibanje je nasumično i ne ovisi o tome miruju li molekule"
   ],
   "lekcije": [
-   "T03"
+   "B10.02"
   ],
   "nedostaje": ""
  },
@@ -1369,10 +1339,8 @@
    "Nagib pravca je nR/p, obrnuto proporcionalan tlaku"
   ],
   "lekcije": [
-   "T01",
-   "T13",
-   "T16",
-   "T17"
+   "B11.02",
+   "B11.03"
   ],
   "nedostaje": ""
  },
@@ -1387,8 +1355,8 @@
    "Za jednake mase i tvari, ravnotežna temperatura je aritmetička sredina"
   ],
   "lekcije": [
-   "T07",
-   "T09"
+   "B12.01",
+   "B12.02"
   ],
   "nedostaje": ""
  },
@@ -1403,8 +1371,8 @@
    "Računanje u postotcima"
   ],
   "lekcije": [
-   "T26",
-   "T27"
+   "B12.04",
+   "B12.08"
   ],
   "nedostaje": ""
  },
@@ -1420,9 +1388,8 @@
    "Zadatak je jedan od rijetkih s nejasnom slikom; ključ je potvrdio odgovor C"
   ],
   "lekcije": [
-   "E05",
-   "E07",
-   "E14"
+   "B13.04",
+   "B13.07"
   ],
   "nedostaje": ""
  },
@@ -1438,11 +1405,9 @@
    "Energija W = Q²/(2C) pa se također smanjuje"
   ],
   "lekcije": [
-   "E15",
-   "E16",
-   "E17",
-   "E18",
-   "E19"
+   "B13.05",
+   "B13.08",
+   "B14.01"
   ],
   "nedostaje": ""
  },
@@ -1457,9 +1422,8 @@
    "1/R = 1/6 - 1/18 = 1/9, R = 9 Ω"
   ],
   "lekcije": [
-   "S02",
-   "S04",
-   "S05"
+   "B15.02",
+   "B15.03"
   ],
   "nedostaje": ""
  },
@@ -1474,9 +1438,8 @@
    "Rotacija oko horizontalne osi mijenja kut prema vertikalnom polju"
   ],
   "lekcije": [
-   "M09",
-   "M10",
-   "M11"
+   "B18.01",
+   "B18.02"
   ],
   "nedostaje": ""
  },
@@ -1491,10 +1454,8 @@
    "Vektorsko zbrajanje sila pod kutom"
   ],
   "lekcije": [
-   "M02",
-   "M03",
-   "M06",
-   "D03"
+   "B16.04",
+   "B17.02"
   ],
   "nedostaje": ""
  },
@@ -1509,11 +1470,9 @@
    "Pri promjeni mase v_max se mijenja s 1/√m"
   ],
   "lekcije": [
-   "O01",
-   "O02",
-   "O03",
-   "O05",
-   "O06"
+   "B19.01",
+   "B19.02",
+   "B19.03"
   ],
   "nedostaje": ""
  },
@@ -1527,8 +1486,8 @@
    "A2 = 3A1 daje E2/E1 = 9"
   ],
   "lekcije": [
-   "O06",
-   "O10"
+   "B20.02",
+   "B20.03"
   ],
   "nedostaje": ""
  },
@@ -1543,8 +1502,8 @@
    "Pravilno očitavanje valne duljine sa slike"
   ],
   "lekcije": [
-   "O10",
-   "O17"
+   "B20.02",
+   "B20.07"
   ],
   "nedostaje": ""
  },
@@ -1559,7 +1518,7 @@
    "Svjetlovod kao vlakno s većim indeksom loma u jezgri"
   ],
   "lekcije": [
-   "P05"
+   "B22.04"
   ],
   "nedostaje": ""
  },
@@ -1574,8 +1533,8 @@
    "Radiovalovi imaju manju frekvenciju i veću valnu duljinu od vidljive svjetlosti"
   ],
   "lekcije": [
-   "P03",
-   "P16"
+   "B24.01",
+   "B24.02"
   ],
   "nedostaje": ""
  },
@@ -1590,8 +1549,8 @@
    "Iz prvog slučaja W = 1,2 eV, zatim E_k = 2,5 - 1,2 = 1,3 eV"
   ],
   "lekcije": [
-   "F02",
-   "F03"
+   "B25.01",
+   "B25.02"
   ],
   "nedostaje": ""
  },
@@ -1606,8 +1565,8 @@
    "λ ∝ 1/√E_k, pa je λ1/λ2 = √(E2/E1) = √100 = 10"
   ],
   "lekcije": [
-   "F05",
-   "Z06"
+   "B05.02",
+   "B25.05"
   ],
   "nedostaje": ""
  },
@@ -1622,7 +1581,7 @@
    "Chadwick otkrio neutron"
   ],
   "lekcije": [
-   "F07"
+   "B26.01"
   ],
   "nedostaje": ""
  },
@@ -1637,11 +1596,8 @@
    "Napomena: pitanje je neprecizno formulirano jer fisija nije vrsta α-raspada; ključ navodi A"
   ],
   "lekcije": [
-   "F11",
-   "F12",
-   "F13",
-   "F18",
-   "F19"
+   "B27.03",
+   "B27.05"
   ],
   "nedostaje": ""
  },
@@ -1656,8 +1612,8 @@
    "Periodni sustav elemenata"
   ],
   "lekcije": [
-   "F11",
-   "F12"
+   "B27.04",
+   "B27.01"
   ],
   "nedostaje": ""
  },
@@ -1672,8 +1628,10 @@
    "Izobarna promjena: tlak je konstantan"
   ],
   "lekcije": [
-   "T17",
-   "T21"
+   "B12.04",
+   "B11.02",
+   "B11.01",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1688,7 +1646,9 @@
    "Računanje L = R_L/ω"
   ],
   "lekcije": [
-   "M16"
+   "B18.05",
+   "B18.03",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1703,9 +1663,9 @@
    "Mehanička energija nakon pada: 0,9 · mgh"
   ],
   "lekcije": [
-   "Z07",
-   "Z09",
-   "Z10"
+   "B05.03",
+   "B05.02",
+   "B01.05"
   ],
   "nedostaje": ""
  },
@@ -1720,9 +1680,9 @@
    "Pretvaranje jedinica (cm² u m²)"
   ],
   "lekcije": [
-   "H02",
-   "H03",
-   "H04"
+   "B08.01",
+   "B08.03",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1737,10 +1697,11 @@
    "Snaga P = Q/t, pretvaranje kJ/min u W"
   ],
   "lekcije": [
-   "T07",
-   "Z11"
+   "B12.02",
+   "B05.05",
+   "B31.05"
   ],
-  "nedostaje": "Vrijednosti specifičnog toplinskog kapaciteta vode i aluminija nisu ni u knjižici formula ni u lekcijama."
+  "nedostaje": "tablične vrijednosti specifičnih toplinskih kapaciteta vode i aluminija (nisu u knjižici formula ni u lekcijama)"
  },
  {
   "rok": "FIZ24prvi",
@@ -1753,7 +1714,8 @@
    "Pretvaranje jedinica (µm, cm, nm)"
   ],
   "lekcije": [
-   "P11"
+   "B23.01",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1769,13 +1731,12 @@
    "Ravnoteža s ubrzanjem: ma = μ mg cosα - mg sinα"
   ],
   "lekcije": [
-   "D02",
-   "D04",
-   "D08",
-   "D09",
-   "D10"
+   "B03.03",
+   "B02.02",
+   "B03.02",
+   "B03.01"
   ],
-  "nedostaje": ""
+  "nedostaje": "trigonometrija (sinus i kosinus kuta od 30°), nije u predznanju ni izričito u lekcijama"
  },
  {
   "rok": "FIZ24prvi",
@@ -1788,10 +1749,10 @@
    "Snaga: P = U²/R_ukupno"
   ],
   "lekcije": [
-   "S02",
-   "S03",
-   "S05",
-   "S06"
+   "B15.03",
+   "B15.04",
+   "B15.02",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1806,9 +1767,10 @@
    "Faradayev zakon: U_i = -N ΔΦ/Δt"
   ],
   "lekcije": [
-   "M04",
-   "M09",
-   "M10"
+   "B18.01",
+   "B18.02",
+   "B16.04",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -1823,10 +1785,10 @@
    "Pri polovini v_max kinetička energija je 1/4 ukupne, potencijalna 3/4"
   ],
   "lekcije": [
-   "O02",
-   "O03",
-   "O06",
-   "Z08"
+   "B19.03",
+   "B19.02",
+   "B19.01",
+   "B05.02"
   ],
   "nedostaje": ""
  },
@@ -1841,9 +1803,8 @@
    "Jednostavno računanje s brzinom svjetlosti c = 3·10⁸ m/s"
   ],
   "lekcije": [
-   "K02",
-   "R01",
-   "R02"
+   "B29.01",
+   "B01.01"
   ],
   "nedostaje": ""
  },
@@ -1858,9 +1819,9 @@
    "trenutak promjene predznaka brzine"
   ],
   "lekcije": [
-   "K04",
-   "K05",
-   "K06"
+   "B01.04",
+   "B01.03",
+   "B01.05"
   ],
   "nedostaje": ""
  },
@@ -1875,9 +1836,10 @@
    "sila otpora kao suprotna sila gibanju"
   ],
   "lekcije": [
-   "D02",
-   "D04",
-   "D05"
+   "B03.04",
+   "B03.02",
+   "B03.03",
+   "B01.05"
   ],
   "nedostaje": ""
  },
@@ -1892,9 +1854,9 @@
    "kinetička energija tijela"
   ],
   "lekcije": [
-   "Z04",
-   "Z06",
-   "Z10"
+   "B05.01",
+   "B05.03",
+   "B05.02"
   ],
   "nedostaje": ""
  },
@@ -1909,10 +1871,9 @@
    "treći Keplerov zakon i veza između perioda, radijusa i mase centralnog tijela"
   ],
   "lekcije": [
-   "G01",
-   "G03",
-   "G05",
-   "G07"
+   "B07.04",
+   "B07.03",
+   "B07.01"
   ],
   "nedostaje": ""
  },
@@ -1927,10 +1888,11 @@
    "prijenos tlaka u tekućini (Pascalov zakon)"
   ],
   "lekcije": [
-   "H03",
-   "H06",
-   "H07",
-   "T17"
+   "B08.03",
+   "B08.04",
+   "B11.02",
+   "B11.03",
+   "B31.04"
   ],
   "nedostaje": ""
  },
@@ -1945,8 +1907,9 @@
    "uvjet za prolazak šipke kroz prsten"
   ],
   "lekcije": [
-   "T04",
-   "T05"
+   "B10.03",
+   "B10.04",
+   "B31.04"
   ],
   "nedostaje": ""
  },
@@ -1960,7 +1923,9 @@
    "jednadžba stanja idealnog plina"
   ],
   "lekcije": [
-   "T14"
+   "B11.04",
+   "B11.01",
+   "B11.02"
   ],
   "nedostaje": ""
  },
@@ -1975,10 +1940,11 @@
    "povezanost specifičnog toplinskog kapaciteta s količinom primljene topline"
   ],
   "lekcije": [
-   "T07",
-   "T09"
+   "B12.01",
+   "B12.02",
+   "B12.03"
   ],
-  "nedostaje": "Vrijednosti specifičnih toplinskih kapaciteta željeza i aluminija nisu ni u knjižici formula ni u lekcijama."
+  "nedostaje": "tablične vrijednosti specifičnih toplinskih kapaciteta željeza i aluminija (nisu u knjižici formula ni u lekcijama)"
  },
  {
   "rok": "FIZ25drugi",
@@ -1991,10 +1957,10 @@
    "rad i unutarnja energija pri adijabatskoj kompresiji"
   ],
   "lekcije": [
-   "T24",
-   "T25"
+   "B12.06",
+   "B11.04"
   ],
-  "nedostaje": ""
+  "nedostaje": "vrijednost κ = 5/3 za jednoatomni plin (izvod iz C_p i C_V nije u lekcijama, a nije ni u knjižici)"
  },
  {
   "rok": "FIZ25drugi",
@@ -2007,11 +1973,12 @@
    "Gaussov zakon"
   ],
   "lekcije": [
-   "E07",
-   "E09",
-   "E10"
+   "B13.04",
+   "B13.07",
+   "B13.08",
+   "B13.02"
   ],
-  "nedostaje": "Kvantitativna formula za polje beskonačne nabijene ploče (E = σ/ε₀ ili E = q/(ε₀S)) nije u knjižici formula, a u lekcijama je samo kvalitativno opisana."
+  "nedostaje": ""
  },
  {
   "rok": "FIZ25drugi",
@@ -2024,9 +1991,8 @@
    "značenje stalnog napona izvora"
   ],
   "lekcije": [
-   "E15",
-   "E16",
-   "E17"
+   "B13.08",
+   "B14.01"
   ],
   "nedostaje": ""
  },
@@ -2040,9 +2006,8 @@
    "formule za ukupni otpor serijskog i paralelnog spoja"
   ],
   "lekcije": [
-   "S02",
-   "S04",
-   "S05"
+   "B15.03",
+   "B15.02"
   ],
   "nedostaje": ""
  },
@@ -2057,8 +2022,9 @@
    "smjer polja unutar i izvan zavojnice"
   ],
   "lekcije": [
-   "M01",
-   "M04"
+   "B16.02",
+   "B16.04",
+   "B16.03"
   ],
   "nedostaje": ""
  },
@@ -2073,10 +2039,10 @@
    "promjena magnetskog toka pri približavanju i udaljavanju magneta"
   ],
   "lekcije": [
-   "M01",
-   "M09",
-   "M10",
-   "M11"
+   "B16.01",
+   "B16.02",
+   "B18.01",
+   "B18.03"
   ],
   "nedostaje": ""
  },
@@ -2091,8 +2057,8 @@
    "veza perioda, frekvencije i vremena"
   ],
   "lekcije": [
-   "O01",
-   "O02"
+   "B19.01",
+   "B19.02"
   ],
   "nedostaje": ""
  },
@@ -2107,10 +2073,10 @@
    "veza v = λf"
   ],
   "lekcije": [
-   "O10",
-   "O12"
+   "B20.01",
+   "B20.02"
   ],
-  "nedostaje": ""
+  "nedostaje": "Ovisnost brzine transverzalnog vala na užetu o napetosti užeta (v = √(F/μ)) nije u lekcijama ni u knjižici formula."
  },
  {
   "rok": "FIZ25drugi",
@@ -2123,11 +2089,10 @@
    "logaritamska svojstva"
   ],
   "lekcije": [
-   "O20",
-   "O21",
-   "O22"
+   "B21.01",
+   "B20.03"
   ],
-  "nedostaje": ""
+  "nedostaje": "Računanje s logaritmom (npr. 10·log(10⁻²) = −20 dB) nije obrađeno ni u lekcijama ni u predznanju."
  },
  {
   "rok": "FIZ25drugi",
@@ -2140,8 +2105,8 @@
    "veza razlike hoda i razlike u fazi"
   ],
   "lekcije": [
-   "O16",
-   "P11"
+   "B23.01",
+   "B20.07"
   ],
   "nedostaje": ""
  },
@@ -2155,7 +2120,8 @@
    "redovi veličine prefiksa pm, nm, cm, km"
   ],
   "lekcije": [
-   "P16"
+   "B24.01",
+   "B24.02"
   ],
   "nedostaje": ""
  },
@@ -2170,9 +2136,9 @@
    "ovisnost maksimalne kinetičke energije fotoelektrona o frekvenciji"
   ],
   "lekcije": [
-   "F01",
-   "F02",
-   "F04"
+   "B25.01",
+   "B25.02",
+   "B25.03"
   ],
   "nedostaje": ""
  },
@@ -2186,8 +2152,8 @@
    "ovisnost valne duljine o masi čestice"
   ],
   "lekcije": [
-   "F05",
-   "Z01"
+   "B25.05",
+   "B31.04"
   ],
   "nedostaje": ""
  },
@@ -2202,10 +2168,8 @@
    "centripetalna sila u Bohrovu modelu"
   ],
   "lekcije": [
-   "E02",
-   "G03",
-   "F08",
-   "F10"
+   "B13.02",
+   "B26.01"
   ],
   "nedostaje": ""
  },
@@ -2220,8 +2184,10 @@
    "nuklearne reakcije u Suncu i u nuklearnim elektranama"
   ],
   "lekcije": [
-   "F18",
-   "F19"
+   "B27.01",
+   "B27.03",
+   "B27.05",
+   "B27.06"
   ],
   "nedostaje": ""
  },
@@ -2236,8 +2202,8 @@
    "relativistička kontrakcija duljine i Lorentzov faktor γ"
   ],
   "lekcije": [
-   "R02",
-   "R03"
+   "B29.01",
+   "B29.03"
   ],
   "nedostaje": ""
  },
@@ -2252,7 +2218,8 @@
    "razlika između korisnosti i omjera temperatura"
   ],
   "lekcije": [
-   "T27"
+   "B12.08",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -2266,7 +2233,7 @@
    "snaga na primaru i sekundaru jednaka (idealni transformator)"
   ],
   "lekcije": [
-   "M19"
+   "B18.07"
   ],
   "nedostaje": ""
  },
@@ -2282,9 +2249,8 @@
    "očitavanje sila s dinamometra"
   ],
   "lekcije": [
-   "D01",
-   "D02",
-   "D08"
+   "B03.03",
+   "B02.02"
   ],
   "nedostaje": ""
  },
@@ -2299,9 +2265,9 @@
    "površina kruga S = πr²"
   ],
   "lekcije": [
-   "H09",
-   "H10",
-   "H11"
+   "B09.01",
+   "B09.02",
+   "B09.03"
   ],
   "nedostaje": ""
  },
@@ -2316,11 +2282,11 @@
    "jedinice (bar, dm³, K)"
   ],
   "lekcije": [
-   "T01",
-   "T16",
-   "T17"
+   "B11.01",
+   "B11.02",
+   "B31.05"
   ],
-  "nedostaje": "pretvorba tlaka iz bara u paskal (1 bar = 10^5 Pa), nije u lekcijama ni predznanju"
+  "nedostaje": ""
  },
  {
   "rok": "FIZ25drugi",
@@ -2333,9 +2299,8 @@
    "brzina svjetlosti u vakuumu c = 3·10⁸ m/s"
   ],
   "lekcije": [
-   "P03",
-   "P05",
-   "D09"
+   "B22.03",
+   "B22.04"
   ],
   "nedostaje": ""
  },
@@ -2351,11 +2316,12 @@
    "kinematika jednoliko usporenog gibanja"
   ],
   "lekcije": [
-   "Z06",
-   "Z07",
-   "Z09",
-   "Z10",
-   "Z11"
+   "B02.02",
+   "B03.03",
+   "B05.01",
+   "B05.02",
+   "B05.03",
+   "B05.05"
   ],
   "nedostaje": ""
  },
@@ -2372,15 +2338,10 @@
    "volumen kuglice iz mase i gustoće"
   ],
   "lekcije": [
-   "D03",
-   "D09",
-   "D11",
-   "E02",
-   "E03",
-   "H01",
-   "H06",
-   "H07",
-   "H08"
+   "B02.02",
+   "B08.04",
+   "B13.02",
+   "B14.01"
   ],
   "nedostaje": ""
  },
@@ -2396,9 +2357,9 @@
    "geometrija polukružnice (udaljenost = 2r)"
   ],
   "lekcije": [
-   "E08",
-   "Z06",
-   "M07"
+   "B13.05",
+   "B17.04",
+   "B17.05"
   ],
   "nedostaje": ""
  },
@@ -2414,9 +2375,9 @@
    "zakon očuvanja mehaničke energije"
   ],
   "lekcije": [
-   "O07",
-   "Z09",
-   "D09"
+   "B19.01",
+   "B19.05",
+   "B05.02"
   ],
   "nedostaje": ""
  },
@@ -2432,10 +2393,11 @@
    "pretvorba jedinica vremena (h u s)"
   ],
   "lekcije": [
-   "F14",
-   "F15"
+   "B28.01",
+   "B28.02",
+   "B31.05"
   ],
-  "nedostaje": "vrijednost prirodnog logaritma ln 2 (λ = ln2/T); logaritmi nisu u predznanju ni lekcijama"
+  "nedostaje": ""
  },
  {
   "rok": "FIZ25prvi",
@@ -2447,7 +2409,7 @@
    "Pitagorin poučak za okomite vektore"
   ],
   "lekcije": [
-   "K01"
+   "B01.01"
   ],
   "nedostaje": ""
  },
@@ -2461,8 +2423,10 @@
    "neelastični sudar: kinetička energija se ne čuva"
   ],
   "lekcije": [
-   "Z03",
-   "Z13"
+   "B04.02",
+   "B04.03",
+   "B04.04",
+   "B05.03"
   ],
   "nedostaje": ""
  },
@@ -2477,9 +2441,9 @@
    "rad konzervativne sile ne ovisi o putu"
   ],
   "lekcije": [
-   "Z04",
-   "Z07",
-   "D09"
+   "B05.01",
+   "B05.02",
+   "B02.02"
   ],
   "nedostaje": ""
  },
@@ -2494,8 +2458,9 @@
    "centripetalna sila usmjerena prema središtu kružnice"
   ],
   "lekcije": [
-   "G03",
-   "G08"
+   "B07.03",
+   "B07.01",
+   "B06.02"
   ],
   "nedostaje": ""
  },
@@ -2509,8 +2474,8 @@
    "dubina se mjeri od slobodne površine tekućine (h = 6 m − visina točke)"
   ],
   "lekcije": [
-   "H03",
-   "H04"
+   "B08.01",
+   "B08.02"
   ],
   "nedostaje": ""
  },
@@ -2524,8 +2489,8 @@
    "povećanje ili smanjenje dimenzija ovisno o promjeni temperature"
   ],
   "lekcije": [
-   "T04",
-   "T05"
+   "B10.03",
+   "B10.04"
   ],
   "nedostaje": ""
  },
@@ -2540,8 +2505,8 @@
    "pri jednakim p, V i T jednake su množine plinova"
   ],
   "lekcije": [
-   "T12",
-   "T16"
+   "B11.01",
+   "B11.02"
   ],
   "nedostaje": ""
  },
@@ -2556,9 +2521,9 @@
    "jednadžba stanja idealnog plina"
   ],
   "lekcije": [
-   "T14",
-   "T16",
-   "T20"
+   "B11.02",
+   "B11.03",
+   "B11.04"
   ],
   "nedostaje": ""
  },
@@ -2572,8 +2537,8 @@
    "rad pri stalnom volumenu jednak je nuli"
   ],
   "lekcije": [
-   "T21",
-   "T23"
+   "B12.04",
+   "B12.06"
   ],
   "nedostaje": ""
  },
@@ -2588,8 +2553,8 @@
    "poništavanje polja između istoimenih naboja"
   ],
   "lekcije": [
-   "E05",
-   "E07"
+   "B13.02",
+   "B13.04"
   ],
   "nedostaje": ""
  },
@@ -2604,11 +2569,9 @@
    "drugi Newtonov zakon F = ma"
   ],
   "lekcije": [
-   "E08",
-   "E09",
-   "E11",
-   "D04",
-   "K07"
+   "B13.05",
+   "B13.06",
+   "B03.02"
   ],
   "nedostaje": ""
  },
@@ -2621,7 +2584,8 @@
    "Ohmov zakon I = U/R"
   ],
   "lekcije": [
-   "S02"
+   "B15.01",
+   "B15.02"
   ],
   "nedostaje": ""
  },
@@ -2636,8 +2600,8 @@
    "smjer polja ovisi o smjeru struje"
   ],
   "lekcije": [
-   "M02",
-   "M03"
+   "B16.03",
+   "B16.04"
   ],
   "nedostaje": ""
  },
@@ -2652,8 +2616,9 @@
    "Faradayev zakon indukcije (induciran napon ovisi o promjeni toka)"
   ],
   "lekcije": [
-   "M09",
-   "M10"
+   "B18.01",
+   "B18.02",
+   "B31.06"
   ],
   "nedostaje": ""
  },
@@ -2667,8 +2632,8 @@
    "maksimalna vrijednost E_p = ½kA² ovisi o kvadratu amplitude"
   ],
   "lekcije": [
-   "O06",
-   "Z08"
+   "B19.01",
+   "B19.03"
   ],
   "nedostaje": ""
  },
@@ -2682,7 +2647,8 @@
    "razlika između refleksije na slobodnom i na učvršćenom kraju"
   ],
   "lekcije": [
-   "O14"
+   "B20.01",
+   "B20.05"
   ],
   "nedostaje": ""
  },
@@ -2696,9 +2662,10 @@
    "tumačenje grafa inverzne proporcionalnosti"
   ],
   "lekcije": [
-   "O20"
+   "B20.03",
+   "B21.01"
   ],
-  "nedostaje": "Površina sfere S = 4πr² (potrebna za I = P/S; nije u knjižici formula ni u predznanju, jer predznanje navodi samo volumen kugle)"
+  "nedostaje": ""
  },
  {
   "rok": "FIZ25prvi",
@@ -2710,8 +2677,8 @@
    "uvjet destruktivne interferencije: fazna razlika π (put razlike λ/2)"
   ],
   "lekcije": [
-   "O16",
-   "P11"
+   "B20.03",
+   "B23.01"
   ],
   "nedostaje": ""
  },
@@ -2725,9 +2692,10 @@
    "veza c = λf"
   ],
   "lekcije": [
-   "P16"
+   "B24.02",
+   "B24.04"
   ],
-  "nedostaje": ""
+  "nedostaje": "Granice frekvencijskih područja elektromagnetskog spektra (da 1 MHz pripada radiovalovima); lekcije navode samo poredak područja, a ne njihove granice, i to nije u knjižici formula."
  },
  {
   "rok": "FIZ25prvi",
@@ -2740,8 +2708,8 @@
    "očitavanje odsječaka na grafu"
   ],
   "lekcije": [
-   "F02",
-   "F03"
+   "B25.02",
+   "B25.03"
   ],
   "nedostaje": ""
  },
@@ -2756,9 +2724,9 @@
    "manja masa daje manji impuls i veću valnu duljinu"
   ],
   "lekcije": [
-   "E08",
-   "E11",
-   "F05"
+   "B25.05",
+   "B13.05",
+   "B17.05"
   ],
   "nedostaje": ""
  },
@@ -2773,8 +2741,8 @@
    "emisija fotona pri prijelazu između stanja"
   ],
   "lekcije": [
-   "F08",
-   "F09"
+   "B26.01",
+   "B26.02"
   ],
   "nedostaje": ""
  },
@@ -2788,7 +2756,7 @@
    "gorivo nuklearnih elektrana je uran"
   ],
   "lekcije": [
-   "F18"
+   "B27.06"
   ],
   "nedostaje": ""
  },
@@ -2802,8 +2770,8 @@
    "dilatacija vremena u specijalnoj teoriji relativnosti"
   ],
   "lekcije": [
-   "R01",
-   "R02"
+   "B29.01",
+   "B29.03"
   ],
   "nedostaje": ""
  },
@@ -2818,7 +2786,8 @@
    "izražavanje korisnosti u postotcima"
   ],
   "lekcije": [
-   "T27"
+   "B12.08",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -2832,8 +2801,8 @@
    "izmjenična struja zadana sinusnom funkcijom i kutna frekvencija ω"
   ],
   "lekcije": [
-   "M13",
-   "S02"
+   "B18.03",
+   "B15.02"
   ],
   "nedostaje": ""
  },
@@ -2848,9 +2817,9 @@
    "sila napetosti niti i sila teže"
   ],
   "lekcije": [
-   "D04",
-   "D11",
-   "D13"
+   "B03.01",
+   "B03.02",
+   "B03.04"
   ],
   "nedostaje": ""
  },
@@ -2865,11 +2834,11 @@
    "pretvorba jedinica (cm² u m²)"
   ],
   "lekcije": [
-   "H09",
-   "H10",
-   "H11"
+   "B09.01",
+   "B09.02",
+   "B08.01"
   ],
-  "nedostaje": "Gustoća vode ρ = 1000 kg/m³ (nije u knjižici konstanti niti u lekcijama, a potrebna je za p_din = ρv²/2)"
+  "nedostaje": "Gustoća vode (ρ = 1000 kg/m³) potrebna je za dinamički tlak; lekcije spominju gustoću fluida, ali ne navode njezinu vrijednost, a nije ni u knjižici."
  },
  {
   "rok": "FIZ25prvi",
@@ -2882,8 +2851,11 @@
    "temperatura u kelvinima"
   ],
   "lekcije": [
-   "T01",
-   "T19"
+   "B11.01",
+   "B11.02",
+   "B08.02",
+   "B11.03",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -2899,10 +2871,9 @@
    "virtualna slika nastaje kad je predmet unutar fokusa"
   ],
   "lekcije": [
-   "P07",
-   "P08",
-   "P09",
-   "P10"
+   "B22.07",
+   "B22.08",
+   "B22.09"
   ],
   "nedostaje": ""
  },
@@ -2918,13 +2889,13 @@
    "rastav sile teže na kosini"
   ],
   "lekcije": [
-   "D08",
-   "D09",
-   "Z07",
-   "Z09",
-   "Z10"
+   "B05.03",
+   "B05.01",
+   "B02.02",
+   "B03.03",
+   "B31.05"
   ],
-  "nedostaje": ""
+  "nedostaje": "trigonometrijske funkcije sinus i kosinus za kut od 25° (nisu u lekcijama ni u predznanju)"
  },
  {
   "rok": "FIZ25prvi",
@@ -2938,12 +2909,10 @@
    "smjerovi sila (privlačenje/odbijanje)"
   ],
   "lekcije": [
-   "E02",
-   "E05",
-   "D01",
-   "D02",
-   "D03",
-   "D11"
+   "B13.02",
+   "B14.01",
+   "B02.02",
+   "B31.05"
   ],
   "nedostaje": ""
  },
@@ -2959,11 +2928,9 @@
    "smjer sile između paralelnih vodiča"
   ],
   "lekcije": [
-   "M02",
-   "M03",
-   "M05",
-   "M06",
-   "D03"
+   "B16.03",
+   "B16.04",
+   "B17.02"
   ],
   "nedostaje": ""
  },
@@ -2978,11 +2945,9 @@
    "zakon očuvanja mehaničke energije: E_k = ½k(A² − y²)"
   ],
   "lekcije": [
-   "O04",
-   "O06",
-   "D07",
-   "Z06",
-   "Z08"
+   "B19.01",
+   "B19.03",
+   "B05.02"
   ],
   "nedostaje": ""
  },
@@ -2998,9 +2963,10 @@
    "Avogadrov broj i množina tvari"
   ],
   "lekcije": [
-   "F14",
-   "F15",
-   "T12"
+   "B28.01",
+   "B28.02",
+   "B11.01",
+   "B31.05"
   ],
   "nedostaje": ""
  }

@@ -1,0 +1,892 @@
+[
+ {
+  "rucna": "E01",
+  "generirane": [
+   "B13.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Naboj, kvantizacija i očuvanje u B13.01; privlačenje/odbijanje i kulon uglavnom uz B13.01/B13.03."
+ },
+ {
+  "rucna": "E02",
+  "generirane": [
+   "B13.01",
+   "B13.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Vodiči/izolatori u B13.01, nabijanje trenjem, dodirom i uzemljenje u B13.02."
+ },
+ {
+  "rucna": "E03",
+  "generirane": [
+   "B13.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Coulombov zakon, dielektrik i vektorski zbroj sila."
+ },
+ {
+  "rucna": "E04",
+  "generirane": [
+   "B13.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Polje, silnice, superpozicija; homogeno polje ploča dijelom u B13.05/B13.08."
+ },
+ {
+  "rucna": "E05",
+  "generirane": [
+   "B13.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Potencijal, napon, rad, eV."
+ },
+ {
+  "rucna": "E06",
+  "generirane": [
+   "B13.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "F = qE, hitac analogija, ubrzavanje naponom (dijelom B13.05/B17.05)."
+ },
+ {
+  "rucna": "E07",
+  "generirane": [
+   "B13.07",
+   "B13.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Vodiči u polju, Faradayev kavez; influencija u B13.02."
+ },
+ {
+  "rucna": "E08",
+  "generirane": [
+   "B13.08"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kapacitet i C=Q/U."
+ },
+ {
+  "rucna": "E08b",
+  "generirane": [
+   "B13.08",
+   "B13.09"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Dielektrik, spojen/odspojen, energija kondenzatora."
+ },
+ {
+  "rucna": "E09",
+  "generirane": [
+   "B15.01",
+   "B15.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Struja, napon, Ohmov zakon i I–U graf."
+ },
+ {
+  "rucna": "E10",
+  "generirane": [
+   "B15.02"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Otpor i geometrija/materijal pokriveni; ovisnost o temperaturi i mjerenje otpora nisu izričito navedeni."
+ },
+ {
+  "rucna": "E11",
+  "generirane": [
+   "B15.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Serijski, paralelni i mješoviti spojevi."
+ },
+ {
+  "rucna": "E12",
+  "generirane": [
+   "B15.03"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Realni izvor spomenut kao dio rješavanja kruga; unutarnji otpor, kratki spoj i U,I graf nisu posebno obrađeni."
+ },
+ {
+  "rucna": "E13",
+  "generirane": [
+   "B15.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Snaga, rad, Joule, korisnost; kalorimetrija dijelom B12.02."
+ },
+ {
+  "rucna": "E14",
+  "generirane": [
+   "B16.01",
+   "B16.02",
+   "B16.03",
+   "B16.04",
+   "B16.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Magnet, polje, ravni vodič, zavojnica, superpozicija."
+ },
+ {
+  "rucna": "E15",
+  "generirane": [
+   "B17.02",
+   "B17.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Amperova sila i međudjelovanje paralelnih vodiča."
+ },
+ {
+  "rucna": "E16",
+  "generirane": [
+   "B17.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Lorentzova sila; veza s Amperovom u B17.02; da ne vrši rad dijelom B17.04."
+ },
+ {
+  "rucna": "E17",
+  "generirane": [
+   "B17.04",
+   "B17.05",
+   "B17.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kružno gibanje naboja, r = mv/(qB), maseni spektrometar među primjenama."
+ },
+ {
+  "rucna": "E18",
+  "generirane": [
+   "B18.01",
+   "B18.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Tok, Faradayev zakon, graf Φ(t), vodič u polju."
+ },
+ {
+  "rucna": "E19",
+  "generirane": [
+   "B18.03",
+   "B18.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Lenzovo pravilo i energija u B18.03; U=Bℓv u B18.02."
+ },
+ {
+  "rucna": "E20",
+  "generirane": [
+   "B18.07",
+   "B18.01",
+   "B18.02",
+   "B18.03",
+   "B18.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "B18.07 pokriva generator i motor; B18.01/B18.02 tok, Faradayev zakon i graf Φ(t); B18.04 sinusni napon. Komutator/klizni prsteni nisu izrijekom spomenuti."
+ },
+ {
+  "rucna": "E21",
+  "generirane": [
+   "B18.04",
+   "B18.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Sinusna jednadžba, ω, T, f, Ohmov zakon za amplitude (B18.04); efektivne vrijednosti dodatno u B18.05."
+ },
+ {
+  "rucna": "E22",
+  "generirane": [
+   "B18.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Induktivni i kapacitivni otpor, impedancija i Ohmov zakon za RLC krug; pretvorba µF vjerojatno uz B31.05."
+ },
+ {
+  "rucna": "E23",
+  "generirane": [
+   "B18.08"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Transformator i omjeri zavoja; snaga i rad samo na izmjeničnu struju vjerojatno obuhvaćeni, B15.04 za snagu."
+ },
+ {
+  "rucna": "M01",
+  "generirane": [
+   "B01.01",
+   "B31.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Srednja brzina u B01.01, jedinice i pretvorbe u B31.05; čitanje formula i red veličine su općenito."
+ },
+ {
+  "rucna": "M02",
+  "generirane": [
+   "B01.01",
+   "B01.05"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Put i pomak pokriveni; skalar/vektor i zbrajanje pomaka pod pravim kutom (Pitagora) nisu izričito navedeni."
+ },
+ {
+  "rucna": "M03",
+  "generirane": [
+   "B01.03",
+   "B01.04",
+   "B31.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Akceleracija, jednadžbe i usporavanje; preuređivanje formula u B31.03."
+ },
+ {
+  "rucna": "M04",
+  "generirane": [
+   "B01.02",
+   "B01.04",
+   "B31.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Čitanje grafova x(t), v(t), a(t); nagib i površina kao opći alati u B31.06."
+ },
+ {
+  "rucna": "M05",
+  "generirane": [
+   "B01.02",
+   "B01.04",
+   "B31.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Brzina iz nagiba s–t grafa i promjena brzine iz površine a–t grafa pokrivene čitanjem grafova."
+ },
+ {
+  "rucna": "M06",
+  "generirane": [
+   "B01.05",
+   "B03.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Slobodni pad i vertikalni hici s a = g, odabir smjera i postupak zadataka."
+ },
+ {
+  "rucna": "M07",
+  "generirane": [
+   "B03.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Horizontalni hitac kao zbroj jednolikog gibanja i slobodnog pada s parabolnom putanjom."
+ },
+ {
+  "rucna": "M08",
+  "generirane": [
+   "B03.01",
+   "B02.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Sila kao vektor, dijagram sila i rezultanta u B03.01; rastavljanje na komponente u B02.03."
+ },
+ {
+  "rucna": "M09",
+  "generirane": [
+   "B02.01",
+   "B02.02",
+   "B03.02",
+   "B04.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "I., II. i III. Newtonov zakon; razlika mase i težine dodatno u B03.04."
+ },
+ {
+  "rucna": "M10",
+  "generirane": [
+   "B03.04"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Težina, dizalo i prividna težina pokriveni; sila teža, bestežinsko stanje i razlika jedinica nisu izrijekom navedeni."
+ },
+ {
+  "rucna": "M11",
+  "generirane": [
+   "B03.03",
+   "B02.03"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Trenje pokriveno; elastična sila opruge, konstanta opruge te mjerenje i kontrola varijabli nisu pokriveni."
+ },
+ {
+  "rucna": "M12",
+  "generirane": [
+   "B02.03",
+   "B03.03",
+   "B03.04",
+   "B31.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kosina, rastav sila i povezana tijela s napetošću niti; postupak rješavanja u B31.02."
+ },
+ {
+  "rucna": "M13",
+  "generirane": [
+   "B05.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Rad sile, kut, predznak; rad iz grafa sile po putu vjerojatno pokriven općenito."
+ },
+ {
+  "rucna": "M14",
+  "generirane": [
+   "B05.02",
+   "B31.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kinetička i potencijalna energija i veza s radom; tehnika omjera u kvalitativnom zaključivanju."
+ },
+ {
+  "rucna": "M15",
+  "generirane": [
+   "B05.03",
+   "B05.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Očuvanje mehaničke energije, izjednačavanje stanja i gubici zbog trenja."
+ },
+ {
+  "rucna": "M16",
+  "generirane": [
+   "B05.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Snaga i korisnost; oblik P = Fv i konjska snaga nisu izrijekom navedeni."
+ },
+ {
+  "rucna": "M17",
+  "generirane": [
+   "B04.02",
+   "B04.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Količina gibanja, impuls, zračni jastuk i zakon očuvanja s predznacima pokriveni u B04.02 i B04.03."
+ },
+ {
+  "rucna": "M18",
+  "generirane": [
+   "B04.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Sudari su pokriveni u B04.04. Eksplozija i trzaj dolaze iz općeg zakona očuvanja u B04.03, a B04.04 ih ne spominje izričito."
+ },
+ {
+  "rucna": "M19",
+  "generirane": [
+   "B06.01",
+   "B06.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Period, frekvencija, obodna i kutna brzina te usporedba točaka na kotaču. Radijan nije izričito naveden."
+ },
+ {
+  "rucna": "M20",
+  "generirane": [
+   "B06.03",
+   "B06.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Centripetalno ubrzanje i sila kao rezultanta stvarnih sila te zadaci s mv²/r. Centrifugalna sila i zavoj nisu izričito navedeni."
+ },
+ {
+  "rucna": "M21",
+  "generirane": [
+   "B07.01",
+   "B07.02",
+   "B31.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Zakon gravitacije i g na površini planeta. Znanstveni zapis tek se djelomično dotiče u B31.05 (jedinice)."
+ },
+ {
+  "rucna": "M22",
+  "generirane": [
+   "B07.03",
+   "B07.04"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Treći Keplerov zakon i brzina satelita pokriveni. Prvi i drugi Keplerov zakon, prva kozmička brzina i geostacionarna orbita nisu izričito navedeni."
+ },
+ {
+  "rucna": "M23",
+  "generirane": [
+   "B08.01",
+   "B31.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Tlak i gustoća u B08.01, pretvorbe jedinica u B31.05."
+ },
+ {
+  "rucna": "M24",
+  "generirane": [
+   "B08.01",
+   "B08.02",
+   "B08.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Hidrostatički tlak, atmosferski, ukupni i manometarski tlak te Pascalov zakon i hidraulika."
+ },
+ {
+  "rucna": "M25",
+  "generirane": [
+   "B08.04",
+   "B08.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Uzgon, Arhimedov zakon i uvjeti plutanja, lebdenja i tonjenja. Prividna težina izvodi se iz ravnoteže uzgona i težine."
+ },
+ {
+  "rucna": "M26",
+  "generirane": [
+   "B09.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Idealni fluid, protok i kontinuitet."
+ },
+ {
+  "rucna": "M27",
+  "generirane": [
+   "B09.02",
+   "B09.03"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Bernoullijeva jednadžba za horizontalnu cijev i primjene. Torricellijev izraz i uzgon krila nisu izričito navedeni."
+ },
+ {
+  "rucna": "Q01",
+  "generirane": [
+   "B25.01",
+   "B26.04",
+   "B24.03",
+   "B31.05"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Energija fotona i veza s frekvencijom te elektronvolt (B13.05). Količina gibanja fotona p = h/λ nije pokrivena."
+ },
+ {
+  "rucna": "Q02",
+  "generirane": [
+   "B25.01",
+   "B25.02",
+   "B25.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Einsteinova jednadžba, granična frekvencija, graf E_k(f) i zaustavni napon."
+ },
+ {
+  "rucna": "Q03",
+  "generirane": [
+   "B25.04",
+   "B25.05"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Dualizam i de Broglieeva valna duljina. Ubrzavanje naponom i elektronski mikroskop nisu izričito navedeni."
+ },
+ {
+  "rucna": "Q04",
+  "generirane": [
+   "B26.01"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Povijest modela atoma i problem Rutherfordova modela. Opis Rutherfordova pokusa raspršenja i odnos veličina jezgre i atoma nisu izričito navedeni."
+ },
+ {
+  "rucna": "Q05",
+  "generirane": [
+   "B26.02",
+   "B26.03",
+   "B26.04"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Bohrovi postulati, E_n i emisija fotona. Veza sa stojnim valom de Broglieevih valova nije izričito navedena."
+ },
+ {
+  "rucna": "Q06",
+  "generirane": [
+   "B26.02",
+   "B26.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Linijski spektri, emisijski i apsorpcijski spektar te serije vodika."
+ },
+ {
+  "rucna": "Q07",
+  "generirane": [
+   "B27.01",
+   "B27.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Građa jezgre, izotopi, jaka sila i očuvanje A i Z. Višak neutrona kod teških jezgara nije izričito naveden."
+ },
+ {
+  "rucna": "Q08",
+  "generirane": [
+   "B27.02",
+   "B27.05",
+   "B27.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Defekt mase, energija vezanja, fisija i fuzija te lančana reakcija."
+ },
+ {
+  "rucna": "Q09",
+  "generirane": [
+   "B27.04",
+   "B28.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Vrste raspada i prodornost zračenja. Biološka opasnost dijelom je u B28.04."
+ },
+ {
+  "rucna": "Q10",
+  "generirane": [
+   "B28.01",
+   "B28.02",
+   "B28.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Zakon raspada, poluraspad, konstanta raspada i aktivnost pokriveni u B28.01 i B28.02. Datiranje C-14 i medicinske primjene najvjerojatnije su u B28.05."
+ },
+ {
+  "rucna": "Q11",
+  "generirane": [
+   "B29.01",
+   "B29.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Postulati STR-a, vlastito vrijeme i dilatacija vremena."
+ },
+ {
+  "rucna": "Q12",
+  "generirane": [
+   "B29.03",
+   "B29.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kontrakcija duljine i povezivanje s dilatacijom vremena preko brzine/γ."
+ },
+ {
+  "rucna": "Q13",
+  "generirane": [
+   "B29.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Relativistička energija, energija mirovanja i zašto se c ne može postići."
+ },
+ {
+  "rucna": "Q14",
+  "generirane": [
+   "B30.01",
+   "B30.02",
+   "B30.05",
+   "B30.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Veliki prasak, Hubble, crveni pomak, pozadinsko zračenje, zvijezde, fuzija i nukleosinteza. Crveni pomak kao Dopplerov efekt dijelom je u B21.04; omjer H/He i nukleosinteza spominju se tek djelomično (B30.05)."
+ },
+ {
+  "rucna": "T01",
+  "generirane": [
+   "B10.01",
+   "B10.02",
+   "B12.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Čestična građa, Brownovo gibanje, difuzija, prijelazi stanja i stalna temperatura pri prijelazu."
+ },
+ {
+  "rucna": "T02",
+  "generirane": [
+   "B11.01",
+   "B11.04",
+   "B12.01",
+   "B31.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kelvin i pretvorba (B11.01, B31.05), temperatura kao kinetička energija (B11.04), temperatura naspram topline (B12.01). Apsolutna nula nije posebno istaknuta."
+ },
+ {
+  "rucna": "T03",
+  "generirane": [
+   "B10.03",
+   "B10.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Linearno i volumno rastezanje, šupljine, tekućine i anomalija vode."
+ },
+ {
+  "rucna": "T04",
+  "generirane": [
+   "B12.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Q = mcΔT i kalorimetrija."
+ },
+ {
+  "rucna": "T05",
+  "generirane": [
+   "B12.03",
+   "B12.02"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Latentna toplina i složena bilanca pokrivene (B12.03, B12.02). Načini prijenosa topline (vođenje, strujanje, zračenje) i izolacija ne postoje u generiranom planu."
+ },
+ {
+  "rucna": "T06",
+  "generirane": [
+   "B11.01",
+   "B11.02",
+   "B11.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Množina tvari, pV=nRT, model idealnog plina i granice primjene; promjena količine tvari obrađuje se kroz primjenu zakona."
+ },
+ {
+  "rucna": "T07",
+  "generirane": [
+   "B11.02",
+   "B11.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Izo-procesi, prepoznavanje iz teksta i grafova te prevođenje između dijagrama."
+ },
+ {
+  "rucna": "T08",
+  "generirane": [
+   "B11.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Molekulsko-kinetički model, tlak kao posljedica sudara i veza Ek i T."
+ },
+ {
+  "rucna": "T09",
+  "generirane": [
+   "B11.04",
+   "B12.01",
+   "B12.06"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Unutarnja energija plina, funkcija stanja, ΔU=0 u izotermnom procesu."
+ },
+ {
+  "rucna": "T10",
+  "generirane": [
+   "B12.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Rad plina W=pΔV, površina ispod krivulje i zatvorena petlja."
+ },
+ {
+  "rucna": "T11",
+  "generirane": [
+   "B12.05",
+   "B12.06",
+   "B12.07"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "I. zakon termodinamike, izoprocesi i adijabatski proces. Perpetuum mobile prve vrste nije posebno naveden."
+ },
+ {
+  "rucna": "T12",
+  "generirane": [
+   "B12.08",
+   "B12.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Kružni proces, bilanca energije, rad kao površina petlje."
+ },
+ {
+  "rucna": "T13",
+  "generirane": [
+   "B12.08",
+   "B12.09"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Korisnost i Carnotov stroj pokriveni. II. zakon termodinamike, hladnjak/toplinska pumpa i perpetuum mobile druge vrste nisu izričito navedeni."
+ },
+ {
+  "rucna": "V01",
+  "generirane": [
+   "B19.01",
+   "B19.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Harmonijsko titranje, veličine, jednadžba elongacije."
+ },
+ {
+  "rucna": "V02",
+  "generirane": [
+   "B19.02",
+   "B19.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Brzina, akceleracija, maksimalne vrijednosti i povratna sila F=−kx."
+ },
+ {
+  "rucna": "V03",
+  "generirane": [
+   "B19.04",
+   "B19.03",
+   "B19.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Energija titranja E=½kA², Ep i Ek u B19.04; F=kx i elastična Ep u B19.01/B19.03 i B05.02. Čitanje grafa Ep(x) uklopljeno je u B19.04 i B31.06."
+ },
+ {
+  "rucna": "V04",
+  "generirane": [
+   "B19.03",
+   "B19.05",
+   "B31.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Periodi opruge i njihala u B19.03 i B19.05; T=t/n u B19.01; izvlačenje k i ℓ spada u B31.03."
+ },
+ {
+  "rucna": "V05",
+  "generirane": [
+   "B20.01",
+   "B20.02",
+   "B20.03",
+   "B19.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Vrste valova, v=λf, ovisnost o sredstvu i izvoru te grafovi y(x) i y(t) pokriveni su u B20.01–B20.03; f=1/T u B19.01."
+ },
+ {
+  "rucna": "V06",
+  "generirane": [
+   "B20.05",
+   "B20.06",
+   "B20.07"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Superpozicija i odbijanje pulsa u B20.05, lom vala u B20.06, razlika putova i A_max/A_min u B20.07."
+ },
+ {
+  "rucna": "V07",
+  "generirane": [
+   "B20.08",
+   "B20.02",
+   "B19.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Stojni val na žici u B20.08, v=λf u B20.02, T i f u B19.01."
+ },
+ {
+  "rucna": "V08",
+  "generirane": [
+   "B21.01",
+   "B21.02",
+   "B20.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Zvuk kao longitudinalni val u B21.01, razina zvuka u B21.02, I=P/(4πr²) u B20.04."
+ },
+ {
+  "rucna": "V09",
+  "generirane": [
+   "B21.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Dopplerov efekt s predznacima u B21.04."
+ },
+ {
+  "rucna": "V10",
+  "generirane": [
+   "B22.01",
+   "B22.02"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Zakon odbijanja i ravno zrcalo pokriveni; pravocrtno širenje, sjena i polusjena nisu izričito navedeni u opisu."
+ },
+ {
+  "rucna": "V11",
+  "generirane": [
+   "B22.03",
+   "B22.04",
+   "B22.06",
+   "B24.02"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Snellov zakon, indeks loma i planparalelna ploča pokriveni; prizma nije izričito navedena. Konstantna frekvencija pri lomu u B20.06."
+ },
+ {
+  "rucna": "V12",
+  "generirane": [
+   "B22.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Totalna refleksija i granični kut u B22.05."
+ },
+ {
+  "rucna": "V13",
+  "generirane": [
+   "B22.07",
+   "B22.08",
+   "B31.06"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Jednadžba leće, jakost i predznaci pokriveni; obrada tablice mjerenja i kombinacija dviju leća nisu izričito navedene."
+ },
+ {
+  "rucna": "V14",
+  "generirane": [
+   "B22.09",
+   "B22.08",
+   "B22.07"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Slike u lećama i povećanje pokriveni; primjene (oko, kratkovidnost, povećalo, fotoaparat, projektor) nisu izričito navedene."
+ },
+ {
+  "rucna": "V15",
+  "generirane": [
+   "B23.02",
+   "B23.01"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Youngov pokus, razlika hoda i razmak pruga u B23.02; valna priroda u B23.01."
+ },
+ {
+  "rucna": "V16",
+  "generirane": [
+   "B23.01",
+   "B23.03"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Ogib u B23.01, optička rešetka i mjerenje u B23.03."
+ },
+ {
+  "rucna": "V17",
+  "generirane": [
+   "B23.04",
+   "B23.05"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Polarizator, analizator, Brewsterov kut u B23.04; polarizacija raspršenjem u B23.05; dvolom i primjene nisu izričito navedeni."
+ },
+ {
+  "rucna": "V18",
+  "generirane": [
+   "B23.05",
+   "B22.03"
+  ],
+  "pokriveno": "djelomicno",
+  "napomena": "Raspršenje (plavo nebo) pokriveno u B23.05; disperzija u prizmi i duga nisu izričito pokrivene."
+ },
+ {
+  "rucna": "V19",
+  "generirane": [
+   "B24.01",
+   "B24.02",
+   "B24.03",
+   "B24.04"
+  ],
+  "pokriveno": "cijelo",
+  "napomena": "Nastanak EM vala, c=λf, spektar i energija fotona pokriveni."
+ }
+]

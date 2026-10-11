@@ -1,0 +1,3721 @@
+{
+ "predznanje": [
+  "osnovnoškolska matematika"
+ ],
+ "blokovi": [
+  {
+   "id": "B01",
+   "naziv": "FIZ SŠ C.1.1. Analizira pravocrtno gibanje"
+  },
+  {
+   "id": "B02",
+   "naziv": "FIZ SŠ B.1.2. Primjenjuje I. Newtonov zakon"
+  },
+  {
+   "id": "B03",
+   "naziv": "FIZ SŠ B.1.3. Primjenjuje II. Newtonov zakon"
+  },
+  {
+   "id": "B04",
+   "naziv": "FIZ SŠ B.1.4. Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja"
+  },
+  {
+   "id": "B05",
+   "naziv": "FIZ SŠ D.1.5. Primjenjuje zakon očuvanja energije"
+  },
+  {
+   "id": "B06",
+   "naziv": "FIZ SŠ C.1.6. Analizira kružno gibanje"
+  },
+  {
+   "id": "B07",
+   "naziv": "FIZ SŠ C.1.7. Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela"
+  },
+  {
+   "id": "B08",
+   "naziv": "FIZ SŠ B.2.1. Primjenjuje zakone statike fluida"
+  },
+  {
+   "id": "B09",
+   "naziv": "FIZ SŠ C.2.2. Primjenjuje zakone dinamike fluida"
+  },
+  {
+   "id": "B10",
+   "naziv": "FIZ SŠ C.2.3. Primjenjuje model čestične građe tvari"
+  },
+  {
+   "id": "B11",
+   "naziv": "FIZ SŠ D.2.4. Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina"
+  },
+  {
+   "id": "B12",
+   "naziv": "FIZ SŠ D.2.5. Analizira termodinamičke procese i sustave"
+  },
+  {
+   "id": "B13",
+   "naziv": "FIZ SŠ B.2.6. Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike"
+  },
+  {
+   "id": "B14",
+   "naziv": "FIZ SŠ B.2.7. Opisuje električno polje"
+  },
+  {
+   "id": "B15",
+   "naziv": "FIZ SŠ C.2.8. Primjenjuje zakone elektrodinamike u električnome strujnom krugu"
+  },
+  {
+   "id": "B16",
+   "naziv": "FIZ SŠ B.3.1. Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma"
+  },
+  {
+   "id": "B17",
+   "naziv": "FIZ SŠ B.3.2. Analizira magnetsko međudjelovanje i objašnjava primjene"
+  },
+  {
+   "id": "B18",
+   "naziv": "FIZ SŠ B.3.3. Analizira elektromagnetsku indukciju i primjene"
+  },
+  {
+   "id": "B19",
+   "naziv": "FIZ SŠ C.3.4., FIZ SŠ D.3.4. Analizira harmonijsko titranje"
+  },
+  {
+   "id": "B20",
+   "naziv": "FIZ SŠ C.3.5., FIZ SŠ D.3.5. Objašnjava nastanak vala i analizira valna svojstva"
+  },
+  {
+   "id": "B21",
+   "naziv": "FIZ SŠ C.3.6., FIZ SŠ D.3.6. Analizira valna svojstva zvuka"
+  },
+  {
+   "id": "B22",
+   "naziv": "FIZ SŠ C.3.7., FIZ SŠ D.3.7. Primjenjuje zakone geometrijske optike"
+  },
+  {
+   "id": "B23",
+   "naziv": "FIZ SŠ C.4.1., FIZ SŠ D.4.1. Analizira valnu prirodu svjetlosti"
+  },
+  {
+   "id": "B24",
+   "naziv": "FIZ SŠ C.4.2., FIZ SŠ D.4.2. Objašnjava nastanak, svojstva i primjene elektromagnetskih valova"
+  },
+  {
+   "id": "B25",
+   "naziv": "FIZ SŠ A.4.3., FIZ SŠ D.4.3. Analizira valno-čestični model svjetlosti i tvari"
+  },
+  {
+   "id": "B26",
+   "naziv": "FIZ SŠ A.4.4., FIZ SŠ D.4.4. Analizira model atoma i energijske spektre"
+  },
+  {
+   "id": "B27",
+   "naziv": "FIZ SŠ A.4.5., FIZ SŠ D.4.5. Objašnjava model atomske jezgre i nuklearne reakcije"
+  },
+  {
+   "id": "B28",
+   "naziv": "FIZ SŠ B.4.6., FIZ SŠ D.4.6. Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme"
+  },
+  {
+   "id": "B29",
+   "naziv": "FIZ SŠ C.4.7., FIZ SŠ D.4.7. Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)"
+  },
+  {
+   "id": "B30",
+   "naziv": "FIZ SŠ B.4.8., FIZ SŠ D.4.8. Opisuje model nastanka i strukturu svemira"
+  },
+  {
+   "id": "B31",
+   "naziv": "ostalo Rješava fizičke probleme"
+  }
+ ],
+ "lekcije": [
+  {
+   "id": "B01.01",
+   "blok": "B01",
+   "naziv": "Gibanje, put i pomak, prosječna brzina",
+   "koncept": "Opisivanje gibanja u referentnom sustavu te razlikovanje puta i pomaka i računanje prosječne brzine.",
+   "zadatak": "A: odrediti miruje li tijelo ili se giba s obzirom na različite referentne sustave; B: razlikovati put i pomak na primjeru kružne ili pravokutne staze; C: izračunati pomak okomitih dijelova Pitagorinim poučkom; D: izračunati prosječnu brzinu i pretvoriti km/h u m/s.",
+   "stavke": [
+    "S01.01",
+    "S01.02",
+    "S01.03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Mehaničko gibanje i relativnost gibanja: položaj, putanja i referentni sustav; tijelo miruje ili se giba samo s obzirom na odabrani referentni sustav; Put (ukupna prijeđena duljina, skalar) i pomak (vektor od početnog do krajnjeg položaja) nisu isto; pomak može biti nula, a put nije; za okomite dijelove pomak se računa Pitagorinim poučkom; Prosječna brzina v = Δs/Δt (omjer ukupnog puta i ukupnog vremena); jedinica m/s, pretvorba km/h u m/s (dijeljenje s 3,6)"
+  },
+  {
+   "id": "B01.02",
+   "blok": "B01",
+   "naziv": "Jednoliko gibanje i njegovi grafovi",
+   "koncept": "Jednoliko gibanje stalnom brzinom, s = v·t, te čitanje grafova x(t) i v(t).",
+   "zadatak": "A: izračunati put i položaj pri jednolikom gibanju; B: iz grafa x(t) odrediti brzinu preko nagiba i usporediti brzine dvaju tijela; C: nacrtati ili pročitati graf v(t) za jednoliko gibanje; D: odrediti put kao površinu ispod grafa v(t).",
+   "stavke": [
+    "S01.04",
+    "S01.05",
+    "S01.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01"
+   ],
+   "zasto_nova": "Jednoliko gibanje po pravcu: brzina je stalna, s = v·t (uz početni položaj x = x0 + vt); akceleracija je nula pa je ukupna sila nula; Graf x(t) jednolikog gibanja je pravac; nagib grafa x(t) jednak je brzini; strmiji pravac znači veću brzinu; vodoravan pravac znači mirovanje; Graf v(t) jednolikog gibanja je vodoravan pravac; površina ispod grafa v(t) jednaka je putu (odnosno pomaku)"
+  },
+  {
+   "id": "B01.03",
+   "blok": "B01",
+   "naziv": "Akceleracija i jednoliko ubrzano gibanje",
+   "koncept": "Akceleracija kao promjena brzine u vremenu te formule v = v0 + at, s = v0t + ½at² i v² = v0² + 2as.",
+   "zadatak": "A: izračunati akceleraciju iz promjene brzine; B: izračunati brzinu nakon vremena t pri stalnoj akceleraciji; C: izračunati prijeđeni put; D: izračunati brzinu ili put formulom bez vremena.",
+   "stavke": [
+    "S01.07",
+    "S01.08",
+    "S01.09",
+    "S01.10"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B01.02"
+   ],
+   "zasto_nova": "Akceleracija a = Δv/Δt: promjena brzine u jedinici vremena; jedinica m/s²; Jednoliko ubrzano gibanje: stalna akceleracija, v = v0 + at; Put pri jednoliko ubrzanom gibanju: s = v0·t + ½at²; Veza brzine, akceleracije i puta bez vremena: v² = v0² + 2as"
+  },
+  {
+   "id": "B01.04",
+   "blok": "B01",
+   "naziv": "Usporavanje i grafovi ubrzanog gibanja",
+   "koncept": "Jednoliko usporeno gibanje i čitanje grafova a(t), v(t) i x(t) za promjenjivo gibanje.",
+   "zadatak": "A: izračunati zaustavni put i vrijeme zaustavljanja kočenjem; B: iz grafa a(t) odrediti promjenu brzine; C: iz grafa v(t) odrediti akceleraciju i pomak; D: iz grafa x(t) po nagibu tangente prosuditi ubrzava li tijelo ili usporava.",
+   "stavke": [
+    "S01.11",
+    "S01.14",
+    "S01.12",
+    "S01.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.02",
+    "B01.03"
+   ],
+   "zasto_nova": "Jednoliko usporeno gibanje: akceleracija je suprotna brzini (u formulama a negativan ili se oduzima); tijelo se zaustavlja kad je v = 0 i ta formula vrijedi samo do zaustavljanja; Graf a(t) jednoliko promjenjivog gibanja je vodoravan pravac; površina ispod grafa a(t) je promjena brzine; Graf v(t) jednoliko ubrzanog gibanja je pravac; nagib grafa v(t) jednak je akceleraciji; površina ispod grafa je pomak; Graf x(t) jednoliko ubrzanog gibanja je parabola; nagib tangente daje trenutačnu brzinu; rastući nagib znači ubrzavanje, padajući usporavanje"
+  },
+  {
+   "id": "B01.05",
+   "blok": "B01",
+   "naziv": "Promjena smjera, slobodni pad i rješavanje zadataka",
+   "koncept": "Put i pomak pri promjeni smjera, vertikalni hitac i pad kao ubrzano gibanje s a = g te opći postupak za zadatke.",
+   "zadatak": "A: iz v(t) grafa s promjenom predznaka odrediti pomak i put; B: izračunati brzinu i visinu pri slobodnom padu; C: analizirati hitac uvis (vrijeme uspona, najveća visina); D: postaviti uvjet susreta dvaju tijela uz odabir osi i predznaka.",
+   "stavke": [
+    "S01.15",
+    "S01.17",
+    "S01.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.03",
+    "B01.04"
+   ],
+   "zasto_nova": "Put i pomak iz v(t) grafa kad brzina promijeni predznak: pomak je predznačena površina (dijelovi ispod osi se oduzimaju), put je zbroj apsolutnih površina; u trenutku v = 0 tijelo mijenja smjer; Slobodni pad i hhitac po vertikali kao jednoliko ubrzano gibanje s a = g (u zadacima 10 m/s²), bez otpora zraka; v = gt, h = ½gt²; pri hicu uvis a = g usmjeren prema dolje cijelo vrijeme; Postupak za zadatke: odabrati smjer osi i predznake, ispisati poznate veličine, odabrati formulu koja sadrži tražene i poznate veličine, za dva tijela postaviti uvjet susreta (jednaki položaji) "
+  },
+  {
+   "id": "B02.01",
+   "blok": "B02",
+   "naziv": "Tromost i I. Newtonov zakon",
+   "koncept": "Tromost kao svojstvo tijela i I. Newtonov zakon: stalna brzina ili mirovanje kad je ukupna sila nula, uz najčešće zablude o potrebi sile za gibanje.",
+   "zadatak": "A: objasniti tromost i masu na primjeru naglog kočenja vozila; B: iskazati I. Newtonov zakon na primjeru tijela koje klizi po glatkoj podlozi; C: prepoznati zamku o sili potrebnoj za jednoliko gibanje; D: objasniti zašto zakrivljeno gibanje ili ubrzavanje znači da ukupna sila nije nula.",
+   "stavke": [
+    "S02.03",
+    "S02.04",
+    "S02.07",
+    "S02.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B03.02"
+   ],
+   "zasto_nova": "Tromost (inercija) je svojstvo tijela da se opire promjeni svojega stanja gibanja; mjera tromosti je masa tijela.; I. Newtonov zakon: tijelo miruje ili se giba jednoliko po pravcu (stalnom brzinom) dok na njega ne djeluje sila ili je ukupna sila na njega jednaka nuli.; Zamka: za održavanje jednolikoga gibanja nije potrebna sila; sila je potrebna samo za promjenu brzine (iznosa ili smjera). Stalna brzina ne znači da nema sila, nego da im je zbroj nula.; Ako je ukupna sila različita od nule, I. zakon ne vrijedi nego tijelo ubrzava (veza s II. Newtonovim zakonom); zakrivljeno gibanje znači da ukupna sila nije nula."
+  },
+  {
+   "id": "B02.02",
+   "blok": "B02",
+   "naziv": "Ravnoteža sila i inercijski sustavi",
+   "koncept": "Ravnoteža sila (ΣF = 0) kao uvjet mirovanja ili jednolikog gibanja, jednostavni primjeri ravnoteže te pojam inercijskog sustava.",
+   "zadatak": "A: odrediti ukupnu silu iz poznate stalne brzine tijela; B: pokazati ravnotežu sile teže i normalne sile na horizontalnoj podlozi; C: izračunati napetost niti za tijelo koje visi ili se jednoliko spušta/diže; D: odlučiti je li sustav inercijski (vlak koji miruje, jednoliko se giba ili ubrzava).",
+   "stavke": [
+    "S02.05",
+    "S02.06",
+    "S02.08",
+    "S02.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B02.01",
+    "B03.01"
+   ],
+   "zasto_nova": "Inercijski sustav: sustav u kojem vrijedi I. Newtonov zakon; sustav koji miruje ili se giba jednoliko po pravcu u odnosu na inercijski sustav.; Ravnoteža sila: ako je ΣF = 0, tijelo je u ravnoteži (miruje ili se giba stalnom brzinom); vrijedi i obrnuto: stalna brzina znači ukupnu silu nula.; Primjer ravnoteže: tijelo na horizontalnoj podlozi – sila teža i normalna sila podloge jednakih su iznosa i suprotnih smjerova.; Tijelo koje visi o niti ili se jednoliko spušta/diže: napetost niti jednaka je težini (T = mg)."
+  },
+  {
+   "id": "B02.03",
+   "blok": "B02",
+   "naziv": "Primjena ravnoteže: trenje i kosina",
+   "koncept": "Primjena uvjeta ravnoteže na jednoliko gibanje po hrapavoj podlozi i na rastavljanje sila na komponente po osima (kosina).",
+   "zadatak": "A: izračunati vučnu silu pri jednolikom vučenju tijela po hrapavoj podlozi; B: nacrtati sve sile na tijelo na kosini; C: rastaviti silu težu na komponente mg sinα i mg cosα; D: izjednačiti zbroj komponenata s nulom po svakoj osi i izračunati nepoznatu silu.",
+   "stavke": [
+    "S02.10",
+    "S02.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B02.02",
+    "B03.03"
+   ],
+   "zasto_nova": "Jednoliko gibanje po hrapavoj podlozi: vučna sila jednaka je sili trenja (F = F_tr = μF_p).; Postupak: nacrtati sve sile na tijelo, rastaviti ih na komponente i izjednačiti zbroj komponenata s nulom po svakoj osi (npr. na kosini mg sinα uzduž, mg cosα okomito)."
+  },
+  {
+   "id": "B03.01",
+   "blok": "B03",
+   "naziv": "Sila, rezultanta i dijagram sila",
+   "koncept": "Sila je vektor mjeren u njutnima; sile na tijelo prikazujemo dijagramom i zbrajamo u rezultantu.",
+   "zadatak": "A: odrediti iznos i smjer sile i jedinicu N; B: nacrtati dijagram sila za tijelo; C: zbrojiti sile na istom pravcu; D: zbrojiti okomite sile Pitagorinim poučkom.",
+   "stavke": [
+    "S03.01",
+    "S03.02",
+    "S03.03",
+    "S03.08",
+    "S03.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Sila je vektorska veličina (iznos, smjer, hvatište); mjerna jedinica njutn: 1 N = 1 kg·m/s²; Dijagram sila: tijelo se crta kao točka/lik, a sve sile koje na njega djeluju prikazuju se strelicama iz tijela (sila teža, normalna sila podloge, napetost niti, elastična sila, trenje, otpor); ne crtaju se sile kojima tijelo djeluje na druge ni rezultanta kao dodatna sila; Rezultantna (ukupna) sila je vektorski zbroj svih sila na tijelo; sile na istom pravcu zbrajaju se s predznacima, okomite pitagorinim poučkom; Sila teža G = mg usmjerena prema dolje; g ≈ 10 m/s² (9,81) neovisno o masi tijela; Elastična sila (Hookeov zakon): F = kx, suprotna deformaciji; k je konstanta opruge"
+  },
+  {
+   "id": "B03.02",
+   "blok": "B03",
+   "naziv": "II. Newtonov zakon i vrste gibanja",
+   "koncept": "Rezultantna sila daje akceleraciju a = F/m u smjeru sile; njezin smjer prema brzini određuje promjenu iznosa ili smjera brzine.",
+   "zadatak": "A: izračunati a iz F i m; B: odrediti smjer akceleracije; C: prepoznati gibanje pri stalnoj rezultanti ili rezultanti nula; D: procijeniti utjecaj sile okomite ili paralelne s brzinom.",
+   "stavke": [
+    "S03.04",
+    "S03.05",
+    "S03.07",
+    "S03.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.03",
+    "B02.01",
+    "B03.01"
+   ],
+   "zasto_nova": "II. Newtonov zakon: a = F/m (F je rezultanta svih sila); akceleracija ima smjer rezultantne sile; Stalna rezultantna sila različita od nule daje stalnu akceleraciju (jednoliko ubrzano gibanje); rezultanta nula znači stalnu brzinu ili mirovanje; Sila okomita na brzinu mijenja smjer gibanja, a sila u smjeru brzine mijenja njezin iznos; Postupak rješavanja: nacrtati sile, odabrati os u smjeru gibanja, rastaviti sile na komponente, napisati ΣF = ma za svaku os"
+  },
+  {
+   "id": "B03.03",
+   "blok": "B03",
+   "naziv": "Trenje, otpor i sile na podlozi",
+   "koncept": "Trenje, statičko trenje, otpor sredstva i normalna sila na kosini određuju rezultantu sila pri gibanju po podlozi.",
+   "zadatak": "A: izračunati silu trenja klizanja; B: odrediti hoće li se tijelo pokrenuti (statičko trenje); C: rastaviti težu na kosini i naći N; D: izračunati akceleraciju pada s otporom.",
+   "stavke": [
+    "S03.12",
+    "S03.13",
+    "S03.10",
+    "S03.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B03.02"
+   ],
+   "zasto_nova": "Sila trenja klizanja F_tr = μF_p, usmjerena suprotno gibanju (relativnom gibanju površina); ne ovisi o površini dodira; Statičko trenje: iznos prilagođava vanjskoj sili do maksimalne vrijednosti μ_s·N; ne pokreće se dok vanjska sila ne prijeđe tu vrijednost; Normalna sila podloge okomita je na podlogu; na kosini je N = mg cos α, a komponenta mg sin α vuče tijelo niz kosinu; Sila otpora sredstva suprotna je gibanju; kod pada ma = mg − F_otp, pa je a < g"
+  },
+  {
+   "id": "B03.04",
+   "blok": "B03",
+   "naziv": "Težina, dizalo i povezana tijela",
+   "koncept": "Težina se razlikuje od sile teže kad tijelo ubrzava, a povezana tijela imaju istu akceleraciju uz različite napetosti.",
+   "zadatak": "A: izračunati težinu u dizalu N = m(g ± a); B: napisati II. zakon za svako od dva povezana tijela; C: izračunati akceleraciju i napetost niti; D: uočiti da napetost nije jednaka težini.",
+   "stavke": [
+    "S03.09",
+    "S03.15",
+    "S03.16"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B03.02"
+   ],
+   "zasto_nova": "Težina tijela (sila na podlogu ili ovjes) i njezina razlika od sile teže; kod ubrzanja dizala N = m(g ± a); Tijela povezana nitima (Atwoodov stroj, tijela na podlozi): nit prenosi napetost, tijela imaju istu akceleraciju; II. zakon piše se za svako tijelo posebno; Zamka: napetost niti nije jednaka težini tijela osim kad je akceleracija nula"
+  },
+  {
+   "id": "B03.05",
+   "blok": "B03",
+   "naziv": "Slobodni pad i vertikalni hici",
+   "koncept": "Uz a = g sva tijela bez otpora padaju jednako, a vertikalni hici opisuju se jednadžbama jednolikog ubrzanog gibanja.",
+   "zadatak": "A: obrazložiti jednaki pad različitih masa; B: izračunati hitac uvis (v, h); C: naći h_max i t uspona; D: izračunati hitac prema dolje.",
+   "stavke": [
+    "S03.18",
+    "S03.19",
+    "S03.20"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.03",
+    "B01.04",
+    "B01.05",
+    "B03.01"
+   ],
+   "zasto_nova": "Bez otpora zraka sva tijela padaju jednakom akceleracijom, neovisno o masi; Vertikalni hitac uvis: a = −g; v = v₀ − gt, h = v₀t − gt²/2; u najvišoj točki v = 0, h_max = v₀²/2g, t_uspon = v₀/g; Vertikalni hitac prema dolje: v = v₀ + gt, s = v₀t + gt²/2"
+  },
+  {
+   "id": "B03.06",
+   "blok": "B03",
+   "naziv": "Horizontalni hitac",
+   "koncept": "Horizontalni hitac je zbroj jednolikog vodoravnog gibanja i slobodnog pada s parabolnom putanjom.",
+   "zadatak": "A: napisati x(t) i y(t); B: izračunati vrijeme pada; C: izračunati domet; D: odrediti iznos brzine i kut prema horizontali pri udaru.",
+   "stavke": [
+    "S03.21",
+    "S03.22",
+    "S03.23"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.02",
+    "B03.01",
+    "B03.05"
+   ],
+   "zasto_nova": "Horizontalni hitac: nezavisna gibanja, vodoravno jednoliko (x = v₀t, v_x stalna), okomito slobodan pad (y = gt²/2, v_y = gt); Putanja horizontalnog hica je parabola; vrijeme pada t = √(2h/g) ne ovisi o početnoj brzini; domet d = v₀·√(2h/g); Brzina u horizontalnom hicu v = √(v_x² + v_y²), a kut prema horizontali tg φ = v_y/v_x"
+  },
+  {
+   "id": "B04.01",
+   "blok": "B04",
+   "naziv": "III. Newtonov zakon i par akcije i reakcije",
+   "koncept": "Sile međudjelovanja jednake su po iznosu, suprotne po smjeru, djeluju na različita tijela i ne poništavaju se.",
+   "zadatak": "A: formulirati zakon na primjeru dvaju tijela; B: objasniti zašto se akcija i reakcija ne poništavaju; C: navesti svojstva sila međudjelovanja (istodobnost, ista vrsta, isti pravac); D: prepoznati par akcije i reakcije na crtežu tijela na podlozi.",
+   "stavke": [
+    "S04.01",
+    "S04.02",
+    "S04.03",
+    "S04.04",
+    "S04.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B03.02",
+    "B03.04"
+   ],
+   "zasto_nova": "III. Newtonov zakon: ako tijelo A djeluje silom na tijelo B, tijelo B djeluje na A silom jednakog iznosa i suprotnog smjera (F_AB = −F_BA); Sile akcije i reakcije djeluju na različita tijela, pa se međusobno ne poništavaju i ne zbrajaju u ravnotežu; Sile međudjelovanja istodobno nastaju i nestaju, iste su vrste (npr. obje gravitacijske, obje elastične) i djeluju duž istog pravca; Prepoznavanje para akcije i reakcije na crtežu: npr. težina tijela i normalna sila podloge nisu par; par težini Zemlje na tijelo je sila tijela na Zemlju; Posljedica III. zakona: pri međudjelovanju tijela različitih masa iste sile daju različita ubrzanja (a = F/m), manja masa ima veće ubrzanje (npr. odboj, trzaj)"
+  },
+  {
+   "id": "B04.02",
+   "blok": "B04",
+   "naziv": "Količina gibanja i impuls sile",
+   "koncept": "Količina gibanja i impuls sile vektorske su veličine povezane relacijom FΔt = Δp, a iz nje slijedi smisao produljenja vremena sudara.",
+   "zadatak": "A: izračunati količinu gibanja tijela; B: izračunati impuls sile; C: odrediti vektorsku promjenu količine gibanja pri odbijanju od zida; D: objasniti zračni jastuk preko FΔt = Δp te izraziti E_k preko p.",
+   "stavke": [
+    "S04.06",
+    "S04.07",
+    "S04.08",
+    "S04.09",
+    "S04.10",
+    "S04.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B03.01",
+    "B03.02",
+    "B05.02"
+   ],
+   "zasto_nova": "Količina gibanja (impuls tijela) p = mv: vektorska veličina istog smjera kao brzina, jedinica kg·m/s; Impuls sile: I = FΔt, vektor u smjeru sile, jedinica N·s = kg·m/s; F·Δt = Δp: impuls sile jednak je promjeni količine gibanja (II. Newtonov zakon u obliku F = Δp/Δt); Promjena količine gibanja Δp = mv₂ − mv₁ računa se vektorski, s predznacima smjera; pri odbijanju od zida elastično je Δp = 2mv; Isti impuls sile može se postići velikom silom kroz kratko vrijeme ili malom silom kroz dugo vrijeme; dulje vrijeme sudara daje manju silu (zračni jastuk, savijanje koljena); Veza količine gibanja i kinetičke energije: E_k = p²/(2m)"
+  },
+  {
+   "id": "B04.03",
+   "blok": "B04",
+   "naziv": "Zakon očuvanja količine gibanja",
+   "koncept": "U zatvorenom sustavu ukupna količina gibanja je stalna, a zakon se primjenjuje postupkom s odabranim smjerom i predznacima.",
+   "zadatak": "A: odrediti je li sustav zatvoren; B: iskazati zakon očuvanja; C: postaviti jednadžbu s predznacima po koracima; D: riješiti raspad iz mirovanja (trzaj puške, čamac).",
+   "stavke": [
+    "S04.12",
+    "S04.13",
+    "S04.14",
+    "S04.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B04.01",
+    "B04.02"
+   ],
+   "zasto_nova": "Zatvoreni (izolirani) sustav: ukupna vanjska sila na sustav jednaka je nuli, samo unutarnje sile; Zakon očuvanja količine gibanja: u zatvorenom sustavu ukupna količina gibanja je stalna, Σp prije = Σp poslije; Postupak: odabrati pozitivan smjer osi, zapisati količine gibanja prije i poslije s predznacima te izjednačiti zbrojeve; Raspad/odbijanje iz mirovanja (eksplozija, trzaj puške, odbacivanje čamca): ukupna količina gibanja ostaje nula, tijela dobivaju količine gibanja jednakih iznosa i suprotnih smjerova"
+  },
+  {
+   "id": "B04.04",
+   "blok": "B04",
+   "naziv": "Sudari i primjena zakona",
+   "koncept": "Vrste sudara razlikuju se po očuvanju kinetičke energije, a količina gibanja čuva se u oba slučaja uz zatvoreni sustav.",
+   "zadatak": "A: riješiti neelastični sudar; B: opisati elastični sudar s očuvanjem obiju veličina; C: objasniti zamku očuvanja količine gibanja bez očuvanja energije; D: kombinirati slobodni pad i sudar.",
+   "stavke": [
+    "S04.15",
+    "S04.16",
+    "S04.18",
+    "S04.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.05",
+    "B04.03",
+    "B05.03",
+    "B05.04"
+   ],
+   "zasto_nova": "Neelastični sudar: tijela se slijepe i gibaju zajedno, m₁v₁ + m₂v₂ = (m₁ + m₂)v; količina gibanja se čuva, a kinetička energija se ne čuva; Elastični sudar: čuvaju se i količina gibanja i kinetička energija; Zamka: količina gibanja čuva se i kad se mehanička energija ne čuva; zakon vrijedi samo ako je sustav zatvoren (npr. u kratkom trenutku sudara zanemarive vanjske sile); Kombiniranje zakona: brzine prije sudara odrediti iz očuvanja energije ili kinematike (npr. slobodni pad), zatim primijeniti očuvanje količine gibanja u sudaru"
+  },
+  {
+   "id": "B05.01",
+   "blok": "B05",
+   "naziv": "Mehanički rad",
+   "koncept": "Rad sile kao skalarna veličina koja ovisi o komponenti sile u smjeru pomaka, njegov predznak i veza s promjenom energije.",
+   "zadatak": "A: izračunati rad sile pod kutom α; B: odrediti predznak rada za vuču, trenje i okomitu silu; C: izračunati rad kad je sila okomita ili suprotna pomaku; D: povezati izvršeni rad s promjenom energije tijela (W = ΔE).",
+   "stavke": [
+    "S05.01",
+    "S05.02",
+    "S05.03"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.1.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01"
+   ],
+   "zasto_nova": "Mehanički rad: W = F·s·cosα, rad je skalarna veličina koja ovisi o komponenti sile u smjeru pomaka; jedinica džul (J); Predznak rada: pozitivan kad sila ima komponentu u smjeru pomaka, negativan kad je suprotna smjeru (npr. trenje, napetost niti pri spuštanju), nula kad je sila okomita na pomak; Rad i energija: rad izvršen na tijelu jednak je promjeni njegove energije, W = ΔE"
+  },
+  {
+   "id": "B05.02",
+   "blok": "B05",
+   "naziv": "Kinetička i potencijalna energija",
+   "koncept": "Oblici mehaničke energije (kinetička, gravitacijska i elastična potencijalna) i njihova veza s radom.",
+   "zadatak": "A: izračunati kinetičku energiju i primijeniti teorem o radu i kinetičkoj energiji (rad trenja pri zaustavljanju); B: izračunati promjenu gravitacijske potencijalne energije za različite nul-razine; C: usporediti rad gravitacijske sile po kosini i okomito uz isti Δh; D: izračunati elastičnu potencijalnu energiju opruge i ukupnu energiju titranja ½kA².",
+   "stavke": [
+    "S05.04",
+    "S05.05",
+    "S05.07",
+    "S05.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.1.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.03",
+    "B03.01",
+    "B03.03",
+    "B05.01"
+   ],
+   "zasto_nova": "Kinetička energija E_k = mv²/2 i teorem o radu i kinetičkoj energiji: ukupni rad sila jednak je promjeni kinetičke energije (npr. rad trenja zaustavlja tijelo); Gravitacijska potencijalna energija: ΔE_gp = mgΔh, ovisi o odabranoj nul-razini, a bitna je samo promjena visine; Rad gravitacijske sile (konzervativne sile) ne ovisi o putanji, nego samo o promjeni visine; kosina smanjuje potrebnu silu, ali ne i rad (bez trenja); Elastična potencijalna energija opruge E_ep = ½kx², najveća pri najvećem istezanju (amplituda), ukupna energija titranja E = ½kA²"
+  },
+  {
+   "id": "B05.03",
+   "blok": "B05",
+   "naziv": "Zakon očuvanja energije i mehanička energija",
+   "koncept": "Ukupna energija zatvorenog sustava je stalna, a bez trenja stalna je i zbroj kinetičke i potencijalne energije; rješavanje zadataka izjednačavanjem stanja.",
+   "zadatak": "A: opisati pretvorbe energije u zatvorenom sustavu; B: pokazati E_k + E_p = konst. na slobodnom padu ili njihalu; C: izjednačiti energiju u početnom i konačnom stanju za nalaženje brzine; D: odrediti E_k u međupoložaju pomoću E_k = E − E_p (npr. opruga).",
+   "stavke": [
+    "S05.08",
+    "S05.09",
+    "S05.10"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.1.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.01",
+    "B05.02"
+   ],
+   "zasto_nova": "Zakon očuvanja energije: u zatvorenom sustavu ukupna energija je stalna, energija se samo pretvara iz jednog oblika u drugi; Očuvanje mehaničke energije: kad nema trenja i otpora vrijedi E_k + E_p = konst. (slobodni pad, njihalo, titranje opruge); Postupak: izjednačiti ukupnu energiju u početnom i konačnom stanju (E_k1 + E_p1 = E_k2 + E_p2); u međupoložaju E_k = E − E_p"
+  },
+  {
+   "id": "B05.04",
+   "blok": "B05",
+   "naziv": "Gubici energije",
+   "koncept": "Kad djeluju trenje i otpor, dio mehaničke energije prelazi u toplinu.",
+   "zadatak": "A: izračunati konačnu energiju iz E_poč = E_kon + W_tr; B: odrediti rad trenja iz razlike energija; C: izračunati konačnu energiju pri postotnom gubitku (0,9·E_poč); D: izračunati brzinu ili visinu tijela uz gubitke.",
+   "stavke": [
+    "S05.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.1.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.03",
+    "B05.03"
+   ],
+   "zasto_nova": "Mehanička energija uz gubitke: dio se pretvara u toplinu (rad sile trenja ili otpora), E_poč = E_kon + W_tr, ili npr. kon. energija = 0,9·E_poč pri 10 % gubitka"
+  },
+  {
+   "id": "B05.05",
+   "blok": "B05",
+   "naziv": "Snaga i korisnost",
+   "koncept": "Snaga kao brzina rada te korisnost kao omjer korisnog i uloženog rada ili snage, primijenjeno na dizalicu.",
+   "zadatak": "A: izračunati snagu iz P = W/t; B: izračunati korisnost iz omjera rada ili snaga; C: odrediti korisni rad dizalice kao mgh; D: izračunati korisnost dizalice iz uložene energije P_motora·t.",
+   "stavke": [
+    "S05.14",
+    "S05.15",
+    "S05.16"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.1.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.01",
+    "B05.02"
+   ],
+   "zasto_nova": "Snaga: P = W/t, brzina izvršenog rada ili pretvorbe energije; jedinica vat (W); Korisnost: η = W_k/W_u = P_k/P_u, omjer korisnog i uloženog rada ili snage, uvijek manja od 1 (100 %); Postupak: korisnost dizalice/stroja – korisni rad je promjena potencijalne energije mgh, uložena energija je P_motora·t"
+  },
+  {
+   "id": "B06.01",
+   "blok": "B06",
+   "naziv": "Opis jednolikog kružnog gibanja",
+   "koncept": "Jednoliko kružno gibanje opisujemo periodom, frekvencijom, obodnom i kutnom brzinom te njihovom međusobnom vezom.",
+   "zadatak": "A: objasniti zašto je kružno gibanje ubrzano iako je iznos brzine stalan; B: izračunati period i frekvenciju iz broja okretaja; C: izračunati obodnu brzinu iz r i T; D: izračunati kutnu brzinu i povezati je s v preko v = ωr.",
+   "stavke": [
+    "S06.01",
+    "S06.02",
+    "S06.03",
+    "S06.04",
+    "S06.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B01.02",
+    "B01.03"
+   ],
+   "zasto_nova": "Jednoliko kružno gibanje: gibanje po kružnici stalnim iznosom brzine; brzina se stalno mijenja po smjeru (tangencijalna je), pa je gibanje ubrzano; Period T: vrijeme jednog ophoda; frekvencija f = 1/T: broj ophoda u jedinici vremena (jedinica Hz); Obodna brzina v = 2πr/T = 2πrf: put jednog ophoda podijeljen periodom; Kutna brzina ω = Δφ/Δt = 2π/T = 2πf (rad/s), jednaka za sve točke krutog tijela koje se vrti; Veza obodne i kutne brzine v = ωr"
+  },
+  {
+   "id": "B06.02",
+   "blok": "B06",
+   "naziv": "Pretvorba jedinica i usporedba točaka",
+   "koncept": "Prije računanja pretvaramo jedinice, a zatim uspoređujemo obodnu i kutnu brzinu točaka na različitim polumjerima.",
+   "zadatak": "A: pretvoriti km/h u m/s i okretaje u minuti u Hz; B: iz promjera odrediti polumjer i izračunati v i ω; C: usporediti dvije točke na različitim polumjerima istog kotača; D: odrediti omjer kutnih brzina kazaljki sata iz omjera perioda.",
+   "stavke": [
+    "S06.13",
+    "S06.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B06.01",
+    "B06.03"
+   ],
+   "zasto_nova": "Pretvorba jedinica (km/h u m/s, okretaji u minuti u Hz, promjer u polumjer) prije računanja kružnog gibanja; Usporedba gibanja: točke na većem polumjeru imaju veću obodnu brzinu i centripetalno ubrzanje, a istu kutnu brzinu; omjeri ω iz omjera perioda (npr. kazaljke sata)"
+  },
+  {
+   "id": "B06.03",
+   "blok": "B06",
+   "naziv": "Centripetalno ubrzanje i sila",
+   "koncept": "Kružno gibanje zahtijeva centripetalno ubrzanje i silu prema središtu, koja je rezultanta stvarnih sila.",
+   "zadatak": "A: izračunati a_cp iz v i r te iz ω i r; B: izračunati F_cp za zadano tijelo; C: prepoznati koje stvarne sile daju centripetalnu silu (napetost, trenje, gravitacija); D: odrediti smjer gibanja kad sila nestane (tangenta).",
+   "stavke": [
+    "S06.06",
+    "S06.07",
+    "S06.08",
+    "S06.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.03",
+    "B02.01",
+    "B03.01",
+    "B03.02",
+    "B06.01"
+   ],
+   "zasto_nova": "Centripetalno ubrzanje a_cp = v²/r = ω²r usmjereno je prema središtu kružnice i okomito na brzinu; mijenja smjer, a ne iznos brzine; Centripetalna sila F_cp = mv²/r = mω²r: ukupna sila prema središtu (II. Newtonov zakon za kružno gibanje); Centripetalna sila nije posebna vrsta sile nego rezultanta stvarnih sila (gravitacijska, napetost niti, trenje, Lorentzova, Coulombova, normalna sila) koja je usmjerena prema središtu; Ako centripetalna sila nestane, tijelo se giba pravocrtno stalnom brzinom po tangenti (I. Newtonov zakon), a ne radijalno van"
+  },
+  {
+   "id": "B06.04",
+   "blok": "B06",
+   "naziv": "Rješavanje zadataka i energija",
+   "koncept": "Zadatke o kružnom gibanju rješavamo izjednačavanjem rezultante prema središtu s mv²/r, a ta sila ne obavlja rad.",
+   "zadatak": "A: nacrtati sve sile na tijelo i odabrati komponente prema središtu; B: za satelit izjednačiti GMm/r² s mv²/r i izračunati v; C: za nabijenu česticu u magnetskom polju izjednačiti qvB s mv²/r i izračunati r; D: objasniti zašto je rad centripetalne sile nula i kinetička energija stalna.",
+   "stavke": [
+    "S06.09",
+    "S06.10"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.02",
+    "B05.01",
+    "B05.02",
+    "B06.03"
+   ],
+   "zasto_nova": "Postupak: odrediti sve sile na tijelo, zbroj komponenti prema središtu izjednačiti s mv²/r (npr. satelit: GMm/r² = mv²/r, nabijena čestica u magnetskom polju: qvB = mv²/r); Ukupna sila pri jednolikom kružnom gibanju okomita je na brzinu i ne obavlja rad; kinetička energija je stalna"
+  },
+  {
+   "id": "B07.01",
+   "blok": "B07",
+   "naziv": "Newtonov zakon gravitacije",
+   "koncept": "Gravitacijska sila među tijelima ovisi o masama i udaljenosti središta te je uvijek međudjelovanje.",
+   "zadatak": "A: izračunati silu među dvjema masama; B: promjena sile pri promjeni udaljenosti; C: primjena III. Newtonova zakona na par tijela; D: izračun s r = R + h.",
+   "stavke": [
+    "S07.01",
+    "S07.02",
+    "S07.05",
+    "S07.03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B04.01"
+   ],
+   "zasto_nova": "Newtonov zakon gravitacije: F = G·m₁m₂/r²; privlačna sila između dviju masa, usmjerena duž spojnice njihovih središta (r je udaljenost središta); Gravitacijska sila je međudjelovanje: dva tijela djeluju jednakim iznosom i suprotnim smjerom (III. Newtonov zakon); proporcionalna je umnošku masa i obrnuto proporcionalna kvadratu udaljenosti; Zamka: r u zakonu gravitacije mjeri se od središta tijela, a ne od površine (r = R + h); Gravitacijska sila na površini planeta: F = GMm/R²; ovisi o masi i polumjeru planeta"
+  },
+  {
+   "id": "B07.02",
+   "blok": "B07",
+   "naziv": "Planeti, masa i ubrzanje slobodnog pada",
+   "koncept": "Sila i ubrzanje na površini planeta određeni su njegovom masom i polumjerom, a masa se izražava preko gustoće.",
+   "zadatak": "A: sila na površini planeta; B: izračun g za planet; C: usporedba planeta različitih gustoća i polumjera; D: promjena g s visinom.",
+   "stavke": [
+    "S07.04",
+    "S07.06",
+    "S07.07"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B03.02",
+    "B07.01"
+   ],
+   "zasto_nova": "Masa homogenog planeta M = ρ·V = ρ·(4/3)πR³ (uspoređivanje planeta različitih gustoća i polumjera); Ubrzanje slobodnog pada g = GM/R²; ovisi o masi i polumjeru nebeskog tijela, ne o masi probnog tijela; opada s visinom; Postupak: točka u kojoj je ukupna gravitacijska sila dvaju tijela na treće jednaka nuli – izjednačiti GM₁m/r₁² = GM₂m/r₂², r₁ + r₂ = d, točka je između tijela"
+  },
+  {
+   "id": "B07.03",
+   "blok": "B07",
+   "naziv": "Satelit u kružnoj orbiti",
+   "koncept": "Gravitacijska sila je centripetalna sila koja određuje brzinu satelita i mijenja samo smjer brzine.",
+   "zadatak": "A: postaviti jednadžbu GMm/r² = mv²/r; B: izračunati orbitalnu brzinu; C: usporediti brzine na različitim orbitama; D: objasniti smjer sile i brzine.",
+   "stavke": [
+    "S07.08",
+    "S07.09",
+    "S07.12",
+    "S07.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.04",
+    "B03.05",
+    "B06.03",
+    "B06.04",
+    "B07.01",
+    "B07.02"
+   ],
+   "zasto_nova": "Gibanje satelita (i Mjeseca, planeta) po kružnici: gravitacijska sila je centripetalna sila, GMm/r² = mv²/r; Brzina satelita u kružnoj orbiti v = √(GM/r); ne ovisi o masi satelita, veća orbita znači manju brzinu; Ukupna sila na satelit u jednolikom kruženju je gravitacijska sila, usmjerena prema središtu, okomita na brzinu; mijenja smjer, ne iznos brzine; Bestežinsko stanje u svemirskoj postaji: tijela su u slobodnom padu oko Zemlje, gravitacija postoji, ali nema sile podloge"
+  },
+  {
+   "id": "B07.04",
+   "blok": "B07",
+   "naziv": "Period, Keplerovi zakoni i masa središnjeg tijela",
+   "koncept": "Period kruženja povezuje polumjer orbite i masu središnjeg tijela (treći Keplerov zakon) te vrijedi za planete i satelite.",
+   "zadatak": "A: izvesti i izračunati period; B: odrediti masu planeta iz r i T; C: primijeniti T²/r³ = konst. i Keplerove zakone; D: Zemlja oko Sunca i Mjesec oko Zemlje te geostacionarni satelit.",
+   "stavke": [
+    "S07.10",
+    "S07.11",
+    "S07.15",
+    "S07.16",
+    "S07.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B06.01",
+    "B07.03"
+   ],
+   "zasto_nova": "Period kruženja: T = 2πr/v; iz GMm/r² = m·4π²r/T² slijedi T² = 4π²r³/(GM) (treći Keplerov zakon: T²/r³ = konst. za isto središnje tijelo); Određivanje mase središnjeg tijela iz polumjera i perioda kruženja njegova satelita: M = 4π²r³/(GT²); Keplerovi zakoni: planeti se gibaju po elipsama sa Suncem u žarištu; radijvektor opisuje jednake površine u jednakim vremenima (brže u perihelu); T²/r³ = konst.; Gibanje Zemlje oko Sunca i Mjeseca oko Zemlje: gravitacija daje centripetalnu silu, period Zemlje oko Sunca je 1 godina; Geostacionarni satelit: period 24 h, kruži iznad ekvatora u smjeru vrtnje Zemlje, stalno iznad iste točke; orbita točno određenog polumjera"
+  },
+  {
+   "id": "B08.01",
+   "blok": "B08",
+   "naziv": "Tlak, fluidi i hidrostatički tlak",
+   "koncept": "Tlak kao omjer sile i površine, svojstva fluida i gustoće te hidrostatički tlak p = ρgh.",
+   "zadatak": "A: izračun tlaka iz sile i površine; B: razlika tekućine i plina te izračun gustoće; C: hidrostatički tlak na zadanoj dubini; D: dubina se mjeri od slobodne površine, ne od dna.",
+   "stavke": [
+    "S08.21",
+    "S08.01",
+    "S08.02",
+    "S08.03",
+    "S08.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01"
+   ],
+   "zasto_nova": "gustoća ρ = m/V, potrebna za izračun mase fluida i uzgona; tlak je omjer sile i površine na koju sila djeluje okomito: p = F/S (jedinica paskal, Pa = N/m²); fluid je tekućina ili plin; tekućine su gotovo nestlačive, plinovi stlačivi; hidrostatički tlak: p = ρgh, ovisi o gustoći tekućine i dubini, ne ovisi o obliku posude ni o količini tekućine; dubina h mjeri se od slobodne površine tekućine prema dolje, a ne od dna posude (visina točke iznad dna nije dubina)"
+  },
+  {
+   "id": "B08.02",
+   "blok": "B08",
+   "naziv": "Atmosferski, ukupni i manometarski tlak",
+   "koncept": "Tlak na istoj dubini je jednak, a ukupni tlak je zbroj atmosferskog i hidrostatičkog; manometarski tlak je njihova razlika.",
+   "zadatak": "A: usporedba tlaka u posudama različitih oblika na istoj dubini; B: atmosferski tlak; C: ukupni tlak p0 + ρgh i graf ovisnosti o dubini; D: manometarski tlak.",
+   "stavke": [
+    "S08.05",
+    "S08.07",
+    "S08.06",
+    "S08.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B08.01"
+   ],
+   "zasto_nova": "u istoj tekućini u mirovanju tlak je jednak u svim točkama na istoj dubini; pri istom h tlak ne ovisi o obliku posude; atmosferski tlak potječe od težine zraka; normirani iznos 101 325 Pa; mijenja se s visinom; ukupni tlak na dubini h: p = p0 + ρgh; ovisnost o dubini je linearna, graf ne prolazi ishodištem (odsječak je p0); manometarski tlak je razlika ukupnog i atmosferskog tlaka; ukupni tlak = manometarski + atmosferski"
+  },
+  {
+   "id": "B08.03",
+   "blok": "B08",
+   "naziv": "Sila tlaka i Pascalov zakon",
+   "koncept": "Sila tlaka tekućine na površinu, prenošenje tlaka u zatvorenoj tekućini i hidraulički uređaji.",
+   "zadatak": "A: sila na čep na dnu posude uz pretvorbu cm² u m²; B: Pascalov zakon; C: hidraulička preša F1/S1 = F2/S2; D: usporedba sila, putova i rada na klipovima.",
+   "stavke": [
+    "S08.09",
+    "S08.10",
+    "S08.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B08.01"
+   ],
+   "zasto_nova": "sila tlaka tekućine na površinu (npr. čep na rupi): F = pS = ρghS, uz pretvorbu cm² u m²; Pascalov zakon: tlak koji djeluje na zatvorenu tekućinu prenosi se jednako na sve dijelove tekućine i stijenke; hidraulički tlak (preša, dizalica): F1/S1 = F2/S2; manjom silom na manjem klipu dobiva se veća sila na većem klipu, put se pritom smanjuje, a rad je isti"
+  },
+  {
+   "id": "B08.04",
+   "blok": "B08",
+   "naziv": "Uzgon i Arhimedov zakon",
+   "koncept": "Uzgon nastaje zbog razlike hidrostatskih tlakova i računa se kao F_u = ρ_f g V.",
+   "zadatak": "A: objašnjenje uzgona razlikom tlakova na donju i gornju stranu; B: izračun uzgona po Arhimedovu zakonu; C: o čemu uzgon ne ovisi; D: sile na uronjeno tijelo i prividna težina.",
+   "stavke": [
+    "S08.12",
+    "S08.13",
+    "S08.14",
+    "S08.15",
+    "S08.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B02.02",
+    "B03.01",
+    "B03.04",
+    "B08.01",
+    "B08.02"
+   ],
+   "zasto_nova": "uzgon: na tijelo uronjeno u fluid djeluje sila uzgona prema gore, nastaje zbog razlike hidrostatskih tlakova na donju i gornju stranu tijela; Arhimedov zakon: F_u = ρ_f·g·V, gdje je V obujam uronjenog dijela tijela, a ρ_f gustoća fluida (ne tijela); uzgon jednak težini istisnutog fluida; uzgon ovisi o obujmu uronjenog dijela i gustoći fluida, ne o masi ni gustoći tijela niti o dubini uronjenosti; sile na uronjeno tijelo: težina mg prema dolje, uzgon prema gore (te napetost niti ili sila podloge); ravnoteža sila daje uvjet za rješavanje zadatka; prividna težina tijela u fluidu: G' = mg − F_u (npr. očitanje dinamometra pri uronjenom tijelu)"
+  },
+  {
+   "id": "B08.05",
+   "blok": "B08",
+   "naziv": "Tonjenje, lebdenje, plutanje",
+   "koncept": "Odnos gustoća tijela i fluida određuje ponašanje tijela, uz primjene uvjeta ravnoteže uzgona i težine.",
+   "zadatak": "A: odluka tone/lebdi/pluta prema gustoćama; B: omjer uronjenog obujma kod plutanja; C: tijelo na dvije tekućine koje se ne miješaju; D: kartezijanski plovak.",
+   "stavke": [
+    "S08.16",
+    "S08.17",
+    "S08.18",
+    "S08.20"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B08.01",
+    "B08.04",
+    "B11.02"
+   ],
+   "zasto_nova": "uvjeti: ρ_tijela > ρ_fluida tijelo tone, ρ_tijela = ρ_fluida lebdi, ρ_tijela < ρ_fluida izranja i pluta; plutanje: F_u = mg, pa je omjer uronjenog obujma V_u/V = ρ_tijela/ρ_fluida; tijelo koje pluta na dvije tekućine koje se ne miješaju: ukupni uzgon je zbroj uzgona u svakoj tekućini za pripadni uronjeni obujam i jednak je težini; kartezijanski plovak: stiskanjem boce raste tlak, zrak u plovku se stisne (pV = konst.), istisne se manje vode, uzgon se smanji i plovak potone"
+  },
+  {
+   "id": "B09.01",
+   "blok": "B09",
+   "naziv": "Idealni fluid, protok i kontinuitet",
+   "koncept": "Idealni fluid i strujna cijev vode do pojma protoka, jednadžbe kontinuiteta i veze brzine i presjeka.",
+   "zadatak": "A: odrediti svojstva idealnog fluida i strujnice; B: izračunati protok q = S·v; C: primijeniti S₁v₁ = S₂v₂; D: zaključiti u kojem dijelu cijevi je brzina veća i izračunati površinu presjeka te pretvoriti jedinice.",
+   "stavke": [
+    "S09.01",
+    "S09.02",
+    "S09.03",
+    "S09.04",
+    "S09.05",
+    "S09.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B08.01"
+   ],
+   "zasto_nova": "Idealni fluid: nestlačiv (stalna gustoća) i bez unutarnjeg trenja (viskoznosti); strujanje je stacionarno (brzina u svakoj točki ne mijenja se s vremenom); Strujnica i strujna cijev: strujnica je putanja čestice fluida pri stacionarnom strujanju; fluid ne prolazi kroz stijenke strujne cijevi; Protok (obujamski) q = V/t = S·v: obujam fluida koji prođe presjekom u jedinici vremena (m³/s); Jednadžba kontinuiteta: S₁v₁ = S₂v₂ (stalan protok; zakon očuvanja mase za nestlačiv fluid); Posljedica kontinuiteta: u užem dijelu cijevi fluid teče brže, u širem sporije (brzina je obrnuto razmjerna presjeku); Računanje površine presjeka cijevi iz promjera ili polumjera (S = πr²) i pretvorba jedinica (cm² u m², l u m³, minute u sekunde) pri računanju protoka i brzine"
+  },
+  {
+   "id": "B09.02",
+   "blok": "B09",
+   "naziv": "Statički i dinamički tlak te Bernoullijeva jednadžba",
+   "koncept": "Statički i dinamički tlak zbrajaju se u Bernoullijevoj jednadžbi za horizontalnu cijev, iz koje slijedi da veća brzina znači manji statički tlak.",
+   "zadatak": "A: izračunati statički (hidrostatski) tlak ρgh; B: izračunati dinamički tlak ρv²/2; C: zapisati Bernoullijevu jednadžbu za horizontalnu cijev; D: objasniti zašto je u užem dijelu cijevi statički tlak manji.",
+   "stavke": [
+    "S09.07",
+    "S09.08",
+    "S09.09",
+    "S09.10",
+    "S09.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.02",
+    "B05.03",
+    "B08.01",
+    "B09.01"
+   ],
+   "zasto_nova": "Statički tlak p: tlak fluida koji djeluje na stijenke i u mirnom fluidu; hidrostatski tlak je p = ρgh; Dinamički tlak ρv²/2: tlak koji potječe od gibanja fluida (gustoća kinetičke energije); Bernoullijeva jednadžba za horizontalnu cijev: p₁ + ρv₁²/2 = p₂ + ρv₂²/2 (zakon očuvanja energije za idealni fluid); zbroj statičkog i dinamičkog tlaka je stalan; Gdje je brzina veća, statički tlak je manji: u užem dijelu horizontalne cijevi veći je dinamički, a manji statički tlak; Bernoullijeva jednadžba u obliku iz knjižice vrijedi bez visinskog člana samo za horizontalnu cijev; dinamički tlak ovisi o kvadratu brzine, pa udvostručenje brzine četverostruko povećava dinamički tlak"
+  },
+  {
+   "id": "B09.03",
+   "blok": "B09",
+   "naziv": "Računanje tlakova i brzina u cijevi",
+   "koncept": "Kontinuitet i Bernoullijeva jednadžba kombiniraju se u računanju brzina, razlika tlakova i vremena punjenja, uz izbjegavanje tipičnih zamki.",
+   "zadatak": "A: izračunati razliku tlakova iz brzina; B: izračunati brzinu iz razlike tlakova; C: iz presjeka i protoka odrediti brzine, tlakove i vrijeme punjenja t = V/q; D: provjeriti rezultat na zamkama (statički i dinamički tlak, promjer i brzina).",
+   "stavke": [
+    "S09.11",
+    "S09.12",
+    "S09.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B09.01",
+    "B09.02"
+   ],
+   "zasto_nova": "Računanje razlike statičkih tlakova iz brzina: p₁ − p₂ = ρ(v₂² − v₁²)/2, i obrnuto brzine iz razlike tlakova (uz kontinuitet za v₂ iz v₁ i omjera presjeka ili polumjera); Kombiniranje kontinuiteta i Bernoullijeve jednadžbe: iz presjeka i protoka odrediti brzine, zatim dinamičke i statičke tlakove; vrijeme punjenja posude t = V/q; Ne miješati statički tlak s dinamičkim: u užem dijelu cijevi statički tlak pada, a ne raste; udvostručenje promjera cijevi smanjuje brzinu četiri puta (S ∝ r²)"
+  },
+  {
+   "id": "B10.01",
+   "blok": "B10",
+   "naziv": "Čestična građa i agregacijska stanja",
+   "koncept": "Tvar se sastoji od čestica u stalnom toplinskom gibanju, a agregacijska stanja se razlikuju po razmaku, uređenosti i vezi među česticama.",
+   "zadatak": "A: opisati česticu i njezino gibanje i sile; B: usporediti čvrsto, tekuće i plinovito stanje; C: objasniti čvrsto tijelo i tekućinu na razini čestica; D: objasniti plin i usporediti sva tri stanja.",
+   "stavke": [
+    "S10.01",
+    "S10.02",
+    "S10.03",
+    "S10.04",
+    "S10.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Čestična građa tvari: tvar se sastoji od atoma i molekula koji su u stalnom kaotičnom toplinskom gibanju i međusobno djeluju privlačnim i odbojnim silama; Agregacijska stanja (čvrsto, tekuće, plinovito): razlika u razmaku, uređenosti i gibanju čestica te jačini međudjelovanja; Čvrsto tijelo: čestice titraju oko stalnih ravnotežnih položaja (kristalna rešetka), tijelo ima stalan oblik i obujam; Tekućina: čestice su blisko i slabo vezane, mogu mijenjati mjesta; stalan obujam, oblik posude; Plin: čestice su daleko jedna od druge, slabo međudjeluju i gibaju se slobodno; ispunjava cijelu posudu"
+  },
+  {
+   "id": "B10.02",
+   "blok": "B10",
+   "naziv": "Prijelazi stanja, difuzija i Brownovo gibanje",
+   "koncept": "Promjena energije čestica uzrokuje prijelaze stanja, a difuzija i Brownovo gibanje potvrđuju stalno gibanje čestica.",
+   "zadatak": "A: objasniti taljenje i isparavanje preko energije čestica; B: imenovati sve prijelaze uključujući sublimaciju; C: objasniti difuziju i ovisnost o temperaturi i stanju; D: objasniti Brownovo gibanje kao dokaz čestične građe.",
+   "stavke": [
+    "S10.06",
+    "S10.07",
+    "S10.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.01"
+   ],
+   "zasto_nova": "Prijelazi među agregacijskim stanjima (taljenje, skrućivanje, isparavanje, kondenzacija, sublimacija) kao posljedica promjene energije i uređenosti čestica; Difuzija: spontano miješanje tvari zbog toplinskog gibanja čestica; brža pri višoj temperaturi i u plinovima nego u tekućinama i čvrstim tijelima; Brownovo gibanje: nasumično gibanje sitnih čestica (npr. peludi) u tekućini ili plinu zbog nasumičnih sudara s molekulama koje su u stalnom gibanju; dokaz čestične građe"
+  },
+  {
+   "id": "B10.03",
+   "blok": "B10",
+   "naziv": "Toplinsko širenje i linearno rastezanje",
+   "koncept": "Zagrijavanjem čestice jače titraju pa se tijela šire, što opisuje formula linearnog rastezanja.",
+   "zadatak": "A: objasniti širenje tijela na razini čestica; B: izračunati Δℓ i ℓ iz formule; C: izračunati relativno produljenje i usporediti šipke; D: ispravno koristiti Δt u °C i K.",
+   "stavke": [
+    "S10.09",
+    "S10.10",
+    "S10.11",
+    "S10.16"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.01"
+   ],
+   "zasto_nova": "Toplinsko širenje: porastom temperature raste srednja udaljenost i amplituda titranja čestica pa se tijelo širi; Linearno rastezanje: Δℓ = α·ℓ₀·Δt, odnosno ℓ = ℓ₀(1 + αΔt); α je koeficijent linearnog rastezanja ovisan o materijalu; Relativno produljenje Δℓ/ℓ₀ = αΔt, ne ovisi o duljini; za jednako produljenje različitih šipki vrijedi α₁ℓ₁Δt₁ = α₂ℓ₂Δt₂; Temperaturu u formulama rastezanja treba paziti: promjena temperature Δt je ista u °C i K"
+  },
+  {
+   "id": "B10.04",
+   "blok": "B10",
+   "naziv": "Volumno rastezanje, šupljine i tekućine",
+   "koncept": "Volumno rastezanje, ponašanje šupljina pri zagrijavanju i posebnosti tekućina uključujući anomaliju vode.",
+   "zadatak": "A: izračunati volumen pomoću γ ≈ 3α; B: predvidjeti što se događa s rupom u prstenu pri zagrijavanju; C: odabrati postupak za provlačenje šipke kroz prsten; D: usporediti rastezanje tekućina i čvrstih tijela te objasniti anomaliju vode.",
+   "stavke": [
+    "S10.12",
+    "S10.13",
+    "S10.14",
+    "S10.15"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.03"
+   ],
+   "zasto_nova": "Volumno rastezanje: V = V₀(1 + γΔt), za čvrsta tijela γ ≈ 3α; Šupljine (rupa u prstenu, unutarnji promjer) rastežu se kao da su od istog materijala, dakle zagrijavanjem se rupa povećava; Postupak za provlačenje šipke kroz prsten: zagrijati prsten ili ohladiti šipku (isti materijal, promjer raste/pada jednako relativno); Tekućine se rastežu više od čvrstih tijela; voda je anomalna: najveća gustoća pri 4 °C"
+  },
+  {
+   "id": "B11.01",
+   "blok": "B11",
+   "naziv": "Idealni plin i veličine stanja",
+   "koncept": "Model idealnog plina, veličine stanja, pretvorba u kelvine i množina tvari.",
+   "zadatak": "A: opiši idealni plin; B: navedi veličine stanja plina; C: pretvori Celzijeve stupnjeve u kelvine; D: izračunaj množinu iz mase i broja čestica.",
+   "stavke": [
+    "S11.01",
+    "S11.02",
+    "S11.03",
+    "S11.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.01"
+   ],
+   "zasto_nova": "Idealni plin: model u kojem su čestice točkaste, nema međudjelovanja među njima osim elastičnih sudara, a gibaju se nasumično; Veličine stanja plina: tlak p, volumen V, termodinamička temperatura T i množina n; stanje plina opisuju te veličine; Temperatura u kelvinima: T = t + 273 (pri računu s plinskim zakonima uvijek se koristi kelvin, ne Celzijev stupanj); Množina tvari: n = N/N_A = m/M (veza mase, molarne mase i broja čestica)"
+  },
+  {
+   "id": "B11.02",
+   "blok": "B11",
+   "naziv": "Jednadžba stanja i izo-procesi",
+   "koncept": "Jednadžba stanja pV = nRT i iz nje izvedeni zakoni izotermne, izobarne i izohorne promjene.",
+   "zadatak": "A: primijeni pV = nRT na zadani plin; B: odredi promjenu množine pri ispuštanju plina; C: riješi izotermnu promjenu; D: riješi izobarnu i izohornu promjenu.",
+   "stavke": [
+    "S11.05",
+    "S11.06",
+    "S11.07",
+    "S11.08",
+    "S11.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.01"
+   ],
+   "zasto_nova": "Jednadžba stanja idealnog plina: pV = nRT; Postupak: kod promjene mase plina (ispuštanje, dodavanje) n je proporcionalan masi; pri jednakim p, V i T plinovi imaju jednake množine; Izotermna promjena (T = konst.): Boyle-Mariotteov zakon pV = konst., p1V1 = p2V2; p-V graf je hiperbola; Izobarna promjena (p = konst.): V/T = konst. (Gay-Lussacov zakon); V-T graf je pravac kroz ishodište, nagib nR/p; Izohorna promjena (V = konst.): p/T = konst. (Charlesov zakon)"
+  },
+  {
+   "id": "B11.03",
+   "blok": "B11",
+   "naziv": "Primjena plinskih zakona i dijagrami",
+   "koncept": "Račun s relativnim i manometarskim tlakom, čitanje p-V, V-T i p-T dijagrama te adijabatska promjena.",
+   "zadatak": "A: izračunaj apsolutni tlak iz manometarskog; B: izračunaj promjenu s relativnom promjenom tlaka; C: pročitaj procese i usporedi temperature iz dijagrama; D: razlikuj adijabatsku od izotermne promjene.",
+   "stavke": [
+    "S11.10",
+    "S11.11",
+    "S11.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.02",
+    "B12.01"
+   ],
+   "zasto_nova": "Postupak: pri računu s relativnom promjenom tlaka (npr. za četvrtinu veći) tlak postaje 1,25 p; manometarski tlak + atmosferski tlak = ukupni (apsolutni) tlak koji ulazi u plinske zakone; Čitanje promjena stanja iz p-V, V-T i p-T dijagrama (izoterma, izobara, izohora) te usporedba temperatura stanja preko umnoška pV; Adijabatska promjena: nema izmjene topline (Q = 0); pri kompresiji rastu tlak i temperatura, pV = konst. ne vrijedi nego pV^κ = konst."
+  },
+  {
+   "id": "B11.04",
+   "blok": "B11",
+   "naziv": "Molekulsko-kinetički model i energija plina",
+   "koncept": "Tlak kao posljedica sudara čestica te povezanost kinetičke energije, temperature i unutarnje energije plina.",
+   "zadatak": "A: objasni tlak sudarima čestica; B: izračunaj srednju kinetičku energiju molekule; C: usporedi brzine različitih plinova pri istoj temperaturi; D: izračunaj unutarnju energiju jednoatomnog plina i povežи k_B s R.",
+   "stavke": [
+    "S11.13",
+    "S11.15",
+    "S11.16",
+    "S11.17",
+    "S11.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.01",
+    "B11.01",
+    "B11.02"
+   ],
+   "zasto_nova": "Molekulsko-kinetički model: plin čine mnoge čestice u stalnom nasumičnom toplinskom gibanju; tlak plina posljedica je sudara čestica sa stijenkama posude; Srednja kinetička energija translacije molekule idealnog plina: E_k = (3/2)k_B T; Zamka: srednja kinetička energija molekula ovisi samo o temperaturi, ne o vrsti plina, masi molekule, tlaku ni volumenu; veća masa pri istoj temperaturi znači manju brzinu; Unutarnja energija jednoatomnog idealnog plina: U = (3/2)N k_B T = (3/2)nRT = (3/2)pV; ovisi samo o temperaturi (kinetička energija čestica); Boltzmannova konstanta k_B povezuje mikroskopsku energiju čestice s temperaturom (k_B = R/N_A)"
+  },
+  {
+   "id": "B12.01",
+   "blok": "B12",
+   "naziv": "Unutarnja energija i toplina",
+   "koncept": "Unutarnja energija kao funkcija stanja i toplina kao energija koja prelazi zbog razlike temperatura.",
+   "zadatak": "A: definirati unutarnju energiju; B: usporediti U idealnog plina u stanjima na pV-dijagramu; C: objasniti toplinu kao prijenos energije; D: razlikovati stanje (U) od procesa (Q).",
+   "stavke": [
+    "S12.01",
+    "S12.03",
+    "S12.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.01",
+    "B11.04"
+   ],
+   "zasto_nova": "Unutarnja energija tijela je zbroj kinetičkih energija kaotičnoga gibanja čestica i potencijalnih energija njihova međudjelovanja; ovisi o stanju tijela (temperaturi), ne o putu do tog stanja; Promjena unutarnje energije idealnoga plina ΔU ∝ ΔT: ista temperatura znači isti U; usporedba U u stanjima s pV-dijagrama preko umnoška pV; Toplina je energija koja prelazi s toplijega na hladnije tijelo zbog razlike temperatura (nije svojstvo tijela, ovisi o procesu)"
+  },
+  {
+   "id": "B12.02",
+   "blok": "B12",
+   "naziv": "Specifični toplinski kapacitet i kalorimetrija",
+   "koncept": "Računanje topline pri zagrijavanju tvari, toplinske ravnoteže, grafova Q–Δt i vremena zagrijavanja uz snagu izvora.",
+   "zadatak": "A: izračunati Q = mcΔt; B: odrediti ravnotežnu temperaturu miješanjem; C: iz Q–Δt grafa usporediti c; D: izračunati vrijeme zagrijavanja vode i posude snagom grijača.",
+   "stavke": [
+    "S12.05",
+    "S12.06",
+    "S12.07",
+    "S12.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.05",
+    "B12.01"
+   ],
+   "zasto_nova": "Toplinski kapacitet i specifični toplinski kapacitet c: Q = m·c·Δt, značenje c kao topline potrebne da se 1 kg tvari zagrije za 1 K; Kalorimetrija: toplinska ravnoteža, toplina što je preda toplije tijelo jednaka je toplini koju primi hladnije (bez gubitaka); za jednake mase iste tvari ravnotežna temperatura je aritmetička sredina; Q–Δt graf: nagib pravca jednak je m·c; za jednake mase veći nagib znači veći specifični toplinski kapacitet; Snaga izvora topline P = Q/t pri računanju vremena zagrijavanja; ukupna toplina je zbroj toplina za sve zagrijavane dijelove (voda, posuda)"
+  },
+  {
+   "id": "B12.03",
+   "blok": "B12",
+   "naziv": "Promjena agregacijskog stanja",
+   "koncept": "Pri taljenju i isparavanju temperatura je stalna, a toplina se troši na promjenu potencijalne energije čestica.",
+   "zadatak": "A: objasniti stalnu temperaturu pri promjeni stanja; B: izračunati toplinu taljenja; C: izračunati toplinu isparavanja; D: iz grafa zagrijavanja izračunati ukupnu toplinu.",
+   "stavke": [
+    "S12.20",
+    "S12.21",
+    "S12.22",
+    "S12.23"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B10.02",
+    "B12.01",
+    "B12.02"
+   ],
+   "zasto_nova": "Pri promjeni agregacijskog stanja temperatura tvari ostaje stalna, a dovedena toplina mijenja potencijalnu energiju čestica (raskidanje veza); Toplina taljenja/skrućivanja Q = m·λ (specifična toplina taljenja λ); Toplina isparavanja/kondenzacije Q = m·r (specifična toplina isparavanja r); Grafički prikaz zagrijavanja tvari t–Q ili t–vrijeme: kose dionice (zagrijavanje faze, Q = mcΔt) i vodoravne dionice (promjena stanja, Q = mλ ili mr); ukupna toplina je zbroj dijelova"
+  },
+  {
+   "id": "B12.04",
+   "blok": "B12",
+   "naziv": "Rad plina u p-V dijagramu",
+   "koncept": "Rad plina kao W = pΔV i površina ispod krivulje te unutar zatvorene krivulje u p-V dijagramu.",
+   "zadatak": "A: izračunati rad pri izobarnom širenju i stlačivanju; B: odrediti rad iz površine ispod krivulje; C: izohorni proces i rad nula; D: izračunati rad kružnog procesa uz pretvorbu jedinica i predznak.",
+   "stavke": [
+    "S12.09",
+    "S12.10",
+    "S12.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.01",
+    "B08.01"
+   ],
+   "zasto_nova": "Rad plina pri stalnom tlaku (izobarno): W = p·ΔV; plin pri širenju vrši pozitivan rad, pri stlačivanju se rad vrši nad plinom (W negativan); Rad plina jednak je površini ispod krivulje u p-V dijagramu; pri stalnom volumenu (izohorno) rad je nula; Rad u kružnom procesu jednak je površini zatvorene krivulje u p-V dijagramu; pozitivan ako se proces odvija u smjeru kazaljke na satu, negativan u suprotnom; paziti na jedinice (l u m³, kPa u Pa)"
+  },
+  {
+   "id": "B12.05",
+   "blok": "B12",
+   "naziv": "I. zakon termodinamike",
+   "koncept": "Zakon očuvanja energije Q = W + ΔU i ispravno čitanje predznaka.",
+   "zadatak": "A: zapisati I. zakon; B: odrediti predznake Q, W, ΔU u opisanom procesu; C: izračunati nepoznatu veličinu; D: protumačiti promjenu temperature iz ΔU.",
+   "stavke": [
+    "S12.12",
+    "S12.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B12.01",
+    "B12.04"
+   ],
+   "zasto_nova": "I. zakon termodinamike: Q = W + ΔU (toplina dovedena plinu troši se na rad plina i povećanje unutarnje energije); zakon očuvanja energije; Predznaci u I. zakonu: Q > 0 plin prima toplinu, W > 0 plin vrši rad, ΔU > 0 temperatura raste"
+  },
+  {
+   "id": "B12.06",
+   "blok": "B12",
+   "naziv": "I. zakon u izoprocesima",
+   "koncept": "Primjena I. zakona na izotermni, izohorni i izobarni proces.",
+   "zadatak": "A: izotermni Q = W; B: izohorni Q = ΔU; C: izobarni Q = W + ΔU; D: usporediti toplinu za isto zagrijavanje izohorno i izobarno.",
+   "stavke": [
+    "S12.14",
+    "S12.15",
+    "S12.16"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.02",
+    "B12.05"
+   ],
+   "zasto_nova": "Izotermni proces: ΔT = 0, ΔU = 0, pa je Q = W (sva dovedena toplina pretvara se u rad); Izohorni proces: W = 0, pa je Q = ΔU (dovedena toplina povećava unutarnju energiju); Izobarni proces: Q = W + ΔU uz W = pΔV; plin uz isto zagrijavanje prima više topline nego pri izohornom"
+  },
+  {
+   "id": "B12.07",
+   "blok": "B12",
+   "naziv": "Adijabatski proces",
+   "koncept": "Bez izmjene topline promjena U jednaka je negativnom radu; vrijedi pV^κ = konst.",
+   "zadatak": "A: ΔU = −W pri kompresiji; B: ekspanzija i hlađenje; C: zašto ne vrijedi pV = konst.; D: usporediti adijabatu i izotermu u dijagramu.",
+   "stavke": [
+    "S12.17",
+    "S12.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.03",
+    "B12.05"
+   ],
+   "zasto_nova": "Adijabatski proces: Q = 0, pa je ΔU = −W; kompresija povećava U, temperaturu i tlak, ekspanzija ih smanjuje; Zamka: pri adijabatskom procesu ne vrijedi pV = konst. (vrijedi pV^κ = konst., κ = 5/3 za jednoatomni plin); adijabatska je promjena strmija od izoterme"
+  },
+  {
+   "id": "B12.08",
+   "blok": "B12",
+   "naziv": "Toplinski strojevi i korisnost",
+   "koncept": "Toplinski stroj, bilanca energije, korisnost i kružni proces plina.",
+   "zadatak": "A: Q1 = W + Q2; B: izračunati korisnost; C: kružni proces ΔU = 0 i W = Q1 − Q2; D: odrediti W i η iz p-V ciklusa.",
+   "stavke": [
+    "S12.24",
+    "S12.25",
+    "S12.29"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B12.01",
+    "B12.04",
+    "B12.05"
+   ],
+   "zasto_nova": "Toplinski stroj uzima toplinu Q1 iz toplijega spremnika, vrši rad W i predaje toplinu Q2 hladnijem spremniku; Q1 = W + Q2; Korisnost toplinskoga stroja η = W/Q1 = (Q1 − Q2)/Q1; uvijek manja od 1 (100 %); Kružni proces plina: nakon ciklusa je ΔU = 0, pa je ukupni rad W = Q1 − Q2"
+  },
+  {
+   "id": "B12.09",
+   "blok": "B12",
+   "naziv": "Carnotov stroj",
+   "koncept": "Najveća moguća korisnost η = 1 − T2/T1 uz temperature u kelvinima.",
+   "zadatak": "A: izračunati η Carnotova stroja; B: pretvoriti °C u K; C: kako promjena temperatura spremnika utječe na η; D: uočiti pogrešku η = T2/T1.",
+   "stavke": [
+    "S12.26",
+    "S12.27",
+    "S12.28"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.01",
+    "B12.08"
+   ],
+   "zasto_nova": "Carnotov kružni proces (idealni stroj): η = 1 − T2/T1, temperature u kelvinima; najveća moguća korisnost među strojevima između istih spremnika; Korisnost Carnotova stroja raste povećanjem temperature toplijega spremnika ili snižavanjem temperature hladnijega; Zamka: temperature u Carnotovoj formuli moraju biti u kelvinima, a ne u °C; korisnost nije omjer temperatura T2/T1"
+  },
+  {
+   "id": "B13.01",
+   "blok": "B13",
+   "naziv": "Električni naboj i vodiči",
+   "koncept": "Naboj je kvantiziran i očuvan, a tvari se po gibljivosti naboja dijele na vodiče i izolatore.",
+   "zadatak": "A: vrste naboja i sile među njima; B: kvantizacija q = n·e; C: vodiči, izolatori i polarizacija; D: očuvanje naboja.",
+   "stavke": [
+    "S13.01",
+    "S13.02",
+    "S13.05",
+    "S13.03"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Električni naboj: dvije vrste (pozitivan i negativan); istoimeni naboji se odbijaju, raznoimeni privlače; Elementarni naboj e je najmanji slobodni naboj; naboj tijela je cjelobrojni višekratnik e (kvantiziranost): q = n·e; Vodiči i izolatori: u vodiču se naboj slobodno giba, u izolatoru ne; polarizacija dielektrika; Zakon očuvanja naboja: ukupan naboj izoliranog sustava je stalan"
+  },
+  {
+   "id": "B13.02",
+   "blok": "B13",
+   "naziv": "Nabijanje tijela",
+   "koncept": "Tijela se nabijaju trenjem, dodirom i influencijom preraspodjelom naboja, a dodir jednakih vodiča naboj izjednačuje.",
+   "zadatak": "A: nabijanje trenjem; B: nabijanje dodirom i influencijom; C: raspodjela naboja pri dodiru dvaju jednakih vodiča; D: račun konačnog naboja uz očuvanje naboja.",
+   "stavke": [
+    "S13.04",
+    "S13.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.01"
+   ],
+   "zasto_nova": "Električno nabijanje trenjem, dodirom i influencijom (električnom indukcijom): preraspodjela naboja, prijenos elektrona; Električni naboj točkastog naboja se dodirom dvaju jednakih vodljivih tijela raspodijeli ravnomjerno (q = (q1+q2)/2)"
+  },
+  {
+   "id": "B13.03",
+   "blok": "B13",
+   "naziv": "Coulombov zakon",
+   "koncept": "Sila među točkastim nabojima ovisi o umnošku naboja, 1/r² i dielektriku, a više sila se zbraja vektorski.",
+   "zadatak": "A: izračun Coulombove sile; B: promjena sile pri promjeni r i εr; C: sile na spojnici i treći Newtonov zakon; D: superpozicija sila na naboj.",
+   "stavke": [
+    "S13.07",
+    "S13.08",
+    "S13.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B13.01"
+   ],
+   "zasto_nova": "Coulombov zakon: F = k·q1·q2/(εr·r²); sila je na spojnici naboja, jednaka po iznosu i suprotna po smjeru na oba naboja; Zamka: Coulombova sila ovisi o 1/r² (udvostručenje udaljenosti smanji silu četiri puta); u dielektriku se dijeli s εr; Vektorsko zbrajanje Coulombovih sila na naboj od više naboja (načelo superpozicije)"
+  },
+  {
+   "id": "B13.04",
+   "blok": "B13",
+   "naziv": "Električno polje i silnice",
+   "koncept": "Polje opisuje silu po jedinici naboja; točkasti naboj stvara polje 1/r², a silnice ga prikazuju.",
+   "zadatak": "A: definicija E = F/q; B: polje točkastog naboja; C: crtanje i čitanje silnica; D: superpozicija polja i točka u kojoj je E = 0.",
+   "stavke": [
+    "S13.10",
+    "S13.11",
+    "S13.12",
+    "S13.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.03"
+   ],
+   "zasto_nova": "Jakost električnog polja E = F/q (smjer je sila na pozitivni probni naboj); jedinica N/C = V/m; Polje točkastog naboja: E = k·q/(εr·r²); usmjereno od pozitivnog naboja, prema negativnom; Silnice električnog polja: izlaze iz + i ulaze u −, ne sijeku se, gušće silnice znače jače polje; tangenta daje smjer polja; Superpozicija polja više naboja: vektorski zbroj; određivanje točke u kojoj je polje nula (između istoimenih naboja bliže manjem)"
+  },
+  {
+   "id": "B13.05",
+   "blok": "B13",
+   "naziv": "Potencijal, napon i energija",
+   "koncept": "Potencijal i napon opisuju rad konzervativne električne sile, uz ekvipotencijalne plohe i elektronvolt.",
+   "zadatak": "A: potencijal točkastog naboja; B: napon kao razlika potencijala; C: rad W = qU i qU = mv²/2; D: ekvipotencijalne plohe i eV.",
+   "stavke": [
+    "S13.17",
+    "S13.18",
+    "S13.16",
+    "S13.19",
+    "S13.20"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.02",
+    "B13.04"
+   ],
+   "zasto_nova": "Električni potencijal točkastog naboja φ = k·q/(εr·r); skalarna veličina, predznak ovisi o naboju; Napon je razlika potencijala U = φ1 − φ2; rad ne ovisi o putu (električna sila je konzervativna); Rad električne sile W = qU; promjena kinetičke energije naboja ubrzanog naponom: qU = mv²/2; Ekvipotencijalne plohe: okomite na silnice; rad pri pomaku po njima je nula; Elektronvolt: 1 eV = 1,6·10⁻¹⁹ J, energija koju elektron dobije ubrzan naponom 1 V"
+  },
+  {
+   "id": "B13.06",
+   "blok": "B13",
+   "naziv": "Naboj u električnom polju",
+   "koncept": "Na naboj u polju djeluje sila F = qE koja ga ubrzava, a u homogenom polju gibanje je analogno hitcu.",
+   "zadatak": "A: homogeno polje E = U/d; B: sila i akceleracija naboja; C: ubrzanje u smjeru polja; D: okomiti ulaz i parabolična putanja.",
+   "stavke": [
+    "S13.14",
+    "S13.15",
+    "S13.31"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.02",
+    "B03.06",
+    "B13.04",
+    "B13.05"
+   ],
+   "zasto_nova": "Homogeno polje pločastog kondenzatora: E = U/d; paralelne ravnomjerno raspoređene silnice; Sila na naboj u električnom polju F = qE; akceleracija a = qE/m (drugi Newtonov zakon); za negativni naboj sila je suprotna polju; Gibanje nabijene čestice u homogenom električnom polju: ubrzanje u smjeru polja, a okomito ulaženje daje parabolu (analogno horizontalnom hitcu)"
+  },
+  {
+   "id": "B13.07",
+   "blok": "B13",
+   "naziv": "Vodiči u elektrostatičkom polju",
+   "koncept": "U ravnoteži je polje u vodiču nula, a naboj je na površini, što objašnjava šuplju kuglu i Faradayev kavez.",
+   "zadatak": "A: svojstva vodiča u ravnoteži; B: polje šuplje nabijene kugle unutra i izvan; C: Faradayev kavez; D: polje nabijenih ploča.",
+   "stavke": [
+    "S13.21",
+    "S13.22",
+    "S13.23",
+    "S13.24"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.01",
+    "B13.04",
+    "B13.06"
+   ],
+   "zasto_nova": "Vodič u elektrostatičkoj ravnoteži: polje unutar vodiča je nula, naboj je na vanjskoj površini, površina je ekvipotencijalna; Šuplja nabijena vodljiva kugla: unutra E = 0, izvan E = kQ/r² kao da je naboj u središtu; Faradayev kavez: unutrašnjost zatvorenog vodiča zaštićena je od vanjskog električnog polja; Polje beskonačne nabijene ploče je homogeno; dvije ploče s +q i −q: polje je između ploča, izvan njih jednako nuli"
+  },
+  {
+   "id": "B13.08",
+   "blok": "B13",
+   "naziv": "Kondenzator i kapacitet",
+   "koncept": "Kapacitet kondenzatora ovisi o geometriji i dielektriku, a nabijeni kondenzator pohranjuje energiju.",
+   "zadatak": "A: definicija C = q/U; B: C pločastog kondenzatora; C: utjecaj dielektrika; D: energija kondenzatora.",
+   "stavke": [
+    "S13.25",
+    "S13.26",
+    "S13.27",
+    "S13.28"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.01",
+    "B13.05",
+    "B13.07"
+   ],
+   "zasto_nova": "Kapacitet kondenzatora C = q/U; jedinica farad (F); Kapacitet pločastog kondenzatora C = ε0·εr·S/d; ovisi o geometriji i dielektriku, ne o q i U; Dielektrik povećava kapacitet εr puta; Energija nabijenog kondenzatora W = CU²/2 (= q²/2C)"
+  },
+  {
+   "id": "B13.09",
+   "blok": "B13",
+   "naziv": "Promjene kondenzatora",
+   "koncept": "Pri promjeni kapaciteta ono što ostaje stalno ovisi o tome je li kondenzator spojen na izvor ili odspojen.",
+   "zadatak": "A: spojen na izvor, U stalan; B: odspojen, q stalan; C: promjena U i energije pri promjeni C; D: usporedba oba slučaja.",
+   "stavke": [
+    "S13.29",
+    "S13.30"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.08"
+   ],
+   "zasto_nova": "Kondenzator priključen na izvor: U je stalan, promjena C mijenja q = CU; Zamka: odspojeni kondenzator: q je stalan, promjena C mijenja U = q/C i energiju q²/2C"
+  },
+  {
+   "id": "B14.01",
+   "blok": "B14",
+   "naziv": "Sile na nabijeno tijelo u električnom polju i uloga polariteta",
+   "koncept": "Nabijeno tijelo u električnom polju je u ravnoteži kad se težina, napetost niti, uzgon i električna sila poništavaju, a promjena polariteta izvora mijenja samo smjer polja, ne njegov iznos ni kapacitet kondenzatora.",
+   "zadatak": "A–B: nacrtati sile na nabijenu kuglicu na niti u polju kondenzatora i postaviti uvjete ravnoteže (napetost niti, težina, uzgon, električna sila); C–D: zamijeniti polove izvora te odrediti što se promijenilo (smjer polja i otklon), a što nije (iznos polja, kapacitet).",
+   "stavke": [
+    "S14.15",
+    "S14.22"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B02.02",
+    "B13.06",
+    "B13.08"
+   ],
+   "zasto_nova": "Ravnoteža nabijenog tijela u polju ili uz drugi naboj: napetost niti, težina, uzgon i Coulombova/električna sila u ravnoteži; Zamka: promjena polariteta izvora ne mijenja iznos polja ni kapacitet kondenzatora, samo smjer polja"
+  },
+  {
+   "id": "B15.01",
+   "blok": "B15",
+   "naziv": "Električna struja i napon",
+   "koncept": "Što je električna struja, kako se mjeri njezina jakost, koji je njezin smjer i što je napon koji je uzrokuje.",
+   "zadatak": "A: uvjeti za struju i zatvoreni krug; B: računanje jakosti struje I = Δq/Δt; C: dogovoreni smjer struje naspram gibanja elektrona; D: napon kao razlika potencijala i uloga izvora.",
+   "stavke": [
+    "S15.01",
+    "S15.02",
+    "S15.03",
+    "S15.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.01",
+    "B13.05"
+   ],
+   "zasto_nova": "Električna struja je usmjereno gibanje nabijenih čestica (u metalima slobodnih elektrona); uvjet je zatvoren strujni krug i izvor napona; Jakost električne struje I = Δq/Δt: naboj koji prođe presjekom vodiča u jedinici vremena (jedinica amper); Dogovoreni smjer struje je od + prema − pola izvora, suprotan smjeru gibanja elektrona; Električni napon je razlika potencijala između dviju točaka i uzrokuje struju; izvor održava napon u krugu"
+  },
+  {
+   "id": "B15.02",
+   "blok": "B15",
+   "naziv": "Otpor i Ohmov zakon",
+   "koncept": "Otpor vodiča, njegova ovisnost o geometriji i materijalu te Ohmov zakon s grafom I–U i ovisnošću struje o naponu i otporu.",
+   "zadatak": "A: definicija otpora R = U/I; B: otpor žice R = ρℓ/S i ovisnost o promjeru; C: Ohmov zakon i računanje struje; D: čitanje grafa I–U i predviđanje promjene struje s U i R.",
+   "stavke": [
+    "S15.05",
+    "S15.06",
+    "S15.07",
+    "S15.08",
+    "S15.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B15.01"
+   ],
+   "zasto_nova": "Električni otpor R je svojstvo vodiča koje se opire protjecanju struje; R = U/I, jedinica om (Ω); Otpor žice R = ρ·ℓ/S: raste s duljinom, pada s presjekom, ovisi o materijalu (otpornost ρ); presjek S = πd²/4 pa otpor ovisi o promjeru kao 1/d²; Ohmov zakon I = U/R: struja je proporcionalna naponu i obrnuto proporcionalna otporu; Graf I–U za ohmski vodič je pravac kroz ishodište; nagib je 1/R (veći nagib = manji otpor); Ovisnost struje o promjeni napona i otpora: struja se povećava povećanjem napona ili smanjenjem otpora"
+  },
+  {
+   "id": "B15.03",
+   "blok": "B15",
+   "naziv": "Serijski i paralelni spoj otpornika",
+   "koncept": "Pravila za serijski i paralelni spoj, zamjenski otpor i postupak rješavanja složenog kruga s realnim izvorom.",
+   "zadatak": "A: serijski spoj (struja, naponi, R_u); B: paralelni spoj (naponi, struje, 1/R_u); C: provjera rezultata zamkom o veličini ukupnog otpora; D: složeni krug zamjenskim otporom i krug s unutarnjim otporom izvora.",
+   "stavke": [
+    "S15.10",
+    "S15.11",
+    "S15.12",
+    "S15.14",
+    "S15.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B15.02"
+   ],
+   "zasto_nova": "Serijski spoj: ista struja kroz sve otpornike, naponi se zbrajaju, R_u = R1 + R2 + …; Paralelni spoj: isti napon na svim otpornicima, struje se zbrajaju, 1/R_u = 1/R1 + 1/R2 + …; Ukupni otpor paralelnog spoja manji je od najmanjeg pojedinačnog otpora; kod serijskog veći od najvećeg; Postupak za složeni krug: spojiti serijske i paralelne grupe u zamjenski otpor, izračunati ukupnu struju, zatim naponi i struje po granama; Strujni krug s realnim izvorom: I = ℰ/(R_u + R_v), gdje je R_v unutarnji otpor izvora"
+  },
+  {
+   "id": "B15.04",
+   "blok": "B15",
+   "naziv": "Snaga, rad i korisnost struje",
+   "koncept": "Snaga i rad električne struje, snaga trošila u serijskom i paralelnom spoju, nazivni podaci te korisnost i Jouleova toplina.",
+   "zadatak": "A: snaga P = UI = I²R = U²/R; B: rad W = UIt = Pt; C: usporedba snaga trošila u serijskom i paralelnom spoju te otpor iz nazivnih podataka R = U²/P; D: korisnost i Jouleova toplina.",
+   "stavke": [
+    "S15.15",
+    "S15.16",
+    "S15.17",
+    "S15.18",
+    "S15.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.05",
+    "B13.05",
+    "B15.02",
+    "B15.03"
+   ],
+   "zasto_nova": "Snaga u strujnom krugu P = U·I = I²R = U²/R; Rad (energija) električne struje W = U·I·t = P·t; Snaga trošila: u paralelnom spoju (isti U) veću snagu ima manji otpor; u serijskom (ista I) veći otpor; Otpor trošila iz nazivnih podataka R = U²/P; trošilo radi normalno pri nazivnom naponu i struji (serijski dodani otpornik preuzima višak napona); Korisnost η = W_k/W_u = P_k/P_u; električna energija se u otporniku pretvara u toplinu (Jouleova toplina)"
+  },
+  {
+   "id": "B16.01",
+   "blok": "B16",
+   "naziv": "Magnet i njegovi polovi",
+   "koncept": "Magnet ima dva nerazdvojiva pola, a feromagnetske tvari se privlače magnetom i mogu se namagnetizirati.",
+   "zadatak": "A: odredi privlačenje ili odbijanje polova; B: predvidi što nastaje dijeljenjem magneta; C: objasni namagnetiziranje željeza preko domena; D: razvrstaj tvari na feromagnetske i ostale.",
+   "stavke": [
+    "S16.01",
+    "S16.02",
+    "S16.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Magnet ima dva pola, sjeverni i južni; istoimeni polovi se odbijaju, raznoimeni privlače; Magnetski polovi se ne mogu razdvojiti: dijeljenjem magneta nastaju novi magneti s oba pola (nema magnetskih monopola); Feromagnetske tvari (željezo, nikal, kobalt) privlače se magnetom i mogu se namagnetizirati; domene se u vanjskom polju usmjere"
+  },
+  {
+   "id": "B16.02",
+   "blok": "B16",
+   "naziv": "Magnetsko polje i silnice",
+   "koncept": "Magnetsko polje opisujemo veličinom B i silnicama čiji oblik i gustoća pokazuju smjer i jakost polja.",
+   "zadatak": "A: navedi oznaku i jedinicu polja; B: nacrtaj smjer silnica izvan i unutar magneta; C: odredi smjer i jakost polja iz gustoće i tangente silnica; D: prepoznaj oblik polja štapićastog i potkovastog magneta te homogeno polje.",
+   "stavke": [
+    "S16.03",
+    "S16.04",
+    "S16.05",
+    "S16.07",
+    "S16.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B16.01"
+   ],
+   "zasto_nova": "Magnetsko polje: prostor oko magneta ili vodiča sa strujom u kojem djeluje magnetska sila; oznaka B, jedinica tesla (T); Magnetske silnice: izvan magneta idu od sjevernog prema južnom polu, unutar magneta od južnog prema sjevernom; zatvorene su krivulje koje se ne sijeku; Gustoća silnica pokazuje jakost polja; tangenta na silnicu daje smjer polja, a to je smjer na koji pokazuje sjeverni pol magnetske igle; Oblik polja štapićastog i potkovastog magneta; homogeno polje ima paralelne silnice jednake gustoće (npr. između krakova potkovastog magneta); Magnetska igla (kompas) u polju se orijentira u smjeru polja; Zemlja je veliki magnet, a geografski sjever je blizu magnetskog južnog pola"
+  },
+  {
+   "id": "B16.03",
+   "blok": "B16",
+   "naziv": "Oerstedov pokus i polje ravnog vodiča",
+   "koncept": "Električna struja stvara magnetsko polje čije su silnice kružnice oko ravnog vodiča, a smjer određujemo pravilom desne ruke.",
+   "zadatak": "A: opiši Oerstedov pokus i otklon igle; B: nacrtaj silnice oko vodiča; C: pravilom desne ruke odredi smjer polja; D: odredi što se mijenja kad se promijeni smjer struje.",
+   "stavke": [
+    "S16.09",
+    "S16.10",
+    "S16.11",
+    "S16.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B15.01",
+    "B16.02",
+    "B16.04"
+   ],
+   "zasto_nova": "Oerstedov pokus: vodič kojim teče struja stvara magnetsko polje i otklanja magnetsku iglu; električna struja izvor je magnetizma; Silnice polja ravnog vodiča sa strujom su koncentrične kružnice oko vodiča u ravnini okomitoj na vodič; Pravilo desne ruke za ravni vodič: palac u smjeru struje, savijeni prsti pokazuju smjer silnica; Zamka: polje struje ne ovisi o smjeru samo po iznosu; promjena smjera struje mijenja smjer polja, a ne njegov iznos"
+  },
+  {
+   "id": "B16.04",
+   "blok": "B16",
+   "naziv": "Jakost polja ravnog vodiča i superpozicija",
+   "koncept": "Indukcija ravnog vodiča raste sa strujom i opada s udaljenošću, a polja više vodiča zbrajaju se vektorski.",
+   "zadatak": "A: izračunaj B za zadane I i r; B: predvidi promjenu B pri promjeni I ili r; C: odredi smjer polja dvaju vodiča u točki; D: zbroji polja vodiča sa strujama istog i suprotnog smjera.",
+   "stavke": [
+    "S16.12",
+    "S16.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B16.03"
+   ],
+   "zasto_nova": "B = μ0·μr·I/(2πr): magnetska indukcija ravnog dugog vodiča; ovisi o struji i udaljenosti (opada s 1/r); Superpozicija magnetskih polja: ukupno polje više vodiča je vektorski zbroj pojedinih polja (npr. dva vodiča sa strujama istog ili suprotnog smjera)"
+  },
+  {
+   "id": "B16.05",
+   "blok": "B16",
+   "naziv": "Zavojnica i elektromagnet",
+   "koncept": "Polje kružne petlje i zavojnice određujemo pravilom desne ruke, njegova jakost ovisi o N, I i ℓ, a željezna jezgra ga višestruko pojačava.",
+   "zadatak": "A: pravilom desne ruke odredi polove petlje ili zavojnice; B: opiši oblik polja zavojnice izvana i unutra; C: izračunaj B u dugoj zavojnici; D: objasni kako jezgra i uključivanje struje djeluju na elektromagnet.",
+   "stavke": [
+    "S16.13",
+    "S16.14",
+    "S16.15",
+    "S16.16"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B16.01",
+    "B16.02",
+    "B16.03"
+   ],
+   "zasto_nova": "Magnetsko polje kružne petlje i zavojnice: pravilo desne ruke (prsti u smjeru struje, palac pokazuje smjer polja u unutrašnjosti, tj. sjeverni pol); Polje zavojnice izvana je kao polje štapićastog magneta, a unutar duge zavojnice je približno homogeno; silnice izlaze na sjevernom polu; B = μ0·μr·N·I/ℓ: magnetska indukcija u dugoj zavojnici; raste s brojem zavoja po duljini i strujom; Feromagnetska jezgra u zavojnici (elektromagnet) višestruko pojačava polje (μr ≫ 1); polje se uključuje i isključuje strujom"
+  },
+  {
+   "id": "B17.01",
+   "blok": "B17",
+   "naziv": "Lorentzova sila na naboj u magnetskom polju",
+   "koncept": "Magnetsko polje djeluje silom na gibajući naboj, a iznos i smjer sile određuju se formulom i pravilom ruke.",
+   "zadatak": "A: prepoznati kada djeluje sila; B: izračunati F_L = qvB sin α; C: posebni slučajevi v ∥ B i v ⊥ B; D: odrediti smjer sile za pozitivan i negativan naboj.",
+   "stavke": [
+    "S17.01",
+    "S17.02",
+    "S17.03",
+    "S17.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.01",
+    "B16.02",
+    "B16.03"
+   ],
+   "zasto_nova": "Magnetska sila djeluje na električni naboj koji se giba u magnetskom polju (Lorentzova sila); na naboj koji miruje magnetsko polje ne djeluje.; Lorentzova sila: F_L = q·v·B·sin α, gdje je α kut između smjera brzine i magnetskog polja; Posebni slučajevi: za v ∥ B je F_L = 0, a za v ⊥ B je F_L = qvB (maksimalna sila); Smjer Lorentzove sile određuje se pravilom ruke: sila je okomita i na v i na B; za negativan naboj (elektron) smjer je suprotan od onoga za pozitivan"
+  },
+  {
+   "id": "B17.02",
+   "blok": "B17",
+   "naziv": "Ampereova sila na vodič sa strujom",
+   "koncept": "Sila na vodič sa strujom u magnetskom polju zbroj je Lorentzovih sila na pokretne naboje, a iznos i smjer se određuju formulom i pravilom lijeve ruke.",
+   "zadatak": "A: izračunati F = BIℓ sin α; B: odrediti smjer pravilom lijeve ruke; C: povezati Ampereovu silu s Lorentzovom; D: razlikovati je od Coulombove sile.",
+   "stavke": [
+    "S17.06",
+    "S17.07",
+    "S17.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.03",
+    "B16.02",
+    "B17.01"
+   ],
+   "zasto_nova": "Ampereova sila na ravni vodič sa strujom u homogenom magnetskom polju: F = B·I·ℓ·sin α, gdje je α kut između vodiča (smjera struje) i B; Smjer Ampereove sile određuje se pravilom lijeve ruke: F ⊥ I i F ⊥ B; magnetske silnice izlaze iz sjevernog pola i ulaze u južni; Ampereova sila je zbroj Lorentzovih sila na pokretne naboje u vodiču; razlikovati je od Coulombove (električne) sile"
+  },
+  {
+   "id": "B17.03",
+   "blok": "B17",
+   "naziv": "Međudjelovanje vodiča i superpozicija polja",
+   "koncept": "Vodiči sa strujom međusobno djeluju silom, a polja više vodiča zbrajaju se vektorski.",
+   "zadatak": "A: odrediti privlači li se ili odbija par vodiča; B: izračunati silu na vodič u polju drugog; C: provjeriti treći Newtonov zakon; D: vektorski zbrojiti polja više vodiča.",
+   "stavke": [
+    "S17.10",
+    "S17.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B04.01",
+    "B16.04",
+    "B17.02"
+   ],
+   "zasto_nova": "Međudjelovanje dvaju paralelnih vodiča sa strujom: istosmjerne struje se privlače, a suprotnosmjerne odbijaju; sila na vodič računa se kao F = B·I·ℓ s poljem drugog vodiča (po trećem Newtonovu zakonu sile su jednakog iznosa); Ukupno magnetsko polje (i sila) više vodiča dobiva se vektorskim zbrajanjem (superpozicijom) doprinosa pojedinih vodiča"
+  },
+  {
+   "id": "B17.04",
+   "blok": "B17",
+   "naziv": "Kružno gibanje naboja u homogenom polju",
+   "koncept": "Budući da je Lorentzova sila okomita na brzinu, naboj okomito na polje kruži jednoliko, a polumjer i period slijede iz qvB = mv²/r.",
+   "zadatak": "A: objasniti zašto sila ne vrši rad; B: postaviti qvB = mv²/r; C: izvesti i izračunati r; D: izračunati period T i uočiti da ne ovisi o brzini.",
+   "stavke": [
+    "S17.05",
+    "S17.12",
+    "S17.13",
+    "S17.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.02",
+    "B05.02",
+    "B06.01",
+    "B06.03",
+    "B17.01"
+   ],
+   "zasto_nova": "Lorentzova sila je stalno okomita na brzinu, pa ne vrši rad i ne mijenja iznos brzine ni kinetičku energiju čestice, nego samo smjer gibanja; Naboj koji ulazi okomito na homogeno magnetsko polje giba se jednoliko po kružnici: Lorentzova sila je centripetalna, qvB = mv²/r; Polumjer kružne putanje: r = mv/(qB); veći je za veću količinu gibanja i manji za jače polje ili veći naboj; Period kruženja T = 2πm/(qB) ne ovisi o brzini ni o polumjeru putanje"
+  },
+  {
+   "id": "B17.05",
+   "blok": "B17",
+   "naziv": "Ubrzani naboji i kosi ulazak u polje",
+   "koncept": "Brzina nabijene čestice ovisi o naponu ubrzanja, a pri kosom ulasku u polje putanja je zavojnica.",
+   "zadatak": "A: izračunati v iz qU = mv²/2; B: povezati s r za određivanje q ili m; C: rastaviti brzinu na komponente; D: opisati putanju zavojnice.",
+   "stavke": [
+    "S17.15",
+    "S17.16",
+    "S17.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.05",
+    "B17.01",
+    "B17.04"
+   ],
+   "zasto_nova": "Čestica ubrzana naponom U iz mirovanja: qU = mv²/2; kombinira se s qvB = mv²/r za određivanje r, v, q ili m; Ako brzina čestice ima komponentu paralelnu s poljem, putanja je zavojnica (spirala): kružno gibanje u okomitoj ravnini uz jednoliko gibanje duž polja; Čestica u magnetskom polju s brzinom koja nije okomita: razdvojiti brzinu na komponente v·sin α (okomita, daje kružnicu) i v·cos α (paralelna, bez sile)"
+  },
+  {
+   "id": "B17.06",
+   "blok": "B17",
+   "naziv": "Primjene magnetskog međudjelovanja",
+   "koncept": "Gibanje naboja u električnom i magnetskom polju koristi se u uređajima za razdvajanje, ubrzavanje i zakretanje čestica.",
+   "zadatak": "A: objasniti maseni spektrometar; B: objasniti ciklotron; C: izračunati brzinu u odabirniku brzine v = E/B; D: opisati katodnu cijev, elektromotor i Zemljinu zaštitu.",
+   "stavke": [
+    "S17.18",
+    "S17.19",
+    "S17.21",
+    "S17.20"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.06",
+    "B17.01",
+    "B17.02",
+    "B17.04"
+   ],
+   "zasto_nova": "Primjena: maseni spektrometar razdvaja čestice istog naboja po masi jer je r ∝ m (različiti polumjeri putanja); Primjena: ciklotron ubrzava čestice izmjeničnim električnim poljem dok ih magnetsko polje drži na kružnoj putanji; frekvencija ne ovisi o brzini; Odabirnik brzine: kad su električna i magnetska sila na česticu jednake (qE = qvB), čestica ide pravocrtno, v = E/B; Primjena: zakretanje elektronskog snopa magnetskim poljem (katodna cijev), elektromotor (zakretni moment na petlji sa strujom), i zaštita Zemljinim magnetskim poljem od nabijenih čestica"
+  },
+  {
+   "id": "B18.01",
+   "blok": "B18",
+   "naziv": "Magnetski tok i pojava indukcije",
+   "koncept": "Magnetski tok, načini njegove promjene i nastanak induciranog napona pri promjeni toka.",
+   "zadatak": "A: izračunati tok Φ = B·S·cosα; B: odrediti kojom se promjenom (B, S, α) tok mijenja u zadanim situacijama; C: prepoznati kada se inducira napon, a kada ne (npr. translacija petlje unutar homogenog polja); D: objasniti indukciju u zavojnici pri promjeni toka.",
+   "stavke": [
+    "S18.02",
+    "S18.03",
+    "S18.01"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B16.02"
+   ],
+   "zasto_nova": "Magnetski tok Φ = B·S·cosα: α je kut između normale na plohu petlje i smjera magnetskog polja; jedinica weber (Wb = T·m²); Tok se mijenja promjenom B, površine S ili kuta α (npr. rotacijom petlje); ako se ništa od toga ne mijenja, nema indukcije (npr. petlja potpuno unutar homogenog polja pri translaciji); Elektromagnetska indukcija: promjena magnetskog toka kroz zavojnicu ili petlju inducira napon (i struju u zatvorenom krugu)"
+  },
+  {
+   "id": "B18.02",
+   "blok": "B18",
+   "naziv": "Faradayev zakon i gibanje vodiča u polju",
+   "koncept": "Količinsko određivanje induciranog napona iz brzine promjene toka, iz grafa Φ(t) i za vodič koji se giba u polju.",
+   "zadatak": "A: izračunati U_i iz ΔΦ/Δt i broja zavoja N; B: iz grafa Φ(t) odrediti napon po nagibu; C: izračunati napon u vodiču koji se giba u polju U_i = B·ℓ·v·sinα; D: analizirati petlju koja stalnom brzinom ulazi u polje i izlazi iz njega.",
+   "stavke": [
+    "S18.04",
+    "S18.05",
+    "S18.06",
+    "S18.07"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B17.01",
+    "B18.01",
+    "B31.06"
+   ],
+   "zasto_nova": "Faradayev zakon: U_i = −N·ΔΦ/Δt; inducirani napon ovisi o brzini promjene toka i broju zavoja; Iz grafa Φ(t) nagib daje iznos induciranog napona; tok konstantan znači U_i = 0, a konstantan nagib znači konstantan napon; Inducirani napon u ravnom vodiču koji se giba u homogenom polju: U_i = −B·ℓ·v·sinα; Petlja stalnom brzinom ulazi u homogeno polje: inducirani napon i struja konstantni su dok petlja ulazi, nula kad je potpuno unutra, a smjer se obrne pri izlasku"
+  },
+  {
+   "id": "B18.03",
+   "blok": "B18",
+   "naziv": "Lenzovo pravilo i smjer inducirane struje",
+   "koncept": "Smjer inducirane struje proizlazi iz Lenzova pravila kao posljedice očuvanja energije.",
+   "zadatak": "A: objasniti zašto Faradayev zakon ima predznak minus; B: odrediti raste li tok ili pada pri približavanju/udaljavanju magneta; C: odrediti smjer induciranog polja; D: pravilom desne ruke odrediti smjer inducirane struje.",
+   "stavke": [
+    "S18.08",
+    "S18.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.03",
+    "B16.05",
+    "B18.02"
+   ],
+   "zasto_nova": "Lenzovo pravilo: smjer inducirane struje je takav da njezino magnetsko polje se protivi promjeni toka koja ju je uzrokovala (posljedica očuvanja energije); predznak minus u Faradayevu zakonu; Određivanje smjera inducirane struje: odrediti smjer polja i je li tok raste ili pada, induciranim poljem se suprotstaviti porastu odnosno nadomjestiti pad, pravilom desne ruke dobiti smjer struje (npr. magnet se približava ili udaljava od petlje)"
+  },
+  {
+   "id": "B18.04",
+   "blok": "B18",
+   "naziv": "Izmjenična struja i napon",
+   "koncept": "Opis izmjenične struje sinusnom funkcijom, kutnom frekvencijom i Ohmovim zakonom za otpornik.",
+   "zadatak": "A: razlikovati izmjeničnu i istosmjernu struju; B: iz jednadžbe i = i₀·sin(ωt + φ₀) očitati amplitudu, ω i fazu; C: izračunati f i T iz ω ili iz grafa; D: primijeniti Ohmov zakon na otpornik u izmjeničnom krugu.",
+   "stavke": [
+    "S18.10",
+    "S18.11",
+    "S18.12",
+    "S18.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B06.01",
+    "B15.01",
+    "B15.02"
+   ],
+   "zasto_nova": "Izmjenična struja i napon periodički mijenjaju iznos i smjer, najčešće sinusno; istosmjerna struja ima stalan smjer; Zapis izmjenične struje i = i₀·sin(ωt + φ₀): i₀ je amplituda (maksimalna vrijednost), ω kutna frekvencija, φ₀ početna faza; analogno za napon u = u₀·sin(ωt); ω = 2π/T = 2πf: veza kutne frekvencije, perioda i frekvencije izmjenične struje; očitavanje f i T iz zadane jednadžbe ili grafa; Ohmov zakon za izmjenični krug s otpornikom: I₀ = U₀/R, vrijedi i za trenutne vrijednosti; općenito I = U/Z"
+  },
+  {
+   "id": "B18.05",
+   "blok": "B18",
+   "naziv": "Efektivne vrijednosti",
+   "koncept": "Efektivne vrijednosti izmjenične struje i napona i njihovo razlikovanje od amplituda.",
+   "zadatak": "A: izračunati I_ef i U_ef iz amplitude; B: objasniti značenje efektivne vrijednosti preko snage na otporniku; C: zaključiti da mrežni napon 230 V ima amplitudu oko 325 V; D: prosuditi što pokazuju voltmetar i ampermetar.",
+   "stavke": [
+    "S18.14",
+    "S18.15"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B15.04",
+    "B18.04"
+   ],
+   "zasto_nova": "Efektivna vrijednost izmjenične struje i napona (I_ef = I₀/√2, U_ef = U₀/√2) jednaka je istosmjernoj vrijednosti koja daje jednaku snagu na otporniku; mrežni napon 230 V je efektivni; Voltmetar i ampermetar u izmjeničnom krugu pokazuju efektivne vrijednosti, a ne amplitude; razlikovati amplitudu od efektivne vrijednosti"
+  },
+  {
+   "id": "B18.06",
+   "blok": "B18",
+   "naziv": "Zavojnica, kondenzator i impedancija",
+   "koncept": "Induktivni i kapacitivni otpor ovise o frekvenciji i zajedno s R čine impedanciju serijskog RLC kruga.",
+   "zadatak": "A: izračunati R_L = ωL; B: izračunati R_C = 1/(ωC); C: usporediti ponašanje zavojnice i kondenzatora pri istosmjernoj i izmjeničnoj struji te pri promjeni frekvencije; D: izračunati Z i struju I = U/Z u serijskom RLC krugu.",
+   "stavke": [
+    "S18.16",
+    "S18.17",
+    "S18.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.08",
+    "B15.03",
+    "B18.02",
+    "B18.04"
+   ],
+   "zasto_nova": "Induktivni otpor zavojnice R_L = ωL raste s frekvencijom (za istosmjernu struju je 0); L je induktivitet, jedinica henri (H); Kapacitivni otpor kondenzatora R_C = 1/(ωC) pada s frekvencijom (za istosmjernu struju je beskonačan, kondenzator ne vodi); Impedancija serijskog RLC kruga Z = √(R² + (R_L − R_C)²) i I = U/Z"
+  },
+  {
+   "id": "B18.07",
+   "blok": "B18",
+   "naziv": "Generator i elektromotor",
+   "koncept": "Generator pretvara mehaničku energiju u električnu indukcijom, a elektromotor električnu u mehaničku silom na vodič sa strujom.",
+   "zadatak": "A: objasniti kako vrtnja zavojnice u polju mijenja tok; B: opisati nastanak izmjeničnog napona u generatoru; C: objasniti silu na zavojnicu sa strujom u elektromotoru; D: usporediti građu i pretvorbe energije generatora i motora.",
+   "stavke": [
+    "S18.20",
+    "S18.21"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B17.02",
+    "B18.01",
+    "B18.02",
+    "B18.04"
+   ],
+   "zasto_nova": "Načelo rada električnog generatora: vrtnja zavojnice u magnetskom polju mijenja tok i inducira izmjenični napon (mehanička energija u električnu); Načelo rada elektromotora: vodič/zavojnica sa strujom u magnetskom polju doživljava silu (moment sile) i vrti se (električna energija u mehaničku); građevno sličan generatoru"
+  },
+  {
+   "id": "B18.08",
+   "blok": "B18",
+   "naziv": "Transformator i prijenos energije",
+   "koncept": "Transformator mijenja izmjenični napon prema omjeru zavoja, a visoki napon smanjuje gubitke u prijenosu.",
+   "zadatak": "A: opisati rad transformatora i zašto radi samo s izmjeničnim naponom; B: izračunati napon preko omjera zavoja N₁/N₂; C: izračunati struje iz P₁ = P₂; D: objasniti zašto se dalekovodi koriste na visokom naponu radi manjih Jouleovih gubitaka.",
+   "stavke": [
+    "S18.22",
+    "S18.23",
+    "S18.24"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B15.04",
+    "B16.05",
+    "B18.02",
+    "B18.04"
+   ],
+   "zasto_nova": "Načelo rada transformatora: izmjenična struja u primaru stvara promjenjivi tok u željeznoj jezgri koji inducira napon u sekundaru; radi samo s izmjeničnim naponom; Idealni transformator: N₁/N₂ = U₁/U₂ = I₂/I₁, snaga primara jednaka snazi sekundara (P₁ = P₂); veći napon znači manju struju; Primjena transformatora u prijenosu energije: povišenjem napona smanjuje se struja pa su manji Jouleovi gubici u dalekovodima"
+  },
+  {
+   "id": "B19.01",
+   "blok": "B19",
+   "naziv": "Što je harmonijsko titranje i njegove veličine",
+   "koncept": "Titranje je periodično gibanje pod povratnom silom F = −kx, opisano amplitudom, periodom, frekvencijom i kutnom frekvencijom.",
+   "zadatak": "A: prepoznati harmonijsko titranje i povratnu silu; B: odrediti A, T i f; C: izračunati ω i očitati A, ω i φ0 iz jednadžbe; D: odrediti T iz broja titraja i vremena te put i pomak u dijelovima perioda.",
+   "stavke": [
+    "S19.01",
+    "S19.02",
+    "S19.03",
+    "S19.20",
+    "S19.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B03.01",
+    "B03.02",
+    "B06.01"
+   ],
+   "zasto_nova": "Titranje je periodično gibanje oko ravnotežnog položaja; harmonijsko titranje je titranje pod djelovanjem povratne sile proporcionalne elongaciji, a suprotnog smjera (F = −kx); Veličine titranja: elongacija, amplituda A (najveća elongacija), period T (trajanje jednog titraja), frekvencija f = 1/T (jedinica Hz); Kutna frekvencija ω = 2π/T = 2πf; čitanje A, ω i početne faze iz jednadžbe y = A sin(ωt + φ0); Određivanje perioda iz broja titraja i vremena (T = t/N) i duljine niti iz perioda; Put u jednom periodu je 4A, u pola perioda 2A, u četvrt perioda A (iz ravnotežnog ili amplitudnog položaja); put i pomak nisu isto"
+  },
+  {
+   "id": "B19.02",
+   "blok": "B19",
+   "naziv": "Elongacija, brzina i akceleracija",
+   "koncept": "Kinematika harmonijskog titranja: jednadžbe y, v i a, njihove maksimalne vrijednosti, položaji ekstrema i fazni odnosi.",
+   "zadatak": "A: napisati y(t) iz zadanih A, T i φ0; B: izračunati v0 i a0 te v i a u trenutku t; C: usporediti v i a u ravnotežnom i amplitudnom položaju; D: odrediti fazne razlike na grafovima y(t), v(t), a(t).",
+   "stavke": [
+    "S19.04",
+    "S19.05",
+    "S19.06",
+    "S19.07",
+    "S19.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.03",
+    "B06.01",
+    "B19.01"
+   ],
+   "zasto_nova": "Elongacija harmonijskog titranja y = A sin(ωt + φ0); Brzina pri titranju v = v0 cos(ωt + φ0), maksimalna brzina v0 = 2πA/T = Aω; Akceleracija pri titranju a = −a0 sin(ωt + φ0), a0 = 4π²A/T² = Aω²; akceleracija je proporcionalna elongaciji i suprotnog je smjera; U ravnotežnom položaju brzina je maksimalna, a akceleracija (sila) nula; u amplitudnom položaju brzina je nula, a akceleracija (sila) maksimalna; Razlika u fazi između titranja i pomak grafa y(t), v(t), a(t): brzina prethodi elongaciji za četvrt perioda, a je u protufazi s y"
+  },
+  {
+   "id": "B19.03",
+   "blok": "B19",
+   "naziv": "Tijelo na opruzi",
+   "koncept": "Period i maksimalna brzina tijela na opruzi ovise o masi i konstanti opruge, a ne o amplitudi.",
+   "zadatak": "A: izračunati T iz m i k; B: procijeniti promjenu perioda pri promjeni mase ili amplitude; C: izračunati v0 = A√(k/m); D: odrediti k ili m iz izmjerenog perioda.",
+   "stavke": [
+    "S19.10",
+    "S19.11",
+    "S19.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B19.01",
+    "B19.02"
+   ],
+   "zasto_nova": "Titranje tijela na opruzi: period T = 2π√(m/k), povratna sila elastična F = −kx; Period opruge ne ovisi o amplitudi; ovisi o masi (T ∝ √m, f ∝ 1/√m) i konstanti opruge; učetverostručenje mase udvostručuje period; Maksimalna brzina tijela na opruzi v0 = A√(k/m)"
+  },
+  {
+   "id": "B19.04",
+   "blok": "B19",
+   "naziv": "Energija titranja na opruzi",
+   "koncept": "Ukupna energija titranja je stalna i proporcionalna A², a mijenja se između kinetičke i elastične potencijalne.",
+   "zadatak": "A: izračunati ukupnu energiju kA²/2; B: odrediti Ek i Eep pri zadanoj elongaciji; C: usporediti energije pri promjeni amplitude; D: odrediti Ek i Eep pri polovici maksimalne brzine.",
+   "stavke": [
+    "S19.13",
+    "S19.14",
+    "S19.15"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.02",
+    "B05.03",
+    "B19.03"
+   ],
+   "zasto_nova": "Energija titranja na opruzi: ukupna E = kA²/2 je stalna, E = Ek + Eep, Eep = kx²/2, Ek = k(A² − x²)/2; u ravnoteži je sva energija kinetička, u amplitudi elastična potencijalna; Ukupna energija proporcionalna je kvadratu amplitude (dvostruka amplituda daje četverostruku energiju); Pri polovici maksimalne brzine kinetička energija je 1/4 ukupne, a potencijalna 3/4"
+  },
+  {
+   "id": "B19.05",
+   "blok": "B19",
+   "naziv": "Matematičko njihalo",
+   "koncept": "Njihalo za male kutove titra harmonijski s periodom ovisnim o duljini niti i g, a energija se pretvara između Ep i Ek.",
+   "zadatak": "A: prepoznati uvjete matematičkog njihala i povratnu silu mg sin α; B: izračunati T = 2π√(l/g) i ovisnost o l, m, amplitudi; C: izračunati visinu h i energiju u amplitudi i ravnoteži; D: odrediti duljinu niti ili g iz mjerenja perioda.",
+   "stavke": [
+    "S19.16",
+    "S19.18",
+    "S19.17",
+    "S19.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01",
+    "B05.02",
+    "B05.03",
+    "B19.01"
+   ],
+   "zasto_nova": "Matematičko njihalo: točkasto tijelo na niti zanemarive mase; za male otklone (do oko 5°–10°) titra harmonijski; Povratna sila njihala je komponenta težine tangencijalna na putanju (mg sin α); Period matematičkog njihala T = 2π√(l/g); ne ovisi o masi ni o amplitudi (za male kutove), ovisi o duljini niti i g; Energija njihala: Ep = mgh, h = l(1 − cos α); u ravnoteži je Ek maksimalna, u amplitudi Ep maksimalna, zbroj je stalan"
+  },
+  {
+   "id": "B19.06",
+   "blok": "B19",
+   "naziv": "LC titrajni krug",
+   "koncept": "U LC krugu energija električnog polja kondenzatora i magnetskog polja zavojnice periodički se izmjenjuju, što je analogno mehaničkom titranju.",
+   "zadatak": "A: opisati izmjenu energije u LC krugu; B: odrediti stanje struje pri punom i praznom kondenzatoru; C: izračunati T i f Thomsonovom formulom; D: povezati veličine mehaničkog i električnog titranja analogijom.",
+   "stavke": [
+    "S19.21",
+    "S19.23",
+    "S19.22",
+    "S19.24"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.08",
+    "B16.02",
+    "B19.03"
+   ],
+   "zasto_nova": "LC titrajni krug: periodička izmjena energije električnog polja kondenzatora i magnetskog polja zavojnice; Energija LC kruga: ukupna energija CU²/2 + LI²/2 je stalna (bez otpora); kad je kondenzator pun, struja je nula, kad je kondenzator prazan, struja je maksimalna; Thomsonova formula: period LC kruga T = 2π√(LC), f = 1/T; Analogija mehaničkog i električnog titranja: m↔L, 1/k↔C, x↔q, v↔I"
+  },
+  {
+   "id": "B19.07",
+   "blok": "B19",
+   "naziv": "Prigušeno i prisilno titranje, rezonancija",
+   "koncept": "Zbog otpora amplituda opada, a pod vanjskom silom sustav titra njenom frekvencijom i ima najveću amplitudu pri rezonanciji.",
+   "zadatak": "A: opisati prigušeno titranje i promjenu amplitude i energije; B: odrediti frekvenciju prisilnog titranja; C: odrediti uvjet rezonancije i utjecaj prigušenja na krivulju; D: objasniti primjere rezonancije.",
+   "stavke": [
+    "S19.25",
+    "S19.26",
+    "S19.27",
+    "S19.28"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.04",
+    "B19.01",
+    "B19.04"
+   ],
+   "zasto_nova": "Prigušeno titranje: zbog otpora (trenja) energija se gubi, amplituda se smanjuje s vremenom, period je približno nepromijenjen; Prisilno titranje: tijelo titra frekvencijom vanjske periodične sile, a ne vlastitom (nakon prijelazne pojave); Rezonancija: kad je frekvencija prisile jednaka vlastitoj frekvenciji sustava, amplituda je najveća; manje prigušenje daje veći i oštriji vrh rezonancijske krivulje; Primjeri i posljedice rezonancije (njihanje ljuljačke, rušenje mostova, radio-prijamnik); vlastita frekvencija sustava f0"
+  },
+  {
+   "id": "B20.01",
+   "blok": "B20",
+   "naziv": "Što je val i kako nastaje",
+   "koncept": "Val kao širenje poremećaja kroz elastično sredstvo koje prenosi energiju, a ne tvar, te podjela na transverzalne i longitudinalne valove s polarizacijom.",
+   "zadatak": "A: opisati širenje poremećaja i prijenos energije bez prijenosa tvari; B: objasniti nastanak mehaničkog vala i zakašnjenje u fazi; C: razlikovati transverzalni i longitudinalni val na primjerima; D: odrediti koji se val može polarizirati.",
+   "stavke": [
+    "S20.01",
+    "S20.02",
+    "S20.03",
+    "S20.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B19.01"
+   ],
+   "zasto_nova": "Val je širenje poremećaja (titranja) kroz sredstvo ili prostor; čestice sredstva titraju oko ravnotežnog položaja, a val prenosi energiju i količinu gibanja, ali ne prenosi tvar; Mehanički val nastaje titranjem izvora i zahtijeva elastično sredstvo; čestice sredstva međusobno prenose poremećaj, a svaka sljedeća čestica titra uz zakašnjenje u fazi; Transverzalni val: čestice titraju okomito na smjer širenja (val na užetu); longitudinalni val: čestice titraju u smjeru širenja (zvuk, zgušnjenja i razrijeđenja); Polarizacija je svojstvo samo transverzalnih valova; longitudinalni valovi (npr. zvuk) ne mogu se polarizirati"
+  },
+  {
+   "id": "B20.02",
+   "blok": "B20",
+   "naziv": "Valna duljina, brzina i frekvencija",
+   "koncept": "Veličine koje opisuju val (λ, A, T, f) i veza v = λ·f, te što određuje brzinu, frekvenciju i valnu duljinu pri promjeni sredstva.",
+   "zadatak": "A: odrediti λ i A sa skice vala; B: izračunati brzinu iz λ i f (ili T); C: odrediti što se mijenja pri prijelazu u drugo sredstvo; D: procijeniti kako napetost i gustoća užeta utječu na brzinu.",
+   "stavke": [
+    "S20.05",
+    "S20.06",
+    "S20.07",
+    "S20.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B19.01",
+    "B20.01"
+   ],
+   "zasto_nova": "Valna duljina λ je udaljenost najbližih čestica koje titraju u istoj fazi (put vala u jednom periodu); amplituda je najveća elongacija; v = λ/T = λ·f: brzina vala, valna duljina, period i frekvencija; Frekvenciju vala određuje izvor i ne mijenja se pri prijelazu u drugo sredstvo; brzina i valna duljina se mijenjaju (λ = v/f); Brzina mehaničkog vala ovisi o svojstvima sredstva (npr. na užetu raste s napetošću, a pada s linearnom gustoćom), a ne o frekvenciji ni amplitudi izvora"
+  },
+  {
+   "id": "B20.03",
+   "blok": "B20",
+   "naziv": "Jednadžba vala i fazna razlika",
+   "koncept": "Čitanje parametara iz jednadžbe progresivnog vala te računanje fazne razlike i razlike hoda točaka vala.",
+   "zadatak": "A: iz jednadžbe y = A·sin(ωt − 2πx/λ) očitati A, ω, λ; B: odrediti fazno zaostajanje čestice na udaljenosti x; C: izračunati faznu razliku dviju točaka na razmaku Δx; D: povezati faznu razliku π i 2π s razlikom hoda λ/2 i λ.",
+   "stavke": [
+    "S20.09",
+    "S20.10",
+    "S20.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B19.02",
+    "B20.02"
+   ],
+   "zasto_nova": "Jednadžba progresivnog vala y = A·sin(ωt − 2πx/λ): čitanje A, ω, λ, fazno zaostajanje čestice na udaljenosti x; Fazna razlika dviju točaka vala na udaljenosti Δx iznosi 2πΔx/λ; točke razmaknute za λ titraju u fazi, a za λ/2 u protufazi; Fazna razlika π odgovara razlici hoda λ/2, a fazna razlika 2π razlici hoda λ"
+  },
+  {
+   "id": "B20.04",
+   "blok": "B20",
+   "naziv": "Energija i intenzitet vala",
+   "koncept": "Energija vala ovisi o kvadratu amplitude, a intenzitet točkastog izvora opada s kvadratom udaljenosti.",
+   "zadatak": "A: izračunati promjenu energije pri promjeni amplitude; B: izračunati intenzitet iz snage i površine; C: primijeniti I ∝ 1/r² na točkasti izvor; D: usporediti intenzitete na dvije udaljenosti.",
+   "stavke": [
+    "S20.11",
+    "S20.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.05",
+    "B19.04",
+    "B20.01"
+   ],
+   "zasto_nova": "Energija vala proporcionalna je kvadratu amplitude (E ∝ A²); udvostručenje amplitude daje četverostruku energiju; Intenzitet vala I = P/S; za točkasti izvor S = 4πr², pa I ∝ 1/r²"
+  },
+  {
+   "id": "B20.05",
+   "blok": "B20",
+   "naziv": "Superpozicija i odbijanje vala",
+   "koncept": "Zbrajanje pomaka valova pri susretu te zakon refleksije i promjena faze pri odbijanju pulsa na užetu.",
+   "zadatak": "A: zbrojiti pomake dvaju pulseva pri susretu; B: primijeniti zakon odbijanja; C: nacrtati odbijeni puls na učvršćenom kraju; D: nacrtati odbijeni puls na slobodnom kraju.",
+   "stavke": [
+    "S20.13",
+    "S20.14",
+    "S20.15"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.01",
+    "B20.02",
+    "B22.01"
+   ],
+   "zasto_nova": "Princip superpozicije: pri susretu valova rezultantni pomak je zbroj pomaka pojedinih valova, a nakon susreta valovi se šire nepromijenjeno; Odbijanje (refleksija) vala: upadni kut jednak je kutu odbijanja; frekvencija i brzina vala u istom sredstvu se ne mijenjaju; Refleksija pulsa na učvršćenom kraju užeta mijenja fazu (brijeg se vraća kao dol, pomak faze π); na slobodnom kraju faza se ne mijenja (brijeg se vraća kao brijeg)"
+  },
+  {
+   "id": "B20.06",
+   "blok": "B20",
+   "naziv": "Lom vala",
+   "koncept": "Promjena smjera i valne duljine pri prijelazu u sredstvo druge brzine uz nepromijenjenu frekvenciju i zakon loma.",
+   "zadatak": "A: opisati što se mijenja pri lomu; B: odrediti smjer loma prema brzini; C: primijeniti zakon loma na kutove; D: izračunati λ ili v u drugom sredstvu.",
+   "stavke": [
+    "S20.16",
+    "S20.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.02",
+    "B22.01"
+   ],
+   "zasto_nova": "Lom (refrakcija) vala: pri prelasku u sredstvo druge brzine mijenja se smjer širenja i valna duljina, frekvencija ostaje ista; Zakon loma: sin α / sin β = v1/v2 = λ1/λ2 = n2/n1; pri manjoj brzini val se lomi prema okomici"
+  },
+  {
+   "id": "B20.07",
+   "blok": "B20",
+   "naziv": "Interferencija valova",
+   "koncept": "Konstruktivna i destruktivna interferencija preko razlike hoda te maksimumi i minimumi dvaju koherentnih izvora.",
+   "zadatak": "A: odrediti vrstu interferencije iz razlike hoda; B: izračunati rezultantnu amplitudu; C: odrediti maksimume i minimume za dva izvora; D: odrediti ogib na otvoru i zapreci.",
+   "stavke": [
+    "S20.18",
+    "S20.20",
+    "S20.24"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.02",
+    "B20.03",
+    "B20.05"
+   ],
+   "zasto_nova": "Konstruktivna interferencija: valovi se susreću u fazi, razlika hoda Δ = kλ, amplitude se zbrajaju; destruktivna: u protufazi, Δ = (2k+1)λ/2, amplitude se oduzimaju (jednake amplitude daju poništenje); Interferencija dvaju koherentnih izvora (valovi u vodi, dvije pukotine): u točkama s Δ = kλ su maksimumi, s Δ = (k+½)λ minimumi; Ogib (difrakcija): skretanje vala oko zapreka i na otvoru, izraženiji kad je dimenzija otvora usporediva s valnom duljinom"
+  },
+  {
+   "id": "B20.08",
+   "blok": "B20",
+   "naziv": "Stojni valovi",
+   "koncept": "Nastanak stojnog vala, čvorovi i trbusi, uvjet na žici i računanje brzine iz slike.",
+   "zadatak": "A: objasniti nastanak stojnog vala i prijenos energije; B: odrediti položaje čvorova i trbuha te razmak λ/2; C: primijeniti L = nλ/2 na žici; D: očitati λ sa slike i izračunati v = λf.",
+   "stavke": [
+    "S20.21",
+    "S20.22",
+    "S20.23"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.02",
+    "B20.05",
+    "B20.07"
+   ],
+   "zasto_nova": "Stojni val nastaje interferencijom vala i njegova odbijenog vala; ima čvorove (stalno mirovanje) i trbuhe (najveća amplituda), a energija se ne prenosi; Razmak susjednih čvorova (ili trbuha) je λ/2; uvjet stojnog vala na žici duljine L učvršćene na oba kraja: L = nλ/2; Čitanje valne duljine stojnog vala sa slike (broj poluvalova na duljini niti) i računanje brzine v = λf"
+  },
+  {
+   "id": "B21.01",
+   "blok": "B21",
+   "naziv": "Priroda zvuka, brzina i frekvencijska područja",
+   "koncept": "Zvuk je mehanički longitudinalni val čija brzina ovisi o sredstvu, a frekvencija određuje područje zvuka i visinu tona.",
+   "zadatak": "A–D: opisati širenje zvuka kao longitudinalnog vala, usporediti brzine zvuka u različitim sredstvima i temperaturama te razvrstati zvukove po frekvencijskim područjima.",
+   "stavke": [
+    "S21.01",
+    "S21.02",
+    "S21.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B19.01",
+    "B20.01",
+    "B20.02"
+   ],
+   "zasto_nova": "Zvuk je mehanički longitudinalni val: titranje čestica sredstva u smjeru širenja, stvaraju se zgušnjenja i razrjeđenja; ne širi se kroz vakuum; Brzina zvuka ovisi o sredstvu (najmanja u plinovima, veća u tekućinama, najveća u čvrstim tijelima); u zraku ovisi o temperaturi; Frekvencijska područja zvuka: infrazvuk, čujni zvuk (oko 20 Hz – 20 kHz), ultrazvuk; visina tona ovisi o frekvenciji"
+  },
+  {
+   "id": "B21.02",
+   "blok": "B21",
+   "naziv": "Glasnoća i razina zvuka",
+   "koncept": "Glasnoća je povezana s amplitudom i intenzitetom zvuka, a razina zvuka u decibelima opisuje intenzitet logaritamskom ljestvicom.",
+   "zadatak": "A–D: povezati amplitudu s intenzitetom i glasnoćom, izračunati razinu zvuka u dB te razliku razina pri promjeni intenziteta ili udaljenosti.",
+   "stavke": [
+    "S21.10",
+    "S21.08",
+    "S21.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.04"
+   ],
+   "zasto_nova": "Glasnoća ovisi o amplitudi, odnosno intenzitetu zvuka; veća amplituda znači veći intenzitet, a energija vala proporcionalna je kvadratu amplitude; Razina zvuka L = 10·log(I/I₀) u decibelima; I₀ = 10⁻¹² W/m² je prag čujnosti; Postupak: razlika razina zvuka ΔL = 10·log(I₁/I₂); deseterostruki intenzitet daje +10 dB, a promjena udaljenosti ide preko omjera kvadrata udaljenosti"
+  },
+  {
+   "id": "B21.03",
+   "blok": "B21",
+   "naziv": "Stojni valovi u cijevima, harmonici i rezonancija",
+   "koncept": "U cijevima nastaju stojni valovi određenih valnih duljina, koji daju osnovni ton i harmonike te rezonanciju pri pobudi vlastitom frekvencijom.",
+   "zadatak": "A–D: odrediti uvjete za valnu duljinu u otvorenoj i zatvorenoj cijevi, izračunati frekvencije harmonika i objasniti rezonanciju zračnog stupca.",
+   "stavke": [
+    "S21.16",
+    "S21.17",
+    "S21.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B19.07",
+    "B20.02",
+    "B20.08",
+    "B21.01"
+   ],
+   "zasto_nova": "Cijev otvorena na oba kraja: trbusi na krajevima, L = nλ/2; cijev zatvorena na jednom kraju: čvor na zatvorenom, trbuh na otvorenom kraju, L = (2n−1)λ/4; Osnovni ton (najniža frekvencija) i viši harmonici: f_n = n·f₁ za žicu i cijev otvorenu na oba kraja; zatvorena cijev ima samo neparne harmonike; Rezonancija: pobuda frekvencijom jednakom vlastitoj frekvenciji sustava daje veliku amplitudu titranja (npr. zračni stupac, žica)"
+  },
+  {
+   "id": "B21.04",
+   "blok": "B21",
+   "naziv": "Dopplerov efekt",
+   "koncept": "Relativno gibanje izvora i prijemnika mijenja opaženu frekvenciju, što se opisuje formulom s pažljivim predznacima.",
+   "zadatak": "A–D: objasniti Dopplerov efekt, primijeniti formulu s ispravnim predznacima, izbjeći zamku o tome što se mijenja i prepoznati primjere (hitna pomoć, radar, krv).",
+   "stavke": [
+    "S21.19",
+    "S21.22",
+    "S21.20",
+    "S21.21",
+    "S21.23"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.02",
+    "B21.01"
+   ],
+   "zasto_nova": "Dopplerov efekt: promjena frekvencije koju registrira prijemnik zbog relativnog gibanja izvora i/ili prijemnika; približavanje povećava frekvenciju, udaljavanje je smanjuje; Zamka: u Dopplerovu efektu mijenja se opažena frekvencija, a ne frekvencija izvora ni brzina zvuka u sredstvu; Formula Dopplerova efekta: f_p = f_i·(v+v_p)/(v−v_i); v je brzina zvuka; Postupak: predznaci u Dopplerovoj formuli – prijemnik se približava izvoru: v_p pozitivna; izvor se približava prijemniku: v_i pozitivna (nazivnik v−v_i), a pri udaljavanju predznak se obrne; Primjeri Dopplerova efekta: sirena hitne pomoći koja prolazi (visina tona pada nakon prolaska), radar i ultrazvučno mjerenje brzine krvi"
+  },
+  {
+   "id": "B22.01",
+   "blok": "B22",
+   "naziv": "Zraka i zakon odbijanja",
+   "koncept": "Svjetlost se opisuje zrakama, a kutovi se mjere od okomice; pri odbijanju vrijedi zakon odbijanja.",
+   "zadatak": "A: definirati zraku i okomicu; B: primijeniti zakon odbijanja; C: okomiti upad; D: izračunati upadni kut iz kuta prema površini (zamka).",
+   "stavke": [
+    "S22.01",
+    "S22.02",
+    "S22.03",
+    "S22.04",
+    "S22.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Svjetlosna zraka je zamišljeni uski snop svjetlosti koji se u homogenom sredstvu širi pravocrtno; geometrijska optika opisuje svjetlost zrakama.; Upadni kut i kut odbijanja mjere se od okomice (normale) na granicu sredstava u točki upada, a ne od površine.; Zakon odbijanja: upadni kut jednak je kutu odbijanja, a upadna zraka, odbijena zraka i okomica leže u istoj ravnini.; Okomito upadna zraka (upadni kut 0°) odbija se sama u sebe; zraka koja se vraća u izvor upada okomito.; Zamka: pri kosom upadu kut između zrake i površine nije upadni kut; upadni kut = 90° − kut prema površini."
+  },
+  {
+   "id": "B22.02",
+   "blok": "B22",
+   "naziv": "Ravno zrcalo",
+   "koncept": "Ravno zrcalo daje virtualnu sliku jednake veličine, a konstruira se simetrijom u odnosu na zrcalo.",
+   "zadatak": "A: opisati svojstva slike; B: konstruirati sliku točke u ravnom zrcalu i povezati ju s odbijenim zrakama.",
+   "stavke": [
+    "S22.06",
+    "S22.07"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.01"
+   ],
+   "zasto_nova": "Ravno zrcalo daje virtualnu sliku jednake veličine, uspravnu, jednako udaljenu iza zrcala kao predmet ispred, zrcalno obrnutu (lijevo-desno).; Konstrukcija slike u ravnom zrcalu: slika točke nalazi se na okomici iz predmeta na zrcalo, na istoj udaljenosti iza zrcala; odbijene zrake izgledaju kao da izlaze iz slike."
+  },
+  {
+   "id": "B22.03",
+   "blok": "B22",
+   "naziv": "Indeks loma i lom svjetlosti",
+   "koncept": "Indeks loma povezuje brzinu svjetlosti u sredstvu s lomom zrake i smjerom loma prema okomici ili od nje.",
+   "zadatak": "A: izračunati n iz brzina; B: usporediti optičku gustoću sredstava; C: opisati lom i ravninu loma; D: odrediti smjer loma pri prijelazu u gušće ili rjeđe sredstvo.",
+   "stavke": [
+    "S22.08",
+    "S22.09",
+    "S22.10",
+    "S22.12",
+    "S22.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.02",
+    "B22.01",
+    "B22.04",
+    "B24.02"
+   ],
+   "zasto_nova": "Indeks loma n = c/v: omjer brzine svjetlosti u vakuumu i brzine u sredstvu; n ≥ 1, za zrak n ≈ 1.; Optički gušće sredstvo ima veći indeks loma i u njemu je brzina svjetlosti manja.; Lom svjetlosti: promjena smjera zrake pri prijelazu u drugo sredstvo zbog promjene brzine svjetlosti; zraka, okomica i lomljena zraka leže u istoj ravnini.; Prijelaz u optički gušće sredstvo: zraka se lomi prema okomici (β < α); u rjeđe sredstvo: od okomice (β > α).; Pri prijelazu u drugo sredstvo frekvencija svjetlosti ostaje ista, mijenjaju se brzina i valna duljina: λ = λ₀/n."
+  },
+  {
+   "id": "B22.04",
+   "blok": "B22",
+   "naziv": "Snellov zakon",
+   "koncept": "Snellov zakon kvantitativno opisuje lom, a kutovi se računaju inverznim sinusom.",
+   "zadatak": "A: napisati Snellov zakon; B: izračunati kut loma; C: izračunati upadni kut pomoću sin⁻¹.",
+   "stavke": [
+    "S22.11",
+    "S22.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.03"
+   ],
+   "zasto_nova": "Snellov zakon: sin α / sin β = n₂/n₁, odnosno n₁ sin α = n₂ sin β.; Postupak računanja kuta loma ili upadnog kuta iz Snellova zakona pomoću inverznog sinusa (sin⁻¹)."
+  },
+  {
+   "id": "B22.05",
+   "blok": "B22",
+   "naziv": "Totalna refleksija",
+   "koncept": "Pri prijelazu u rjeđe sredstvo iznad graničnog kuta svjetlost se potpuno odbija, što se primjenjuje u svjetlovodima.",
+   "zadatak": "A: opisati uvjete totalne refleksije; B: izračunati granični kut; C: objasniti svjetlovod; D: provjeriti nastaje li totalna refleksija za zadani kut.",
+   "stavke": [
+    "S22.15",
+    "S22.16",
+    "S22.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.03",
+    "B22.04"
+   ],
+   "zasto_nova": "Totalna refleksija: nastaje pri prijelazu u optički rjeđe sredstvo kad je upadni kut veći od graničnog; sva se svjetlost odbija.; Granični kut totalne refleksije: sin α_g = n₂/n₁ (n₁ > n₂), kut loma je tada 90°.; Primjena totalne refleksije: svjetlovodi (optička vlakna, endoskop) s jezgrom većeg indeksa loma."
+  },
+  {
+   "id": "B22.06",
+   "blok": "B22",
+   "naziv": "Planparalelna ploča",
+   "koncept": "Zraka kroz planparalelnu ploču izlazi paralelno upadnoj, ali bočno pomaknuta, što se računa dvostrukom primjenom Snellova zakona.",
+   "zadatak": "A: opisati pomak zrake; B: o čemu ovisi pomak; C: primijeniti Snellov zakon na obje granice; D: izračunati izlazni kut.",
+   "stavke": [
+    "S22.18",
+    "S22.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.03",
+    "B22.04"
+   ],
+   "zasto_nova": "Planparalelna ploča: zraka izlazi paralelno upadnoj, ali je bočno pomaknuta; pomak raste s debljinom ploče i upadnim kutom.; Postupak za planparalelnu ploču: Snellov zakon primijeniti na obje granice; kut loma na prvoj granici jednak je upadnom kutu na drugoj."
+  },
+  {
+   "id": "B22.07",
+   "blok": "B22",
+   "naziv": "Leće, žarište i jakost",
+   "koncept": "Leće lome zrake u žarište ili ih raspršuju, a žarišna daljina određuje jakost leće.",
+   "zadatak": "A: razlikovati sabirnu i rastresnu leću; B: odrediti žarište i os; C: izračunati jakost u dioptrijama; D: povezati predznak jakosti s vrstom leće.",
+   "stavke": [
+    "S22.20",
+    "S22.21",
+    "S22.22",
+    "S22.23",
+    "S22.30"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.03"
+   ],
+   "zasto_nova": "Leća je prozirno tijelo omeđeno zakrivljenim plohama; sabirna (konvergentna) leća zrake skuplja u žarište, a rastresna (divergentna) ih raspršuje.; Žarište (fokus) i žarišna daljina f; os leće; zrake paralelne s optičkom osi prolaze žarištem (kod rastresne leće izgledaju kao da iz njega izlaze).; Jakost leće j = 1/f, jedinica dioptrija (m⁻¹); sabirna leća ima pozitivnu, rastresna negativnu jakost.; Karakteristične zrake pri konstrukciji slike: paralelna s osi kroz žarište, kroz žarište paralelno s osi, kroz optičko središte bez loma.; Realna slika nastaje presjecištem stvarnih zraka i može se uhvatiti na zastoru; virtualna slika nastaje produžetcima zraka i ne može."
+  },
+  {
+   "id": "B22.08",
+   "blok": "B22",
+   "naziv": "Jednadžba leće i povećanje",
+   "koncept": "Jednadžba leće i povećanje povezuju položaj i veličinu predmeta i slike, uz pravilne predznake.",
+   "zadatak": "A: primijeniti jednadžbu leće; B: izračunati povećanje; C: odrediti predznake b i f; D: izračunati žarišnu daljinu iz izmjerenih podataka.",
+   "stavke": [
+    "S22.24",
+    "S22.25",
+    "S22.26",
+    "S22.31"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.07"
+   ],
+   "zasto_nova": "Jednadžba leće: 1/a + 1/b = 1/f (a udaljenost predmeta, b udaljenost slike).; Povećanje leće: y'/y = −b/a; negativan predznak znači obrnutu sliku.; Predznaci: realna slika b > 0, virtualna slika b < 0; kod rastresne leće f < 0.; Postupak određivanja žarišne daljine iz mjerenja: iz tablice a, b i povećanja provjeriti dosljednost (y'/y = b/a) pa izračunati f iz jednadžbe leće."
+  },
+  {
+   "id": "B22.09",
+   "blok": "B22",
+   "naziv": "Slike u lećama",
+   "koncept": "Vrsta, veličina i položaj slike ovise o položaju predmeta i vrsti leće.",
+   "zadatak": "A: slika sabirne leće iza 2f; B: slika između f i 2f; C: lupa (a < f); D: slika rastresne leće.",
+   "stavke": [
+    "S22.27",
+    "S22.28",
+    "S22.29"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B22.07",
+    "B22.08"
+   ],
+   "zasto_nova": "Sabirna leća, predmet iza 2f: realna, obrnuta, umanjena slika; između f i 2f: realna, obrnuta, uvećana; slika se može uloviti na zastoru.; Sabirna leća, predmet unutar žarišta (a < f): virtualna, uspravna, uvećana slika (lupa); na zastoru se ne dobiva.; Rastresna leća uvijek daje virtualnu, uspravnu, umanjenu sliku."
+  },
+  {
+   "id": "B23.01",
+   "blok": "B23",
+   "naziv": "Svjetlost kao val i ogib",
+   "koncept": "Svjetlost je transverzalni elektromagnetski val, a ogib i interferencija pokazuju njezinu valnu prirodu.",
+   "zadatak": "A: valna svojstva kao dokaz valne prirode; B: ogib na rubu i otvoru; C: uvjet izraženog ogiba (otvor usporediv s λ); D: interferencija kao superpozicija koherentnih valova i nastanak svijetlih i tamnih pruga.",
+   "stavke": [
+    "S23.01",
+    "S23.03",
+    "S23.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.1., FIZ SŠ D.4.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.01",
+    "B20.07",
+    "B24.01"
+   ],
+   "zasto_nova": "Svjetlost se ponaša kao transverzalni elektromagnetski val; valna svojstva (ogib, interferencija, polarizacija) dokazuju njezinu valnu prirodu; Ogib (difrakcija): svjetlost zalazi iza zapreke ili savija oko ruba i prolazi kroz otvor; izraženiji je kad je veličina otvora usporediva s valnom duljinom; Interferencija svjetlosti: superpozicija koherentnih valova daje pojačanje i poništenje, tj. svijetle i tamne pruge"
+  },
+  {
+   "id": "B23.02",
+   "blok": "B23",
+   "naziv": "Uvjeti interferencije i Youngov pokus",
+   "koncept": "Razlika hoda određuje maksimume i minimume, a Youngov pokus povezuje razmak pruga s λ, L i d.",
+   "zadatak": "A: uvjeti maksimuma i minimuma preko razlike hoda i fazne razlike; B: formula s = λL/d u Youngovu pokusu; C: ovisnost razmaka pruga o λ, L i d (zamka proporcionalnosti).",
+   "stavke": [
+    "S23.05",
+    "S23.06",
+    "S23.07"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.1., FIZ SŠ D.4.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.07",
+    "B23.01"
+   ],
+   "zasto_nova": "Uvjeti interferencije: maksimum (konstruktivna) kad je razlika hoda Δ = kλ, tj. fazna razlika 2kπ (središnja svijetla pruga: razlika 0); minimum (destruktivna) kad je Δ = (k+½)λ, fazna razlika π; Youngov pokus s dvjema pukotinama: razmak susjednih maksimuma s = λL/d (u knjižici λ = sd/a); Youngov pokus: razmak pruga proporcionalan je valnoj duljini i udaljenosti zastora, a obrnuto proporcionalan razmaku pukotina (veća λ ili L, manji d daju razmaknutije pruge)"
+  },
+  {
+   "id": "B23.03",
+   "blok": "B23",
+   "naziv": "Optička rešetka i određivanje valne duljine",
+   "koncept": "Optička rešetka daje oštre maksimume za d sin α = kλ, a iz mjerenja na zastoru određuje se valna duljina.",
+   "zadatak": "A: maksimumi optičke rešetke i konstanta rešetke; B: razlaganje bijele svjetlosti u spektar; C i D: izračun valne duljine iz razmaka maksimuma uz pretvorbu jedinica.",
+   "stavke": [
+    "S23.08",
+    "S23.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.1., FIZ SŠ D.4.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B23.01",
+    "B23.02"
+   ],
+   "zasto_nova": "Optička rešetka: maksimumi za d sin αₖ = kλ, gdje je d konstanta rešetke; bijela svjetlost se razlaže u spektar; Postupak: iz izmjerenog razmaka maksimuma na zastoru i poznatih d i L odrediti valnu duljinu svjetlosti (pazi na pretvorbu µm, mm, nm)"
+  },
+  {
+   "id": "B23.04",
+   "blok": "B23",
+   "naziv": "Polarizacija svjetlosti",
+   "koncept": "Polarizacija je svojstvo transverzalnih valova koje se postiže polarizatorom, analizatorom ili refleksijom pod Brewsterovim kutom.",
+   "zadatak": "A: polarizacija i zašto je moguća samo za transverzalne valove; B: polarizator i analizator, ovisnost o kutu osi; C: Brewsterov kut tg α_B = n pri refleksiji.",
+   "stavke": [
+    "S23.10",
+    "S23.11",
+    "S23.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.1., FIZ SŠ D.4.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.01",
+    "B22.04",
+    "B23.01"
+   ],
+   "zasto_nova": "Polarizacija: titranje električnog polja u jednoj ravnini; polarizirati se mogu samo transverzalni valovi, a longitudinalni (zvuk) ne; Polarizator i analizator: nepolarizirana svjetlost prolaskom kroz polarizator postaje linearno polarizirana; propuštena svjetlost ovisi o kutu među osima, a pri okomitim osima nema prolaska; Polarizacija refleksijom: reflektirana svjetlost je potpuno polarizirana kad je upadni kut Brewsterov, tg α_B = n"
+  },
+  {
+   "id": "B23.05",
+   "blok": "B23",
+   "naziv": "Raspršenje svjetlosti u atmosferi",
+   "koncept": "Raspršenje na molekulama zraka jače djeluje na kraće valne duljine i djelomično polarizira svjetlost neba.",
+   "zadatak": "A: raspršenje na česticama i molekulama zraka; B: plavo nebo; C: crveni Sunce pri izlasku i zalasku; D: djelomična polarizacija raspršene svjetlosti neba.",
+   "stavke": [
+    "S23.13",
+    "S23.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.1., FIZ SŠ D.4.1."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B23.01",
+    "B23.04",
+    "B24.03"
+   ],
+   "zasto_nova": "Raspršenje svjetlosti na česticama i molekulama zraka: kraće valne duljine (plava) raspršuju se jače, što objašnjava plavo nebo i crvenu boju Sunca pri izlasku i zalasku; Raspršena svjetlost neba djelomično je polarizirana"
+  },
+  {
+   "id": "B24.01",
+   "blok": "B24",
+   "naziv": "Nastanak i građa elektromagnetskog vala",
+   "koncept": "Elektromagnetski val nastaje ubrzanim gibanjem nabijenih čestica kao međusobno povezano titranje električnog i magnetskog polja, koje je transverzalno i širi se i kroz vakuum.",
+   "zadatak": "A: kako promjenjivo E i B polje stvaraju val u vakuumu; B: antena i izmjenična struja kao izvor; C: okomitost vektora E, B i smjera širenja; D: titranje E i B u fazi i brzina vala u zadanom sredstvu.",
+   "stavke": [
+    "S24.01",
+    "S24.02",
+    "S24.03",
+    "S24.04"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.2., FIZ SŠ D.4.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B18.04",
+    "B20.01"
+   ],
+   "zasto_nova": "Elektromagnetski val nastaje titranjem električnog i magnetskog polja: promjenjivo električno polje stvara promjenjivo magnetsko polje i obratno, pa se val širi i kroz vakuum (ne treba sredstvo); Izvor elektromagnetskih valova je ubrzano gibanje (titranje) nabijenih čestica, npr. izmjenična struja u anteni; Elektromagnetski val je transverzalan: vektori E i B međusobno su okomiti i okomiti na smjer širenja vala; Vektori E i B titraju u fazi; u zadanom sredstvu brzina vala ne ovisi o valnoj duljini"
+  },
+  {
+   "id": "B24.02",
+   "blok": "B24",
+   "naziv": "Brzina, valna duljina i frekvencija",
+   "koncept": "Elektromagnetski valovi u vakuumu imaju istu brzinu c, a veza c = λ·f i indeks loma opisuju što se događa pri prijelazu u drugo sredstvo.",
+   "zadatak": "A: brzina c u vakuumu i n = c/v; B: račun s c = λ·f; C: prijelaz u sredstvo (f ista, mijenjaju se v i λ = λ₀/n); D: zamka da svi valovi u vakuumu imaju istu brzinu, a razlikuju se u f i λ.",
+   "stavke": [
+    "S24.05",
+    "S24.06",
+    "S24.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.2., FIZ SŠ D.4.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B20.02",
+    "B22.03",
+    "B24.01",
+    "B24.03"
+   ],
+   "zasto_nova": "Brzina elektromagnetskih valova u vakuumu je c = 3·10⁸ m/s, jednaka za sve valne duljine; u sredstvu je manja: n = c/v; c = λ·f: veza brzine, valne duljine i frekvencije elektromagnetskog vala; pri prijelazu u drugo sredstvo frekvencija ostaje ista, a mijenjaju se brzina i valna duljina (λ = λ₀/n); Zamka: svi elektromagnetski valovi u vakuumu imaju istu brzinu; razlikuju se frekvencijom i valnom duljinom, a ne brzinom"
+  },
+  {
+   "id": "B24.03",
+   "blok": "B24",
+   "naziv": "Elektromagnetski spektar i energija fotona",
+   "koncept": "Spektar poreda valove po frekvenciji, a veća frekvencija znači manju valnu duljinu i veću energiju fotona, što određuje područja spektra.",
+   "zadatak": "A: redoslijed područja spektra po frekvenciji; B: odnos f, λ i energije E = hf; C: približna područja valnih duljina; D: procjena područja iz zadane λ ili f (npr. 1 MHz).",
+   "stavke": [
+    "S24.08",
+    "S24.09",
+    "S24.10"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.2., FIZ SŠ D.4.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B24.02"
+   ],
+   "zasto_nova": "Elektromagnetski spektar po rastućoj frekvenciji: radiovalovi, mikrovalovi, infracrveno, vidljiva svjetlost, ultraljubičasto, rendgensko, gama zračenje; Veća frekvencija znači manju valnu duljinu i veću energiju fotona E = hf; radiovalovi imaju najveću valnu duljinu, gama zračenje najmanju; Približna područja valnih duljina: radiovalovi od metara do kilometara, mikrovalovi od mm do cm, vidljiva svjetlost oko 400–700 nm (ljubičasta najkraća, crvena najdulja), rendgensko oko nm i manje; učenik zna procijeniti područje iz λ ili f (npr. 1 MHz je radiopodručje)"
+  },
+  {
+   "id": "B24.04",
+   "blok": "B24",
+   "naziv": "Primjene i štetnost zračenja",
+   "koncept": "Pojedina područja spektra imaju specifične primjene, a štetnost zračenja raste s energijom fotona.",
+   "zadatak": "A: povezivanje područja spektra s primjenama (radio, TV, mobilna komunikacija, radar, mikrovalna pećnica); B: infracrveno, UV, rendgensko i gama zračenje u primjeni; C: koje zračenje je ionizirajuće i zašto; D: usporedba štetnosti zračenja prema energiji fotona.",
+   "stavke": [
+    "S24.11",
+    "S24.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.2., FIZ SŠ D.4.2."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B24.03"
+   ],
+   "zasto_nova": "Primjene: radio i TV (radiovalovi), mobilna komunikacija i radar (mikrovalovi), mikrovalna pećnica, daljinski upravljači i toplinske kamere (infracrveno), sterilizacija (UV), rendgenska dijagnostika, gama zračenje u medicini; Štetnost ionizirajućeg zračenja raste s energijom fotona (UV, rendgensko i gama zračenje oštećuju žive stanice)"
+  },
+  {
+   "id": "B25.01",
+   "blok": "B25",
+   "naziv": "Fotoelektrični efekt i foton",
+   "koncept": "Fotoefekt kao pojava te foton kao kvant energije i izlazni rad kao svojstvo metala.",
+   "zadatak": "A: opis fotoefekta; B: energija fotona hf=hc/λ; C: izlazni rad metala; D: količina gibanja fotona p=h/λ.",
+   "stavke": [
+    "S25.01",
+    "S25.02",
+    "S25.03",
+    "S25.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B04.02",
+    "B13.02",
+    "B24.02",
+    "B24.03"
+   ],
+   "zasto_nova": "Fotoelektrični efekt: osvjetljavanjem metala svjetlošću dovoljno visoke frekvencije iz njega se izbacuju elektroni (fotoelektroni).; Foton je kvant elektromagnetskoga zračenja; energija fotona E_f = h·f = hc/λ, pri čemu je h Planckova konstanta.; Izlazni rad W_i je najmanja energija potrebna da se elektron oslobodi iz metala; svojstvo je materijala (metala).; Količina gibanja fotona p = h/λ = E_f/c; foton ima količinu gibanja iako nema mase mirovanja."
+  },
+  {
+   "id": "B25.02",
+   "blok": "B25",
+   "naziv": "Einsteinova jednadžba i granična frekvencija",
+   "koncept": "Očuvanje energije u fotoefektu povezuje energiju fotona, izlazni rad, maksimalnu kinetičku energiju i graničnu frekvenciju.",
+   "zadatak": "A: primjena hf=W_i+E_k,max; B: granična frekvencija i valna duljina; C: ovisnost E_k i fotostruje o frekvenciji i intenzitetu; D: račun s pažnjom na jedinice i W_i kao konstantu metala.",
+   "stavke": [
+    "S25.04",
+    "S25.05",
+    "S25.06",
+    "S25.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.02",
+    "B05.03",
+    "B13.05",
+    "B25.01",
+    "B31.05"
+   ],
+   "zasto_nova": "Einsteinova jednadžba fotoefekta: E_f = W_i + E_k,max, tj. h·f = W_i + E_k,max (zakon očuvanja energije: foton predaje svu energiju jednom elektronu).; Granična frekvencija f₀ (granična valna duljina λ₀): najmanja frekvencija pri kojoj se pojavljuje fotoefekt; W_i = h·f₀ = hc/λ₀. Za f < f₀ nema fotoefekta, bez obzira na intenzitet.; Maksimalna kinetička energija fotoelektrona ovisi o frekvenciji svjetlosti i vrsti metala, a ne o intenzitetu; intenzitet određuje broj izbijenih elektrona (jakost fotostruje) pri f > f₀.; Pri računu s fotoefektom pazi na jedinice (eV u J, nm u m) i da je W_i svojstvo metala koje se ne mijenja promjenom zračenja; iz jednog mjerenja izračunaj W_i pa ga primijeni na drugo."
+  },
+  {
+   "id": "B25.03",
+   "blok": "B25",
+   "naziv": "Zaustavni napon i graf fotoefekta",
+   "koncept": "Mjerenje i grafički prikaz fotoefekta pomoću zaustavnog napona i pravca E_k(f).",
+   "zadatak": "A: zaustavni napon e·U_z=E_k,max; B: crtanje grafa E_k(f); C: očitavanje h, f₀ i W_i s grafa; D: usporedba pravaca različitih metala.",
+   "stavke": [
+    "S25.09",
+    "S25.08"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.05",
+    "B25.02",
+    "B31.06"
+   ],
+   "zasto_nova": "Zaustavni napon U_z: napon koji zaustavlja najbrže fotoelektrone, e·U_z = E_k,max; pa je h·f = W_i + e·U_z.; Graf E_k,max(f): pravac E_k = h·f − W_i; nagib je Planckova konstanta h (isti za sve metale), odsječak na osi f je f₀, odsječak na osi E_k je −W_i. Različiti metali daju paralelne pravce pomaknute po osi f."
+  },
+  {
+   "id": "B25.04",
+   "blok": "B25",
+   "naziv": "Valno-čestični dualizam svjetlosti",
+   "koncept": "Fotoefekt ne može objasniti valni model pa svjetlost ima dvojnu narav.",
+   "zadatak": "A: nedostatci valnog modela; B: čestična narav iz fotoefekta; C: val pri širenju, čestica pri međudjelovanju; D: razvrstavanje pojava prema modelu.",
+   "stavke": [
+    "S25.07",
+    "S25.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B23.01",
+    "B25.02"
+   ],
+   "zasto_nova": "Fotoefekt se ne može objasniti valnim modelom svjetlosti (trenutna emisija, granična frekvencija, neovisnost E_k o intenzitetu); potvrđuje čestičnu (kvantnu) narav svjetlosti.; Valno-čestični dualizam svjetlosti: svjetlost se pri širenju (interferencija, ogib, polarizacija) ponaša kao val, a pri međudjelovanju s tvari (fotoefekt) kao tok čestica (fotona)."
+  },
+  {
+   "id": "B25.05",
+   "blok": "B25",
+   "naziv": "De Broglieevi valovi tvari",
+   "koncept": "Čestice tvari imaju valnu duljinu λ=h/p, uočljivu samo za mikročestice, i potvrđenu ogibom elektrona.",
+   "zadatak": "A: λ=h/(mv); B: λ ubrzane čestice iz E_k=qU; C: usporedba makroskopskih tijela i elektrona; D: Davisson–Germerov pokus.",
+   "stavke": [
+    "S25.14",
+    "S25.15",
+    "S25.16",
+    "S25.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B04.02",
+    "B13.05",
+    "B23.03",
+    "B25.01",
+    "B25.04"
+   ],
+   "zasto_nova": "De Broglieva valna duljina čestice tvari: λ = h/p = h/(m·v); svakoj čestici pripada valna svojstva.; Valna duljina ubrzane čestice: iz E_k = qU = p²/(2m) slijedi p = √(2mE_k), pa je λ = h/√(2mE_k); λ ∝ 1/√E_k, a pri istoj E_k veća masa daje manju λ.; Za makroskopska tijela (loptica, kugla) valna duljina je zanemarivo mala pa se valna svojstva ne opažaju; uočljiva su za elektrone i druge mikročestice. Pri jednakoj brzini najmanju λ ima najmasivnije tijelo.; Eksperimentalna potvrda valne naravi tvari: ogib i interferencija elektrona na kristalu (Davisson–Germer), što potvrđuje de Broglieve valove."
+  },
+  {
+   "id": "B26.01",
+   "blok": "B26",
+   "naziv": "Od Thomsona do Rutherfordova modela atoma",
+   "koncept": "Povijesni razvoj modela atoma vodi od Thomsonova do Rutherfordova planetarnog modela, u kojem Coulombova sila djeluje kao centripetalna, a klasična fizika ga ne može održati.",
+   "zadatak": "A: opis pokusa sa zlatnom folijom i zaključak o jezgri; B: usporedba Thomsonova i Rutherfordova modela; C: izjednačavanje Coulombove i centripetalne sile u planetarnom modelu; D: objašnjenje zašto bi elektron pao u jezgru.",
+   "stavke": [
+    "S26.01",
+    "S26.02",
+    "S26.03"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.4., FIZ SŠ D.4.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B06.03",
+    "B13.01",
+    "B13.03",
+    "B24.01"
+   ],
+   "zasto_nova": "Povijesni razvoj modela atoma: Thomsonov model, Rutherfordov model (pokus raspršenja α-čestica na tankoj zlatnoj foliji pokazao je da je atom pretežno prazan prostor s malom, gustom, pozitivnom jezgrom) i Bohrov model; Rutherfordov planetarni model: elektroni kruže oko jezgre, a Coulombova sila djeluje kao centripetalna sila (k·e²/r² = m·v²/r); Nedostatak klasičnog (Rutherfordova) modela: elektron koji ubrzano kruži trebao bi zračiti i pasti u jezgru, a model ne objašnjava linijski spektar"
+  },
+  {
+   "id": "B26.02",
+   "blok": "B26",
+   "naziv": "Linijski spektri i Bohrovi postulati",
+   "koncept": "Različiti izvori daju kontinuirani ili linijski spektar, a linijski spektar vodika objašnjavaju Bohrovi postulati s kvantiziranim energijama, uz ograničenje modela na atome s jednim elektronom.",
+   "zadatak": "A: razlikovanje izvora kontinuiranog i linijskog spektra; B: opis linijskog spektra vodika; C: iskaz Bohrovih postulata; D: procjena za koje atome Bohrov model vrijedi, a za koje ne.",
+   "stavke": [
+    "S26.17",
+    "S26.04",
+    "S26.05",
+    "S26.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.4., FIZ SŠ D.4.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B24.03",
+    "B26.01"
+   ],
+   "zasto_nova": "Kontinuirani spektar zrače užarena čvrsta tijela, a linijski spektar zrače razrijeđeni plinovi pobuđeni na zračenje; Linijski spektar atoma vodika: atom emitira i apsorbira zračenje samo određenih valnih duljina; Bohrov model prvi ga je uspješno objasnio; Bohrovi postulati: elektron se giba po stacionarnim putanjama bez zračenja, a energija atoma je kvantizirana (diskretna energijska stanja); Ograničenje Bohrova modela: dobro opisuje vodik i atome s jednim elektronom, a ne objašnjava složenije atome"
+  },
+  {
+   "id": "B26.03",
+   "blok": "B26",
+   "naziv": "Energijska stanja atoma vodika",
+   "koncept": "Energije stanja vodika su diskretne i negativne, dane formulom E_n = −13,6 eV/n², a ionizacijska energija odgovara odvajanju elektrona iz osnovnog stanja.",
+   "zadatak": "A: razlikovanje osnovnog i pobuđenih stanja; B: izračun E_n za n = 1, 2, 3; C: crtanje energijskog dijagrama; D: određivanje ionizacijske energije kao prijelaza n → ∞.",
+   "stavke": [
+    "S26.06",
+    "S26.07",
+    "S26.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.4., FIZ SŠ D.4.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.05",
+    "B26.02"
+   ],
+   "zasto_nova": "Osnovno i pobuđena stanja atoma: osnovno stanje (n = 1) ima najnižu energiju, a energije stanja vodika negativne su i rastu prema nuli kako n raste; Energija stanja atoma vodika: E_n = −13,6 eV/n²; Ionizacijska energija vodika iznosi 13,6 eV: energija potrebna da se elektron iz osnovnog stanja odvoji od atoma (prijelaz u n → ∞)"
+  },
+  {
+   "id": "B26.04",
+   "blok": "B26",
+   "naziv": "Emisija i apsorpcija fotona",
+   "koncept": "Pri prijelazu između stanja atom emitira ili apsorbira foton čija je energija jednaka razlici energija stanja, a energija fotona povezana je s frekvencijom i valnom duljinom.",
+   "zadatak": "A: izračun energije emitiranog fotona iz razlike E_m − E_n; B: provjera može li atom apsorbirati foton zadane energije; C: izračun frekvencije i valne duljine fotona; D: čitanje strelica prijelaza na energijskom dijagramu.",
+   "stavke": [
+    "S26.08",
+    "S26.10",
+    "S26.11",
+    "S26.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.4., FIZ SŠ D.4.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B25.01",
+    "B26.02"
+   ],
+   "zasto_nova": "Emisija fotona pri prijelazu elektrona iz višeg u niže energijsko stanje; energija fotona jednaka je razlici energija stanja: E_f = E_m − E_n = h·f; Apsorpcija fotona: atom prelazi u više stanje samo ako je energija fotona točno jednaka razlici energija dvaju stanja; Veza energije fotona i valne duljine: E_f = h·f = h·c/λ; veća energija prijelaza znači veća frekvencija i manja valna duljina (npr. ljubičasta linija ima najveću energiju fotona među vidljivim); Postupak: čitanje strelica prijelaza na energijskom dijagramu; dulja strelica znači veća energija fotona, smjer prema dolje je emisija, a prema gore apsorpcija"
+  },
+  {
+   "id": "B26.05",
+   "blok": "B26",
+   "naziv": "Spektralne serije vodika i spektri elemenata",
+   "koncept": "Energija fotona pri prijelazu m → n daje serije linija vodika (Lyman, Balmer, Paschen), a emisijski i apsorpcijski spektar istog elementa imaju linije na istim valnim duljinama.",
+   "zadatak": "A: izračun energije fotona prijelaza m → n formulom s 13,6 eV; B: razvrstavanje prijelaza u serije i područja zračenja; C: usporedba emisijskog i apsorpcijskog spektra istog elementa; D: prepoznavanje elementa po spektru.",
+   "stavke": [
+    "S26.09",
+    "S26.13",
+    "S26.16"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.4., FIZ SŠ D.4.4."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B24.03",
+    "B26.03",
+    "B26.04"
+   ],
+   "zasto_nova": "Energija fotona vodika pri prijelazu m → n: E_f = 13,6 eV·(1/n² − 1/m²), uz m > n; Serije linija vodikova spektra: prijelazi na n = 1 (Lymanova, UV), na n = 2 (Balmerova, vidljivo), na n = 3 (Paschenova, IR); Emisijski spektar (svijetle linije na tamnoj podlozi) i apsorpcijski spektar (tamne linije na kontinuiranom spektru) istog elementa imaju linije na istim valnim duljinama; spektar je karakterističan za element"
+  },
+  {
+   "id": "B27.01",
+   "blok": "B27",
+   "naziv": "Građa jezgre i nuklidi",
+   "koncept": "Jezgra se sastoji od protona i neutrona, opisuje se oznakom nuklida i izotopima, a drži je jaka nuklearna sila.",
+   "zadatak": "A: odredi Z, N i A iz zapisa nuklida; B: zapiši oznaku nuklida; C: prepoznaj izotope; D: objasni ulogu jake nuklearne sile i mjeru u.",
+   "stavke": [
+    "S27.02",
+    "S27.03",
+    "S27.04",
+    "S27.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B13.03",
+    "B26.01"
+   ],
+   "zasto_nova": "Jezgra se sastoji od nukleona: protona (Z) i neutrona (N); maseni broj A = Z + N, broj neutrona N = A − Z; Oznaka nuklida ᴬ_Z X te izotopi: jezgre istog Z, a različitog A (broja neutrona); Jaka nuklearna sila drži nukleone u jezgri: kratkog je dosega, privlačna i jača od Coulombova odbijanja protona; Unificirana atomska masa u: mjera za mase atoma i jezgri (vrijednost iz knjižice)"
+  },
+  {
+   "id": "B27.02",
+   "blok": "B27",
+   "naziv": "Defekt mase i energija vezanja",
+   "koncept": "Masa jezgre manja je od zbroja masa nukleona, a defekt mase odgovara energiji vezanja prema E = Δm·c².",
+   "zadatak": "A: izračunaj defekt mase jezgre; B: pretvori u u MeV i J; C: izračunaj energiju vezanja; D: izračunaj energiju vezanja po nukleonu i usporedi stabilnost.",
+   "stavke": [
+    "S27.06",
+    "S27.07",
+    "S27.11",
+    "S27.08",
+    "S27.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.01",
+    "B27.01",
+    "B31.05"
+   ],
+   "zasto_nova": "Defekt mase Δm: masa jezgre manja je od zbroja masa njezinih slobodnih nukleona; Ekvivalentnost mase i energije: E = Δm·c²; promjena mase odgovara promjeni energije; Pretvorba jedinica energije: 1 u odgovara ≈ 931,5 MeV, a eV u J preko elementarnog naboja; Energija vezanja jezgre: energija potrebna za rastavljanje jezgre na slobodne nukleone, E_v = Δm·c²; Energija vezanja po nukleonu E_v/A; ukupna energija vezanja = A · (E_v/A); veća vrijednost znači stabilniju jezgru"
+  },
+  {
+   "id": "B27.03",
+   "blok": "B27",
+   "naziv": "Nuklearne reakcije i zakoni sačuvanja",
+   "koncept": "Nuklearna reakcija zapisuje se jednadžbom u kojoj se čuvaju A, Z, energija i količina gibanja.",
+   "zadatak": "A: zapiši jednadžbu reakcije; B: provjeri očuvanje A i Z; C: dopuni jednadžbu nepoznatim produktom; D: objasni zašto se čuva A, a ne masa.",
+   "stavke": [
+    "S27.12",
+    "S27.13",
+    "S27.14",
+    "S27.25"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B27.01",
+    "B27.02"
+   ],
+   "zasto_nova": "Nuklearna reakcija: promjena jezgre uslijed raspada ili sudara s česticom; zapis jednadžbe reakcije; U nuklearnim reakcijama čuvaju se ukupni maseni broj A (broj nukleona), ukupni naboj (Z), energija i količina gibanja; Postupak dopunjavanja nuklearne jednadžbe: zbroj A i zbroj Z lijevo mora biti jednak zbroju desno; određivanje nepoznatog produkta pomoću periodnog sustava; Zamka: masa se ne \"gubi\" – defekt mase je energija vezanja; u reakciji se čuva A, a ne ukupna masa jezgri"
+  },
+  {
+   "id": "B27.04",
+   "blok": "B27",
+   "naziv": "Radioaktivni raspadi",
+   "koncept": "α, β⁻, β⁺ i γ raspadi mijenjaju A i Z na točno određen način.",
+   "zadatak": "A: α-raspad; B: β⁻ raspad; C: β⁺ raspad; D: γ zračenje, svaki kroz dopunjavanje jednadžbe raspada.",
+   "stavke": [
+    "S27.15",
+    "S27.16",
+    "S27.17",
+    "S27.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B27.03"
+   ],
+   "zasto_nova": "α-raspad: jezgra emitira jezgru helija ⁴₂He; A se smanjuje za 4, Z za 2; β⁻ raspad: neutron prelazi u proton, emitiraju se elektron i antineutrino; A ostaje isti, Z raste za 1; β⁺ raspad: proton prelazi u neutron, emitiraju se pozitron i neutrino; A ostaje isti, Z pada za 1; γ zračenje: emisija fotona pri prijelazu pobuđene jezgre u niže stanje; A i Z se ne mijenjaju"
+  },
+  {
+   "id": "B27.05",
+   "blok": "B27",
+   "naziv": "Fisija, fuzija i energija reakcije",
+   "koncept": "Fisija teških i fuzija lakih jezgara oslobađaju energiju, što objašnjava krivulja energije vezanja, a Q se računa iz masa.",
+   "zadatak": "A: opiši fisiju i lančanu reakciju; B: opiši fuziju; C: razlikuj raspad, fisiju i fuziju; D: izračunaj Q reakcije i objasni pomoću krivulje energije vezanja.",
+   "stavke": [
+    "S27.19",
+    "S27.20",
+    "S27.22",
+    "S27.24",
+    "S27.23",
+    "S27.10"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B27.02",
+    "B27.03",
+    "B27.04"
+   ],
+   "zasto_nova": "Nuklearna fisija: teška jezgra (uran, plutonij) sudarom s neutronom raspada se na dvije srednje teške jezgre uz oslobađanje neutrona i energije; Lančana reakcija: neutroni oslobođeni fisijom izazivaju daljnje fisije; kontrolirana u reaktoru, nekontrolirana u bombi; Nuklearna fuzija: spajanje lakih jezgara (npr. vodika u helij) uz oslobađanje energije; zahtijeva vrlo visoku temperaturu; izvor energije Sunca i zvijezda; Zamka: radioaktivni raspad (α, β, γ) nije fisija; fisija je cijepanje teške jezgre, fuzija spajanje lakih; Energija nuklearne reakcije Q = (zbroj masa prije − zbroj masa poslije)·c²; Q > 0 reakcija oslobađa energiju; Krivulja energije vezanja po nukleonu: maksimum kod željeza (A≈56); lake jezgre fuzijom, a teške fisijom prelaze u stabilnije jezgre i oslobađaju energiju"
+  },
+  {
+   "id": "B27.06",
+   "blok": "B27",
+   "naziv": "Nuklearna elektrana",
+   "koncept": "Nuklearna elektrana kontrolirano koristi lančanu fisiju urana za dobivanje energije.",
+   "zadatak": "A: navedi gorivo i princip rada; B: poveži s kontroliranom lančanom reakcijom; C: usporedi s bombom; D: procijeni energiju iz fisije.",
+   "stavke": [
+    "S27.21"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B27.05"
+   ],
+   "zasto_nova": "Nuklearna elektrana (npr. Krško): gorivo je uran, energija se dobiva fisijom"
+  },
+  {
+   "id": "B28.01",
+   "blok": "B28",
+   "naziv": "Radioaktivni raspad i vrijeme poluraspada",
+   "koncept": "Radioaktivnost je slučajno spontano pretvaranje nestabilnih jezgara, a vrijeme poluraspada opisuje koliko brzo se broj neraspadnutih jezgara smanjuje.",
+   "zadatak": "A: objasniti radioaktivnost i njezinu neovisnost o vanjskim uvjetima; B: odrediti vrijeme poluraspada iz podataka; C: izračunati N prema zakonu raspada N = N₀·2^(−t/T); D: uočiti zamku da nakon 2T ostaje četvrtina jezgara, a ne nula.",
+   "stavke": [
+    "S28.01",
+    "S28.08",
+    "S28.09",
+    "S28.14"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.6., FIZ SŠ D.4.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B27.03"
+   ],
+   "zasto_nova": "Radioaktivnost: spontano pretvaranje nestabilne jezgre u drugu jezgru uz emisiju zračenja; raspad je slučajan proces, ne ovisi o vanjskim uvjetima (temperatura, tlak, kemijski spoj); Vrijeme poluraspada T: vrijeme za koje se broj neraspadnutih jezgara prepolovi; Zakon radioaktivnog raspada: N = N₀·2^(−t/T) = N₀·e^(−λt); Zamka: nakon dva poluraspada ostaje četvrtina jezgara, a ne nula; nakon vremena T ne raspadne se polovina mase uzorka u smislu nestanka, nego polovina jezgara određenog izotopa"
+  },
+  {
+   "id": "B28.02",
+   "blok": "B28",
+   "naziv": "Konstanta raspada i aktivnost",
+   "koncept": "Konstanta raspada povezuje T i λ, a aktivnost A = λN mjeri broj raspada u sekundi i smanjuje se jednako kao broj jezgara.",
+   "zadatak": "A: izračunati λ iz T; B: izračunati aktivnost A = λN u bekerelima; C: izračunati aktivnost nakon vremena t pomoću A = A₀·2^(−t/T); D: iz mase i molarne mase uzorka odrediti N pa A, uz iste jedinice vremena.",
+   "stavke": [
+    "S28.10",
+    "S28.11",
+    "S28.12",
+    "S28.13"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.6., FIZ SŠ D.4.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.01",
+    "B28.01"
+   ],
+   "zasto_nova": "Konstanta raspada λ = ln2/T; Aktivnost A = λN: broj raspada u jedinici vremena; jedinica bekerel (1 Bq = 1 raspad/s); Aktivnost se smanjuje isto kao broj jezgara: A = A₀·2^(−t/T); Postupak: broj jezgara iz množine i mase (N = n·N_A, n = m/M); vrijeme i T izraziti u istim jedinicama, a za aktivnost u sekundama"
+  },
+  {
+   "id": "B28.03",
+   "blok": "B28",
+   "naziv": "Ionizirajuće zračenje i njegova prodornost",
+   "koncept": "Ionizirajuće zračenje izbija elektrone iz atoma, a α, β i γ zračenje razlikuju se po prodornosti i jakosti ionizacije.",
+   "zadatak": "A: definirati ionizirajuće zračenje i nabrojati vrste; B: poredati α, β i γ po prodornosti; C: poredati ih po jakosti ionizacije; D: odabrati zaštitni materijal za svaku vrstu zračenja.",
+   "stavke": [
+    "S28.15",
+    "S28.16",
+    "S28.20"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.6., FIZ SŠ D.4.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B27.04",
+    "B28.01"
+   ],
+   "zasto_nova": "Ionizirajuće zračenje: zračenje dovoljne energije da iz atoma izbije elektrone i stvara ione (α, β, γ, X-zrake, neutroni); Prodornost i ionizacija: α-čestice najmanje prodorne (zaustavi ih papir/koža), najjače ioniziraju; β zaustavlja tanki aluminijski lim; γ je najprodornije, zaustavlja ga debeli olovni ili betonski sloj; Zaštita od zračenja: skraćivanje vremena izlaganja, povećanje udaljenosti od izvora, korištenje zaštitnih zastora (olovo, beton)"
+  },
+  {
+   "id": "B28.04",
+   "blok": "B28",
+   "naziv": "Doze zračenja i učinci na organizme",
+   "koncept": "Biološki učinci zračenja ovise o dozi, vrsti zračenja i tkivu, a mjere se apsorbiranom i ekvivalentnom dozom, pri čemu je važno i je li izvor izvan ili unutar tijela.",
+   "zadatak": "A: opisati učinke zračenja na stanice i DNK; B: izračunati apsorbiranu dozu D = E/m; C: izračunati ekvivalentnu dozu H = w_R·D i usporediti α i γ; D: objasniti zašto je α-izvor opasan unutar tijela, a izvan njega relativno bezopasan.",
+   "stavke": [
+    "S28.17",
+    "S28.18",
+    "S28.19",
+    "S28.22"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.6., FIZ SŠ D.4.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B28.03"
+   ],
+   "zasto_nova": "Učinci zračenja na žive organizme: oštećenje stanica i DNK, mutacije, radijacijska bolest, rak; učinak ovisi o dozi, vrsti zračenja i osjetljivosti tkiva; Apsorbirana doza D = E/m (jedinica gray, Gy = J/kg): apsorbirana energija zračenja po jedinici mase tkiva; Ekvivalentna doza H = w_R·D (jedinica sievert, Sv): uzima u obzir različitu biološku štetnost vrsta zračenja (α je štetnije od β i γ pri istoj apsorbiranoj dozi); Zamka: vanjsko izlaganje i unos radioaktivne tvari u tijelo (udisanjem, hranom) nisu jednaki; α-izvor je opasan unutar tijela, a izvan tijela relativno bezopasan"
+  },
+  {
+   "id": "B28.05",
+   "blok": "B28",
+   "naziv": "Izvori zračenja i primjene",
+   "koncept": "Zračenje potječe iz prirodnih i umjetnih izvora, a koristi se u medicini i industriji.",
+   "zadatak": "A: razvrstati izvore na prirodne i umjetne; B: navesti primjere primjene u medicini (PET, radioterapija, sterilizacija).",
+   "stavke": [
+    "S28.21"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.6., FIZ SŠ D.4.6."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B28.03"
+   ],
+   "zasto_nova": "Prirodni izvori zračenja (kozmičko zračenje, radon, tlo) i umjetni (medicinska dijagnostika, nuklearne elektrane); primjena u medicini (PET s F-18, radioterapija, sterilizacija)"
+  },
+  {
+   "id": "B29.01",
+   "blok": "B29",
+   "naziv": "Postulati STR-a i Lorentzov faktor",
+   "koncept": "Dva postulata specijalne teorije relativnosti te Lorentzov faktor γ kao mjera relativističkih učinaka.",
+   "zadatak": "A–B: formulirati prvi i drugi postulat na primjeru svjetlosti i dvaju promatrača; C–D: izračunati γ za različite brzine (male, 0,6c, 0,99c) i opisati njegovo ponašanje kad v → c.",
+   "stavke": [
+    "S29.01",
+    "S29.02",
+    "S29.03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.7., FIZ SŠ D.4.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B02.02",
+    "B24.02"
+   ],
+   "zasto_nova": "Prvi postulat STR-a: zakoni fizike jednaki su u svim inercijskim sustavima (nema apsolutnog sustava mirovanja); Drugi postulat STR-a: brzina svjetlosti u vakuumu ista je u svim inercijskim sustavima, neovisno o gibanju izvora i promatrača; Lorentzov faktor γ = 1/√(1 − v²/c²): γ ≥ 1, približno 1 za male brzine, teži u beskonačnost kad v → c"
+  },
+  {
+   "id": "B29.02",
+   "blok": "B29",
+   "naziv": "Dilatacija vremena",
+   "koncept": "Vlastito vrijeme i dilatacija vremena te njezina primjena na nestabilne čestice.",
+   "zadatak": "A: odrediti vlastito vrijeme u zadanoj situaciji; B: izračunati T = γT0; C–D: primijeniti na mion/pion i izračunati prijeđeni put s = vT.",
+   "stavke": [
+    "S29.04",
+    "S29.05",
+    "S29.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.7., FIZ SŠ D.4.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B29.01"
+   ],
+   "zasto_nova": "Vlastito vrijeme T0: vrijeme između dvaju događaja izmjereno satom koji u svojem sustavu miruje na mjestu zbivanja (oba događaja na istome mjestu); Dilatacija vremena: T = T0/√(1 − v²/c²) = γT0; sat u gibanju kuca sporije, promatrač izmjeri dulje vrijeme od vlastitog; Primjena dilatacije vremena: nestabilne čestice (mion, pion) u gibanju žive dulje; put u sustavu promatrača s = vT"
+  },
+  {
+   "id": "B29.03",
+   "blok": "B29",
+   "naziv": "Kontrakcija duljine i ravnopravnost sustava",
+   "koncept": "Vlastita duljina i kontrakcija duljine u smjeru gibanja, relativnost istodobnosti te razlikovanje vlastitih i izmjerenih veličina.",
+   "zadatak": "A: odrediti vlastitu duljinu L0; B: izračunati L = L0/γ; C: objasniti ravnopravnost sustava i zanemarivost pri v ≪ c; D: prepoznati T0, L0 i izmjerene veličine u zadatku (zamka).",
+   "stavke": [
+    "S29.07",
+    "S29.08",
+    "S29.09",
+    "S29.10"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.7., FIZ SŠ D.4.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B29.01",
+    "B29.02"
+   ],
+   "zasto_nova": "Vlastita duljina L0: duljina tijela izmjerena u sustavu u kojem tijelo miruje; Kontrakcija duljine: L = L0√(1 − v²/c²) = L0/γ; skraćenje je samo u smjeru gibanja, dimenzije okomite na smjer gibanja ostaju iste; Relativnost istodobnosti i ravnopravnost sustava: svaki promatrač za sat/štap onog drugoga izmjeri dilataciju/kontrakciju; učinci su zanemarivi pri malim brzinama (v ≪ c); Zamka: pri računu dilatacije vremena i kontrakcije duljine treba prepoznati što je vlastito (T0, L0), a što izmjereno; T0 ≤ T, L0 ≥ L"
+  },
+  {
+   "id": "B29.04",
+   "blok": "B29",
+   "naziv": "Povezivanje kontrakcije duljine i dilatacije vremena",
+   "koncept": "Određivanje γ iz jednog relativističkog učinka i njegova uporaba za drugi.",
+   "zadatak": "A: iz zadanog L/L0 odrediti γ; B: pomoću γ izračunati dilataciju vremena; C–D: obrnuti smjer, iz dilatacije vremena odrediti kontrakciju duljine.",
+   "stavke": [
+    "S29.11"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.7., FIZ SŠ D.4.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B29.01",
+    "B29.02",
+    "B29.03"
+   ],
+   "zasto_nova": "Postupak: iz zadane kontrakcije duljine (L/L0) odrediti γ, pa njime izračunati dilataciju vremena (i obratno)"
+  },
+  {
+   "id": "B29.05",
+   "blok": "B29",
+   "naziv": "Relativistička energija i masa",
+   "koncept": "Ukupna energija, energija mirovanja i relativistička kinetička energija, te zašto se ne smije koristiti mv²/2 pri brzinama bliskim c.",
+   "zadatak": "A: izračunati E = γmc²; B: izračunati E0 = mc²; C: izračunati Ek = (γ − 1)mc² i usporediti s mv²/2 pri velikoj brzini; D: objasniti zašto tijelo s masom ne može dosegnuti brzinu c.",
+   "stavke": [
+    "S29.12",
+    "S29.13",
+    "S29.14",
+    "S29.15",
+    "S29.17"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.7., FIZ SŠ D.4.7."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B05.02",
+    "B29.01"
+   ],
+   "zasto_nova": "Ukupna relativistička energija tijela E = mc²/√(1 − v²/c²) = γmc²; Energija mirovanja E0 = mc² (za v = 0); masa i energija su ekvivalentne; Relativistička kinetička energija Ek = E − E0 = (γ − 1)mc²; Tijelo s masom ne može dosegnuti brzinu svjetlosti: pri v → c energija E → ∞, pa bi trebalo beskonačno mnogo energije; samo čestice bez mase (foton) gibaju se brzinom c; Zamka: za brzine bliske c ne koristi se klasični izraz mv²/2, nego relativistički izraz za energiju"
+  },
+  {
+   "id": "B30.01",
+   "blok": "B30",
+   "naziv": "Veliki prasak i širenje svemira",
+   "koncept": "Svemir je nastao Velikim praskom i od tada se širi rastezanjem samog prostora, bez središta.",
+   "zadatak": "A: Veliki prasak i starost svemira; B: širenje prostora; C: zamka o eksploziji i središtu; D: slijed ranog svemira od čestica do atoma i galaksija.",
+   "stavke": [
+    "S30.01",
+    "S30.02",
+    "S30.20",
+    "S30.06"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B30.03"
+   ],
+   "zasto_nova": "Veliki prasak (Big Bang): svemir je nastao prije oko 13,8 milijardi godina iz iznimno guste i vruće početne stanje te se od tada širi i hladi; Širenje svemira: prostor se rasteže pa se galaksije međusobno udaljavaju; to nije eksplozija u već postojećem prostoru, nego širenje samog prostora; Zamka: Veliki prasak nije eksplozija u prostoru i nema središta; vidljiva tvar čini manje od 5 % svemira; Slijed ranog svemira: hlađenjem nastaju elementarne čestice, zatim protoni i neutroni, jezgre lakih elemenata (H, He), atomi te kasnije zvijezde i galaksije"
+  },
+  {
+   "id": "B30.02",
+   "blok": "B30",
+   "naziv": "Dokazi širenja: Hubble, crveni pomak i pozadinsko zračenje",
+   "koncept": "Širenje svemira i Veliki prasak potvrđuju Hubbleov zakon, crveni pomak i mikrovalno pozadinsko zračenje.",
+   "zadatak": "A: računanje brzine udaljavanja pomoću v = H·d; B: crveni pomak i udaljenost galaksije; C: kozmičko mikrovalno zračenje kao dokaz Velikog praska.",
+   "stavke": [
+    "S30.03",
+    "S30.04",
+    "S30.05"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01",
+    "B20.02",
+    "B24.03",
+    "B30.01"
+   ],
+   "zasto_nova": "Hubbleov zakon: galaksije se udaljavaju brzinom razmjernom svojoj udaljenosti (v = H·d); dalje galaksije bježe brže; Crveni pomak: zbog širenja svemira valna duljina svjetlosti udaljenih galaksija povećava se (pomak prema crvenom); veći pomak znači veća udaljenost i brzina udaljavanja; Kozmičko mikrovalno pozadinsko zračenje: ostatak zračenja iz ranog svemira (nastalo oko 380 000 godina nakon Velikog praska), ~2,7 K, dokaz Velikog praska"
+  },
+  {
+   "id": "B30.03",
+   "blok": "B30",
+   "naziv": "Sastav svemira: tamna tvar i tamna energija",
+   "koncept": "Većinu svemira čine tamna energija i tamna tvar, a obična tvar manje od 5 %.",
+   "zadatak": "A: postotni sastav svemira; B: tamna tvar i vrtnja galaksija; C: tamna energija i ubrzano širenje.",
+   "stavke": [
+    "S30.07",
+    "S30.08",
+    "S30.09"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B07.01",
+    "B30.01"
+   ],
+   "zasto_nova": "Sastav svemira: oko 68 % tamna energija, oko 27 % tamna tvar, manje od 5 % obična (vidljiva) tvar; Tamna tvar: nevidljiva tvar koja gravitacijski djeluje (npr. brzine vrtnje galaksija), ne zrači svjetlost; Tamna energija: uzrok ubrzanog širenja svemira"
+  },
+  {
+   "id": "B30.04",
+   "blok": "B30",
+   "naziv": "Struktura svemira i udaljenosti",
+   "koncept": "Svemir je hijerarhijski građen od planeta do superjata, a udaljenosti se mjere svjetlosnim godinama i astronomskim jedinicama.",
+   "zadatak": "A: Mliječna staza i Andromeda; B: hijerarhija struktura svemira; C: svjetlosna godina i astronomska jedinica te pretvorbe udaljenosti.",
+   "stavke": [
+    "S30.11",
+    "S30.10",
+    "S30.12"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B01.01"
+   ],
+   "zasto_nova": "Naša galaksija Mliječna staza je spiralna galaksija u kojoj je Sunčev sustav; najbliža velika galaksija je Andromeda; Struktura svemira: planeti i zvijezde → zvjezdani sustavi → galaksije → skupine i jata galaksija → superjata; svemir je na velikim skalama homogen; Jedinice udaljenosti: svjetlosna godina (put svjetlosti u godinu dana, ≈ 9,5·10¹² km) i astronomska jedinica (udaljenost Zemlja–Sunce)"
+  },
+  {
+   "id": "B30.05",
+   "blok": "B30",
+   "naziv": "Nastanak zvijezda i izvor njihove energije",
+   "koncept": "Zvijezde nastaju gravitacijskim skupljanjem plina, a sjaje zbog fuzije u ravnoteži sa stezanjem; fuzijom nastaju i teži elementi.",
+   "zadatak": "A: nastanak zvijezde iz oblaka plina; B: fuzija vodika u helij; C: ravnoteža tlaka i gravitacije; D: nastanak težih elemenata i HR dijagram.",
+   "stavke": [
+    "S30.13",
+    "S30.14",
+    "S30.17",
+    "S30.19"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B07.01",
+    "B27.05"
+   ],
+   "zasto_nova": "Nastanak zvijezda: gravitacijsko skupljanje oblaka plina i prašine (uglavnom vodika); kad jezgra dosegne dovoljnu temperaturu počinje fuzija vodika u helij; Izvor energije zvijezda je nuklearna fuzija; ravnoteža između gravitacijskog stezanja i tlaka zračenja i plina drži zvijezdu stabilnom; Teži elementi nastaju fuzijom u zvijezdama i eksplozijama supernova; Hertzsprung-Russellov dijagram: prikaz sjaja/luminoznosti zvijezda prema temperaturi; glavni niz, crveni divovi, bijeli patuljci"
+  },
+  {
+   "id": "B30.06",
+   "blok": "B30",
+   "naziv": "Životni ciklus zvijezda i crne rupe",
+   "koncept": "Sudbina zvijezde ovisi o masi: od bijelog patuljka do supernove, neutronske zvijezde i crne rupe.",
+   "zadatak": "A: put zvijezde Sunčeve mase; B: put masivne zvijezde i supernova; C: crna rupa; D: usporedba završetaka prema masi.",
+   "stavke": [
+    "S30.15",
+    "S30.16",
+    "S30.18"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B07.01",
+    "B30.05"
+   ],
+   "zasto_nova": "Životni ciklus zvijezde ovisi o masi: zvijezde male i srednje mase (poput Sunca) → crveni div → bijeli patuljak; Masivne zvijezde završavaju kao supernova, a ostatak je neutronska zvijezda ili crna rupa; Crna rupa: objekt s tako jakim gravitacijskim poljem da ni svjetlost ne može pobjeći"
+  },
+  {
+   "id": "B31.01",
+   "blok": "B31",
+   "naziv": "Razumijevanje zadatka i podataka",
+   "koncept": "Prvi korak rješavanja je skica, jasan cilj zadatka te pažljivo izdvajanje zadanih i skrivenih podataka.",
+   "zadatak": "A: prepoznati što se traži i u kojim jedinicama; B: izdvojiti zadane i skrivene podatke; C: nacrtati skicu s ucrtanim silama i osima; D: poslužiti se knjižicom formula za pronalazak potrebnih formula.",
+   "stavke": [
+    "S31.02",
+    "S31.03",
+    "S31.01",
+    "S31.24"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B03.01"
+   ],
+   "zasto_nova": "Prepoznati cilj zadatka: što se točno traži (veličina, iznos ili smjer, odnos ili omjer, usporedba, graf, objašnjenje) i u kojim jedinicama; Odabir podataka: izdvojiti zadane veličine, odbaciti nepotrebne, uočiti skrivene podatke (npr. 'miruje', 'jednoliko', 'stalna temperatura', 'idealan sustav', 'bez trenja') i očitati podatke iz teksta, slike, tablice i grafa; Vizualizacija problema: nacrtati skicu situacije, ucrtati poznate i tražene veličine te označiti sile, smjerove i osi (npr. dijagram sila tijela); Služenje knjižicom formula: znati koja formula postoji, što znače oznake u njoj i kada se koristi; formule koje nisu u knjižici treba izvesti iz onih danih"
+  },
+  {
+   "id": "B31.02",
+   "blok": "B31",
+   "naziv": "Odabir načela i plan rješavanja",
+   "koncept": "Pojavu povezujemo s odgovarajućim zakonom uz provjeru uvjeta primjene te planiramo korake rješavanja.",
+   "zadatak": "A: povezati opisanu pojavu sa zakonom; B: provjeriti uvjete primjene formule; C: rastaviti višekoračni zadatak na korake i odabrati jednadžbe.",
+   "stavke": [
+    "S31.04",
+    "S31.23",
+    "S31.05"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B31.01"
+   ],
+   "zasto_nova": "Odabir fizičkog načela: povezati opisanu pojavu sa zakonom ili modelom (Newtonovi zakoni, očuvanje energije i količine gibanja, plinski zakoni, Coulombov zakon, Snellov zakon itd.) i provjeriti uvjete njegove primjene; Zamka: pri odabiru formule provjeriti uvjete (stalna akceleracija, stalna temperatura, stalan napon ili stalan naboj, izolirani sustav), jer se formula izvan uvjeta ne smije koristiti; Plan rješavanja: rastaviti problem na korake, odabrati jednadžbe, odrediti redoslijed računanja i izraziti traženu veličinu iz jednadžbi (višekoračni zadaci, kombiniranje dviju jednadžbi)"
+  },
+  {
+   "id": "B31.03",
+   "blok": "B31",
+   "naziv": "Matematika u fizici i računanje",
+   "koncept": "Matematičke vještine služe za modeliranje situacije jednadžbama te za izvođenje izraza prije uvrštavanja brojeva.",
+   "zadatak": "A: riješiti jednadžbe, omjere, potencije i trigonometriju; B: pretvoriti opis situacije u jednadžbe; C: izvesti opći izraz i tek onda uvrstiti brojeve; D: zaokružiti rezultat na odgovarajući broj značajnih znamenaka.",
+   "stavke": [
+    "S31.10",
+    "S31.09",
+    "S31.06",
+    "S31.11"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B31.02"
+   ],
+   "zasto_nova": "Osnovna matematika u fizici: rješavanje jednadžbi, omjeri i postotci, potencije i korijeni, logaritam, trigonometrijske funkcije i njihove inverzne (sin, cos, tg), Pitagorin poučak; Matematičko modeliranje: pretvoriti opis situacije u jednadžbe (jednadžba ravnoteže, jednadžba gibanja, bilanca energije ili topline) i riješiti ih; Računanje u općim brojevima: prvo izvesti izraz za traženu veličinu pa tek onda uvrštavati brojeve; Značajne znamenke i zaokruživanje: rezultat se daje s odgovarajućom točnošću, a konstante iz knjižice (npr. g = 10 m/s² u zadatcima) koriste se kako je propisano"
+  },
+  {
+   "id": "B31.04",
+   "blok": "B31",
+   "naziv": "Kvalitativno zaključivanje",
+   "koncept": "Bez računanja zaključujemo iz načela i proporcionalnosti kako se veličine ponašaju.",
+   "zadatak": "A: odrediti kako se veličina mijenja kad se druga udvostruči; B: iz stalne akceleracije ili mirovanja zaključiti o ukupnoj sili; C: usporediti slučajeve i ocijeniti koja je tvrdnja točna.",
+   "stavke": [
+    "S31.07",
+    "S31.08",
+    "S31.18",
+    "S31.20"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B02.02",
+    "B03.02",
+    "B31.03",
+    "B31.05"
+   ],
+   "zasto_nova": "Kvalitativno zaključivanje: proporcionalnost i omjeri (izravna, obrnuta, kvadratna ovisnost; npr. što se dogodi veličini kad se druga udvostruči), bez računanja brojeva; Kvalitativno zaključivanje iz načela: npr. stalna akceleracija znači stalnu ukupnu silu različitu od nule, a miruje ili jednoliko giba znači ukupna sila nula; Vrednovanje rezultata: procijeniti je li iznos realan (red veličine, predznak, smjer), slaže li se s očekivanjem i granicama (npr. korisnost manja od 1, brzina manja od c); Vrednovanje fizičkih situacija i tvrdnji: ocijeniti koja je tvrdnja točna i obrazložiti zašto druge nisu (višestruki izbor, usporedba slučajeva)"
+  },
+  {
+   "id": "B31.05",
+   "blok": "B31",
+   "naziv": "Mjerne jedinice",
+   "koncept": "SI jedinice, njihove pretvorbe i dimenzijska provjera osiguravaju točan račun, uključujući temperaturu u kelvinima.",
+   "zadatak": "A: povezati osnovne i izvedene SI jedinice; B: pretvoriti prefikse, površine, obujme i brzine; C: pretvoriti °C u K za plinske zakone; D: dimenzijski provjeriti formulu.",
+   "stavke": [
+    "S31.15",
+    "S31.16",
+    "S31.21",
+    "S31.17"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B11.01"
+   ],
+   "zasto_nova": "Mjerne jedinice SI: osnovne i izvedene jedinice (m, kg, s, K, A, N, J, W, Pa, Hz, C, V, Ω, F, T) i njihova veza; Pretvaranje jedinica: prefiksi (p, n, µ, m, c, d, k, M, G), pretvorbe površine i obujma (cm² u m², dm³ u m³, l u m³), km/h u m/s, minute i sati u sekunde, bar i kPa u Pa, °C u K, eV u J; Zamka: temperaturu u formulama plina i korisnosti toplinskog stroja treba uvrstiti u kelvinima, a ne u °C; Provjera jedinica računom: jedinica rezultata mora odgovarati traženoj veličini (dimenzijska provjera formule)"
+  },
+  {
+   "id": "B31.06",
+   "blok": "B31",
+   "naziv": "Prikazi i grafovi",
+   "koncept": "Fizikalne veličine prikazujemo riječima, formulama, tablicama i grafovima te iz grafa čitamo fizičko značenje.",
+   "zadatak": "A: prijeći iz jednog prikaza u drugi; B: očitati vrijednosti, nagib i površinu grafa; C: nacrtati graf s osima, mjerilom i pravcem; D: usporediti grafove različitih slučajeva.",
+   "stavke": [
+    "S31.12",
+    "S31.13",
+    "S31.14"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [],
+   "zasto_nova": "Prikazi fizičkih veličina: opis pomoću riječi, formule, tablice, grafa, sheme i slike te prelazak iz jednog prikaza u drugi; Čitanje grafa: očitati vrijednosti, sjecišta s osima, nagib (kvocijent promjena) i površinu ispod krivulje te im pridružiti fizičko značenje (npr. nagib x,t grafa je brzina, površina ispod v,t grafa je put); Crtanje grafa: označiti osi s veličinama i jedinicama, odabrati mjerilo, ucrtati točke te povući pravac ili krivulju kroz točke; usporediti grafove za različite slučajeve"
+  },
+  {
+   "id": "B31.07",
+   "blok": "B31",
+   "naziv": "Vrednovanje rješenja",
+   "koncept": "Na kraju provjeravamo je li postupak ispravan i je li rezultat fizički smislen.",
+   "zadatak": "A: procijeniti red veličine, predznak i granice rezultata; B: provjeriti pretpostavke i uvjete primjene u gotovom postupku i uočiti pogrešku.",
+   "stavke": [
+    "S31.19"
+   ],
+   "ishodi": [
+    "ostalo"
+   ],
+   "tezina": "",
+   "preduvjeti": [
+    "B31.02"
+   ],
+   "zasto_nova": "Vrednovanje postupka: provjeriti pretpostavke i uvjete primjene zakona, uočiti pogreške u postupku i usporediti rezultat s ograničenjima modela"
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+Pokrivenost: 169/182 zadataka pokriveno; 20 lekcija ne treba nijedan zadatak s ispita
+Nulta pretpostavka: 120 lekcija s problemom
+Usporedba s ručnim (97 lekcija): {'cijelo': 50, 'djelomicno': 47, 'nista': 0}
+# Mjerenja prototipa
+
+- Lekcija: **135** (ručni: 97)
+- Zadaci s ispita pokriveni: **169/182**
+- Lekcije koje ne treba nijedan zadatak s ispita: 20
+- Nulta pretpostavka prekršena: 120 lekcija
+- Ručne lekcije koje generirani plan uopće ne pokriva: 0
+- Jev razvrstavanje stranica: 191/283 slaže se s nazivom datoteke
+- Jev parovi „nova ideja?“: 0, označeno za spajanje 0
+
+## Trošak po koraku (USD)
+
+- assume: 0.340
+- classify: 0.009
+- compare: 0.764
+- coverage: 0.129
+- dedupe: 0.140
+- draft: 1.763
+- edges: 1.328
+- group: 0.466
+- merge-jev: 0.011
+- merge-llm: 0.187
+- ocr: 0.098
+- points: 2.556
+- scope-catalog: 0.120
+- scope-exam: 0.031
+- **ukupno: 7.94**
+
+## Nepokriveni zadaci s ispita
+
+- [FIZ-katalog-2026.pdf 1 (str. 4)] Zadatak je vezan uz shemu električnog polja točkastih naboja, ali tekst zadatka nije dostupan jer je na stranici samo slika bez pitanja. → Tekst zadatka nije dostupan (na stranici je samo slika sheme), pa se potrebno znanje ne može pouzdano procijeniti.
+- [FIZ22ljeto 27] Kolika je gustoća tijela koje pluta između ulja i vode ako je 45 % njegova volumena u vodi? → gustoća ulja i vode, ako nisu zadane u tekstu zadatka (nisu u knjižici)
+- [FIZ22ljeto 29] Koliki je napon U izvora ako se naboj na pločama kondenzatora kapaciteta 44 pF promijeni za 35 nC pri stavljanju u ulje? → relativna permitivnost ulja, ako nije zadana u tekstu zadatka (nije u knjižici)
+- [FIZ23ljeto1 35] Kolika je razlika razina zvuka koje osoba čuje lijevim i desnim uhom od točkastog izvora snage 2,5

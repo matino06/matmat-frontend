@@ -1,0 +1,1262 @@
+[
+ {
+  "id": "B01.01",
+  "ok": false,
+  "nedostaje": [
+   "Pitagorin poučak (zbroj kvadrata kateta jednak je kvadratu hipotenuze), koji lekcija koristi u zadatku C za računanje pomaka, a nije naveden ni u preduvjetima ni u predznanju"
+  ]
+ },
+ {
+  "id": "B01.02",
+  "ok": false,
+  "nedostaje": [
+   "nagib pravca u koordinatnom sustavu kao mjera promjene (omjer Δx/Δt), koji se koristi za očitavanje brzine iz grafa x(t)",
+   "pojam funkcije i zapis ovisnosti x(t) i v(t) (veličina kao funkcija vremena)"
+  ]
+ },
+ {
+  "id": "B01.03",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B01.04",
+  "ok": false,
+  "nedostaje": [
+   "nagib tangente na zakrivljenu krivulju x(t) kao trenutna brzina (u prethodnim lekcijama je obrađen samo nagib pravca x(t) za jednoliko gibanje)"
+  ]
+ },
+ {
+  "id": "B01.05",
+  "ok": false,
+  "nedostaje": [
+   "površina ispod grafa v(t) kao pomak (predznačena površina) i put (zbroj apsolutnih površina)",
+   "rješavanje kvadratnih jednadžbi (npr. za vrijeme pada na tlo ili vrijeme susreta u s = v0t + ½at²)"
+  ]
+ },
+ {
+  "id": "B02.01",
+  "ok": false,
+  "nedostaje": [
+   "trenje (sila trenja između tijela i podloge, potrebna za objašnjenje kočenja i zamke o sili za jednoliko gibanje)"
+  ]
+ },
+ {
+  "id": "B02.02",
+  "ok": false,
+  "nedostaje": [
+   "sila teže i gravitacijsko ubrzanje g (G = mg), koji lekcija koristi u zadatku B i C, a nisu uvedeni u preduvjetima ni u predznanju",
+   "normalna sila (sila podloge), koju lekcija koristi u zadatku B, a nije uvedena u preduvjetima ni u predznanju",
+   "napetost niti kao sila u niti, koju lekcija koristi u zadatku C, a nije uvedena u preduvjetima ni u predznanju"
+  ]
+ },
+ {
+  "id": "B02.03",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus kuta u pravokutnom trokutu (potrebne za komponente mg·sinα i mg·cosα)",
+   "koeficijent trenja μ i odnos F_tr = μ·N (potreban za vučnu silu pri jednolikom vučenju po hrapavoj podlozi)"
+  ]
+ },
+ {
+  "id": "B03.01",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B03.02",
+  "ok": false,
+  "nedostaje": [
+   "masa kao količina tvari i mjera tromosti te jedinica kilogram (kg), jer ranije lekcije govore o tromosti, ali ne definiraju masu kao veličinu",
+   "veza jedinica njutna i osnovnih jedinica (1 N = 1 kg·m/s²), potrebna za izračun a = F/m",
+   "rastav sile na komponente (okomita i paralelna sastavnica u odnosu na brzinu), potrebno za zadatak D",
+   "vektorski karakter promjene brzine, tj. da je akceleracija vektor čiji smjer može biti različit od smjera brzine, potrebno za zadatak B"
+  ]
+ },
+ {
+  "id": "B03.03",
+  "ok": false,
+  "nedostaje": [
+   "težina tijela (sila teža, G = mg) i gravitacijska akceleracija g, koje lekcija koristi u zadatku D i pri rastavljanju težine na kosini, a nisu uvedene u ranijim lekcijama",
+   "rastavljanje sile na komponente (kosinu i okomicu) kao vektorska operacija, jer lekcija traži rastavljanje težine na kosini, a ranije se obrađivalo samo zbrajanje sila u rezultantu",
+   "trigonometrijske funkcije sinus i kosinus u pravokutnom trokutu, potrebne za rastavljanje sile na kosini, a nisu dio osnovnoškolske matematike niti su obrađene u ranijim lekcijama"
+  ]
+ },
+ {
+  "id": "B03.04",
+  "ok": false,
+  "nedostaje": [
+   "sila teže i gravitacijska akceleracija g (koristi se u N = m(g ± a), a nije uvedena ni u preduvjetima ni u predznanju)",
+   "napetost niti kao vrsta sile (koristi se u zadatku C i D, a nije uvedena ranije)"
+  ]
+ },
+ {
+  "id": "B03.05",
+  "ok": false,
+  "nedostaje": [
+   "Newtonov drugi zakon (F = ma) i pojam mase, koji su potrebni za obrazloženje da slobodni pad ne ovisi o masi tijela (ubrzanje a = F/m = mg/m = g)",
+   "rješavanje kvadratne jednadžbe, potrebno za izračun vremena pri hitcu prema dolje (h = v₀t + ½gt²)"
+  ]
+ },
+ {
+  "id": "B03.06",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije (sinus, kosinus, tangens) za kut prema horizontali i rastav vektora",
+   "rastav vektora brzine na vodoravnu i okomitu komponentu"
+  ]
+ },
+ {
+  "id": "B04.01",
+  "ok": false,
+  "nedostaje": [
+   "sila podloge (normalna sila) kao kontaktna sila kojom podloga djeluje na tijelo, potrebna za prepoznavanje para akcije i reakcije u zadatku D"
+  ]
+ },
+ {
+  "id": "B04.02",
+  "ok": false,
+  "nedostaje": [
+   "III. Newtonov zakon (akcija i reakcija), koji je potreban za razumijevanje sile kojom zid djeluje na tijelo pri odbijanju i sile kojom tijelo djeluje na zrak ili jastuk",
+   "Vektorsko oduzimanje (razlika vektora), potrebno za izračun vektorske promjene količine gibanja Δp = p₂ − p₁"
+  ]
+ },
+ {
+  "id": "B04.03",
+  "ok": false,
+  "nedostaje": [
+   "unutarnje i vanjske sile sustava (pojam zatvorenog sustava)"
+  ]
+ },
+ {
+  "id": "B04.04",
+  "ok": false,
+  "nedostaje": [
+   "rješavanje sustava dviju jednadžbi s kvadratnim članom (kinetička energija ∝ v²) za elastični sudar, što je srednjoškolska algebra, a nije u preduvjetima ni u predznanju (predznanje je samo osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B05.01",
+  "ok": false,
+  "nedostaje": [
+   "energija tijela kao pojam (kinetička i potencijalna energija, mjerna jedinica džul), potrebna za povezivanje rada i promjene energije",
+   "kosinus kuta i trigonometrija (računanje komponente sile u smjeru pomaka F·cos α), što nije u osnovnoškolskoj matematici",
+   "rastav vektora na komponente i projekcija sile na smjer pomaka, koji nisu uvedeni u ranijim lekcijama"
+  ]
+ },
+ {
+  "id": "B05.02",
+  "ok": false,
+  "nedostaje": [
+   "Hookeov zakon i elastična sila opruge (F = kx, konstanta opruge k), koja je potrebna za elastičnu potencijalnu energiju u zadatku D",
+   "Titranje i harmonijsko gibanje s amplitudom A, koje je potrebno za ukupnu energiju titranja ½kA² u zadatku D",
+   "Sila teže (gravitacijska sila mg), koja je potrebna za gravitacijsku potencijalnu energiju mgh u zadacima B i C"
+  ]
+ },
+ {
+  "id": "B05.03",
+  "ok": false,
+  "nedostaje": [
+   "zatvoreni sustav (pojam sustava u kojem nema izmjene energije s okolinom, koristi se bez uvođenja)",
+   "unutarnja (toplinska) energija (potrebna za opis pretvorbi energije kad trenje pretvara mehaničku energiju u toplinu)"
+  ]
+ },
+ {
+  "id": "B05.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B05.05",
+  "ok": false,
+  "nedostaje": [
+   "električna energija i električna snaga motora (P_motora·t kao uložena energija dizalice), koje lekcija koristi kao poznate, a nisu uvedene u preduvjetima",
+   "gravitacijsko ubrzanje g i težina tijela mg (potencijalna energija mgh), koji nisu izričito uvedeni u preduvjetima"
+  ]
+ },
+ {
+  "id": "B06.01",
+  "ok": false,
+  "nedostaje": [
+   "brzina kao vektor (brzina ima iznos i smjer, a promjena smjera znači ubrzanje, što je potrebno za zadatak A)",
+   "kut mjeren u radijanima (kutna brzina ω u rad/s i veza ω = 2π/T zahtijevaju pojam radijana kao kutne mjere)"
+  ]
+ },
+ {
+  "id": "B06.02",
+  "ok": false,
+  "nedostaje": [
+   "radijan kao mjerna jedinica za kut (potreban za kutnu brzinu u rad/s i formulu ω = 2π/T)"
+  ]
+ },
+ {
+  "id": "B06.03",
+  "ok": false,
+  "nedostaje": [
+   "Vrste sila (gravitacija, napetost, trenje) kao poznati pojmovi; lekcija ih koristi u zadatku C, a ranije lekcije uvode samo sile općenito"
+  ]
+ },
+ {
+  "id": "B06.04",
+  "ok": false,
+  "nedostaje": [
+   "Newtonov zakon gravitacije i gravitacijska sila GMm/r² (koristi se za satelit u zadatku B, a nije uvedena u preduvjetima)",
+   "Magnetska sila na nabijenu česticu u magnetskom polju, qvB, uz pojmove naboja i magnetskog polja (koristi se u zadatku C, a nije uvedena u preduvjetima)"
+  ]
+ },
+ {
+  "id": "B07.01",
+  "ok": false,
+  "nedostaje": [
+   "obrnuta proporcionalnost i kvadratna ovisnost (1/r²), koju lekcija koristi za ovisnost sile o udaljenosti, a nije u preduvjetima ni u predznanju (osnovnoškolska matematika)",
+   "potencije broja 10 i znanstveni zapis s negativnim eksponentima (npr. G ≈ 6,67·10⁻¹¹ N·m²/kg², mase planeta), koje lekcija koristi za račun, a nisu uvedene ranije"
+  ]
+ },
+ {
+  "id": "B07.02",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B07.03",
+  "ok": false,
+  "nedostaje": [
+   "Horizontalni hitac i gibanje projektila: tijelo koje pada dok se istovremeno giba horizontalnom brzinom (satelit 'pada' oko Zemlje, a da se ne približava joj)"
+  ]
+ },
+ {
+  "id": "B07.04",
+  "ok": false,
+  "nedostaje": [
+   "Keplerov I. i II. zakon (eliptične orbite i jednake površine u jednakim vremenima), koje lekcija spominje kao poznate uz treći zakon",
+   "Gravitacijska konstanta G i njezina numerička vrijednost, potrebna za izračun mase planeta iz r i T"
+  ]
+ },
+ {
+  "id": "B08.01",
+  "ok": false,
+  "nedostaje": [
+   "gravitacijsko ubrzanje g (koristi se u p = ρgh, a nije uvedeno u preduvjetima ni predznanju)",
+   "masa i njezin odnos prema težini (koriste se pri uvođenju gustoće ρ = m/V, a nisu uvedeni ranije)"
+  ]
+ },
+ {
+  "id": "B08.02",
+  "ok": false,
+  "nedostaje": [
+   "linearna funkcija i čitanje pravca na grafu (ovisnost p = p₀ + ρgh o dubini h, s odsječkom p₀ na osi tlaka)"
+  ]
+ },
+ {
+  "id": "B08.03",
+  "ok": false,
+  "nedostaje": [
+   "rad sile (W = F·s) kao mjera prijenosa energije, potreban za usporedbu rada na klipovima u zadatku D"
+  ]
+ },
+ {
+  "id": "B08.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B08.05",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B09.01",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B09.02",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B09.03",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B10.01",
+  "ok": false,
+  "nedostaje": [
+   "sila (privlačna i odbojna sila među česticama, koja se koristi u zadatku A i pri objašnjavanju čvrstog tijela i tekućine)",
+   "temperatura (toplinsko gibanje čestica ovisi o temperaturi, a lekcija to koristi kao poznato)",
+   "volumen i gustoća (razlike u razmaku među česticama među stanjima pretpostavljaju poznavanje pojmova volumena i gustoće)"
+  ]
+ },
+ {
+  "id": "B10.02",
+  "ok": false,
+  "nedostaje": [
+   "kinetička energija čestica i pojam temperature kao mjere prosječne kinetičke energije čestica",
+   "energija potrebna za svladavanje privlačnih sila (veze) među česticama pri taljenju i isparavanju"
+  ]
+ },
+ {
+  "id": "B10.03",
+  "ok": false,
+  "nedostaje": [
+   "temperatura kao mjera zagrijanosti tijela (pojam temperature i njezino mjerenje termometrom)",
+   "mjerne skale temperature °C i K (odnos Celzijeve i Kelvinove skale potreban za rad s Δt)",
+   "toplina kao energija koja se prenosi pri zagrijavanju tijela"
+  ]
+ },
+ {
+  "id": "B10.04",
+  "ok": false,
+  "nedostaje": [
+   "gustoća tvari (ρ = m/V), koju lekcija koristi pri objašnjenju anomalije vode i usporedbi rastezanja tekućina, a nije uvedena u preduvjetima ni u predznanju",
+   "vodikova veza među molekulama vode, koju lekcija koristi za objašnjenje anomalije vode, a nije uvedena u preduvjetima ni u predznanju"
+  ]
+ },
+ {
+  "id": "B11.01",
+  "ok": false,
+  "nedostaje": [
+   "Avogadrova konstanta (broj čestica u jednom molu), potrebna za izračun množine iz broja čestica",
+   "molarna masa, potrebna za izračun množine iz mase"
+  ]
+ },
+ {
+  "id": "B11.02",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B11.03",
+  "ok": false,
+  "nedostaje": [
+   "hidrostatski tlak i atmosferski tlak (p = p₀ + ρgh), potrebni za račun apsolutnog tlaka iz manometarskog očitanja",
+   "rad plina (W = p·ΔV) i njegovo očitavanje kao površine ispod krivulje na p-V dijagramu",
+   "prvi zakon termodinamike (ΔU = Q − W), potreban za razlikovanje adijabatske od izotermne promjene",
+   "toplinski kapaciteti pri stalnom tlaku i stalnom volumenu te omjer κ = c_p/c_V, potrebni za adijabatsku jednadžbu pV^κ = konst.",
+   "potencije s realnim eksponentom, potrebne za rad s izrazom pV^κ, a nisu dio osnovnoškolske matematike"
+  ]
+ },
+ {
+  "id": "B11.04",
+  "ok": false,
+  "nedostaje": [
+   "kinetička energija gibanja i izraz E_k = m·v²/2 (koristi se u B, C i D, a nije uvedena u preduvjetima)",
+   "sila i tlak kao omjer sile i površine p = F/S (potrebno za objašnjenje tlaka sudarima, a preduvjeti tlak spominju samo kao veličinu stanja)",
+   "količina gibanja (impuls) i promjena količine gibanja pri elastičnom sudaru sa stijenkom (potrebno za objašnjenje tlaka sudarima)",
+   "molarna masa M i masa molekule m (potrebno za C i za izračun energije; preduvjeti spominju samo množinu tvari)",
+   "Avogadrova konstanta N_A (potrebna za povezivanje k_B = R/N_A u zadatku D)"
+  ]
+ },
+ {
+  "id": "B12.01",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B12.02",
+  "ok": false,
+  "nedostaje": [
+   "Zakon očuvanja energije (energija se ne gubi, samo prelazi iz jednog oblika ili tijela u drugo), potreban za izjednačavanje topline predane i primljene pri miješanju i za računanje vremena zagrijavanja iz snage izvora"
+  ]
+ },
+ {
+  "id": "B12.03",
+  "ok": true,
+  "nedostaje": [
+   "talište i vrelište kao karakteristične temperature pri kojima tvar mijenja agregacijsko stanje (prijelazi stanja su uvedeni, ali ne i te temperature)"
+  ]
+ },
+ {
+  "id": "B12.04",
+  "ok": false,
+  "nedostaje": [
+   "stanje plina i veličine p, V, T kao termodinamičke veličine (ni u preduvjetima ni u predznanju)",
+   "izobarni proces (stalni tlak)",
+   "izohorni proces (stalni volumen)",
+   "kružni proces (ciklus) i zatvorena krivulja u p-V dijagramu kao ciklus",
+   "pretvorba jedinica volumena i tlaka (litra u m³, kPa/bar u Pa)"
+  ]
+ },
+ {
+  "id": "B12.05",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B12.06",
+  "ok": false,
+  "nedostaje": [
+   "toplinski kapacitet tvari (specifični i molarni) i izraz Q = nCΔT, potreban za usporedbu topline pri izohornom i izobarnom zagrijavanju (zadatak D)"
+  ]
+ },
+ {
+  "id": "B12.07",
+  "ok": false,
+  "nedostaje": [
+   "Specifični toplinski kapacitet pri stalnom tlaku i pri stalnom volumenu te njihov omjer κ = c_p/c_V (eksponent u pV^κ = konst. ovisi o tom omjeru)",
+   "Potenciranje s necjelobrojnim eksponentom (npr. V^κ), što nije obrađeno u osnovnoškolskoj matematici"
+  ]
+ },
+ {
+  "id": "B12.08",
+  "ok": false,
+  "nedostaje": [
+   "toplinski spremnik (izvor i ponor topline): pojam toplinskog spremnika kao tijela stalne temperature koje predaje ili prima toplinu, a lekcija ga koristi za Q1 i Q2 kao poznat, a nije uveden ni u preduvjetima ni u predznanju"
+  ]
+ },
+ {
+  "id": "B12.09",
+  "ok": false,
+  "nedostaje": [
+   "adijabatska promjena (Carnotov ciklus se sastoji od dvije izotermne i dvije adijabatske promjene)",
+   "toplinski spremnik (toplinski izvor i hladnjak, koje stroj uzima i predaje toplinu)"
+  ]
+ },
+ {
+  "id": "B13.01",
+  "ok": false,
+  "nedostaje": [
+   "građa atoma: protoni, neutroni i elektroni te njihov električni naboj (potrebno za kvantizaciju naboja, očuvanje naboja i objašnjenje vodiča, izolatora i polarizacije)"
+  ]
+ },
+ {
+  "id": "B13.02",
+  "ok": false,
+  "nedostaje": [
+   "elektroni kao nositelji naboja (pri trenju i dodiru se prenose elektroni)",
+   "dva predznaka naboja, pozitivni i negativni",
+   "električna sila (privlačenje i odbijanje naelektriziranih tijela), potrebna za objašnjenje influencije"
+  ]
+ },
+ {
+  "id": "B13.03",
+  "ok": false,
+  "nedostaje": [
+   "treći Newtonov zakon (zakon akcije i reakcije), koji zadatak C koristi kao poznat",
+   "točkasti naboj kao idealizirani model, koji lekcija koristi kao poznat pojam",
+   "potencije i obrnuta proporcionalnost (1/r²), koje nisu u preduvjetima i nisu jasno dio osnovnoškolske matematike"
+  ]
+ },
+ {
+  "id": "B13.04",
+  "ok": false,
+  "nedostaje": [
+   "probni naboj (mali pozitivni naboj q kojim se mjeri polje u točki; lekcija ga koristi u definiciji E = F/q, a nije uveden u preduvjetima)"
+  ]
+ },
+ {
+  "id": "B13.05",
+  "ok": false,
+  "nedostaje": [
+   "konzervativna sila, odnosno sila čiji rad ne ovisi o putu, pa se za nju može definirati potencijalna energija (lekcija to koristi kao poznato, a ranije lekcije spominju samo potencijalnu energiju bez tog pojma)",
+   "rad promjenjive sile (sile koja ovisi o udaljenosti), potreban za izvod potencijala točkastog naboja V = kq/r; predznanje sadrži samo osnovnoškolsku matematiku, a ranije lekcije govore samo o radu stalne sile"
+  ]
+ },
+ {
+  "id": "B13.06",
+  "ok": false,
+  "nedostaje": [
+   "homogeno električno polje između paralelnih nabijenih ploča (kondenzator) i veza E = U/d"
+  ]
+ },
+ {
+  "id": "B13.07",
+  "ok": false,
+  "nedostaje": [
+   "površinska gustoća naboja (σ = Q/S), potrebna za opis naboja na površini vodiča i za polje nabijenih ploča",
+   "elektrostatička indukcija (raspodjela naboja na vodiču u vanjskom polju), potrebna za objašnjenje Faradayeva kaveza",
+   "Gaussov zakon ili tok električnog polja, koji se obično koristi za polje šuplje nabijene kugle i ploča"
+  ]
+ },
+ {
+  "id": "B13.08",
+  "ok": false,
+  "nedostaje": [
+   "izvor napona (baterija) i njegova uloga pri nabijanju kondenzatora",
+   "srednja vrijednost linearno rastuće veličine (npr. prosječni napon pri nabijanju) potrebna za izvod energije, što nadilazi osnovnoškolsku matematiku"
+  ]
+ },
+ {
+  "id": "B13.09",
+  "ok": false,
+  "nedostaje": [
+   "izvor napona (baterija) kao uređaj koji održava stalni napon između ploča, uz rad koji izvor obavlja pri nabijanju kondenzatora",
+   "permitivnost vakuuma ε0 i formula C = ε0·εr·S/d za pločasti kondenzator"
+  ]
+ },
+ {
+  "id": "B14.01",
+  "ok": false,
+  "nedostaje": [
+   "uzgon (Arhimedov zakon) kao sila u fluidu, koja se u ravnoteži nabijene kuglice koristi bez uvođenja",
+   "izvor napona s polovima (baterija spojena na kondenzator), čiji polaritet lekcija koristi kao poznat"
+  ]
+ },
+ {
+  "id": "B15.01",
+  "ok": false,
+  "nedostaje": [
+   "elektron kao nositelj negativnog naboja u metalnom vodiču (slobodni elektroni koji se gibaju pri proticanju struje)",
+   "mjerna jedinica naboja kulon (C) i pojam količine naboja koja prođe kroz presjek vodiča"
+  ]
+ },
+ {
+  "id": "B15.02",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B15.03",
+  "ok": false,
+  "nedostaje": [
+   "elektromotorna sila (EMS) i električni izvor kao uređaj koji održava napon u krugu, potreban za zadatak D s realnim izvorom"
+  ]
+ },
+ {
+  "id": "B15.04",
+  "ok": false,
+  "nedostaje": [
+   "toplina kao oblik energije (pojam topline kao energije koja se prenosi i pretvara iz drugih oblika energije, što lekcija koristi kod Jouleove topline)"
+  ]
+ },
+ {
+  "id": "B16.01",
+  "ok": false,
+  "nedostaje": [
+   "magnetske domene (područja unutar tvari u kojima su magnetski momenti atoma usmjereni u istom smjeru), koje zadatak C koristi za objašnjenje namagnetiziranja, a nisu uvedene ni u preduvjetima ni u predznanju",
+   "magnetski moment atoma (mikroskopski magnetski učinak atoma ili elektrona), potreban za razumijevanje domena, a nije uveden ni u preduvjetima ni u predznanju"
+  ]
+ },
+ {
+  "id": "B16.02",
+  "ok": false,
+  "nedostaje": [
+   "vektorska veličina (smjer i iznos), potrebna za pojam smjera i jakosti polja",
+   "tangenta na krivulju, potrebna za određivanje smjera polja iz silnica",
+   "mjerna jedinica tesla i SI sustav jedinica, potrebni za oznaku i jedinicu polja",
+   "pojam homogenog (jednolikog) polja, koji se koristi u zadatku D"
+  ]
+ },
+ {
+  "id": "B16.03",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B16.04",
+  "ok": false,
+  "nedostaje": [
+   "magnetska konstanta (permeabilnost vakuuma) μ0 i formula B = μ0·I/(2π·r), koje su potrebne za računanje B u zadatku A"
+  ]
+ },
+ {
+  "id": "B16.05",
+  "ok": false,
+  "nedostaje": [
+   "magnetska permeabilnost (μ), odnosno magnetska konstanta μ0 i relativna permeabilnost jezgre, potrebne za izračun B u zavojnici i za objašnjenje pojačanja željezne jezgre"
+  ]
+ },
+ {
+  "id": "B17.01",
+  "ok": false,
+  "nedostaje": [
+   "sinus kuta (trigonometrijska funkcija) potreban za formulu F_L = qvB sin α, koji nije u preduvjetima niti u predznanju (osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B17.02",
+  "ok": false,
+  "nedostaje": [
+   "sinus kuta (trigonometrija), potreban za formulu F = BIℓ sin α, a nije u preduvjetima ni u predznanju (predznanje je samo osnovnoškolska matematika)",
+   "nosioci naboja, njihova gustoća n i brzina usmjerenog gibanja (driftа) te presjek vodiča S, potrebni za povezivanje struje I = nqvS s Lorentzovom silom na pokretne naboje"
+  ]
+ },
+ {
+  "id": "B17.03",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus za rastavljanje vektora na komponente (potrebne za vektorski zbroj polja i sile pod kutom, npr. u formuli F = BIl·sinα i u zadatku D)"
+  ]
+ },
+ {
+  "id": "B17.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B17.05",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus u pravokutnom trokutu za rastavljanje brzine na komponente (osnovnoškolska matematika ih ne obuhvaća, a nisu uvedene ni u jednoj ranijoj lekciji)"
+  ]
+ },
+ {
+  "id": "B17.06",
+  "ok": false,
+  "nedostaje": [
+   "izmjenični napon (potreban za ciklotron, a uvodi se samo istosmjerni napon u lekciji o naponu)",
+   "moment sile i zakretni moment (potrebni za opis rada elektromotora, a nisu uvedeni)",
+   "ionizacija atoma i izotopi (potrebni za objašnjenje masenog spektrometra, a nisu uvedeni u preduvjetima ni predznanju)",
+   "Zemljino magnetsko polje kao prirodni izvor polja (potrebno za objašnjenje Zemljine zaštite, a nije uvedeno)"
+  ]
+ },
+ {
+  "id": "B18.01",
+  "ok": false,
+  "nedostaje": [
+   "kosinus kuta (trigonometrijska funkcija cos α), koja nije u osnovnoškolskoj matematici",
+   "električni napon, koji lekcija koristi u pojmu induciranog napona bez prethodnog uvođenja",
+   "homogeno magnetsko polje, koje se pojavljuje u zadatku C bez prethodnog definiranja",
+   "normala na plohu i kut α između smjera polja i normale, bez kojih se formula Φ = B·S·cosα ne može razumjeti",
+   "zavojnica, koja se pojavljuje u zadatku D bez prethodnog uvođenja"
+  ]
+ },
+ {
+  "id": "B18.02",
+  "ok": false,
+  "nedostaje": [
+   "funkcija sinus i kut α (trigonometrija) koju lekcija koristi u formuli U_i = B·ℓ·v·sinα, a nije uvedena u preduvjetima ni u predznanju (predznanje je samo osnovnoškolska matematika)",
+   "nagib grafa kao brzina promjene veličine (omjer ΔΦ/Δt, odnosno nagib tangente za nelinearni Φ(t)) koji lekcija koristi za očitavanje napona iz grafa Φ(t), a nije eksplicitno uveden u preduvjetima"
+  ]
+ },
+ {
+  "id": "B18.03",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B18.04",
+  "ok": false,
+  "nedostaje": [
+   "sinusna (trigonometrijska) funkcija i njezino čitanje: argument sin(ωt+φ₀), amplituda, fazni pomak i periodičnost",
+   "radijan kao mjera kuta potrebna za kutnu frekvenciju ω u rad/s"
+  ]
+ },
+ {
+  "id": "B18.05",
+  "ok": false,
+  "nedostaje": [
+   "vremenska srednja vrijednost periodične sinusne funkcije (srednja vrijednost kvadrata sinusnog signala kroz period, potrebna za izvođenje efektivne vrijednosti i srednje snage)"
+  ]
+ },
+ {
+  "id": "B18.06",
+  "ok": false,
+  "nedostaje": [
+   "fazni pomak između napona i struje u zavojnici i kondenzatoru",
+   "efektivne (djelotvorne) vrijednosti izmjeničnog napona i struje u izrazu I = U/Z"
+  ]
+ },
+ {
+  "id": "B18.07",
+  "ok": false,
+  "nedostaje": [
+   "moment sile (zakretni moment) i krak sile, potrebni za objašnjenje zakretanja zavojnice u zadatku A i C"
+  ]
+ },
+ {
+  "id": "B18.08",
+  "ok": false,
+  "nedostaje": [
+   "efektivna (effective) vrijednost izmjeničnog napona i struje, potrebna za računanje napona preko omjera zavoja i struja iz P₁ = P₂"
+  ]
+ },
+ {
+  "id": "B19.01",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus (kao periodične funkcije kuta), potrebne za jednadžbu x(t) = A·sin(ωt + φ0) i očitavanje faze φ0"
+  ]
+ },
+ {
+  "id": "B19.02",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus (periodičke funkcije kuta) potrebne za y(t)=A·sin(ωt+φ0) i v(t), a(t)",
+   "radijan kao mjera kuta, potrebna za fazu ωt+φ0 i fazne razlike"
+  ]
+ },
+ {
+  "id": "B19.03",
+  "ok": false,
+  "nedostaje": [
+   "kinetička energija (½mv²) i elastična potencijalna energija (½kx²)",
+   "zakon očuvanja mehaničke energije"
+  ]
+ },
+ {
+  "id": "B19.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B19.05",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus (sin α, cos α) u pravokutnom trokutu, potrebne za povratnu silu mg sin α i za visinu h = l(1 − cos α)",
+   "mjera kuta u radijanima i aproksimacija sin α ≈ α za male kutove, potrebna za harmonijsko titranje i formulu T = 2π√(l/g)",
+   "rastav sile na komponente (tangencijalna komponenta težine mg sin α), koji se ne uvodi u prethodnim lekcijama"
+  ]
+ },
+ {
+  "id": "B19.06",
+  "ok": false,
+  "nedostaje": [
+   "zavojnica (svitak) i njezin induktivitet L, koji se koristi u Thomsonovoj formuli i pri opisu energije magnetskog polja zavojnice",
+   "električna struja kao tok naboja, potrebna za opis stanja struje u krugu",
+   "energija magnetskog polja zavojnice, koja se koristi kao poznata veličina",
+   "elektromagnetska indukcija (samoindukcija), na kojoj se temelji izmjena energije između zavojnice i kondenzatora"
+  ]
+ },
+ {
+  "id": "B19.07",
+  "ok": false,
+  "nedostaje": [
+   "vlastita (prirodna) frekvencija sustava, koja se koristi u uvjetu rezonancije, a nije uvedena u preduvjetima",
+   "eksponencijalni pad (eksponencijalna funkcija), potreban za opis opadanja amplitude kod prigušenog titranja"
+  ]
+ },
+ {
+  "id": "B20.01",
+  "ok": false,
+  "nedostaje": [
+   "pojam faze titranja (fazni pomak i zakašnjenje u fazi)",
+   "pojam energije kao prenosivog svojstva (kinetička i potencijalna energija)",
+   "elastičnost sredstva i elastična (povratna) sila između čestica"
+  ]
+ },
+ {
+  "id": "B20.02",
+  "ok": false,
+  "nedostaje": [
+   "linijska gustoća (masa po jedinici duljine užeta), koja je potrebna za procjenu utjecaja gustoće užeta na brzinu",
+   "napetost užeta kao sila u užetu, koja je potrebna za procjenu utjecaja napetosti na brzinu"
+  ]
+ },
+ {
+  "id": "B20.03",
+  "ok": false,
+  "nedostaje": [
+   "funkcija sinus (trigonometrijska funkcija kao sin(argument) i njezino ponašanje između −1 i 1)",
+   "radijan kao mjera kuta/faze (npr. 2π za puni ciklus, veza π radijana i 180°)"
+  ]
+ },
+ {
+  "id": "B20.04",
+  "ok": false,
+  "nedostaje": [
+   "površina sfere 4πr² (geometrijska formula potrebna za zadatak B i za izvod I ∝ 1/r²; nije u preduvjetima ni u osnovnoškolskom predznanju)",
+   "pojam točkastog izvora i sfernog širenja vala (valna fronta na udaljenosti r) koji lekcija koristi u zadatku C, a nije uveden ranije"
+  ]
+ },
+ {
+  "id": "B20.05",
+  "ok": false,
+  "nedostaje": [
+   "Prikaz vala kao oblika užeta u jednom trenutku, odnosno graf pomaka y u ovisnosti o položaju x (ranije su obrađeni samo grafovi x(t) i v(t))"
+  ]
+ },
+ {
+  "id": "B20.06",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijska funkcija sinus (omjeri sinusa kutova u zakonu loma sin α / sin β), koja nije u preduvjetima ni u predznanju (osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B20.07",
+  "ok": false,
+  "nedostaje": [
+   "ogib (difrakcija) valova na otvoru i zapreci, koji se koristi u zadatku D, a nije uveden ni u preduvjetima ni u predznanju",
+   "trigonometrijska funkcija kosinus, potrebna za rezultantnu amplitudu u zadatku B, a nije u predznanju (osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B20.08",
+  "ok": false,
+  "nedostaje": [
+   "učvršćeni krajevi žice kao rubni uvjet (na krajevima je uvijek čvor), koji lekcija koristi pri uvjetu L = nλ/2, a nije uveden ni u jednom preduvjetu",
+   "pojam harmonika (n-ti harmonik kao broj polovina valnih duljina na žici), koji lekcija koristi pri primjeni uvjeta L = nλ/2, a nije uveden ranije"
+  ]
+ },
+ {
+  "id": "B21.01",
+  "ok": false,
+  "nedostaje": [
+   "temperatura kao fizikalna veličina (pojam i mjerne skale, npr. Celzijeva i apsolutna), potrebna za razumijevanje ovisnosti brzine zvuka o temperaturi",
+   "gustoća tvari kao fizikalna veličina, potrebna za usporedbu brzine zvuka u čvrstim tvarima, tekućinama i plinovima"
+  ]
+ },
+ {
+  "id": "B21.02",
+  "ok": false,
+  "nedostaje": [
+   "logaritam (log₁₀ i njegova svojstva, npr. log(a·b) = log a + log b, log(10ⁿ) = n, log(a/b) = log a − log b), potrebni za računanje razine zvuka u decibelima i razlike razina"
+  ]
+ },
+ {
+  "id": "B21.03",
+  "ok": false,
+  "nedostaje": [
+   "tlak zraka i tlačni čvorovi/trbusi u cijevi (zatvoreni kraj je tlačni trbuh, otvoreni tlačni čvor), koji se koriste za određivanje uvjeta na cijevi, a nisu uvedeni u preduvjetima ni predznanju"
+  ]
+ },
+ {
+  "id": "B21.04",
+  "ok": false,
+  "nedostaje": [
+   "refleksija (odbijanje) valova, koja je potrebna za razumijevanje radara i ultrazvučnog mjerenja protoka krvi",
+   "elektromagnetski valovi (radiovalovi i svjetlost), koji su potrebni za primjer radara"
+  ]
+ },
+ {
+  "id": "B22.01",
+  "ok": false,
+  "nedostaje": [
+   "pravocrtno širenje svjetlosti (lekcija se oslanja na to da svjetlost putuje pravocrtno, a to nije uvedeno ni u preduvjetima ni u predznanju)",
+   "ravna glatka površina kao reflektirajuća površina (zrcalo), koja se koristi u zakonu odbijanja, a nije uvedena ranije"
+  ]
+ },
+ {
+  "id": "B22.02",
+  "ok": false,
+  "nedostaje": [
+   "produljenje odbijenih zraka iza zrcala (zrake se u konstrukciji i opisu slike moraju produžiti unatrag, a taj pojam nije uveden ranije)",
+   "percepcija slike: promatrač vidi zrake koje ulaze u oko kao da dolaze iz smjera produljenja, što lekcija koristi za povezivanje slike s odbijenim zrakama"
+  ]
+ },
+ {
+  "id": "B22.03",
+  "ok": false,
+  "nedostaje": [
+   "sinus kuta (trigonometrijska funkcija), koji se koristi pri Snellovom zakonu i računanju kutova loma, a nije uveden ni u preduvjetima ni u predznanju (predznanje je samo osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B22.04",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijska funkcija sinus i inverzni sinus (sin⁻¹) za računanje kutova"
+  ]
+ },
+ {
+  "id": "B22.05",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijska funkcija sinus (računanje sinusa kuta i inverznog sinusa), koju lekcija koristi za granični kut i provjeru totalne refleksije, a nije uvedena u preduvjetima niti spada u osnovnoškolsku matematiku"
+  ]
+ },
+ {
+  "id": "B22.06",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i kosinus kuta (definirane omjerom stranica u pravokutnom trokutu) potrebne za računanje pomaka i izlaznog kuta, a nisu ni u preduvjetima ni u predznanju (predznanje je samo osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B22.07",
+  "ok": false,
+  "nedostaje": [
+   "optička (glavna) os leće kao pravac kroz središte leće okomit na njezinu ravninu, koji lekcija koristi u zadatku B bez prethodnog uvođenja",
+   "paralelne zrake svjetlosti koje upadaju na leću, na kojima se definira žarište, a nisu uvedene u preduvjetima"
+  ]
+ },
+ {
+  "id": "B22.08",
+  "ok": false,
+  "nedostaje": [
+   "stvarna i virtualna slika (pojmovi potrebni za predznake b i f)",
+   "predmetna udaljenost a i slikovna udaljenost b kao veličine položaja predmeta i slike",
+   "optička os leće kao referentni pravac za mjerenje udaljenosti"
+  ]
+ },
+ {
+  "id": "B22.09",
+  "ok": false,
+  "nedostaje": [
+   "realna i virtualna (prividna) slika, koju zadatak koristi za A/B (realna) i C/D (virtualna) bez uvođenja u preduvjetima ili predznanju"
+  ]
+ },
+ {
+  "id": "B23.01",
+  "ok": false,
+  "nedostaje": [
+   "lom svjetlosti (refrakcija) kao valno svojstvo, koje zadatak A koristi kao poznato, a nije uvedeno u preduvjetima",
+   "brzina svjetlosti c u vakuumu, potrebna za primjenu v = λ·f na svjetlost, a nije uvedena u preduvjetima"
+  ]
+ },
+ {
+  "id": "B23.02",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijske funkcije sinus i tangens (potrebne za razliku hoda d·sinθ i odnos y/L)",
+   "aproksimacija malih kutova sinθ ≈ tgθ ≈ θ, koja se koristi pri izvodu s = λL/d"
+  ]
+ },
+ {
+  "id": "B23.03",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrijski odnosi, osobito sinus kuta u pravokutnom trokutu (sin α, tan α = x/L), koji se koriste u d sin α = kλ i pri računanju kuta iz položaja maksimuma na zastoru, a nisu ni u preduvjetima ni u predznanju (predznanje je samo osnovnoškolska matematika)"
+  ]
+ },
+ {
+  "id": "B23.04",
+  "ok": false,
+  "nedostaje": [
+   "tangens kuta (trigonometrijska funkcija tg α, uključujući računanje kuta pomoću inverzne funkcije) potreban za Brewsterov kut tg α_B = n",
+   "kosinus kuta (trigonometrijska funkcija cos α) potreban za ovisnost intenziteta o kutu osi polarizatora i analizatora"
+  ]
+ },
+ {
+  "id": "B23.05",
+  "ok": false,
+  "nedostaje": [
+   "bijela svjetlost kao zbroj boja vidljivog spektra (disperzija), potrebna za objašnjenje crvenog Sunca pri izlasku i zalasku",
+   "atmosfera kao plinski omotač Zemlje sastavljen od molekula (dušik, kisik), na kojem se odvija raspršenje"
+  ]
+ },
+ {
+  "id": "B24.01",
+  "ok": false,
+  "nedostaje": [
+   "magnetsko polje i magnetska indukcija B (lekcija ga koristi kao poznato, a nije uvedeno u preduvjetima)",
+   "elektromagnetska indukcija: promjenjivo magnetsko polje stvara električno polje (lekcija to koristi za međusobno stvaranje E i B)",
+   "fazni odnos titranja (faza): lekcija tvrdi da E i B titraju u fazi, a pojam faze nije uveden u preduvjetima"
+  ]
+ },
+ {
+  "id": "B24.02",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B24.03",
+  "ok": false,
+  "nedostaje": [
+   "Planckova konstanta h i njezina vrijednost, potrebna za E = hf (zadatak B)",
+   "SI prefiksi (k, M, G, m, n) i zapis potencija broja 10, potrebni za zadatak D (npr. 1 MHz = 10⁶ Hz)"
+  ]
+ },
+ {
+  "id": "B24.04",
+  "ok": false,
+  "nedostaje": [
+   "građa atoma i vezani elektroni (potrebni za objašnjenje ionizacije)",
+   "ionizacijska energija atoma ili molekule (prag za ionizirajuće zračenje)",
+   "molekule i polarne molekule, na primjer voda (potrebne za zagrijavanje u mikrovalnoj pećnici)",
+   "jezgra atoma i radioaktivni raspad (gama zračenje se u lekciji koristi kao poznato)",
+   "modulacija signala i prijenos informacija valovima (potrebni za TV, radio i mobilnu komunikaciju)"
+  ]
+ },
+ {
+  "id": "B25.01",
+  "ok": false,
+  "nedostaje": [
+   "elektron kao negativno nabijena čestica vezana u atomu metala (nosilac naboja koji se oslobađa iz metala)"
+  ]
+ },
+ {
+  "id": "B25.02",
+  "ok": false,
+  "nedostaje": [
+   "Planckova konstanta h i relacija E = hf (formula za energiju fotona, a ne samo pojam kvanta energije)",
+   "Intenzitet svjetlosti kao fizikalna veličina (snaga po jedinici površine), potreban za ovisnost fotostruje o intenzitetu"
+  ]
+ },
+ {
+  "id": "B25.03",
+  "ok": false,
+  "nedostaje": [
+   "linearna funkcija y = kx + l i nagib pravca (koeficijent smjera), potrebni za očitavanje h iz nagiba i f₀ iz presjeka s osi f",
+   "elementarni naboj e kao vrijednost kvanta naboja, potreban za zapis e·U_z"
+  ]
+ },
+ {
+  "id": "B25.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B25.05",
+  "ok": false,
+  "nedostaje": [
+   "Planckova konstanta h i relacija E = hf (kvant energije fotona s nazivom konstante; lekcija o fotoefektu ne uvodi simbol h)",
+   "Kristalna rešetka i Braggov uvjet nλ = 2d·sinθ, potrebni za tumačenje Davisson–Germerova pokusa",
+   "Pretvorba električne energije u kinetičku pri ubrzavanju naboja (E_k = qU kao izvedena veza rada polja i kinetičke energije), koja je samo djelomično pokrivena potencijalom i naponom",
+   "Kvadratni korijen i račun s potencijama broja 10 (npr. zapis vrlo malih vrijednosti h ≈ 6,6·10⁻³⁴ J·s), potrebni za v = √(2qU/m) i λ = h/(mv)"
+  ]
+ },
+ {
+  "id": "B26.01",
+  "ok": false,
+  "nedostaje": [
+   "građa atoma: pozitivno nabijena jezgra i negativno nabijeni elektroni, uz neutralnost atoma",
+   "alfa čestice kao brzo pozitivno nabijene čestice iz radioaktivnog izvora, potrebne za opis pokusa sa zlatnom folijom"
+  ]
+ },
+ {
+  "id": "B26.02",
+  "ok": false,
+  "nedostaje": [
+   "Planckova konstanta h i relacija E = h·f za energiju fotona (prijelaz elektrona između razina koristi je za frekvenciju emitirane svjetlosti, a u predznanju i preduvjetima se spominje samo da energija fotona raste s frekvencijom)",
+   "Energija vezanja elektrona u atomu i pojam ionizacije (potrebni za procjenu granica spektra i za razliku atoma s jednim elektronom od ostalih)"
+  ]
+ },
+ {
+  "id": "B26.03",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B26.04",
+  "ok": false,
+  "nedostaje": [
+   "Planckova konstanta h i kvantitativna veza E = h·f između energije fotona i frekvencije (preduvjet o fotonu kao kvantu energije to ne uvodi)",
+   "Energijski dijagram atoma s osnovnim i pobuđenim stanjima te čitanje prijelaza strelicama (preduvjet Bohrovi postulati spominje kvantizirane energije, ali ne uvodi dijagram ni pojmove stanja)"
+  ]
+ },
+ {
+  "id": "B26.05",
+  "ok": false,
+  "nedostaje": [
+   "Planckova konstanta h i relacija E = h·f (odnosno λ = hc/E, hc ≈ 1240 eV·nm), potrebne za pretvorbu energije fotona u valnu duljinu pri određivanju područja zračenja u zadatku B i za usporedbu linija u zadatku C; u preduvjetima se energija fotona povezuje s frekvencijom, ali konstanta h nije uvedena",
+   "Rydbergova formula za valne duljine (1/λ = R(1/n₁² − 1/n₂²)), ako se lekcija oslanja na nju za računanje valnih duljina linija serija, a nije uvedena u preduvjetima"
+  ]
+ },
+ {
+  "id": "B27.01",
+  "ok": false,
+  "nedostaje": [
+   "kemijski element i njegov simbol (oznaka nuklida ^A_Z X koristi kemijsku oznaku elementa, a to nije uvedeno u preduvjetima ni predznanju)",
+   "atomska jedinica mase u (zadatak D spominje 'mjeru u', a jedinica nije uvedena ranije)"
+  ]
+ },
+ {
+  "id": "B27.02",
+  "ok": false,
+  "nedostaje": [
+   "atomska jedinica mase u (unificirana jedinica mase) i njezina veza s kilogramom te MeV",
+   "brzina svjetlosti u vakuumu c kao poznata konstanta"
+  ]
+ },
+ {
+  "id": "B27.03",
+  "ok": false,
+  "nedostaje": [
+   "količina gibanja (impuls, p = m·v) i njezino očuvanje, koje lekcija koristi kao poznato, a nigdje nije uvedeno",
+   "vrste čestica i zračenja u nuklearnim reakcijama (alfa čestica, beta čestica, elektron, pozitron, gama zračenje) i njihove oznake, koje su potrebne za dopunjavanje jednadžbe u zadatku C"
+  ]
+ },
+ {
+  "id": "B27.04",
+  "ok": false,
+  "nedostaje": [
+   "pozitron kao antičestica elektrona i njegova oznaka ⁰₊₁e (potrebna za β⁺ raspad)",
+   "elektron kao česticu koju jezgra emitira i njegova oznaka ⁰₋₁e (potrebna za β⁻ raspad)",
+   "antineutrino i neutrino kao čestice bez naboja koje se emitiraju pri β raspadu",
+   "ekscitirano (pobuđeno) stanje jezgre i prijelaz u niže energijsko stanje, koje je uzrok γ zračenja"
+  ]
+ },
+ {
+  "id": "B27.05",
+  "ok": false,
+  "nedostaje": [
+   "krivulja energije vezanja po nukleonu u ovisnosti o masenom broju A (energija vezanja po nukleonu), koju lekcija koristi kao poznatu za objašnjenje fisije i fuzije",
+   "atomska jedinica mase u i pretvorba mase u energiju u MeV potrebne za računanje Q iz masa"
+  ]
+ },
+ {
+  "id": "B27.06",
+  "ok": false,
+  "nedostaje": [
+   "Toplina i prijenos topline (energija oslobođena fisijom predaje se vodi i pari)",
+   "Parna turbina i njezin rad kao pretvorba toplinske u mehaničku energiju",
+   "Elektromagnetska indukcija (generator pretvara mehaničku energiju turbine u električnu)",
+   "Neutron kao čestica koja izaziva fisiju jezgre urana",
+   "Kritična masa (potrebna za usporedbu s nuklearnom bombom)"
+  ]
+ },
+ {
+  "id": "B28.01",
+  "ok": false,
+  "nedostaje": [
+   "eksponencijalna funkcija i potencije s negativnim i razlomljenim eksponentom (npr. 2^(−t/T))",
+   "logaritam za izračun vremena poluraspada T iz podataka (T = t·ln2 / ln(N₀/N))",
+   "čitanje i crtanje eksponencijalnog pada N(t) na grafu"
+  ]
+ },
+ {
+  "id": "B28.02",
+  "ok": false,
+  "nedostaje": [
+   "Avogadrov broj i molarna masa, potrebni za određivanje broja jezgara N iz mase uzorka (zadatak D)",
+   "potencije s razlomljenim i negativnim eksponentom, tj. eksponencijalna funkcija 2^(−t/T) (zadatak C), što nije obuhvaćeno osnovnoškolskom matematikom"
+  ]
+ },
+ {
+  "id": "B28.03",
+  "ok": false,
+  "nedostaje": [
+   "gustoća tvari (potrebna za usporedbu zaštitnih materijala u zadatku D)"
+  ]
+ },
+ {
+  "id": "B28.04",
+  "ok": false,
+  "nedostaje": [
+   "građa stanice i DNK (DNK kao molekula nasljednog materijala) potrebna za zadatak A, a nije uvedena u preduvjetima ni predznanju",
+   "kemijske veze i pojam slobodnih radikala potrebni za objašnjenje oštećenja DNK zračenjem, a nisu uvedeni ranije"
+  ]
+ },
+ {
+  "id": "B28.05",
+  "ok": false,
+  "nedostaje": [
+   "anihilacija pozitrona i elektrona (fotoni nastali pri anihilaciji u PET-u)",
+   "rendgensko zračenje i rendgenska cijev kao umjetni izvor",
+   "kozmičko zračenje kao prirodni izvor",
+   "prirodni radionuklidi u tlu, građevinskom materijalu i zraku (npr. radon, kalij-40)",
+   "akcelerator čestica i umjetno proizvedeni radioizotopi (npr. za PET)",
+   "apsorbirana doza zračenja i njezina mjerna jedinica (Gy, Sv)"
+  ]
+ },
+ {
+  "id": "B29.01",
+  "ok": false,
+  "nedostaje": [
+   "relativistički učinci (dilatacija vremena i kontrakcija duljina), koje lekcija podrazumijeva kao poznate kad govori o γ kao mjeri tih učinaka",
+   "kvadratni korijen i račun s potencijama i razlomcima potrebni za formulu γ = 1/√(1 − v²/c²), a nisu sadržani u navedenom predznanju 'osnovnoškolska matematika'"
+  ]
+ },
+ {
+  "id": "B29.02",
+  "ok": false,
+  "nedostaje": [
+   "Pojam nestabilnih čestica i raspada, uključujući srednje vrijeme života čestice (T0 kao vrijeme života u mirovanju), na kojem lekcija temelji primjenu na mion i pion",
+   "Subatomske čestice (mion i pion) kao objekti s određenim svojstvima, koje lekcija pretpostavlja kao poznate"
+  ]
+ },
+ {
+  "id": "B29.03",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B29.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B29.05",
+  "ok": false,
+  "nedostaje": [
+   "razvoj u red (binomna aproksimacija) za γ pri малim brzinama, potreban za usporedbu s mv²/2 u zadatku C",
+   "granična vrijednost i pojam beskonačnosti, potrebni za zaključak da γ → ∞ kad v → c u zadatku D",
+   "račun s kvadratnim korijenom i razlomcima u izrazu γ = 1/√(1 − v²/c²)"
+  ]
+ },
+ {
+  "id": "B30.01",
+  "ok": false,
+  "nedostaje": [
+   "čestica kao osnovna sastavna jedinica tvari (npr. protoni, elektroni) potrebna za slijed ranog svemira",
+   "atom kao građevna jedinica tvari i pojam nastanka atoma iz čestica",
+   "galaksija kao velik sustav zvijezda i plinova te pojam nastanka galaksija",
+   "elektromagnetsko zračenje (svjetlost, fotoni) i pojam da se ono širi kroz svemir",
+   "temperatura i hlađenje tvari pri širenju, potrebni za opis ranog svemira"
+  ]
+ },
+ {
+  "id": "B30.02",
+  "ok": false,
+  "nedostaje": [
+   "Dopplerov efekt (pomak valne duljine ili frekvencije zbog gibanja izvora i promatrača), koji lekcija koristi za tumačenje crvenog pomaka",
+   "Temperatura i toplinsko zračenje (zračenje crnog tijela), koje lekcija koristi za objašnjenje kozmičkog mikrovalnog pozadinskog zračenja",
+   "Astronomske jedinice udaljenosti (svjetlosna godina, parsek), koje lekcija koristi u računu udaljenosti galaksija"
+  ]
+ },
+ {
+  "id": "B30.03",
+  "ok": false,
+  "nedostaje": [
+   "Jednoliko kružno gibanje i centripetalna sila (centripetalna akceleracija v²/r), potrebni za objašnjenje vrtnje galaksija u zadatku B"
+  ]
+ },
+ {
+  "id": "B30.04",
+  "ok": false,
+  "nedostaje": [
+   "brzina svjetlosti (potrebna za definiciju svjetlosne godine, a nije u preduvjetima ni u predznanju)",
+   "potencije broja 10 i znanstveni zapis (potrebni za pretvorbe udaljenosti reda veličine svjetlosnih godina, a nisu sigurno dio osnovnoškolske matematike)"
+  ]
+ },
+ {
+  "id": "B30.05",
+  "ok": false,
+  "nedostaje": [
+   "HR dijagram (odnos svjetlosnosti i temperature zvijezda, glavni niz) i pojam svjetlosnosti zvijezde"
+  ]
+ },
+ {
+  "id": "B30.06",
+  "ok": false,
+  "nedostaje": [
+   "Degeneracijski tlak (Paulijev princip isključenja) koji podupire bijele patuljke i neutronske zvijezde, a nije u preduvjetima ni predznanju",
+   "Brzina oslobađanja iz gravitacijskog polja, potrebna za razumijevanje crne rupe, a nije u preduvjetima ni predznanju"
+  ]
+ },
+ {
+  "id": "B31.01",
+  "ok": false,
+  "nedostaje": [
+   "koordinatne osi (x i y osi) potrebne za crtanje skice i rastavljanje sila",
+   "mjerne jedinice i sustav SI (npr. kg, m, s, m/s²) te pretvaranje među jedinicama"
+  ]
+ },
+ {
+  "id": "B31.02",
+  "ok": false,
+  "nedostaje": [
+   "fizikalni zakoni i njihove formule (npr. drugi Newtonov zakon F = m·a) koje lekcija koristi za povezivanje pojave sa zakonom, a nisu uvedeni u preduvjetima ni u predznanju"
+  ]
+ },
+ {
+  "id": "B31.03",
+  "ok": false,
+  "nedostaje": [
+   "trigonometrija (sinus, kosinus, tangens u pravokutnom trokutu), koju lekcija koristi u zadatku A",
+   "značajne znamenke, koje lekcija koristi u zadatku D kao poznat pojam",
+   "potencije (eksponenti i računanje s njima), koje lekcija koristi u zadatku A i pri izvođenju izraza"
+  ]
+ },
+ {
+  "id": "B31.04",
+  "ok": true,
+  "nedostaje": []
+ },
+ {
+  "id": "B31.05",
+  "ok": false,
+  "nedostaje": [
+   "Potencije broja 10 s negativnim eksponentom (npr. 10^−3, 10^−6) i znanstveni zapis, potrebni za pretvorbu prefiksa (kilo, mili, mikro)"
+  ]
+ },
+ {
+  "id": "B31.06",
+  "ok": false,
+  "nedostaje": [
+   "pojam fizikalne veličine i njezine mjerne jedinice (lekcija to koristi kao poznato već u svojoj ideji)",
+   "pojam nagiba grafa kao omjera promjene veličina (Δy/Δx) i fizikalno značenje površine ispod grafa kao umnoška veličina"
+  ]
+ },
+ {
+  "id": "B31.07",
+  "ok": false,
+  "nedostaje": [
+   "granice rezultante dviju sila, tj. ovisnost iznosa rezultante o kutu između sila: |F1 − F2| ≤ R ≤ F1 + F2",
+   "znanstveni zapis i potencije broja 10 potrebne za procjenu reda veličine"
+  ]
+ }
+]

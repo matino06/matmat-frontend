@@ -46,7 +46,7 @@ def _post(url, body):
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
             msg = e.read().decode()[:500]
-            if e.code in (429, 500, 502, 503, 524, 529) and attempt < 5:
+            if e.code in (402, 429, 500, 502, 503, 524, 529) and attempt < 5:
                 time.sleep(2 ** attempt * 3); continue
             raise RuntimeError(f"{e.code} {msg}")
         except (urllib.error.URLError, TimeoutError) as e:
@@ -69,7 +69,7 @@ def _cached(step, payload, fn):
     return res
 
 
-def chat(step, model, system, user, json_out=True, max_tokens=16000, reasoning=None):
+def chat(step, model, system, user, json_out=True, max_tokens=16000, reasoning=None, _try=0):
     content = user if isinstance(user, list) else [{"type": "text", "text": user}]
     body = {"model": model, "max_tokens": max_tokens, "usage": {"include": True},
             "messages": [{"role": "system", "content": system},
@@ -78,12 +78,18 @@ def chat(step, model, system, user, json_out=True, max_tokens=16000, reasoning=N
         body["response_format"] = {"type": "json_object"}
     if reasoning:
         body["reasoning"] = {"effort": reasoning}
+    if _try:
+        body["seed"] = _try  # novi ključ cachea = novi poziv
     res = _cached(step, body, lambda: _post("https://openrouter.ai/api/v1/chat/completions", body))
     text = res["choices"][0]["message"]["content"] or ""
     if not json_out:
         return text
     m = re.search(r"\{.*\}", text, re.S)
-    return json.loads(m.group(0) if m else text)
+    try:
+        return json.loads(m.group(0) if m else text)
+    except json.JSONDecodeError:
+        if _try >= 2: raise
+        return chat(step, model, system, user, json_out, max_tokens, reasoning, _try + 1)
 
 
 def decide(step, state, questions):
@@ -92,6 +98,7 @@ def decide(step, state, questions):
 
 
 def pmap(fn, items, workers=8):
+    workers = min(workers, int(os.environ.get("MAXW", workers)))  # manje paralelnih poziva = manji in-flight budžet
     with ThreadPoolExecutor(workers) as ex:
         return list(ex.map(fn, items))
 
@@ -428,7 +435,7 @@ def step_compare():
 
     def one(batch):
         m = "\n".join(f"{x['id']} {x['naziv']} — uči: {x['uci']}" for x in batch)
-        return chat("compare", M_PLAN,
+        return chat("compare", os.environ.get("M_COMPARE", M_PLAN),
             "Za svaku lekciju RUČNOG plana navedi koje lekcije GENERIRANOG plana pokrivaju njezino gradivo. "
             "Vrati JSON {\"lekcije\":[{\"rucna\":\"id\",\"generirane\":[\"id\"],\"pokriveno\":\"cijelo|djelomicno|nista\","
             "\"napomena\":\"što fali ili zašto je spojeno\"}]}",
@@ -617,6 +624,58 @@ def step_group():
     print(f"Grupiranje: {len(lessons)} lekcija iz {len(P)} stavki; veličine {sorted(collections.Counter(sizes).items())}; "
           f"{len(missing)} stavki bez lekcije; {back} preduvjeta pokazuje unaprijed (kasnija lekcija)")
 
+
+
+def step_repair():
+    """Kod: spoji premale lekcije sa susjednom u istom bloku, pa topološki poredaj lekcije."""
+    plan = load("plan.json")
+    if not (OUT / "plan_grouped.json").exists():
+        save("plan_grouped.json", plan)
+    plan = load("plan_grouped.json")
+    P = {p["id"]: p for p in load("stavke.json")}
+    lo, hi = BUDGET
+    out = []
+    for b in plan["blokovi"]:
+        ls = [dict(l) for l in plan["lekcije"] if l["blok"] == b["id"]]
+        changed = True
+        while changed and len(ls) > 1:
+            changed = False
+            for i, l in enumerate(ls):
+                if len(l["stavke"]) >= lo: continue
+                cands = [j for j in (i + 1, i - 1) if 0 <= j < len(ls) and len(ls[j]["stavke"]) + len(l["stavke"]) <= hi]
+                if not cands: continue
+                j = min(cands, key=lambda j: len(ls[j]["stavke"]))
+                a, c = sorted((i, j))
+                m = ls[a]
+                m["stavke"] = ls[a]["stavke"] + ls[c]["stavke"]
+                m["naziv"] = f"{ls[a]['naziv']} + {ls[c]['naziv']}"
+                m["koncept"] = f"{ls[a]['koncept']} {ls[c]['koncept']}"
+                m["zadatak"] = f"{ls[a]['zadatak']} / {ls[c]['zadatak']}"
+                del ls[c]
+                changed = True
+                break
+        out += ls
+    owner = {x: l["id"] for l in out for x in l["stavke"]}
+    for l in out:
+        l["preduvjeti"] = sorted({owner[y] for x in l["stavke"] for y in P[x]["preduvjeti"] if owner.get(y) and owner[y] != l["id"]})
+        l["zasto_nova"] = "; ".join(P[x]["tekst"] for x in l["stavke"])
+    # topološki poredak (stabilan), ciklusi ostaju na mjestu
+    idx = {l["id"]: i for i, l in enumerate(out)}
+    done, order = set(), []
+    def visit(lid, stack=()):
+        if lid in done or lid in stack: return
+        for p in sorted(next(l for l in out if l["id"] == lid)["preduvjeti"], key=idx.get):
+            visit(p, stack + (lid,))
+        done.add(lid); order.append(lid)
+    for l in out: visit(l["id"])
+    by = {l["id"]: l for l in out}
+    final = [by[i] for i in order]
+    pos = {l["id"]: i for i, l in enumerate(final)}
+    fwd = sum(1 for l in final for p in l["preduvjeti"] if pos[p] > pos[l["id"]])
+    save("plan.json", {**plan, "lekcije": final})
+    import collections
+    print(f"Popravak: {len(final)} lekcija; veličine {sorted(collections.Counter(len(l['stavke']) for l in final).items())}; "
+          f"{fwd} preduvjeta unaprijed (ciklusi)")
 
 
 STEPS = ["ocr", "classify", "scope", "draft", "merge", "coverage", "assumptions", "compare", "report"]
