@@ -1,0 +1,601 @@
+{
+ "predznanje": [
+  "Algebra: preuređivanje formula, izravna/obrnuta/kvadratna proporcionalnost, linearna funkcija i njezin graf (nagib, odsječak), potencije i korijeni",
+  "Geometrija i trigonometrija: Pitagorin poučak, sin/cos/tan u pravokutnom trokutu, opseg i površina kruga, volumeni jednostavnih tijela",
+  "SI jedinice, prefiksi i pretvorbe (km/h u m/s, cm² u m², dm³ u m³, h u s)",
+  "Masa, volumen, gustoća; brzina kao put/vrijeme kod jednolikog gibanja",
+  "Kvalitativni pojam sile kao međudjelovanja i težine; pojam energije i njezinih oblika (kvalitativno)",
+  "Temperatura i Celzijeva ljestvica; atom se sastoji od protona, neutrona i elektrona",
+  "Dvije vrste električnog naboja (privlačenje i odbijanje); jednostavan strujni krug (izvor, trošilo, vodiči)",
+  "Svjetlost se u homogenom sredstvu širi pravocrtno; čitanje tablica i grafova"
+ ],
+ "blokovi": [
+  {
+   "id": "M",
+   "naziv": "Mehanika"
+  },
+  {
+   "id": "F",
+   "naziv": "Mehanika fluida"
+  },
+  {
+   "id": "T",
+   "naziv": "Toplina i termodinamika"
+  },
+  {
+   "id": "V",
+   "naziv": "Titranje i mehanički valovi"
+  },
+  {
+   "id": "E",
+   "naziv": "Električno polje i električna struja"
+  },
+  {
+   "id": "G",
+   "naziv": "Magnetizam, indukcija i izmjenična struja"
+  },
+  {
+   "id": "O",
+   "naziv": "Optika i elektromagnetski valovi"
+  },
+  {
+   "id": "A",
+   "naziv": "Moderna fizika i svemir"
+  }
+ ],
+ "lekcije": [
+  {
+   "id": "M01",
+   "blok": "M",
+   "naziv": "Opis pravocrtnog gibanja",
+   "koncept": "Gibanje se opisuje položajem, brzinom i akceleracijom (promjena brzine u vremenu); nagib x-t grafa je brzina, nagib v-t grafa je akceleracija, a površina ispod v-t grafa je pomak.",
+   "zasto_nova": "Akceleracija, razlika puta i pomaka te čitanje grafova nisu izvedivi iz predznanja (poznata je samo jednolika brzina). Ovdje se uče i pomak kao vektor te Pitagorin poučak za okomite pomake. Ova lekcija nosi i opće vještine rješavanja problema (vizualizacija, plan, vrednovanje rezultata), koje se vježbaju u svim lekcijama.",
+   "preduvjeti": [],
+   "ishodi": [
+    "FIZ SŠ C.1.1.",
+    "Rješava fizičke probleme"
+   ]
+  },
+  {
+   "id": "M02",
+   "blok": "M",
+   "naziv": "Sile i Newtonovi zakoni gibanja (I. i II.)",
+   "koncept": "Vektorski zbroj svih sila na tijelo jednak je ma (a = 0 znači ravnoteža i gibanje stalnom brzinom), a svaka se komponenta sile određuje zasebno.",
+   "zasto_nova": "Veza sile i promjene gibanja ne slijedi iz kinematike. Ovdje se uče vektori i komponente, dijagram sila te zakoni težine, elastične sile (Hooke), normalne sile, napetosti i trenja (μN) kao primjene istog zakona. Slobodni pad i hici slijede iz F = ma po komponentama pa nemaju zasebnu lekciju.",
+   "preduvjeti": [
+    "M01"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.2.",
+    "FIZ SŠ B.1.3."
+   ]
+  },
+  {
+   "id": "M03",
+   "blok": "M",
+   "naziv": "Rad, energija, snaga i korisnost",
+   "koncept": "Rad sile (F·s·cosφ) mijenja energiju tijela: kinetičku, gravitacijsku i elastičku potencijalnu, a ukupna energija sustava se čuva (uz toplinu zbog trenja); snaga je rad u vremenu, korisnost omjer korisne i uložene energije ili snage.",
+   "zasto_nova": "Energija i rad kao veličine uz zakon očuvanja ne mogu se izvesti iz sila i kinematike. Snaga i korisnost su izravno definirani radom pa nemaju svoju lekciju.",
+   "preduvjeti": [
+    "M02"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.1.5."
+   ]
+  },
+  {
+   "id": "M04",
+   "blok": "M",
+   "naziv": "Međudjelovanje i količina gibanja",
+   "koncept": "Sile međudjelovanja dvaju tijela jednakog su iznosa i suprotnog smjera (III. zakon), impuls sile jednak je promjeni količine gibanja p = mv, a p zatvorenog sustava je stalna.",
+   "zasto_nova": "Količina gibanja kao veličina, impuls i očuvanje p nisu izvedivi iz II. zakona bez uvođenja III. zakona (par sila). Sudari, elastični i neelastični, primjena su istih zakona.",
+   "preduvjeti": [
+    "M02",
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.1.4."
+   ]
+  },
+  {
+   "id": "M05",
+   "blok": "M",
+   "naziv": "Jednoliko kružno gibanje",
+   "koncept": "Gibanje po kružnici opisuje se periodom, frekvencijom i kutnom brzinom (v = ωr), a zbog stalne promjene smjera brzine potrebna je centripetalna sila usmjerena prema središtu (a = v²/r).",
+   "zasto_nova": "Centripetalna akceleracija i kutne veličine nisu dio pravocrtne kinematike. Sila okomita na brzinu mijenja smjer, a ne iznos brzine.",
+   "preduvjeti": [
+    "M02"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.6."
+   ]
+  },
+  {
+   "id": "M06",
+   "blok": "M",
+   "naziv": "Newtonov zakon gravitacije i gibanje satelita",
+   "koncept": "Svaka dva tijela privlače se silom F = G·m1·m2/r², a ta sila djeluje kao centripetalna sila satelita (Keplerov III. zakon, bestežinsko stanje kao slobodni pad).",
+   "zasto_nova": "Opći zakon gravitacije (ovisnost o masama i udaljenosti) nova je ideja. Gibanje satelita primjena je zakona s kružnim gibanjem.",
+   "preduvjeti": [
+    "M05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.1.7."
+   ]
+  },
+  {
+   "id": "F01",
+   "blok": "F",
+   "naziv": "Tlak u fluidima i uzgon",
+   "koncept": "Fluid djeluje tlakom p = F/S koji se prenosi na sve strane (Pascal), raste s dubinom (p = p0 + ρgh), a razlika tlakova na tijelo daje uzgon (Arhimed).",
+   "zasto_nova": "Tlak u fluidu kao veličina koja ovisi o dubini i prijenos tlaka nisu izvedivi iz sila na čvrstim tijelima. Hidraulički tlak, atmosferski tlak i uzgon posljedice su iste ideje.",
+   "preduvjeti": [
+    "M02"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.1."
+   ]
+  },
+  {
+   "id": "F02",
+   "blok": "F",
+   "naziv": "Strujanje idealnog fluida",
+   "koncept": "Pri stacionarnom strujanju protok je stalan (S·v = konst.), a energija po volumenu je očuvana (Bernoulli: p + ρv²/2 + ρgh = konst.), pa se u užem dijelu cijevi brzina povećava, a statički tlak smanjuje.",
+   "zasto_nova": "Jednadžba kontinuiteta i Bernoullijeva jednadžba ne slijede iz statike. Bernoulli je zakon očuvanja energije za fluid, a kontinuitet je nužan za njegovu primjenu pa su u jednoj lekciji.",
+   "preduvjeti": [
+    "F01",
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.2."
+   ]
+  },
+  {
+   "id": "T01",
+   "blok": "T",
+   "naziv": "Čestična građa tvari i toplinsko širenje",
+   "koncept": "Tvar se sastoji od čestica u stalnom nasumičnom gibanju (difuzija, Brownovo gibanje, agregacijska stanja), a višom temperaturom čestice se gibaju intenzivnije, pa se tijela šire (Δl = α·l0·ΔT, ΔV = γ·V0·ΔT).",
+   "zasto_nova": "Čestični model i temperatura kao mjera gibanja čestica nova su ideja. Linearno i volumno širenje njezina je makroskopska posljedica, a pretvorbe °C i K uče se ovdje.",
+   "preduvjeti": [
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.3."
+   ]
+  },
+  {
+   "id": "T02",
+   "blok": "T",
+   "naziv": "Idealni plin i molekulsko-kinetički model",
+   "koncept": "Stanje idealnog plina opisuje pV = nRT (Boyle, Gay-Lussac i Charles su posebni slučajevi), a tlak i temperatura proizlaze iz sudara molekula, pri čemu je srednja kinetička energija Ek = 3/2·kT neovisna o vrsti plina.",
+   "zasto_nova": "Jednadžba stanja, množina tvari i veza temperature s kinetičkom energijom molekula nisu izvedivi iz čestičnog modela bez novih zakona. Plinski zakoni nemaju zasebnu lekciju jer su posebni slučajevi pV = nRT.",
+   "preduvjeti": [
+    "T01",
+    "M04",
+    "F01"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.4."
+   ]
+  },
+  {
+   "id": "T03",
+   "blok": "T",
+   "naziv": "Toplina, kalorimetrija i promjene agregacijskih stanja",
+   "koncept": "Toplina je energija koja prelazi s toplijeg na hladnije tijelo (Q = mcΔT, Q = mL pri promjeni stanja), a u izoliranom sustavu zbroj predanih i primljenih toplina jednak je nuli.",
+   "zasto_nova": "Toplina kao prijenos energije, specifični toplinski kapacitet i latentna toplina nisu izvedivi iz mehaničke energije i čestičnog modela. Nagib Q-ΔT grafa čita se u ovoj lekciji.",
+   "preduvjeti": [
+    "T01",
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ]
+  },
+  {
+   "id": "T04",
+   "blok": "T",
+   "naziv": "I. zakon termodinamike i procesi plina",
+   "koncept": "Unutarnja energija plina mijenja se toplinom i radom (ΔU = Q − W, W = p·ΔV, površina ispod krivulje u p-V dijagramu), što određuje ponašanje plina u izotermnom, izobarnom, izohornom i adijabatskom procesu.",
+   "zasto_nova": "Rad plina i povezivanje mehaničkog rada, topline i unutarnje energije novi su zakon. Adijabatska promjena (pV^κ = konst.) i izračun ΔU = 3/2·nRΔT posebni su slučajevi.",
+   "preduvjeti": [
+    "T02",
+    "T03"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ]
+  },
+  {
+   "id": "T05",
+   "blok": "T",
+   "naziv": "Toplinski strojevi i Carnotov stroj",
+   "koncept": "Stroj koji radi u kružnom procesu uzima toplinu Q1 od toplijeg spremnika, daje rad W i predaje Q2 hladnijem, pa je korisnost η = W/Q1, a najveća moguća (Carnot) ovisi samo o temperaturama spremnika: η = 1 − T2/T1.",
+   "zasto_nova": "Ograničenje korisnosti pretvorbe topline u rad (Carnotov izraz) ne slijedi iz I. zakona. Kružni proces u p-V dijagramu primjena je rada plina iz T04.",
+   "preduvjeti": [
+    "T04"
+   ],
+   "ishodi": [
+    "FIZ SŠ D.2.5."
+   ]
+  },
+  {
+   "id": "V01",
+   "blok": "V",
+   "naziv": "Harmonijsko titranje",
+   "koncept": "Kad je povratna sila proporcionalna otklonu (F = −kx), tijelo harmonijski titra: y = A·sin(ωt), ω = 2π/T = 2πf, uz stalnu pretvorbu kinetičke u potencijalnu energiju. Opruga i njihalo su dva primjera, a prisilno titranje, prigušenje i rezonancija opisuju se kvalitativno.",
+   "zasto_nova": "Sinusni zapis titranja, veličine T, f, ω te ovisnost perioda o parametrima sustava nisu izvedivi iz dinamike i energije. Opruga i matematičko njihalo posebni su slučajevi istog zakona.",
+   "preduvjeti": [
+    "M02",
+    "M03",
+    "M05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ]
+  },
+  {
+   "id": "V02",
+   "blok": "V",
+   "naziv": "Nastanak i širenje valova",
+   "koncept": "Val prenosi energiju titranjem čestica sredstva bez prijenosa tvari (v = λf), a brzina ovisi o sredstvu, dok se frekvencija pri prijelazu u drugo sredstvo ne mijenja. Transverzalni i longitudinalni valovi, refleksija i lom su opisani.",
+   "zasto_nova": "Širenje poremećaja kroz sredstvo i veza v = λf nisu sadržane u titranju jednog tijela. Brzina vala na užetu i brzina zvuka po sredstvima su primjene.",
+   "preduvjeti": [
+    "V01"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5."
+   ]
+  },
+  {
+   "id": "V03",
+   "blok": "V",
+   "naziv": "Superpozicija valova: interferencija i stojni val",
+   "koncept": "Valovi se zbrajaju, pa razlika hoda (fazna razlika) određuje pojačanje ili poništenje, a refleksija na krajevima daje stojni val čija valna duljina ovisi o duljini niti ili cijevi.",
+   "zasto_nova": "Princip superpozicije i uvjeti konstruktivne/destruktivne interferencije novi su u odnosu na jedan val. Stojni val je njegova posljedica.",
+   "preduvjeti": [
+    "V02"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ]
+  },
+  {
+   "id": "V04",
+   "blok": "V",
+   "naziv": "Zvuk: intenzitet i razina jakosti",
+   "koncept": "Zvuk je longitudinalni val čiji je intenzitet I = P/S (∝ A², ∝ 1/r² za točkasti izvor), a razina jakosti L = 10·log(I/I0) logaritamska je skala.",
+   "zasto_nova": "Intenzitet kao snaga po površini i logaritamska skala decibela nisu izvedivi iz opisa vala. Logaritam se uči kao alat u ovoj lekciji.",
+   "preduvjeti": [
+    "V02",
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ]
+  },
+  {
+   "id": "V05",
+   "blok": "V",
+   "naziv": "Dopplerov efekt",
+   "koncept": "Gibanje izvora ili promatrača u odnosu na sredstvo mijenja frekvenciju koju promatrač registrira (približavanje povećava, udaljavanje smanjuje).",
+   "zasto_nova": "Promjena izmjerene frekvencije zbog relativnog gibanja ne slijedi iz v = λf za mirne izvore.",
+   "preduvjeti": [
+    "V02",
+    "M01"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.6., FIZ SŠ D.3.6."
+   ]
+  },
+  {
+   "id": "E01",
+   "blok": "E",
+   "naziv": "Električni naboj i Coulombov zakon",
+   "koncept": "Naboj je kvantiziran i čuva se (vodiči, izolatori, influencija, električno ponašanje tijela), a dva točkasta naboja djeluju silom F = k·q1·q2/r².",
+   "zasto_nova": "Kvantitativni zakon sile među nabojima nije izvediv iz kvalitativnog predznanja o naboju.",
+   "preduvjeti": [
+    "M02"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.6."
+   ]
+  },
+  {
+   "id": "E02",
+   "blok": "E",
+   "naziv": "Električno polje",
+   "koncept": "Naboj stvara polje E = F/q (E = kQ/r², silnice, superpozicija), u kojem na naboj djeluje F = qE; unutar vodiča u ravnoteži je E = 0, a između ploča je homogeno.",
+   "zasto_nova": "Polje kao svojstvo prostora, silnice i superpozicija polja uvode novi opis. Polje ploče (uz Gaussov zakon kao alat) i gibanje čestice u polju (a = qE/m) primjene su.",
+   "preduvjeti": [
+    "E01"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.7."
+   ]
+  },
+  {
+   "id": "E03",
+   "blok": "E",
+   "naziv": "Električni potencijal i napon",
+   "koncept": "Rad sile polja pri premještanju naboja ovisi samo o početnoj i krajnjoj točki, pa se definira napon U = W/q i potencijal (E = U/d u homogenom polju, qU = ΔEk).",
+   "zasto_nova": "Potencijalna energija u električnom polju i napon kao energija po naboju nisu izvedivi iz polja E. Ubrzanje čestice naponom primjena je ove ideje.",
+   "preduvjeti": [
+    "E02",
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.7."
+   ]
+  },
+  {
+   "id": "E04",
+   "blok": "E",
+   "naziv": "Kondenzator i kapacitet",
+   "koncept": "Kondenzator pohranjuje naboj razmjerno naponu (C = Q/U), pločasti ima C = ε0εr·S/d, a energija mu je Q²/2C. Pri stalnom naponu ili stalnom naboju promjene d ili dielektrika računaju se iz tih izraza.",
+   "zasto_nova": "Kapacitet kao omjer naboja i napona te utjecaj dielektrika nova su veličina i pojava.",
+   "preduvjeti": [
+    "E03"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.2.7."
+   ]
+  },
+  {
+   "id": "E05",
+   "blok": "E",
+   "naziv": "Struja, otpor i Ohmov zakon, rad i snaga struje",
+   "koncept": "Struja I = Q/t teče pod naponom kroz vodič otpora R (I = U/R, R = ρl/S), a izvor predaje energiju trošilu snagom P = UI = I²R = U²/R.",
+   "zasto_nova": "Struja kao tok naboja, otpor ovisan o geometriji i materijalu, te Ohmov zakon nisu izvedivi iz elektrostatike. Snaga struje je naponska definicija iz E03 pomnožena strujom.",
+   "preduvjeti": [
+    "E03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.8."
+   ]
+  },
+  {
+   "id": "E06",
+   "blok": "E",
+   "naziv": "Serijski i paralelni spoj trošila",
+   "koncept": "U serijskom spoju kroz sve teče ista struja, a napon se dijeli (R = R1 + R2); u paralelnom je napon isti, a struja se dijeli (1/R = 1/R1 + 1/R2).",
+   "zasto_nova": "Očuvanje naboja u čvoru i energije u petlji daje pravila za složene krugove, što nije sadržano u Ohmovu zakonu za jedno trošilo.",
+   "preduvjeti": [
+    "E05"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.2.8."
+   ]
+  },
+  {
+   "id": "G01",
+   "blok": "G",
+   "naziv": "Magnetsko polje magneta i struje",
+   "koncept": "Magneti i električne struje stvaraju magnetsko polje (silnice, pravilo desne ruke) s indukcijom B = μ0I/(2πr) oko ravnog vodiča i B = μ0NI/l u zavojnici.",
+   "zasto_nova": "Magnetsko polje kao novo polje i povezanost struje i magnetizma nisu izvedivi iz električnog polja.",
+   "preduvjeti": [
+    "E02",
+    "E05"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.1."
+   ]
+  },
+  {
+   "id": "G02",
+   "blok": "G",
+   "naziv": "Magnetska sila na naboj i vodič",
+   "koncept": "Na naboj koji se giba u magnetskom polju djeluje Lorentzova sila F = qvB·sinα (okomita na v i B), a na vodič sa strujom Amperova F = BIl·sinθ, pa nabijena čestica u polju opisuje kružnicu r = mv/(qB) (pravilo lijeve ruke, sila među paralelnim vodičima).",
+   "zasto_nova": "Sila okomita i na polje i na brzinu novi je zakon. Amperova sila je zbroj Lorentzovih sila, a kružno gibanje čestice povezuje je s centripetalnom silom.",
+   "preduvjeti": [
+    "G01",
+    "M05",
+    "E03"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.2."
+   ]
+  },
+  {
+   "id": "G03",
+   "blok": "G",
+   "naziv": "Elektromagnetska indukcija",
+   "koncept": "Promjena magnetskog toka Φ = B·S·cosα kroz petlju inducira napon U = −N·ΔΦ/Δt (Faraday), a smjer inducirane struje opire se promjeni (Lenz).",
+   "zasto_nova": "Magnetsko polje koje se mijenja stvara električni napon, što je suprotan smjer od G01 i G02 i ne može se izvesti iz njih. Čitanje Φ(t) i U(t) grafova uči se ovdje.",
+   "preduvjeti": [
+    "G02",
+    "E05"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ]
+  },
+  {
+   "id": "G04",
+   "blok": "G",
+   "naziv": "Izmjenična struja, generator, motor i transformator",
+   "koncept": "Vrtnjom petlje u polju nastaje sinusni napon u = U0·sin(ωt), kojemu su vrijednosti opisane amplitudom i efektivnom vrijednošću; transformator mijenja napon omjerom zavoja (U1/U2 = N1/N2 = I2/I1), a motor je obrnut proces od generatora.",
+   "zasto_nova": "Vremenski promjenjivi napon i struja te efektivne vrijednosti nisu pokriveni istosmjernim krugovima. Rad generatora, motora i transformatora su primjene indukcije.",
+   "preduvjeti": [
+    "G03",
+    "V01",
+    "E06"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3."
+   ]
+  },
+  {
+   "id": "G05",
+   "blok": "G",
+   "naziv": "Induktivitet, kapacitivni i induktivni otpor, LC krug",
+   "koncept": "Zavojnica ima induktivitet L, a otpor kondenzatora i zavojnice u izmjeničnom krugu ovisi o frekvenciji (X_C = 1/ωC, X_L = ωL); kad se spoje, energija titra između električnog i magnetskog polja (LC krug, T = 2π√(LC)).",
+   "zasto_nova": "Samoindukcija i frekvencijski ovisan otpor novi su pojmovi. LC titranje je analogno titranju opruge, ali s novim veličinama.",
+   "preduvjeti": [
+    "G04",
+    "E04",
+    "V01"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.3.3.",
+    "FIZ SŠ C.3.4., FIZ SŠ D.3.4."
+   ]
+  },
+  {
+   "id": "O01",
+   "blok": "O",
+   "naziv": "Odbijanje i lom svjetlosti",
+   "koncept": "Na granici sredstava zraka se odbija (upadni kut = kut odbijanja) i lomi prema Snellovu zakonu n1·sinα1 = n2·sinα2 (n = c/v), uz totalnu refleksiju iznad graničnog kuta i prolaz kroz planparalelnu ploču.",
+   "zasto_nova": "Indeks loma i Snellov zakon ne mogu se izvesti iz pravocrtnog širenja svjetlosti. Ravno zrcalo je posebni slučaj odbijanja, a svjetlovod primjena totalne refleksije.",
+   "preduvjeti": [
+    "V02"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ]
+  },
+  {
+   "id": "O02",
+   "blok": "O",
+   "naziv": "Tanke leće i nastanak slike",
+   "koncept": "Leća žarišne daljine f (jakost 1/f) lomom stvara sliku predmeta prema 1/a + 1/b = 1/f i povećanju m = −b/a (realna i virtualna slika, uvećana i obrnuta).",
+   "zasto_nova": "Nastanak slike i jednadžba leće nisu izvedivi iz samog Snellova zakona na jednoj granici.",
+   "preduvjeti": [
+    "O01"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.3.7., FIZ SŠ D.3.7."
+   ]
+  },
+  {
+   "id": "O03",
+   "blok": "O",
+   "naziv": "Valna svojstva svjetlosti",
+   "koncept": "Svjetlost je transverzalni val: na pukotinama se ogiba i interferira (Young: Δy = λL/d), polarizira se, a raspršenje ovisi o valnoj duljini.",
+   "zasto_nova": "Valna priroda svjetlosti (dokazana interferencijom i polarizacijom) nova je tvrdnja koja se ne može izvesti iz zraka u geometrijskoj optici. Primjenjuje se V03.",
+   "preduvjeti": [
+    "V03",
+    "O01"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.1., FIZ SŠ D.4.1."
+   ]
+  },
+  {
+   "id": "O04",
+   "blok": "O",
+   "naziv": "Elektromagnetski valovi i spektar",
+   "koncept": "Promjenjivo električno i magnetsko polje međusobno se održavaju i šire kao transverzalan val brzinom c (E ⊥ B ⊥ smjer), a po valnoj duljini dijele se u spektar od radiovalova do gama zraka.",
+   "zasto_nova": "Samoodrživi val polja nova je ideja koja povezuje indukciju i valnu prirodu svjetlosti. Spektar je razvrstavanje po λ i f (c = λf).",
+   "preduvjeti": [
+    "G03",
+    "O03"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.2., FIZ SŠ D.4.2."
+   ]
+  },
+  {
+   "id": "A01",
+   "blok": "A",
+   "naziv": "Foton i fotoelektrični efekt",
+   "koncept": "Svjetlost izmjenjuje energiju u kvantima E = hf, pa se elektroni izbacuju samo kad je f ≥ f0, a Ek,max = hf − W (zaustavni napon eU = Ek,max).",
+   "zasto_nova": "Čestična svojstva svjetlosti proturječe valnom opisu. Einsteinova jednadžba, granična frekvencija i izlazni rad ne mogu se izvesti iz valne slike.",
+   "preduvjeti": [
+    "O04",
+    "E03"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ]
+  },
+  {
+   "id": "A02",
+   "blok": "A",
+   "naziv": "Valovi tvari (de Broglie)",
+   "koncept": "Svaka čestica ima valnu duljinu λ = h/p, koja je vidljiva samo kad je p vrlo mali.",
+   "zasto_nova": "Valna svojstva tvari nova su ideja koja nije obuhvaćena fotonom, jer foton nema masu. Veza p = √(2mEk) je alat iz mehanike.",
+   "preduvjeti": [
+    "A01",
+    "M04",
+    "V03"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.3., FIZ SŠ D.4.3."
+   ]
+  },
+  {
+   "id": "A03",
+   "blok": "A",
+   "naziv": "Modeli atoma i Bohrov model",
+   "koncept": "Elektron u atomu zauzima samo diskretne energijske razine (Bohr), a prijelaz među njima emitira ili apsorbira foton E = hf = E_i − E_j, što objašnjava linijski spektar (nakon Thomsonova i Rutherfordova modela).",
+   "zasto_nova": "Kvantizacija energije elektrona u atomu i linijski spektri ne slijede iz klasične fizike. Rutherfordov pokus prikazuje se kao motivacija povijesnog razvoja modela.",
+   "preduvjeti": [
+    "A01",
+    "E01",
+    "M05"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.4., FIZ SŠ D.4.4."
+   ]
+  },
+  {
+   "id": "A04",
+   "blok": "A",
+   "naziv": "Specijalna teorija relativnosti",
+   "koncept": "Brzina svjetlosti je jednaka u svim inercijskim sustavima, pa se vrijeme usporava (Δt = γ·Δt0), duljina skraćuje (L = L0/γ), a energija raste E = γmc² (E0 = mc², v = c nedostižna).",
+   "zasto_nova": "Relativnost vremena i duljine proturječi Newtonovoj intuiciji i ne može se izvesti iz ranijih lekcija. Lorentzov faktor se uči ovdje.",
+   "preduvjeti": [
+    "O04",
+    "M03",
+    "M04"
+   ],
+   "ishodi": [
+    "FIZ SŠ C.4.7., FIZ SŠ D.4.7."
+   ]
+  },
+  {
+   "id": "A05",
+   "blok": "A",
+   "naziv": "Atomska jezgra i nuklearne reakcije",
+   "koncept": "Jezgra se sastoji od nukleona (A, Z, N) vezanih nuklearnom silom, energija vezanja jednaka je Δm·c², a nuklearne reakcije (α, β, γ raspad, fisija, fuzija) čuvaju A i Z i oslobađaju energiju zbog razlike energija vezanja po nukleonu.",
+   "zasto_nova": "Nuklearna sila, energija vezanja i nuklearne reakcije nisu izvedivi iz elektrostatike i modela atoma. Ekvivalencija mase i energije dolazi iz A04, a zapis reakcija je isti za sve vrste.",
+   "preduvjeti": [
+    "A04",
+    "E01",
+    "M03"
+   ],
+   "ishodi": [
+    "FIZ SŠ A.4.5., FIZ SŠ D.4.5."
+   ]
+  },
+  {
+   "id": "A06",
+   "blok": "A",
+   "naziv": "Radioaktivni raspad i ionizirajuće zračenje",
+   "koncept": "Broj neraspadnutih jezgri opada eksponencijalno (N = N0·2^(−t/T), λ = ln2/T), aktivnost je A = λN, a ionizirajuće zračenje (α, β, γ) ima različit prodor i oštećuje žive organizme.",
+   "zasto_nova": "Statistički zakon raspada, vrijeme poluraspada i aktivnost nisu izvedivi iz zapisa nuklearnih reakcija. Učinci zračenja na organizme su novo, kvalitativno znanje.",
+   "preduvjeti": [
+    "A05"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.6., FIZ SŠ D.4.6."
+   ]
+  },
+  {
+   "id": "A07",
+   "blok": "A",
+   "naziv": "Nastanak i struktura svemira",
+   "koncept": "Svemir se širi od Velikog praska i sastoji se od vidljive tvari, tamne tvari i tamne energije, a zvijezde nastaju, žive i završavaju (bijeli patuljak, neutronska zvijezda, crna rupa) ovisno o masi.",
+   "zasto_nova": "Kozmološki model i životni ciklus zvijezda su kvalitativno nove činjenice. Povezuju gravitaciju i nuklearnu fuziju iz ranijih lekcija.",
+   "preduvjeti": [
+    "A05",
+    "M06"
+   ],
+   "ishodi": [
+    "FIZ SŠ B.4.8., FIZ SŠ D.4.8."
+   ]
+  }
+ ]
+}

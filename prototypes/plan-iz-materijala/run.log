@@ -1,0 +1,39 @@
+OCR: 283 stranica
+Jev razvrstavanje: 191/283 se slaže s nazivom datoteke (gruba istina)
+Opseg: 31 ishoda, 182 zadataka s 6 rokova
+Nacrt: 40 lekcija, 8 stavki predznanja
+Spajanje: 39 lekcija nakon spajanja (prije 40). Jev označio 2/79 parova, LLM spojio 1 grupa, preklapanje 1
+Pokrivenost: 164/182 zadataka pokriveno; 1 lekcija ne treba nijedan zadatak s ispita
+Nulta pretpostavka: 37 lekcija s problemom
+Usporedba s ručnim (98 lekcija): {'cijelo': 56, 'djelomicno': 39, 'nista': 3}
+# Mjerenja prototipa
+
+- Lekcija: **39** (nacrt prije spajanja: 40, ručni: 98)
+- Zadaci s ispita pokriveni: **164/182**
+- Lekcije koje ne treba nijedan zadatak s ispita: 1
+- Nulta pretpostavka prekršena: 37 lekcija
+- Ručne lekcije koje generirani plan uopće ne pokriva: 3
+- Jev razvrstavanje stranica: 191/283 slaže se s nazivom datoteke
+- Jev parovi „nova ideja?“: 79, označeno za spajanje 2
+
+## Trošak po koraku (USD)
+
+- assume: 0.025
+- classify: 0.009
+- compare: 0.207
+- coverage: 0.018
+- draft: 0.335
+- merge-jev: 0.002
+- merge-llm: 0.035
+- ocr: 0.098
+- scope-catalog: 0.120
+- scope-exam: 0.031
+- **ukupno: 0.88**
+
+## Nepokriveni zadaci s ispita
+
+- [FIZ22ljeto 15] Koji je odnos brzina zvuka u zraku, vodi i željezu? → tablične vrijednosti brzine zvuka u zraku, vodi i željezu
+- [FIZ22ljeto 19] Kolika je valna duljina elektrona koji se giba brzinom 1 km/s? → tablična masa elektrona i vrijednost Planckove konstante h
+- [FIZ22ljeto 23] Koju frekvenciju titranja tijela na opruzi bi motritelj sa Zemlje mogao izmjeriti ako se svemirski brod giba relativističkom brzinom? → Relativistički Dopplerov efekt (promjena frekvencije izvora koji se giba relativističkom brzinom); lekcije daju samo usporavanje vremena, a V05 obuhvaća klasični Doppler
+- [FIZ22ljeto 28] Koliko se topline mora izotermno dovesti idealnom plinu pri normiranom atmosferskom tlaku da mu se volumen poveća s 4 m³ na 6 m³? → Logaritamska formula za rad pri izotermnom procesu W = nRT·ln(V2/V1); lekcije daju samo W = p·ΔV
+- [FIZ2
