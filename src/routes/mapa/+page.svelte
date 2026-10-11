@@ -2,8 +2,7 @@
   import { apiClient } from "$lib/api/apiClient";
   import { userData } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
-  import { fetchObjectivesWithStatus } from "$lib/api/objectives";
-  import { calculateExamProgress } from "$lib/utils/progress";
+  import { fetchReadiness } from "$lib/api/progress";
 
   let loading = $state(true);
   let error = $state(false);
@@ -76,15 +75,10 @@
     } catch {}
   }
 
-  // Exam readiness — same computation as the Napredak page, so the % matches.
+  // Exam readiness — same endpoint as the Napredak page, so the % matches.
   async function loadReadiness() {
     try {
-      const [courseRes, objs] = await Promise.all([
-        apiClient("/account/current-course", { method: "GET" }),
-        fetchObjectivesWithStatus(),
-      ]);
-      const course = courseRes.ok ? await courseRes.json() : null;
-      if (course?.courseId) readiness = calculateExamProgress(objs, course.courseId);
+      readiness = await fetchReadiness();
     } catch {}
   }
 

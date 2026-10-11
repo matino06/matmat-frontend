@@ -2,8 +2,7 @@
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import { onMount, onDestroy, tick } from "svelte";
-  import { fetchObjectivesWithStatus } from "$lib/api/objectives";
-  import { calculateExamProgress } from "$lib/utils/progress";
+  import { fetchReadiness } from "$lib/api/progress";
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
   import { mathjaxTypeset } from "$lib/utils/mathjax";
@@ -48,15 +47,10 @@
     } catch {}
   }
 
-  async function fetchCurrentProgress() {
-    const objectives = await fetchObjectivesWithStatus();
-    return calculateExamProgress(objectives, currentCourse?.courseId);
-  }
-
   let initialProgress = $state(null);
 
   async function checkProgressBump() {
-    const progress = await fetchCurrentProgress();
+    const progress = await fetchReadiness();
     if (initialProgress !== null && progress > initialProgress) {
       progressBump = { from: initialProgress, to: progress, key: Date.now() };
     }

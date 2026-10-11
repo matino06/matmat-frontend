@@ -1,14 +1,13 @@
 <script>
   import { userData } from "$lib/store/user.svelte";
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
-  import { calculateExamProgress } from "$lib/utils/progress";
+  import { fetchReadiness } from "$lib/api/progress";
   import { apiClient } from "$lib/api/apiClient";
 
   let objectives = $state([]);
   let todayTasks = $state([]);
   let upcomingTasks = $state([]);
   let examProgress = $state(0);
-  let currentCourse = $state(null);
   let loading = $state(true);
   let activeArea = $state("Sve");
 
@@ -16,15 +15,12 @@
     if (!userData.user) return;
     loading = true;
     try {
-      const [courseRes, objs] = await Promise.all([
-        apiClient("/account/current-course", { method: "GET" }),
+      const [readiness, objs] = await Promise.all([
+        fetchReadiness(),
         fetchObjectivesWithStatus(),
       ]);
-      if (courseRes.ok) currentCourse = await courseRes.json();
+      examProgress = readiness;
       objectives = objs;
-      if (currentCourse?.courseId) {
-        examProgress = calculateExamProgress(objs, currentCourse.courseId);
-      }
       const progressRes = await apiClient("/progress", { method: "GET" });
       if (progressRes.ok) {
         const res = await progressRes.json();

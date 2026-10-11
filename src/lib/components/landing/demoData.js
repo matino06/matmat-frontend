@@ -3,8 +3,8 @@
 // as stored, so they render through the same MathJax path as on /tasks (old tasks,
 // id <= 335). Their AI replies (hint, why, explain — one per "## N." step of the
 // explanation) are written for the demo. Everything else is made up but shaped
-// like the real pages: the fields and their weights match
-// pointsDistributionByCourse for the A level, the review intervals match the
+// like the real pages: the fields and their weights match the A level exam
+// catalogue (course_field_weight in the backend), the review intervals match the
 // RatingPicker.
 
 export const DEMO_TASKS = [
