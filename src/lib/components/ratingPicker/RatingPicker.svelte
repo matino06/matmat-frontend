@@ -1,7 +1,6 @@
-<script>
-  let { onSelect } = $props();
-
-  const RATINGS = [
+<script module>
+  // Also read by /kako-radi, which lists what each rating means.
+  export const RATINGS = [
     { k: 0, t: "Zaborav",      desc: "Ni rješenje mi nije jasno",                 sub: "za 1 dan",   color: "#ef4444", gain: 0 },
     { k: 1, t: "Netočno",      desc: "Netočno riješeno, rješenje shvaćeno",        sub: "za 1 dan",   color: "#f97316", gain: 0 },
     { k: 2, t: "Lako netočno", desc: "Netočno, ali rješenje izgleda jednostavno",  sub: "za 2 dana",  color: "#eab308", gain: 0 },
@@ -9,6 +8,10 @@
     { k: 4, t: "Lako točno",   desc: "Točno nakon malo razmišljanja",              sub: "za 8 dana",  color: "#22c55e", gain: 4 },
     { k: 5, t: "Savršeno",     desc: "Riješio samostalno bez problema",            sub: "za 14 dana", color: "#16a34a", gain: 6 },
   ];
+</script>
+
+<script>
+  let { onSelect } = $props();
 
   let hovered = $state(null);
   let selected = $state(null);

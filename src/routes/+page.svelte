@@ -2,7 +2,9 @@
   import { onMount } from "svelte";
   import { userData, handleLogIn } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
-  import MarketingNav from "$lib/components/marketingNav/MarketingNav.svelte";
+  import MarketingShell from "$lib/components/marketing/MarketingShell.svelte";
+  import GoogleButton from "$lib/components/marketing/GoogleButton.svelte";
+  import ClosingCta from "$lib/components/marketing/ClosingCta.svelte";
   import AppDemo from "$lib/components/landing/AppDemo.svelte";
   import DemoView from "$lib/components/landing/DemoView.svelte";
   import DemoChat from "$lib/components/landing/DemoChat.svelte";
@@ -19,14 +21,14 @@
     if (!userData.loading && userData.user) goto("/tasks");
   });
 
-  // Picking a level signs in like the other buttons; a new account's onboarding
-  // then opens on that level. Existing accounts keep the course they have.
   function toDemo(e) {
     e.preventDefault();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     document.getElementById("demo")?.scrollIntoView({ behavior: still ? "auto" : "smooth" });
   }
 
+  // Picking a level signs in like the other buttons; a new account's onboarding
+  // then opens on that level. Existing accounts keep the course they have.
   function chooseLevel(level) {
     rememberLevel(level);
     start();
@@ -101,183 +103,117 @@
   }
 </script>
 
-{#snippet googleButton(label)}
-  <button class="hm-google" onclick={start}>
-    <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
-      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-    </svg>
-    {label}
-  </button>
-{/snippet}
-
-<div class="hm">
-  <MarketingNav />
-
-  <main>
-    <section class="hm-hero hm-wrap">
-      <HeroTiles />
-      <h1>Priprema za maturu koja pamti umjesto tebe</h1>
-      <p class="hm-lead">
-        Svaki dan dobiješ zadatke iz matematike s rješenjima korak po korak. Ocijeniš kako ti je išlo, a MatMat odredi kad ti isti ishod treba ponovno. Za A i B razinu državne mature.
-      </p>
-      <div class="hm-cta">
-        {@render googleButton("Nastavi s Googleom")}
-        <span class="hm-cta-note">Besplatno, bez kartice i instalacije.</span>
-      </div>
-    </section>
-
-    <p class="hm-try hm-wrap">Ispod je aplikacija kakvu vidiš nakon prijave. Riješi zadatak i ocijeni ga, ili označi dio zadatka i pitaj AI.</p>
-
-    <div class="hm-stage" id="demo">
-      <div class="hm-window hm-wrap-wide">
-        <AppDemo />
-      </div>
+<MarketingShell>
+  <section class="hm-hero hm-wrap">
+    <HeroTiles />
+    <h1>Priprema za maturu koja pamti umjesto tebe</h1>
+    <p class="hm-lead">
+      Svaki dan dobiješ zadatke iz matematike s rješenjima korak po korak. Ocijeniš kako ti je išlo, a MatMat odredi kad ti isti ishod treba ponovno. Za A i B razinu državne mature.
+    </p>
+    <div class="hm-cta">
+      <GoogleButton />
+      <span class="hm-cta-note">Besplatno, bez kartice i instalacije.</span>
     </div>
+  </section>
 
-    <section class="hm-features hm-wrap" aria-labelledby="hm-features-h">
-      <h2 id="hm-features-h">Ti rješavaš zadatke. MatMat vodi računa o svemu ostalom.</h2>
+  <p class="hm-try hm-wrap">Ispod je aplikacija kakvu vidiš nakon prijave. Riješi zadatak i ocijeni ga, ili označi dio zadatka i pitaj AI.</p>
 
-      {#snippet featPart()}
-        {#if feature === "ai"}
-          <div class="hm-feat-chat">
-            <DemoChat task={DEMO_TASKS[0]} scripted />
-          </div>
-        {:else}
-          <DemoView part={feature} />
-        {/if}
-      {/snippet}
-
-      <div class="hm-feat">
-        {#if narrow}
-          <div class="hm-feat-list">
-            {#each FEATURES as f (f.id)}
-              <button
-                class="hm-feat-tab"
-                class:active={feature === f.id}
-                aria-expanded={feature === f.id}
-                onclick={() => (feature = f.id)}
-              >
-                <span class="hm-feat-title">{f.title}</span>
-                <span class="hm-feat-lead">{f.lead}</span>
-                <span class="hm-feat-text">{f.text}</span>
-              </button>
-              {#if feature === f.id}
-                <div class="hm-feat-inline">{@render featPart()}</div>
-              {/if}
-            {/each}
-          </div>
-        {:else}
-          <div class="hm-feat-list" role="tablist" aria-orientation="vertical" aria-label="Mogućnosti">
-            {#each FEATURES as f, i (f.id)}
-              <button
-                id="feat-tab-{f.id}"
-                role="tab"
-                class="hm-feat-tab"
-                class:active={feature === f.id}
-                aria-selected={feature === f.id}
-                aria-controls="feat-panel"
-                tabindex={feature === f.id ? 0 : -1}
-                onclick={() => (feature = f.id)}
-                onkeydown={(e) => onTabKey(e, i)}
-              >
-                <span class="hm-feat-title">{f.title}</span>
-                <span class="hm-feat-lead">{f.lead}</span>
-                <span class="hm-feat-text">{f.text}</span>
-              </button>
-            {/each}
-          </div>
-
-          <div class="hm-feat-panel" id="feat-panel" role="tabpanel" aria-labelledby="feat-tab-{feature}">
-            {@render featPart()}
-          </div>
-        {/if}
-      </div>
-    </section>
-
-    <section class="hm-levels hm-wrap" aria-labelledby="hm-levels-h">
-      <h2 id="hm-levels-h">Koju razinu polažeš?</h2>
-      <div class="hm-levels-grid">
-        {#each LEVELS as l (l.id)}
-          <button class="hm-level" onclick={() => chooseLevel(l.id)}>
-            <span class="hm-level-head">
-              <span class="badge-sq" style="background: hsl({l.color} 75% 55%)">{l.badge}</span>
-              <span class="hm-level-title">
-                <span class="hm-level-name">{l.id} razina</span>
-                <span class="hm-level-kind">{l.name}</span>
-              </span>
-            </span>
-            <span class="hm-level-text">{l.text}</span>
-            <span class="hm-level-cta">
-              Odaberi {l.id} razinu
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
-            </span>
-          </button>
-        {/each}
-      </div>
-    </section>
-
-    <section class="hm-final hm-wrap">
-      <h2>Prvi zadatak te čeka.</h2>
-      <p>MatMat je besplatan i radi u pregledniku. Prijavi se Googleom i odmah dobiješ današnje zadatke.</p>
-      <div class="hm-final-actions">
-        {@render googleButton("Nastavi s Googleom")}
-        <a class="hm-ghost" href="#demo" onclick={toDemo}>Isprobaj aplikaciju</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="hm-footer">
-    <div class="hm-footer-inner">
-      <div class="hm-footer-brand">
-        <div class="brand-mark">M</div>
-        © {new Date().getFullYear()} MatMat
-      </div>
-      <nav class="hm-footer-links" aria-label="Podnožje">
-        <a href="/kako-radi">Kako radi</a>
-        <a href="mailto:info@matmat.online">Kontakt</a>
-      </nav>
+  <div class="hm-stage" id="demo">
+    <div class="hm-window hm-wrap-wide">
+      <AppDemo />
     </div>
-  </footer>
-</div>
+  </div>
+
+  <section class="hm-features hm-wrap" aria-labelledby="hm-features-h">
+    <h2 id="hm-features-h">Ti rješavaš zadatke. MatMat vodi računa o svemu ostalom.</h2>
+
+    {#snippet featPart()}
+      {#if feature === "ai"}
+        <div class="hm-feat-chat">
+          <DemoChat task={DEMO_TASKS[0]} scripted />
+        </div>
+      {:else}
+        <DemoView part={feature} />
+      {/if}
+    {/snippet}
+
+    <div class="hm-feat">
+      {#if narrow}
+        <div class="hm-feat-list">
+          {#each FEATURES as f (f.id)}
+            <button
+              class="hm-feat-tab"
+              class:active={feature === f.id}
+              aria-expanded={feature === f.id}
+              onclick={() => (feature = f.id)}
+            >
+              <span class="hm-feat-title">{f.title}</span>
+              <span class="hm-feat-lead">{f.lead}</span>
+              <span class="hm-feat-text">{f.text}</span>
+            </button>
+            {#if feature === f.id}
+              <div class="hm-feat-inline">{@render featPart()}</div>
+            {/if}
+          {/each}
+        </div>
+      {:else}
+        <div class="hm-feat-list" role="tablist" aria-orientation="vertical" aria-label="Mogućnosti">
+          {#each FEATURES as f, i (f.id)}
+            <button
+              id="feat-tab-{f.id}"
+              role="tab"
+              class="hm-feat-tab"
+              class:active={feature === f.id}
+              aria-selected={feature === f.id}
+              aria-controls="feat-panel"
+              tabindex={feature === f.id ? 0 : -1}
+              onclick={() => (feature = f.id)}
+              onkeydown={(e) => onTabKey(e, i)}
+            >
+              <span class="hm-feat-title">{f.title}</span>
+              <span class="hm-feat-lead">{f.lead}</span>
+              <span class="hm-feat-text">{f.text}</span>
+            </button>
+          {/each}
+        </div>
+
+        <div class="hm-feat-panel" id="feat-panel" role="tabpanel" aria-labelledby="feat-tab-{feature}">
+          {@render featPart()}
+        </div>
+      {/if}
+    </div>
+  </section>
+
+  <section class="hm-levels hm-wrap" aria-labelledby="hm-levels-h">
+    <h2 id="hm-levels-h">Koju razinu polažeš?</h2>
+    <div class="hm-levels-grid">
+      {#each LEVELS as l (l.id)}
+        <button class="hm-level" onclick={() => chooseLevel(l.id)}>
+          <span class="hm-level-head">
+            <span class="badge-sq" style="background: hsl({l.color} 75% 55%)">{l.badge}</span>
+            <span class="hm-level-title">
+              <span class="hm-level-name">{l.id} razina</span>
+              <span class="hm-level-kind">{l.name}</span>
+            </span>
+          </span>
+          <span class="hm-level-text">{l.text}</span>
+          <span class="hm-level-cta">
+            Odaberi {l.id} razinu
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+          </span>
+        </button>
+      {/each}
+    </div>
+  </section>
+
+  <ClosingCta
+    title="Prvi zadatak te čeka."
+    text="MatMat je besplatan i radi u pregledniku. Prijavi se Googleom i odmah dobiješ današnje zadatke."
+    secondary={{ label: "Isprobaj aplikaciju", href: "#demo", onclick: toDemo }}
+  />
+</MarketingShell>
 
 <style>
-  /* The landing page is always dark, whatever theme the app is set to, so the
-     dark tokens from app.css are pinned here for the app preview inside it. */
-  .hm {
-    --bg: #0a0a0b;
-    --bg-elev: #111113;
-    --bg-elev-2: #17171a;
-    --bg-hover: #1c1c20;
-    --border: #232328;
-    --border-strong: #2e2e34;
-    --text: #ededef;
-    --text-dim: #a1a1a8;
-    --text-faint: #6b6b73;
-    --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset;
-    --success: #34d399;
-    --warn: #fbbf24;
-    --danger: #f87171;
-
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-sans);
-  }
-  .hm :global(:focus-visible) {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-  }
-
-  .hm-wrap { max-width: 1120px; margin: 0 auto; padding-inline: 40px; }
-  .hm-wrap-wide { max-width: 1240px; margin: 0 auto; }
-
   h1, h2 { margin: 0; font-weight: 600; color: var(--text); }
 
   /* Hero — centred between the syllabus tiles (HeroTiles), on a faint grid
@@ -341,21 +277,6 @@
     line-height: 1.55;
     color: var(--text-faint);
   }
-
-  .hm-google {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 13px 22px;
-    border-radius: var(--r-lg);
-    background: #fff;
-    color: #18181b;
-    font-size: 15px;
-    font-weight: 600;
-    transition: background 0.12s, transform 0.06s;
-  }
-  .hm-google:hover { background: #e9e9ec; }
-  .hm-google:active { transform: translateY(1px); }
 
   /* The app preview sits on a lit floor, like a product on a table. */
   .hm-stage {
@@ -473,68 +394,6 @@
   .hm-level:hover .hm-level-cta svg { transform: translateX(3px); }
   .hm-levels .hm-levels-note { margin-top: 28px; font-size: 14px; color: var(--text-faint); }
 
-  /* Closing — centred, with a faint glow rising from the footer edge. */
-  .hm-final {
-    position: relative;
-    padding-top: 128px;
-    padding-bottom: 136px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .hm-final::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: min(100vw, 1100px);
-    height: 160px;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse 50% 100% at 50% 100%, hsl(var(--primary-h) 70% 55% / 0.12), transparent 70%);
-    pointer-events: none;
-  }
-  .hm-final h2 {
-    font-size: clamp(36px, 5.6vw, 68px);
-    letter-spacing: -0.045em;
-    line-height: 1.02;
-    text-wrap: balance;
-  }
-  .hm-final p { margin: 20px 0 36px; font-size: 18px; line-height: 1.6; color: var(--text-dim); max-width: 31em; text-wrap: pretty; }
-  .hm-final-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .hm-ghost {
-    display: inline-flex;
-    align-items: center;
-    padding: 13px 22px;
-    border-radius: var(--r-lg);
-    border: 1px solid var(--border-strong);
-    color: var(--text-dim);
-    font-size: 15px;
-    font-weight: 500;
-    transition: color 0.12s, background 0.12s, border-color 0.12s;
-  }
-  .hm-ghost:hover { color: var(--text); background: var(--bg-elev); border-color: var(--text-faint); }
-
-  .hm-footer { border-top: 1px solid var(--border); font-size: 13px; color: var(--text-faint); }
-  /* As wide as the app preview and the nav bar. */
-  .hm-footer-inner {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding-inline: 24px;
-    box-sizing: content-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding-top: 26px;
-    padding-bottom: 26px;
-  }
-  .hm-footer-brand { display: flex; align-items: center; gap: 10px; }
-  .hm-footer-brand .brand-mark { width: 20px; height: 20px; font-size: 10px; border-radius: 6px; }
-  .hm-footer-links { display: flex; gap: 22px; }
-  .hm-footer a:hover { color: var(--text); }
-
   .hm-feat-inline { padding: 4px 0 20px 20px; border-left: 2px solid var(--primary); animation: hm-fade 0.2s ease-out; }
   @keyframes hm-fade { from { opacity: 0; } }
 
@@ -546,17 +405,11 @@
     .hm-feat-chat { max-width: none; }
   }
   @media (max-width: 640px) {
-    .hm-wrap { padding-inline: 20px; }
     .hm-hero { padding-top: 64px; }
     .hm-lead { font-size: 16px; }
     .hm-stage { padding: 0 16px 64px; }
-    .hm-footer-inner { padding-inline: 16px; }
     .hm-try { margin-top: 40px; }
     .hm-features, .hm-levels { padding-top: 48px; padding-bottom: 72px; }
-    .hm-final { padding-top: 80px; padding-bottom: 96px; }
-    .hm-final p { font-size: 16px; }
-    .hm-final-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
-    .hm-final-actions > * { justify-content: center; }
     .hm-feat-lead { font-size: 16px; }
     .hm-feat-text { font-size: 15px; }
     .hm-levels-grid { grid-template-columns: 1fr; gap: 12px; }
