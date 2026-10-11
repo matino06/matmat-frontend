@@ -1,0 +1,4398 @@
+[
+ {
+  "id": "S01.01",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Mehaničko gibanje i relativnost gibanja: položaj, putanja i referentni sustav; tijelo miruje ili se giba samo s obzirom na odabrani referentni sustav",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S01.02",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Put (ukupna prijeđena duljina, skalar) i pomak (vektor od početnog do krajnjeg položaja) nisu isto; pomak može biti nula, a put nije; za okomite dijelove pomak se računa Pitagorinim poučkom",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S01.03",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Prosječna brzina v = Δs/Δt (omjer ukupnog puta i ukupnog vremena); jedinica m/s, pretvorba km/h u m/s (dijeljenje s 3,6)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S01.04",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Jednoliko gibanje po pravcu: brzina je stalna, s = v·t (uz početni položaj x = x0 + vt); akceleracija je nula pa je ukupna sila nula",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S01.05",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Graf x(t) jednolikog gibanja je pravac; nagib grafa x(t) jednak je brzini; strmiji pravac znači veću brzinu; vodoravan pravac znači mirovanje",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S01.06",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Graf v(t) jednolikog gibanja je vodoravan pravac; površina ispod grafa v(t) jednaka je putu (odnosno pomaku)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S01.07",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Akceleracija a = Δv/Δt: promjena brzine u jedinici vremena; jedinica m/s²",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S01.08",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Jednoliko ubrzano gibanje: stalna akceleracija, v = v0 + at",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S01.09",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Put pri jednoliko ubrzanom gibanju: s = v0·t + ½at²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S01.10",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Veza brzine, akceleracije i puta bez vremena: v² = v0² + 2as",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S01.11",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Jednoliko usporeno gibanje: akceleracija je suprotna brzini (u formulama a negativan ili se oduzima); tijelo se zaustavlja kad je v = 0 i ta formula vrijedi samo do zaustavljanja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S01.12",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Graf v(t) jednoliko ubrzanog gibanja je pravac; nagib grafa v(t) jednak je akceleraciji; površina ispod grafa je pomak",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S01.13",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Graf x(t) jednoliko ubrzanog gibanja je parabola; nagib tangente daje trenutačnu brzinu; rastući nagib znači ubrzavanje, padajući usporavanje",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S01.14",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Graf a(t) jednoliko promjenjivog gibanja je vodoravan pravac; površina ispod grafa a(t) je promjena brzine",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S01.15",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Put i pomak iz v(t) grafa kad brzina promijeni predznak: pomak je predznačena površina (dijelovi ispod osi se oduzimaju), put je zbroj apsolutnih površina; u trenutku v = 0 tijelo mijenja smjer",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S01.16",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Veza s dinamikom: stalna ukupna sila različita od nule daje stalnu akceleraciju (a = F/m), tj. jednoliko ubrzano gibanje po pravcu",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S01.17",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Slobodni pad i hhitac po vertikali kao jednoliko ubrzano gibanje s a = g (u zadacima 10 m/s²), bez otpora zraka; v = gt, h = ½gt²; pri hicu uvis a = g usmjeren prema dolje cijelo vrijeme",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S01.18",
+  "ishod": "FIZ SŠ C.1.1.",
+  "ishod_naslov": "Analizira pravocrtno gibanje",
+  "tekst": "Postupak za zadatke: odabrati smjer osi i predznake, ispisati poznate veličine, odabrati formulu koja sadrži tražene i poznate veličine, za dva tijela postaviti uvjet susreta (jednaki položaji) ",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S02.01",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Sila je vektorska veličina koja je uzrok promjene gibanja (brzine) tijela; mjerna jedinica je newton (N).",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S02.02",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Ukupna (rezultantna) sila na tijelo je vektorski zbroj svih sila koje djeluju na njega.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S02.03",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Tromost (inercija) je svojstvo tijela da se opire promjeni svojega stanja gibanja; mjera tromosti je masa tijela.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S02.04",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "I. Newtonov zakon: tijelo miruje ili se giba jednoliko po pravcu (stalnom brzinom) dok na njega ne djeluje sila ili je ukupna sila na njega jednaka nuli.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S02.05",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Inercijski sustav: sustav u kojem vrijedi I. Newtonov zakon; sustav koji miruje ili se giba jednoliko po pravcu u odnosu na inercijski sustav.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S02.06",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Ravnoteža sila: ako je ΣF = 0, tijelo je u ravnoteži (miruje ili se giba stalnom brzinom); vrijedi i obrnuto: stalna brzina znači ukupnu silu nula.",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S02.07",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Zamka: za održavanje jednolikoga gibanja nije potrebna sila; sila je potrebna samo za promjenu brzine (iznosa ili smjera). Stalna brzina ne znači da nema sila, nego da im je zbroj nula.",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S02.08",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Primjer ravnoteže: tijelo na horizontalnoj podlozi – sila teža i normalna sila podloge jednakih su iznosa i suprotnih smjerova.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S02.09",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Tijelo koje visi o niti ili se jednoliko spušta/diže: napetost niti jednaka je težini (T = mg).",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S02.10",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Jednoliko gibanje po hrapavoj podlozi: vučna sila jednaka je sili trenja (F = F_tr = μF_p).",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S02.11",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Postupak: nacrtati sve sile na tijelo, rastaviti ih na komponente i izjednačiti zbroj komponenata s nulom po svakoj osi (npr. na kosini mg sinα uzduž, mg cosα okomito).",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S02.12",
+  "ishod": "FIZ SŠ B.1.2.",
+  "ishod_naslov": "Primjenjuje I. Newtonov zakon",
+  "tekst": "Ako je ukupna sila različita od nule, I. zakon ne vrijedi nego tijelo ubrzava (veza s II. Newtonovim zakonom); zakrivljeno gibanje znači da ukupna sila nije nula.",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S03.01",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Sila je vektorska veličina (iznos, smjer, hvatište); mjerna jedinica njutn: 1 N = 1 kg·m/s²",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S03.02",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Dijagram sila: tijelo se crta kao točka/lik, a sve sile koje na njega djeluju prikazuju se strelicama iz tijela (sila teža, normalna sila podloge, napetost niti, elastična sila, trenje, otpor); ne crtaju se sile kojima tijelo djeluje na druge ni rezultanta kao dodatna sila",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S03.03",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Rezultantna (ukupna) sila je vektorski zbroj svih sila na tijelo; sile na istom pravcu zbrajaju se s predznacima, okomite pitagorinim poučkom",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S03.04",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "II. Newtonov zakon: a = F/m (F je rezultanta svih sila); akceleracija ima smjer rezultantne sile",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.05",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Stalna rezultantna sila različita od nule daje stalnu akceleraciju (jednoliko ubrzano gibanje); rezultanta nula znači stalnu brzinu ili mirovanje",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S03.06",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Postupak rješavanja: nacrtati sile, odabrati os u smjeru gibanja, rastaviti sile na komponente, napisati ΣF = ma za svaku os",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S03.07",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Sila okomita na brzinu mijenja smjer gibanja, a sila u smjeru brzine mijenja njezin iznos",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S03.08",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Sila teža G = mg usmjerena prema dolje; g ≈ 10 m/s² (9,81) neovisno o masi tijela",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.09",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Težina tijela (sila na podlogu ili ovjes) i njezina razlika od sile teže; kod ubrzanja dizala N = m(g ± a)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S03.10",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Normalna sila podloge okomita je na podlogu; na kosini je N = mg cos α, a komponenta mg sin α vuče tijelo niz kosinu",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.11",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Elastična sila (Hookeov zakon): F = kx, suprotna deformaciji; k je konstanta opruge",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.12",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Sila trenja klizanja F_tr = μF_p, usmjerena suprotno gibanju (relativnom gibanju površina); ne ovisi o površini dodira",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.13",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Statičko trenje: iznos prilagođava vanjskoj sili do maksimalne vrijednosti μ_s·N; ne pokreće se dok vanjska sila ne prijeđe tu vrijednost",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S03.14",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Sila otpora sredstva suprotna je gibanju; kod pada ma = mg − F_otp, pa je a < g",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S03.15",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Tijela povezana nitima (Atwoodov stroj, tijela na podlozi): nit prenosi napetost, tijela imaju istu akceleraciju; II. zakon piše se za svako tijelo posebno",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S03.16",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Zamka: napetost niti nije jednaka težini tijela osim kad je akceleracija nula",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S03.17",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Slobodan pad: gibanje iz mirovanja samo pod djelovanjem sile teže, a = g; v = gt, h = gt²/2, v² = 2gh",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.18",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Bez otpora zraka sva tijela padaju jednakom akceleracijom, neovisno o masi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S03.19",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Vertikalni hitac uvis: a = −g; v = v₀ − gt, h = v₀t − gt²/2; u najvišoj točki v = 0, h_max = v₀²/2g, t_uspon = v₀/g",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.20",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Vertikalni hitac prema dolje: v = v₀ + gt, s = v₀t + gt²/2",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.21",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Horizontalni hitac: nezavisna gibanja, vodoravno jednoliko (x = v₀t, v_x stalna), okomito slobodan pad (y = gt²/2, v_y = gt)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S03.22",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Putanja horizontalnog hica je parabola; vrijeme pada t = √(2h/g) ne ovisi o početnoj brzini; domet d = v₀·√(2h/g)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S03.23",
+  "ishod": "FIZ SŠ B.1.3.",
+  "ishod_naslov": "Primjenjuje II. Newtonov zakon",
+  "tekst": "Brzina u horizontalnom hicu v = √(v_x² + v_y²), a kut prema horizontali tg φ = v_y/v_x",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S04.01",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "III. Newtonov zakon: ako tijelo A djeluje silom na tijelo B, tijelo B djeluje na A silom jednakog iznosa i suprotnog smjera (F_AB = −F_BA)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S04.02",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Sile akcije i reakcije djeluju na različita tijela, pa se međusobno ne poništavaju i ne zbrajaju u ravnotežu",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S04.03",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Sile međudjelovanja istodobno nastaju i nestaju, iste su vrste (npr. obje gravitacijske, obje elastične) i djeluju duž istog pravca",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S04.04",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Prepoznavanje para akcije i reakcije na crtežu: npr. težina tijela i normalna sila podloge nisu par; par težini Zemlje na tijelo je sila tijela na Zemlju",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S04.05",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Posljedica III. zakona: pri međudjelovanju tijela različitih masa iste sile daju različita ubrzanja (a = F/m), manja masa ima veće ubrzanje (npr. odboj, trzaj)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S04.06",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Količina gibanja (impuls tijela) p = mv: vektorska veličina istog smjera kao brzina, jedinica kg·m/s",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S04.07",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Impuls sile: I = FΔt, vektor u smjeru sile, jedinica N·s = kg·m/s",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S04.08",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "F·Δt = Δp: impuls sile jednak je promjeni količine gibanja (II. Newtonov zakon u obliku F = Δp/Δt)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S04.09",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Promjena količine gibanja Δp = mv₂ − mv₁ računa se vektorski, s predznacima smjera; pri odbijanju od zida elastično je Δp = 2mv",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S04.10",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Isti impuls sile može se postići velikom silom kroz kratko vrijeme ili malom silom kroz dugo vrijeme; dulje vrijeme sudara daje manju silu (zračni jastuk, savijanje koljena)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S04.11",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Veza količine gibanja i kinetičke energije: E_k = p²/(2m)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S04.12",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Zatvoreni (izolirani) sustav: ukupna vanjska sila na sustav jednaka je nuli, samo unutarnje sile",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S04.13",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Zakon očuvanja količine gibanja: u zatvorenom sustavu ukupna količina gibanja je stalna, Σp prije = Σp poslije",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S04.14",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Postupak: odabrati pozitivan smjer osi, zapisati količine gibanja prije i poslije s predznacima te izjednačiti zbrojeve",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S04.15",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Neelastični sudar: tijela se slijepe i gibaju zajedno, m₁v₁ + m₂v₂ = (m₁ + m₂)v; količina gibanja se čuva, a kinetička energija se ne čuva",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S04.16",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Elastični sudar: čuvaju se i količina gibanja i kinetička energija",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S04.17",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Raspad/odbijanje iz mirovanja (eksplozija, trzaj puške, odbacivanje čamca): ukupna količina gibanja ostaje nula, tijela dobivaju količine gibanja jednakih iznosa i suprotnih smjerova",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S04.18",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Zamka: količina gibanja čuva se i kad se mehanička energija ne čuva; zakon vrijedi samo ako je sustav zatvoren (npr. u kratkom trenutku sudara zanemarive vanjske sile)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S04.19",
+  "ishod": "FIZ SŠ B.1.4.",
+  "ishod_naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "tekst": "Kombiniranje zakona: brzine prije sudara odrediti iz očuvanja energije ili kinematike (npr. slobodni pad), zatim primijeniti očuvanje količine gibanja u sudaru",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S05.01",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Mehanički rad: W = F·s·cosα, rad je skalarna veličina koja ovisi o komponenti sile u smjeru pomaka; jedinica džul (J)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.02",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Predznak rada: pozitivan kad sila ima komponentu u smjeru pomaka, negativan kad je suprotna smjeru (npr. trenje, napetost niti pri spuštanju), nula kad je sila okomita na pomak",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S05.03",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Rad i energija: rad izvršen na tijelu jednak je promjeni njegove energije, W = ΔE",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.04",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Kinetička energija E_k = mv²/2 i teorem o radu i kinetičkoj energiji: ukupni rad sila jednak je promjeni kinetičke energije (npr. rad trenja zaustavlja tijelo)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.05",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Gravitacijska potencijalna energija: ΔE_gp = mgΔh, ovisi o odabranoj nul-razini, a bitna je samo promjena visine",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.06",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Elastična potencijalna energija opruge E_ep = ½kx², najveća pri najvećem istezanju (amplituda), ukupna energija titranja E = ½kA²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.07",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Rad gravitacijske sile (konzervativne sile) ne ovisi o putanji, nego samo o promjeni visine; kosina smanjuje potrebnu silu, ali ne i rad (bez trenja)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S05.08",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Zakon očuvanja energije: u zatvorenom sustavu ukupna energija je stalna, energija se samo pretvara iz jednog oblika u drugi",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S05.09",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Očuvanje mehaničke energije: kad nema trenja i otpora vrijedi E_k + E_p = konst. (slobodni pad, njihalo, titranje opruge)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.10",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Postupak: izjednačiti ukupnu energiju u početnom i konačnom stanju (E_k1 + E_p1 = E_k2 + E_p2); u međupoložaju E_k = E − E_p",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S05.11",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Mehanička energija uz gubitke: dio se pretvara u toplinu (rad sile trenja ili otpora), E_poč = E_kon + W_tr, ili npr. kon. energija = 0,9·E_poč pri 10 % gubitka",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S05.12",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Zamka: u neelastičnom sudaru količina gibanja se čuva, a kinetička energija ne (dio prelazi u unutarnju energiju)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S05.13",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Energija i količina gibanja: E_k = p²/2m",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.14",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Snaga: P = W/t, brzina izvršenog rada ili pretvorbe energije; jedinica vat (W)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.15",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Korisnost: η = W_k/W_u = P_k/P_u, omjer korisnog i uloženog rada ili snage, uvijek manja od 1 (100 %)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S05.16",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Postupak: korisnost dizalice/stroja – korisni rad je promjena potencijalne energije mgh, uložena energija je P_motora·t",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S05.17",
+  "ishod": "FIZ SŠ D.1.5.",
+  "ishod_naslov": "Primjenjuje zakon očuvanja energije",
+  "tekst": "Rad električne sile i energija: W = qU (npr. ubrzavanje naboja naponom, qU = mv²/2)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S06.01",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Jednoliko kružno gibanje: gibanje po kružnici stalnim iznosom brzine; brzina se stalno mijenja po smjeru (tangencijalna je), pa je gibanje ubrzano",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S06.02",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Period T: vrijeme jednog ophoda; frekvencija f = 1/T: broj ophoda u jedinici vremena (jedinica Hz)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S06.03",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Obodna brzina v = 2πr/T = 2πrf: put jednog ophoda podijeljen periodom",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S06.04",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Kutna brzina ω = Δφ/Δt = 2π/T = 2πf (rad/s), jednaka za sve točke krutog tijela koje se vrti",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S06.05",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Veza obodne i kutne brzine v = ωr",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S06.06",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Centripetalno ubrzanje a_cp = v²/r = ω²r usmjereno je prema središtu kružnice i okomito na brzinu; mijenja smjer, a ne iznos brzine",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S06.07",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Centripetalna sila F_cp = mv²/r = mω²r: ukupna sila prema središtu (II. Newtonov zakon za kružno gibanje)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S06.08",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Centripetalna sila nije posebna vrsta sile nego rezultanta stvarnih sila (gravitacijska, napetost niti, trenje, Lorentzova, Coulombova, normalna sila) koja je usmjerena prema središtu",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S06.09",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Postupak: odrediti sve sile na tijelo, zbroj komponenti prema središtu izjednačiti s mv²/r (npr. satelit: GMm/r² = mv²/r, nabijena čestica u magnetskom polju: qvB = mv²/r)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S06.10",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Ukupna sila pri jednolikom kružnom gibanju okomita je na brzinu i ne obavlja rad; kinetička energija je stalna",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S06.11",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Ako centripetalna sila nestane, tijelo se giba pravocrtno stalnom brzinom po tangenti (I. Newtonov zakon), a ne radijalno van",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S06.12",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Usporedba gibanja: točke na većem polumjeru imaju veću obodnu brzinu i centripetalno ubrzanje, a istu kutnu brzinu; omjeri ω iz omjera perioda (npr. kazaljke sata)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S06.13",
+  "ishod": "FIZ SŠ C.1.6.",
+  "ishod_naslov": "Analizira kružno gibanje",
+  "tekst": "Pretvorba jedinica (km/h u m/s, okretaji u minuti u Hz, promjer u polumjer) prije računanja kružnog gibanja",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S07.01",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Newtonov zakon gravitacije: F = G·m₁m₂/r²; privlačna sila između dviju masa, usmjerena duž spojnice njihovih središta (r je udaljenost središta)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S07.02",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Gravitacijska sila je međudjelovanje: dva tijela djeluju jednakim iznosom i suprotnim smjerom (III. Newtonov zakon); proporcionalna je umnošku masa i obrnuto proporcionalna kvadratu udaljenosti",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S07.03",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Gravitacijska sila na površini planeta: F = GMm/R²; ovisi o masi i polumjeru planeta",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S07.04",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Masa homogenog planeta M = ρ·V = ρ·(4/3)πR³ (uspoređivanje planeta različitih gustoća i polumjera)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S07.05",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Zamka: r u zakonu gravitacije mjeri se od središta tijela, a ne od površine (r = R + h)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S07.06",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Ubrzanje slobodnog pada g = GM/R²; ovisi o masi i polumjeru nebeskog tijela, ne o masi probnog tijela; opada s visinom",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S07.07",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Postupak: točka u kojoj je ukupna gravitacijska sila dvaju tijela na treće jednaka nuli – izjednačiti GM₁m/r₁² = GM₂m/r₂², r₁ + r₂ = d, točka je između tijela",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S07.08",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Gibanje satelita (i Mjeseca, planeta) po kružnici: gravitacijska sila je centripetalna sila, GMm/r² = mv²/r",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S07.09",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Brzina satelita u kružnoj orbiti v = √(GM/r); ne ovisi o masi satelita, veća orbita znači manju brzinu",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S07.10",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Period kruženja: T = 2πr/v; iz GMm/r² = m·4π²r/T² slijedi T² = 4π²r³/(GM) (treći Keplerov zakon: T²/r³ = konst. za isto središnje tijelo)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S07.11",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Određivanje mase središnjeg tijela iz polumjera i perioda kruženja njegova satelita: M = 4π²r³/(GT²)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S07.12",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Ukupna sila na satelit u jednolikom kruženju je gravitacijska sila, usmjerena prema središtu, okomita na brzinu; mijenja smjer, ne iznos brzine",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S07.13",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Bestežinsko stanje u svemirskoj postaji: tijela su u slobodnom padu oko Zemlje, gravitacija postoji, ali nema sile podloge",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S07.14",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Geostacionarni satelit: period 24 h, kruži iznad ekvatora u smjeru vrtnje Zemlje, stalno iznad iste točke; orbita točno određenog polumjera",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S07.15",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Keplerovi zakoni: planeti se gibaju po elipsama sa Suncem u žarištu; radijvektor opisuje jednake površine u jednakim vremenima (brže u perihelu); T²/r³ = konst.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S07.16",
+  "ishod": "FIZ SŠ C.1.7.",
+  "ishod_naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "tekst": "Gibanje Zemlje oko Sunca i Mjeseca oko Zemlje: gravitacija daje centripetalnu silu, period Zemlje oko Sunca je 1 godina",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S08.01",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "definicija",
+  "tekst": "tlak je omjer sile i površine na koju sila djeluje okomito: p = F/S (jedinica paskal, Pa = N/m²)"
+ },
+ {
+  "id": "S08.02",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "definicija",
+  "tekst": "fluid je tekućina ili plin; tekućine su gotovo nestlačive, plinovi stlačivi"
+ },
+ {
+  "id": "S08.03",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "formula",
+  "tekst": "hidrostatički tlak: p = ρgh, ovisi o gustoći tekućine i dubini, ne ovisi o obliku posude ni o količini tekućine"
+ },
+ {
+  "id": "S08.04",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "zamka",
+  "tekst": "dubina h mjeri se od slobodne površine tekućine prema dolje, a ne od dna posude (visina točke iznad dna nije dubina)"
+ },
+ {
+  "id": "S08.05",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "pojava",
+  "tekst": "u istoj tekućini u mirovanju tlak je jednak u svim točkama na istoj dubini; pri istom h tlak ne ovisi o obliku posude"
+ },
+ {
+  "id": "S08.06",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "formula",
+  "tekst": "ukupni tlak na dubini h: p = p0 + ρgh; ovisnost o dubini je linearna, graf ne prolazi ishodištem (odsječak je p0)"
+ },
+ {
+  "id": "S08.07",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "pojava",
+  "tekst": "atmosferski tlak potječe od težine zraka; normirani iznos 101 325 Pa; mijenja se s visinom"
+ },
+ {
+  "id": "S08.08",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "definicija",
+  "tekst": "manometarski tlak je razlika ukupnog i atmosferskog tlaka; ukupni tlak = manometarski + atmosferski"
+ },
+ {
+  "id": "S08.09",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "postupak",
+  "tekst": "sila tlaka tekućine na površinu (npr. čep na rupi): F = pS = ρghS, uz pretvorbu cm² u m²"
+ },
+ {
+  "id": "S08.10",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "pojava",
+  "tekst": "Pascalov zakon: tlak koji djeluje na zatvorenu tekućinu prenosi se jednako na sve dijelove tekućine i stijenke"
+ },
+ {
+  "id": "S08.11",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "formula",
+  "tekst": "hidraulički tlak (preša, dizalica): F1/S1 = F2/S2; manjom silom na manjem klipu dobiva se veća sila na većem klipu, put se pritom smanjuje, a rad je isti"
+ },
+ {
+  "id": "S08.12",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "pojava",
+  "tekst": "uzgon: na tijelo uronjeno u fluid djeluje sila uzgona prema gore, nastaje zbog razlike hidrostatskih tlakova na donju i gornju stranu tijela"
+ },
+ {
+  "id": "S08.13",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "formula",
+  "tekst": "Arhimedov zakon: F_u = ρ_f·g·V, gdje je V obujam uronjenog dijela tijela, a ρ_f gustoća fluida (ne tijela); uzgon jednak težini istisnutog fluida"
+ },
+ {
+  "id": "S08.14",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "zamka",
+  "tekst": "uzgon ovisi o obujmu uronjenog dijela i gustoći fluida, ne o masi ni gustoći tijela niti o dubini uronjenosti"
+ },
+ {
+  "id": "S08.15",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "postupak",
+  "tekst": "sile na uronjeno tijelo: težina mg prema dolje, uzgon prema gore (te napetost niti ili sila podloge); ravnoteža sila daje uvjet za rješavanje zadatka"
+ },
+ {
+  "id": "S08.16",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "pojava",
+  "tekst": "uvjeti: ρ_tijela > ρ_fluida tijelo tone, ρ_tijela = ρ_fluida lebdi, ρ_tijela < ρ_fluida izranja i pluta"
+ },
+ {
+  "id": "S08.17",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "postupak",
+  "tekst": "plutanje: F_u = mg, pa je omjer uronjenog obujma V_u/V = ρ_tijela/ρ_fluida"
+ },
+ {
+  "id": "S08.18",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "postupak",
+  "tekst": "tijelo koje pluta na dvije tekućine koje se ne miješaju: ukupni uzgon je zbroj uzgona u svakoj tekućini za pripadni uronjeni obujam i jednak je težini"
+ },
+ {
+  "id": "S08.19",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "definicija",
+  "tekst": "prividna težina tijela u fluidu: G' = mg − F_u (npr. očitanje dinamometra pri uronjenom tijelu)"
+ },
+ {
+  "id": "S08.20",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "pojava",
+  "tekst": "kartezijanski plovak: stiskanjem boce raste tlak, zrak u plovku se stisne (pV = konst.), istisne se manje vode, uzgon se smanji i plovak potone"
+ },
+ {
+  "id": "S08.21",
+  "ishod": "FIZ SŠ B.2.1.",
+  "ishod_naslov": "Primjenjuje zakone statike fluida",
+  "vrsta": "definicija",
+  "tekst": "gustoća ρ = m/V, potrebna za izračun mase fluida i uzgona"
+ },
+ {
+  "id": "S09.01",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "definicija",
+  "tekst": "Idealni fluid: nestlačiv (stalna gustoća) i bez unutarnjeg trenja (viskoznosti); strujanje je stacionarno (brzina u svakoj točki ne mijenja se s vremenom)"
+ },
+ {
+  "id": "S09.02",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "definicija",
+  "tekst": "Strujnica i strujna cijev: strujnica je putanja čestice fluida pri stacionarnom strujanju; fluid ne prolazi kroz stijenke strujne cijevi"
+ },
+ {
+  "id": "S09.03",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "definicija",
+  "tekst": "Protok (obujamski) q = V/t = S·v: obujam fluida koji prođe presjekom u jedinici vremena (m³/s)"
+ },
+ {
+  "id": "S09.04",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "formula",
+  "tekst": "Jednadžba kontinuiteta: S₁v₁ = S₂v₂ (stalan protok; zakon očuvanja mase za nestlačiv fluid)"
+ },
+ {
+  "id": "S09.05",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "pojava",
+  "tekst": "Posljedica kontinuiteta: u užem dijelu cijevi fluid teče brže, u širem sporije (brzina je obrnuto razmjerna presjeku)"
+ },
+ {
+  "id": "S09.06",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "postupak",
+  "tekst": "Računanje površine presjeka cijevi iz promjera ili polumjera (S = πr²) i pretvorba jedinica (cm² u m², l u m³, minute u sekunde) pri računanju protoka i brzine"
+ },
+ {
+  "id": "S09.07",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "definicija",
+  "tekst": "Statički tlak p: tlak fluida koji djeluje na stijenke i u mirnom fluidu; hidrostatski tlak je p = ρgh"
+ },
+ {
+  "id": "S09.08",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "definicija",
+  "tekst": "Dinamički tlak ρv²/2: tlak koji potječe od gibanja fluida (gustoća kinetičke energije)"
+ },
+ {
+  "id": "S09.09",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "formula",
+  "tekst": "Bernoullijeva jednadžba za horizontalnu cijev: p₁ + ρv₁²/2 = p₂ + ρv₂²/2 (zakon očuvanja energije za idealni fluid); zbroj statičkog i dinamičkog tlaka je stalan"
+ },
+ {
+  "id": "S09.10",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "pojava",
+  "tekst": "Gdje je brzina veća, statički tlak je manji: u užem dijelu horizontalne cijevi veći je dinamički, a manji statički tlak"
+ },
+ {
+  "id": "S09.11",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "postupak",
+  "tekst": "Računanje razlike statičkih tlakova iz brzina: p₁ − p₂ = ρ(v₂² − v₁²)/2, i obrnuto brzine iz razlike tlakova (uz kontinuitet za v₂ iz v₁ i omjera presjeka ili polumjera)"
+ },
+ {
+  "id": "S09.12",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "postupak",
+  "tekst": "Kombiniranje kontinuiteta i Bernoullijeve jednadžbe: iz presjeka i protoka odrediti brzine, zatim dinamičke i statičke tlakove; vrijeme punjenja posude t = V/q"
+ },
+ {
+  "id": "S09.13",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "zamka",
+  "tekst": "Bernoullijeva jednadžba u obliku iz knjižice vrijedi bez visinskog člana samo za horizontalnu cijev; dinamički tlak ovisi o kvadratu brzine, pa udvostručenje brzine četverostruko povećava dinamički tlak"
+ },
+ {
+  "id": "S09.14",
+  "ishod": "FIZ SŠ C.2.2.",
+  "ishod_naslov": "Primjenjuje zakone dinamike fluida",
+  "vrsta": "zamka",
+  "tekst": "Ne miješati statički tlak s dinamičkim: u užem dijelu cijevi statički tlak pada, a ne raste; udvostručenje promjera cijevi smanjuje brzinu četiri puta (S ∝ r²)"
+ },
+ {
+  "id": "S10.01",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Čestična građa tvari: tvar se sastoji od atoma i molekula koji su u stalnom kaotičnom toplinskom gibanju i međusobno djeluju privlačnim i odbojnim silama",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.02",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Agregacijska stanja (čvrsto, tekuće, plinovito): razlika u razmaku, uređenosti i gibanju čestica te jačini međudjelovanja",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S10.03",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Čvrsto tijelo: čestice titraju oko stalnih ravnotežnih položaja (kristalna rešetka), tijelo ima stalan oblik i obujam",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.04",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Tekućina: čestice su blisko i slabo vezane, mogu mijenjati mjesta; stalan obujam, oblik posude",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.05",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Plin: čestice su daleko jedna od druge, slabo međudjeluju i gibaju se slobodno; ispunjava cijelu posudu",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.06",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Prijelazi među agregacijskim stanjima (taljenje, skrućivanje, isparavanje, kondenzacija, sublimacija) kao posljedica promjene energije i uređenosti čestica",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.07",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Difuzija: spontano miješanje tvari zbog toplinskog gibanja čestica; brža pri višoj temperaturi i u plinovima nego u tekućinama i čvrstim tijelima",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.08",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Brownovo gibanje: nasumično gibanje sitnih čestica (npr. peludi) u tekućini ili plinu zbog nasumičnih sudara s molekulama koje su u stalnom gibanju; dokaz čestične građe",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.09",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Toplinsko širenje: porastom temperature raste srednja udaljenost i amplituda titranja čestica pa se tijelo širi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.10",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Linearno rastezanje: Δℓ = α·ℓ₀·Δt, odnosno ℓ = ℓ₀(1 + αΔt); α je koeficijent linearnog rastezanja ovisan o materijalu",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S10.11",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Relativno produljenje Δℓ/ℓ₀ = αΔt, ne ovisi o duljini; za jednako produljenje različitih šipki vrijedi α₁ℓ₁Δt₁ = α₂ℓ₂Δt₂",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S10.12",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Volumno rastezanje: V = V₀(1 + γΔt), za čvrsta tijela γ ≈ 3α",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S10.13",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Šupljine (rupa u prstenu, unutarnji promjer) rastežu se kao da su od istog materijala, dakle zagrijavanjem se rupa povećava",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S10.14",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Postupak za provlačenje šipke kroz prsten: zagrijati prsten ili ohladiti šipku (isti materijal, promjer raste/pada jednako relativno)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S10.15",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Tekućine se rastežu više od čvrstih tijela; voda je anomalna: najveća gustoća pri 4 °C",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S10.16",
+  "ishod": "FIZ SŠ C.2.3.",
+  "ishod_naslov": "Primjenjuje model čestične građe tvari",
+  "tekst": "Temperaturu u formulama rastezanja treba paziti: promjena temperature Δt je ista u °C i K",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S11.01",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Idealni plin: model u kojem su čestice točkaste, nema međudjelovanja među njima osim elastičnih sudara, a gibaju se nasumično",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S11.02",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Veličine stanja plina: tlak p, volumen V, termodinamička temperatura T i množina n; stanje plina opisuju te veličine",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S11.03",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Temperatura u kelvinima: T = t + 273 (pri računu s plinskim zakonima uvijek se koristi kelvin, ne Celzijev stupanj)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S11.04",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Množina tvari: n = N/N_A = m/M (veza mase, molarne mase i broja čestica)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.05",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Jednadžba stanja idealnog plina: pV = nRT",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.06",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Postupak: kod promjene mase plina (ispuštanje, dodavanje) n je proporcionalan masi; pri jednakim p, V i T plinovi imaju jednake množine",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S11.07",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Izotermna promjena (T = konst.): Boyle-Mariotteov zakon pV = konst., p1V1 = p2V2; p-V graf je hiperbola",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.08",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Izobarna promjena (p = konst.): V/T = konst. (Gay-Lussacov zakon); V-T graf je pravac kroz ishodište, nagib nR/p",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.09",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Izohorna promjena (V = konst.): p/T = konst. (Charlesov zakon)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.10",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Postupak: pri računu s relativnom promjenom tlaka (npr. za četvrtinu veći) tlak postaje 1,25 p; manometarski tlak + atmosferski tlak = ukupni (apsolutni) tlak koji ulazi u plinske zakone",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S11.11",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Čitanje promjena stanja iz p-V, V-T i p-T dijagrama (izoterma, izobara, izohora) te usporedba temperatura stanja preko umnoška pV",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S11.12",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Adijabatska promjena: nema izmjene topline (Q = 0); pri kompresiji rastu tlak i temperatura, pV = konst. ne vrijedi nego pV^κ = konst.",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S11.13",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Molekulsko-kinetički model: plin čine mnoge čestice u stalnom nasumičnom toplinskom gibanju; tlak plina posljedica je sudara čestica sa stijenkama posude",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S11.14",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Brownovo gibanje: nasumično gibanje sitnih čestica (npr. peludi) u tekućini ili plinu zbog sudara s molekulama koje su u stalnom toplinskom gibanju",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S11.15",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Srednja kinetička energija translacije molekule idealnog plina: E_k = (3/2)k_B T",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.16",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Zamka: srednja kinetička energija molekula ovisi samo o temperaturi, ne o vrsti plina, masi molekule, tlaku ni volumenu; veća masa pri istoj temperaturi znači manju brzinu",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S11.17",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Unutarnja energija jednoatomnog idealnog plina: U = (3/2)N k_B T = (3/2)nRT = (3/2)pV; ovisi samo o temperaturi (kinetička energija čestica)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S11.18",
+  "ishod": "FIZ SŠ D.2.4.",
+  "ishod_naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "tekst": "Boltzmannova konstanta k_B povezuje mikroskopsku energiju čestice s temperaturom (k_B = R/N_A)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S12.01",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Unutarnja energija tijela je zbroj kinetičkih energija kaotičnoga gibanja čestica i potencijalnih energija njihova međudjelovanja; ovisi o stanju tijela (temperaturi), ne o putu do tog stanja",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S12.02",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Unutarnja energija idealnoga plina ovisi samo o temperaturi (nema međudjelovanja čestica); U = 3/2·N·k_B·T = 3/2·nRT za jednoatomni plin, pa U ∝ pV",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.03",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Promjena unutarnje energije idealnoga plina ΔU ∝ ΔT: ista temperatura znači isti U; usporedba U u stanjima s pV-dijagrama preko umnoška pV",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S12.04",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Toplina je energija koja prelazi s toplijega na hladnije tijelo zbog razlike temperatura (nije svojstvo tijela, ovisi o procesu)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S12.05",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Toplinski kapacitet i specifični toplinski kapacitet c: Q = m·c·Δt, značenje c kao topline potrebne da se 1 kg tvari zagrije za 1 K",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.06",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Kalorimetrija: toplinska ravnoteža, toplina što je preda toplije tijelo jednaka je toplini koju primi hladnije (bez gubitaka); za jednake mase iste tvari ravnotežna temperatura je aritmetička sredina",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S12.07",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Q–Δt graf: nagib pravca jednak je m·c; za jednake mase veći nagib znači veći specifični toplinski kapacitet",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S12.08",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Snaga izvora topline P = Q/t pri računanju vremena zagrijavanja; ukupna toplina je zbroj toplina za sve zagrijavane dijelove (voda, posuda)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S12.09",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Rad plina pri stalnom tlaku (izobarno): W = p·ΔV; plin pri širenju vrši pozitivan rad, pri stlačivanju se rad vrši nad plinom (W negativan)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.10",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Rad plina jednak je površini ispod krivulje u p-V dijagramu; pri stalnom volumenu (izohorno) rad je nula",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.11",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Rad u kružnom procesu jednak je površini zatvorene krivulje u p-V dijagramu; pozitivan ako se proces odvija u smjeru kazaljke na satu, negativan u suprotnom; paziti na jedinice (l u m³, kPa u Pa)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S12.12",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "I. zakon termodinamike: Q = W + ΔU (toplina dovedena plinu troši se na rad plina i povećanje unutarnje energije); zakon očuvanja energije",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.13",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Predznaci u I. zakonu: Q > 0 plin prima toplinu, W > 0 plin vrši rad, ΔU > 0 temperatura raste",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S12.14",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Izotermni proces: ΔT = 0, ΔU = 0, pa je Q = W (sva dovedena toplina pretvara se u rad)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.15",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Izohorni proces: W = 0, pa je Q = ΔU (dovedena toplina povećava unutarnju energiju)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.16",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Izobarni proces: Q = W + ΔU uz W = pΔV; plin uz isto zagrijavanje prima više topline nego pri izohornom",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.17",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Adijabatski proces: Q = 0, pa je ΔU = −W; kompresija povećava U, temperaturu i tlak, ekspanzija ih smanjuje",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.18",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Zamka: pri adijabatskom procesu ne vrijedi pV = konst. (vrijedi pV^κ = konst., κ = 5/3 za jednoatomni plin); adijabatska je promjena strmija od izoterme",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S12.19",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Agregacijska stanja (kruto, tekuće, plinovito) i prijelazi: taljenje, skrućivanje, isparavanje, kondenzacija, sublimacija, resublimacija",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S12.20",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Pri promjeni agregacijskog stanja temperatura tvari ostaje stalna, a dovedena toplina mijenja potencijalnu energiju čestica (raskidanje veza)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.21",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Toplina taljenja/skrućivanja Q = m·λ (specifična toplina taljenja λ)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.22",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Toplina isparavanja/kondenzacije Q = m·r (specifična toplina isparavanja r)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.23",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Grafički prikaz zagrijavanja tvari t–Q ili t–vrijeme: kose dionice (zagrijavanje faze, Q = mcΔt) i vodoravne dionice (promjena stanja, Q = mλ ili mr); ukupna toplina je zbroj dijelova",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S12.24",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Toplinski stroj uzima toplinu Q1 iz toplijega spremnika, vrši rad W i predaje toplinu Q2 hladnijem spremniku; Q1 = W + Q2",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S12.25",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Korisnost toplinskoga stroja η = W/Q1 = (Q1 − Q2)/Q1; uvijek manja od 1 (100 %)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.26",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Carnotov kružni proces (idealni stroj): η = 1 − T2/T1, temperature u kelvinima; najveća moguća korisnost među strojevima između istih spremnika",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S12.27",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Korisnost Carnotova stroja raste povećanjem temperature toplijega spremnika ili snižavanjem temperature hladnijega",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S12.28",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Zamka: temperature u Carnotovoj formuli moraju biti u kelvinima, a ne u °C; korisnost nije omjer temperatura T2/T1",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S12.29",
+  "ishod": "FIZ SŠ D.2.5.",
+  "ishod_naslov": "Analizira termodinamičke procese i sustave",
+  "tekst": "Kružni proces plina: nakon ciklusa je ΔU = 0, pa je ukupni rad W = Q1 − Q2",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.01",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Električni naboj: dvije vrste (pozitivan i negativan); istoimeni naboji se odbijaju, raznoimeni privlače",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.02",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Elementarni naboj e je najmanji slobodni naboj; naboj tijela je cjelobrojni višekratnik e (kvantiziranost): q = n·e",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.03",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Zakon očuvanja naboja: ukupan naboj izoliranog sustava je stalan",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.04",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Električno nabijanje trenjem, dodirom i influencijom (električnom indukcijom): preraspodjela naboja, prijenos elektrona",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.05",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Vodiči i izolatori: u vodiču se naboj slobodno giba, u izolatoru ne; polarizacija dielektrika",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.06",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Električni naboj točkastog naboja se dodirom dvaju jednakih vodljivih tijela raspodijeli ravnomjerno (q = (q1+q2)/2)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S13.07",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Coulombov zakon: F = k·q1·q2/(εr·r²); sila je na spojnici naboja, jednaka po iznosu i suprotna po smjeru na oba naboja",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.08",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Zamka: Coulombova sila ovisi o 1/r² (udvostručenje udaljenosti smanji silu četiri puta); u dielektriku se dijeli s εr",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S13.09",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Vektorsko zbrajanje Coulombovih sila na naboj od više naboja (načelo superpozicije)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S13.10",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Jakost električnog polja E = F/q (smjer je sila na pozitivni probni naboj); jedinica N/C = V/m",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.11",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Polje točkastog naboja: E = k·q/(εr·r²); usmjereno od pozitivnog naboja, prema negativnom",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.12",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Silnice električnog polja: izlaze iz + i ulaze u −, ne sijeku se, gušće silnice znače jače polje; tangenta daje smjer polja",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.13",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Superpozicija polja više naboja: vektorski zbroj; određivanje točke u kojoj je polje nula (između istoimenih naboja bliže manjem)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S13.14",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Homogeno polje pločastog kondenzatora: E = U/d; paralelne ravnomjerno raspoređene silnice",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.15",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Sila na naboj u električnom polju F = qE; akceleracija a = qE/m (drugi Newtonov zakon); za negativni naboj sila je suprotna polju",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.16",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Rad električne sile W = qU; promjena kinetičke energije naboja ubrzanog naponom: qU = mv²/2",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.17",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Električni potencijal točkastog naboja φ = k·q/(εr·r); skalarna veličina, predznak ovisi o naboju",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.18",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Napon je razlika potencijala U = φ1 − φ2; rad ne ovisi o putu (električna sila je konzervativna)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.19",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Ekvipotencijalne plohe: okomite na silnice; rad pri pomaku po njima je nula",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.20",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Elektronvolt: 1 eV = 1,6·10⁻¹⁹ J, energija koju elektron dobije ubrzan naponom 1 V",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S13.21",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Vodič u elektrostatičkoj ravnoteži: polje unutar vodiča je nula, naboj je na vanjskoj površini, površina je ekvipotencijalna",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.22",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Šuplja nabijena vodljiva kugla: unutra E = 0, izvan E = kQ/r² kao da je naboj u središtu",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.23",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Faradayev kavez: unutrašnjost zatvorenog vodiča zaštićena je od vanjskog električnog polja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.24",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Polje beskonačne nabijene ploče je homogeno; dvije ploče s +q i −q: polje je između ploča, izvan njih jednako nuli",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.25",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Kapacitet kondenzatora C = q/U; jedinica farad (F)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.26",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Kapacitet pločastog kondenzatora C = ε0·εr·S/d; ovisi o geometriji i dielektriku, ne o q i U",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.27",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Dielektrik povećava kapacitet εr puta",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S13.28",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Energija nabijenog kondenzatora W = CU²/2 (= q²/2C)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S13.29",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Kondenzator priključen na izvor: U je stalan, promjena C mijenja q = CU",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S13.30",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Zamka: odspojeni kondenzator: q je stalan, promjena C mijenja U = q/C i energiju q²/2C",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S13.31",
+  "ishod": "FIZ SŠ B.2.6.",
+  "ishod_naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "tekst": "Gibanje nabijene čestice u homogenom električnom polju: ubrzanje u smjeru polja, a okomito ulaženje daje parabolu (analogno horizontalnom hitcu)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S14.01",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Električno polje: prostor oko naboja u kojem na drugi naboj djeluje električna sila; E = F/q (vektor, smjer sile na pozitivan probni naboj)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S14.02",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Polje točkastog naboja E = kq/(εr·r²): usmjereno od pozitivnog naboja, prema negativnom; opada s kvadratom udaljenosti",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S14.03",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Silnice električnog polja: izlaze iz + i ulaze u −, ne sijeku se, gušće silnice znače jače polje, tangenta daje smjer polja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S14.04",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Princip superpozicije: ukupno polje više naboja je vektorski zbroj pojedinih polja (npr. središte kvadrata, točka između dvaju naboja gdje je polje nula)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S14.05",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Zamka: polje između istoimenih naboja poništava se bliže manjem naboju (E = kq/r² za oba naboja izjednačiti); između raznoimenih polja se zbrajaju",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S14.06",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Homogeno polje između nabijenih paralelnih ploča: E = U/d; usmjereno od pozitivne prema negativnoj ploči",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S14.07",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Polje jedne velike nabijene ploče je homogeno; za dvije ploče +q i −q polje je između ploča zbroj polja, a izvan ploča jednako nuli",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S14.08",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Vodič u elektrostatičkoj ravnoteži: polje unutar vodiča (i šuplje kugle) je nula, naboj je na vanjskoj površini; izvan nabijene kugle E = kQ/r²",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S14.09",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Električni potencijal točkastog naboja φ = kq/(εr·r) (skalar)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S14.10",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Električni napon je razlika potencijala U = φ1 − φ2; jedinica volt",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S14.11",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Rad električne sile pri premještanju naboja W = qU (neovisan o putu); rad vanjske sile ima suprotan predznak",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S14.12",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Elektron ubrzan naponom U: qU = mv²/2 (rad polja = promjena kinetičke energije); elektronvolt kao energija",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S14.13",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Gibanje nabijene čestice u električnom polju: F = qE, a = qE/m (II. Newtonov zakon); u homogenom polju jednoliko ubrzano gibanje, pozitivna čestica ubrzava u smjeru polja, negativna suprotno",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S14.14",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Čestica koja ulijeće okomito na homogeno polje giba se po paraboli (kao horizontalni hitac): jednoliko u smjeru ulaska, ubrzano u smjeru polja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S14.15",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Ravnoteža nabijenog tijela u polju ili uz drugi naboj: napetost niti, težina, uzgon i Coulombova/električna sila u ravnoteži",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S14.16",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Kapacitet kondenzatora C = q/U: sposobnost pohranjivanja naboja; jedinica farad",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S14.17",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Kapacitet pločastog kondenzatora C = ε0·εr·S/d (raste s površinom i dielektrikom, pada s razmakom)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S14.18",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Energija nabijenog kondenzatora W = CU²/2 = q²/(2C)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S14.19",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Kondenzator spojen na izvor: napon U stalan; promjena d ili dielektrika mijenja C pa Q = CU, a polje E = U/d",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S14.20",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Odspojeni kondenzator: naboj Q stalan; dielektrik povećava C, napon U = Q/C i energija se smanjuju",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S14.21",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Dielektrik u kondenzatoru povećava kapacitet εr puta i smanjuje polje",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S14.22",
+  "ishod": "FIZ SŠ B.2.7.",
+  "ishod_naslov": "Opisuje električno polje",
+  "tekst": "Zamka: promjena polariteta izvora ne mijenja iznos polja ni kapacitet kondenzatora, samo smjer polja",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S15.01",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Električna struja je usmjereno gibanje nabijenih čestica (u metalima slobodnih elektrona); uvjet je zatvoren strujni krug i izvor napona",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S15.02",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Jakost električne struje I = Δq/Δt: naboj koji prođe presjekom vodiča u jedinici vremena (jedinica amper)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.03",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Dogovoreni smjer struje je od + prema − pola izvora, suprotan smjeru gibanja elektrona",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S15.04",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Električni napon je razlika potencijala između dviju točaka i uzrokuje struju; izvor održava napon u krugu",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S15.05",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Električni otpor R je svojstvo vodiča koje se opire protjecanju struje; R = U/I, jedinica om (Ω)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S15.06",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Otpor žice R = ρ·ℓ/S: raste s duljinom, pada s presjekom, ovisi o materijalu (otpornost ρ); presjek S = πd²/4 pa otpor ovisi o promjeru kao 1/d²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.07",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Ohmov zakon I = U/R: struja je proporcionalna naponu i obrnuto proporcionalna otporu",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.08",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Graf I–U za ohmski vodič je pravac kroz ishodište; nagib je 1/R (veći nagib = manji otpor)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S15.09",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Ovisnost struje o promjeni napona i otpora: struja se povećava povećanjem napona ili smanjenjem otpora",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S15.10",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Serijski spoj: ista struja kroz sve otpornike, naponi se zbrajaju, R_u = R1 + R2 + …",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.11",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Paralelni spoj: isti napon na svim otpornicima, struje se zbrajaju, 1/R_u = 1/R1 + 1/R2 + …",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.12",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Ukupni otpor paralelnog spoja manji je od najmanjeg pojedinačnog otpora; kod serijskog veći od najvećeg",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S15.13",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Strujni krug s realnim izvorom: I = ℰ/(R_u + R_v), gdje je R_v unutarnji otpor izvora",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.14",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Postupak za složeni krug: spojiti serijske i paralelne grupe u zamjenski otpor, izračunati ukupnu struju, zatim naponi i struje po granama",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S15.15",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Snaga u strujnom krugu P = U·I = I²R = U²/R",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.16",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Rad (energija) električne struje W = U·I·t = P·t",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S15.17",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Snaga trošila: u paralelnom spoju (isti U) veću snagu ima manji otpor; u serijskom (ista I) veći otpor",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S15.18",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Otpor trošila iz nazivnih podataka R = U²/P; trošilo radi normalno pri nazivnom naponu i struji (serijski dodani otpornik preuzima višak napona)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S15.19",
+  "ishod": "FIZ SŠ C.2.8.",
+  "ishod_naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "tekst": "Korisnost η = W_k/W_u = P_k/P_u; električna energija se u otporniku pretvara u toplinu (Jouleova toplina)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S16.01",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Magnet ima dva pola, sjeverni i južni; istoimeni polovi se odbijaju, raznoimeni privlače",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.02",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Magnetski polovi se ne mogu razdvojiti: dijeljenjem magneta nastaju novi magneti s oba pola (nema magnetskih monopola)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S16.03",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Magnetsko polje: prostor oko magneta ili vodiča sa strujom u kojem djeluje magnetska sila; oznaka B, jedinica tesla (T)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S16.04",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Magnetske silnice: izvan magneta idu od sjevernog prema južnom polu, unutar magneta od južnog prema sjevernom; zatvorene su krivulje koje se ne sijeku",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S16.05",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Gustoća silnica pokazuje jakost polja; tangenta na silnicu daje smjer polja, a to je smjer na koji pokazuje sjeverni pol magnetske igle",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S16.06",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Magnetska igla (kompas) u polju se orijentira u smjeru polja; Zemlja je veliki magnet, a geografski sjever je blizu magnetskog južnog pola",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.07",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Oblik polja štapićastog i potkovastog magneta; homogeno polje ima paralelne silnice jednake gustoće (npr. između krakova potkovastog magneta)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.08",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Feromagnetske tvari (željezo, nikal, kobalt) privlače se magnetom i mogu se namagnetizirati; domene se u vanjskom polju usmjere",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.09",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Oerstedov pokus: vodič kojim teče struja stvara magnetsko polje i otklanja magnetsku iglu; električna struja izvor je magnetizma",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.10",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Silnice polja ravnog vodiča sa strujom su koncentrične kružnice oko vodiča u ravnini okomitoj na vodič",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.11",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Pravilo desne ruke za ravni vodič: palac u smjeru struje, savijeni prsti pokazuju smjer silnica",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S16.12",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "B = μ0·μr·I/(2πr): magnetska indukcija ravnog dugog vodiča; ovisi o struji i udaljenosti (opada s 1/r)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S16.13",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Magnetsko polje kružne petlje i zavojnice: pravilo desne ruke (prsti u smjeru struje, palac pokazuje smjer polja u unutrašnjosti, tj. sjeverni pol)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S16.14",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Polje zavojnice izvana je kao polje štapićastog magneta, a unutar duge zavojnice je približno homogeno; silnice izlaze na sjevernom polu",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.15",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "B = μ0·μr·N·I/ℓ: magnetska indukcija u dugoj zavojnici; raste s brojem zavoja po duljini i strujom",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S16.16",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Feromagnetska jezgra u zavojnici (elektromagnet) višestruko pojačava polje (μr ≫ 1); polje se uključuje i isključuje strujom",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S16.17",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Superpozicija magnetskih polja: ukupno polje više vodiča je vektorski zbroj pojedinih polja (npr. dva vodiča sa strujama istog ili suprotnog smjera)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S16.18",
+  "ishod": "FIZ SŠ B.3.1.",
+  "ishod_naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "tekst": "Zamka: polje struje ne ovisi o smjeru samo po iznosu; promjena smjera struje mijenja smjer polja, a ne njegov iznos",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S17.01",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Magnetska sila djeluje na električni naboj koji se giba u magnetskom polju (Lorentzova sila); na naboj koji miruje magnetsko polje ne djeluje.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.02",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Lorentzova sila: F_L = q·v·B·sin α, gdje je α kut između smjera brzine i magnetskog polja",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S17.03",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Posebni slučajevi: za v ∥ B je F_L = 0, a za v ⊥ B je F_L = qvB (maksimalna sila)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S17.04",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Smjer Lorentzove sile određuje se pravilom ruke: sila je okomita i na v i na B; za negativan naboj (elektron) smjer je suprotan od onoga za pozitivan",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S17.05",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Lorentzova sila je stalno okomita na brzinu, pa ne vrši rad i ne mijenja iznos brzine ni kinetičku energiju čestice, nego samo smjer gibanja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.06",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Ampereova sila na ravni vodič sa strujom u homogenom magnetskom polju: F = B·I·ℓ·sin α, gdje je α kut između vodiča (smjera struje) i B",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S17.07",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Smjer Ampereove sile određuje se pravilom lijeve ruke: F ⊥ I i F ⊥ B; magnetske silnice izlaze iz sjevernog pola i ulaze u južni",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S17.08",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Ampereova sila je zbroj Lorentzovih sila na pokretne naboje u vodiču; razlikovati je od Coulombove (električne) sile",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S17.09",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Magnetsko polje beskonačno dugog ravnog vodiča: B = μ0μr·I/(2πr); smjer polja po pravilu desne ruke",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S17.10",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Međudjelovanje dvaju paralelnih vodiča sa strujom: istosmjerne struje se privlače, a suprotnosmjerne odbijaju; sila na vodič računa se kao F = B·I·ℓ s poljem drugog vodiča (po trećem Newtonovu zakonu sile su jednakog iznosa)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.11",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Ukupno magnetsko polje (i sila) više vodiča dobiva se vektorskim zbrajanjem (superpozicijom) doprinosa pojedinih vodiča",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S17.12",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Naboj koji ulazi okomito na homogeno magnetsko polje giba se jednoliko po kružnici: Lorentzova sila je centripetalna, qvB = mv²/r",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.13",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Polumjer kružne putanje: r = mv/(qB); veći je za veću količinu gibanja i manji za jače polje ili veći naboj",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S17.14",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Period kruženja T = 2πm/(qB) ne ovisi o brzini ni o polumjeru putanje",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S17.15",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Čestica ubrzana naponom U iz mirovanja: qU = mv²/2; kombinira se s qvB = mv²/r za određivanje r, v, q ili m",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S17.16",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Ako brzina čestice ima komponentu paralelnu s poljem, putanja je zavojnica (spirala): kružno gibanje u okomitoj ravnini uz jednoliko gibanje duž polja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.17",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Čestica u magnetskom polju s brzinom koja nije okomita: razdvojiti brzinu na komponente v·sin α (okomita, daje kružnicu) i v·cos α (paralelna, bez sile)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S17.18",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Primjena: maseni spektrometar razdvaja čestice istog naboja po masi jer je r ∝ m (različiti polumjeri putanja)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.19",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Primjena: ciklotron ubrzava čestice izmjeničnim električnim poljem dok ih magnetsko polje drži na kružnoj putanji; frekvencija ne ovisi o brzini",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.20",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Primjena: zakretanje elektronskog snopa magnetskim poljem (katodna cijev), elektromotor (zakretni moment na petlji sa strujom), i zaštita Zemljinim magnetskim poljem od nabijenih čestica",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S17.21",
+  "ishod": "FIZ SŠ B.3.2.",
+  "ishod_naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "tekst": "Odabirnik brzine: kad su električna i magnetska sila na česticu jednake (qE = qvB), čestica ide pravocrtno, v = E/B",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S18.01",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Elektromagnetska indukcija: promjena magnetskog toka kroz zavojnicu ili petlju inducira napon (i struju u zatvorenom krugu)"
+ },
+ {
+  "id": "S18.02",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "definicija",
+  "tekst": "Magnetski tok Φ = B·S·cosα: α je kut između normale na plohu petlje i smjera magnetskog polja; jedinica weber (Wb = T·m²)"
+ },
+ {
+  "id": "S18.03",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "postupak",
+  "tekst": "Tok se mijenja promjenom B, površine S ili kuta α (npr. rotacijom petlje); ako se ništa od toga ne mijenja, nema indukcije (npr. petlja potpuno unutar homogenog polja pri translaciji)"
+ },
+ {
+  "id": "S18.04",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Faradayev zakon: U_i = −N·ΔΦ/Δt; inducirani napon ovisi o brzini promjene toka i broju zavoja"
+ },
+ {
+  "id": "S18.05",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "postupak",
+  "tekst": "Iz grafa Φ(t) nagib daje iznos induciranog napona; tok konstantan znači U_i = 0, a konstantan nagib znači konstantan napon"
+ },
+ {
+  "id": "S18.06",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Inducirani napon u ravnom vodiču koji se giba u homogenom polju: U_i = −B·ℓ·v·sinα"
+ },
+ {
+  "id": "S18.07",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "postupak",
+  "tekst": "Petlja stalnom brzinom ulazi u homogeno polje: inducirani napon i struja konstantni su dok petlja ulazi, nula kad je potpuno unutra, a smjer se obrne pri izlasku"
+ },
+ {
+  "id": "S18.08",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Lenzovo pravilo: smjer inducirane struje je takav da njezino magnetsko polje se protivi promjeni toka koja ju je uzrokovala (posljedica očuvanja energije); predznak minus u Faradayevu zakonu"
+ },
+ {
+  "id": "S18.09",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "postupak",
+  "tekst": "Određivanje smjera inducirane struje: odrediti smjer polja i je li tok raste ili pada, induciranim poljem se suprotstaviti porastu odnosno nadomjestiti pad, pravilom desne ruke dobiti smjer struje (npr. magnet se približava ili udaljava od petlje)"
+ },
+ {
+  "id": "S18.10",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "definicija",
+  "tekst": "Izmjenična struja i napon periodički mijenjaju iznos i smjer, najčešće sinusno; istosmjerna struja ima stalan smjer"
+ },
+ {
+  "id": "S18.11",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Zapis izmjenične struje i = i₀·sin(ωt + φ₀): i₀ je amplituda (maksimalna vrijednost), ω kutna frekvencija, φ₀ početna faza; analogno za napon u = u₀·sin(ωt)"
+ },
+ {
+  "id": "S18.12",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "ω = 2π/T = 2πf: veza kutne frekvencije, perioda i frekvencije izmjenične struje; očitavanje f i T iz zadane jednadžbe ili grafa"
+ },
+ {
+  "id": "S18.13",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Ohmov zakon za izmjenični krug s otpornikom: I₀ = U₀/R, vrijedi i za trenutne vrijednosti; općenito I = U/Z"
+ },
+ {
+  "id": "S18.14",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "definicija",
+  "tekst": "Efektivna vrijednost izmjenične struje i napona (I_ef = I₀/√2, U_ef = U₀/√2) jednaka je istosmjernoj vrijednosti koja daje jednaku snagu na otporniku; mrežni napon 230 V je efektivni"
+ },
+ {
+  "id": "S18.15",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "zamka",
+  "tekst": "Voltmetar i ampermetar u izmjeničnom krugu pokazuju efektivne vrijednosti, a ne amplitude; razlikovati amplitudu od efektivne vrijednosti"
+ },
+ {
+  "id": "S18.16",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Induktivni otpor zavojnice R_L = ωL raste s frekvencijom (za istosmjernu struju je 0); L je induktivitet, jedinica henri (H)"
+ },
+ {
+  "id": "S18.17",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Kapacitivni otpor kondenzatora R_C = 1/(ωC) pada s frekvencijom (za istosmjernu struju je beskonačan, kondenzator ne vodi)"
+ },
+ {
+  "id": "S18.18",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Impedancija serijskog RLC kruga Z = √(R² + (R_L − R_C)²) i I = U/Z"
+ },
+ {
+  "id": "S18.19",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Titrajni krug LC ima period T = 2π√(LC); u njemu energija periodički prelazi između električnog polja kondenzatora i magnetskog polja zavojnice"
+ },
+ {
+  "id": "S18.20",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Načelo rada električnog generatora: vrtnja zavojnice u magnetskom polju mijenja tok i inducira izmjenični napon (mehanička energija u električnu)"
+ },
+ {
+  "id": "S18.21",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Načelo rada elektromotora: vodič/zavojnica sa strujom u magnetskom polju doživljava silu (moment sile) i vrti se (električna energija u mehaničku); građevno sličan generatoru"
+ },
+ {
+  "id": "S18.22",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Načelo rada transformatora: izmjenična struja u primaru stvara promjenjivi tok u željeznoj jezgri koji inducira napon u sekundaru; radi samo s izmjeničnim naponom"
+ },
+ {
+  "id": "S18.23",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "formula",
+  "tekst": "Idealni transformator: N₁/N₂ = U₁/U₂ = I₂/I₁, snaga primara jednaka snazi sekundara (P₁ = P₂); veći napon znači manju struju"
+ },
+ {
+  "id": "S18.24",
+  "ishod": "FIZ SŠ B.3.3.",
+  "ishod_naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "vrsta": "pojava",
+  "tekst": "Primjena transformatora u prijenosu energije: povišenjem napona smanjuje se struja pa su manji Jouleovi gubici u dalekovodima"
+ },
+ {
+  "id": "S19.01",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Titranje je periodično gibanje oko ravnotežnog položaja; harmonijsko titranje je titranje pod djelovanjem povratne sile proporcionalne elongaciji, a suprotnog smjera (F = −kx)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S19.02",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Veličine titranja: elongacija, amplituda A (najveća elongacija), period T (trajanje jednog titraja), frekvencija f = 1/T (jedinica Hz)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S19.03",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Kutna frekvencija ω = 2π/T = 2πf; čitanje A, ω i početne faze iz jednadžbe y = A sin(ωt + φ0)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.04",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Elongacija harmonijskog titranja y = A sin(ωt + φ0)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.05",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Brzina pri titranju v = v0 cos(ωt + φ0), maksimalna brzina v0 = 2πA/T = Aω",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.06",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Akceleracija pri titranju a = −a0 sin(ωt + φ0), a0 = 4π²A/T² = Aω²; akceleracija je proporcionalna elongaciji i suprotnog je smjera",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.07",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "U ravnotežnom položaju brzina je maksimalna, a akceleracija (sila) nula; u amplitudnom položaju brzina je nula, a akceleracija (sila) maksimalna",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.08",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Put u jednom periodu je 4A, u pola perioda 2A, u četvrt perioda A (iz ravnotežnog ili amplitudnog položaja); put i pomak nisu isto",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S19.09",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Razlika u fazi između titranja i pomak grafa y(t), v(t), a(t): brzina prethodi elongaciji za četvrt perioda, a je u protufazi s y",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.10",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Titranje tijela na opruzi: period T = 2π√(m/k), povratna sila elastična F = −kx",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.11",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Period opruge ne ovisi o amplitudi; ovisi o masi (T ∝ √m, f ∝ 1/√m) i konstanti opruge; učetverostručenje mase udvostručuje period",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S19.12",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Maksimalna brzina tijela na opruzi v0 = A√(k/m)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.13",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Energija titranja na opruzi: ukupna E = kA²/2 je stalna, E = Ek + Eep, Eep = kx²/2, Ek = k(A² − x²)/2; u ravnoteži je sva energija kinetička, u amplitudi elastična potencijalna",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.14",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Ukupna energija proporcionalna je kvadratu amplitude (dvostruka amplituda daje četverostruku energiju)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.15",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Pri polovici maksimalne brzine kinetička energija je 1/4 ukupne, a potencijalna 3/4",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S19.16",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Matematičko njihalo: točkasto tijelo na niti zanemarive mase; za male otklone (do oko 5°–10°) titra harmonijski",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S19.17",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Period matematičkog njihala T = 2π√(l/g); ne ovisi o masi ni o amplitudi (za male kutove), ovisi o duljini niti i g",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.18",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Povratna sila njihala je komponenta težine tangencijalna na putanju (mg sin α)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.19",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Energija njihala: Ep = mgh, h = l(1 − cos α); u ravnoteži je Ek maksimalna, u amplitudi Ep maksimalna, zbroj je stalan",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S19.20",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Određivanje perioda iz broja titraja i vremena (T = t/N) i duljine niti iz perioda",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S19.21",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "LC titrajni krug: periodička izmjena energije električnog polja kondenzatora i magnetskog polja zavojnice",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.22",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Thomsonova formula: period LC kruga T = 2π√(LC), f = 1/T",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S19.23",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Energija LC kruga: ukupna energija CU²/2 + LI²/2 je stalna (bez otpora); kad je kondenzator pun, struja je nula, kad je kondenzator prazan, struja je maksimalna",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.24",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Analogija mehaničkog i električnog titranja: m↔L, 1/k↔C, x↔q, v↔I",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.25",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Prigušeno titranje: zbog otpora (trenja) energija se gubi, amplituda se smanjuje s vremenom, period je približno nepromijenjen",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.26",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Prisilno titranje: tijelo titra frekvencijom vanjske periodične sile, a ne vlastitom (nakon prijelazne pojave)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.27",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Rezonancija: kad je frekvencija prisile jednaka vlastitoj frekvenciji sustava, amplituda je najveća; manje prigušenje daje veći i oštriji vrh rezonancijske krivulje",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S19.28",
+  "ishod": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "ishod_naslov": "Analizira harmonijsko titranje",
+  "tekst": "Primjeri i posljedice rezonancije (njihanje ljuljačke, rušenje mostova, radio-prijamnik); vlastita frekvencija sustava f0",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.01",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Val je širenje poremećaja (titranja) kroz sredstvo ili prostor; čestice sredstva titraju oko ravnotežnog položaja, a val prenosi energiju i količinu gibanja, ali ne prenosi tvar",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S20.02",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Mehanički val nastaje titranjem izvora i zahtijeva elastično sredstvo; čestice sredstva međusobno prenose poremećaj, a svaka sljedeća čestica titra uz zakašnjenje u fazi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.03",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Transverzalni val: čestice titraju okomito na smjer širenja (val na užetu); longitudinalni val: čestice titraju u smjeru širenja (zvuk, zgušnjenja i razrijeđenja)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S20.04",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Polarizacija je svojstvo samo transverzalnih valova; longitudinalni valovi (npr. zvuk) ne mogu se polarizirati",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.05",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Valna duljina λ je udaljenost najbližih čestica koje titraju u istoj fazi (put vala u jednom periodu); amplituda je najveća elongacija",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S20.06",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "v = λ/T = λ·f: brzina vala, valna duljina, period i frekvencija",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.07",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Frekvenciju vala određuje izvor i ne mijenja se pri prijelazu u drugo sredstvo; brzina i valna duljina se mijenjaju (λ = v/f)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.08",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Brzina mehaničkog vala ovisi o svojstvima sredstva (npr. na užetu raste s napetošću, a pada s linearnom gustoćom), a ne o frekvenciji ni amplitudi izvora",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.09",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Jednadžba progresivnog vala y = A·sin(ωt − 2πx/λ): čitanje A, ω, λ, fazno zaostajanje čestice na udaljenosti x",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.10",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Fazna razlika dviju točaka vala na udaljenosti Δx iznosi 2πΔx/λ; točke razmaknute za λ titraju u fazi, a za λ/2 u protufazi",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S20.11",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Energija vala proporcionalna je kvadratu amplitude (E ∝ A²); udvostručenje amplitude daje četverostruku energiju",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.12",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Intenzitet vala I = P/S; za točkasti izvor S = 4πr², pa I ∝ 1/r²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.13",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Princip superpozicije: pri susretu valova rezultantni pomak je zbroj pomaka pojedinih valova, a nakon susreta valovi se šire nepromijenjeno",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S20.14",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Odbijanje (refleksija) vala: upadni kut jednak je kutu odbijanja; frekvencija i brzina vala u istom sredstvu se ne mijenjaju",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.15",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Refleksija pulsa na učvršćenom kraju užeta mijenja fazu (brijeg se vraća kao dol, pomak faze π); na slobodnom kraju faza se ne mijenja (brijeg se vraća kao brijeg)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.16",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Lom (refrakcija) vala: pri prelasku u sredstvo druge brzine mijenja se smjer širenja i valna duljina, frekvencija ostaje ista",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.17",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Zakon loma: sin α / sin β = v1/v2 = λ1/λ2 = n2/n1; pri manjoj brzini val se lomi prema okomici",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.18",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Konstruktivna interferencija: valovi se susreću u fazi, razlika hoda Δ = kλ, amplitude se zbrajaju; destruktivna: u protufazi, Δ = (2k+1)λ/2, amplitude se oduzimaju (jednake amplitude daju poništenje)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.19",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Fazna razlika π odgovara razlici hoda λ/2, a fazna razlika 2π razlici hoda λ",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.20",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Interferencija dvaju koherentnih izvora (valovi u vodi, dvije pukotine): u točkama s Δ = kλ su maksimumi, s Δ = (k+½)λ minimumi",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S20.21",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Stojni val nastaje interferencijom vala i njegova odbijenog vala; ima čvorove (stalno mirovanje) i trbuhe (najveća amplituda), a energija se ne prenosi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.22",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Razmak susjednih čvorova (ili trbuha) je λ/2; uvjet stojnog vala na žici duljine L učvršćene na oba kraja: L = nλ/2",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S20.23",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Čitanje valne duljine stojnog vala sa slike (broj poluvalova na duljini niti) i računanje brzine v = λf",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S20.24",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Ogib (difrakcija): skretanje vala oko zapreka i na otvoru, izraženiji kad je dimenzija otvora usporediva s valnom duljinom",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S20.25",
+  "ishod": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "ishod_naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "tekst": "Zamka: pri prijelazu u drugo sredstvo mijenja se valna duljina, a ne frekvencija",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S21.01",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Zvuk je mehanički longitudinalni val: titranje čestica sredstva u smjeru širenja, stvaraju se zgušnjenja i razrjeđenja; ne širi se kroz vakuum",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S21.02",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Brzina zvuka ovisi o sredstvu (najmanja u plinovima, veća u tekućinama, najveća u čvrstim tijelima); u zraku ovisi o temperaturi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.03",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Veza brzine, valne duljine i frekvencije vala: v = λ·f = λ/T; pri prijelazu u drugo sredstvo frekvencija ostaje ista, mijenjaju se v i λ",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S21.04",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Zvuk je longitudinalan val pa se ne može polarizirati (polarizacija je svojstvo transverzalnih valova)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S21.05",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Frekvencijska područja zvuka: infrazvuk, čujni zvuk (oko 20 Hz – 20 kHz), ultrazvuk; visina tona ovisi o frekvenciji",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S21.06",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Intenzitet zvuka: I = P/S, snaga zvuka po jedinici površine okomite na smjer širenja (W/m²)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S21.07",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Za točkasti izvor S = 4πr², pa intenzitet opada s kvadratom udaljenosti: I ∝ 1/r²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S21.08",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Razina zvuka L = 10·log(I/I₀) u decibelima; I₀ = 10⁻¹² W/m² je prag čujnosti",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S21.09",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Postupak: razlika razina zvuka ΔL = 10·log(I₁/I₂); deseterostruki intenzitet daje +10 dB, a promjena udaljenosti ide preko omjera kvadrata udaljenosti",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S21.10",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Glasnoća ovisi o amplitudi, odnosno intenzitetu zvuka; veća amplituda znači veći intenzitet, a energija vala proporcionalna je kvadratu amplitude",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.11",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Refleksija zvuka (jeka, odjek): upadni kut jednak kutu refleksije; refleksija na čvrstoj granici",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.12",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Interferencija zvučnih valova: konstruktivna kad je razlika hoda cjelobrojni višekratnik λ, destruktivna kad je neparni višekratnik λ/2",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.13",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Stojni val nastaje superpozicijom upadnoga i reflektiranoga vala jednake frekvencije i amplitude; ima čvorove (amplituda nula) i trbuhe (maksimalna amplituda)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.14",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Razmak susjednih čvorova ili trbuha je λ/2; energija se ne prenosi duž stojnoga vala",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S21.15",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Stojni val na žici učvršćenoj na oba kraja: L = n·λ/2, čvorovi na krajevima; očitavanje λ iz slike (broj poluvalova) i v = λ·f",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S21.16",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Cijev otvorena na oba kraja: trbusi na krajevima, L = nλ/2; cijev zatvorena na jednom kraju: čvor na zatvorenom, trbuh na otvorenom kraju, L = (2n−1)λ/4",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S21.17",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Osnovni ton (najniža frekvencija) i viši harmonici: f_n = n·f₁ za žicu i cijev otvorenu na oba kraja; zatvorena cijev ima samo neparne harmonike",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S21.18",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Rezonancija: pobuda frekvencijom jednakom vlastitoj frekvenciji sustava daje veliku amplitudu titranja (npr. zračni stupac, žica)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.19",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Dopplerov efekt: promjena frekvencije koju registrira prijemnik zbog relativnog gibanja izvora i/ili prijemnika; približavanje povećava frekvenciju, udaljavanje je smanjuje",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S21.20",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Formula Dopplerova efekta: f_p = f_i·(v+v_p)/(v−v_i); v je brzina zvuka",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S21.21",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Postupak: predznaci u Dopplerovoj formuli – prijemnik se približava izvoru: v_p pozitivna; izvor se približava prijemniku: v_i pozitivna (nazivnik v−v_i), a pri udaljavanju predznak se obrne",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S21.22",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Zamka: u Dopplerovu efektu mijenja se opažena frekvencija, a ne frekvencija izvora ni brzina zvuka u sredstvu",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S21.23",
+  "ishod": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "ishod_naslov": "Analizira valna svojstva zvuka",
+  "tekst": "Primjeri Dopplerova efekta: sirena hitne pomoći koja prolazi (visina tona pada nakon prolaska), radar i ultrazvučno mjerenje brzine krvi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.01",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Svjetlosna zraka je zamišljeni uski snop svjetlosti koji se u homogenom sredstvu širi pravocrtno; geometrijska optika opisuje svjetlost zrakama.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S22.02",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Upadni kut i kut odbijanja mjere se od okomice (normale) na granicu sredstava u točki upada, a ne od površine.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S22.03",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Zakon odbijanja: upadni kut jednak je kutu odbijanja, a upadna zraka, odbijena zraka i okomica leže u istoj ravnini.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.04",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Okomito upadna zraka (upadni kut 0°) odbija se sama u sebe; zraka koja se vraća u izvor upada okomito.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.05",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Zamka: pri kosom upadu kut između zrake i površine nije upadni kut; upadni kut = 90° − kut prema površini.",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S22.06",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Ravno zrcalo daje virtualnu sliku jednake veličine, uspravnu, jednako udaljenu iza zrcala kao predmet ispred, zrcalno obrnutu (lijevo-desno).",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.07",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Konstrukcija slike u ravnom zrcalu: slika točke nalazi se na okomici iz predmeta na zrcalo, na istoj udaljenosti iza zrcala; odbijene zrake izgledaju kao da izlaze iz slike.",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S22.08",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Indeks loma n = c/v: omjer brzine svjetlosti u vakuumu i brzine u sredstvu; n ≥ 1, za zrak n ≈ 1.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.09",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Optički gušće sredstvo ima veći indeks loma i u njemu je brzina svjetlosti manja.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S22.10",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Lom svjetlosti: promjena smjera zrake pri prijelazu u drugo sredstvo zbog promjene brzine svjetlosti; zraka, okomica i lomljena zraka leže u istoj ravnini.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.11",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Snellov zakon: sin α / sin β = n₂/n₁, odnosno n₁ sin α = n₂ sin β.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.12",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Prijelaz u optički gušće sredstvo: zraka se lomi prema okomici (β < α); u rjeđe sredstvo: od okomice (β > α).",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.13",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Pri prijelazu u drugo sredstvo frekvencija svjetlosti ostaje ista, mijenjaju se brzina i valna duljina: λ = λ₀/n.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.14",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Postupak računanja kuta loma ili upadnog kuta iz Snellova zakona pomoću inverznog sinusa (sin⁻¹).",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S22.15",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Totalna refleksija: nastaje pri prijelazu u optički rjeđe sredstvo kad je upadni kut veći od graničnog; sva se svjetlost odbija.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.16",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Granični kut totalne refleksije: sin α_g = n₂/n₁ (n₁ > n₂), kut loma je tada 90°.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.17",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Primjena totalne refleksije: svjetlovodi (optička vlakna, endoskop) s jezgrom većeg indeksa loma.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.18",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Planparalelna ploča: zraka izlazi paralelno upadnoj, ali je bočno pomaknuta; pomak raste s debljinom ploče i upadnim kutom.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.19",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Postupak za planparalelnu ploču: Snellov zakon primijeniti na obje granice; kut loma na prvoj granici jednak je upadnom kutu na drugoj.",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S22.20",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Leća je prozirno tijelo omeđeno zakrivljenim plohama; sabirna (konvergentna) leća zrake skuplja u žarište, a rastresna (divergentna) ih raspršuje.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S22.21",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Žarište (fokus) i žarišna daljina f; os leće; zrake paralelne s optičkom osi prolaze žarištem (kod rastresne leće izgledaju kao da iz njega izlaze).",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S22.22",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Jakost leće j = 1/f, jedinica dioptrija (m⁻¹); sabirna leća ima pozitivnu, rastresna negativnu jakost.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.23",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Karakteristične zrake pri konstrukciji slike: paralelna s osi kroz žarište, kroz žarište paralelno s osi, kroz optičko središte bez loma.",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S22.24",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Jednadžba leće: 1/a + 1/b = 1/f (a udaljenost predmeta, b udaljenost slike).",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.25",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Povećanje leće: y'/y = −b/a; negativan predznak znači obrnutu sliku.",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S22.26",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Predznaci: realna slika b > 0, virtualna slika b < 0; kod rastresne leće f < 0.",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S22.27",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Sabirna leća, predmet iza 2f: realna, obrnuta, umanjena slika; između f i 2f: realna, obrnuta, uvećana; slika se može uloviti na zastoru.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.28",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Sabirna leća, predmet unutar žarišta (a < f): virtualna, uspravna, uvećana slika (lupa); na zastoru se ne dobiva.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.29",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Rastresna leća uvijek daje virtualnu, uspravnu, umanjenu sliku.",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S22.30",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Realna slika nastaje presjecištem stvarnih zraka i može se uhvatiti na zastoru; virtualna slika nastaje produžetcima zraka i ne može.",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S22.31",
+  "ishod": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "ishod_naslov": "Primjenjuje zakone geometrijske optike",
+  "tekst": "Postupak određivanja žarišne daljine iz mjerenja: iz tablice a, b i povećanja provjeriti dosljednost (y'/y = b/a) pa izračunati f iz jednadžbe leće.",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S23.01",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Svjetlost se ponaša kao transverzalni elektromagnetski val; valna svojstva (ogib, interferencija, polarizacija) dokazuju njezinu valnu prirodu",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S23.02",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Veza brzine, frekvencije i valne duljine: c = λf; pri prijelazu u drugo sredstvo frekvencija se ne mijenja, a mijenjaju se brzina i valna duljina (λ = λ₀/n)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S23.03",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Ogib (difrakcija): svjetlost zalazi iza zapreke ili savija oko ruba i prolazi kroz otvor; izraženiji je kad je veličina otvora usporediva s valnom duljinom",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S23.04",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Interferencija svjetlosti: superpozicija koherentnih valova daje pojačanje i poništenje, tj. svijetle i tamne pruge",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S23.05",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Uvjeti interferencije: maksimum (konstruktivna) kad je razlika hoda Δ = kλ, tj. fazna razlika 2kπ (središnja svijetla pruga: razlika 0); minimum (destruktivna) kad je Δ = (k+½)λ, fazna razlika π",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S23.06",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Youngov pokus s dvjema pukotinama: razmak susjednih maksimuma s = λL/d (u knjižici λ = sd/a)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S23.07",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Youngov pokus: razmak pruga proporcionalan je valnoj duljini i udaljenosti zastora, a obrnuto proporcionalan razmaku pukotina (veća λ ili L, manji d daju razmaknutije pruge)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S23.08",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Optička rešetka: maksimumi za d sin αₖ = kλ, gdje je d konstanta rešetke; bijela svjetlost se razlaže u spektar",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S23.09",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Postupak: iz izmjerenog razmaka maksimuma na zastoru i poznatih d i L odrediti valnu duljinu svjetlosti (pazi na pretvorbu µm, mm, nm)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S23.10",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Polarizacija: titranje električnog polja u jednoj ravnini; polarizirati se mogu samo transverzalni valovi, a longitudinalni (zvuk) ne",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S23.11",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Polarizator i analizator: nepolarizirana svjetlost prolaskom kroz polarizator postaje linearno polarizirana; propuštena svjetlost ovisi o kutu među osima, a pri okomitim osima nema prolaska",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S23.12",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Polarizacija refleksijom: reflektirana svjetlost je potpuno polarizirana kad je upadni kut Brewsterov, tg α_B = n",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S23.13",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Raspršenje svjetlosti na česticama i molekulama zraka: kraće valne duljine (plava) raspršuju se jače, što objašnjava plavo nebo i crvenu boju Sunca pri izlasku i zalasku",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S23.14",
+  "ishod": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "ishod_naslov": "Analizira valnu prirodu svjetlosti",
+  "tekst": "Raspršena svjetlost neba djelomično je polarizirana",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.01",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Elektromagnetski val nastaje titranjem električnog i magnetskog polja: promjenjivo električno polje stvara promjenjivo magnetsko polje i obratno, pa se val širi i kroz vakuum (ne treba sredstvo)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.02",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Izvor elektromagnetskih valova je ubrzano gibanje (titranje) nabijenih čestica, npr. izmjenična struja u anteni",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.03",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Elektromagnetski val je transverzalan: vektori E i B međusobno su okomiti i okomiti na smjer širenja vala",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S24.04",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Vektori E i B titraju u fazi; u zadanom sredstvu brzina vala ne ovisi o valnoj duljini",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.05",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Brzina elektromagnetskih valova u vakuumu je c = 3·10⁸ m/s, jednaka za sve valne duljine; u sredstvu je manja: n = c/v",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S24.06",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "c = λ·f: veza brzine, valne duljine i frekvencije elektromagnetskog vala; pri prijelazu u drugo sredstvo frekvencija ostaje ista, a mijenjaju se brzina i valna duljina (λ = λ₀/n)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S24.07",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Elektromagnetski valovi su transverzalni pa se mogu polarizirati (za razliku od zvuka, koji je longitudinalan)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.08",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Elektromagnetski spektar po rastućoj frekvenciji: radiovalovi, mikrovalovi, infracrveno, vidljiva svjetlost, ultraljubičasto, rendgensko, gama zračenje",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S24.09",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Veća frekvencija znači manju valnu duljinu i veću energiju fotona E = hf; radiovalovi imaju najveću valnu duljinu, gama zračenje najmanju",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S24.10",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Približna područja valnih duljina: radiovalovi od metara do kilometara, mikrovalovi od mm do cm, vidljiva svjetlost oko 400–700 nm (ljubičasta najkraća, crvena najdulja), rendgensko oko nm i manje; učenik zna procijeniti područje iz λ ili f (npr. 1 MHz je radiopodručje)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S24.11",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Primjene: radio i TV (radiovalovi), mobilna komunikacija i radar (mikrovalovi), mikrovalna pećnica, daljinski upravljači i toplinske kamere (infracrveno), sterilizacija (UV), rendgenska dijagnostika, gama zračenje u medicini",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.12",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Štetnost ionizirajućeg zračenja raste s energijom fotona (UV, rendgensko i gama zračenje oštećuju žive stanice)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S24.13",
+  "ishod": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "ishod_naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "tekst": "Zamka: svi elektromagnetski valovi u vakuumu imaju istu brzinu; razlikuju se frekvencijom i valnom duljinom, a ne brzinom",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S25.01",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "pojava",
+  "tekst": "Fotoelektrični efekt: osvjetljavanjem metala svjetlošću dovoljno visoke frekvencije iz njega se izbacuju elektroni (fotoelektroni)."
+ },
+ {
+  "id": "S25.02",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "definicija",
+  "tekst": "Foton je kvant elektromagnetskoga zračenja; energija fotona E_f = h·f = hc/λ, pri čemu je h Planckova konstanta."
+ },
+ {
+  "id": "S25.03",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "definicija",
+  "tekst": "Izlazni rad W_i je najmanja energija potrebna da se elektron oslobodi iz metala; svojstvo je materijala (metala)."
+ },
+ {
+  "id": "S25.04",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "formula",
+  "tekst": "Einsteinova jednadžba fotoefekta: E_f = W_i + E_k,max, tj. h·f = W_i + E_k,max (zakon očuvanja energije: foton predaje svu energiju jednom elektronu)."
+ },
+ {
+  "id": "S25.05",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "definicija",
+  "tekst": "Granična frekvencija f₀ (granična valna duljina λ₀): najmanja frekvencija pri kojoj se pojavljuje fotoefekt; W_i = h·f₀ = hc/λ₀. Za f < f₀ nema fotoefekta, bez obzira na intenzitet."
+ },
+ {
+  "id": "S25.06",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "pojava",
+  "tekst": "Maksimalna kinetička energija fotoelektrona ovisi o frekvenciji svjetlosti i vrsti metala, a ne o intenzitetu; intenzitet određuje broj izbijenih elektrona (jakost fotostruje) pri f > f₀."
+ },
+ {
+  "id": "S25.07",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "pojava",
+  "tekst": "Fotoefekt se ne može objasniti valnim modelom svjetlosti (trenutna emisija, granična frekvencija, neovisnost E_k o intenzitetu); potvrđuje čestičnu (kvantnu) narav svjetlosti."
+ },
+ {
+  "id": "S25.08",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "postupak",
+  "tekst": "Graf E_k,max(f): pravac E_k = h·f − W_i; nagib je Planckova konstanta h (isti za sve metale), odsječak na osi f je f₀, odsječak na osi E_k je −W_i. Različiti metali daju paralelne pravce pomaknute po osi f."
+ },
+ {
+  "id": "S25.09",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "definicija",
+  "tekst": "Zaustavni napon U_z: napon koji zaustavlja najbrže fotoelektrone, e·U_z = E_k,max; pa je h·f = W_i + e·U_z."
+ },
+ {
+  "id": "S25.10",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "definicija",
+  "tekst": "Elektronvolt: energija koju elektron dobije ubrzan naponom 1 V, 1 eV = 1,6·10⁻¹⁹ J; koristi se za energije fotona i elektrona."
+ },
+ {
+  "id": "S25.11",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "zamka",
+  "tekst": "Pri računu s fotoefektom pazi na jedinice (eV u J, nm u m) i da je W_i svojstvo metala koje se ne mijenja promjenom zračenja; iz jednog mjerenja izračunaj W_i pa ga primijeni na drugo."
+ },
+ {
+  "id": "S25.12",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "formula",
+  "tekst": "Količina gibanja fotona p = h/λ = E_f/c; foton ima količinu gibanja iako nema mase mirovanja."
+ },
+ {
+  "id": "S25.13",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "pojava",
+  "tekst": "Valno-čestični dualizam svjetlosti: svjetlost se pri širenju (interferencija, ogib, polarizacija) ponaša kao val, a pri međudjelovanju s tvari (fotoefekt) kao tok čestica (fotona)."
+ },
+ {
+  "id": "S25.14",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "formula",
+  "tekst": "De Broglieva valna duljina čestice tvari: λ = h/p = h/(m·v); svakoj čestici pripada valna svojstva."
+ },
+ {
+  "id": "S25.15",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "postupak",
+  "tekst": "Valna duljina ubrzane čestice: iz E_k = qU = p²/(2m) slijedi p = √(2mE_k), pa je λ = h/√(2mE_k); λ ∝ 1/√E_k, a pri istoj E_k veća masa daje manju λ."
+ },
+ {
+  "id": "S25.16",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "zamka",
+  "tekst": "Za makroskopska tijela (loptica, kugla) valna duljina je zanemarivo mala pa se valna svojstva ne opažaju; uočljiva su za elektrone i druge mikročestice. Pri jednakoj brzini najmanju λ ima najmasivnije tijelo."
+ },
+ {
+  "id": "S25.17",
+  "ishod": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "ishod_naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "vrsta": "pojava",
+  "tekst": "Eksperimentalna potvrda valne naravi tvari: ogib i interferencija elektrona na kristalu (Davisson–Germer), što potvrđuje de Broglieve valove."
+ },
+ {
+  "id": "S26.01",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Povijesni razvoj modela atoma: Thomsonov model, Rutherfordov model (pokus raspršenja α-čestica na tankoj zlatnoj foliji pokazao je da je atom pretežno prazan prostor s malom, gustom, pozitivnom jezgrom) i Bohrov model",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S26.02",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Rutherfordov planetarni model: elektroni kruže oko jezgre, a Coulombova sila djeluje kao centripetalna sila (k·e²/r² = m·v²/r)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S26.03",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Nedostatak klasičnog (Rutherfordova) modela: elektron koji ubrzano kruži trebao bi zračiti i pasti u jezgru, a model ne objašnjava linijski spektar",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S26.04",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Linijski spektar atoma vodika: atom emitira i apsorbira zračenje samo određenih valnih duljina; Bohrov model prvi ga je uspješno objasnio",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S26.05",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Bohrovi postulati: elektron se giba po stacionarnim putanjama bez zračenja, a energija atoma je kvantizirana (diskretna energijska stanja)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S26.06",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Osnovno i pobuđena stanja atoma: osnovno stanje (n = 1) ima najnižu energiju, a energije stanja vodika negativne su i rastu prema nuli kako n raste",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S26.07",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Energija stanja atoma vodika: E_n = −13,6 eV/n²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S26.08",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Emisija fotona pri prijelazu elektrona iz višeg u niže energijsko stanje; energija fotona jednaka je razlici energija stanja: E_f = E_m − E_n = h·f",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S26.09",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Energija fotona vodika pri prijelazu m → n: E_f = 13,6 eV·(1/n² − 1/m²), uz m > n",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S26.10",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Apsorpcija fotona: atom prelazi u više stanje samo ako je energija fotona točno jednaka razlici energija dvaju stanja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S26.11",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Veza energije fotona i valne duljine: E_f = h·f = h·c/λ; veća energija prijelaza znači veća frekvencija i manja valna duljina (npr. ljubičasta linija ima najveću energiju fotona među vidljivim)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S26.12",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Postupak: čitanje strelica prijelaza na energijskom dijagramu; dulja strelica znači veća energija fotona, smjer prema dolje je emisija, a prema gore apsorpcija",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S26.13",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Serije linija vodikova spektra: prijelazi na n = 1 (Lymanova, UV), na n = 2 (Balmerova, vidljivo), na n = 3 (Paschenova, IR)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S26.14",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Ionizacijska energija vodika iznosi 13,6 eV: energija potrebna da se elektron iz osnovnog stanja odvoji od atoma (prijelaz u n → ∞)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S26.15",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Pretvorba jedinica: energiju u eV pretvara se u J množenjem s 1,6·10⁻¹⁹ J/eV",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S26.16",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Emisijski spektar (svijetle linije na tamnoj podlozi) i apsorpcijski spektar (tamne linije na kontinuiranom spektru) istog elementa imaju linije na istim valnim duljinama; spektar je karakterističan za element",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S26.17",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Kontinuirani spektar zrače užarena čvrsta tijela, a linijski spektar zrače razrijeđeni plinovi pobuđeni na zračenje",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S26.18",
+  "ishod": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "ishod_naslov": "Analizira model atoma i energijske spektre",
+  "tekst": "Ograničenje Bohrova modela: dobro opisuje vodik i atome s jednim elektronom, a ne objašnjava složenije atome",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S27.01",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Građa atoma: mala, gusta, pozitivna jezgra u središtu atoma i uglavnom prazan prostor (Rutherfordov pokus raspršenja α-čestica na zlatnoj foliji)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.02",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Jezgra se sastoji od nukleona: protona (Z) i neutrona (N); maseni broj A = Z + N, broj neutrona N = A − Z",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S27.03",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Oznaka nuklida ᴬ_Z X te izotopi: jezgre istog Z, a različitog A (broja neutrona)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S27.04",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Jaka nuklearna sila drži nukleone u jezgri: kratkog je dosega, privlačna i jača od Coulombova odbijanja protona",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.05",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Unificirana atomska masa u: mjera za mase atoma i jezgri (vrijednost iz knjižice)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S27.06",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Defekt mase Δm: masa jezgre manja je od zbroja masa njezinih slobodnih nukleona",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S27.07",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Ekvivalentnost mase i energije: E = Δm·c²; promjena mase odgovara promjeni energije",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S27.08",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Energija vezanja jezgre: energija potrebna za rastavljanje jezgre na slobodne nukleone, E_v = Δm·c²",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S27.09",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Energija vezanja po nukleonu E_v/A; ukupna energija vezanja = A · (E_v/A); veća vrijednost znači stabilniju jezgru",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S27.10",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Krivulja energije vezanja po nukleonu: maksimum kod željeza (A≈56); lake jezgre fuzijom, a teške fisijom prelaze u stabilnije jezgre i oslobađaju energiju",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.11",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Pretvorba jedinica energije: 1 u odgovara ≈ 931,5 MeV, a eV u J preko elementarnog naboja",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S27.12",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Nuklearna reakcija: promjena jezgre uslijed raspada ili sudara s česticom; zapis jednadžbe reakcije",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S27.13",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "U nuklearnim reakcijama čuvaju se ukupni maseni broj A (broj nukleona), ukupni naboj (Z), energija i količina gibanja",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S27.14",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Postupak dopunjavanja nuklearne jednadžbe: zbroj A i zbroj Z lijevo mora biti jednak zbroju desno; određivanje nepoznatog produkta pomoću periodnog sustava",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S27.15",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "α-raspad: jezgra emitira jezgru helija ⁴₂He; A se smanjuje za 4, Z za 2",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.16",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "β⁻ raspad: neutron prelazi u proton, emitiraju se elektron i antineutrino; A ostaje isti, Z raste za 1",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.17",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "β⁺ raspad: proton prelazi u neutron, emitiraju se pozitron i neutrino; A ostaje isti, Z pada za 1",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.18",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "γ zračenje: emisija fotona pri prijelazu pobuđene jezgre u niže stanje; A i Z se ne mijenjaju",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.19",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Nuklearna fisija: teška jezgra (uran, plutonij) sudarom s neutronom raspada se na dvije srednje teške jezgre uz oslobađanje neutrona i energije",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.20",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Lančana reakcija: neutroni oslobođeni fisijom izazivaju daljnje fisije; kontrolirana u reaktoru, nekontrolirana u bombi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.21",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Nuklearna elektrana (npr. Krško): gorivo je uran, energija se dobiva fisijom",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.22",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Nuklearna fuzija: spajanje lakih jezgara (npr. vodika u helij) uz oslobađanje energije; zahtijeva vrlo visoku temperaturu; izvor energije Sunca i zvijezda",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S27.23",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Energija nuklearne reakcije Q = (zbroj masa prije − zbroj masa poslije)·c²; Q > 0 reakcija oslobađa energiju",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S27.24",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Zamka: radioaktivni raspad (α, β, γ) nije fisija; fisija je cijepanje teške jezgre, fuzija spajanje lakih",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S27.25",
+  "ishod": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "ishod_naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "tekst": "Zamka: masa se ne \"gubi\" – defekt mase je energija vezanja; u reakciji se čuva A, a ne ukupna masa jezgri",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S28.01",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Radioaktivnost: spontano pretvaranje nestabilne jezgre u drugu jezgru uz emisiju zračenja; raspad je slučajan proces, ne ovisi o vanjskim uvjetima (temperatura, tlak, kemijski spoj)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S28.02",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "α-raspad: emisija jezgre helija ⁴₂He; maseni broj A se smanji za 4, a atomski broj Z za 2",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.03",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "β⁻ raspad: neutron se pretvara u proton uz emisiju elektrona (i antineutrina); A ostaje isti, Z se poveća za 1, broj neutrona se smanji za 1",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.04",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "β⁺ raspad: proton se pretvara u neutron uz emisiju pozitrona (i neutrina); A ostaje isti, Z se smanji za 1",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.05",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "γ-zračenje: emisija fotona visoke energije pri prijelazu jezgre iz pobuđenog u niže stanje; A i Z se ne mijenjaju",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.06",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Postupak: pisanje jednadžbe raspada uz očuvanje masenog broja A i atomskog broja Z; određivanje nastalog elementa iz periodnog sustava; broj neutrona N = A − Z",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S28.07",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Razlika radioaktivnog raspada (spontan, jedna jezgra emitira česticu) i nuklearne fisije/fuzije (inducirana reakcija)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S28.08",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Vrijeme poluraspada T: vrijeme za koje se broj neraspadnutih jezgara prepolovi",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S28.09",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Zakon radioaktivnog raspada: N = N₀·2^(−t/T) = N₀·e^(−λt)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S28.10",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Konstanta raspada λ = ln2/T",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S28.11",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Aktivnost A = λN: broj raspada u jedinici vremena; jedinica bekerel (1 Bq = 1 raspad/s)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S28.12",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Aktivnost se smanjuje isto kao broj jezgara: A = A₀·2^(−t/T)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S28.13",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Postupak: broj jezgara iz množine i mase (N = n·N_A, n = m/M); vrijeme i T izraziti u istim jedinicama, a za aktivnost u sekundama",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S28.14",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Zamka: nakon dva poluraspada ostaje četvrtina jezgara, a ne nula; nakon vremena T ne raspadne se polovina mase uzorka u smislu nestanka, nego polovina jezgara određenog izotopa",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S28.15",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Ionizirajuće zračenje: zračenje dovoljne energije da iz atoma izbije elektrone i stvara ione (α, β, γ, X-zrake, neutroni)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S28.16",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Prodornost i ionizacija: α-čestice najmanje prodorne (zaustavi ih papir/koža), najjače ioniziraju; β zaustavlja tanki aluminijski lim; γ je najprodornije, zaustavlja ga debeli olovni ili betonski sloj",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.17",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Učinci zračenja na žive organizme: oštećenje stanica i DNK, mutacije, radijacijska bolest, rak; učinak ovisi o dozi, vrsti zračenja i osjetljivosti tkiva",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.18",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Apsorbirana doza D = E/m (jedinica gray, Gy = J/kg): apsorbirana energija zračenja po jedinici mase tkiva",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S28.19",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Ekvivalentna doza H = w_R·D (jedinica sievert, Sv): uzima u obzir različitu biološku štetnost vrsta zračenja (α je štetnije od β i γ pri istoj apsorbiranoj dozi)",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S28.20",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Zaštita od zračenja: skraćivanje vremena izlaganja, povećanje udaljenosti od izvora, korištenje zaštitnih zastora (olovo, beton)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S28.21",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Prirodni izvori zračenja (kozmičko zračenje, radon, tlo) i umjetni (medicinska dijagnostika, nuklearne elektrane); primjena u medicini (PET s F-18, radioterapija, sterilizacija)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S28.22",
+  "ishod": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "ishod_naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "tekst": "Zamka: vanjsko izlaganje i unos radioaktivne tvari u tijelo (udisanjem, hranom) nisu jednaki; α-izvor je opasan unutar tijela, a izvan tijela relativno bezopasan",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S29.01",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Prvi postulat STR-a: zakoni fizike jednaki su u svim inercijskim sustavima (nema apsolutnog sustava mirovanja)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S29.02",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Drugi postulat STR-a: brzina svjetlosti u vakuumu ista je u svim inercijskim sustavima, neovisno o gibanju izvora i promatrača",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S29.03",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Lorentzov faktor γ = 1/√(1 − v²/c²): γ ≥ 1, približno 1 za male brzine, teži u beskonačnost kad v → c",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.04",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Vlastito vrijeme T0: vrijeme između dvaju događaja izmjereno satom koji u svojem sustavu miruje na mjestu zbivanja (oba događaja na istome mjestu)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S29.05",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Dilatacija vremena: T = T0/√(1 − v²/c²) = γT0; sat u gibanju kuca sporije, promatrač izmjeri dulje vrijeme od vlastitog",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.06",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Primjena dilatacije vremena: nestabilne čestice (mion, pion) u gibanju žive dulje; put u sustavu promatrača s = vT",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S29.07",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Vlastita duljina L0: duljina tijela izmjerena u sustavu u kojem tijelo miruje",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S29.08",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Kontrakcija duljine: L = L0√(1 − v²/c²) = L0/γ; skraćenje je samo u smjeru gibanja, dimenzije okomite na smjer gibanja ostaju iste",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.09",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Relativnost istodobnosti i ravnopravnost sustava: svaki promatrač za sat/štap onog drugoga izmjeri dilataciju/kontrakciju; učinci su zanemarivi pri malim brzinama (v ≪ c)",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S29.10",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Zamka: pri računu dilatacije vremena i kontrakcije duljine treba prepoznati što je vlastito (T0, L0), a što izmjereno; T0 ≤ T, L0 ≥ L",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S29.11",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Postupak: iz zadane kontrakcije duljine (L/L0) odrediti γ, pa njime izračunati dilataciju vremena (i obratno)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S29.12",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Ukupna relativistička energija tijela E = mc²/√(1 − v²/c²) = γmc²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.13",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Energija mirovanja E0 = mc² (za v = 0); masa i energija su ekvivalentne",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.14",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Relativistička kinetička energija Ek = E − E0 = (γ − 1)mc²",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.15",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Tijelo s masom ne može dosegnuti brzinu svjetlosti: pri v → c energija E → ∞, pa bi trebalo beskonačno mnogo energije; samo čestice bez mase (foton) gibaju se brzinom c",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S29.16",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Ekvivalencija mase i energije u nuklearnim procesima: oslobođena energija E = Δm·c², Δm je defekt mase",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S29.17",
+  "ishod": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "ishod_naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "tekst": "Zamka: za brzine bliske c ne koristi se klasični izraz mv²/2, nego relativistički izraz za energiju",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S30.01",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Veliki prasak (Big Bang): svemir je nastao prije oko 13,8 milijardi godina iz iznimno guste i vruće početne stanje te se od tada širi i hladi",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S30.02",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Širenje svemira: prostor se rasteže pa se galaksije međusobno udaljavaju; to nije eksplozija u već postojećem prostoru, nego širenje samog prostora",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.03",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Hubbleov zakon: galaksije se udaljavaju brzinom razmjernom svojoj udaljenosti (v = H·d); dalje galaksije bježe brže",
+  "vrsta": "formula"
+ },
+ {
+  "id": "S30.04",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Crveni pomak: zbog širenja svemira valna duljina svjetlosti udaljenih galaksija povećava se (pomak prema crvenom); veći pomak znači veća udaljenost i brzina udaljavanja",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S30.05",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Kozmičko mikrovalno pozadinsko zračenje: ostatak zračenja iz ranog svemira (nastalo oko 380 000 godina nakon Velikog praska), ~2,7 K, dokaz Velikog praska",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S30.06",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Slijed ranog svemira: hlađenjem nastaju elementarne čestice, zatim protoni i neutroni, jezgre lakih elemenata (H, He), atomi te kasnije zvijezde i galaksije",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S30.07",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Sastav svemira: oko 68 % tamna energija, oko 27 % tamna tvar, manje od 5 % obična (vidljiva) tvar",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.08",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Tamna tvar: nevidljiva tvar koja gravitacijski djeluje (npr. brzine vrtnje galaksija), ne zrači svjetlost",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.09",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Tamna energija: uzrok ubrzanog širenja svemira",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.10",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Struktura svemira: planeti i zvijezde → zvjezdani sustavi → galaksije → skupine i jata galaksija → superjata; svemir je na velikim skalama homogen",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.11",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Naša galaksija Mliječna staza je spiralna galaksija u kojoj je Sunčev sustav; najbliža velika galaksija je Andromeda",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.12",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Jedinice udaljenosti: svjetlosna godina (put svjetlosti u godinu dana, ≈ 9,5·10¹² km) i astronomska jedinica (udaljenost Zemlja–Sunce)",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.13",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Nastanak zvijezda: gravitacijsko skupljanje oblaka plina i prašine (uglavnom vodika); kad jezgra dosegne dovoljnu temperaturu počinje fuzija vodika u helij",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S30.14",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Izvor energije zvijezda je nuklearna fuzija; ravnoteža između gravitacijskog stezanja i tlaka zračenja i plina drži zvijezdu stabilnom",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S30.15",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Životni ciklus zvijezde ovisi o masi: zvijezde male i srednje mase (poput Sunca) → crveni div → bijeli patuljak",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S30.16",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Masivne zvijezde završavaju kao supernova, a ostatak je neutronska zvijezda ili crna rupa",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S30.17",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Teži elementi nastaju fuzijom u zvijezdama i eksplozijama supernova",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S30.18",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Crna rupa: objekt s tako jakim gravitacijskim poljem da ni svjetlost ne može pobjeći",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.19",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Hertzsprung-Russellov dijagram: prikaz sjaja/luminoznosti zvijezda prema temperaturi; glavni niz, crveni divovi, bijeli patuljci",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S30.20",
+  "ishod": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "ishod_naslov": "Opisuje model nastanka i strukturu svemira",
+  "tekst": "Zamka: Veliki prasak nije eksplozija u prostoru i nema središta; vidljiva tvar čini manje od 5 % svemira",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S31.01",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Vizualizacija problema: nacrtati skicu situacije, ucrtati poznate i tražene veličine te označiti sile, smjerove i osi (npr. dijagram sila tijela)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.02",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Prepoznati cilj zadatka: što se točno traži (veličina, iznos ili smjer, odnos ili omjer, usporedba, graf, objašnjenje) i u kojim jedinicama",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.03",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Odabir podataka: izdvojiti zadane veličine, odbaciti nepotrebne, uočiti skrivene podatke (npr. 'miruje', 'jednoliko', 'stalna temperatura', 'idealan sustav', 'bez trenja') i očitati podatke iz teksta, slike, tablice i grafa",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.04",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Odabir fizičkog načela: povezati opisanu pojavu sa zakonom ili modelom (Newtonovi zakoni, očuvanje energije i količine gibanja, plinski zakoni, Coulombov zakon, Snellov zakon itd.) i provjeriti uvjete njegove primjene",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.05",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Plan rješavanja: rastaviti problem na korake, odabrati jednadžbe, odrediti redoslijed računanja i izraziti traženu veličinu iz jednadžbi (višekoračni zadaci, kombiniranje dviju jednadžbi)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.06",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Računanje u općim brojevima: prvo izvesti izraz za traženu veličinu pa tek onda uvrštavati brojeve",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.07",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Kvalitativno zaključivanje: proporcionalnost i omjeri (izravna, obrnuta, kvadratna ovisnost; npr. što se dogodi veličini kad se druga udvostruči), bez računanja brojeva",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.08",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Kvalitativno zaključivanje iz načela: npr. stalna akceleracija znači stalnu ukupnu silu različitu od nule, a miruje ili jednoliko giba znači ukupna sila nula",
+  "vrsta": "pojava"
+ },
+ {
+  "id": "S31.09",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Matematičko modeliranje: pretvoriti opis situacije u jednadžbe (jednadžba ravnoteže, jednadžba gibanja, bilanca energije ili topline) i riješiti ih",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.10",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Osnovna matematika u fizici: rješavanje jednadžbi, omjeri i postotci, potencije i korijeni, logaritam, trigonometrijske funkcije i njihove inverzne (sin, cos, tg), Pitagorin poučak",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.11",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Značajne znamenke i zaokruživanje: rezultat se daje s odgovarajućom točnošću, a konstante iz knjižice (npr. g = 10 m/s² u zadatcima) koriste se kako je propisano",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.12",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Prikazi fizičkih veličina: opis pomoću riječi, formule, tablice, grafa, sheme i slike te prelazak iz jednog prikaza u drugi",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S31.13",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Čitanje grafa: očitati vrijednosti, sjecišta s osima, nagib (kvocijent promjena) i površinu ispod krivulje te im pridružiti fizičko značenje (npr. nagib x,t grafa je brzina, površina ispod v,t grafa je put)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.14",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Crtanje grafa: označiti osi s veličinama i jedinicama, odabrati mjerilo, ucrtati točke te povući pravac ili krivulju kroz točke; usporediti grafove za različite slučajeve",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.15",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Mjerne jedinice SI: osnovne i izvedene jedinice (m, kg, s, K, A, N, J, W, Pa, Hz, C, V, Ω, F, T) i njihova veza",
+  "vrsta": "definicija"
+ },
+ {
+  "id": "S31.16",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Pretvaranje jedinica: prefiksi (p, n, µ, m, c, d, k, M, G), pretvorbe površine i obujma (cm² u m², dm³ u m³, l u m³), km/h u m/s, minute i sati u sekunde, bar i kPa u Pa, °C u K, eV u J",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.17",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Provjera jedinica računom: jedinica rezultata mora odgovarati traženoj veličini (dimenzijska provjera formule)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.18",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Vrednovanje rezultata: procijeniti je li iznos realan (red veličine, predznak, smjer), slaže li se s očekivanjem i granicama (npr. korisnost manja od 1, brzina manja od c)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.19",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Vrednovanje postupka: provjeriti pretpostavke i uvjete primjene zakona, uočiti pogreške u postupku i usporediti rezultat s ograničenjima modela",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.20",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Vrednovanje fizičkih situacija i tvrdnji: ocijeniti koja je tvrdnja točna i obrazložiti zašto druge nisu (višestruki izbor, usporedba slučajeva)",
+  "vrsta": "postupak"
+ },
+ {
+  "id": "S31.21",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Zamka: temperaturu u formulama plina i korisnosti toplinskog stroja treba uvrstiti u kelvinima, a ne u °C",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S31.22",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Zamka: put i pomak nisu isto (put je skalar, a pomak vektor; kod promjene smjera put je veći od iznosa pomaka)",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S31.23",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Zamka: pri odabiru formule provjeriti uvjete (stalna akceleracija, stalna temperatura, stalan napon ili stalan naboj, izolirani sustav), jer se formula izvan uvjeta ne smije koristiti",
+  "vrsta": "zamka"
+ },
+ {
+  "id": "S31.24",
+  "ishod": "ostalo",
+  "ishod_naslov": "Rješava fizičke probleme",
+  "tekst": "Služenje knjižicom formula: znati koja formula postoji, što znače oznake u njoj i kada se koristi; formule koje nisu u knjižici treba izvesti iz onih danih",
+  "vrsta": "postupak"
+ }
+]

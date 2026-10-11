@@ -1,0 +1,44 @@
+Stavke: 628 iz 31 ishoda
+Traceback (most recent call last):
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 45, in _post
+    with urllib.request.urlopen(req, timeout=600, context=SSL) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 402: Payment Required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 633, in <module>
+    globals()[f"step_{s}"]()
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 535, in step_edges
+    dup = chat("dedupe", M_PLAN,
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 81, in chat
+    res = _cached(step, body, lambda: _post("https://openrouter.ai/api/v1/chat/completions", body))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 63, in _cached
+    res = fn()
+          ^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 81, in <lambda>
+    res = _cached(step, body, lambda: _post("https://openrouter.ai/api/v1/chat/completions", body))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 51, in _post
+    raise RuntimeError(f"{e.code} {msg}")
+RuntimeError: 402 {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120
