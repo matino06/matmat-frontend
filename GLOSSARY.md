@@ -30,6 +30,10 @@ _Avoid_: kurikulum, syllabus, roadmap
 Mali zalogaj plana: najviše jedna nova ideja, koju učenik nauči iz jednog zadatka i njegovog objašnjenja. Složen koncept dijeli se na lekciju s laganim zadatkom i lekciju sa složenijim zadatkom koja joj je preduvjet; novi kontekst ili obrat formule nisu razlog za novu lekciju.
 _Avoid_: ishod, cilj, objective, tema
 
+**Stavka znanja**:
+Najsitnija stvar koju učenik mora znati ili umjeti: jedna formula, definicija, pojava, postupak ili tipična zamka. Lekcija se sastoji od 4–6 stavki.
+_Avoid_: knowledge point, činjenica, cilj
+
 **Koncept**:
 Nova ideja koju učenik mora razumjeti, a ne može je izvesti iz ranijih lekcija.
 _Avoid_: tip zadatka, vještina
