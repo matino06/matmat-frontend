@@ -281,7 +281,74 @@ for (const c of data) {
     print((P.OUT / "zadaci-mjerenja.md").read_text())
 
 
-STEPS = ["write", "verify", "overfit", "katex", "report"]
+DESIGN_V2 = r"""KAKO NAPRAVITI ZADATAK KOJI UČI:
+- Zadatak uči gradivo lekcije; učenik ga ne zna unaprijed i uči ga iz objašnjenja. Nema uvodnog teksta.
+- Jedna realna situacija (boca, auto, opruga…) kroz podzadatke a), b), c), po potrebi d): podzadaci se
+  nastavljaju jedan na drugi („Taj plin prebacimo u…“, „Vratimo plin u bocu iz a)“).
+- Podzadaci zajedno pokrivaju sve stavke lekcije. Barem jedan traži razumijevanje (koliko puta se nešto
+  promijeni, što ako, zašto) i ugrađen je prirodno u situaciju, ne kao „Navedi…“ ili „Opiši…“.
+- Ne otkrivaj formulu u tekstu zadatka. Ne prepisuj zadatke s mature.
+- Uzmi g = 10 m/s² i lijepe brojeve s kojima se lako računa; rezultati fizikalno realni.
+- Koristi samo stavke ove lekcije, stavke preduvjeta i osnovnoškolsku matematiku.
+
+KAKO OBJAŠNJAVATI (ovako piše autor MatMata):
+- Jedan korak po podzadatku: `## <emoji> Kratak naslov`, pa odmah **podebljano ponovljeno pitanje
+  podzadatka**, pa jednom rečenicom što je zadano.
+- Novi pojam uvedi tek kad ga podzadatak treba: prvo što on JEST svakodnevnim jezikom, s usporedbom iz
+  života („Mol je samo brojevna jedinica, kao što je tucet“; „potencijalna energija je rad koji ostane
+  pohranjen u podignutoj knjizi“), i zašto se tako zove. Tek onda formula.
+- Formulu ne izmišljaj iz zraka: reci gdje je — „u **knjižici formula, str. N**, poglavlje *X*“ — i prepiši
+  je kao display formulu. Konstante isto tako („R ne treba pamtiti, nalazi se u knjižici, str. 5“). Ako
+  formule nema u knjižici, izvedi je u par redaka iz one koja jest i reci „Nema je u knjižici, ali se iz nje
+  izvede u dva reda“.
+- Preuređivanje formule pokaži korak po korak s operacijom desno:
+  $$\begin{aligned} pV &= nRT && / : V \\ p &= \frac{nRT}{V} \end{aligned}$$
+- Pretvorbe jedinica napiši izričito prije uvrštavanja; uvrštavanje pokaži s brojevima; konačan rezultat
+  \textcolor{green}{…}.
+- Piši u odlomcima od 2–4 povezane rečenice, prirodnim tonom („Primijeti…“, „Sad tlak.“, „Ključna riječ u
+  zadatku je **jednoliko**.“). Ne piši telegrafski, jednu po jednu kratku rečenicu.
+- Zamku najavi izričito („Prvo jedna zamka.“, „Zamka je…“) i objasni zašto je zamka.
+- Nakon rezultata jednom ili dvjema rečenicama poveži ga s intuicijom ili provjeri drugim putem
+  („brzina 3×, energija 9×, zato dvostruko brži auto koči četiri puta dulje“; „da smo visinu mjerili od
+  stola, razlika bi bila ista“).
+- Pojmove i ključne riječi podebljaj. Decimalni zarez u LaTeX-u: 0{,}8. Jedinice: 20 \ \text{m/s}.
+- LaTeX: inline \( … \), display $$ … $$ u jednom retku (osim aligned), prazan red prije i poslije.
+- Zadnji korak `## ✅ Rezultati`: po jedan redak za svaki podzadatak s rezultatom."""
+
+
+def formula_sheet_pages():
+    pages = P.load("pages.json")
+    return "MATERIJAL DOSTUPAN NA ISPITU (knjižica formula), po stranicama:\n\n" + "\n\n".join(
+        f"[knjižica formula, str. {p['page']}]\n{p['text']}" for p in pages if p["file"] == "FIZ-T-D.pdf")
+
+
+def step_write_v2(lessons=("B05.01", "B11.01", "B22.03"), n=2):
+    """Lijeno generiranje: varijacija k dobiva prethodne kao kontekst."""
+    res = []
+    for lid in lessons:
+        l, ctx = lesson_ctx(lid)
+        ctx = ctx.replace(P.formula_sheet(), formula_sheet_pages())
+        prev = []
+        for k in range(1, n + 1):
+            extra = ("" if not prev else "\n\nVEĆ POSTOJEĆE VARIJACIJE (napravi NOVU: druga situacija i brojevi, iste "
+                     "stavke; ne ponavljaj iste podzadatke):\n" + "\n---\n".join(prev))
+            v = P.chat("task-write-v2", WRITERS["haiku"], "Pišeš zadatak za MatMat, aplikaciju za učenje fizike za državnu maturu.\n"
+                + DESIGN_V2 + '\nVrati JSON {"zadatak":"markdown teksta zadatka","objasnjenje":"markdown objašnjenja",'
+                '"rezultati":{"a":"konačan odgovor","b":"…"}}. U rezultatima za računske podzadatke broj s jedinicom, '
+                'za ostale jedna rečenica.', ctx + extra, max_tokens=12000)
+            prev.append(v["zadatak"])
+            res.append({"lesson": lid, "naziv": l["naziv"], "k": k, **v})
+    P.save("tasks_v2.json", res)
+    cards = [{"title": f"{r['lesson']} {r['naziv']} — varijacija {r['k']}", "flags": [], "task": r["zadatak"],
+              "expl": r["objasnjenje"], "check": {}, "ref": r["rezultati"]} for r in res]
+    html = (P.OUT / "zadaci.html").read_text()
+    start = html.index("const data = ") + len("const data = ")
+    end = html.index(";\nconst root")
+    (P.OUT / "zadaci-v2.html").write_text(html[:start] + json.dumps(cards, ensure_ascii=False) + html[end:])
+    print(f"v2: {len(res)} varijacija")
+
+
+STEPS = ["write", "verify", "overfit", "katex", "report", "write_v2"]
 
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else "all"
