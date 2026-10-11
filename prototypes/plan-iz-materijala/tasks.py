@@ -348,7 +348,89 @@ def step_write_v2(lessons=("B05.01", "B11.01", "B22.03"), n=2):
     print(f"v2: {len(res)} varijacija")
 
 
-STEPS = ["write", "verify", "overfit", "katex", "report", "write_v2"]
+KATEX_JS = r"""
+const katex = require(process.argv[1]);
+const texts = JSON.parse(require('fs').readFileSync(0, 'utf8'));
+const re = /\$\$([\s\S]+?)\$\$|\\\(([\s\S]+?)\\\)/g;
+console.log(JSON.stringify(texts.map(t => { const errs = []; let m;
+  while ((m = re.exec(t))) { const src = m[1] || m[2];
+    try { katex.renderToString(src, {throwOnError: true, displayMode: !!m[1]}); } catch (e) { errs.push(src.slice(0, 80) + ' :: ' + e.message.slice(0, 80)); } }
+  return errs; })));
+"""
+
+
+def katex_errors(texts):
+    katex = str(P.HERE.parents[5] / "matmat-frontend/node_modules/katex")
+    out = subprocess.run(["node", "-e", KATEX_JS, katex], input=json.dumps(texts), capture_output=True, text=True, check=True)
+    return json.loads(out.stdout)
+
+
+REVIEW_Q = {
+    "premisa": {"type": "noul", "instructions": "Je li situacija opisana u zadatku fizikalno moguća i bez kontradikcija (podaci se ne proturječe, npr. isti uređaj na istom naponu ne može imati drugu struju)?"},
+    "jednoznacno": {"type": "noul", "instructions": "Ima li SVAKI podzadatak jedan jasan točan odgovor na razini srednje škole (nema pitanja na mišljenje ni dvosmislenih tvrdnji)?"},
+    "cinjenice": {"type": "noul", "instructions": "Jesu li sve činjenice u tekstu zadatka točne (boje i valne duljine svjetlosti, svojstva tvari, realne vrijednosti, smislene rečenice)?"},
+}
+REVIEW_TH = 0.8
+FALLBACK = "xiaomi/mimo-v2.6-pro"
+
+
+def write_one(lid, model, step):
+    l, ctx = lesson_ctx(lid)
+    ctx = ctx.replace(P.formula_sheet(), formula_sheet_pages())
+    v = P.chat(step, model, "Pišeš zadatak za MatMat, aplikaciju za učenje fizike za državnu maturu.\n"
+        + DESIGN_V2 + '\nVrati JSON {"zadatak":"markdown teksta zadatka","objasnjenje":"markdown objašnjenja",'
+        '"rezultati":{"a":"konačan odgovor","b":"…"}}. U rezultatima za računske podzadatke broj s jedinicom, '
+        'za ostale jedna rečenica.', ctx, max_tokens=24000)
+    return {"lesson": lid, "naziv": l["naziv"], "model": model, **v}
+
+
+def check_one(v):
+    errs = katex_errors([v["zadatak"] + "\n\n" + v["objasnjenje"]])[0]
+    a = P.decide("task-review", {"zadatak": v["zadatak"][:8000], "rezultati": v.get("rezultati", {})}, REVIEW_Q)
+    scores = {k: round(a[k]["noul"], 2) for k in REVIEW_Q}
+    return {"katex": errs, "recenzija": scores, "prosao": not errs and min(scores.values()) >= REVIEW_TH}
+
+
+def step_test50():
+    plan = P.load("plan.json")["lekcije"]
+    lids = [plan[round(i * (len(plan) - 1) / 49)]["id"] for i in range(50)]
+
+    def one(lid):
+        h = write_one(lid, WRITERS["haiku"], "t50-haiku")
+        h["provjera"] = check_one(h)
+        out = {"lesson": lid, "naziv": h["naziv"], "haiku": h}
+        if not h["provjera"]["prosao"]:
+            m = write_one(lid, FALLBACK, "t50-mimo")
+            m["provjera"] = check_one(m)
+            out["mimo"] = m
+        return out
+
+    res = P.pmap(one, lids, workers=4)
+    P.save("test50.json", res)
+    costs = {}
+    for line in (P.CACHE / "costs.jsonl").read_text().splitlines():
+        r = json.loads(line)
+        if r["step"].startswith("t50-") or r["step"] == "task-review":
+            costs[r["step"]] = costs.get(r["step"], 0) + (r["usage"].get("cost") or 0)
+    fb = [r for r in res if "mimo" in r]
+    print(f"Haiku prošao: {50 - len(fb)}/50; MiMo pisao {len(fb)}, od toga prošao {sum(r['mimo']['provjera']['prosao'] for r in fb)}")
+    print("KaTeX greške kod Haikua:", sum(bool(r['haiku']['provjera']['katex']) for r in res))
+    print("Trošak:", {k: round(v, 3) for k, v in costs.items()})
+    cards = []
+    for r in res:
+        for key in ("haiku", "mimo"):
+            if key not in r: continue
+            v = r[key]; pv = v["provjera"]
+            flags = [("✅ prošao" if pv["prosao"] else "❌ nije prošao") + f" · recenzija {pv['recenzija']}"]
+            if pv["katex"]: flags.append(f"KaTeX: {pv['katex'][0]}")
+            cards.append({"title": f"{r['lesson']} {r['naziv']} — {key}", "flags": flags, "task": v["zadatak"],
+                          "expl": v["objasnjenje"], "check": {}, "ref": v.get("rezultati", {})})
+    html = (P.OUT / "zadaci.html").read_text()
+    a, b = html.index("const data = ") + len("const data = "), html.index(";\nconst root")
+    (P.OUT / "test50.html").write_text(html[:a] + json.dumps(cards, ensure_ascii=False) + html[b:])
+
+
+STEPS = ["write", "verify", "overfit", "katex", "report", "write_v2", "test50"]
 
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else "all"

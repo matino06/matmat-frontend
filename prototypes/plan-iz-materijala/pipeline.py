@@ -30,6 +30,11 @@ M_DECIDE = "typesafe/jev-1.13"
 def api_key():
     if os.environ.get("OPENROUTER_API_KEY"):
         return os.environ["OPENROUTER_API_KEY"]
+    env = HERE / ".env"  # lokalni ključ za prototip, nije u gitu
+    if env.exists():
+        for line in env.read_text().splitlines():
+            if line.startswith("OPENROUTER_API_KEY="):
+                return line.split("=", 1)[1].strip()
     for line in BACKEND_PROPS.read_text().splitlines():
         if line.startswith("openrouter.api-key="):
             return line.split("=", 1)[1].strip()
