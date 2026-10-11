@@ -13,7 +13,7 @@ SAMPLE = ["B05.01", "B02.02", "B11.01", "B11.02", "B15.01", "B19.05", "B22.03", 
 WRITERS = {"haiku": "anthropic/claude-haiku-5.5", "sonnet": "anthropic/claude-sonnet-5.5"}
 SONNET_SAMPLE = ["B11.02", "B22.03", "B27.02"]
 SOLVERS = {
-    "deepseek": ("deepseek/deepseek-v4.1-flash", {"order": ["deepseek"], "allow_fallbacks": False}),
+    "deepseek": ("deepseek/deepseek-v4.1-flash", {"order": ["deepinfra"], "allow_fallbacks": True, "quantizations": ["fp8", "bf16", "fp32"]}),
     "luna": ("openai/gpt-6-luna", None),
 }
 
@@ -87,30 +87,53 @@ def solve(name, text):
     res = P._cached("task-solve", payload, lambda: P._post("https://openrouter.ai/api/v1/chat/completions", payload))
     t = res["choices"][0]["message"]["content"] or "{}"
     m = re.search(r"\{.*\}", t, re.S)
+    txt = m.group(0) if m else t
     try:
-        return json.loads(m.group(0) if m else t).get("rezultati", {})
+        try:
+            raw = json.loads(txt).get("rezultati", {})
+            txt_ok = txt
+        except json.JSONDecodeError:  # LaTeX u JSON-u: \cdot, \frac… nisu valjani escapeovi
+            raw = json.loads(re.sub(r'\\(?![\\"/bfnrtu])', r"\\\\", txt)).get("rezultati", {})
+        if not raw:  # npr. ključ „rezultati={“: uzmi prvi rječnik s podzadacima
+            d = json.loads(txt) if txt.strip().startswith("{") else {}
+            raw = next((x for x in d.values() if isinstance(x, dict)), d)
+        out = {}
+        for k, v in raw.items():  # „A)“, „a“, „A1“… → „A“; više stavki istog slova spoji
+            kk = re.sub(r"[^A-Da-d]", "", str(k))[:1].upper() or str(k)
+            out[kk] = (out[kk] + "; " if kk in out else "") + (json.dumps(v, ensure_ascii=False) if not isinstance(v, str) else v)
+        return out
     except json.JSONDecodeError:
         return {}
 
 
-NUM = re.compile(r"[-−]?\d+(?:[.,]\d+)?(?:\s*(?:·|\*|x|×)\s*10\^?\{?[-−]?\d+\}?)?")
+SUP = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹⁻", "0123456789-")
+PREFIX = {"k": 1e3, "M": 1e6, "G": 1e9, "m": 1e-3, "µ": 1e-6, "μ": 1e-6, "n": 1e-9}
+NUM = re.compile(r"(-?\d+(?:\.\d+)?)(?:\s*[·*x×]\s*10\^?\{?(-?\d+)\}?)?\s*([kMGmµμn](?=[A-ZΩa-z]))?")
 
 
 def numbers(s):
+    t = str(s).translate(SUP).replace("−", "-").replace("\\cdot", "·").replace("{,}", ",")
+    t = re.sub(r"(\d),(\d)", r"\1.\2", t)
+    t = re.sub(r"10\s*(-?\d+)\b", lambda m: m.group(0), t)
     out = []
-    for m in NUM.findall(str(s).replace("\\cdot", "·").replace("{,}", ",")):
-        t = m.replace("−", "-").replace(",", ".").replace(" ", "")
-        mm = re.match(r"(-?\d+(?:\.\d+)?)(?:[·*x×]10\^?\{?(-?\d+)\}?)?", t)
-        if mm:
-            out.append(float(mm.group(1)) * (10 ** int(mm.group(2)) if mm.group(2) else 1))
+    for m in NUM.finditer(t):
+        v = float(m.group(1)) * (10 ** int(m.group(2)) if m.group(2) else 1)
+        out.append(v)
+        if m.group(3):  # „kg“, „mol“… nisu prefiksi, pa vrijede obje vrijednosti
+            out.append(v * PREFIX[m.group(3)])
     return out
+
+
+def close(x, y):
+    return abs(x - y) <= 0.03 * max(abs(x), abs(y), 1e-30)
 
 
 def same(a, b):
     na, nb = numbers(a), numbers(b)
     if na and nb:
-        x, y = na[0], nb[0]
-        return abs(x - y) <= 0.03 * max(abs(x), abs(y), 1e-12), "broj"
+        # svaki „rezultat“ iz reference (brojevi iza „=“ ili zadnji broj) mora se pojaviti u odgovoru rješavača
+        refs = [numbers(x)[-2:] for x in re.split(r"[;]", str(a)) if numbers(x)] or [na[-2:]]
+        return all(any(close(r, y) for r in rs for y in nb) for rs in refs), "broj"
     ans = P.decide("task-same", {"odgovor_1": str(a), "odgovor_2": str(b)}, {"isto": {"type": "noul",
         "instructions": "Tvrde li ova dva odgovora na isto pitanje iz fizike istu stvar (isti zaključak)?"}})
     return ans["isto"]["noul"] >= 0.5, "jev"
@@ -169,7 +192,7 @@ def step_katex():
     tasks = P.load("tasks.json")
     texts = [v["zadatak"] + "\n\n" + v["objasnjenje"] for t in tasks for v in t["varijacije"]]
     js = r"""
-const katex = require(process.argv[2]);
+const katex = require(process.argv[1]);
 const texts = JSON.parse(require('fs').readFileSync(0, 'utf8'));
 const re = /\$\$([\s\S]+?)\$\$|\\\(([\s\S]+?)\\\)/g;
 const out = texts.map(t => { const errs = []; let m;

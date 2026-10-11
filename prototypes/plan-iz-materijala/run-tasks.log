@@ -1,0 +1,64 @@
+Pisanje: 55 varijacija za 11 (lekcija, model)
+Traceback (most recent call last):
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 45, in _post
+    with urllib.request.urlopen(req, timeout=600, context=SSL) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/tasks.py", line 266, in <module>
+    globals()[f"step_{s}"]()
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/tasks.py", line 136, in step_verify
+    for ti, vi, checks in P.pmap(one, flat, workers=6):
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 103, in pmap
+    return list(ex.map(fn, items))
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/tasks.py", line 125, in one
+    sols = {n: solve(n, v["zadatak"]) for n in SOLVERS}
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/tasks.py", line 87, in solve
+    res = P._cached("task-solve", payload, lambda: P._post("https://openrouter.ai/api/v1/chat/completions", payload))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 63, in _cached
+    res = fn()
+          ^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/tasks.py", line 87, in <lambda>
+    res = P._cached("task-solve", payload, lambda: P._post("https://openrouter.ai/api/v1/chat/completions", payload))
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/matino/Documents/Projects/matmat-frontend/.claude/worktrees/prototype-plan/prototypes/plan-iz-materijala/pipeline.py", line 51, in _post
+    raise RuntimeError(f"{e.code} {msg}")
+RuntimeError: 404 {"error":{"message":"No endpoints found for deepseek/deepseek-v4.1-flash. Every candidate endpoint was removed during routing: Filter by Regional Surcharge removed fireworks/us; Filter by Guardrails removed deepseek (Paid model training violation (account settings), Paid model training violation (guardrail)); Filter by Parameters removed relace, baseten/fp8; Filter by Fallback removed baidu/fp8, wafer, morph/fp8, open-inference/fp4, inference-net/fp8, sail-research/fp4, ionstream, dekallm, deepi
