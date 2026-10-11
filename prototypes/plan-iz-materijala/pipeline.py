@@ -9,7 +9,10 @@ import base64, hashlib, json, os, re, sys, time, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+import certifi, ssl
 import pymupdf
+
+SSL = ssl.create_default_context(cafile=certifi.where())
 
 HERE = Path(__file__).parent
 CACHE = HERE / "cache"
@@ -39,15 +42,15 @@ def _post(url, body):
         "X-Title": "MatMat prototip plana"})
     for attempt in range(6):
         try:
-            with urllib.request.urlopen(req, timeout=600) as r:
+            with urllib.request.urlopen(req, timeout=600, context=SSL) as r:
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
             msg = e.read().decode()[:500]
             if e.code in (429, 500, 502, 503, 524, 529) and attempt < 5:
                 time.sleep(2 ** attempt * 3); continue
             raise RuntimeError(f"{e.code} {msg}")
-        except (urllib.error.URLError, TimeoutError):
-            if attempt < 5:
+        except (urllib.error.URLError, TimeoutError) as e:
+            if attempt < 5 and "CERTIFICATE" not in str(e):
                 time.sleep(2 ** attempt * 3); continue
             raise
 
