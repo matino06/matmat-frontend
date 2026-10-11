@@ -1,0 +1,296 @@
+[
+ {
+  "lesson": "B01.01",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B01.05",
+  "dobar": false,
+  "komentar": "U objašnjenju d): „drugi kamen prolazi kroz prvi dok pada.” To je fizikalno nemoguće za stvarne kamene; u trenutku susreta kamenovi bi se sudarili, a ne prolazili jedan kroz drugi.",
+  "greska": null
+ },
+ {
+  "lesson": "B03.02",
+  "dobar": false,
+  "komentar": "U objašnjenju d): „Bočna sila ne mijenja normalnu silu jer je vodoravna, pa trenje ostaje 26 N? Ne, za stalnu brzinu je trenje 30 N” — tvrdnja da trenje ostaje 26 N proturječi ispravku u istoj rečenici. U tom trenutku normalna sila iznosi 60 N, pa je trenje 30 N.",
+  "greska": null
+ },
+ {
+  "lesson": "B02.02",
+  "dobar": false,
+  "komentar": "1. Objašnjenje, odlomak „Što ako radnik povuče jače?“: „Ukupna sila nije nula, pa I. Newtonov zakon više ne vrijedi”. Netočno: I. Newtonov zakon vrijedi i kada je rezultantna sila različita od nule; tada tijelo ubrzava, u skladu s II. Newtonovim zakonom.\n2. Objašnjenje, odlomak „Ravnoteža sila pri spuštanju“: „Ubrzanje slobodnoga pada g uzimamo kao 10 m/s² jer je tako propisano u knjižici formula”. To nije propisana vrijednost u knjižici formula; ovdje je g = 10 m/s² zadano u samom zadatku.",
+  "greska": null
+ },
+ {
+  "lesson": "B04.01",
+  "dobar": false,
+  "komentar": "1. U objašnjenju b) piše: „Ana ima ubrzanje **2 m/s² udesno, dakle ulijevo**”. Smjerovi su proturječni. Budući da Marko djeluje na Anu silom ulijevo, Anina akceleracija je ulijevo.\n2. U zadatku c), objašnjenju i rezultatima „težina Ane” upotrebljava se za silu kojom Zemlja djeluje na Anu. To je **sila teža**, a ne težina: težina je voiman, jolla kappale vaikuttaa tukeen tai ripustimeen. Siksi i navod da je par težine „sila kojom Ana privlači Zemlju” ne vrijedi za težinu u tom značenju. Ako se misli na silu težu, njezin je par gravitacijska sila kojom Ana djeluje na Zemlju; sila teža i normalna sila mogu se poništavati jer djeluju na Anu.",
+  "greska": null
+ },
+ {
+  "lesson": "B04.02",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B05.03",
+  "dobar": false,
+  "komentar": "U objašnjenju d), „vrijedi \\(E_{poč} = E_{kon} + W_{tr}\\), gdje je \\(|W_{tr}|\\) energija pretvorena u toplinu”: tvrdnja je proturječna jer je \\(W_{tr}\\) rad trenja sa znakom, dakle negativan, dok je energija pretvorena u toplinu pozitivna. Ispravno je pisati \\(E_{poč} = E_{kon} + |W_{tr}|\\) (ili \\(E_{kon} = E_{poč} + W_{tr}\\)).",
+  "greska": null
+ },
+ {
+  "lesson": "B06.01",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B07.01",
+  "dobar": false,
+  "komentar": "U objašnjenju dijela d piše: „Zato je r 4 puta veći od R, odnosno $$r = 4 \\cdot R \\ \\text{ ?}$$ To nije točno” te se zatim zaključuje „Dakle $r^2 = 16R^2$, pa je $r = 4R$.” Tekst proturječi sam sebi: odbacuje $r=4R$, a potom potvrđuje isti rezultat.",
+  "greska": null
+ },
+ {
+  "lesson": "B07.04",
+  "dobar": false,
+  "komentar": "U zadatku c) podaci nisu međusobno usklađeni s eliptičnom orbitom: „r_p = 1,0 · 10^7 m, r_a = 4,0 · 10^7 m” i „U perigeju sonda ima brzinu 4,0 km/s.” Za elipsu s tim udaljenostima velika poluos iznosi 2,5 · 10^7 m. Iz vis-viva jednadžbe pri perigeju slijedi brzina približno 8,0 km/s, a ne 4,0 km/s. Zato takva sonda ne može imati navedenu eliptičnu orbitu, iako iz samog očuvanja umnoška rv objašnjenje računa v_a = 1,0 km/s.",
+  "greska": null
+ },
+ {
+  "lesson": "B08.02",
+  "dobar": false,
+  "komentar": "U zadatku d) piše: „Prvi ronilac se spušta s 5 m na 15 m ispod površine.” Jezero je zadano kao duboko 12 m, pa ronilac ne može biti 15 m ispod njegove površine.",
+  "greska": null
+ },
+ {
+  "lesson": "B10.01",
+  "dobar": false,
+  "komentar": "1. Objašnjenje a): „Kad se led otopi, čestice dobiju više energije i međudjelovanje im se oslabi.” Zagrijavanje ne smanjuje samu jačinu međudjelovanja među česticama; toplinsko gibanje omogućuje česticama da svladaju ograničenja koja ih drže u uređenim položajima. Tvrdnja je netočno objašnjenje promjene agregatnog stanja.\n2. Objašnjenje b): „Čestice vode mijenjaju svoj raspored i međusobni položaj” nasuprot „Nisu se odmakle”. Te su tvrdnje proturječne ako se druga shvati doslovno. Trebalo bi reći da se čestice premještaju, ali njihov prosječni međusobni razmak ostaje približno jednak.\n3. Objašnjenje d): „tekućina … se skuplja i zadržava na mjestu gdje je nastala.” Kondenzacija se može dogoditi na različitim hladnim površinama u kuhinji; iz teksta ne slijedi da će tekućina nastati samo na jednom mjestu niti da će ondje ostati. Za takav zaključak nedostaje podatak o tome gdje se para kondenzira.",
+  "greska": null
+ },
+ {
+  "lesson": "B08.05",
+  "dobar": false,
+  "komentar": "U objašnjenju c): „Staklena posudica se ne sabija, pa obujam staklenog dijela ostaje \\(9{,}0\\ \\text{cm}^3\\). Istisnuti obujam vode sada je \\(9{,}0 + 0{,}80 = 9{,}8\\ \\text{cm}^3\\).” Ako je posudica staklena i ne sabija se, zatvoreni zrak u njoj ne može se stisnuti na manji obujam bez ulaska vode ili promjene oblika posudice. Ako voda uđe u posudicu, njezin vanjski istisnuti obujam ne postaje 9,8 cm³; ako se zrak stisne promjenom oblika, posudica nije kruta. Zadatak opisuje plovak kao staklenu posudicu, ali objašnjenje računa kao da ima promjenjiv obujam zraka i stalni obujam staklenog dijela, što nije fizički usklađeno. Potrebno je navesti da je plovak deformabilan ili drukčije opisati njegovu konstrukciju.",
+  "greska": null
+ },
+ {
+  "lesson": "B09.03",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B10.03",
+  "dobar": false,
+  "komentar": "1. U objašnjenju se proturječi tvrdnjama o knjižici formula: „Formula je u knjižici formula, str. 3“ i zatim „Nema je u knjižici“. 2. Rečenica „čelik se u željezničkoj pruzi ne smije slobodno širiti jer bi se inače tračnice izvile“ pogrešno navodi uzrok: izvijanje može nastati kad je toplinsko širenje spriječeno, a ne kad se tračnice mogu slobodno širiti.",
+  "greska": null
+ },
+ {
+  "lesson": "B12.01",
+  "dobar": false,
+  "komentar": "U zadatku piše: „Plin možemo zagrijavati i hladiti, a klip se slobodno giba”, a zatim se u podzadatcima b), c) i d) traže dijelovi procesa „pri stalnom volumenu”. Ako se klip slobodno giba, zagrijavanje ili hlađenje plina mijenja njegov volumen; za izohorni dio klip mora biti zakočen ili na neki drugi način zadržan. Treba navesti da se klip tijekom tih dijelova može učvrstiti.",
+  "greska": null
+ },
+ {
+  "lesson": "B12.03",
+  "dobar": false,
+  "komentar": "U objašnjenju a) piše: „Toplina koju daje grijač tu ne povisuje temperaturu, nego se troši na to da se čestice otkinu iz kristalne rešetke i postanu pokretnije, to jest na raskidanje veza među njima. Zato se povećava potencijalna energija čestica, a kinetička ostaje ista.“ Tvrdnja da se čestice tijekom taljenja „postanu pokretnije“ proturječi objašnjenju da im kinetička energija ostaje ista; pri stalnoj temperaturi srednja kinetička energija ne raste. U objašnjenju c) piše: „Toplina se opet troši na raskidanje veza među molekulama, ali sada su veze puno slabije nego kod leda“. To je netочно: veze među molekulama vandersvalovske su i slabije od veza u kristalnoj rešetki leda, no isparavanje zahtijeva više topline po kilogramu jer se molekule pri isparavanju znatno više razdvajaju, a ne zato što su veze u vodi slabije nego u ledu. Računski rezultati i ostali navedeni odnosi su točni.",
+  "greska": null
+ },
+ {
+  "lesson": "B13.02",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B13.06",
+  "dobar": false,
+  "komentar": "U objašnjenju d): „jer u \\(F = qE\\) ulazi apsolutna vrijednost naboja, \\(|q| = 2\\cdot 10^{-8}\\ \\text{C}\\)” — jednadžba \\(F=qE\\) za vektore uključuje predznak naboja i određuje smjer sile. Apsolutna vrijednost naboja koristi se za iznos sile: \\(|F|=|q|E\\).",
+  "greska": null
+ },
+ {
+  "lesson": "B14.01",
+  "dobar": false,
+  "komentar": "U objašnjenju d): „Energija nabijenog kondenzatora je rad koji je izvor uložio u punjenje ploča” netočno je kao opća tvrdnja. Pri punjenju kondenzatora iz idealnog izvora stalnog napona izvor obavi rad CU², dok je u kondenzatoru pohranjena energija CU²/2; preostala energija se rasipa u krugu. Formula za pohranjenu energiju i izračunati rezultat jesu točni.",
+  "greska": null
+ },
+ {
+  "lesson": "B15.02",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B16.01",
+  "dobar": false,
+  "komentar": "U objašnjenju: „Aluminij nije feromagnetska tvar. Njegove se domene ne mogu usmjeriti, pa aluminijska žica ostaje bez polova i magnet je ne privlači.” Aluminij nema feromagnetske domene, ali je paramagnetičan: u vanjskom magnetskom polju slabo se magnetizira i slabo ga privlači magnet. Zato nije točno da ostaje bez polova i da ga magnet uopće ne privlači; privlačenje je obično vrlo slabo.",
+  "greska": null
+ },
+ {
+  "lesson": "B16.03",
+  "dobar": false,
+  "komentar": "Objašnjenje, dio a): „Kompas je iznad vodiča, a iz prošlog gradiva znamo da se igla u magnetskom polju okreće u smjeru polja” i „polje iznad vodiča usmjereno prema istoku, pa se sjeverni pol igle skreće prema istoku.” Polje vodiča iznad njega doista je usmjereno prema istoku, ali kompas se orijentira prema ukupnom magnetskom polju, koje uključuje i Zemljino polje. Zato igla ne pokazuje točno prema istoku; skreće prema istoku od početnog smjera sjevera. Rezultat a) ispravno označuje stranu otklona, ali objašnjenje ne razlikuje polje vodiča od ukupnog polja.",
+  "greska": null
+ },
+ {
+  "lesson": "B17.04",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B17.06",
+  "dobar": false,
+  "komentar": "U objašnjenju f) stoji: „Čestica koja ulazi u Zemljino polje zato ne može ravno pasti na površinu. Ona se stalno skreće i kreće se u spirali uz magnetske silnice, pa većinu čestica polje odbaci od površine”. To nije općenito točno: magnetska sila ne djeluje na česticu koja se giba paralelno sa silnicama, a čestica s komponentom brzine uz silnice može se gibati duž njih i dospjeti u atmosferu, osobito u polarnim područjima. Zato tvrdnja da se čestica uvijek skreće i da polje odbaci većinu čestica nije valjano obrazloženje.",
+  "greska": null
+ },
+ {
+  "lesson": "B31.02",
+  "dobar": false,
+  "komentar": "U objašnjenju za d) piše: „Uvrštavanje, uz \\(g = 10\\ \\text{m/s}^2\\) iz zadatka“. Zadatak ne navodi vrijednost za \\(g\\), pa je netočno tvrditi da je zadana. Rezultat od 0,05 m vrijedi uz pretpostavku \\(g=10\\ \\text{m/s}^2\\), ali tu pretpostavku treba navesti, a ne pripisati zadatku.",
+  "greska": null
+ },
+ {
+  "lesson": "B18.03",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B19.01",
+  "dobar": false,
+  "komentar": "Objašnjenje, a): „Formula je ... $$F_{elas} = kx$$”. Ako je $$x$$ elongacija sa predznakom, ta formula ne daje povratnu silu: treba pisati $$F_{elas}=-kx$$. Ako se računa samo iznos sile, treba navesti $$|F_{elas}|=k|x|$$; smjer se zatim određuje zasebno.",
+  "greska": null
+ },
+ {
+  "lesson": "B19.03",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B19.07",
+  "dobar": false,
+  "komentar": "1. U zadatku piše: „pri sljedećem titraju vrati samo do 18 cm od ravnoteže, na suprotnoj strani“, a zatim se pita za energiju izgubljenu „u tom jednom punom titraju“. Povratak do suprotne strane odgovara polovici titraja; nakon punog titraja tijelo se vraća na početnu stranu. Zato navedeni položaj ne određuje gubitak energije tijekom jednog punog titraja kako je pitanje formulirano.\n2. Objašnjenje kaže: „Razlika energija je rad sile trenja“ i zapisuje „W_tr = E - E' = 0,19 J“. Rad sile trenja na tijelu jest negativan, −0,19 J; 0,19 J je iznos izgubljene mehaničke energije, odnosno energija pretvorena u toplinu. Zapis je prihvatljiv samo ako se W_tr posebno definira kao pozitivan iznos, što ovdje nije učinjeno.\n3. Tvrdnja „Amplituda je najveća kad se frekvencija pogona poklopi s vlastitom frekvencijom sustava“ nije općenito točna za prigušeni prisilni oscilator: frekvencija najveće amplitude ovisi o prigušenju i u uobičajenom modelu je nešto manja od vlastite frekvencije. Bez podataka o prigušenju ne može se odrediti točna frekvencija vrha; 1,6 Hz je približna vrijednost za slabo prigušenje.",
+  "greska": null
+ },
+ {
+  "lesson": "B20.03",
+  "dobar": false,
+  "komentar": "U zadatku: „amplituda iznosi 0,5 mm”, a poslije se navodi da zvučnik „predaje zraku snagu 2 W” i da se zvuk širi jednako u svim smjerovima. Ti podaci nisu međusobno usklađeni za isti zvuk u zraku. Amplituda pomaka čestica od 0,5 mm pri 400 Hz odgovara vrlo velikom intenzitetu (reda 10^3 W/m²), dok snaga od 2 W raspodijeljena po sferi daje na 2 m intenzitet oko 0,040 W/m². Zato zadatak treba razjasniti, primjerice navodeći da se dio e) odnosi na drukčije uvjete ili da se amplituda odnosi na određeni drugi položaj.",
+  "greska": null
+ },
+ {
+  "lesson": "B20.07",
+  "dobar": false,
+  "komentar": "U objašnjenju piše: „Stojni val ne prenosi energiju. Svaki dio užeta između dva čvora titra sam za sebe, pa val ne putuje duž užeta. Energija ostaje zarobljena između učvršćenih krajeva.” Tvrdnja da stojni val ne prenosi energiju općenito je netočna: idealni stojni val ne prenosi neto energiju duž užeta, ali lokalno se energija izmjenjuje između kinetičke i potencijalne, a izjava da je energija „zarobljena između učvršćenih krajeva” pogrešno je obrazloženje. ",
+  "greska": null
+ },
+ {
+  "lesson": "B21.03",
+  "dobar": false,
+  "komentar": "U objašnjenju d), „Razlika od 20 Hz može se činiti malom, ali je dovoljna da se amplituda bitno smanji” i „Vilica više ne pogađa vlastitu frekvenciju, pa se rezonancija oslabi i cijev snažno ne zvuči.” To se ne može zaključiti samo iz frekvencija: koliko će titranje oslabjeti ovisi o prigušenju, odnosno širini rezonancije. Budući da prigušenje nije zadano, nema jednoznačnog odgovora hoće li cijev snažno titrati; i vilica od 680 Hz može pobuditi cijev čija je vlastita frekvencija 660 Hz.",
+  "greska": null
+ },
+ {
+  "lesson": "B22.04",
+  "dobar": false,
+  "komentar": "U podzadatku d) citat: „Zraka se na drugom kraju štapa vraća i iznutra pada na čelo pod kutom 30° prema okomici”. To nije usklađeno s prethodnim opisom iste zrake: nakon ulaska zraka putuje pod kutom 19,5° prema osi štapa, a refleksije na bočnim stijenkama mijenjaju samo smjer njezine poprečne komponente, ne i kut prema osi. Zato bi na drugom čelu upadni kut bio 19,5°, a ne 30°. Kut izlaska 48,6° ispravan je samo ako se u d) promatra druga zraka ili ako se promijeni prethodno zadana geometrija.",
+  "greska": null
+ },
+ {
+  "lesson": "B22.03",
+  "dobar": false,
+  "komentar": "U zadatku: „crveni laser, čija je valna duljina u zraku 600 nm” — prema uobičajenoj podjeli vidljivog spektra, 600 nm pripada narančastom području, a crveno svjetlo ima približno 620–750 nm. Podatak o valnoj duljini i naziv boje nisu usklađeni.",
+  "greska": null
+ },
+ {
+  "lesson": "B22.07",
+  "dobar": false,
+  "komentar": "U objašnjenju: „što je i razlog zašto se koristi u npr. ogledalima na vratima auta.” To je netočno: ogledala na vratima auta u pravilu su konveksna zrcala, a ne rastresne leće.",
+  "greska": null
+ },
+ {
+  "lesson": "B23.01",
+  "dobar": false,
+  "komentar": "U objašnjenju a) piše: „To je narančasto-crveno područje vidljivog spektra, što odgovara crvenom laseru.” Valna duljina 600 nm pripada narančastom području, a ne uobičajenom crvenom području (oko 620–750 nm). Zato su zadani opis lasera kao crvenog i izmjerene vrijednosti koje daju 600 nm međusobno neusklađeni.",
+  "greska": null
+ },
+ {
+  "lesson": "B24.04",
+  "dobar": false,
+  "komentar": "1. U objašnjenju: „Upravo zato se hrana u pećnici zagrijava jače nego što bi se zagrijala da val ostane u zraku.” To ne slijedi iz smanjenja brzine i valne duljine. Zagrijavanje ovisi o apsorpciji mikrovalova u hrani; indeks loma sam po sebi ne znači da će se hrana jače zagrijavati.\n2. U objašnjenju i rezultatima e): „Ionizirajuće su UV i rendgensko zračenje” i „ionizirajuće su UV lampa i rendgen”. Foton valne duljine 300 nm ima energiju oko 4,1 eV, što nije dovoljno za ionizaciju atoma. Rendgensko zračenje jest ionizirajuće, ali zadana UV lampa nije.\n3. U objašnjenju: „Štetnost raste s energijom fotona”. To je pretjerano opća tvrdnja: štetnost zračenja ne određuje samo energija pojedinog fotona, nego i doza i izloženost. U ovom zadatku usporedba energija fotona ne opravdava takav opći zaključak.",
+  "greska": null
+ },
+ {
+  "lesson": "B25.02",
+  "dobar": true,
+  "komentar": "",
+  "greska": null
+ },
+ {
+  "lesson": "B25.05",
+  "dobar": false,
+  "komentar": "1. U zadatku: „Umjesto elektrona, isti top ubrzava lopticu mase 100 g.” Električni top ubrzava nabijene čestice; za lopticu nije naveden električni naboj, pa nije određeno kako bi je isti top ubrzavao. Zadana brzina omogućuje račun de Broglieove valne duljine, ali ne uklanja tu nedosljednost u opisu pokusa.\n2. U objašnjenju: „ni jedna pukotina ili razmak između atoma ne bi mogao proizvesti ogib.” To je previše kategorično: ogib se može pojaviti i kad je valna duljina mnogo manja od karakteristične veličine; tada su učinci vrlo slabo razlučivi ili vrlo malih kutova. Ispravno je zaključiti da ogib loptice na kristalu ne bi bilo moguće opaziti u opisanom pokusu, a ne da se ogib ne može proizvesti.",
+  "greska": null
+ },
+ {
+  "lesson": "B26.03",
+  "dobar": false,
+  "komentar": "U objašnjenju dijela c piše: „Ionizacija je lakša kad elektron bolje ‘drži’ sljedeće stanje, jer je njegova energija bliže nuli.” To je proturječno i fizikalno pogrešno obrazloženje: energija bliža nuli znači da je elektron slabije vezan uz atom, pa ga je lakše ionizirati; ne znači da elektron bolje drži stanje.",
+  "greska": null
+ },
+ {
+  "lesson": "B27.01",
+  "dobar": false,
+  "komentar": "U rezultatima b) piše: „razlikuju se po broju neutrona (\\(A\\) )”. Oznaka \\(A\\) znači maseni broj, a ne broj neutrona; broj neutrona označava se s \\(N\\). Ugljik-12 i ugljik-14 razlikuju se po broju neutrona, odnosno po masenom broju \\(A\\).",
+  "greska": null
+ },
+ {
+  "lesson": "B27.04",
+  "dobar": false,
+  "komentar": "1. U objašnjenju b): „Masa se gotovo ne mijenja jer proton i neutron imaju približno istu masu. Zato A ostaje isti” — zaključak je ispravan, ali razlog nije. Maseni broj A ostaje isti zato što se jedan nukleon (neutron) pretvara u drugi nukleon (proton); približno jednake mase protona i neutrona ne objašnjavaju očuvanje A.\n2. U objašnjenju c): „Fotoni nam govore samo o energiji prijelaza, a ne o identitetu jezgre” — previše je kategorično i netočno. Energije i spektar gama-fotona mogu služiti za prepoznavanje jezgara, iako sam podatak da je detektor zabilježio foton nije dovoljan da se zaključi da se element promijenio. U ovom koraku element se ne mijenja.\n3. U objašnjenju d): „⁽²²⁾Na ima samo 11 neutrona, pa mu treba još jedan neutron” — to nije valjan fizikalni razlog za raspad β⁺. Usporedba s jednim stabilnim izotopom ne određuje sama po sebi ni stabilnost ni način raspada. Za navedeni izotop raspad β⁺ (odnosno i elektronski uhvat) jest moguć, ali tvrdnju da mu ‘treba’ neutron treba zamijeniti objašnjenjem da je jezgra protonski bogata i da se proton može pretvoriti u neutron.",
+  "greska": null
+ },
+ {
+  "lesson": "B27.06",
+  "dobar": false,
+  "komentar": "U objašnjenju a): „Razlika mase iz zadatka završila je kao kinetička energija produkata fisije i neutrona” — nije nužno sva oslobođena energija odmah kinetička energija tih čestica; dio se može osloboditi kao gama-zračenje, a dio energije nastaje i naknadnim radioaktivnim raspadima produkata fisije.\nU objašnjenju c): „Gorivo težine manje od dva kilograma” — kilogram je jedinica mase, a ne težine; trebalo bi reći „gorivo mase manje od dva kilograma”.",
+  "greska": null
+ },
+ {
+  "lesson": "B28.03",
+  "dobar": false,
+  "komentar": "U d), pitanje „Koje dvije mjere bi učenik najbolje kombinirao” nema jedan jasan odgovor: nisu zadane ograničenja ni uvjeti koji bi opravdali odabir baš skraćivanja vremena i olovnog zastora umjesto povećanja udaljenosti. Objašnjenje kaže da je udaljenost korisna, ali je odbacuje jer učenik „mora raditi uz izvor”; takvo ograničenje nije navedeno u zadatku. Potrebno je dodati uvjet ili prihvatiti više mogućih kombinacija.",
+  "greska": null
+ },
+ {
+  "lesson": "B29.03",
+  "dobar": false,
+  "komentar": "U podzadatku d) piše: „Na postaji sat izmjeri 4 h između istih dvaju događaja iz c).” To proturječi podzadatku c), u kojemu je za iste događaje već navedeno da sat na postaji izmjeri 2,5 h. Objašnjenje i rezultati d) računaju kao da je riječ o drugom slučaju, a ne o istim događajima iz c).",
+  "greska": null
+ },
+ {
+  "lesson": "B30.01",
+  "dobar": false,
+  "komentar": "U objašnjenju, citat: „Teleskop vidi samo ono što zrači svjetlost“. To je netočno: teleskopi mogu opažati i svjetlost koju tijelo reflektira, a ne samo svjetlost koju ono samo zrači.\nU zadatku i objašnjenju, citat: „Astronomi znaju da su se galaksije u prošlosti udaljavale brže nego danas, jer je gravitacija tada usporavala širenje.“ To je izrečeno kao opća činjenica, ali je netočno za svemir danas: njegovo se širenje ubrzava, što se pripisuje tamnoj energiji. Tvrdnja da je gravitacija usporavala širenje odnosi se na raniju fazu svemira, a ne na cijelu prošlost do danas.",
+  "greska": null
+ },
+ {
+  "lesson": "B30.05",
+  "dobar": false,
+  "komentar": "U zadatku: „Gravitacija pod vlastitom težinom počne stezati njegove dijelove.” U objašnjenju: „što je oblak sabijeniji, to ga njegova vlastita težina sabija još jače.” Težina nije gravitacijska sila kojom oblak privlači sam sebe; težina je sila kojom tijelo djeluje na podlogu ili ovjes. Ovdje treba reći da oblak steže vlastita gravitacija odnosno gravitacijska sila.",
+  "greska": null
+ },
+ {
+  "lesson": "B31.04",
+  "dobar": false,
+  "komentar": "U podzadatku c piše „Ne računaj brojeve”, ali objašnjenje ipak uvrštava brojčane vrijednosti i računa put kočenja: „Kad uvrstimo 144 km/h = 40 m/s, dobivamo s = 4 · 40 m = 160 m”. To ne slijedi uputu podzadatka, koji traži samo odnos putova.",
+  "greska": null
+ }
+]

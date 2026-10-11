@@ -71,3 +71,15 @@ Ocjena zadataka (prije ikakvog ispravka): **20 ✅ točnih, 20 ⚠️ s manjom g
 - **Nakon ispravaka prema Luni** (procjena): ~33 potpuno točna, ~14 s manjom zaostalom nejasnoćom, ~1–2 s ozbiljnom (B04.01 težina vs sila teža; eventualno B30.01).
 - **Sustavno:** 12 zadataka nema ili ima prazan odjeljak „✅ Rezultati“ — to se može provjeriti kodom, besplatno.
 - **Trošak Lune:** 0,028 $ za 49 provjera = **0,057 c po provjeri** (Sol ≈ 0,88 c, 15× skuplji).
+
+## Luna s popisom što tražiti (REVIEW_SYS_V2, `luna_review_v2.py`)
+
+| | Luna v1 (općenito) | Luna v2, prolaz 1 | Luna v2, prolaz 2 (drugi seed) |
+|---|---|---|---|
+| ❌ ozbiljne uhvaćene | 9/9 | 8/9 (propustila B25.02) | 9/9 |
+| ⚠️ manje uhvaćene | 14/20 (10 s pravim razlogom) | 20/20 (19 s pravim razlogom) | 19/20 |
+| ✅ točni odbijeni | 9/20 | 11/20 (5 od toga nađe stvarnu sitnicu koju sam ja propustio) | 15/20 |
+| Netočna tvrdnja recenzenta | Hubble (B30.01) | nijedna očita | — |
+
+Svih 6 sitnih grešaka koje je v1 propustila v2 sada hvata (kamenje, „26 N? Ne“, „r = 4R ? To nije točno“, „u knjižici… nema je u knjižici“, CU², 600 nm). Nove stvarne sitnice koje je v2 našla, a ja nisam: B20.03 (amplituda 0,5 mm nespojiva sa snagom 2 W), B27.01 (A umjesto N), B30.05 („vlastita težina“ oblaka), B31.04 („ne računaj brojeve“, a objašnjenje računa), B23.01 (600 nm).
+Cijena: ~0,07 c po provjeri.
