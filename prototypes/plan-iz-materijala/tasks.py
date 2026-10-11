@@ -371,20 +371,30 @@ REVIEW_Q = {
     "cinjenice": {"type": "noul", "instructions": "Jesu li sve činjenice u tekstu zadatka točne (boje i valne duljine svjetlosti, svojstva tvari, realne vrijednosti, smislene rečenice)?"},
 }
 REVIEW_TH = 0.8
-FALLBACK = "xiaomi/mimo-v2.6-pro"
+FALLBACK = "anthropic/claude-haiku-5.5"  # isti model, ali reasoning effort xhigh (Haiku po defaultu radi s medium)
 
 
-def write_one(lid, model, step):
+def write_one(lid, model, step, effort=None):
+    try:
+        return _write_one(lid, model, step, effort)
+    except Exception as e:  # jedna pokvarena lekcija ne smije srušiti cijeli test
+        return {"lesson": lid, "naziv": "", "model": model, "greska": str(e)[:300], "zadatak": "", "objasnjenje": "", "rezultati": {}}
+
+
+def _write_one(lid, model, step, effort=None):
     l, ctx = lesson_ctx(lid)
     ctx = ctx.replace(P.formula_sheet(), formula_sheet_pages())
     v = P.chat(step, model, "Pišeš zadatak za MatMat, aplikaciju za učenje fizike za državnu maturu.\n"
         + DESIGN_V2 + '\nVrati JSON {"zadatak":"markdown teksta zadatka","objasnjenje":"markdown objašnjenja",'
         '"rezultati":{"a":"konačan odgovor","b":"…"}}. U rezultatima za računske podzadatke broj s jedinicom, '
-        'za ostale jedna rečenica.', ctx, max_tokens=24000)
+        'za ostale jedna rečenica.', ctx, max_tokens=64000 if effort else 24000,
+        reasoning=effort)
     return {"lesson": lid, "naziv": l["naziv"], "model": model, **v}
 
 
 def check_one(v):
+    if v.get("greska"):
+        return {"katex": [], "recenzija": {k: 0 for k in REVIEW_Q}, "prosao": False, "greska": v["greska"]}
     errs = katex_errors([v["zadatak"] + "\n\n" + v["objasnjenje"]])[0]
     a = P.decide("task-review", {"zadatak": v["zadatak"][:8000], "rezultati": v.get("rezultati", {})}, REVIEW_Q)
     scores = {k: round(a[k]["noul"], 2) for k in REVIEW_Q}
@@ -400,9 +410,9 @@ def step_test50():
         h["provjera"] = check_one(h)
         out = {"lesson": lid, "naziv": h["naziv"], "haiku": h}
         if not h["provjera"]["prosao"]:
-            m = write_one(lid, FALLBACK, "t50-mimo")
+            m = write_one(lid, FALLBACK, "t50-xhigh", effort="xhigh")
             m["provjera"] = check_one(m)
-            out["mimo"] = m
+            out["xhigh"] = m
         return out
 
     res = P.pmap(one, lids, workers=4)
@@ -412,13 +422,13 @@ def step_test50():
         r = json.loads(line)
         if r["step"].startswith("t50-") or r["step"] == "task-review":
             costs[r["step"]] = costs.get(r["step"], 0) + (r["usage"].get("cost") or 0)
-    fb = [r for r in res if "mimo" in r]
-    print(f"Haiku prošao: {50 - len(fb)}/50; MiMo pisao {len(fb)}, od toga prošao {sum(r['mimo']['provjera']['prosao'] for r in fb)}")
+    fb = [r for r in res if "xhigh" in r]
+    print(f"Haiku (medium) prošao: {50 - len(fb)}/50; Haiku xhigh pisao {len(fb)}, od toga prošao {sum(r['xhigh']['provjera']['prosao'] for r in fb)}")
     print("KaTeX greške kod Haikua:", sum(bool(r['haiku']['provjera']['katex']) for r in res))
     print("Trošak:", {k: round(v, 3) for k, v in costs.items()})
     cards = []
     for r in res:
-        for key in ("haiku", "mimo"):
+        for key in ("haiku", "xhigh"):
             if key not in r: continue
             v = r[key]; pv = v["provjera"]
             flags = [("✅ prošao" if pv["prosao"] else "❌ nije prošao") + f" · recenzija {pv['recenzija']}"]
