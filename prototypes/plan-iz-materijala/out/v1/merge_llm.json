@@ -1,0 +1,14 @@
+{
+ "spajanja": [
+  {
+   "zadrzi": "E05",
+   "spoji": [
+    "E06"
+   ],
+   "novi_naziv": "Struja, otpor, Ohmov zakon, snaga struje i spajanje trošila",
+   "novi_koncept": "Struja I = Q/t teče pod naponom kroz vodič otpora R (I = U/R, R = ρl/S), a izvor predaje energiju trošilu snagom P = UI = I²R = U²/R. U serijskom spoju kroz sve teče ista struja, a napon se dijeli (R = R1 + R2). U paralelnom je napon isti, a struja se dijeli (1/R = 1/R1 + 1/R2).",
+   "razlog": "Pravila serijskog i paralelnog spoja nisu nova ideja. Slijede iz Ohmova zakona uz očuvanje naboja u čvoru i energije (napona) u petlji, a oba su već poznata iz E01 i E03. Učenik koji ne zna Ohmov zakon ne može ni zbrajati otpore. Spojevi su samo primjena iste veze U = IR na više trošila, odnosno novi kontekst, pa to nije zasebna lekcija."
+  }
+ ],
+ "brisanja": []
+}

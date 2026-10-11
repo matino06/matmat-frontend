@@ -214,18 +214,32 @@ def step_scope():
 
 # ---------------------------------------------------------------- 4. nacrt plana
 
+def formula_sheet():
+    pages = load("pages.json")
+    t = "\n\n".join(p["text"] for p in pages if p["file"] == "FIZ-T-D.pdf")
+    return f"MATERIJAL DOSTUPAN NA ISPITU (knjižica formula):\n{t}"
+
 RULES = """PRAVILA PLANA (strogo):
-1. Lekcija = točno JEDAN novi koncept: ideja koju učenik ne može izvesti iz ranijih lekcija i predznanja.
-2. Novi tip zadatka, novi kontekst (npr. ista formula na srcu umjesto na satu), obrat formule
-   (računanje druge veličine iz iste formule), ili posebni slučaj NISU razlog za novu lekciju.
-3. Alat (jedinice, vektori, preuređivanje formule, čitanje grafa) nema svoju lekciju; uči se u
-   lekciji u kojoj prvi put zatreba.
-4. Test spajanja: ako učenik koji ne zna A sigurno ne zna ni B, i obratno, A i B su JEDNA lekcija.
-5. Pravilo nulte pretpostavke: lekcija koristi samo koncepte iz svojih preduvjeta (tranzitivno)
-   ili iz popisa pretpostavljenog predznanja.
-6. Pokrij SVE što se traži u katalogu (razrada) i na ispitima. Ništa izvan toga.
-7. Cilj je NAJMANJI broj lekcija koji to postiže. LLM-ovi sustavno rade previše lekcija;
-   prije odgovora prođi popis i spoji sve što pada na testu 4."""
+1. Lekcija je MALI ZALOGAJ: učenik je nauči iz JEDNOG zadatka (moguće s podzadacima a, b, c) i
+   njegovog laičkog objašnjenja. Lekcija nema uvodni tekst; uči se samo kroz taj zadatak.
+2. Lekcija uvodi NAJVIŠE JEDNU novu ideju: novu veličinu, novi zakon ili definiciju koja se ne
+   može izvesti iz ranijih lekcija (npr. trenje μN, Hookeov zakon, Kelvinova ljestvica, mol su
+   zasebne ideje, a ne „primjene F = ma“). U pravilu najviše jedna nova formula.
+3. Ako je ideja složena ili je zadatak s njom naporan, podijeli je na DVIJE lekcije:
+   osnovna (lagan zadatak s tom idejom) → složenija (teži zadatak; preduvjet joj je osnovna).
+   Primjer: „Kondenzator“ i „Kondenzator s dielektrikom“ su dvije lekcije.
+4. NE radi novu lekciju za: istu ideju u drugom kontekstu (dilatacija vremena na satu i na srcu
+   je ista lekcija), obrat iste formule, isti zadatak s drugim brojevima.
+5. Alat (vektori, jedinice, preuređivanje formule, čitanje grafa) uči se u lekciji u kojoj prvi
+   put zatreba; ako je alat sam po sebi nova ideja (npr. vektor), dobiva svoju malu lekciju.
+6. Pravilo nulte pretpostavke: lekcija koristi samo ideje iz svojih preduvjeta (tranzitivno) i
+   pretpostavljenog predznanja. Predznanje je SAMO osnovnoškolska matematika; nikakvo znanje
+   fizike (ni osnovnoškolske) se ne pretpostavlja.
+7. Materijal dostupan na ispitu (knjižica formula s konstantama i formulama): konstante i
+   tablične vrijednosti iz nje učenik ne pamti i za njih ne treba lekcija, ali značenje svake
+   veličine i kada se formula koristi traže lekciju.
+8. Pokrij SVE što se traži u katalogu (razrada) i na ispitima, ništa izvan toga. Nema lekcija
+   bez fizikalnog sadržaja (strategija ispita, kalkulator i sl.)."""
 
 
 def step_draft():
@@ -236,10 +250,11 @@ def step_draft():
         "Ti si iskusan nastavnik fizike koji radi plan učenja za državnu maturu.\n" + RULES +
         '\nVrati JSON {"predznanje":["…"],"blokovi":[{"id":"M","naziv":"…"}],'
         '"lekcije":[{"id":"M01","blok":"M","naziv":"…","koncept":"jedna rečenica: nova ideja",'
-        '"zasto_nova":"što se ne može izvesti iz preduvjeta","preduvjeti":["M00"],"ishodi":["oznaka"]}]}. '
+        '"zasto_nova":"što se ne može izvesti iz preduvjeta","zadatak":"jedna rečenica: koji jedan zadatak uči ovu lekciju",'
+        '"tezina":"osnovna|slozenija","preduvjeti":["M00"],"ishodi":["oznaka"]}]}. '
         "Lekcije poredaj tako da preduvjeti uvijek dolaze prije.",
         f"KATALOG (ishodi s razradom):\n{json.dumps(ishodi, ensure_ascii=False)}\n\n"
-        f"ZADACI SA ŠEST ROKOVA:\n{zad}", max_tokens=48000, reasoning="high")
+        f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}", max_tokens=64000, reasoning="high")
     save("plan_draft.json", plan)
     print(f"Nacrt: {len(plan['lekcije'])} lekcija, {len(plan['predznanje'])} stavki predznanja")
 
@@ -265,8 +280,9 @@ def step_merge():
         ans = decide("merge-jev", {"lekcija_A": desc(a), "lekcija_B": desc(b),
                                    "preduvjeti_od_B": [desc(L[p]) for p in b["preduvjeti"] if p in L]},
             {"nova_ideja": {"type": "noul", "instructions":
-                "Uvodi li lekcija B novu fizikalnu ideju koju učenik NE može izvesti iz lekcije A i "
-                "preduvjeta od B? (Novi kontekst, obrat formule ili posebni slučaj NE računaju se kao nova ideja.)"}})
+                "Uvodi li lekcija B novu fizikalnu ideju ili bitno teži korak koji učenik NE može izvesti iz "
+                "lekcije A i preduvjeta od B? (Novi kontekst, obrat formule ili isti zadatak s drugim brojevima "
+                "NE računaju se.)"}})
         return {"A": pair[0], "B": pair[1], "p_nova": ans["nova_ideja"]["noul"]}
 
     jev = pmap(one, sorted(pairs), workers=8)
@@ -275,7 +291,8 @@ def step_merge():
 
     critic = chat("merge-llm", M_PLAN,
         "Pregledavaš nacrt plana učenja i SPAJAŠ lekcije koje nisu zaseban koncept.\n" + RULES +
-        "\nModel odluke je označio parove kod kojih B vjerojatno NE uvodi novu ideju (p_nova<0.5); "
+        "\nPazi: lekcije moraju ostati mali zalogaji. Spoji samo ako spojena lekcija i dalje uvodi najviše jednu "
+        "novu ideju i uči se jednim zadatkom.\nModel odluke je označio parove kod kojih B vjerojatno NE uvodi novu ideju (p_nova<0.5); "
         "to je samo pomoć, odluči sam za svaki par, a provjeri i ostale lekcije.\n"
         'Vrati JSON {"spajanja":[{"zadrzi":"id","spoji":["id"],"novi_naziv":"…","novi_koncept":"…","razlog":"…"}],'
         '"brisanja":[{"id":"…","razlog":"…"}]}',
@@ -329,9 +346,10 @@ def step_coverage():
                       for i, x in enumerate(batch))
         return chat("coverage", M_CHEAP,
             "Za svaki zadatak s ispita navedi koje lekcije plana učenik mora proći da ga riješi, "
-            "i je li za njega potrebno nešto što NIJE ni u jednoj lekciji ni u predznanju. Vrati JSON "
+            "i je li za njega potrebno nešto što NIJE ni u jednoj lekciji ni u predznanju. Konstante i formule iz "
+            "knjižice formula su dostupne na ispitu i ne računaju se kao nedostatak. Vrati JSON "
             '{"zadaci":[{"i":0,"lekcije":["id"],"nedostaje":"" }]}  (nedostaje prazno ako ništa)',
-            f"PREDZNANJE: {plan['predznanje']}\n\nLEKCIJE:\n{lek}\n\nZADACI:\n{z}", max_tokens=8000)["zadaci"]
+            f"PREDZNANJE: {plan['predznanje']}\n\n{formula_sheet()}\n\nLEKCIJE:\n{lek}\n\nZADACI:\n{z}", max_tokens=8000)["zadaci"]
 
     res = []
     for batch, out in zip(batches, pmap(one, batches, workers=6)):
@@ -364,9 +382,10 @@ def step_assumptions():
         pre = [f"{L[p]['naziv']}: {L[p]['koncept']}" for p in sorted(closure(l["id"]))]
         return {"id": l["id"], **chat("assume", M_CHEAP,
             "Provjeri pravilo nulte pretpostavke: smije li se ova lekcija naučiti samo uz navedene "
-            "ranije lekcije i predznanje? Vrati JSON "
+            "ranije lekcije i predznanje? Ideja koju lekcija SAMA uvodi (njezin koncept) je dopuštena i NIJE "
+            "nedostatak. Nedostatak je samo ono što lekcija koristi kao već poznato, a nije uvedeno ranije. Vrati JSON "
             '{"ok":true,"nedostaje":["koncept koji lekcija koristi, a nije ni u preduvjetima ni u predznanju"]}',
-            f"LEKCIJA: {l['naziv']}: {l['koncept']}\n\nRANIJE LEKCIJE (preduvjeti, tranzitivno):\n"
+            f"LEKCIJA: {l['naziv']}\nNOVA IDEJA LEKCIJE: {l['koncept']}\nZADATAK: {l.get('zadatak', '')}\n\nRANIJE LEKCIJE (preduvjeti, tranzitivno):\n"
             + "\n".join(pre) + f"\n\nPREDZNANJE: {plan['predznanje']}", max_tokens=2000)}
 
     res = pmap(one, plan["lekcije"], workers=8)
@@ -379,7 +398,7 @@ def step_assumptions():
 def manual_plan():
     out = []
     for f in sorted(MANUAL_PLAN.glob("*.md")):
-        if f.name.startswith("_"): continue
+        if f.name.startswith("_") or f.name.startswith("Z01"): continue  # Z01 nikad nije bio na MatMatu
         t = f.read_text()
         learn = re.search(r"## Što ćeš naučiti\n(.*?)\n## ", t, re.S)
         out.append({"id": f.stem.split(" - ")[0], "naziv": f.stem.split(" - ", 1)[-1],
@@ -432,7 +451,8 @@ def step_report():
             if l["id"] in bad: flags.append("⚠️ nulta pretpostavka: " + "; ".join(bad[l["id"]]))
             md += [f"**{l['id']} {l['naziv']}** · zadataka s ispita: {used.get(l['id'], 0)}"
                    + (f" · spojeno iz {', '.join(l['spojeno_iz'])}" if l.get("spojeno_iz") else ""),
-                   f"- Koncept: {l['koncept']}", f"- Zašto nova: {l['zasto_nova']}",
+                   f"- Koncept: {l['koncept']}", f"- Zadatak: {l.get('zadatak', '')} ({l.get('tezina', '')})",
+                   f"- Zašto nova: {l['zasto_nova']}",
                    f"- Preduvjeti: {', '.join(l['preduvjeti']) or '—'}"] + [f"- {f}" for f in flags] + [""]
     (OUT / "plan.md").write_text("\n".join(md))
 
