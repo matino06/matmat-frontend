@@ -224,10 +224,10 @@ RULES = """PRAVILA PLANA (strogo):
    njegovog laičkog objašnjenja. Lekcija nema uvodni tekst; uči se samo kroz taj zadatak.
 2. Lekcija uvodi NAJVIŠE JEDNU novu ideju: novu veličinu, novi zakon ili definiciju koja se ne
    može izvesti iz ranijih lekcija (npr. trenje μN, Hookeov zakon, Kelvinova ljestvica, mol su
-   zasebne ideje, a ne „primjene F = ma“). U pravilu najviše jedna nova formula.
-3. Ako je ideja složena ili je zadatak s njom naporan, podijeli je na DVIJE lekcije:
-   osnovna (lagan zadatak s tom idejom) → složenija (teži zadatak; preduvjet joj je osnovna).
-   Primjer: „Kondenzator“ i „Kondenzator s dielektrikom“ su dvije lekcije.
+   zasebne ideje, a ne „primjene F = ma“). Veličinu lekcije odmjeri prema primjerima na kraju.
+3. IZNIMNO, samo ako je ideja stvarno teška I ispiti traže njezinu težu uporabu, podijeli je na
+   dvije lekcije: osnovna (lagan zadatak) → složenija (teži zadatak; preduvjet joj je osnovna).
+   Većina ideja je JEDNA lekcija. Ne dijeli svaku ideju na dvije.
 4. NE radi novu lekciju za: istu ideju u drugom kontekstu (dilatacija vremena na satu i na srcu
    je ista lekcija), obrat iste formule, isti zadatak s drugim brojevima.
 5. Alat (vektori, jedinice, preuređivanje formule, čitanje grafa) uči se u lekciji u kojoj prvi
@@ -242,6 +242,21 @@ RULES = """PRAVILA PLANA (strogo):
    bez fizikalnog sadržaja (strategija ispita, kalkulator i sl.)."""
 
 
+ANCHORS = ["E05", "E08", "E08b", "E09", "E10", "E11", "E16", "E17"]
+
+
+def anchors():
+    out = []
+    for f in sorted(MANUAL_PLAN.glob("*.md")):
+        if f.stem.split(" - ")[0] not in ANCHORS: continue
+        t = f.read_text()
+        learn = re.search(r"## Što ćeš naučiti\n(.*?)\n## ", t, re.S)
+        task = re.search(r"## Primjer zadatka\n(.*?)\n## ", t, re.S)
+        out.append(f"### {f.stem}\nUči:\n{learn.group(1).strip() if learn else ''}\nZadatak:\n{task.group(1).strip() if task else ''}")
+    return ("PRIMJERI DOBRO ODMJERENIH LEKCIJA (iz jednog dijela gradiva; kalibriraj VELIČINU svojih lekcija "
+            "prema njima, ne kopiraj ih):\n\n" + "\n\n".join(out))
+
+
 def step_draft():
     ishodi, zadaci = load("ishodi.json"), load("zadaci.json")
     zad = "\n".join(f"- [{z['rok']} {z['broj']}] {z['sazetak']} | treba: {', '.join(z.get('potrebno_znanje', []))}"
@@ -254,7 +269,7 @@ def step_draft():
         '"tezina":"osnovna|slozenija","preduvjeti":["M00"],"ishodi":["oznaka"]}]}. '
         "Lekcije poredaj tako da preduvjeti uvijek dolaze prije.",
         f"KATALOG (ishodi s razradom):\n{json.dumps(ishodi, ensure_ascii=False)}\n\n"
-        f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}", max_tokens=64000, reasoning="high")
+        f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}\n\n{anchors()}", max_tokens=64000, reasoning="high")
     save("plan_draft.json", plan)
     print(f"Nacrt: {len(plan['lekcije'])} lekcija, {len(plan['predznanje'])} stavki predznanja")
 
