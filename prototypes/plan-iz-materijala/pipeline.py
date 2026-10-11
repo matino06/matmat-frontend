@@ -97,8 +97,8 @@ def chat(step, model, system, user, json_out=True, max_tokens=16000, reasoning=N
         return chat(step, model, system, user, json_out, max_tokens, reasoning, _try + 1)
 
 
-def decide(step, state, questions):
-    body = {"model": M_DECIDE, "state": state, "questions": questions}
+def decide(step, state, questions, model=None):
+    body = {"model": model or M_DECIDE, "state": state, "questions": questions}
     return _cached(step, body, lambda: _post("https://openrouter.ai/api/alpha/decisions", body))["answers"]
 
 
