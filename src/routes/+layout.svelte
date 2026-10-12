@@ -1,6 +1,7 @@
 <script>
   import "../app.css";
   import { page } from '$app/state';
+  import { dev } from "$app/environment";
   import { afterNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
@@ -97,6 +98,8 @@
   });
 
   $effect(() => {
+    // PROTOTIP: /prototype-* radi i bez prijave u dev modu (samo na grani prototype/napredak-izrade)
+    if (dev && path.startsWith("/prototype-")) return;
     if (!userData.loading && !userData.user && !isLanding) {
       goto("/");
     }
@@ -141,7 +144,7 @@
 </div>
 
 <!-- Loading -->
-{#if userData.loading}
+{#if userData.loading && !(dev && path.startsWith("/prototype-"))}
   <LoadingOverlay title="Učitavanje MatMat-a" message="Pripremamo tvoje personalizirano iskustvo učenja"/>
 {/if}
 
@@ -205,6 +208,10 @@
             <span style="color:var(--text-faint)">Admin</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>AI postavke</b>
+          {:else if path === '/prototype-napredak'}
+            <span style="color:var(--text-faint)">Vlastiti predmet</span>
+            <span style="color:var(--text-faint); margin: 0 6px">/</span>
+            <b>Izrada (PROTOTIP)</b>
           {:else}
             <b>MatMat</b>
           {/if}
@@ -260,6 +267,9 @@
     </Panel>
   </div>
 
+{:else if dev && path.startsWith("/prototype-")}
+  <!-- PROTOTIP: bez prijave samo stranica, bez sidebara -->
+  {@render children?.()}
 {/if}
 
 <style>
