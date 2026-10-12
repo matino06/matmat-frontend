@@ -304,3 +304,25 @@ Isti predlošci i isti prompt kao Haiku medium po predlošku. **0,31 c po varija
 | GLM 5.3 Flash | 2 / 28 | ~7 / 28 (+ jezik) | 2 / 30 | 0,31 c |
 
 Obje ozbiljne GLM greške su iste vrste kao Haikuova: rečenica koja ovisi o promijenjenom podatku. GLM je u B07.04 mijenjao središnje tijelo (Jupiter, Mars, Saturn), što je veća promjena od „brojeva i sitnica“ i upravo je dovelo do izmišljene tvrdnje o knjižici.
+
+## Sonnet 5.5 (medium) u jednom pozivu piše sve 4 varijacije — preko Claude pretplate (podagenti Claude Codea)
+
+Isti prompt kao Sol/Luna Pro/GLM (`sonnet_in/<lekcija>.md`), 10 podagenata (model sonnet, effort medium), izlaz u `out/sonnet4/`. Bez API troška; točan broj tokena se ne vidi.
+- Trajanje 119–391 s po lekciji (B07.04 najdulje); „subagent_tokens“ 55,9–96,3 k (uključuje sistemski prompt Claude Codea i alate, pa nije usporedivo s API-jem).
+- Procjena (`sonnet4_eval.py`, omjer znakova/tokena iz Haiku poziva): ulaz ~10,1 k, izlaz bez razmišljanja ~16,4 k tokena po lekciji → **≥ 18,4 c po lekciji** (Sonnet 2 $ / 10 $ po M); s razmišljanjem vjerojatno ~22–28 c, tj. ~5,5–7 c po varijaciji, ~30–38 $ za 135 lekcija × 4.
+- Provjere kodom: 0 grešaka (KaTeX, Rezultati, LaTeX izvan formula, strani jezik, duljina).
+
+**Računi: 40/40 točni** (sve ručno preračunato, uključujući stvarne podatke: GPS, ISS, Hubble, perihel/afel Marsa, Merkura, Jupitera).
+
+**Ozbiljne greške: 0.** Sve rečenice ovisne o brojevima ispravno prilagođene (omjeri, postotci, „km/h“ usporedbe, provjere trećim Keplerovim zakonom, tko se još diže/pada u trenutku susreta). Težina/sila teža ispravno razlikovane (B04.01 izbjegava „težinu“ i točno objašnjava parove).
+
+**Male greške (~5):** B01.01 (sve 4): u c) osoba „sjedi na klupi“ u trenutku 40 s, a d) kaže da je u t = 0 ustala i krenula — vremenski proturječno; B06.01 v3: osoba „stoji na rubu“ platforme s centripetalnom akceleracijom ~1,3 g (nerealno), v1: „22,6 km/h sasvim realno za vrtuljak“ (upitno); B03.02 v1: jedna nespretna rečenica; B01.05 v2: „teniski loptu“.
+
+Objašnjenja su duga (~16 k tokena izlaza po lekciji, više od Sola i Haikua po predlošku) i najbliža DESIGN_V2 stilu od svih testiranih modela; zadaci su realistični i raznoliki (dron, sanjke, skijaši, Merkur/Mars/Jupiter).
+
+| Na istih 10 lekcija | Ozbiljne | Male | Po lekciji (4 var.) |
+|---|---|---|---|
+| Haiku xhigh 1. + Haiku medium po predlošku | 0 + 1 / 40 | ~13 / 40 | 4,83 c |
+| Sol low, sve 4 | 0 / 40 | 2 / 40 | 10,95 c |
+| **Sonnet 5.5 medium, sve 4** | **0 / 40** | **~5 / 40** | **≥ 18,4 c (procjena ~22–28 c)** |
+| Luna Pro / GLM 5.3 Flash sami | 10 / 9 | — | 1,32 c / 0,68 c |
