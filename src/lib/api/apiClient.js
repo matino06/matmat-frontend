@@ -1,11 +1,14 @@
 import { getAuth0Client } from "$lib/config/auth0-config";
 import { isSessionExpiredError, notifySessionExpired } from "$lib/auth/session";
 
+// Za lokalno testiranje grane: VITE_API_URL=http://localhost:8080/api pnpm run dev
+const API_BASE = import.meta.env.VITE_API_URL ?? "https://api.matmat.online/api";
+
 // options.handleUnauthorized — set to false for calls where a 401 is part of the
 // normal flow (account bootstrap during sign-in) and must not log the user out.
 export async function apiClient(path, init = {}, options = {}) {
   const { handleUnauthorized = true } = options;
-  const url = "https://api.matmat.online/api" + path;
+  const url = API_BASE + path;
   const fetchInit = {
     ...init,
     headers: {
