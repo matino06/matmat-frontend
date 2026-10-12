@@ -11,6 +11,7 @@ Lekcija **bez novog koncepta**. Uči primijeniti već naučene koncepte na jedno
 - **obrnuto**: zadan je rezultat, a traži se ulazni podatak;
 - **graf**: čitanje ili crtanje grafa i zaključivanje iz njega;
 - **zamka**: tip zadatka u kojem učenici tipično griješe;
+- **omjer**: koliko se puta nešto promijeni kad se promijeni drugo (npr. dvostruka brzina → četiri puta veća kinetička energija);
 - **miješana**: na kraju područja, spaja više cjelina kao zadatak na testu.
 
 ## Pravila
@@ -28,7 +29,7 @@ Isključivo JSON:
 {"lekcije_primjene":[
   {"naziv":"kratak naziv tipa zadatka",
    "cjelina":"naziv cjeline (ili 'miješana: <područje>')",
-   "tip":"kombinacija|nova situacija|obrnuto|graf|zamka|miješana",
+   "tip":"kombinacija|nova situacija|obrnuto|graf|zamka|omjer|miješana",
    "koristi":["id lekcija koncepata"],
    "iza":"id lekcije iza koje dolazi",
    "opis":"jedna rečenica: koji tip zadatka uči",
