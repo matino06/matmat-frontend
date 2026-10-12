@@ -102,3 +102,11 @@ Ručna provjera završnih verzija (razlike u `out/loop_luna_diff.txt`):
 - Lunin status na kraju: 32 „prošao“, 17 „nije prošao“. Od 17 „nije prošao“ većina je sitničavost koja se vrti u krug (npr. F = kx vs −kx, položaj detektora, kozmologija), a 2 su stvarne (B02.02, B08.05).
 - Haiku je ispravno **odbio** netočne primjedbe (g iz knjižice, „tisuće tona ugljena“, kartezijanski plovak otvoren na dnu).
 - Trošak petlje: 0,46 $ za 49 = 0,94 c po varijaciji + pisanje ~0,83 c → **~1,8 c po varijaciji**.
+
+## Ispravci MiMo v2.6 Pro (bez razmišljanja) umjesto Haikua (`loop_mimo.py`)
+
+- 74 ispravka, 0 odrezanih, 0 tokena razmišljanja, max izlaz 5 423 tokena; **0,67 c po ispravku** (Haiku ~0,46 c).
+- Lunin status na kraju: 29/49 prošlo (Haiku: 32/49).
+- Bolje od Haikua: B02.02 („I. Newtonov zakon ne vrijedi“ — MiMo ispravio, Haiku nije).
+- Lošije: nove greške — B25.05 („W = qU < 0“ za elektron koji se ubrzava), B19.07 („u svakom trenutku vrijedi E = ½kA²“ uz prigušenje), B08.02 (dodana besmislena rečenica „čini se da bi dubina trebala biti veća od 12 m jer jezero ima dno“), B07.04 (eliptičnu orbitu zamijenio kružnom — nestao Keplerov 2. zakon, a u objašnjenje procurio tekst „stavka iz preduvjeta“), B23.01 (ponovno „crveni laser“ za 600 nm), B10.03 (proturječje o knjižici nije ispravio ni u 2 kruga).
+- B25.02 (f = 4·10¹⁴ Hz) i ovdje promašen — Luna ga nije prijavila.

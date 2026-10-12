@@ -47,7 +47,7 @@ def _post(url, body):
         "X-Title": "MatMat prototip plana"})
     for attempt in range(6):
         try:
-            with urllib.request.urlopen(req, timeout=600, context=SSL) as r:
+            with urllib.request.urlopen(req, timeout=int(os.environ.get('HTTP_TIMEOUT', 600)), context=SSL) as r:
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
             msg = e.read().decode()[:500]
