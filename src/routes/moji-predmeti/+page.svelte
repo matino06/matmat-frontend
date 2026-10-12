@@ -1,8 +1,19 @@
 <script>
+  import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { apiClient } from "$lib/api/apiClient";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte";
   import { ownCourses, SUBJECTS, LEVELS, STATUS_LABELS, courseBadge, courseHue } from "$lib/store/ownCourses.svelte";
+
+  // Mjesečna kvota izrade: kreator vidi samo postotak i dan obnove, ne dolare.
+  let quota = $state(null);
+  onMount(async () => {
+    try {
+      const res = await apiClient("/own-courses/quota", { method: "GET" });
+      if (res.ok) quota = await res.json();
+    } catch {}
+  });
+  const formatDate = (iso) => new Date(iso).toLocaleDateString("hr-HR", { day: "numeric", month: "long" });
 
   const subjectLabel = (id) => SUBJECTS.find((s) => s.id === id)?.label ?? id;
   const levelLabel = (id) => LEVELS.find((l) => l.id === id)?.label ?? id;
@@ -51,6 +62,21 @@
       <button class="btn btn-primary" onclick={() => goto("/moji-predmeti/novi")}>+ Novi predmet</button>
     {/if}
   </div>
+
+  {#if quota && ownCourses.isCreator}
+    <div class="card quota" class:warn={quota.usedPercent >= 80 && quota.usedPercent < 100} class:full={quota.usedPercent >= 100}>
+      <div class="quota-row">
+        <span>Iskorišteno <b>{quota.usedPercent} %</b> ovog mjeseca</span>
+        <span class="muted small">Obnavlja se {formatDate(quota.resetsOn)}</span>
+      </div>
+      <div class="quota-bar"><span style="width:{quota.usedPercent}%"></span></div>
+      {#if quota.usedPercent >= 100}
+        <div class="small">Kvota za ovaj mjesec je potrošena. Izrada novih predmeta nastavlja se {formatDate(quota.resetsOn)}; učenje radi normalno.</div>
+      {:else if quota.usedPercent >= 80}
+        <div class="small">Kvota je skoro potrošena.</div>
+      {/if}
+    </div>
+  {/if}
 
   {#if !ownCourses.loaded}
     <div class="card card-pad muted">Učitavanje…</div>
@@ -105,6 +131,14 @@
 
 <style>
   .muted { color: var(--text-dim); }
+  .quota { padding: 14px 16px; margin-bottom: 16px; display: grid; gap: 8px; font-size: 13.5px; }
+  .quota-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .quota-bar { height: 6px; border-radius: 999px; background: var(--bg-elev-2); overflow: hidden; }
+  .quota-bar span { display: block; height: 100%; background: var(--primary); transition: width 0.4s; }
+  .quota.warn .quota-bar span { background: var(--warn); }
+  .quota.warn .small { color: var(--warn); }
+  .quota.full .quota-bar span { background: var(--danger); }
+  .quota.full .small { color: var(--danger); }
   .small { font-size: 12.5px; }
   .empty { display: grid; gap: 10px; justify-items: start; }
   .list { display: grid; gap: 10px; }
