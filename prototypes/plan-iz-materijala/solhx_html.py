@@ -2,10 +2,15 @@
 (solhx_varijacije.json), s označenim malim greškama iz ručne provjere.
 
 Pokretanje:  .venv/bin/python solhx_html.py   →  out/solhx-pregled.html
+             TPL=sol1_plan5.json VARS= NAME=sol1-plan5-pregled .venv/bin/python solhx_html.py  (samo 1. varijacije)
 """
-import json
+import json, os
 
 import pipeline as P
+
+TPL = os.environ.get("TPL", "sol1_write10.json")
+VARS = os.environ.get("VARS", "solhx_varijacije.json")
+NAME = os.environ.get("NAME", "solhx-pregled")
 
 # (lekcija, varijacija): [(vrsta, točan tekst za označiti, komentar)]
 # tekst se traži u običnom tekstu ili u TeX izvoru formule (tada se označi cijela formula)
@@ -23,11 +28,18 @@ MARKS = {
                      "nespretno; u objašnjenju pitanje glasi drukčije nego u tekstu zadatka („Satelit ostaje u novoj orbiti iz c)“)")],
     ("B07.04", 4): [("sitnica", "prikuplja podatke", "umjetan okvir d), preuzet iz predloška")],
 }
+MARKS_PLAN5 = {
+    ("B01.01", 1): [("sitnica", "prema sjeveroistoku", "nije točno sjeveroistok (45°), nego oko 53° od istoka prema sjeveru"),
+                    ("sitnica", "Mora li tijekom ove jednolike vožnje",
+                     "c) je pretrpan: put, položaj, dva grafa, nagib i sila u jednom podzadatku")],
+}
+if TPL != "sol1_write10.json":
+    MARKS = MARKS_PLAN5 if TPL == "sol1_plan5.json" else {}
 
 
 def main():
-    tpls = P.load("sol1_write10.json")
-    vars_ = P.load("solhx_varijacije.json")
+    tpls = P.load(TPL)
+    vars_ = P.load(VARS) if VARS else []
     cards = []
     for t in tpls:
         rows = [(1, "Sol medium (predložak)", t)] + [
@@ -51,8 +63,8 @@ mark.sitnica,.katex.mk.sitnica{background:#4a90e244;border-color:#4a90e2}
 .notes li{margin:.2rem 0}.tag{font-size:.75rem;padding:1px 6px;border-radius:8px;background:#f5a623;color:#111;margin-right:4px}
 .tag.sitnica{background:#4a90e2}.ref{font-size:.85rem;color:#aaa}.ref td{padding:2px 8px;vertical-align:top}
 #toc li{margin:.15rem 0}</style>
-<h1 style="font-size:1.3rem">Sol medium (1. varijacija) + Haiku xhigh (2.–4. po predlošku) — 10 lekcija</h1>
-<p>Ozbiljnih grešaka nema; računi su 30/30 točni. <mark>Narančasto</mark> = mala greška u Haikuovoj varijaciji,
+<h1 style="font-size:1.3rem">__H1__</h1>
+<p>Ozbiljnih grešaka nema; svi su računi točni. <mark>Narančasto</mark> = mala greška u Haikuovoj varijaciji,
 <mark class=sitnica>plavo</mark> = sitnica u Solovu predlošku. Kartice s oznakama imaju narančasti rub, a objašnjenje
 im je automatski otvoreno.</p>
 <ul id=toc></ul>
@@ -101,8 +113,13 @@ for (const c of data) {
   if (c.marks.length) toc.lastElementChild.querySelector(`a[href="#${c.id}"]`).insertAdjacentText('afterend', c.marks.some(m => m.kind === 'mala') ? ' 🟠' : ' 🔵');
 }
 </script>"""
-    (P.OUT / "solhx-pregled.html").write_text(html.replace("__DATA__", json.dumps(cards, ensure_ascii=False)))
-    print(P.OUT / "solhx-pregled.html", len(cards), "kartica")
+    h1 = (f"Sol medium (1. varijacija) + Haiku xhigh (2.–4. po predlošku) — {len(tpls)} lekcija" if vars_
+          else f"Sol medium, 1. varijacija — {len(tpls)} lekcija")
+    html = html.replace("__H1__", h1).replace("__DATA__", json.dumps(cards, ensure_ascii=False))
+    if not vars_:  # nema v2–v4: sadržaj samo s poveznicom na v1
+        html = html.replace("[1,2,3,4].map", "[1].map")
+    (P.OUT / f"{NAME}.html").write_text(html)
+    print(P.OUT / f"{NAME}.html", len(cards), "kartica")
 
 
 if __name__ == "__main__":

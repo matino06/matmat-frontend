@@ -1,6 +1,6 @@
 """PROTOTIP: GPT-6.1 Sol (medium) piše samo 1. varijaciju za istih 10 lekcija.
 Ona će poslije biti predložak po kojem Haiku xhigh radi varijacije 2–4 (sablon_varijacije.py)."""
-import json, time
+import json, os, time
 
 import pipeline as P
 import tasks as T
@@ -29,9 +29,13 @@ def one(lid):
 
 
 if __name__ == "__main__":
-    lids = [d["lesson"] for d in P.load("luna_review.json")][:10]
+    # PLAN=5 → prvih 5 lekcija po redu iz plana (out/plan.json), inače istih 10 kao prije
+    n = int(os.environ.get("PLAN", "0"))
+    lids = ([l["id"] for l in P.load("plan.json")["lekcije"]][:n] if n
+            else [d["lesson"] for d in P.load("luna_review.json")][:10])
+    name = f"sol1_plan{n}" if n else "sol1_write10"
     res = P.pmap(one, lids, workers=10)
-    P.save("sol1_write10.json", res)
+    P.save(f"{name}.json", res)
     usage = [json.loads(l) for l in (P.CACHE / "costs.jsonl").read_text().splitlines()
              if json.loads(l)["step"] == STEP][-len(res):]
     tot = sum(u["usage"].get("cost") or 0 for u in usage)
@@ -43,7 +47,7 @@ if __name__ == "__main__":
     print("izlaz tokena:", [u["usage"].get("completion_tokens") for u in usage])
     print("razmišljanje:", [(u["usage"].get("completion_tokens_details") or {}).get("reasoning_tokens") for u in usage])
     print(f"trošak: {tot:.4f} $ ukupno, {tot / max(len(usage), 1) * 100:.2f} c po varijaciji")
-    with open(P.OUT / "sol1_write10.txt", "w") as f:
+    with open(P.OUT / f"{name}.txt", "w") as f:
         for r in res:
             f.write(f"\n######## {r['lesson']} {r['naziv']} | {r['sekunde']} s | greska {r['greska']} | kod {r['provjere_kodom']}\n"
                     f"--- ZADATAK\n{r.get('zadatak', '')}\n--- REZ {json.dumps(r.get('rezultati', {}), ensure_ascii=False)}\n"
