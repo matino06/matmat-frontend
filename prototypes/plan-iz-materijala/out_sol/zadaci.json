@@ -1,0 +1,1991 @@
+[
+ {
+  "rok": "FIZ-katalog-2026.pdf",
+  "broj": "Zadatak sa slikom (ispit, str. 4)",
+  "sazetak": "Tekst zadatka nije dostupan, u materijalu je samo slika shematskog prikaza električnog polja točkastih naboja.",
+  "odgovor": "Nema ključa za ovaj zadatak na priloženim stranicama.",
+  "potrebno_znanje": [
+   "električno polje točkastih naboja",
+   "Coulombov zakon",
+   "princip superpozicije električnih polja",
+   "silnice električnog polja"
+  ]
+ },
+ {
+  "rok": "FIZ-katalog-2026.pdf",
+  "broj": "Primjer 6.1 (višestruki izbor, 1 bod)",
+  "sazetak": "Odrediti što vrijedi za iznos ukupne sile na tijelo koje se giba jednoliko ubrzano po pravcu (A: raste, B: nula, C: smanjuje se, D: stalan i različit od nule).",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "jednoliko ubrzano gibanje po pravcu",
+   "II. Newtonov zakon (F = ma)",
+   "konstantno ubrzanje znači stalnu ukupnu silu različitu od nule"
+  ]
+ },
+ {
+  "rok": "FIZ-katalog-2026.pdf",
+  "broj": "Primjer 6.2 (produženi odgovor, 2 boda)",
+  "sazetak": "Iz jednadžbe harmonijskoga titranja y(t) = 2 cm·sin(628 s⁻¹·t) odrediti frekvenciju titranja.",
+  "odgovor": "f = 100 Hz",
+  "potrebno_znanje": [
+   "jednadžba harmonijskoga titranja y(t) = A·sin(ωt)",
+   "veza kutne frekvencije i frekvencije ω = 2πf",
+   "računanje frekvencije iz kutne frekvencije"
+  ]
+ },
+ {
+  "rok": "FIZ-katalog-2026.pdf",
+  "broj": "Zadatak s fotoelektričnim efektom (4 boda, dijelovi A i B)",
+  "sazetak": "A) Izraziti graničnu frekvenciju f₀ preko konstanata A i B te objasniti fizičko značenje A, B i f₀. B) Nacrtati ovisnost kinetičke energije fotoelektrona o frekvenciji za drugi metal s drugačijim svojstvima i usporediti ju s prvim grafom.",
+  "odgovor": "A) f₀ = B/A; f₀ je granična frekvencija, A je Planckova konstanta h, B je izlazni rad metala. B) Graf je pravac koji počinje na graničnoj frekvenciji drugoga metala (f₀₁) i/ili ima drugačiji nagib, ovisno o tome je li granična frekvencija veća ili manja; ne može se točno odrediti jer izlazni rad drugoga metala nije poznat.",
+  "potrebno_znanje": [
+   "fotoelektrični efekt",
+   "Einsteinova jednadžba fotoelektričnog efekta (hf = W_i + E_k)",
+   "granična frekvencija i izlazni rad metala",
+   "Planckova konstanta",
+   "linearna ovisnost E_k o frekvenciji iznad granične frekvencije",
+   "tumačenje i usporedba grafova"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "1",
+  "sazetak": "Iz grafa položaja u vremenu odrediti dio grafa koji prikazuje ubrzano gibanje.",
+  "odgovor": "A (AB)",
+  "potrebno_znanje": [
+   "položaj i vrijeme u x-t grafu",
+   "brzina kao nagib x-t grafa",
+   "jednoliko i ubrzano gibanje",
+   "promjena nagiba kao promjena brzine"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "2",
+  "sazetak": "Odrediti koja tvrdnja je točna za automobil koji miruje na horizontalnoj cesti.",
+  "odgovor": "D (na automobil djeluje više od jedne sile)",
+  "potrebno_znanje": [
+   "sila teža",
+   "normalna sila podloge",
+   "ravnoteža sila",
+   "prvi Newtonov zakon"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "3",
+  "sazetak": "Izračunati omjer kutnih brzina minutne i satne kazaljke sata.",
+  "odgovor": "C (12)",
+  "potrebno_znanje": [
+   "kutna brzina",
+   "period vrtnje kazaljki (1 h i 12 h)",
+   "omjer kutnih brzina"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "4",
+  "sazetak": "Odabrati planet koji bi na tijelo mase m na svojoj površini djelovao najvećom gravitacijskom silom.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "Newtonov zakon gravitacije",
+   "gravitacijska sila na površini ovisi o masi planeta i polumjeru",
+   "homogeni planeti, gustoća i volumen"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "5",
+  "sazetak": "Odrediti temperaturu na koju treba zagrijati žicu B da se produlji za isti iznos kao žica A zagrijana na 24 °C, ako je koeficijent rastezanja žice A 1,2 puta veći.",
+  "odgovor": "C (na 28,8 °C)",
+  "potrebno_znanje": [
+   "linearno toplinsko rastezanje",
+   "Δl = l0·α·ΔT",
+   "proporcionalnost produljenja i koeficijenta"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "6",
+  "sazetak": "Usporediti srednje kinetičke energije atoma helija i argona pri jednakoj temperaturi.",
+  "odgovor": "B (jednake su)",
+  "potrebno_znanje": [
+   "srednja kinetička energija molekula idealnog plina ovisi samo o temperaturi",
+   "E_k = 3/2 kT"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "7",
+  "sazetak": "Iz Q-ΔT grafova za tri tekućine jednakih masa odrediti odnos specifičnih toplinskih kapaciteta.",
+  "odgovor": "C (c_A > c_B > c_C)",
+  "potrebno_znanje": [
+   "Q = m·c·ΔT",
+   "nagib Q-ΔT grafa jednak je m·c",
+   "specifični toplinski kapacitet"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "8",
+  "sazetak": "Odrediti pri kojoj temperaturi toplijeg spremnika će korisnost Carnotova stroja s hladnim spremnikom na temperaturi T biti najveća.",
+  "odgovor": "D (3T)",
+  "potrebno_znanje": [
+   "korisnost Carnotova stroja η = 1 − T_hladni/T_topli",
+   "korisnost raste s povećanjem temperature toplijeg spremnika"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "9",
+  "sazetak": "Odrediti smjer električnog polja u točki B u središtu kvadrata s nabojima +q i −q u vrhovima.",
+  "odgovor": "C (prema točki E)",
+  "potrebno_znanje": [
+   "električno polje točkastog naboja",
+   "superpozicija električnih polja",
+   "smjer polja od pozitivnog prema negativnom naboju",
+   "simetrija rasporeda naboja"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "10",
+  "sazetak": "Odrediti što se događa s pločastim kondenzatorom spojenim na izvor stalnog napona kada se poveća razmak između ploča.",
+  "odgovor": "B (smanjio se kapacitet)",
+  "potrebno_znanje": [
+   "kapacitet pločastog kondenzatora C = ε·S/d",
+   "pri stalnom naponu U je konstantan",
+   "naboj Q = C·U"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "11",
+  "sazetak": "Iz I-U grafa za dvije žice iste duljine i materijala odrediti odnos otpora i promjera žica.",
+  "odgovor": "B (R1 < R2 i d1 > d2)",
+  "potrebno_znanje": [
+   "Ohmov zakon, R = U/I (nagib I-U grafa)",
+   "otpor žice R = ρ·l/S",
+   "S = d²π/4, obrnuta proporcionalnost otpora s kvadratom promjera"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "12",
+  "sazetak": "Odabrati graf ovisnosti inducirane struje o vremenu za strujnu petlju koja stalnom brzinom ulazi u homogeno magnetsko polje.",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "Faradayev zakon indukcije",
+   "inducirana emf = B·l·v za vrijeme ulaska",
+   "Lenzovo pravilo",
+   "struja je konstantna dok petlja ulazi, a nula dok je cijela unutar polja"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "13",
+  "sazetak": "Odrediti koja tvrdnja o brzini i akceleraciji matematičkog njihala je točna.",
+  "odgovor": "C (brzina i akceleracija nikad nisu istodobno jednake nuli)",
+  "potrebno_znanje": [
+   "harmonijsko titranje matematičkog njihala",
+   "brzina je nula u amplitudnom položaju, a maksimalna u ravnotežnom",
+   "akceleracija tangencijalna i normalna komponenta"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "14",
+  "sazetak": "Odrediti kako se mijenja valna duljina vala pri prijelazu iz jednog sredstva u drugo ako se brzina udvostruči.",
+  "odgovor": "C (udvostruči se)",
+  "potrebno_znanje": [
+   "v = λ·f",
+   "frekvencija pri prijelazu ostaje ista",
+   "λ je proporcionalna brzini"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "15",
+  "sazetak": "Odrediti odnos brzina zvuka u zraku, vodi i željezu.",
+  "odgovor": "D (v_z < v_v < v_ž)",
+  "potrebno_znanje": [
+   "brzina zvuka ovisi o sredstvu",
+   "brzina zvuka raste s gustoćom i elastičnošću (krutošću) sredstva",
+   "u krutim tvarima brža je nego u tekućinama i plinovima"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "16",
+  "sazetak": "Odrediti upadni kut zrake koja iz zraka upada na površinu vode tako da se reflektirana zraka vrati u izvor.",
+  "odgovor": "A (0°)",
+  "potrebno_znanje": [
+   "zakon refleksije: upadni kut = kut refleksije",
+   "okomito upadanje zrake vraća se po istom putu"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "17",
+  "sazetak": "Odrediti promjenu razmaka između susjednih svijetlih pruga u Youngovu pokusu kada se razmak između zastora i pukotina udvostruči.",
+  "odgovor": "C (dvostruko se poveća)",
+  "potrebno_znanje": [
+   "interferencija na dvije pukotine",
+   "formula razmaka pruga Δy = λ·L/d",
+   "proporcionalnost s udaljenošću zastora"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "18",
+  "sazetak": "Odrediti orijentaciju magnetskog polja radiovala u odnosu na električno polje i smjer širenja.",
+  "odgovor": "C (okomito je na električno polje i na smjer širenja)",
+  "potrebno_znanje": [
+   "elektromagnetski val je transverzalan",
+   "E, B i smjer širenja međusobno su okomiti"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "19",
+  "sazetak": "Izračunati valnu duljinu elektrona koji se giba brzinom 1 km/s.",
+  "odgovor": "C (0,727 µm)",
+  "potrebno_znanje": [
+   "de Broglieva valna duljina λ = h/(m·v)",
+   "masa elektrona",
+   "nerelativistička brzina"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "20",
+  "sazetak": "Odrediti koja strelica na dijagramu energijskih razina odgovara fotonu ljubičaste svjetlosti.",
+  "odgovor": "D (strelica 4)",
+  "potrebno_znanje": [
+   "energija fotona E = h·f = h·c/λ",
+   "ljubičasta svjetlost ima najveću energiju među vidljivim linijama",
+   "najveća razlika energijskih razina odgovara najkraćoj valnoj duljini"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "21",
+  "sazetak": "Odrediti najmanju energiju potrebnu za rastavljanje jezgre tricija na nukleone ako je energija vezanja po nukleonu 2,8 MeV.",
+  "odgovor": "C (8,4 MeV)",
+  "potrebno_znanje": [
+   "energija vezanja jezgre E_v = A·E_v/nukleonu",
+   "tricij ima 3 nukleona",
+   "3 · 2,8 MeV = 8,4 MeV"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "22",
+  "sazetak": "Odrediti maseni broj i broj protona elementa Y nastalog nakon β⁻ i α raspada bizmuta-210.",
+  "odgovor": "B (A = 206, Z = 82)",
+  "potrebno_znanje": [
+   "zakoni očuvanja masenog i atomskog broja u raspadima",
+   "β⁻ raspad: Z se povećava za 1, A ostaje",
+   "α raspad: A se smanjuje za 4, Z za 2"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "23",
+  "sazetak": "Odrediti frekvenciju titranja tijela koju mjeri promatrač sa Zemlje ako se svemirski brod giba relativističkom brzinom.",
+  "odgovor": "D (0,8 f0)",
+  "potrebno_znanje": [
+   "relativistički efekt vremenske dilatacije",
+   "frekvencija tijela koje miruje u sustavu broda se mijenja za promatrača u drugom sustavu",
+   "frekvencija u pokretnom sustavu je manja"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "24",
+  "sazetak": "Odrediti postotak svemira koji čini vidljiva tvar.",
+  "odgovor": "A (< 10 %)",
+  "potrebno_znanje": [
+   "sastav svemira: tamna energija, tamna tvar, vidljiva tvar",
+   "vidljiva (barionska) tvar čini manje od 10 % svemira"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "25",
+  "sazetak": "Izračunati konačni volumen zraka u boci kada se tlak poveća za četvrtinu pri stalnoj temperaturi.",
+  "odgovor": "V2 = 0,4 L (uz p1·V1 = p2·V2)",
+  "potrebno_znanje": [
+   "Boyle-Mariotteov zakon",
+   "izotermni proces",
+   "računanje s omjerima tlakova"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "26",
+  "sazetak": "Odrediti upadni kut svjetlosti pri prijelazu iz zraka u staklo indeksa loma 1,5 ako je kut loma 30°.",
+  "odgovor": "α ≈ 48,6°",
+  "potrebno_znanje": [
+   "Snellov zakon n1·sin α = n2·sin β",
+   "indeks loma zraka ≈ 1",
+   "inverzna funkcija sinusa"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "27",
+  "sazetak": "Odrediti gustoću tijela koje pluta između ulja i vode tako da je 45 % volumena u vodi.",
+  "odgovor": "ρ = 945 kg/m³",
+  "potrebno_znanje": [
+   "uvjet plutanja: težina tijela jednaka je ukupnom uzgonu",
+   "Arhimedov zakon",
+   "uzgon u dvije tekućine",
+   "ρ_tijela = ρ_v·0,45 + ρ_u·0,55"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "28",
+  "sazetak": "Odrediti toplinu koju treba izotermno dovesti idealnom plinu da mu se volumen poveća s 4 m³ na 6 m³ pri normiranom atmosferskom tlaku.",
+  "odgovor": "Q = 2,03·10⁵ J",
+  "potrebno_znanje": [
+   "prvi zakon termodinamike ΔQ = ΔU + W",
+   "pri izotermnom procesu ΔU = 0",
+   "rad plina pri stalnom tlaku W = p·ΔV",
+   "normirani atmosferski tlak 101 325 Pa"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "29",
+  "sazetak": "Odrediti napon U na pločastom kondenzatoru ako se naboj promijeni za 35 nC nakon stavljanja u ulje relativne permitivnosti 2,59.",
+  "odgovor": "U = 500 V",
+  "potrebno_znanje": [
+   "kapacitet pločastog kondenzatora C = ε0·εr·S/d",
+   "Q = C·U",
+   "promjena kapaciteta pri stalnom naponu",
+   "dielektrik povećava kapacitet"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "30",
+  "sazetak": "Odrediti zaustavni napon elektrona emitiranih iz kalcija osvijetljenog svjetlošću valne duljine 250 nm ako je granična valna duljina 384 nm.",
+  "odgovor": "U = 1,7 V",
+  "potrebno_znanje": [
+   "Einsteinova jednadžba fotoelektričnog efekta hc/λ = W_izlaza + eU",
+   "izlazni rad iz granične valne duljine",
+   "energija fotona E = hc/λ"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "31",
+  "sazetak": "Odrediti korisnost dizalice koja s motorom snage 1050 W podigne teret mase 300 kg na visinu 8 m za jednu minutu.",
+  "odgovor": "η = 38,1 %",
+  "potrebno_znanje": [
+   "korisnost η = P_korisna/P_uložena",
+   "rad protiv sile teže W = m·g·h",
+   "snaga P = W/t"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "32",
+  "sazetak": "Odrediti visinu iznad tla na kojoj su se kuglice sudarile, jedna slobodno pada s 25 m, a druga je bačena prema gore brzinom 5 m/s.",
+  "odgovor": "h ≈ 18,95 m (alternativno, ako je „istodobno“ shvaćeno kao istovremeno: h ≈ 15,9 m)",
+  "potrebno_znanje": [
+   "kinematika slobodnog pada i vertikalnog hica",
+   "zakon očuvanja količine gibanja pri neelastičnom sudaru",
+   "zakon očuvanja energije",
+   "kinematske jednadžbe za jednoliko ubrzano gibanje"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "33",
+  "sazetak": "Odrediti otpor promjenjivog otpornika spojenog serijski s devet žarulja na izvor 220 V tako da svaka žarulja svijetli kao pri 12 V.",
+  "odgovor": "R_o = 672 Ω",
+  "potrebno_znanje": [
+   "snaga P = U·I i Ohmov zakon R = U/I",
+   "serijski spoj otpora R_uk = Σ R",
+   "žarulje moraju raditi pri nazivnom naponu 12 V i struji I = P/U",
+   "napon na otporniku je 220 V − 9·12 V"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "34",
+  "sazetak": "Odrediti silu na tijelo mase 100 g koje harmonijski titra amplitudom 10 cm i periodom 12 s u trenutku t = 2 s.",
+  "odgovor": "F = 2,4 mN",
+  "potrebno_znanje": [
+   "harmonijsko titranje x = A·sin(ωt)",
+   "ω = 2π/T",
+   "period opruge T = 2π√(m/k), iz čega k",
+   "Hookeov zakon F = −kx"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "35.1",
+  "sazetak": "Odrediti koju silu učenici trebaju istražiti pomoću pribora s potkovastim magnetom i vodičem sa strujom.",
+  "odgovor": "1 (Ampereova sila)",
+  "potrebno_znanje": [
+   "Ampereova sila na vodič sa strujom u magnetskom polju",
+   "razlika između Ampereove, Lorentzove i Coulombove sile"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "35.2",
+  "sazetak": "Odabrati shemu u kojoj su ispravno označeni polovi magneta s obzirom na smjer struje i smjer sile na vodič.",
+  "odgovor": "1",
+  "potrebno_znanje": [
+   "pravilo lijeve ruke za smjer Ampereove sile",
+   "smjer magnetskih silnica od sjevernog prema južnom polu",
+   "međusobni smjerovi I, B i F su okomiti"
+  ]
+ },
+ {
+  "rok": "FIZ22ljeto",
+  "broj": "35.3",
+  "sazetak": "Izračunati iznos Ampereove sile na vodič duljine 3 cm kroz koji teče struja 0,5 A u polju indukcije 0,1 T okomitom na vodič.",
+  "odgovor": "F = 1,5·10⁻³ N (0,0015 N)",
+  "potrebno_znanje": [
+   "Ampereova sila F = B·I·l·sin θ",
+   "sin 90° = 1",
+   "pretvorba jedinica cm u m"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "1.",
+  "sazetak": "Koja tvrdnja o gibanju autića prikazanom x,t grafom je točna (akceleracija, najveća brzina, put kao površina ispod grafa, put u šestoj u odnosu na prvu sekundu)?",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "x,t graf: nagib = brzina",
+   "promjena nagiba grafa = akceleracija",
+   "put se ne računa kao površina ispod x,t grafa",
+   "jednoliko ubrzano i nejednoliko gibanje"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "2.",
+  "sazetak": "Na kojem su crtežu ispravno prikazane sile kojima dva tijela međudjeluju (3. Newtonov zakon)?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "3. Newtonov zakon: sile međudjelovanja jednake su po iznosu, suprotne po smjeru i djeluju na različita tijela",
+   "vektorski prikaz sila (duljina strelice i smjer)"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "3.",
+  "sazetak": "Tijelo mase m pokrenuto iz mirovanja impulsom sile I ima kinetičku energiju E_k; kolika je kinetička energija tijela mase 2m pokrenutog impulsom I/2?",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "impuls sile jednak promjeni količine gibanja: I = p",
+   "E_k = p²/(2m)",
+   "veza između impulsa, mase i kinetičke energije"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "4.",
+  "sazetak": "Na kojoj se udaljenosti od planeta X nalazi svemirski brod u točki gdje je ukupna gravitacijska sila planeta X i Y jednaka nuli, ako je M_Y = 4M_X i razmak planeta 1500 milijuna km?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "Newtonov zakon gravitacije F = G·m₁·m₂/r²",
+   "uvjet ravnoteže sila (jednakost iznosa sila)",
+   "rješavanje jednadžbe s omjerom masa i udaljenosti"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "5.",
+  "sazetak": "Koji graf ispravno prikazuje ovisnost ukupnog tlaka o dubini pri zaronu u more?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "hidrostatski tlak: p = p₀ + ρgd",
+   "linearna ovisnost tlaka o dubini s pozitivnim nagibom i odsječkom p₀ na osi tlaka",
+   "čitanje i interpretacija grafa"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "6.",
+  "sazetak": "Na kojoj temperaturi će aluminijska šipka biti 0,5 % dulja nego na 10 °C, ako je koeficijent linearnog toplinskog rastezanja 2,6·10⁻⁵ K⁻¹?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "linearno toplinsko rastezanje: Δl = l₀·α·Δt",
+   "relativna promjena duljine Δl/l₀ = 0,005",
+   "izračun temperaturne razlike i preračun u °C"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "7.",
+  "sazetak": "Koliki je tlak idealnog plina u čvrstoj boci nakon što se ispusti jedna četvrtina mase plina i termodinamička temperatura dvostruko poveća?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "jednadžba stanja idealnog plina pV = nRT",
+   "u čvrstoj boci V je konstantan",
+   "tlak proporcionalan masi (broju molova) i temperaturi"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "8.",
+  "sazetak": "Kakav je odnos prosječnih kinetičkih energija molekula kisika i dušika u zraku (idealni plin) pri različitim godišnjim dobima?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "prosječna kinetička energija molekula ovisi samo o termodinamičkoj temperaturi: E_k = (3/2)kT",
+   "ista temperatura za sve molekule u smjesi znači istu prosječnu kinetičku energiju",
+   "ljeti je viša temperatura nego zimi"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "9.",
+  "sazetak": "Kako se mijenjaju tlak i temperatura idealnog plina pri adijabatskoj kompresiji?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "adijabatski proces: Q = 0",
+   "1. zakon termodinamike: ΔU = W; kompresija znači rad na plinu",
+   "rast unutarnje energije i temperature pri kompresiji",
+   "tlak raste jer se smanjuje volumen i raste temperatura"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "10.",
+  "sazetak": "Koliki je ukupni rad u kružnom procesu prikazanom pravokutnikom na p-V dijagramu (p od 2 do 10 ·10⁵ Pa, V od 20 do 80 l)?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "rad pri izohornom procesu je nula",
+   "rad pri izobarnom procesu W = pΔV",
+   "rad u kružnom procesu jednak je površini zatvorene krivulje u p-V dijagramu",
+   "jedinice (1 l = 10⁻³ m³)"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "11.",
+  "sazetak": "Na kojim su slikama električne sile između naboja jednakih iznosa (Coulombov zakon)?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "Coulombov zakon F = k·q₁·q₂/r²",
+   "računanje umnoška naboja i kvadrata udaljenosti za svaku sliku",
+   "usporedba iznosa sila"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "12.",
+  "sazetak": "Za koliko se promijeni iznos električnog polja između ploča kondenzatora ako se polariteti spojnih žica zamijene (pozitivna ploča na negativan pol i obrnuto)?",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "električno polje između ploča E = U/d",
+   "promjena polariteta mijenja smjer, ne iznos napona i polja",
+   "homogeno polje između paralelnih ploča"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "13.",
+  "sazetak": "Koliki je rad vanjske sile F pri premještanju protona od točke A do točke B između nabijenih ploča?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "rad sile W = F·s·cos α",
+   "rad električne sile ovisi samo o razlici potencijala između početne i konačne točke",
+   "veza napona, polja i udaljenosti: U = E·d",
+   "rad vanjske sile jednak je promjeni potencijalne energije naboja"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "14.",
+  "sazetak": "Koja žarulja jače sjaji u paralelnom, a koja u serijskom spoju (100 W i 40 W, 230 V) na izmjeničnom izvoru 230 V?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "snaga P = U²/R; otpor žarulje R = U²/P (veća snaga znači manji otpor)",
+   "u paralelnom spoju napon je jednak na obje žarulje, jače sjaji veća snaga",
+   "u serijskom spoju kroz obje struja je ista, jače sjaji veći otpor, tj. manja snaga"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "15.",
+  "sazetak": "Koji graf induciranog napona odgovara zadanom grafu magnetskog toka kroz zavojnicu u vremenu?",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "Faradayev zakon indukcije: U_i = −ΔΦ/Δt (nagib Φ-t grafa)",
+   "Lenzovo pravilo za predznak napona",
+   "konstantan tok znači nulti inducirani napon"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "16.",
+  "sazetak": "Koliko titraja u minuti napravi tijelo mase 4m na opruzi ako tijelo mase m napravi 40 titraja u minuti?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "period titranja na opruzi T = 2π√(m/k)",
+   "frekvencija ovisi o masi: f ∝ 1/√m",
+   "omjer frekvencija pri četverostrukoj masi"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "17.",
+  "sazetak": "Za maksimalnu kinetičku energiju 0,5 mJ matematičkog njihala, koja je tvrdnja o E_k i E_p u nekom trenutku točna?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "zakon očuvanja mehaničke energije: E_k + E_p = const",
+   "pri ekstremu položaja E_k = 0, pri ravnotežnom položaju E_p = 0",
+   "u bilo kojem trenutku zbroj E_k i E_p jednak je maksimalnoj E_k"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "18.",
+  "sazetak": "Kolika je valna duljina elektromagnetskog vala valne duljine 400 nm u vakuumu kad prođe u sredstvo indeksa loma 2?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "indeks loma n = c/v = λ₀/λ",
+   "frekvencija se pri prijelazu ne mijenja",
+   "λ = λ₀/n"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "19.",
+  "sazetak": "Koja slika ispravno prikazuje mogući lom svjetlosti pri prijelazu iz zraka u staklo u obliku slova L?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "zakon loma: n₁ sin α = n₂ sin β",
+   "pri ulasku u optički gušće sredstvo zraka se lomi prema normali",
+   "zakon odbijanja: kut odbijanja jednak kutu upadanja"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "20.",
+  "sazetak": "Koje vrste valova je moguće polarizirati?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "polarizacija je svojstvo transverzalnih valova",
+   "longitudinalni valovi (npr. zvuk) ne mogu se polarizirati",
+   "primjer: elektromagnetski valovi"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "21.",
+  "sazetak": "Što treba učiniti s upadnim zračenjem da bi se povećala maksimalna kinetička energija elektrona izbačenih fotoefektom?",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "Einsteinova jednadžba fotoefekta: E_k,max = hf − W_i",
+   "kinetička energija ovisi o frekvenciji, a ne o intenzitetu",
+   "manja valna duljina znači veća frekvencija (c = λf)"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "22.",
+  "sazetak": "Koliko neutrona ima izotop koji nastane β⁻ raspadom izotopa ¹³⁵Sn?",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "β⁻ raspad: neutron se pretvara u proton, maseni broj ostaje isti",
+   "broj neutrona N = A − Z",
+   "redni broj kod β⁻ raspada raste za 1"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "23.",
+  "sazetak": "Zašto prema teoriji relativnosti tijelo ne može putovati brzinom svjetlosti?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "relativistička energija E = γmc²",
+   "Lorentzov faktor γ = 1/√(1 − v²/c²) teži beskonačnosti kad v → c",
+   "za tijelo s masom potrebna bi beskonačna energija"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "24.",
+  "sazetak": "Što će se dogoditi sa Suncem u dalekoj budućnosti?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "evolucija zvijezde ovisno o masi",
+   "Sunce je zvijezda male mase i neće eksplodirati kao supernova",
+   "završni stadij male zvijezde je bijeli patuljak"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "25.",
+  "sazetak": "Kolika je frekvencija okretanja kotača promjera 1,5 m ako točka na obodu ima brzinu 72 km/h?",
+  "odgovor": "f ≈ 4,24 Hz",
+  "potrebno_znanje": [
+   "kutna brzina i linearna brzina: v = ωr",
+   "veza frekvencije i kutne brzine: ω = 2πf",
+   "pretvorba jedinica km/h u m/s"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "26.",
+  "sazetak": "Kolika je valna duljina protona koji se giba brzinom 0,01c?",
+  "odgovor": "λ ≈ 1,32·10⁻¹³ m",
+  "potrebno_znanje": [
+   "de Broglieva valna duljina λ = h/p",
+   "impuls p = mv (nerelativistički, v = 0,01c)",
+   "Planckova konstanta"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "27.",
+  "sazetak": "Kolikom silom ravni vodič kojim teče struja 4 A djeluje na elektron brzine 3·10⁴ m/s na udaljenosti 2,5 cm, kad se elektron giba paralelno s vodičem?",
+  "odgovor": "F ≈ 1,54·10⁻¹⁹ N",
+  "potrebno_znanje": [
+   "Lorentzova sila F = qvB sin α",
+   "magnetsko polje ravnog vodiča B = μ₀I/(2πr)",
+   "kut između brzine i magnetskog polja (sin α = 1 jer je brzina paralelna s vodičem)",
+   "vrijednost elementarnog naboja i magnetske permeabilnosti vakuuma"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "28.",
+  "sazetak": "Kolika bi trebala biti duljina grijaće žice istog materijala i presjeka da se u istoj prostoriji temperatura poveća za 5 °C u 15 minuta (umjesto 25 minuta)?",
+  "odgovor": "l₂ = 1,2 m",
+  "potrebno_znanje": [
+   "toplinska snaga električnog grijanja P = U²/R, a energija W = Pt",
+   "otpor žice R = ρl/S, pa je snaga obrnuto proporcionalna duljini",
+   "jednaka toplina za isto povećanje temperature: W₁ = W₂"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "29.",
+  "sazetak": "Koliko jezgri izotopa ¹⁸F ostaje u krvotoku nakon sat vremena ako je početna aktivnost 370 MBq i vrijeme poluraspada 110 min?",
+  "odgovor": "N ≈ 2,41·10¹²",
+  "potrebno_znanje": [
+   "zakon radioaktivnog raspada N = N₀·2^(−t/T)",
+   "aktivnost A = λN, gdje je λ = ln 2 / T",
+   "pretvorba minuta u sekunde"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "30.",
+  "sazetak": "30.1: Koja je tvrdnja točna za sliku predmeta dobivenu na zastoru sabirne leće? 30.2: Odabrati ispravno mjerenje iz tablice i izračunati žarišnu daljinu leće.",
+  "odgovor": "30.1: 4 (obrnuta, realna, uvećana); 30.2: f ≈ 4,26 cm",
+  "potrebno_znanje": [
+   "jednadžba tankih leća 1/a + 1/b = 1/f",
+   "povećanje leće m = y'/y = −b/a",
+   "svojstva slike sabirne leće ovisno o položaju predmeta (realna slika na zastoru je obrnuta)",
+   "predznačna konvencija za realne i virtualne predmete/slike"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "31.",
+  "sazetak": "Kolika je razlika iznosa napetosti niti između tijela A i B kad vučna sila 25 N djeluje na A, odnosno na B?",
+  "odgovor": "ΔF_N = 6,25 N",
+  "potrebno_znanje": [
+   "2. Newtonov zakon za sustav i pojedina tijela",
+   "sila trenja F_tr = μmg",
+   "napetost niti kao unutarnja sila sustava za izračun u pojedinom tijelu",
+   "razlika napetosti ovisi o raspodjeli mase i trenja između tijela"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "32.",
+  "sazetak": "Koliko je vremena potrebno da voda iz uže cijevi (promjer 2 cm) napuni bačvu volumena 50 l, ako je razlika statičkih tlakova u cijevima 500 Pa (promjer 4 cm)?",
+  "odgovor": "t ≈ 154,2 s",
+  "potrebno_znanje": [
+   "Bernoullijeva jednadžba za horizontalnu cijev",
+   "jednadžba kontinuiteta S₁v₁ = S₂v₂",
+   "volumni protok Q = V/t = Sv",
+   "računanje brzine iz razlike tlakova"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "33.",
+  "sazetak": "Kolika je unutarnja energija idealnog jednoatomnog plina u točki C kružnog procesa, ako je rad od A do B 4 kJ, a to je dvostruko više od rada od B do E?",
+  "odgovor": "U = 4,5 kJ",
+  "potrebno_znanje": [
+   "rad pri izobarnom procesu W = pΔV",
+   "rad pri izohornom procesu je nula",
+   "unutarnja energija idealnog jednoatomnog plina U = (3/2)pV = (3/2)nRT",
+   "čitanje stanja s p-V dijagrama"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "34.",
+  "sazetak": "Koliki je naboj čestice mase 3,32·10⁻²⁷ kg koja se ubrza razlikom potencijala 4,9·10⁴ V i u homogenom magnetskom polju 1,5 T opisuje kružnicu polumjera 0,03 m?",
+  "odgovor": "q = 1,6·10⁻¹⁹ C",
+  "potrebno_znanje": [
+   "energija ubrzanja qU = mv²/2",
+   "Lorentzova sila je centripetalna: qvB = mv²/r",
+   "kombiniranje dviju jednadžbi za izračun naboja"
+  ]
+ },
+ {
+  "rok": "FIZ23ljeto1",
+  "broj": "35.",
+  "sazetak": "Kolika je razlika razina zvuka koju osoba čuje lijevim i desnim uhom ako je točkasti izvor snage 2,5 mW udaljen 55 cm, odnosno 57 cm?",
+  "odgovor": "ΔL ≈ 0,31 dB",
+  "potrebno_znanje": [
+   "intenzitet zvuka I = P/(4πr²) za točkasti izvor",
+   "razina zvuka L = 10·log(I/I₀)",
+   "razlika razina preko omjera intenziteta i logaritamskih pravila"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "1.",
+  "sazetak": "Tijelo se giba stalnom brzinom duž osi x; na njega počne djelovati stalna sila duž osi y. Koja tvrdnja o promjeni iznosa brzine i smjera gibanja je točna?",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "Drugi Newtonov zakon",
+   "Sila okomita na brzinu mijenja smjer gibanja",
+   "Rad sile i promjena kinetičke energije (sila ima komponentu u smjeru gibanja)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "2.",
+  "sazetak": "Loptica mase m udara okomito elastično u vertikalni zid brzinom v. Koliki je impuls sile zida na lopticu?",
+  "odgovor": "C (2mv)",
+  "potrebno_znanje": [
+   "Impuls sile i promjena količine gibanja",
+   "Elastičan sudar (odbijanje s istim iznosom brzine)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "3.",
+  "sazetak": "Tijelo na niti spušta se jednoliko. Kakvi su predznaci rada sile napetosti niti i rada gravitacijske sile?",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "Rad sile kao W = F·s·cos φ",
+   "Predznak rada (pozitivan/negativan ovisno o smjeru sile i pomaka)",
+   "Uvjet jednolikog gibanja (ukupna sila nula)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "4.",
+  "sazetak": "Na kojoj je slici ispravno prikazana ukupna sila na meteorološki satelit koji jednoliko kruži oko Zemlje?",
+  "odgovor": "B (prema ključu; fizikalno bi trebala biti A, sila prema središtu)",
+  "potrebno_znanje": [
+   "Jednoliko kružno gibanje",
+   "Centripetalna sila usmjerena prema središtu kruženja",
+   "Gravitacijska sila kao centripetalna sila za satelit"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "5.",
+  "sazetak": "Kroz horizontalnu cijev sa širim i užim dijelom teče tekućina. Koja je tvrdnja o odnosu statičkih i dinamičkih tlakova u širem i užem dijelu točna?",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "Jednadžba kontinuiteta (Av = konst.)",
+   "Bernoullijeva jednadžba",
+   "Odnos brzine i tlaka u suženju"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "6.",
+  "sazetak": "Koja je tvrdnja o gibanju zrnca peludi koje Robert Brown promatra mikroskopom točna?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "Brownovo gibanje",
+   "Molekularno-kinetička teorija (nasumični sudari molekula)",
+   "Toplinsko gibanje molekula"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "7.",
+  "sazetak": "Graf ovisnosti volumena idealnog plina o temperaturi pri stalnom tlaku je pravac. Što je točno za taj pravac?",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "Izobarna promjena stanja (Gay-Lussacov zakon)",
+   "Jednadžba idealnog plina pV = nRT",
+   "Nagib V–T grafa = nR/p"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "8.",
+  "sazetak": "Dvije jednake bakrene kocke, temperature 20 °C i 50 °C, dovedu se u kontakt. Na kojoj temperaturi prestane izmjena topline (bez gubitaka)?",
+  "odgovor": "C (35 °C)",
+  "potrebno_znanje": [
+   "Toplinska ravnoteža",
+   "Kalorimetrijska jednadžba Q = mc·ΔT",
+   "Jednake mase i tvari, pa je konačna temperatura aritmetička sredina"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "9.",
+  "sazetak": "Toplinski stroj izvrši rad 100 J i preda hladnijem spremniku 500 J. Kolika je korisnost stroja?",
+  "odgovor": "A (17 %)",
+  "potrebno_znanje": [
+   "Prvi zakon termodinamike za kružni proces",
+   "Q1 = W + Q2",
+   "Korisnost η = W/Q1"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "10.",
+  "sazetak": "Za metalnu šuplju pozitivno nabijenu kuglu odrediti odnos iznosa električnog polja u točkama A, B (unutar), C (na površini) i D (izvan kugle).",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "Električno polje u unutrašnjosti vodiča i šupljini jednako je nuli",
+   "Naboj se raspoređuje po vanjskoj površini vodiča",
+   "Coulombov zakon / polje točkastog naboja izvan kugle, opadanje s r²"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "11.",
+  "sazetak": "Nabijeni pločasti kondenzator odspoji se od izvora, zatim se umetne dielektrik. Kako se mijenjaju napon i električna potencijalna energija?",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "Naboj je stalan nakon odspajanja",
+   "Kapacitet kondenzatora raste s dielektrikom",
+   "U = Q²/(2C) ili U = Q·U/2 (energija se smanjuje)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "12.},",
+  "sazetak": "Otpornik nepoznatog otpora R spojen je s otpornikom 18 Ω tako da je ukupni otpor 6 Ω. Kako su spojeni i koliki je R?",
+  "odgovor": "C (paralelno, R = 9 Ω)",
+  "potrebno_znanje": [
+   "Serijski i paralelni spoj otpornika",
+   "1/R_uk = 1/R1 + 1/R2"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "13.",
+  "sazetak": "Pri kojem se gibanju vodljivog prstena u homogenom magnetskom polju vertikalno usmjerenom prema gore inducira struja?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "Elektromagnetska indukcija",
+   "Promjena magnetskog toka kroz prsten",
+   "Rotacija oko horizontalne osi mijenja kut između normale i polja"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "14.",
+  "sazetak": "Tri paralelna jednako udaljena beskonačna vodiča kroz koje teku jednake struje. Koja slika točno prikazuje ukupnu magnetsku silu gornja dva vodiča na donji?",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "Magnetska sila između paralelnih vodiča (istosmjerne struje se privlače, suprotne odbijaju)",
+   "Superpozicija sila (vektorsko zbrajanje)",
+   "Simetrija jednakostraničnog trokuta"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "15.",
+  "sazetak": "Blok mase m na opruzi harmonijski titra amplitudom A s maksimalnom brzinom v. Ako se blok zamijeni masom 2m uz istu amplitudu, kolika je nova maksimalna brzina?",
+  "odgovor": "B (v/√2)",
+  "potrebno_znanje": [
+   "Harmonijski oscilator, ω = √(k/m)",
+   "v_max = Aω",
+   "Ovisnost brzine o masi"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "16.",
+  "sazetak": "Dva ravna vala iste valne duljine šire se kroz isti medij, A2 = 3A1. Koliki je odnos energija valova E2/E1?",
+  "odgovor": "D (9)",
+  "potrebno_znanje": [
+   "Energija harmonijskog vala proporcionalna kvadratu amplitude",
+   "E ∝ A²ω²"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "17.",
+  "sazetak": "Na slici je stojni val frekvencije 550 Hz na niti duljine 2 m (prikazano 2 puna vala). Kolika je brzina valova na niti?",
+  "odgovor": "C (440 m/s)",
+  "potrebno_znanje": [
+   "Stojni val i odnos duljine niti i valne duljine",
+   "v = λf"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "18.",
+  "sazetak": "Koji fizikalni princip je najvažniji za rad svjetlovoda u endoskopu?",
+  "odgovor": "A (totalna refleksija)",
+  "potrebno_znanje": [
+   "Totalna unutarnja refleksija",
+   "Kritični kut i indeks loma"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "19.",
+  "sazetak": "Koja tvrdnja za radiovalove i vidljivu svjetlost koji se šire u istom sredstvu je točna?",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "Elektromagnetski spektar",
+   "Brzina svjetlosti u sredstvu ovisi o sredstvu, ali ne ovisi o valnoj duljini (u ovom kontekstu jednaka)",
+   "c = λf, radiovalovi imaju manju frekvenciju i veću valnu duljinu"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "20.",
+  "sazetak": "Foton energije 2 eV izbija elektrone maksimalne kinetičke energije 0,8 eV. Kolika je maksimalna kinetička energija elektrona za foton energije 2,5 eV?",
+  "odgovor": "B (1,3 eV)",
+  "potrebno_znanje": [
+   "Einsteinova jednadžba fotoelektričnog učinka E_f = W + E_k,max",
+   "Izlazni rad kao svojstvo materijala"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "21.",
+  "sazetak": "Elektron energije 10 eV ima valnu duljinu λ1, a elektron energije 1000 eV ima λ2. Koliki je λ1/λ2?",
+  "odgovor": "C (10)",
+  "potrebno_znanje": [
+   "De Broglieva valna duljina λ = h/p",
+   "p = √(2mE_k)",
+   "λ ∝ 1/√E_k"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "22.",
+  "sazetak": "Koji je znanstvenik eksperimentalno utvrdio da se atom sastoji od praznog prostora s malom, gustom, pozitivnom jezgrom?",
+  "odgovor": "C (Ernest Rutherford)",
+  "potrebno_znanje": [
+   "Rutherfordov pokus raspršenja α-čestica",
+   "Modeli atoma (Thomson, Bohr, Chadwick)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "23.",
+  "sazetak": "Koji od navedenih raspada je reakcija fisije?",
+  "odgovor": "A (prema ključu; pitanje je pogrešno formulirano jer fisija nije vrsta raspada među ponuđenima)",
+  "potrebno_znanje": [
+   "Vrste radioaktivnih raspada (α, β⁺, β⁻, γ)",
+   "Razlika između radioaktivnog raspada i nuklearne fisije"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "24.",
+  "sazetak": "Izotop torija-230 raspada se α-raspadom. Koji element nastaje?",
+  "odgovor": "D (Ra)",
+  "potrebno_znanje": [
+   "α-raspad: maseni broj se smanjuje za 4, redni broj za 2",
+   "Periodni sustav elemenata"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "25.",
+  "sazetak": "Idealni plin pri izobarnoj promjeni izvrši rad 100 J, a volumen mu se poveća s 1 dm³ na 2 dm³. Koliki je tlak?",
+  "odgovor": "p = 10^5 Pa (100 kPa)",
+  "potrebno_znanje": [
+   "Izobarna promjena stanja",
+   "Rad plina W = pΔV",
+   "Jedinice (dm³ u m³, Pa)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "26.",
+  "sazetak": "Iz grafa ovisnosti induktivnog otpora o kružnoj frekvenciji (R_L = 65 Ω pri ω = 300 rad/s) odrediti induktivitet zavojnice.",
+  "odgovor": "L = 0,22 H",
+  "potrebno_znanje": [
+   "Induktivni otpor R_L = ωL",
+   "Očitavanje podataka iz grafa"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "27.",
+  "sazetak": "Lubenica mase 1,45 kg pada iz mirovanja 80 cm; 10 % mehaničke energije izgubi se na otpor zraka. Kolika je mehanička energija nakon 80 cm?",
+  "odgovor": "E = 10,44 J",
+  "potrebno_znanje": [
+   "Potencijalna energija E_p = mgh",
+   "Očuvanje energije uz gubitke",
+   "Mehanička energija = kinetička + potencijalna"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "28.",
+  "sazetak": "Rupa površine 2 cm² na dubini 1,2 m u morskoj vodi (ρ = 1020 kg/m³). Kolikom najmanjom silom treba djelovati na čep da se spriječi prodiranje vode?",
+  "odgovor": "F = 2,45 N (prema ključu)",
+  "potrebno_znanje": [
+   "Hidrostatski tlak p = ρgh",
+   "Sila F = pS",
+   "Pretvorba jedinica (cm² u m²)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "29.",
+  "sazetak": "Plamenik daje 72 kJ/min za zagrijavanje 200 g vode i 100 g aluminijske posude od 20 °C do 90 °C. Koliko vremena je potrebno?",
+  "odgovor": "t = 54,25 s",
+  "potrebno_znanje": [
+   "Kalorimetrijska jednadžba Q = mcΔT",
+   "Snaga P = Q/t",
+   "Pretvorba jedinica (kJ, min u J, s)"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "30.",
+  "sazetak": "Youngov pokus: pukotine na razmaku 70 µm, zaslon na 4 m. Koliki su razmak između susjednih maksimuma i valna duljina lasera (prema slici)?",
+  "odgovor": "s = 4 cm; λ = 700 nm",
+  "potrebno_znanje": [
+   "Youngov pokus interferencije",
+   "Formula λ = s·d/a (d razmak pukotina, a udaljenost zaslona, s razmak maksimuma)",
+   "Očitavanje sa slike i skale"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "31.",
+  "sazetak": "Kamion na nagibu 30° s sandukom; koeficijent statičkog trenja 0,7. Koliko je maksimalno ubrzanje kamiona prije nego što sanduk počne kliziti unatrag?",
+  "odgovor": "a = 1,06 m/s²",
+  "potrebno_znanje": [
+   "Drugi Newtonov zakon na nagibu",
+   "Komponente težine mg sinα i mg cosα",
+   "Maksimalna sila statičkog trenja F = μN",
+   "Ubrzanje uz nagib"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "32.",
+  "sazetak": "Idealna baterija 5 V na paralelnom spoju dvaju identičnih nikromskih otpornika duljine 1 cm; baterija daje 25 W. Kolika je površina poprečnog presjeka žice?",
+  "odgovor": "S = 5,6·10⁻⁹ m²",
+  "potrebno_znanje": [
+   "Otpor žice R = ρl/S",
+   "Paralelni spoj otpornika",
+   "Snaga P = U²/R"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "33.",
+  "sazetak": "Zavojnica (S = 10 cm², l = 45 cm, N = 250) u zraku; struja raste s 1,2 A na 2,6 A za 0,07 s. Koliki je inducirani napon?",
+  "odgovor": "U_i = 3,5 mV",
+  "potrebno_znanje": [
+   "Magnetsko polje solenoida B = μ0NI/l",
+   "Magnetski tok Φ = BS",
+   "Faradayev zakon indukcije U = −NΔΦ/Δt"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "34.",
+  "sazetak": "Opruga k = 35 N/m, amplituda 8 cm. Kolika je elastična potencijalna energija kad tijelo ima polovinu maksimalne brzine?",
+  "odgovor": "E_ep = 0,084 J",
+  "potrebno_znanje": [
+   "Energija harmonijskog oscilatora E = kA²/2",
+   "Očuvanje energije: E_k + E_p = E",
+   "Odnos brzine i položaja"
+  ]
+ },
+ {
+  "rok": "FIZ24prvi",
+  "broj": "35.",
+  "sazetak": "Vrijeme života piona u mirovanju 26 ns; pion se giba brzinom 0,95c. Koliko su vrijeme života i put u sustavu Zemlje?",
+  "odgovor": "T = 83,3 ns; s ≈ 23,7 m",
+  "potrebno_znanje": [
+   "Specijalna teorija relativnosti: dilatacija vremena T = T0/√(1−v²/c²)",
+   "Put s = vT u sustavu promatrača",
+   "Brzina svjetlosti c"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "1",
+  "sazetak": "Iz v-t grafa odrediti put i pomak tijela za prvih 9 s gibanja (v pada linearno s 5 m/s na -3 m/s).",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "v-t graf: površina ispod grafa jednaka pomaku, apsolutne površine daju put",
+   "Pomak kao algebarski zbroj, put kao zbroj apsolutnih vrijednosti",
+   "Jednoliko ubrzano gibanje"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "2",
+  "sazetak": "Odrediti silu otpora na loptu mase 300 g koja vertikalno pada akceleracijom 9 m/s².",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Drugi Newtonov zakon",
+   "Sila teža F = mg",
+   "Rezultantna sila i sila otpora"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "3",
+  "sazetak": "Odrediti silu trenja koja zaustavi tijelo početne kinetičke energije 100 J na putu 2 m.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Work-energy teorem: rad sile trenja jednak promjeni kinetičke energije",
+   "Rad sile W = F·s",
+   "Negativni rad sile trenja"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "4",
+  "sazetak": "Izabrati izraz za masu Jupitera iz polumjera i perioda kruženja mjeseca Europa.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Newtonov zakon gravitacije",
+   "Centripetalna sila u kružnom gibanju",
+   "Treći Keplerov zakon (T² ∝ R³)"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "5",
+  "sazetak": "Odrediti što se događa s mjehurićem zraka i plovkom kad se boca stisne (plovak lebdi u sredini).",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Arhimedov zakon i uvjet plivanja/lebdenja",
+   "Tlak u tekućini se prenosi (Pascalov zakon)",
+   "Boyleov zakon pV = const za zrak u plovku"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "6",
+  "sazetak": "Odrediti što treba učiniti da bi se šipka progurala kroz prsten koji ima nešto manji unutarnji promjer od šipke.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Toplinsko širenje krutih tijela",
+   "Linearni koeficijent toplinskog rastezanja",
+   "Hlađenje/zagrijavanje prstena ili šipke mijenja promjer"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "7",
+  "sazetak": "Odrediti omjer srednjih kinetičkih energija molekula idealnog plina u dvije posude jednakog tlaka i temperature, a različitog volumena.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Srednja kinetička energija molekula ovisi samo o temperaturi (E = 3/2 kT)",
+   "Jednake temperature daju jednake energije"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "8",
+  "sazetak": "Usporediti količinu primljene topline i temperaturu aluminijske i željezne kuglice jednakih masa u pećnici nakon dva sata.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Q = mcΔT",
+   "Toplinska ravnoteža s okolinom",
+   "Uvjet da se kuglice zagriju do temperature pećnice"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "9",
+  "sazetak": "Odrediti kako se mijenja konačni tlak jednoatomnog idealnog plina pri adijabatskoj kompresiji na polovicu volumena.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Adijabatski proces: pV^κ = const, κ = 5/3 za jednoatomni plin",
+   "Adijabatska kompresija povećava tlak više nego izotermna"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "10",
+  "sazetak": "Odrediti iznose električnog polja izvan i između dviju paralelnih nabijenih ploča s nabojima +q i -q.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Polje beskonačne nabijene ploče E = σ/(2ε₀)",
+   "Superpozicija polja",
+   "Polje izvan dviju suprotno nabijenih ploča je nula, između je zbroj"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "11",
+  "sazetak": "Odrediti što se događa s nábojem i kapacitetom pločastog kondenzatora spojenog na stalni napon kad se umetne dielektrik.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Kapacitet C = ε_r ε₀ S/d",
+   "Q = CU pri stalnom naponu",
+   "Utjecaj dielektrika na kapacitet"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "12",
+  "sazetak": "Odabrati shemu spoja četiri otpornika jednakih otpora R kojima je ukupni otpor R.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Serijski spoj: otpori se zbrajaju",
+   "Paralelni spoj: recipročne vrijednosti se zbrajaju",
+   "Izračun ukupnog otpora složenog spoja"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "13",
+  "sazetak": "Odrediti orijentaciju magnetskih igala kompasa unutar i pokraj zavojnice kojom teče istosmjerna struja.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Magnetsko polje zavojnice i pravilo desne ruke",
+   "Smjer magnetskog polja određuje orijentaciju igle kompasa",
+   "Sjeverni pol igle pokazuje smjer polja"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "14",
+  "sazetak": "Odrediti smjer inducirane struje u petlji (gledano odozgo) dok se magnet približava, a zatim udaljava od nje.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Faradayev zakon indukcije",
+   "Lenzovo pravilo: inducirana struja suprotstavlja se promjeni magnetskog toka",
+   "Promjena predznaka smjera struje pri približavanju i udaljavanju"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "15",
+  "sazetak": "Odrediti period harmonijskog titranja tijela koje za 2 s prijeđe put jednak dvjema amplitudama.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Harmonijsko titranje: put u jednom periodu je 4 amplitude",
+   "Odnos između perioda, vremena i prijeđenog puta"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "16",
+  "sazetak": "Odrediti što treba učiniti da transverzalni valovi na užetu imaju veću brzinu.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Brzina transverzalnog vala na napetoj žici v = √(F/μ)",
+   "Ovisnost brzine o napetosti i linearnoj gustoći"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "17",
+  "sazetak": "Odrediti za koliko se smanji razina zvuka kad se detektor udalji s 2 m na 20 m od izvora.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Intenzitet zvuka opada s kvadratom udaljenosti (I ∝ 1/r²)",
+   "Razina zvuka u decibelima L = 10 log(I/I₀)",
+   "Za 10 puta veću udaljenost smanjenje je 20 dB"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "18",
+  "sazetak": "Odrediti faznu razliku dvaju valova u Youngovu pokusu za nastanak središnje svijetle pruge.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Interferencija valova",
+   "Konstruktivna interferencija: fazna razlika 0 ili 2πn",
+   "Središnji maksimum nastaje za jednake puteve"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "19",
+  "sazetak": "Odabrati valnu duljinu koja pripada mikrovalovima.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Elektromagnetski spektar i područja valnih duljina",
+   "Razlika između radiovalova, mikrovalova, infracrvenog, vidljivog i rendgenskog zračenja",
+   "Mjerne jedinice pm, nm, cm, km"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "20",
+  "sazetak": "Odrediti kako se mijenja zaustavni napon pri fotoelektričnom učinku kad se valna duljina svjetlosti smanjuje.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Einsteinova jednadžba fotoefekta: eU_z = hf − W_i",
+   "Veća frekvencija (manja valna duljina) daje veću maksimalnu kinetičku energiju elektrona"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "21",
+  "sazetak": "Odrediti koja čestica pri jednakoj brzini ima valnu duljinu materije najmanju.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "De Broglieva valna duljina λ = h/(mv)",
+   "Najmanja valna duljina za najveću masu"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "22",
+  "sazetak": "Odrediti koja sila zadržava elektron na kružnoj stazi oko protona u jednostavnom modelu atoma vodika.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Vrste temeljnih interakcija",
+   "Coulombova (električna) privlačna sila kao centripetalna sila"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "23",
+  "sazetak": "Odabrati točnu tvrdnju o nuklearnim reakcijama (fisija, fuzija, nuklearna elektrana Krško, Sunce).",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Razlika između fisije (cijepanje teških jezgara) i fuzije (spajanje lakih jezgara)",
+   "Gorivo u nuklearnim elektranama (npr. uran)",
+   "Fuzijske reakcije na Suncu i nastanak helija iz vodika"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "24",
+  "sazetak": "Odrediti vrijeme između dvaju događaja za promatrača na Zemlji ako astronaut izmjeri 4 s, uz duljine broda 120 m i 80 m.",
+  "odgovor": null,
+  "potrebno_znanje": [
+   "Specijalna teorija relativnosti: relativistička dilatacija vremena",
+   "Lorentzova kontrakcija duljine",
+   "Lorentzov faktor γ = 1/√(1 − v²/c²) iz omjera duljina"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "25",
+  "sazetak": "Izračunati korisnost Carnotova toplinskog stroja koji radi između spremnika temperatura 280 K i 500 K.",
+  "odgovor": "η = 0,44 (44 %)",
+  "potrebno_znanje": [
+   "Carnotov kružni proces i njegova korisnost η = 1 − T_hladni/T_topli",
+   "Temperature moraju biti u kelvinima",
+   "Postotak kao prikaz korisnosti"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "26",
+  "sazetak": "Odrediti napon na trošilu spojenom na sekundar idealnog transformatora ako su poznate struje i napon primara.",
+  "odgovor": "U₂ = 7 V",
+  "potrebno_znanje": [
+   "Idealni transformator: U₁/U₂ = I₂/I₁",
+   "Snaga na primaru jednaka snazi na sekundaru"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "27",
+  "sazetak": "Odrediti faktor trenja između utega i podloge pomoću dinamometra kojim se utег povlači jednoliko.",
+  "odgovor": "μ = 0,6 (G = 5 N, F_tr = 3 N)",
+  "potrebno_znanje": [
+   "Uvjet jednolikog gibanja: F_vlak = F_tr",
+   "Sila trenja F_tr = μF_N",
+   "Na horizontalnoj podlozi F_N = G",
+   "Očitavanje sile s dinamometra"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "28",
+  "sazetak": "Odrediti dinamički tlak vode u užem dijelu horizontalne cijevi ako je polumjer užeg dijela dva puta manji i brzina u širem dijelu 2,5 m/s.",
+  "odgovor": "p_din = 50 000 Pa (5·10⁴ Pa)",
+  "potrebno_znanje": [
+   "Jednadžba kontinuiteta S₁v₁ = S₂v₂",
+   "Površina presjeka ovisi o kvadratu polumjera",
+   "Dinamički tlak p = ρv²/2",
+   "Bernoullijeva jednadžba"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "29",
+  "sazetak": "Odrediti konačnu temperaturu idealnog plina u spremniku s klipom nakon izobarnog povećanja volumena za 20 dm³.",
+  "odgovor": "T₂ = 812 K",
+  "potrebno_znanje": [
+   "Jednadžba stanja idealnog plina pV = nRT",
+   "Izobarni proces: V₁/T₁ = V₂/T₂",
+   "Pretvorba jedinica (bar, dm³, Pa, m³)"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "30",
+  "sazetak": "Odrediti brzinu svjetlosti u kristalu ako je granični kut totalne refleksije na prijelazu iz kristala u zrak 69°.",
+  "odgovor": "v = 2,8·10⁸ m/s",
+  "potrebno_znanje": [
+   "Totalna refleksija: sin α_gr = n₂/n₁",
+   "Indeks loma n = c/v",
+   "Brzina svjetlosti u vakuumu c ≈ 3·10⁸ m/s"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "31",
+  "sazetak": "Odrediti visinu na koju se popne tijelo mase 3 kg uz kosinu ako je početna brzina 5 m/s, vrijeme kočenja 7 s, a snaga sile trenja 1,5 W.",
+  "odgovor": "h = 0,9 m",
+  "potrebno_znanje": [
+   "Zakon očuvanja energije s gubitkom zbog trenja",
+   "Snaga P = W/t",
+   "Kinetička i potencijalna energija (mgh)",
+   "Rad sile trenja jednak gubitku mehaničke energije"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "32",
+  "sazetak": "Odrediti količinu naboja na svakoj od dviju nabijenih aluminijskih kuglica u tekućini ako niti zatvaraju kut 60°.",
+  "odgovor": "q = 4,85·10⁻⁷ C",
+  "potrebno_znanje": [
+   "Coulombov zakon uz relativnu permitivnost sredine",
+   "Ravnoteža sila: napetost, težina (umanjena za uzgon), Coulombova sila",
+   "Uzgon F_u = ρ_tek·g·V",
+   "Geometrija ravnoteže: tg(α/2) = F_e/F_g'",
+   "Gustoća i volumen kuglice iz mase"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "33",
+  "sazetak": "Odrediti udaljenost između ulazne i izlazne točke elektrona ubrzanog naponom 100 V koji opiše polukružnicu u magnetskom polju.",
+  "odgovor": "2r = 21 cm",
+  "potrebno_znanje": [
+   "Rad električnog polja: eU = mv²/2",
+   "Lorentzova sila F = qvB",
+   "Polumjer kružnice r = mv/(qB)",
+   "Promjer polukružnice jednak je udaljenosti ulaza i izlaza"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "34",
+  "sazetak": "Odrediti visinu na koju se podigne kuglica njihala (10 titraja u 36 s) pri otklonu 5°.",
+  "odgovor": "h = 1,25 cm",
+  "potrebno_znanje": [
+   "Period matematičkog njihala T = 2π√(l/g)",
+   "Izračun duljine niti iz perioda",
+   "Geometrija: h = l(1 − cos α)",
+   "Period T = t/n"
+  ]
+ },
+ {
+  "rok": "FIZ25drugi",
+  "broj": "35",
+  "sazetak": "Odrediti aktivnost radioaktivnog izotopa nakon 20 h ako je vrijeme poluraspada 10 h i početni broj jezgara 1000.",
+  "odgovor": "A = 0,0048 Bq",
+  "potrebno_znanje": [
+   "Zakon radioaktivnog raspada N = N₀·2^(−t/T)",
+   "Konstanta raspada λ = ln 2 / T",
+   "Aktivnost A = λN",
+   "Pretvorba jedinica vremena (h u s)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "1",
+  "sazetak": "Izračunati put i pomak biciklista koji se giba 30 km na istok, zatim 40 km na jug.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "razlika između puta (ukupna prijeđena duljina) i pomaka (vektor od početne do krajnje točke)",
+   "Pitagorin poučak za zbrajanje okomitih vektora"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "2",
+  "sazetak": "Odrediti koja tvrdnja o očuvanju količine gibanja i kinetičke energije vrijedi za neelastični sudar u zatvorenom sustavu.",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "zakon očuvanja količine gibanja u zatvorenom sustavu",
+   "neelastični sudar i pretvorba kinetičke energije u druge oblike energije"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "3",
+  "sazetak": "Usporediti rad i silu potrebnu za podizanje tereta na visinu h direktno (A) i uz kosinu (B) bez trenja.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "rad sile i promjena potencijalne energije tereta",
+   "rad jednak kod konzervativne sile bez trenja neovisno o putanji",
+   "sila na kosini manja od težine tereta, ali na većem putu"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "4",
+  "sazetak": "Odrediti rezultantnu silu na astronaute u orbitalnoj svemirskoj postaji u sustavu vezanom za Zemlju.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "gravitacijska sila kao centripetalna sila pri kruženju",
+   "bestežinsko stanje u slobodnom padu",
+   "smjer centripetalne sile prema središtu kružnice"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "5",
+  "sazetak": "Usporediti hidrostatičke tlakove u točkama A i B u spremniku punom vode.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "hidrostatički tlak p = ρgh",
+   "dubina mjerena od slobodne površine vode (A je na dubini 5 m, B na 4 m)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "6",
+  "sazetak": "Odrediti što će omogućiti ponovni prolazak zagrijane bakrene kuglice kroz bakreni prsten.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "toplinsko širenje krutina",
+   "zagrijavanje šupljine prstena povećava njegov promjer",
+   "hlađenje kuglice smanjuje njezin promjer"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "7",
+  "sazetak": "Odrediti masu plina m2 ako je molarna masa M2 = 0,5 M1, a plinovi su u jednakim volumenima, tlakovima i temperaturama.",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "jednadžba stanja idealnog plina pV = nRT",
+   "jednaki n za jednake p, V, T",
+   "veza mase, količine tvari i molarne mase m = nM"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "8",
+  "sazetak": "Usporediti unutarnje energije idealnog plina u stanjima 1, 2 i 3 kružnog procesa na pV dijagramu.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "unutarnja energija idealnog plina proporcionalna temperaturi (U = 3/2 nRT)",
+   "iz pV = nRT: produkt pV određuje temperaturu",
+   "očitavanje promjene pV iz dijagrama"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "9",
+  "sazetak": "Odrediti toplinu Q i rad W za idealni plin stalnog volumena kojem se unutarnja energija poveća za 500 J.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "prvi zakon termodinamike ΔU = Q − W",
+   "pri stalnom volumenu nema rada (W = 0)",
+   "pri izohornom procesu sva dovedena toplina mijenja unutarnju energiju"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "10",
+  "sazetak": "Odrediti točku između naboja q i 9q u kojoj je električno polje jednako nuli.",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "električno polje točkastog naboja E = kQ/r²",
+   "poništavanje polja dvaju naboja istog predznaka",
+   "točka bliža manjem naboju, na udaljenosti r/4 od q"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "11",
+  "sazetak": "Odrediti izraz za akceleraciju elektrona ubrzanog razlikom potencijala U na putu s.",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "rad električne sile jednak promjeni kinetičke energije (eU = ½mv²)",
+   "drugi Newtonov zakon: a = F/m, F = eE, E = U/s"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "12",
+  "sazetak": "Odrediti koja kombinacija promjena napona i otpora uvijek povećava struju u jednostavnom strujnom krugu.",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "Ohmov zakon I = U/R",
+   "struja raste s porastom napona i padom otpora"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "13",
+  "sazetak": "Odrediti smjer ukupnog magnetskog polja u točki T između dvaju vodiča sa strujama u suprotnim smjerovima.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "magnetsko polje ravnog vodiča, pravilo desne ruke",
+   "superpozicija magnetskih polja dvaju vodiča",
+   "smjerovi polja oba vodiča u točki T se zbrajaju"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "14",
+  "sazetak": "Odrediti vremenski interval u kojemu je razlika magnetskih tokova jednaka nuli na grafu Φ(t).",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "magnetski tok Φ i njegova promjena ΔΦ",
+   "očitavanje vrijednosti toka u trenucima t2 i t4 s grafa",
+   "ΔΦ = 0 kad su tokovi na krajevima intervala jednaki"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "15",
+  "sazetak": "Odrediti promjenu maksimalne elastične potencijalne energije titrajnog sustava kad se amplituda udvostruči.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "elastična potencijalna energija opruge E = ½kx²",
+   "maksimalna energija ovisi o kvadratu amplitude (E ∝ A²)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "16",
+  "sazetak": "Odrediti kako se puls brijega reflektira od slobodnog kraja užeta.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "refleksija transverzalnih valova na slobodnom kraju",
+   "na slobodnom kraju puls se reflektira bez promjene faze (brijeg ostaje brijeg)",
+   "amplituda ostaje ista pri idealnoj refleksiji"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "17",
+  "sazetak": "Odrediti graf koji točno prikazuje ovisnost intenziteta zvučnih valova o udaljenosti r.",
+  "odgovor": "B",
+  "potrebno_znanje": [
+   "intenzitet zvuka opada s kvadratom udaljenosti (I ∝ 1/r²)",
+   "prepoznavanje grafa opadajuće hiperbole koja asimptotski teži nuli"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "18",
+  "sazetak": "Odrediti razliku faza dvaju valova pri nastanku prve tamne pruge u Youngovu pokusu.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "interferencija valova i uvjet za destruktivnu interferenciju",
+   "prva tamna pruga odgovara faznoj razlici π (polovina valne duljine razlike hoda)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "19",
+  "sazetak": "Odrediti kojem području elektromagnetskog spektra pripada val frekvencije 1 MHz.",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "elektromagnetski spektar i rasponi frekvencija",
+   "veza c = λf",
+   "radiovalovi imaju frekvencije od kHz do GHz"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "20",
+  "sazetak": "Odrediti odnos izlaznih radova metala A i B iz grafa ovisnosti maksimalne kinetičke energije fotoelektrona o frekvenciji.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "fotoelektrični efekt, jednadžba Ek = hf − W",
+   "izlazni rad iz odsječka na osi frekvencija (Ek = 0 → W = hf0)",
+   "veći prag frekvencije znači veći izlazni rad"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "21",
+  "sazetak": "Usporediti kinetičku energiju i valnu duljinu elektrona i protona ubrzanih jednakim naponima iz mirovanja.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "kinetička energija stečena radom električne sile Ek = eU (ista za oba)",
+   "de Broglieva valna duljina λ = h/p",
+   "p = √(2mEk), pa je manja masa elektrona povezana s većom valnom duljinom"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "22",
+  "sazetak": "Odrediti čiji je model atoma prvi uspješno objasnio linijski spektar atoma vodika.",
+  "odgovor": "A",
+  "potrebno_znanje": [
+   "Bohrov model atoma s kvantiziranim energijskim razinama",
+   "linijski spektar nastaje prijelazima elektrona između razina"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "23",
+  "sazetak": "Odrediti koje se gorivo koristi u nuklearnoj elektrani Krško.",
+  "odgovor": "C",
+  "potrebno_znanje": [
+   "nuklearna fisija",
+   "gorivo nuklearnih elektrana je uranij (U-235)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "24",
+  "sazetak": "Odrediti kojim se satom mjeri vlastito vrijeme putovanja istraživačke letjelice.",
+  "odgovor": "D",
+  "potrebno_znanje": [
+   "vlastito vrijeme je vrijeme izmjereno satom koji miruje u odnosu na promatrani događaj",
+   "posebna teorija relativnosti i dilatacija vremena"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "25",
+  "sazetak": "Izračunati korisnost Carnotovog toplinskog stroja između spremnika temperatura 400 K i 300 K.",
+  "odgovor": "η = 1 − T2/T1 = 0,25 = 25 %",
+  "potrebno_znanje": [
+   "korisnost Carnotovog stroja η = 1 − T2/T1",
+   "temperature se uvrštavaju u kelvinima",
+   "pretvorba decimalnog broja u postotak"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "26",
+  "sazetak": "Odrediti najveći iznos napona na krajevima otpornika 100 Ω kroz koji teče izmjenična struja i = 2 A sin(314 s⁻¹ t).",
+  "odgovor": "U0 = 200 V",
+  "potrebno_znanje": [
+   "amplituda izmjenične struje I0 = 2 A",
+   "Ohmov zakon za amplitude U0 = I0·R",
+   "za otpornik struja i napon su u fazi"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "27",
+  "sazetak": "Odrediti omjer masa utega m1/m2 na nepomičnoj koloturi ako se utezi gibaju akceleracijom 2 m/s².",
+  "odgovor": "m1/m2 = 1,5",
+  "potrebno_znanje": [
+   "drugi Newtonov zakon za sustav utega povezanih niti",
+   "Atwoodov stroj: (m1 − m2)g = (m1 + m2)a",
+   "izraz m1/m2 = (g + a)/(g − a)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "28",
+  "sazetak": "Odrediti dinamički tlak vode u dijelu horizontalne cijevi za zadani protok i površinu presjeka.",
+  "odgovor": "p_din = 8000 Pa",
+  "potrebno_znanje": [
+   "jednadžba kontinuiteta Q = Av",
+   "dinamički tlak p_din = ½ρv²",
+   "pretvorba jedinica (cm² u m²)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "29",
+  "sazetak": "Odrediti ukupni tlak plina u tikvici pri temperaturi 61 °C iz podataka o razlici tlaka pri 20 °C.",
+  "odgovor": "p = 2,8·10⁵ Pa",
+  "potrebno_znanje": [
+   "ukupni tlak plina p = Δp + p_a (atmosferski tlak)",
+   "izohorni proces: p1/T1 = p2/T2",
+   "temperature u kelvinima"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "30",
+  "sazetak": "Odrediti udaljenost predmeta od konvergentne leće jakosti 2,5 dioptrije koja daje virtualnu sliku uvećanu 40 %.",
+  "odgovor": "a = 11,4 cm",
+  "potrebno_znanje": [
+   "jednadžba tankih leća 1/f = 1/a + 1/b",
+   "jakost leće J = 1/f",
+   "linearno uvećanje m = −b/a, virtualna slika daje m = 1,4"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "31",
+  "sazetak": "Odrediti udaljenost od podnožja kosine na kojoj se tijelo zaustavi nakon klizanja niz kosinu i po horizontalnoj podlozi s trenjem.",
+  "odgovor": "s = 39,3 m",
+  "potrebno_znanje": [
+   "zakon očuvanja energije uz rad sile trenja",
+   "sila trenja na kosini μmg cos α i na podlozi μmg",
+   "potencijalna energija mgh = W_trenja ukupno",
+   "trigonometrija za duljinu kosine ℓ = h/sin α"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "32",
+  "sazetak": "Odrediti udaljenost točkastog naboja q2 ispod naboja q1 tako da napetost niti bude 1,208·10⁻⁴ N.",
+  "odgovor": "r = 27,3 cm",
+  "potrebno_znanje": [
+   "sile na ovješeno tijelo: težina, električna sila homogenog polja i Coulombova sila",
+   "Coulombov zakon F = kq1q2/r²",
+   "ravnoteža sila na niti F_N = mg + Eq1 − F"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "33",
+  "sazetak": "Odrediti silu kojom magnetska polja vodiča sa strujama I1 i I2 djeluju na 1 m vodiča sa strujom I3.",
+  "odgovor": "F = 1,2·10⁻⁵ N",
+  "potrebno_znanje": [
+   "magnetsko polje ravnog vodiča B = μ0 I/(2πr)",
+   "sila na vodič u magnetskom polju F = BIℓ",
+   "superpozicija polja vodiča I1 i I2 na mjestu I3 (oduzimanje zbog smjerova)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "34",
+  "sazetak": "Odrediti kinetičku energiju tijela koje harmonijski titra na opruzi na mjestu gdje djeluje sila 625 mN.",
+  "odgovor": "Ek = 0,375 J",
+  "potrebno_znanje": [
+   "harmonijski titraj, sila F = ky",
+   "energija titranja E = ½kA²",
+   "zakon očuvanja energije: Ek = ½k(A² − y²)"
+  ]
+ },
+ {
+  "rok": "FIZ25prvi",
+  "broj": "35",
+  "sazetak": "Odrediti aktivnost 1 mol izotopa natrija nakon 10 minuta ako je vrijeme poluraspada 60 s.",
+  "odgovor": "A = 6,79·10¹⁸ Bq",
+  "potrebno_znanje": [
+   "zakon radioaktivnog raspada N = N0·2^(−t/T)",
+   "konstanta raspada λ = ln 2 / T",
+   "aktivnost A = λN",
+   "Avogadrov broj za određivanje broja atoma u 1 molu"
+  ]
+ }
+]

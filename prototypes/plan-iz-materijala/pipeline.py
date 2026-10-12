@@ -16,13 +16,13 @@ SSL = ssl.create_default_context(cafile=certifi.where())
 
 HERE = Path(__file__).parent
 CACHE = HERE / "cache"
-OUT = HERE / "out"
+OUT = HERE / os.environ.get("OUTDIR", "out")  # OUTDIR=out_sol → zaseban plan za usporedbu
 MATERIALS = Path("/Users/matino/Documents/Coworker/test-new-feature")
 MANUAL_PLAN = Path("/Users/matino/Documents/Coworker/Fizika/Plan - Fizika 3")
 BACKEND_PROPS = HERE.parents[5] / "matmat-backend/src/main/resources/application-local.properties"
 
 M_OCR = "google/gemini-2.5-flash-lite"
-M_PLAN = "anthropic/claude-sonnet-5.5"
+M_PLAN = os.environ.get("PLAN_MODEL", "anthropic/claude-sonnet-5.5")
 M_CHEAP = "anthropic/claude-haiku-5.5"
 M_DECIDE = "typesafe/jev-1.13"
 
@@ -76,8 +76,11 @@ def _cached(step, payload, fn):
 
 def chat(step, model, system, user, json_out=True, max_tokens=16000, reasoning=None, _try=0):
     content = user if isinstance(user, list) else [{"type": "text", "text": user}]
+    # Anthropic kešira samo uz izričitu oznaku; OpenAI kešira zajednički početak prompta sam
+    sys_msg = ([{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}]
+               if model.startswith("anthropic/") and os.environ.get("CACHE_PROMPTS") else system)
     body = {"model": model, "max_tokens": max_tokens, "usage": {"include": True},
-            "messages": [{"role": "system", "content": system},
+            "messages": [{"role": "system", "content": sys_msg},
                          {"role": "user", "content": content}]}
     if json_out:
         body["response_format"] = {"type": "json_object"}
@@ -373,12 +376,14 @@ def step_coverage():
     def one(batch):
         z = "\n".join(f"{i}. [{x['rok']} {x['broj']}] {x['sazetak']} (odgovor: {x.get('odgovor', '')})"
                       for i, x in enumerate(batch))
-        return chat("coverage", M_CHEAP,
-            "Za svaki zadatak s ispita navedi koje lekcije plana učenik mora proći da ga riješi, "
+        sys_ = ("Za svaki zadatak s ispita navedi koje lekcije plana učenik mora proći da ga riješi, "
             "i je li za njega potrebno nešto što NIJE ni u jednoj lekciji ni u predznanju. Konstante i formule iz "
             "knjižice formula su dostupne na ispitu i ne računaju se kao nedostatak. Vrati JSON "
-            '{"zadaci":[{"i":0,"lekcije":["id"],"nedostaje":"" }]}  (nedostaje prazno ako ništa)',
-            f"PREDZNANJE: {plan['predznanje']}\n\n{formula_sheet()}\n\nLEKCIJE:\n{lek}\n\nZADACI:\n{z}", max_tokens=8000)["zadaci"]
+            '{"zadaci":[{"i":0,"lekcije":["id"],"nedostaje":"" }]}  (nedostaje prazno ako ništa)')
+        shared = f"PREDZNANJE: {plan['predznanje']}\n\n{formula_sheet()}\n\nLEKCIJE:\n{lek}"
+        if os.environ.get("CACHE_PROMPTS"):
+            return chat("coverage", M_CHEAP, sys_ + "\n\n" + shared, f"ZADACI:\n{z}", max_tokens=8000)["zadaci"]
+        return chat("coverage", M_CHEAP, sys_, f"{shared}\n\nZADACI:\n{z}", max_tokens=8000)["zadaci"]
 
     res = []
     for batch, out in zip(batches, pmap(one, batches, workers=6)):
@@ -518,6 +523,12 @@ Stavka NIJE: isti zakon u drugom kontekstu, obrat iste formule, isti zadatak s d
 Predznanje je samo osnovnoškolska matematika; sve iz fizike je stavka.
 Konstante i tablične vrijednosti iz knjižice formula NISU stavke (učenik ih pronađe u knjižici),
 ali značenje veličine i kada se formula koristi jesu."""
+if os.environ.get("COARSE"):  # Sol dijeli dvostruko sitnije od Sonneta (1299 prema 628 stavki), pa mu treba ova granica
+    POINT_RULES += """
+Stavka obuhvaća jednu veličinu ili zakon ZAJEDNO s njegovom definicijom, formulom, jedinicom i tipičnom zamkom
+kad idu zajedno, npr. „put i pomak: put je ukupna duljina putanje (skalar), pomak vektor od početnog do konačnog
+položaja; put je jednak iznosu pomaka samo ako tijelo ne mijenja smjer“. Ne rastavljaj definiciju, jedinicu,
+formulu i zamku iste veličine na zasebne stavke. Jedan ishod obično ima 10–25 stavki."""
 
 
 def step_points():
@@ -528,13 +539,18 @@ def step_points():
 
     def one(ix):
         i, ish = ix
-        out = chat("points", M_PLAN,
-            "Izvlačiš stavke znanja za JEDAN ishod ispitnog kataloga fizike.\n" + POINT_RULES +
+        sys_ = ("Izvlačiš stavke znanja za JEDAN ishod ispitnog kataloga fizike.\n" + POINT_RULES +
             "\nUzmi samo stavke koje pripadaju OVOM ishodu (ostali ishodi imaju svoje pozive). Uključi sve što "
             "traži razrada i sve što zadaci s ispita iz ovog područja zahtijevaju. Poredaj ih redom učenja. "
-            'Vrati JSON {"stavke":[{"tekst":"…","vrsta":"formula|definicija|pojava|postupak|zamka"}]}',
-            f"OVAJ ISHOD:\n{json.dumps(ish, ensure_ascii=False)}\n\nSVI ISHODI (da znaš granice):\n{others}\n\n"
-            f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}", max_tokens=12000, reasoning="medium")["stavke"]
+            'Vrati JSON {"stavke":[{"tekst":"…","vrsta":"formula|definicija|pojava|postupak|zamka"}]}')
+        if os.environ.get("CACHE_PROMPTS"):  # zajednički dio na početak, ishod koji se mijenja na kraj
+            out = chat("points", M_PLAN, sys_ + f"\n\nSVI ISHODI (da znaš granice):\n{others}\n\n"
+                       f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}",
+                       f"OVAJ ISHOD:\n{json.dumps(ish, ensure_ascii=False)}", max_tokens=12000, reasoning="medium")["stavke"]
+        else:
+            out = chat("points", M_PLAN, sys_,
+                f"OVAJ ISHOD:\n{json.dumps(ish, ensure_ascii=False)}\n\nSVI ISHODI (da znaš granice):\n{others}\n\n"
+                f"ZADACI SA ŠEST ROKOVA:\n{zad}\n\n{formula_sheet()}", max_tokens=12000, reasoning="medium")["stavke"]
         return [{"id": f"S{i:02d}.{k:02d}", "ishod": ish["oznaka"] or "ostalo", "ishod_naslov": ish["naslov"], **x}
                 for k, x in enumerate(out, 1)]
 
@@ -559,6 +575,12 @@ def step_edges():
 
     def one(batch):
         b = "\n".join(f"{p['id']} {p['tekst']}" for p in batch)
+        if os.environ.get("CACHE_PROMPTS"):  # cijeli popis u system, da ga cache dijeli među serijama
+            return chat("edges", M_PLAN,
+                "Za svaku stavku iz SERIJE navedi njezine IZRAVNE preduvjete: stavke s CIJELOG popisa bez kojih se ona "
+                "ne može razumjeti. Samo izravne (ne tranzitivne), obično 0–3. Predznanje (osnovnoškolska matematika) "
+                'nije stavka. Vrati JSON {"preduvjeti":{"id":["id"]}}\n\n' f"CIJELI POPIS:\n{allp}",
+                f"SERIJA:\n{b}", max_tokens=8000, reasoning="low")["preduvjeti"]
         return chat("edges", M_PLAN,
             "Za svaku stavku iz SERIJE navedi njezine IZRAVNE preduvjete: stavke s CIJELOG popisa bez kojih se ona "
             "ne može razumjeti. Samo izravne (ne tranzitivne), obično 0–3. Predznanje (osnovnoškolska matematika) "
@@ -566,7 +588,8 @@ def step_edges():
             f"CIJELI POPIS:\n{allp}\n\nSERIJA:\n{b}", max_tokens=8000, reasoning="low")["preduvjeti"]
 
     edges = {}
-    for out in pmap(one, batches, workers=6):
+    first = [one(batches[0])] if os.environ.get("CACHE_PROMPTS") else []  # prvi poziv sam, da napuni cache
+    for out in first + pmap(one, batches[len(first):], workers=6):
         edges.update(out)
     ids = {p["id"] for p in pts}
     for p in pts:

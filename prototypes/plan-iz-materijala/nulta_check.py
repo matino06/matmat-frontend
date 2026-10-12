@@ -68,7 +68,7 @@ def main():
         user = (f"LEKCIJA {l['id']}: {l['naziv']}\nSTAVKE LEKCIJE:\n"
                 + "\n".join(f"{s} {S[s]['tekst']}" for s in l["stavke"]))
         try:
-            out = P.chat(f"{TAG}-llm", MODEL, sys_, user, max_tokens=4000, reasoning=EFFORT)
+            out = P.chat(f"{TAG}-llm", MODEL, sys_, user, max_tokens=4000, reasoning=EFFORT, _try=int(os.environ.get("SEED", "0")))
         except Exception as e:
             return {"id": l["id"], "greska": str(e)[:200], "koristi": []}
         return {"id": l["id"], "koristi": out.get("koristi", [])}

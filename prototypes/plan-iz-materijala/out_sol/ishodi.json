@@ -1,0 +1,267 @@
+[
+ {
+  "oznaka": "FIZ SŠ C.1.1.",
+  "naslov": "Analizira pravocrtno gibanje",
+  "razrada": [
+   "fizički analizira primjere jednolikoga gibanja po pravcu",
+   "fizički analizira primjere jednolikoga ubrzanog/ usporenog gibanja po pravcu"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.1.2.",
+  "naslov": "Primjenjuje I. Newtonov zakon",
+  "razrada": [
+   "primjenjuje koncept I. Newtonova zakona"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.1.3.",
+  "naslov": "Primjenjuje II. Newtonov zakon",
+  "razrada": [
+   "primjenjuje istodobno djelovanje više sila na tijelo i prikazuje ih dijagramom sila",
+   "fizički analizira II. Newtonov zakon na primjeru sile teže, elastične sile i sile trenja",
+   "fizički analizira gibanja u polju sile teže (slobodan pad, vertikalni i horizontalni hitac)"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.1.4.",
+  "naslov": "Primjenjuje III. Newtonov zakon i zakon očuvanja količine gibanja",
+  "razrada": [
+   "primjenjuje koncept III. Newtonova zakona",
+   "povezuje impuls sile i promjenu količine gibanja",
+   "primjenjuje koncept zakona očuvanja količine gibanja"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ D.1.5.",
+  "naslov": "Primjenjuje zakon očuvanja energije",
+  "razrada": [
+   "fizički analizira zakon očuvanja energije",
+   "fizički analizira koncepte energije i rada",
+   "fizički analizira koncept snage i korisnosti",
+   "fizički analizira koncepte različitih oblika mehaničke energije"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.1.6.",
+  "naslov": "Analizira kružno gibanje",
+  "razrada": [
+   "fizički analizira primjere jednolikoga kružnog gibanja"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.1.7.",
+  "naslov": "Primjenjuje zakon gravitacije i analizira gibanje Zemlje i nebeskih tijela",
+  "razrada": [
+   "fizički analizira Newtonov zakon gravitacije",
+   "fizički analizira gibanje satelita"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.2.1.",
+  "naslov": "Primjenjuje zakone statike fluida",
+  "razrada": [
+   "fizički analizira tlak (hidrostatički, atmosferski, hidraulički)",
+   "fizički analizira uzgon",
+   "fizički analizira djelovanje sila na tijelo uronjeno u fluid"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.2.2.",
+  "naslov": "Primjenjuje zakone dinamike fluida",
+  "razrada": [
+   "fizički analizira gibanje idealnih fluida (jednadžba kontinuiteta i Bernoullijeva jednadžba)"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.2.3.",
+  "naslov": "Primjenjuje model čestične građe tvari",
+  "razrada": [
+   "fizički analizira zakonitosti toplinskoga širenja čvrstih i tekućih tijela (linearno i volumno)",
+   "objašnjava strukturu tvari, difuziju, Brownovo gibanje, agregacijska stanja"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ D.2.4.",
+  "naslov": "Analizira i primjenjuje zakone idealnoga plina i molekulsko-kinetički model plina",
+  "razrada": [
+   "fizički analizira promjene stanja idealnoga plina (plinski zakoni)",
+   "fizički analizira molekulsko-kinetičku teoriju plinova na modelu idealnoga plina"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ D.2.5.",
+  "naslov": "Analizira termodinamičke procese i sustave",
+  "razrada": [
+   "fizički analizira koncept rada plina, topline i unutarnje energije",
+   "fizički analizira promjene agregacijskih stanja",
+   "fizički analizira rad toplinskih strojeva",
+   "fizički analizira I. zakon termodinamike"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.2.6.",
+  "naslov": "Objašnjava elektrostatičke pojave, primjenjuje koncepte i zakone elektrostatike",
+  "razrada": [
+   "fizički analizira osnovne pojmove i zakone elektrostatike"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.2.7.",
+  "naslov": "Opisuje električno polje",
+  "razrada": [
+   "fizički analizira električno polje",
+   "fizički analizira gibanje nabijene čestice u električnome polju",
+   "fizički analizira koncept električnoga kapaciteta i elektrostatičkih veličina povezanih s pločastim kondenzatorom",
+   "fizički analizira koncept električnoga napona i električnoga potencijala"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.2.8.",
+  "naslov": "Primjenjuje zakone elektrodinamike u električnome strujnom krugu",
+  "razrada": [
+   "fizički analizira koncept električne struje",
+   "fizički analizira koncept električnoga otpora",
+   "fizički analizira Ohmov zakon",
+   "fizički analizira ovisnost struje, napona i otpora u električnim strujnim krugovima",
+   "fizički interpretira rad i snagu u električnome strujnom krugu"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.3.1.",
+  "naslov": "Opisuje svojstva magneta i analizira vezu između električne struje i magnetizma",
+  "razrada": [
+   "fizički analizira magnetska polja trajnih magneta",
+   "fizički analizira magnetsko polje električne struje"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.3.2.",
+  "naslov": "Analizira magnetsko međudjelovanje i objašnjava primjene",
+  "razrada": [
+   "primjenjuje fizičke izraze za Amperovu i Lorentzovu silu na primjerima",
+   "analizira gibanje nabijene čestice u magnetskome polju"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.3.3.",
+  "naslov": "Analizira elektromagnetsku indukciju i primjene",
+  "razrada": [
+   "fizički analizira elektromagnetsku indukciju",
+   "primjenjuje Faradayev zakon i Lenzovo pravilo",
+   "primjenjuje osnovne fizičke veličine u zapisu izmjenične struje",
+   "uspoređuje svojstva istosmjerne i izmjenične struje, primjenjuje načelo rada električnoga generatora, elektromotora i transformatora, primjenjuje kapacitivni i induktivni otpor"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.3.4., FIZ SŠ D.3.4.",
+  "naslov": "Analizira harmonijsko titranje",
+  "razrada": [
+   "fizički analizira titranje tijela na opruzi",
+   "fizički analizira titranje matematičkoga njihala",
+   "fizički analizira titranje u LC titrajnom krugu",
+   "konceptualno analizira prisilno i prigušeno titranje"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.3.5., FIZ SŠ D.3.5.",
+  "naslov": "Objašnjava nastanak vala i analizira valna svojstva",
+  "razrada": [
+   "fizički analizira nastanak i širenje vala",
+   "fizički analizira svojstva mehaničkih valova (odbijanje, lom, interferencija)"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.3.6., FIZ SŠ D.3.6.",
+  "naslov": "Analizira valna svojstva zvuka",
+  "razrada": [
+   "fizički analizira valna svojstva zvuka",
+   "fizički analizira nastanak stojnoga vala",
+   "fizički analizira primjere Dopplerova efekta"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.3.7., FIZ SŠ D.3.7.",
+  "naslov": "Primjenjuje zakone geometrijske optike",
+  "razrada": [
+   "fizički analizira zakone odbijanja svjetlosti te primjenjuje odbijanje svjetlosti od ravnoga zrcala",
+   "fizički analizira zakone loma svjetlosti te primjenjuje lom svjetlosti kroz planparalelne ploče i leće"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.4.1., FIZ SŠ D.4.1.",
+  "naslov": "Analizira valnu prirodu svjetlosti",
+  "razrada": [
+   "fizički analizira valna svojstva svjetlosti (ogib, interferencija, polarizacija, raspršenje)"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.4.2., FIZ SŠ D.4.2.",
+  "naslov": "Objašnjava nastanak, svojstva i primjene elektromagnetskih valova",
+  "razrada": [
+   "fizički analizira elektromagnetske valove",
+   "fizički analizira elektromagnetski spektar"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ A.4.3., FIZ SŠ D.4.3.",
+  "naslov": "Analizira valno-čestični model svjetlosti i tvari",
+  "razrada": [
+   "fizički analizira fotoelektrični efekt",
+   "fizički analizira valno-čestični model elektromagnetskoga zračenja i tvari"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ A.4.4., FIZ SŠ D.4.4.",
+  "naslov": "Analizira model atoma i energijske spektre",
+  "razrada": [
+   "fizički analizira Bohrov model atoma"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ A.4.5., FIZ SŠ D.4.5.",
+  "naslov": "Objašnjava model atomske jezgre i nuklearne reakcije",
+  "razrada": [
+   "fizički analizira nuklearne reakcije",
+   "fizički analizira načelo ekvivalentnosti mase i energije"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.4.6., FIZ SŠ D.4.6.",
+  "naslov": "Analizira radioaktivne raspade i opisuje učinke ionizirajućega zračenja na žive organizme",
+  "razrada": [
+   "fizički analizira zakon radioaktivnoga raspada",
+   "fizički analizira vrste ionizirajućega zračenja i njihov učinak na žive organizme"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ C.4.7., FIZ SŠ D.4.7.",
+  "naslov": "Opisuje i primjenjuje osnovne ideje specijalne teorije relativnosti (STR)",
+  "razrada": [
+   "fizički analizira koncept STR-a (dilatacija vremena, kontrakcija duljine, relativistička energija, energija mirovanja čestice)"
+  ]
+ },
+ {
+  "oznaka": "FIZ SŠ B.4.8., FIZ SŠ D.4.8.",
+  "naslov": "Opisuje model nastanka i strukturu svemira",
+  "razrada": [
+   "opisuje model nastanka i strukturu svemira"
+  ]
+ },
+ {
+  "oznaka": "",
+  "naslov": "Rješava fizičke probleme",
+  "razrada": [
+   "vizualizira problemsku situaciju",
+   "identificira ciljeve rješavanja problema",
+   "izabire potrebne informacije i primjenjiva fizička načela",
+   "konstruira plan rješavanja problema",
+   "kvalitativno zaključuje primjenjujući fizičke koncepte i zakone",
+   "matematički modelira situacije i računa potrebne fizičke veličine",
+   "vrednuje fizičke situacije",
+   "interpretira i primjenjuje različite prikaze fizičkih veličina",
+   "primjenjuje i pretvara mjerne jedinice",
+   "vrednuje postupak i rezultat"
+  ]
+ }
+]
