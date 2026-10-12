@@ -1,0 +1,5982 @@
+[
+ {
+  "id": "B01.01",
+  "naziv": "Gibanje, put i pomak, prosječna brzina + Jednoliko gibanje i njegovi grafovi",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "akceleracija (ubrzanje)",
+    "stavka_lekcije": "S01.04",
+    "uci_ga": "S01.07",
+    "lekcija": "B01.03",
+    "kasnije": true
+   },
+   {
+    "pojam": "ukupna (rezultantna) sila",
+    "stavka_lekcije": "S01.04",
+    "uci_ga": "S03.03",
+    "lekcija": "B03.01",
+    "kasnije": true
+   },
+   {
+    "pojam": "vektorska veličina (vektor)",
+    "stavka_lekcije": "S01.02",
+    "uci_ga": "S03.01",
+    "lekcija": "B03.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "akceleracija (ubrzanje)",
+    "stavka_lekcije": "S01.04",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "ukupna (rezultantna) sila",
+    "stavka_lekcije": "S01.04",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "vektorska veličina (vektor)",
+    "stavka_lekcije": "S01.02",
+    "uci_ga": "S03.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B01.03",
+  "naziv": "Akceleracija i jednoliko ubrzano gibanje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "brzina (trenutačna, vektor)",
+    "stavka_lekcije": "S01.07",
+    "uci_ga": "S01.03"
+   },
+   {
+    "pojam": "put",
+    "stavka_lekcije": "S01.09",
+    "uci_ga": "S01.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B01.04",
+  "naziv": "Usporavanje i grafovi ubrzanog gibanja",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "trenutačna brzina",
+    "stavka_lekcije": "S01.13",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "akceleracija a = Δv/Δt",
+    "stavka_lekcije": "S01.11",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "jednoliko ubrzano gibanje (v = v0 + at)",
+    "stavka_lekcije": "S01.11",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "jednoliko ubrzano gibanje (stalna akceleracija)",
+    "stavka_lekcije": "S01.14",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "akceleracija a = Δv/Δt",
+    "stavka_lekcije": "S01.14",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "graf v(t) i površina ispod v(t) kao put/pomak",
+    "stavka_lekcije": "S01.12",
+    "uci_ga": "S01.06"
+   },
+   {
+    "pojam": "pomak",
+    "stavka_lekcije": "S01.12",
+    "uci_ga": "S01.02"
+   },
+   {
+    "pojam": "akceleracija kao nagib grafa v(t)",
+    "stavka_lekcije": "S01.12",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "jednoliko ubrzano gibanje",
+    "stavka_lekcije": "S01.12",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "graf x(t) i nagib grafa x(t) kao brzina",
+    "stavka_lekcije": "S01.13",
+    "uci_ga": "S01.05"
+   },
+   {
+    "pojam": "trenutačna brzina",
+    "stavka_lekcije": "S01.13",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "ubrzavanje/usporavanje kao promjena brzine (akceleracija)",
+    "stavka_lekcije": "S01.13",
+    "uci_ga": "S01.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B01.05",
+  "naziv": "Promjena smjera, slobodni pad i rješavanje zadataka",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "pomak kao predznačena vrijednost i put kao ukupna prijeđena duljina",
+    "stavka_lekcije": "S01.15",
+    "uci_ga": "S01.02"
+   },
+   {
+    "pojam": "pomak kao površina ispod grafa v(t)",
+    "stavka_lekcije": "S01.15",
+    "uci_ga": "S01.06"
+   },
+   {
+    "pojam": "jednoliko ubrzano gibanje: v = v0 + at i s = v0·t + ½at²",
+    "stavka_lekcije": "S01.17",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "put pri jednoliko ubrzanom gibanju s = v0·t + ½at²",
+    "stavka_lekcije": "S01.17",
+    "uci_ga": "S01.09"
+   },
+   {
+    "pojam": "položaj tijela x = x0 + vt u jednolikom gibanju",
+    "stavka_lekcije": "S01.18",
+    "uci_ga": "S01.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B03.01",
+  "naziv": "Sila, rezultanta i dijagram sila",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "Pitagorin poučak",
+    "stavka_lekcije": "S03.03",
+    "uci_ga": "predznanje"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B03.02",
+  "naziv": "II. Newtonov zakon i vrste gibanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "ravnoteža sila (ΣF = 0)",
+    "stavka_lekcije": "S03.05",
+    "uci_ga": "S02.06",
+    "lekcija": "B02.02",
+    "kasnije": true
+   },
+   {
+    "pojam": "komponente sile (rastavljanje sile na osi)",
+    "stavka_lekcije": "S03.06",
+    "uci_ga": "S02.11",
+    "lekcija": "B02.02",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (vektorska veličina)",
+    "stavka_lekcije": "S03.04",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "rezultantna sila (vektorski zbroj sila)",
+    "stavka_lekcije": "S03.04",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S03.04",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "stalna akceleracija, jednoliko ubrzano gibanje",
+    "stavka_lekcije": "S03.05",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "I. Newtonov zakon (mirovanje ili stalna brzina pri nultoj ukupnoj sili)",
+    "stavka_lekcije": "S03.05",
+    "uci_ga": "S02.04"
+   },
+   {
+    "pojam": "ravnoteža sila (ΣF = 0)",
+    "stavka_lekcije": "S03.05",
+    "uci_ga": "S02.06"
+   },
+   {
+    "pojam": "brzina kao vektor (smjer gibanja)",
+    "stavka_lekcije": "S03.07",
+    "uci_ga": "S01.03"
+   },
+   {
+    "pojam": "komponente sile (rastavljanje sile na osi)",
+    "stavka_lekcije": "S03.06",
+    "uci_ga": "S02.11"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B02.01",
+  "naziv": "Tromost i I. Newtonov zakon",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila",
+    "stavka_lekcije": "S02.04",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "ukupna (rezultantna) sila kao vektorski zbroj sila",
+    "stavka_lekcije": "S02.04",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "jednoliko gibanje po pravcu",
+    "stavka_lekcije": "S02.04",
+    "uci_ga": "S01.04"
+   },
+   {
+    "pojam": "brzina kao fizikalna veličina (iznos i smjer)",
+    "stavka_lekcije": "S02.07",
+    "uci_ga": "S01.03"
+   },
+   {
+    "pojam": "jednoliko gibanje (stalna brzina)",
+    "stavka_lekcije": "S02.07",
+    "uci_ga": "S01.04"
+   },
+   {
+    "pojam": "akceleracija (promjena brzine)",
+    "stavka_lekcije": "S02.12",
+    "uci_ga": "S01.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B03.03",
+  "naziv": "Trenje, otpor i sile na podlozi",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "ravnoteža sila (ΣF = 0, statičko stanje ili stalna brzina)",
+    "stavka_lekcije": "S03.13",
+    "uci_ga": "S02.06",
+    "lekcija": "B02.02",
+    "kasnije": true
+   },
+   {
+    "pojam": "slobodni pad (gibanje s akceleracijom g)",
+    "stavka_lekcije": "S03.14",
+    "uci_ga": "S01.17",
+    "lekcija": "B01.05",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila teža (G = mg)",
+    "stavka_lekcije": "S03.10",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "sila teža (G = mg)",
+    "stavka_lekcije": "S03.14",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "II. Newtonov zakon (a = F/m, ma = ΣF)",
+    "stavka_lekcije": "S03.14",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "ravnoteža sila (ΣF = 0, statičko stanje ili stalna brzina)",
+    "stavka_lekcije": "S03.13",
+    "uci_ga": "S02.06"
+   },
+   {
+    "pojam": "rastavljanje sile na komponente",
+    "stavka_lekcije": "S03.10",
+    "uci_ga": "S03.06"
+   },
+   {
+    "pojam": "relativno gibanje (gibanje u odnosu na referentni sustav)",
+    "stavka_lekcije": "S03.12",
+    "uci_ga": "S01.01"
+   },
+   {
+    "pojam": "slobodni pad (gibanje s akceleracijom g)",
+    "stavka_lekcije": "S03.14",
+    "uci_ga": "S01.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B02.02",
+  "naziv": "Ravnoteža sila i inercijski sustavi + Primjena ravnoteže: trenje i kosina",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "I. Newtonov zakon",
+    "stavka_lekcije": "S02.05",
+    "uci_ga": "S02.04"
+   },
+   {
+    "pojam": "jednoliko gibanje (stalna brzina po pravcu)",
+    "stavka_lekcije": "S02.06",
+    "uci_ga": "S01.04"
+   },
+   {
+    "pojam": "ukupna sila (rezultanta) kao vektorski zbroj sila",
+    "stavka_lekcije": "S02.06",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "sila teža",
+    "stavka_lekcije": "S02.08",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "normalna sila podloge",
+    "stavka_lekcije": "S02.08",
+    "uci_ga": "S03.10"
+   },
+   {
+    "pojam": "napetost niti",
+    "stavka_lekcije": "S02.09",
+    "uci_ga": "S03.02"
+   },
+   {
+    "pojam": "sila trenja klizanja",
+    "stavka_lekcije": "S02.10",
+    "uci_ga": "S03.12"
+   },
+   {
+    "pojam": "rastavljanje sile na komponente",
+    "stavka_lekcije": "S02.11",
+    "uci_ga": "S03.06"
+   },
+   {
+    "pojam": "kosina i komponenta mg sinα niz kosinu",
+    "stavka_lekcije": "S02.11",
+    "uci_ga": "S03.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B03.04",
+  "naziv": "Težina, dizalo i povezana tijela + Slobodni pad i vertikalni hici",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "normalna sila podloge",
+    "stavka_lekcije": "S03.09",
+    "uci_ga": "S03.10",
+    "lekcija": "B03.03",
+    "kasnije": false
+   },
+   {
+    "pojam": "otpor zraka",
+    "stavka_lekcije": "S03.18",
+    "uci_ga": "S03.14",
+    "lekcija": "B03.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila teža (G = mg)",
+    "stavka_lekcije": "S03.09",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "normalna sila podloge",
+    "stavka_lekcije": "S03.09",
+    "uci_ga": "S03.10"
+   },
+   {
+    "pojam": "II. Newtonov zakon (ΣF = ma)",
+    "stavka_lekcije": "S03.09",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "rezultantna sila",
+    "stavka_lekcije": "S03.09",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "II. Newtonov zakon (ΣF = ma)",
+    "stavka_lekcije": "S03.15",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S03.19",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "jednoliko ubrzano gibanje (v = v0 + at, s = v0t + at²/2)",
+    "stavka_lekcije": "S03.19",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "jednoliko ubrzano gibanje (v = v0 + at, s = v0t + at²/2)",
+    "stavka_lekcije": "S03.20",
+    "uci_ga": "S01.08"
+   },
+   {
+    "pojam": "slobodni pad",
+    "stavka_lekcije": "S03.18",
+    "uci_ga": "S01.17"
+   },
+   {
+    "pojam": "otpor zraka",
+    "stavka_lekcije": "S03.18",
+    "uci_ga": "S03.14"
+   },
+   {
+    "pojam": "slobodni pad (gibanje s a = g)",
+    "stavka_lekcije": "S03.19",
+    "uci_ga": "S01.17"
+   },
+   {
+    "pojam": "slobodni pad (gibanje s a = g)",
+    "stavka_lekcije": "S03.20",
+    "uci_ga": "S01.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B03.06",
+  "naziv": "Horizontalni hitac",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "slobodni pad (gibanje pod djelovanjem sile teže bez otpora zraka)",
+    "stavka_lekcije": "S03.21",
+    "uci_ga": "S01.17"
+   },
+   {
+    "pojam": "jednoliko gibanje po pravcu (vodoravna komponenta)",
+    "stavka_lekcije": "S03.21",
+    "uci_ga": "S01.04"
+   },
+   {
+    "pojam": "ubrzanje sile teže g",
+    "stavka_lekcije": "S03.21",
+    "uci_ga": "S01.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B04.01",
+  "naziv": "III. Newtonov zakon i par akcije i reakcije",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "ravnoteža sila (zbroj sila nula)",
+    "stavka_lekcije": "S04.02",
+    "uci_ga": "S02.06",
+    "lekcija": "B02.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "normalna sila podloge",
+    "stavka_lekcije": "S04.04",
+    "uci_ga": "S03.10",
+    "lekcija": "B03.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (kao vektorska veličina, sila međudjelovanja)",
+    "stavka_lekcije": "S04.01",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "ravnoteža sila (zbroj sila nula)",
+    "stavka_lekcije": "S04.02",
+    "uci_ga": "S02.06"
+   },
+   {
+    "pojam": "sila teža i težina tijela",
+    "stavka_lekcije": "S04.04",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "normalna sila podloge",
+    "stavka_lekcije": "S04.04",
+    "uci_ga": "S03.10"
+   },
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S04.05",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "II. Newtonov zakon (a = F/m)",
+    "stavka_lekcije": "S04.05",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "masa kao mjera tromosti",
+    "stavka_lekcije": "S04.05",
+    "uci_ga": "S02.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B05.01",
+  "naziv": "Mehanički rad",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "pomak",
+    "stavka_lekcije": "S05.01",
+    "uci_ga": "S01.02",
+    "lekcija": "B01.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "pomak",
+    "stavka_lekcije": "S05.02",
+    "uci_ga": "S01.02",
+    "lekcija": "B01.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (kao vektorska veličina, komponenta sile)",
+    "stavka_lekcije": "S05.01",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "pomak",
+    "stavka_lekcije": "S05.01",
+    "uci_ga": "S01.02"
+   },
+   {
+    "pojam": "sila",
+    "stavka_lekcije": "S05.02",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "pomak",
+    "stavka_lekcije": "S05.02",
+    "uci_ga": "S01.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B05.02",
+  "naziv": "Kinetička i potencijalna energija",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "harmonijsko titranje",
+    "stavka_lekcije": "S05.06",
+    "uci_ga": "S19.01",
+    "lekcija": "B19.01",
+    "kasnije": true
+   },
+   {
+    "pojam": "amplituda titranja",
+    "stavka_lekcije": "S05.06",
+    "uci_ga": "S19.02",
+    "lekcija": "B19.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "rad sile (W = F·s·cosα)",
+    "stavka_lekcije": "S05.04",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "energija kao veličina čija se promjena jednaka radu (W = ΔE)",
+    "stavka_lekcije": "S05.05",
+    "uci_ga": "S05.03"
+   },
+   {
+    "pojam": "brzina (promjena položaja u vremenu)",
+    "stavka_lekcije": "S05.04",
+    "uci_ga": "S01.03"
+   },
+   {
+    "pojam": "sila teža G = mg",
+    "stavka_lekcije": "S05.05",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "rastav sile teže na kosini (mg sinα)",
+    "stavka_lekcije": "S05.07",
+    "uci_ga": "S03.10"
+   },
+   {
+    "pojam": "elastična sila opruge (Hookeov zakon F = kx)",
+    "stavka_lekcije": "S05.06",
+    "uci_ga": "S03.11"
+   },
+   {
+    "pojam": "harmonijsko titranje",
+    "stavka_lekcije": "S05.06",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "amplituda titranja",
+    "stavka_lekcije": "S05.06",
+    "uci_ga": "S19.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B04.02",
+  "naziv": "Količina gibanja i impuls sile",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "elastični sudar / odbijanje",
+    "stavka_lekcije": "S04.09",
+    "uci_ga": "S04.16",
+    "lekcija": "B04.04",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (vektorska veličina, njutn)",
+    "stavka_lekcije": "S04.07",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "II. Newtonov zakon (F = ma)",
+    "stavka_lekcije": "S04.08",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "brzina kao fizikalna veličina (v = Δs/Δt, vektor)",
+    "stavka_lekcije": "S04.06",
+    "uci_ga": "S01.03"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S04.11",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "elastični sudar / odbijanje",
+    "stavka_lekcije": "S04.09",
+    "uci_ga": "S04.16"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B04.03",
+  "naziv": "Zakon očuvanja količine gibanja",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "rezultantna (ukupna) sila",
+    "stavka_lekcije": "S04.12",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "količina gibanja p = mv",
+    "stavka_lekcije": "S04.13",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "količina gibanja p = mv",
+    "stavka_lekcije": "S04.17",
+    "uci_ga": "S04.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B05.03",
+  "naziv": "Zakon očuvanja energije i mehanička energija + Gubici energije",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "toplina kao oblik energije",
+    "stavka_lekcije": "S05.11",
+    "uci_ga": "S12.04",
+    "lekcija": "B12.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "kinetička energija (E_k = mv²/2)",
+    "stavka_lekcije": "S05.09",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "gravitacijska potencijalna energija (E_p = mgh)",
+    "stavka_lekcije": "S05.10",
+    "uci_ga": "S05.05"
+   },
+   {
+    "pojam": "rad sile (W = F·s·cosα)",
+    "stavka_lekcije": "S05.11",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "sila trenja",
+    "stavka_lekcije": "S05.11",
+    "uci_ga": "S03.12"
+   },
+   {
+    "pojam": "sila otpora sredstva",
+    "stavka_lekcije": "S05.09",
+    "uci_ga": "S03.14"
+   },
+   {
+    "pojam": "toplina kao oblik energije",
+    "stavka_lekcije": "S05.11",
+    "uci_ga": "S12.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B04.04",
+  "naziv": "Sudari i primjena zakona",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "količina gibanja (p = mv)",
+    "stavka_lekcije": "S04.15",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "očuvanje količine gibanja",
+    "stavka_lekcije": "S04.15",
+    "uci_ga": "S04.13"
+   },
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S04.15",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "količina gibanja (p = mv)",
+    "stavka_lekcije": "S04.16",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S04.16",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "očuvanje količine gibanja",
+    "stavka_lekcije": "S04.16",
+    "uci_ga": "S04.13"
+   },
+   {
+    "pojam": "zatvoreni (izolirani) sustav",
+    "stavka_lekcije": "S04.18",
+    "uci_ga": "S04.12"
+   },
+   {
+    "pojam": "mehanička energija",
+    "stavka_lekcije": "S04.18",
+    "uci_ga": "S05.09"
+   },
+   {
+    "pojam": "očuvanje količine gibanja",
+    "stavka_lekcije": "S04.18",
+    "uci_ga": "S04.13"
+   },
+   {
+    "pojam": "očuvanje energije",
+    "stavka_lekcije": "S04.19",
+    "uci_ga": "S05.08"
+   },
+   {
+    "pojam": "očuvanje količine gibanja",
+    "stavka_lekcije": "S04.19",
+    "uci_ga": "S04.13"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B05.05",
+  "naziv": "Snaga i korisnost",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "mehanički rad W = F·s·cosα",
+    "stavka_lekcije": "S05.14",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "gravitacijska potencijalna energija mgh (promjena)",
+    "stavka_lekcije": "S05.16",
+    "uci_ga": "S05.05"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B06.01",
+  "naziv": "Opis jednolikog kružnog gibanja",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "akceleracija (promjena brzine po smjeru i iznosu kao ubrzano gibanje)",
+    "stavka_lekcije": "S06.01",
+    "uci_ga": "S01.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B06.02",
+  "naziv": "Pretvorba jedinica i usporedba točaka + Centripetalno ubrzanje i sila",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "frekvencija (Hz)",
+    "stavka_lekcije": "S06.13",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "period",
+    "stavka_lekcije": "S06.12",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "obodna brzina",
+    "stavka_lekcije": "S06.12",
+    "uci_ga": "S06.03"
+   },
+   {
+    "pojam": "kutna brzina",
+    "stavka_lekcije": "S06.12",
+    "uci_ga": "S06.04"
+   },
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S06.06",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "kružno gibanje",
+    "stavka_lekcije": "S06.06",
+    "uci_ga": "S06.01"
+   },
+   {
+    "pojam": "II. Newtonov zakon",
+    "stavka_lekcije": "S06.07",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "rezultantna sila",
+    "stavka_lekcije": "S06.08",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "I. Newtonov zakon",
+    "stavka_lekcije": "S06.11",
+    "uci_ga": "S02.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B06.04",
+  "naziv": "Rješavanje zadataka i energija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "centripetalna sila (F_cp = mv²/r)",
+    "stavka_lekcije": "S06.09",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "jednoliko kružno gibanje",
+    "stavka_lekcije": "S06.10",
+    "uci_ga": "S06.01"
+   },
+   {
+    "pojam": "rezultantna (ukupna) sila",
+    "stavka_lekcije": "S06.10",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "mehanički rad",
+    "stavka_lekcije": "S06.10",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S06.10",
+    "uci_ga": "S05.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B07.01",
+  "naziv": "Newtonov zakon gravitacije",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "III. Newtonov zakon (zakon akcije i reakcije)",
+    "stavka_lekcije": "S07.02",
+    "uci_ga": "S04.01"
+   },
+   {
+    "pojam": "sila kao vektor (iznos, smjer, hvatište)",
+    "stavka_lekcije": "S07.01",
+    "uci_ga": "S03.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B07.02",
+  "naziv": "Planeti, masa i ubrzanje slobodnog pada",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "gustoća",
+    "stavka_lekcije": "S07.04",
+    "uci_ga": "S08.21",
+    "lekcija": "B08.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "gustoća",
+    "stavka_lekcije": "S07.04",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "Newtonov zakon gravitacije (gravitacijska sila između masa)",
+    "stavka_lekcije": "S07.06",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "gravitacijska sila na površini planeta F = GMm/R²",
+    "stavka_lekcije": "S07.06",
+    "uci_ga": "S07.03"
+   },
+   {
+    "pojam": "ubrzanje slobodnog pada",
+    "stavka_lekcije": "S07.06",
+    "uci_ga": "S01.17"
+   },
+   {
+    "pojam": "gravitacijska sila kao međudjelovanje dvaju tijela (III. zakon, jednaki iznosi)",
+    "stavka_lekcije": "S07.07",
+    "uci_ga": "S07.02"
+   },
+   {
+    "pojam": "rezultantna sila kao vektorski zbroj sila",
+    "stavka_lekcije": "S07.07",
+    "uci_ga": "S03.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B07.03",
+  "naziv": "Satelit u kružnoj orbiti",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "centripetalna sila",
+    "stavka_lekcije": "S07.08",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "centripetalno ubrzanje (v²/r)",
+    "stavka_lekcije": "S07.08",
+    "uci_ga": "S06.06"
+   },
+   {
+    "pojam": "jednoliko kružno gibanje",
+    "stavka_lekcije": "S07.08",
+    "uci_ga": "S06.01"
+   },
+   {
+    "pojam": "II. Newtonov zakon (F = ma)",
+    "stavka_lekcije": "S07.08",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "Newtonov zakon gravitacije (F = Gm₁m₂/r²)",
+    "stavka_lekcije": "S07.08",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "Newtonov zakon gravitacije (F = Gm₁m₂/r²)",
+    "stavka_lekcije": "S07.09",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "sila okomita na brzinu mijenja smjer, ne iznos",
+    "stavka_lekcije": "S07.12",
+    "uci_ga": "S03.07"
+   },
+   {
+    "pojam": "gravitacijska sila kao centripetalna sila",
+    "stavka_lekcije": "S07.12",
+    "uci_ga": "S07.08"
+   },
+   {
+    "pojam": "slobodni pad",
+    "stavka_lekcije": "S07.13",
+    "uci_ga": "S01.17"
+   },
+   {
+    "pojam": "sila teža i težina tijela",
+    "stavka_lekcije": "S07.13",
+    "uci_ga": "S03.09"
+   },
+   {
+    "pojam": "normalna sila podloge",
+    "stavka_lekcije": "S07.13",
+    "uci_ga": "S03.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B07.04",
+  "naziv": "Period, Keplerovi zakoni i masa središnjeg tijela",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "Newtonov zakon gravitacije, F = GMm/r²",
+    "stavka_lekcije": "S07.10",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "centripetalna sila i centripetalno ubrzanje (v²/r)",
+    "stavka_lekcije": "S07.10",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "period kruženja i obodna brzina v = 2πr/T",
+    "stavka_lekcije": "S07.10",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "Newtonov zakon gravitacije, gravitacijska konstanta G",
+    "stavka_lekcije": "S07.11",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "centripetalna sila i centripetalno ubrzanje",
+    "stavka_lekcije": "S07.16",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "Newtonov zakon gravitacije",
+    "stavka_lekcije": "S07.16",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "gravitacijska sila kao centripetalna sila kod kruženja satelita",
+    "stavka_lekcije": "S07.14",
+    "uci_ga": "S07.08"
+   },
+   {
+    "pojam": "brzina satelita u kružnoj orbiti i njezina ovisnost o polumjeru",
+    "stavka_lekcije": "S07.14",
+    "uci_ga": "S07.09"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B08.01",
+  "naziv": "Tlak, fluidi i hidrostatički tlak",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (vektorska veličina, njutn)",
+    "stavka_lekcije": "S08.01",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "ubrzanje sile teže g",
+    "stavka_lekcije": "S08.03",
+    "uci_ga": "S03.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B08.02",
+  "naziv": "Atmosferski, ukupni i manometarski tlak",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak (p = F/S)",
+    "stavka_lekcije": "S08.05",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "hidrostatski tlak p = ρgh",
+    "stavka_lekcije": "S08.05",
+    "uci_ga": "S08.03"
+   },
+   {
+    "pojam": "dubina tekućine (mjerena od slobodne površine)",
+    "stavka_lekcije": "S08.05",
+    "uci_ga": "S08.04"
+   },
+   {
+    "pojam": "gustoća ρ",
+    "stavka_lekcije": "S08.06",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "hidrostatski tlak p = ρgh",
+    "stavka_lekcije": "S08.06",
+    "uci_ga": "S08.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B08.03",
+  "naziv": "Sila tlaka i Pascalov zakon",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "mehanički rad W = F·s",
+    "stavka_lekcije": "S08.11",
+    "uci_ga": "S05.01",
+    "lekcija": "B05.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak (omjer sile i površine)",
+    "stavka_lekcije": "S08.09",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "hidrostatski tlak p = ρgh",
+    "stavka_lekcije": "S08.09",
+    "uci_ga": "S08.03"
+   },
+   {
+    "pojam": "gustoća ρ",
+    "stavka_lekcije": "S08.09",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "tlak",
+    "stavka_lekcije": "S08.10",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "tlak",
+    "stavka_lekcije": "S08.11",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "mehanički rad W = F·s",
+    "stavka_lekcije": "S08.11",
+    "uci_ga": "S05.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B08.04",
+  "naziv": "Uzgon i Arhimedov zakon",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "gustoća (ρ = m/V)",
+    "stavka_lekcije": "S08.13",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "hidrostatski tlak (p = ρgh)",
+    "stavka_lekcije": "S08.12",
+    "uci_ga": "S08.03"
+   },
+   {
+    "pojam": "sila teža (G = mg)",
+    "stavka_lekcije": "S08.15",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "ravnoteža sila (ΣF = 0)",
+    "stavka_lekcije": "S08.15",
+    "uci_ga": "S02.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B10.01",
+  "naziv": "Čestična građa i agregacijska stanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "sila (međudjelovanje silama)",
+    "stavka_lekcije": "S10.01",
+    "uci_ga": "S03.01",
+    "lekcija": "B03.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "titranje oko ravnotežnog položaja",
+    "stavka_lekcije": "S10.03",
+    "uci_ga": "S19.01",
+    "lekcija": "B19.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (međudjelovanje silama)",
+    "stavka_lekcije": "S10.01",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "titranje oko ravnotežnog položaja",
+    "stavka_lekcije": "S10.03",
+    "uci_ga": "S19.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B11.01",
+  "naziv": "Idealni plin i veličine stanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "tlak (kao fizikalna veličina, p = F/S)",
+    "stavka_lekcije": "S11.02",
+    "uci_ga": "S08.01",
+    "lekcija": "B08.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "elastični sudar",
+    "stavka_lekcije": "S11.01",
+    "uci_ga": "S04.16",
+    "lekcija": "B04.04",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak (kao fizikalna veličina, p = F/S)",
+    "stavka_lekcije": "S11.02",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "elastični sudar",
+    "stavka_lekcije": "S11.01",
+    "uci_ga": "S04.16"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B11.02",
+  "naziv": "Jednadžba stanja i izo-procesi",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "tlak (sila po površini)",
+    "stavka_lekcije": "S11.05",
+    "uci_ga": "S08.01",
+    "lekcija": "B08.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "univerzalna plinska konstanta R",
+    "stavka_lekcije": "S11.05",
+    "uci_ga": "S11.18",
+    "lekcija": "B11.04",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "idealni plin (model)",
+    "stavka_lekcije": "S11.05",
+    "uci_ga": "S11.01"
+   },
+   {
+    "pojam": "tlak (sila po površini)",
+    "stavka_lekcije": "S11.05",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "termodinamička temperatura u kelvinima",
+    "stavka_lekcije": "S11.08",
+    "uci_ga": "S11.03"
+   },
+   {
+    "pojam": "množina tvari n",
+    "stavka_lekcije": "S11.06",
+    "uci_ga": "S11.04"
+   },
+   {
+    "pojam": "univerzalna plinska konstanta R",
+    "stavka_lekcije": "S11.05",
+    "uci_ga": "S11.18"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B08.05",
+  "naziv": "Tonjenje, lebdenje, plutanje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "gustoća ρ = m/V",
+    "stavka_lekcije": "S08.16",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "uzgon (sila uzgona na uronjeno tijelo)",
+    "stavka_lekcije": "S08.16",
+    "uci_ga": "S08.12"
+   },
+   {
+    "pojam": "gustoća ρ = m/V",
+    "stavka_lekcije": "S08.17",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "Arhimedov zakon F_u = ρ_f·g·V",
+    "stavka_lekcije": "S08.17",
+    "uci_ga": "S08.13"
+   },
+   {
+    "pojam": "sila teža G = mg",
+    "stavka_lekcije": "S08.17",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "Arhimedov zakon F_u = ρ_f·g·V",
+    "stavka_lekcije": "S08.18",
+    "uci_ga": "S08.13"
+   },
+   {
+    "pojam": "sila teža G = mg",
+    "stavka_lekcije": "S08.18",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "tlak p = F/S",
+    "stavka_lekcije": "S08.20",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "Arhimedov zakon F_u = ρ_f·g·V",
+    "stavka_lekcije": "S08.20",
+    "uci_ga": "S08.13"
+   },
+   {
+    "pojam": "Boyleov zakon pV = konst. (izotermna promjena)",
+    "stavka_lekcije": "S08.20",
+    "uci_ga": "S11.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B09.01",
+  "naziv": "Idealni fluid, protok i kontinuitet",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "viskoznost (unutarnje trenje fluida)",
+    "stavka_lekcije": "S09.01",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "gustoća fluida (ρ = m/V)",
+    "stavka_lekcije": "S09.01",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "viskoznost (unutarnje trenje fluida)",
+    "stavka_lekcije": "S09.01",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "brzina (kao fizikalna veličina v)",
+    "stavka_lekcije": "S09.03",
+    "uci_ga": "S01.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B09.02",
+  "naziv": "Statički i dinamički tlak te Bernoullijeva jednadžba",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak (sila po površini)",
+    "stavka_lekcije": "S09.07",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "fluid (tekućina ili plin)",
+    "stavka_lekcije": "S09.07",
+    "uci_ga": "S08.02"
+   },
+   {
+    "pojam": "gustoća ρ",
+    "stavka_lekcije": "S09.07",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S09.08",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "idealni fluid i stacionarno strujanje",
+    "stavka_lekcije": "S09.09",
+    "uci_ga": "S09.01"
+   },
+   {
+    "pojam": "zakon očuvanja energije",
+    "stavka_lekcije": "S09.09",
+    "uci_ga": "S05.08"
+   },
+   {
+    "pojam": "visinski član ρgh (hidrostatski tlak)",
+    "stavka_lekcije": "S09.13",
+    "uci_ga": "S08.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B09.03",
+  "naziv": "Računanje tlakova i brzina u cijevi",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak (p = F/S)",
+    "stavka_lekcije": "S09.11",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "gustoća ρ",
+    "stavka_lekcije": "S09.11",
+    "uci_ga": "S08.21"
+   },
+   {
+    "pojam": "Bernoullijeva jednadžba",
+    "stavka_lekcije": "S09.11",
+    "uci_ga": "S09.09"
+   },
+   {
+    "pojam": "jednadžba kontinuiteta S₁v₁ = S₂v₂",
+    "stavka_lekcije": "S09.11",
+    "uci_ga": "S09.04"
+   },
+   {
+    "pojam": "protok q = S·v",
+    "stavka_lekcije": "S09.12",
+    "uci_ga": "S09.03"
+   },
+   {
+    "pojam": "jednadžba kontinuiteta",
+    "stavka_lekcije": "S09.12",
+    "uci_ga": "S09.04"
+   },
+   {
+    "pojam": "Bernoullijeva jednadžba",
+    "stavka_lekcije": "S09.12",
+    "uci_ga": "S09.09"
+   },
+   {
+    "pojam": "dinamički tlak ρv²/2",
+    "stavka_lekcije": "S09.12",
+    "uci_ga": "S09.08"
+   },
+   {
+    "pojam": "statički tlak",
+    "stavka_lekcije": "S09.12",
+    "uci_ga": "S09.07"
+   },
+   {
+    "pojam": "statički tlak",
+    "stavka_lekcije": "S09.14",
+    "uci_ga": "S09.07"
+   },
+   {
+    "pojam": "dinamički tlak ρv²/2",
+    "stavka_lekcije": "S09.14",
+    "uci_ga": "S09.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B10.02",
+  "naziv": "Prijelazi stanja, difuzija i Brownovo gibanje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "agregacijska stanja (čvrsto, tekuće, plinovito)",
+    "stavka_lekcije": "S10.06",
+    "uci_ga": "S10.02"
+   },
+   {
+    "pojam": "čestice u stalnom kaotičnom toplinskom gibanju",
+    "stavka_lekcije": "S10.07",
+    "uci_ga": "S10.01"
+   },
+   {
+    "pojam": "čestična građa tvari (toplinsko gibanje molekula)",
+    "stavka_lekcije": "S10.08",
+    "uci_ga": "S10.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B10.03",
+  "naziv": "Toplinsko širenje i linearno rastezanje",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "termodinamička temperatura u kelvinima",
+    "stavka_lekcije": "S10.16",
+    "uci_ga": "S11.03",
+    "lekcija": "B11.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "čestična građa tvari (čestice u toplinskom gibanju)",
+    "stavka_lekcije": "S10.09",
+    "uci_ga": "S10.01"
+   },
+   {
+    "pojam": "titranje čestica oko ravnotežnih položaja u čvrstom tijelu",
+    "stavka_lekcije": "S10.09",
+    "uci_ga": "S10.03"
+   },
+   {
+    "pojam": "termodinamička temperatura u kelvinima",
+    "stavka_lekcije": "S10.16",
+    "uci_ga": "S11.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B10.04",
+  "naziv": "Volumno rastezanje, šupljine i tekućine",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "gustoća ρ = m/V",
+    "stavka_lekcije": "S10.15",
+    "uci_ga": "S08.21",
+    "lekcija": "B08.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "koeficijent linearnog rastezanja α",
+    "stavka_lekcije": "S10.12",
+    "uci_ga": "S10.10"
+   },
+   {
+    "pojam": "linearno rastezanje (Δℓ = αℓ₀Δt)",
+    "stavka_lekcije": "S10.13",
+    "uci_ga": "S10.10"
+   },
+   {
+    "pojam": "relativno produljenje Δℓ/ℓ₀",
+    "stavka_lekcije": "S10.14",
+    "uci_ga": "S10.11"
+   },
+   {
+    "pojam": "gustoća ρ = m/V",
+    "stavka_lekcije": "S10.15",
+    "uci_ga": "S08.21"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B11.04",
+  "naziv": "Molekulsko-kinetički model i energija plina",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "tlak p (sila po površini)",
+    "stavka_lekcije": "S11.13",
+    "uci_ga": "S08.01",
+    "lekcija": "B08.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S11.15",
+    "uci_ga": "S05.04",
+    "lekcija": "B05.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "unutarnja energija tijela",
+    "stavka_lekcije": "S11.17",
+    "uci_ga": "S12.01",
+    "lekcija": "B12.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak p (sila po površini)",
+    "stavka_lekcije": "S11.13",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "idealni plin (model točkastih čestica bez međudjelovanja)",
+    "stavka_lekcije": "S11.15",
+    "uci_ga": "S11.01"
+   },
+   {
+    "pojam": "termodinamička temperatura u kelvinima",
+    "stavka_lekcije": "S11.15",
+    "uci_ga": "S11.03"
+   },
+   {
+    "pojam": "kaotično toplinsko gibanje čestica",
+    "stavka_lekcije": "S11.13",
+    "uci_ga": "S10.01"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S11.15",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "množina n i Avogadrov broj N_A",
+    "stavka_lekcije": "S11.17",
+    "uci_ga": "S11.04"
+   },
+   {
+    "pojam": "plinska konstanta R (u U = nRT, k_B = R/N_A)",
+    "stavka_lekcije": "S11.18",
+    "uci_ga": "S11.05"
+   },
+   {
+    "pojam": "unutarnja energija tijela",
+    "stavka_lekcije": "S11.17",
+    "uci_ga": "S12.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B12.01",
+  "naziv": "Unutarnja energija i toplina",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S12.01",
+    "uci_ga": "S05.04",
+    "lekcija": "B05.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "potencijalna energija (međudjelovanja)",
+    "stavka_lekcije": "S12.01",
+    "uci_ga": "S05.05",
+    "lekcija": "B05.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "energija i njezina promjena (rad jednak promjeni energije)",
+    "stavka_lekcije": "S12.04",
+    "uci_ga": "S05.03",
+    "lekcija": "B05.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S12.01",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "potencijalna energija (međudjelovanja)",
+    "stavka_lekcije": "S12.01",
+    "uci_ga": "S05.05"
+   },
+   {
+    "pojam": "idealni plin",
+    "stavka_lekcije": "S12.03",
+    "uci_ga": "S11.01"
+   },
+   {
+    "pojam": "termodinamička temperatura (kelvin)",
+    "stavka_lekcije": "S12.03",
+    "uci_ga": "S11.03"
+   },
+   {
+    "pojam": "jednadžba stanja idealnog plina pV = nRT",
+    "stavka_lekcije": "S12.03",
+    "uci_ga": "S11.05"
+   },
+   {
+    "pojam": "unutarnja energija jednoatomnog idealnog plina U = (3/2)nRT",
+    "stavka_lekcije": "S12.03",
+    "uci_ga": "S11.17"
+   },
+   {
+    "pojam": "energija i njezina promjena (rad jednak promjeni energije)",
+    "stavka_lekcije": "S12.04",
+    "uci_ga": "S05.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B11.03",
+  "naziv": "Primjena plinskih zakona i dijagrami",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "manometarski tlak",
+    "stavka_lekcije": "S11.10",
+    "uci_ga": "S08.08",
+    "lekcija": "B08.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "atmosferski tlak",
+    "stavka_lekcije": "S11.10",
+    "uci_ga": "S08.07",
+    "lekcija": "B08.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "adijabatski eksponent κ",
+    "stavka_lekcije": "S11.12",
+    "uci_ga": "S12.18",
+    "lekcija": "B12.06",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "manometarski tlak",
+    "stavka_lekcije": "S11.10",
+    "uci_ga": "S08.08"
+   },
+   {
+    "pojam": "atmosferski tlak",
+    "stavka_lekcije": "S11.10",
+    "uci_ga": "S08.07"
+   },
+   {
+    "pojam": "jednadžba stanja idealnog plina pV = nRT (usporedba temperatura preko pV)",
+    "stavka_lekcije": "S11.11",
+    "uci_ga": "S11.05"
+   },
+   {
+    "pojam": "izotermna promjena (izoterma)",
+    "stavka_lekcije": "S11.11",
+    "uci_ga": "S11.07"
+   },
+   {
+    "pojam": "izobarna promjena (izobara)",
+    "stavka_lekcije": "S11.11",
+    "uci_ga": "S11.08"
+   },
+   {
+    "pojam": "izohorna promjena (izohora)",
+    "stavka_lekcije": "S11.11",
+    "uci_ga": "S11.09"
+   },
+   {
+    "pojam": "toplina kao izmjena energije (Q)",
+    "stavka_lekcije": "S11.12",
+    "uci_ga": "S12.04"
+   },
+   {
+    "pojam": "Boyle-Mariotteov zakon pV = konst. (kao usporedba s adijabatskim)",
+    "stavka_lekcije": "S11.12",
+    "uci_ga": "S11.07"
+   },
+   {
+    "pojam": "adijabatski eksponent κ",
+    "stavka_lekcije": "S11.12",
+    "uci_ga": "S12.18"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B12.02",
+  "naziv": "Specifični toplinski kapacitet i kalorimetrija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "toplina (energija koja prelazi s toplijeg na hladnije tijelo)",
+    "stavka_lekcije": "S12.05",
+    "uci_ga": "S12.04"
+   },
+   {
+    "pojam": "temperatura i promjena temperature Δt",
+    "stavka_lekcije": "S12.05",
+    "uci_ga": "S11.03"
+   },
+   {
+    "pojam": "snaga (P = W/t, brzina prijenosa energije)",
+    "stavka_lekcije": "S12.08",
+    "uci_ga": "S05.14"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B12.03",
+  "naziv": "Promjena agregacijskog stanja",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "potencijalna energija čestica (međudjelovanje, raskidanje veza)",
+    "stavka_lekcije": "S12.20",
+    "uci_ga": "S12.01"
+   },
+   {
+    "pojam": "toplina kao energija koja prelazi s toplijeg na hladnije tijelo (Q)",
+    "stavka_lekcije": "S12.21",
+    "uci_ga": "S12.04"
+   },
+   {
+    "pojam": "specifični toplinski kapacitet c i Q = mcΔt",
+    "stavka_lekcije": "S12.23",
+    "uci_ga": "S12.05"
+   },
+   {
+    "pojam": "Q–t graf: nagib pravca i njegovo značenje",
+    "stavka_lekcije": "S12.23",
+    "uci_ga": "S12.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B12.04",
+  "naziv": "Rad plina u p-V dijagramu + I. zakon termodinamike",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "kružni proces",
+    "stavka_lekcije": "S12.11",
+    "uci_ga": "S12.29",
+    "lekcija": "B12.08",
+    "kasnije": true
+   },
+   {
+    "pojam": "zakon očuvanja energije",
+    "stavka_lekcije": "S12.12",
+    "uci_ga": "S05.08",
+    "lekcija": "B05.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "tlak (p, paskal)",
+    "stavka_lekcije": "S12.09",
+    "uci_ga": "S08.01"
+   },
+   {
+    "pojam": "mehanički rad W = F·s·cosα",
+    "stavka_lekcije": "S12.09",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "izobarni proces (p = konst.)",
+    "stavka_lekcije": "S12.09",
+    "uci_ga": "S11.08"
+   },
+   {
+    "pojam": "izohorni proces (V = konst.)",
+    "stavka_lekcije": "S12.10",
+    "uci_ga": "S11.09"
+   },
+   {
+    "pojam": "kružni proces",
+    "stavka_lekcije": "S12.11",
+    "uci_ga": "S12.29"
+   },
+   {
+    "pojam": "unutarnja energija",
+    "stavka_lekcije": "S12.12",
+    "uci_ga": "S12.01"
+   },
+   {
+    "pojam": "toplina (kao energija koja prelazi)",
+    "stavka_lekcije": "S12.12",
+    "uci_ga": "S12.04"
+   },
+   {
+    "pojam": "zakon očuvanja energije",
+    "stavka_lekcije": "S12.12",
+    "uci_ga": "S05.08"
+   },
+   {
+    "pojam": "predznak rada (pozitivan/negativan)",
+    "stavka_lekcije": "S12.13",
+    "uci_ga": "S05.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B12.06",
+  "naziv": "I. zakon u izoprocesima + Adijabatski proces",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "I. zakon termodinamike Q = W + ΔU",
+    "stavka_lekcije": "S12.14",
+    "uci_ga": "S12.12"
+   },
+   {
+    "pojam": "unutarnja energija plina U",
+    "stavka_lekcije": "S12.14",
+    "uci_ga": "S12.01"
+   },
+   {
+    "pojam": "toplina Q kao prijenos energije",
+    "stavka_lekcije": "S12.14",
+    "uci_ga": "S12.04"
+   },
+   {
+    "pojam": "rad plina W = pΔV",
+    "stavka_lekcije": "S12.16",
+    "uci_ga": "S12.09"
+   },
+   {
+    "pojam": "predznaci Q, W i ΔU u I. zakonu",
+    "stavka_lekcije": "S12.17",
+    "uci_ga": "S12.13"
+   },
+   {
+    "pojam": "Boyle-Mariotteov zakon pV = konst. (izotermna promjena)",
+    "stavka_lekcije": "S12.18",
+    "uci_ga": "S11.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B12.08",
+  "naziv": "Toplinski strojevi i korisnost + Carnotov stroj",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "unutarnja energija tijela (ΔU)",
+    "stavka_lekcije": "S12.29",
+    "uci_ga": "S12.01"
+   },
+   {
+    "pojam": "I. zakon termodinamike (Q = W + ΔU)",
+    "stavka_lekcije": "S12.29",
+    "uci_ga": "S12.12"
+   },
+   {
+    "pojam": "rad plina pri promjeni volumena (W u kružnom procesu)",
+    "stavka_lekcije": "S12.29",
+    "uci_ga": "S12.09"
+   },
+   {
+    "pojam": "toplina kao energija koja prelazi između tijela",
+    "stavka_lekcije": "S12.24",
+    "uci_ga": "S12.04"
+   },
+   {
+    "pojam": "termodinamička temperatura u kelvinima",
+    "stavka_lekcije": "S12.26",
+    "uci_ga": "S11.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B13.01",
+  "naziv": "Električni naboj i vodiči",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [],
+  "greska": null
+ },
+ {
+  "id": "B13.02",
+  "naziv": "Nabijanje tijela + Coulombov zakon",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "relativna permitivnost εr",
+    "stavka_lekcije": "S13.07",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "električni naboj (pozitivan i negativan)",
+    "stavka_lekcije": "S13.04",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "vodič i izolator",
+    "stavka_lekcije": "S13.06",
+    "uci_ga": "S13.05"
+   },
+   {
+    "pojam": "dielektrik",
+    "stavka_lekcije": "S13.08",
+    "uci_ga": "S13.05"
+   },
+   {
+    "pojam": "relativna permitivnost εr",
+    "stavka_lekcije": "S13.07",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "sila (vektorska veličina)",
+    "stavka_lekcije": "S13.07",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "vektorsko zbrajanje sila",
+    "stavka_lekcije": "S13.09",
+    "uci_ga": "S03.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B13.04",
+  "naziv": "Električno polje i silnice",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "električni naboj (pozitivni i negativni naboj, q)",
+    "stavka_lekcije": "S13.11",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "sila (vektorska veličina) u izrazu E = F/q",
+    "stavka_lekcije": "S13.10",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "Coulombov zakon: konstanta k i relativna permitivnost εr u formuli E = k·q/(εr·r²)",
+    "stavka_lekcije": "S13.11",
+    "uci_ga": "S13.07"
+   },
+   {
+    "pojam": "načelo superpozicije sila/doprinosa na naboj od više naboja",
+    "stavka_lekcije": "S13.13",
+    "uci_ga": "S13.09"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B13.05",
+  "naziv": "Potencijal, napon i energija",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "električna sila na naboj",
+    "stavka_lekcije": "S13.16",
+    "uci_ga": "S13.15",
+    "lekcija": "B13.06",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "električni naboj (q)",
+    "stavka_lekcije": "S13.17",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "Coulombova konstanta k i relativna permitivnost εr",
+    "stavka_lekcije": "S13.17",
+    "uci_ga": "S13.07"
+   },
+   {
+    "pojam": "rad sile (W = F·s·cosα)",
+    "stavka_lekcije": "S13.16",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "električna sila na naboj",
+    "stavka_lekcije": "S13.16",
+    "uci_ga": "S13.15"
+   },
+   {
+    "pojam": "kinetička energija (mv²/2)",
+    "stavka_lekcije": "S13.16",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "konzervativna sila",
+    "stavka_lekcije": "S13.18",
+    "uci_ga": "S05.07"
+   },
+   {
+    "pojam": "potencijalna energija",
+    "stavka_lekcije": "S13.18",
+    "uci_ga": "S05.05"
+   },
+   {
+    "pojam": "rad sile (pri pomaku po ekvipotencijalnoj plohi)",
+    "stavka_lekcije": "S13.19",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "silnice električnog polja",
+    "stavka_lekcije": "S13.19",
+    "uci_ga": "S13.12"
+   },
+   {
+    "pojam": "električno polje",
+    "stavka_lekcije": "S13.19",
+    "uci_ga": "S13.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B13.06",
+  "naziv": "Naboj u električnom polju",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "pločasti kondenzator",
+    "stavka_lekcije": "S13.14",
+    "uci_ga": "S13.26",
+    "lekcija": "B13.08",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "pločasti kondenzator",
+    "stavka_lekcije": "S13.14",
+    "uci_ga": "S13.26"
+   },
+   {
+    "pojam": "napon U (razlika potencijala)",
+    "stavka_lekcije": "S13.14",
+    "uci_ga": "S13.18"
+   },
+   {
+    "pojam": "jakost električnog polja E",
+    "stavka_lekcije": "S13.14",
+    "uci_ga": "S13.10"
+   },
+   {
+    "pojam": "silnice električnog polja",
+    "stavka_lekcije": "S13.14",
+    "uci_ga": "S13.12"
+   },
+   {
+    "pojam": "električni naboj (i predznak naboja)",
+    "stavka_lekcije": "S13.15",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "sila na naboj i jakost polja (F = qE)",
+    "stavka_lekcije": "S13.15",
+    "uci_ga": "S13.10"
+   },
+   {
+    "pojam": "II. Newtonov zakon",
+    "stavka_lekcije": "S13.15",
+    "uci_ga": "S03.04"
+   },
+   {
+    "pojam": "horizontalni hitac (nezavisna gibanja, parabola)",
+    "stavka_lekcije": "S13.31",
+    "uci_ga": "S03.21"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B13.07",
+  "naziv": "Vodiči u elektrostatičkom polju",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "električno polje (jakost polja E)",
+    "stavka_lekcije": "S13.21",
+    "uci_ga": "S13.10"
+   },
+   {
+    "pojam": "električni potencijal",
+    "stavka_lekcije": "S13.21",
+    "uci_ga": "S13.17"
+   },
+   {
+    "pojam": "ekvipotencijalna ploha",
+    "stavka_lekcije": "S13.21",
+    "uci_ga": "S13.19"
+   },
+   {
+    "pojam": "vodič (slobodno gibanje naboja)",
+    "stavka_lekcije": "S13.21",
+    "uci_ga": "S13.05"
+   },
+   {
+    "pojam": "polje točkastog naboja E = kq/(εr·r²)",
+    "stavka_lekcije": "S13.22",
+    "uci_ga": "S13.11"
+   },
+   {
+    "pojam": "homogeno električno polje",
+    "stavka_lekcije": "S13.24",
+    "uci_ga": "S13.14"
+   },
+   {
+    "pojam": "superpozicija električnih polja",
+    "stavka_lekcije": "S13.24",
+    "uci_ga": "S13.13"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B13.08",
+  "naziv": "Kondenzator i kapacitet + Promjene kondenzatora",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "izvor s stalnim naponom",
+    "stavka_lekcije": "S13.29",
+    "uci_ga": "S15.04",
+    "lekcija": "B15.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [
+   {
+    "pojam": "permitivnost vakuuma ε0",
+    "stavka_lekcije": "S13.26",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "električni naboj q",
+    "stavka_lekcije": "S13.25",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "električni napon U",
+    "stavka_lekcije": "S13.25",
+    "uci_ga": "S13.18"
+   },
+   {
+    "pojam": "dielektrik i relativna permitivnost εr",
+    "stavka_lekcije": "S13.26",
+    "uci_ga": "S13.05"
+   },
+   {
+    "pojam": "permitivnost vakuuma ε0",
+    "stavka_lekcije": "S13.26",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "izvor s stalnim naponom",
+    "stavka_lekcije": "S13.29",
+    "uci_ga": "S15.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B14.01",
+  "naziv": "Sile na nabijeno tijelo u električnom polju i uloga polariteta",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "uzgon (Arhimedov zakon)",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S08.13",
+    "lekcija": "B08.04",
+    "kasnije": false
+   },
+   {
+    "pojam": "električni napon kao razlika potencijala",
+    "stavka_lekcije": "S14.22",
+    "uci_ga": "S15.04",
+    "lekcija": "B15.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "ravnoteža sila (ΣF = 0)",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S02.06"
+   },
+   {
+    "pojam": "sila teža G = mg",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "napetost niti",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S02.09"
+   },
+   {
+    "pojam": "uzgon (Arhimedov zakon)",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S08.13"
+   },
+   {
+    "pojam": "električna (Coulombova) sila F = qE",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S13.15"
+   },
+   {
+    "pojam": "jakost električnog polja E = F/q",
+    "stavka_lekcije": "S14.15",
+    "uci_ga": "S13.10"
+   },
+   {
+    "pojam": "električni napon kao razlika potencijala",
+    "stavka_lekcije": "S14.22",
+    "uci_ga": "S15.04"
+   },
+   {
+    "pojam": "homogeno polje pločastog kondenzatora E = U/d",
+    "stavka_lekcije": "S14.22",
+    "uci_ga": "S13.14"
+   },
+   {
+    "pojam": "kapacitet kondenzatora C = q/U",
+    "stavka_lekcije": "S14.22",
+    "uci_ga": "S13.25"
+   },
+   {
+    "pojam": "kapacitet pločastog kondenzatora C = ε0·εr·S/d",
+    "stavka_lekcije": "S14.22",
+    "uci_ga": "S13.26"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B15.01",
+  "naziv": "Električna struja i napon",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "električni naboj (q, Δq)",
+    "stavka_lekcije": "S15.02",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "električni potencijal",
+    "stavka_lekcije": "S15.04",
+    "uci_ga": "S13.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B15.02",
+  "naziv": "Otpor i Ohmov zakon",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "jakost električne struje I (naboj u jedinici vremena)",
+    "stavka_lekcije": "S15.05",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "električni napon U (razlika potencijala)",
+    "stavka_lekcije": "S15.05",
+    "uci_ga": "S15.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B15.03",
+  "naziv": "Serijski i paralelni spoj otpornika",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "elektromotorna sila ℰ izvora",
+    "stavka_lekcije": "S15.13",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "unutarnji otpor izvora R_v",
+    "stavka_lekcije": "S15.13",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "električni otpor R",
+    "stavka_lekcije": "S15.10",
+    "uci_ga": "S15.05"
+   },
+   {
+    "pojam": "električna struja I",
+    "stavka_lekcije": "S15.10",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "električni napon U",
+    "stavka_lekcije": "S15.10",
+    "uci_ga": "S15.04"
+   },
+   {
+    "pojam": "Ohmov zakon I = U/R",
+    "stavka_lekcije": "S15.13",
+    "uci_ga": "S15.07"
+   },
+   {
+    "pojam": "elektromotorna sila ℰ izvora",
+    "stavka_lekcije": "S15.13",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "unutarnji otpor izvora R_v",
+    "stavka_lekcije": "S15.13",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "Ohmov zakon I = U/R",
+    "stavka_lekcije": "S15.14",
+    "uci_ga": "S15.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B15.04",
+  "naziv": "Snaga, rad i korisnost struje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "električna struja (I)",
+    "stavka_lekcije": "S15.15",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "električni napon (U)",
+    "stavka_lekcije": "S15.15",
+    "uci_ga": "S15.04"
+   },
+   {
+    "pojam": "električni otpor (R)",
+    "stavka_lekcije": "S15.15",
+    "uci_ga": "S15.05"
+   },
+   {
+    "pojam": "Ohmov zakon",
+    "stavka_lekcije": "S15.15",
+    "uci_ga": "S15.07"
+   },
+   {
+    "pojam": "snaga (P = W/t)",
+    "stavka_lekcije": "S15.15",
+    "uci_ga": "S05.14"
+   },
+   {
+    "pojam": "rad (mehanički, energija)",
+    "stavka_lekcije": "S15.16",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "snaga (P = W/t)",
+    "stavka_lekcije": "S15.16",
+    "uci_ga": "S05.14"
+   },
+   {
+    "pojam": "serijski spoj otpornika",
+    "stavka_lekcije": "S15.17",
+    "uci_ga": "S15.10"
+   },
+   {
+    "pojam": "paralelni spoj otpornika",
+    "stavka_lekcije": "S15.17",
+    "uci_ga": "S15.11"
+   },
+   {
+    "pojam": "serijski spoj otpornika",
+    "stavka_lekcije": "S15.18",
+    "uci_ga": "S15.10"
+   },
+   {
+    "pojam": "električni napon (U)",
+    "stavka_lekcije": "S15.18",
+    "uci_ga": "S15.04"
+   },
+   {
+    "pojam": "snaga (P = W/t)",
+    "stavka_lekcije": "S15.19",
+    "uci_ga": "S05.14"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B16.01",
+  "naziv": "Magnet i njegovi polovi",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "magnetsko polje (vanjsko polje u kojem se magnet orijentira i djeluje silom)",
+    "stavka_lekcije": "S16.08",
+    "uci_ga": "S16.03",
+    "lekcija": "B16.02",
+    "kasnije": true
+   }
+  ],
+  "rupe": [
+   {
+    "pojam": "magnetske domene (male područja usmjerenih magnetskih momenata u feromagnetu)",
+    "stavka_lekcije": "S16.08",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "magnetsko polje (vanjsko polje u kojem se magnet orijentira i djeluje silom)",
+    "stavka_lekcije": "S16.08",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "magnetske domene (male područja usmjerenih magnetskih momenata u feromagnetu)",
+    "stavka_lekcije": "S16.08",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B16.02",
+  "naziv": "Magnetsko polje i silnice",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "električna struja kao izvor magnetskog polja",
+    "stavka_lekcije": "S16.03",
+    "uci_ga": "S15.01",
+    "lekcija": "B15.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetska sila (međudjelovanje magneta)",
+    "stavka_lekcije": "S16.03",
+    "uci_ga": "S16.01"
+   },
+   {
+    "pojam": "električna struja kao izvor magnetskog polja",
+    "stavka_lekcije": "S16.03",
+    "uci_ga": "S15.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B16.04",
+  "naziv": "Jakost polja ravnog vodiča i superpozicija + Zavojnica i elektromagnet",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "magnetska permeabilnost (μ0 i relativna μr)",
+    "stavka_lekcije": "S16.12",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "magnetska indukcija B i magnetsko polje",
+    "stavka_lekcije": "S16.12",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "jakost električne struje I",
+    "stavka_lekcije": "S16.12",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "magnetska permeabilnost (μ0 i relativna μr)",
+    "stavka_lekcije": "S16.12",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "magnetske silnice",
+    "stavka_lekcije": "S16.14",
+    "uci_ga": "S16.04"
+   },
+   {
+    "pojam": "magnetski polovi (sjeverni pol)",
+    "stavka_lekcije": "S16.14",
+    "uci_ga": "S16.01"
+   },
+   {
+    "pojam": "polje štapićastog magneta",
+    "stavka_lekcije": "S16.14",
+    "uci_ga": "S16.07"
+   },
+   {
+    "pojam": "feromagnetska tvar i domene",
+    "stavka_lekcije": "S16.16",
+    "uci_ga": "S16.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B16.03",
+  "naziv": "Oerstedov pokus i polje ravnog vodiča",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetsko polje (prostor u kojem djeluje magnetska sila)",
+    "stavka_lekcije": "S16.09",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "magnetske silnice (linije smjera magnetskog polja, smjer od sjevernog prema južnom polu izvan magneta)",
+    "stavka_lekcije": "S16.10",
+    "uci_ga": "S16.04"
+   },
+   {
+    "pojam": "magnetska igla (orijentira se u smjeru magnetskog polja)",
+    "stavka_lekcije": "S16.09",
+    "uci_ga": "S16.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B17.01",
+  "naziv": "Lorentzova sila na naboj u magnetskom polju",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetsko polje (oznaka B, jedinica tesla)",
+    "stavka_lekcije": "S17.01",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "električni naboj (pozitivan i negativan)",
+    "stavka_lekcije": "S17.01",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "sila kao vektorska veličina",
+    "stavka_lekcije": "S17.02",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "brzina (v) kao veličina gibanja",
+    "stavka_lekcije": "S17.02",
+    "uci_ga": "S01.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B17.02",
+  "naziv": "Ampereova sila na vodič sa strujom + Međudjelovanje vodiča i superpozicija polja",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetsko polje (magnetska indukcija B)",
+    "stavka_lekcije": "S17.06",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "homogeno magnetsko polje",
+    "stavka_lekcije": "S17.06",
+    "uci_ga": "S16.07"
+   },
+   {
+    "pojam": "jakost električne struje I",
+    "stavka_lekcije": "S17.06",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "magnetske silnice",
+    "stavka_lekcije": "S17.07",
+    "uci_ga": "S16.04"
+   },
+   {
+    "pojam": "Lorentzova sila",
+    "stavka_lekcije": "S17.08",
+    "uci_ga": "S17.02"
+   },
+   {
+    "pojam": "III. Newtonov zakon",
+    "stavka_lekcije": "S17.10",
+    "uci_ga": "S04.01"
+   },
+   {
+    "pojam": "magnetsko polje ravnog vodiča sa strujom (B = μ0·I/(2πr))",
+    "stavka_lekcije": "S17.10",
+    "uci_ga": "S16.12"
+   },
+   {
+    "pojam": "superpozicija magnetskih polja",
+    "stavka_lekcije": "S17.11",
+    "uci_ga": "S16.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B17.04",
+  "naziv": "Kružno gibanje naboja u homogenom polju",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "količina gibanja (impuls tijela) p = mv",
+    "stavka_lekcije": "S17.13",
+    "uci_ga": "S04.06",
+    "lekcija": "B04.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "Lorentzova sila",
+    "stavka_lekcije": "S17.05",
+    "uci_ga": "S17.02"
+   },
+   {
+    "pojam": "magnetsko polje (magnetska indukcija B)",
+    "stavka_lekcije": "S17.12",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "homogeno magnetsko polje",
+    "stavka_lekcije": "S17.12",
+    "uci_ga": "S16.07"
+   },
+   {
+    "pojam": "električni naboj q",
+    "stavka_lekcije": "S17.12",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "jednoliko kružno gibanje",
+    "stavka_lekcije": "S17.12",
+    "uci_ga": "S06.01"
+   },
+   {
+    "pojam": "centripetalna sila",
+    "stavka_lekcije": "S17.12",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "količina gibanja (impuls tijela) p = mv",
+    "stavka_lekcije": "S17.13",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "rad sile",
+    "stavka_lekcije": "S17.05",
+    "uci_ga": "S05.01"
+   },
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S17.05",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "period kruženja T",
+    "stavka_lekcije": "S17.14",
+    "uci_ga": "S06.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B17.05",
+  "naziv": "Ubrzani naboji i kosi ulazak u polje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "rad električne sile W = qU (napon kao razlika potencijala)",
+    "stavka_lekcije": "S17.15",
+    "uci_ga": "S13.16"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S17.15",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "Lorentzova sila F = qvB",
+    "stavka_lekcije": "S17.15",
+    "uci_ga": "S17.02"
+   },
+   {
+    "pojam": "centripetalna sila mv²/r",
+    "stavka_lekcije": "S17.15",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "magnetsko polje B",
+    "stavka_lekcije": "S17.16",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "nulta magnetska sila pri v ∥ B",
+    "stavka_lekcije": "S17.16",
+    "uci_ga": "S17.03"
+   },
+   {
+    "pojam": "ovisnost Lorentzove sile o kutu F = qvB·sin α",
+    "stavka_lekcije": "S17.17",
+    "uci_ga": "S17.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B17.06",
+  "naziv": "Primjene magnetskog međudjelovanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "izmjenično električno polje (ciklotron)",
+    "stavka_lekcije": "S17.19",
+    "uci_ga": "S18.10",
+    "lekcija": "B18.03",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "polumjer kružne putanje naboja u magnetskom polju r = mv/(qB)",
+    "stavka_lekcije": "S17.18",
+    "uci_ga": "S17.13"
+   },
+   {
+    "pojam": "polumjer kružne putanje naboja u magnetskom polju r = mv/(qB)",
+    "stavka_lekcije": "S17.19",
+    "uci_ga": "S17.13"
+   },
+   {
+    "pojam": "Lorentzova sila F = qvB kao centripetalna sila u kružnoj putanji (qvB = mv²/r)",
+    "stavka_lekcije": "S17.18",
+    "uci_ga": "S17.12"
+   },
+   {
+    "pojam": "period kruženja naboja T = 2πm/(qB)",
+    "stavka_lekcije": "S17.19",
+    "uci_ga": "S17.14"
+   },
+   {
+    "pojam": "Lorentzova sila F = qvB",
+    "stavka_lekcije": "S17.20",
+    "uci_ga": "S17.02"
+   },
+   {
+    "pojam": "Lorentzova sila F = qvB",
+    "stavka_lekcije": "S17.21",
+    "uci_ga": "S17.02"
+   },
+   {
+    "pojam": "električna sila na naboj F = qE i jakost električnog polja E",
+    "stavka_lekcije": "S17.21",
+    "uci_ga": "S13.10"
+   },
+   {
+    "pojam": "Ampereova sila na vodič sa strujom F = BIℓ sinα",
+    "stavka_lekcije": "S17.20",
+    "uci_ga": "S17.06"
+   },
+   {
+    "pojam": "Zemljino magnetsko polje",
+    "stavka_lekcije": "S17.20",
+    "uci_ga": "S16.06"
+   },
+   {
+    "pojam": "izmjenično električno polje (ciklotron)",
+    "stavka_lekcije": "S17.19",
+    "uci_ga": "S18.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B18.01",
+  "naziv": "Magnetski tok i pojava indukcije",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetsko polje (magnetska indukcija B)",
+    "stavka_lekcije": "S18.02",
+    "uci_ga": "S16.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B31.01",
+  "naziv": "Razumijevanje zadatka i podataka",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "trenje",
+    "stavka_lekcije": "S31.03",
+    "uci_ga": "S03.12",
+    "lekcija": "B03.03",
+    "kasnije": false
+   },
+   {
+    "pojam": "jednoliko gibanje",
+    "stavka_lekcije": "S31.03",
+    "uci_ga": "S01.04",
+    "lekcija": "B01.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sila (vektorska veličina)",
+    "stavka_lekcije": "S31.01",
+    "uci_ga": "S03.01"
+   },
+   {
+    "pojam": "trenje",
+    "stavka_lekcije": "S31.03",
+    "uci_ga": "S03.12"
+   },
+   {
+    "pojam": "jednoliko gibanje",
+    "stavka_lekcije": "S31.03",
+    "uci_ga": "S01.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B31.02",
+  "naziv": "Odabir načela i plan rješavanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "izolirani (zatvoreni) sustav",
+    "stavka_lekcije": "S31.23",
+    "uci_ga": "S04.12",
+    "lekcija": "B04.03",
+    "kasnije": false
+   },
+   {
+    "pojam": "izotermna promjena (stalna temperatura)",
+    "stavka_lekcije": "S31.23",
+    "uci_ga": "S11.07",
+    "lekcija": "B11.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "izolirani (zatvoreni) sustav",
+    "stavka_lekcije": "S31.23",
+    "uci_ga": "S04.12"
+   },
+   {
+    "pojam": "izotermna promjena (stalna temperatura)",
+    "stavka_lekcije": "S31.23",
+    "uci_ga": "S11.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B31.06",
+  "naziv": "Prikazi i grafovi + Vrednovanje rješenja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "graf x(t) i nagib kao brzina",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.05",
+    "lekcija": "B01.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "graf v(t) i površina ispod kao put",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.06",
+    "lekcija": "B01.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "put (prijeđena duljina)",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.02",
+    "lekcija": "B01.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "brzina",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.03",
+    "lekcija": "B01.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "graf x(t) i nagib kao brzina",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.05"
+   },
+   {
+    "pojam": "graf v(t) i površina ispod kao put",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.06"
+   },
+   {
+    "pojam": "put (prijeđena duljina)",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.02"
+   },
+   {
+    "pojam": "brzina",
+    "stavka_lekcije": "S31.13",
+    "uci_ga": "S01.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B18.02",
+  "naziv": "Faradayev zakon i gibanje vodiča u polju",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetski tok Φ",
+    "stavka_lekcije": "S18.04",
+    "uci_ga": "S18.02"
+   },
+   {
+    "pojam": "elektromagnetska indukcija (inducirani napon)",
+    "stavka_lekcije": "S18.04",
+    "uci_ga": "S18.01"
+   },
+   {
+    "pojam": "magnetsko polje B (magnetska indukcija)",
+    "stavka_lekcije": "S18.06",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "homogeno magnetsko polje",
+    "stavka_lekcije": "S18.06",
+    "uci_ga": "S16.07"
+   },
+   {
+    "pojam": "homogeno magnetsko polje",
+    "stavka_lekcije": "S18.07",
+    "uci_ga": "S16.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B18.03",
+  "naziv": "Lenzovo pravilo i smjer inducirane struje + Izmjenična struja i napon",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "amplituda titranja",
+    "stavka_lekcije": "S18.11",
+    "uci_ga": "S19.02",
+    "lekcija": "B19.01",
+    "kasnije": true
+   },
+   {
+    "pojam": "početna faza",
+    "stavka_lekcije": "S18.11",
+    "uci_ga": "S19.03",
+    "lekcija": "B19.01",
+    "kasnije": true
+   },
+   {
+    "pojam": "impedancija",
+    "stavka_lekcije": "S18.13",
+    "uci_ga": "S18.18",
+    "lekcija": "B18.05",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "magnetsko polje (B)",
+    "stavka_lekcije": "S18.08",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "magnetski tok",
+    "stavka_lekcije": "S18.08",
+    "uci_ga": "S18.02"
+   },
+   {
+    "pojam": "Faradayev zakon elektromagnetske indukcije",
+    "stavka_lekcije": "S18.08",
+    "uci_ga": "S18.04"
+   },
+   {
+    "pojam": "elektromagnetska indukcija i inducirana struja",
+    "stavka_lekcije": "S18.08",
+    "uci_ga": "S18.01"
+   },
+   {
+    "pojam": "pravilo desne ruke",
+    "stavka_lekcije": "S18.09",
+    "uci_ga": "S16.11"
+   },
+   {
+    "pojam": "amplituda titranja",
+    "stavka_lekcije": "S18.11",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "početna faza",
+    "stavka_lekcije": "S18.11",
+    "uci_ga": "S19.03"
+   },
+   {
+    "pojam": "kutna frekvencija",
+    "stavka_lekcije": "S18.11",
+    "uci_ga": "S06.04"
+   },
+   {
+    "pojam": "period i frekvencija",
+    "stavka_lekcije": "S18.12",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "Ohmov zakon",
+    "stavka_lekcije": "S18.13",
+    "uci_ga": "S15.07"
+   },
+   {
+    "pojam": "električni otpor",
+    "stavka_lekcije": "S18.13",
+    "uci_ga": "S15.05"
+   },
+   {
+    "pojam": "impedancija",
+    "stavka_lekcije": "S18.13",
+    "uci_ga": "S18.18"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B18.05",
+  "naziv": "Efektivne vrijednosti + Zavojnica, kondenzator i impedancija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "amplituda izmjenične struje/napona (I₀, U₀)",
+    "stavka_lekcije": "S18.14",
+    "uci_ga": "S18.11"
+   },
+   {
+    "pojam": "izmjenična struja i napon",
+    "stavka_lekcije": "S18.14",
+    "uci_ga": "S18.10"
+   },
+   {
+    "pojam": "istosmjerna struja",
+    "stavka_lekcije": "S18.14",
+    "uci_ga": "S18.10"
+   },
+   {
+    "pojam": "snaga električne struje na otporniku (P = I²R)",
+    "stavka_lekcije": "S18.14",
+    "uci_ga": "S15.15"
+   },
+   {
+    "pojam": "električni otpor R",
+    "stavka_lekcije": "S18.18",
+    "uci_ga": "S15.05"
+   },
+   {
+    "pojam": "frekvencija f",
+    "stavka_lekcije": "S18.16",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "kutna frekvencija ω",
+    "stavka_lekcije": "S18.16",
+    "uci_ga": "S18.12"
+   },
+   {
+    "pojam": "kapacitet kondenzatora C",
+    "stavka_lekcije": "S18.17",
+    "uci_ga": "S13.25"
+   },
+   {
+    "pojam": "serijski spoj",
+    "stavka_lekcije": "S18.18",
+    "uci_ga": "S15.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B18.07",
+  "naziv": "Generator i elektromotor + Transformator i prijenos energije",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "moment sile",
+    "stavka_lekcije": "S18.21",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "magnetski tok",
+    "stavka_lekcije": "S18.20",
+    "uci_ga": "S18.02"
+   },
+   {
+    "pojam": "elektromagnetska indukcija",
+    "stavka_lekcije": "S18.20",
+    "uci_ga": "S18.01"
+   },
+   {
+    "pojam": "izmjenični napon",
+    "stavka_lekcije": "S18.20",
+    "uci_ga": "S18.10"
+   },
+   {
+    "pojam": "magnetsko polje",
+    "stavka_lekcije": "S18.21",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "sila na vodič sa strujom (Ampereova sila)",
+    "stavka_lekcije": "S18.21",
+    "uci_ga": "S17.06"
+   },
+   {
+    "pojam": "moment sile",
+    "stavka_lekcije": "S18.21",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "elektromagnetska indukcija",
+    "stavka_lekcije": "S18.22",
+    "uci_ga": "S18.01"
+   },
+   {
+    "pojam": "magnetski tok",
+    "stavka_lekcije": "S18.22",
+    "uci_ga": "S18.02"
+   },
+   {
+    "pojam": "izmjenični napon i struja",
+    "stavka_lekcije": "S18.22",
+    "uci_ga": "S18.10"
+   },
+   {
+    "pojam": "feromagnetska jezgra",
+    "stavka_lekcije": "S18.22",
+    "uci_ga": "S16.16"
+   },
+   {
+    "pojam": "Faradayev zakon indukcije",
+    "stavka_lekcije": "S18.22",
+    "uci_ga": "S18.04"
+   },
+   {
+    "pojam": "snaga električne struje P = UI",
+    "stavka_lekcije": "S18.23",
+    "uci_ga": "S15.15"
+   },
+   {
+    "pojam": "Jouleov gubitak (toplina u vodiču)",
+    "stavka_lekcije": "S18.24",
+    "uci_ga": "S15.19"
+   },
+   {
+    "pojam": "snaga P = I²R u vodiču",
+    "stavka_lekcije": "S18.24",
+    "uci_ga": "S15.15"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B19.01",
+  "naziv": "Što je harmonijsko titranje i njegove veličine",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "period matematičkog njihala T = 2π√(l/g)",
+    "stavka_lekcije": "S19.20",
+    "uci_ga": "S19.17",
+    "lekcija": "B19.05",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "put i pomak (razlika između njih)",
+    "stavka_lekcije": "S19.08",
+    "uci_ga": "S01.02"
+   },
+   {
+    "pojam": "period matematičkog njihala T = 2π√(l/g)",
+    "stavka_lekcije": "S19.20",
+    "uci_ga": "S19.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B19.02",
+  "naziv": "Elongacija, brzina i akceleracija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "harmonijsko titranje (povratna sila proporcionalna elongaciji)",
+    "stavka_lekcije": "S19.06",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "elongacija",
+    "stavka_lekcije": "S19.04",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "amplituda",
+    "stavka_lekcije": "S19.05",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "period titranja",
+    "stavka_lekcije": "S19.05",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "kutna frekvencija ω",
+    "stavka_lekcije": "S19.04",
+    "uci_ga": "S19.03"
+   },
+   {
+    "pojam": "početna faza φ0",
+    "stavka_lekcije": "S19.04",
+    "uci_ga": "S19.03"
+   },
+   {
+    "pojam": "brzina",
+    "stavka_lekcije": "S19.05",
+    "uci_ga": "S01.03"
+   },
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S19.06",
+    "uci_ga": "S01.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B19.03",
+  "naziv": "Tijelo na opruzi + Energija titranja na opruzi",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "harmonijsko titranje (titranje oko ravnotežnog položaja)",
+    "stavka_lekcije": "S19.10",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "period T (trajanje jednog titraja)",
+    "stavka_lekcije": "S19.10",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "elastična (povratna) sila F = −kx, Hookeov zakon",
+    "stavka_lekcije": "S19.10",
+    "uci_ga": "S03.11"
+   },
+   {
+    "pojam": "konstanta opruge k",
+    "stavka_lekcije": "S19.11",
+    "uci_ga": "S03.11"
+   },
+   {
+    "pojam": "frekvencija f = 1/T",
+    "stavka_lekcije": "S19.11",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "amplituda A",
+    "stavka_lekcije": "S19.12",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "elongacija x",
+    "stavka_lekcije": "S19.13",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S19.13",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "elastična potencijalna energija E_ep = kx²/2",
+    "stavka_lekcije": "S19.13",
+    "uci_ga": "S05.06"
+   },
+   {
+    "pojam": "očuvanje (ukupne) mehaničke energije",
+    "stavka_lekcije": "S19.13",
+    "uci_ga": "S05.09"
+   },
+   {
+    "pojam": "amplituda A",
+    "stavka_lekcije": "S19.14",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "kinetička i potencijalna energija kao dijelovi ukupne energije",
+    "stavka_lekcije": "S19.15",
+    "uci_ga": "S05.09"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B19.05",
+  "naziv": "Matematičko njihalo",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "ubrzanje slobodnog pada g",
+    "stavka_lekcije": "S19.17",
+    "uci_ga": "S01.17",
+    "lekcija": "B01.05",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "harmonijsko titranje (titranje pod povratnom silom proporcionalnom elongaciji)",
+    "stavka_lekcije": "S19.16",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "titranje i harmonijsko titranje",
+    "stavka_lekcije": "S19.18",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "povratna sila",
+    "stavka_lekcije": "S19.18",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "sila teža (težina mg)",
+    "stavka_lekcije": "S19.18",
+    "uci_ga": "S03.08"
+   },
+   {
+    "pojam": "rastavljanje sile na komponente",
+    "stavka_lekcije": "S19.18",
+    "uci_ga": "S03.06"
+   },
+   {
+    "pojam": "period titranja",
+    "stavka_lekcije": "S19.17",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "ubrzanje slobodnog pada g",
+    "stavka_lekcije": "S19.17",
+    "uci_ga": "S01.17"
+   },
+   {
+    "pojam": "amplituda",
+    "stavka_lekcije": "S19.17",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "gravitacijska potencijalna energija mgh",
+    "stavka_lekcije": "S19.19",
+    "uci_ga": "S05.05"
+   },
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S19.19",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "očuvanje mehaničke energije",
+    "stavka_lekcije": "S19.19",
+    "uci_ga": "S05.09"
+   },
+   {
+    "pojam": "amplituda (najveća elongacija)",
+    "stavka_lekcije": "S19.19",
+    "uci_ga": "S19.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B19.06",
+  "naziv": "LC titrajni krug",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "Magnetsko polje zavojnice",
+    "stavka_lekcije": "S19.21",
+    "uci_ga": "S16.15",
+    "lekcija": "B16.04",
+    "kasnije": false
+   },
+   {
+    "pojam": "Induktivitet zavojnice L",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "S18.16",
+    "lekcija": "B18.05",
+    "kasnije": false
+   },
+   {
+    "pojam": "Električna struja i jakost struje I",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "S15.02",
+    "lekcija": "B15.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [
+   {
+    "pojam": "Energija magnetskog polja zavojnice (LI²/2)",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "Kapacitet kondenzatora i energija nabijenog kondenzatora (CU²/2)",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "S13.28"
+   },
+   {
+    "pojam": "Električno polje kondenzatora",
+    "stavka_lekcije": "S19.21",
+    "uci_ga": "S13.14"
+   },
+   {
+    "pojam": "Magnetsko polje zavojnice",
+    "stavka_lekcije": "S19.21",
+    "uci_ga": "S16.15"
+   },
+   {
+    "pojam": "Induktivitet zavojnice L",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "S18.16"
+   },
+   {
+    "pojam": "Energija magnetskog polja zavojnice (LI²/2)",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "Električna struja i jakost struje I",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "Period i frekvencija titranja",
+    "stavka_lekcije": "S19.22",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "Mehaničko titranje tijela na opruzi (period T = 2π√(m/k))",
+    "stavka_lekcije": "S19.24",
+    "uci_ga": "S19.10"
+   },
+   {
+    "pojam": "Konstanta opruge k",
+    "stavka_lekcije": "S19.24",
+    "uci_ga": "S03.11"
+   },
+   {
+    "pojam": "Zakon očuvanja energije",
+    "stavka_lekcije": "S19.23",
+    "uci_ga": "S05.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B19.07",
+  "naziv": "Prigušeno i prisilno titranje, rezonancija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "amplituda titranja",
+    "stavka_lekcije": "S19.25",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "period titranja",
+    "stavka_lekcije": "S19.25",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "frekvencija titranja",
+    "stavka_lekcije": "S19.26",
+    "uci_ga": "S19.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B20.01",
+  "naziv": "Što je val i kako nastaje",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "fazni odnos titranja (zakašnjenje u fazi)",
+    "stavka_lekcije": "S20.02",
+    "uci_ga": "S19.09",
+    "lekcija": "B19.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "energija",
+    "stavka_lekcije": "S20.01",
+    "uci_ga": "S05.03",
+    "lekcija": "B05.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "količina gibanja",
+    "stavka_lekcije": "S20.01",
+    "uci_ga": "S04.06",
+    "lekcija": "B04.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "titranje (periodično gibanje oko ravnotežnog položaja)",
+    "stavka_lekcije": "S20.01",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "fazni odnos titranja (zakašnjenje u fazi)",
+    "stavka_lekcije": "S20.02",
+    "uci_ga": "S19.09"
+   },
+   {
+    "pojam": "elastično sredstvo (elastičnost)",
+    "stavka_lekcije": "S20.02",
+    "uci_ga": "S03.11"
+   },
+   {
+    "pojam": "energija",
+    "stavka_lekcije": "S20.01",
+    "uci_ga": "S05.03"
+   },
+   {
+    "pojam": "količina gibanja",
+    "stavka_lekcije": "S20.01",
+    "uci_ga": "S04.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B20.02",
+  "naziv": "Valna duljina, brzina i frekvencija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "mehanički val (širenje poremećaja kroz sredstvo)",
+    "stavka_lekcije": "S20.05",
+    "uci_ga": "S20.01"
+   },
+   {
+    "pojam": "period T (vrijeme jednog titraja/ophoda)",
+    "stavka_lekcije": "S20.06",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "frekvencija f (broj titraja u jedinici vremena)",
+    "stavka_lekcije": "S20.06",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "amplituda i elongacija",
+    "stavka_lekcije": "S20.05",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "faza titranja",
+    "stavka_lekcije": "S20.05",
+    "uci_ga": "S19.03"
+   },
+   {
+    "pojam": "napetost niti/užeta",
+    "stavka_lekcije": "S20.08",
+    "uci_ga": "S03.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B20.03",
+  "naziv": "Jednadžba vala i fazna razlika + Energija i intenzitet vala",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "razlika hoda",
+    "stavka_lekcije": "S20.19",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "harmonijsko titranje (elongacija)",
+    "stavka_lekcije": "S20.09",
+    "uci_ga": "S19.01"
+   },
+   {
+    "pojam": "amplituda titranja",
+    "stavka_lekcije": "S20.09",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "kutna frekvencija ω",
+    "stavka_lekcije": "S20.09",
+    "uci_ga": "S19.03"
+   },
+   {
+    "pojam": "val kao širenje poremećaja (i prijenos energije)",
+    "stavka_lekcije": "S20.09",
+    "uci_ga": "S20.01"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S20.09",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "faza i fazna razlika (protufaza)",
+    "stavka_lekcije": "S20.10",
+    "uci_ga": "S19.09"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S20.10",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "razlika hoda",
+    "stavka_lekcije": "S20.19",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "energija titranja (E = kA²/2, ovisi o kvadratu amplitude)",
+    "stavka_lekcije": "S20.11",
+    "uci_ga": "S19.13"
+   },
+   {
+    "pojam": "snaga P",
+    "stavka_lekcije": "S20.12",
+    "uci_ga": "S05.14"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.01",
+  "naziv": "Zraka i zakon odbijanja",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [],
+  "greska": null
+ },
+ {
+  "id": "B20.05",
+  "naziv": "Superpozicija i odbijanje vala + Lom vala",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "indeks loma sredstva n",
+    "stavka_lekcije": "S20.17",
+    "uci_ga": "S22.08",
+    "lekcija": "B22.03",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "upadni kut i normala (okomica) na granicu sredstava",
+    "stavka_lekcije": "S20.14",
+    "uci_ga": "S22.02"
+   },
+   {
+    "pojam": "frekvencija vala",
+    "stavka_lekcije": "S20.13",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "faza (titranja/vala)",
+    "stavka_lekcije": "S20.15",
+    "uci_ga": "S20.02"
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S20.16",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "brzina vala (v = λf)",
+    "stavka_lekcije": "S20.17",
+    "uci_ga": "S20.06"
+   },
+   {
+    "pojam": "indeks loma sredstva n",
+    "stavka_lekcije": "S20.17",
+    "uci_ga": "S22.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B20.07",
+  "naziv": "Interferencija valova + Stojni valovi",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "koherentni izvori",
+    "stavka_lekcije": "S20.20",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "fazna razlika (u fazi, u protufazi)",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": "S20.10"
+   },
+   {
+    "pojam": "razlika hoda",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": "S20.19"
+   },
+   {
+    "pojam": "amplituda vala",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "koherentni izvori",
+    "stavka_lekcije": "S20.20",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "frekvencija f",
+    "stavka_lekcije": "S20.23",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "brzina vala v = λf",
+    "stavka_lekcije": "S20.23",
+    "uci_ga": "S20.06"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S20.22",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "refleksija (odbijanje) vala",
+    "stavka_lekcije": "S20.21",
+    "uci_ga": "S20.14"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B21.01",
+  "naziv": "Priroda zvuka, brzina i frekvencijska područja + Glasnoća i razina zvuka",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "val (širenje poremećaja kroz sredstvo)",
+    "stavka_lekcije": "S21.01",
+    "uci_ga": "S20.01"
+   },
+   {
+    "pojam": "longitudinalni val (čestice titraju u smjeru širenja, zgušnjenja i razrjeđenja)",
+    "stavka_lekcije": "S21.01",
+    "uci_ga": "S20.03"
+   },
+   {
+    "pojam": "sredstvo za širenje mehaničkog vala",
+    "stavka_lekcije": "S21.02",
+    "uci_ga": "S20.01"
+   },
+   {
+    "pojam": "brzina vala ovisi o svojstvima sredstva",
+    "stavka_lekcije": "S21.02",
+    "uci_ga": "S20.08"
+   },
+   {
+    "pojam": "frekvencija (f = 1/T) i visina tona",
+    "stavka_lekcije": "S21.05",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "amplituda (najveća elongacija)",
+    "stavka_lekcije": "S21.10",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "energija vala proporcionalna kvadratu amplitude",
+    "stavka_lekcije": "S21.10",
+    "uci_ga": "S20.11"
+   },
+   {
+    "pojam": "intenzitet vala I = P/S",
+    "stavka_lekcije": "S21.08",
+    "uci_ga": "S20.12"
+   },
+   {
+    "pojam": "intenzitet vala opada s 1/r² (točkasti izvor)",
+    "stavka_lekcije": "S21.09",
+    "uci_ga": "S20.12"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B21.03",
+  "naziv": "Stojni valovi u cijevima, harmonici i rezonancija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "čvor i trbuh stojnog vala",
+    "stavka_lekcije": "S21.16",
+    "uci_ga": "S20.21"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S21.16",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "frekvencija f (f = 1/T)",
+    "stavka_lekcije": "S21.17",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "vlastita frekvencija sustava",
+    "stavka_lekcije": "S21.18",
+    "uci_ga": "S19.27"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B21.04",
+  "naziv": "Dopplerov efekt",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "frekvencija (f = 1/T, broj titraja ili valova u sekundi)",
+    "stavka_lekcije": "S21.20",
+    "uci_ga": "S20.07"
+   },
+   {
+    "pojam": "relativno gibanje (gibanje izvora i prijemnika u odnosu na sredstvo ili jedno na drugo)",
+    "stavka_lekcije": "S21.19",
+    "uci_ga": "S01.01"
+   },
+   {
+    "pojam": "brzina zvuka u sredstvu",
+    "stavka_lekcije": "S21.20",
+    "uci_ga": "S21.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.02",
+  "naziv": "Ravno zrcalo",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "virtualna slika (nastaje produžetcima zraka, ne može se uhvatiti na zastoru)",
+    "stavka_lekcije": "S22.06",
+    "uci_ga": "S22.30",
+    "lekcija": "B22.07",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "virtualna slika (nastaje produžetcima zraka, ne može se uhvatiti na zastoru)",
+    "stavka_lekcije": "S22.06",
+    "uci_ga": "S22.30"
+   },
+   {
+    "pojam": "zakon odbijanja (upadni kut jednak kutu odbijanja; zraka, okomica i odbijena zraka u istoj ravnini)",
+    "stavka_lekcije": "S22.07",
+    "uci_ga": "S22.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.04",
+  "naziv": "Snellov zakon + Totalna refleksija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "indeks loma sredstva n",
+    "stavka_lekcije": "S22.11",
+    "uci_ga": "S22.08"
+   },
+   {
+    "pojam": "upadni kut i kut loma mjereni od okomice (normale) na granicu",
+    "stavka_lekcije": "S22.11",
+    "uci_ga": "S22.02"
+   },
+   {
+    "pojam": "lom svjetlosti pri prijelazu u drugo sredstvo",
+    "stavka_lekcije": "S22.11",
+    "uci_ga": "S22.10"
+   },
+   {
+    "pojam": "optički gušće i optički rjeđe sredstvo",
+    "stavka_lekcije": "S22.15",
+    "uci_ga": "S22.09"
+   },
+   {
+    "pojam": "odbijanje svjetlosti (refleksija) na granici sredstava",
+    "stavka_lekcije": "S22.15",
+    "uci_ga": "S22.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B24.01",
+  "naziv": "Nastanak i građa elektromagnetskog vala",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "fazа titranja (u fazi)",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": "S20.10",
+    "lekcija": "B20.03",
+    "kasnije": false
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": "S20.05",
+    "lekcija": "B20.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "električno polje",
+    "stavka_lekcije": "S24.01",
+    "uci_ga": "S13.10"
+   },
+   {
+    "pojam": "magnetsko polje",
+    "stavka_lekcije": "S24.01",
+    "uci_ga": "S16.03"
+   },
+   {
+    "pojam": "električni naboj (nabijene čestice)",
+    "stavka_lekcije": "S24.02",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "akceleracija (ubrzano gibanje)",
+    "stavka_lekcije": "S24.02",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "transverzalni val",
+    "stavka_lekcije": "S24.03",
+    "uci_ga": "S20.03"
+   },
+   {
+    "pojam": "fazа titranja (u fazi)",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": "S20.10"
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": "S20.05"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B24.02",
+  "naziv": "Brzina, valna duljina i frekvencija + Elektromagnetski spektar i energija fotona",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "foton i Planckova konstanta h (E = hf)",
+    "stavka_lekcije": "S24.09",
+    "uci_ga": "S25.02",
+    "lekcija": "B25.01",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski val (širenje titranja električnog i magnetskog polja)",
+    "stavka_lekcije": "S24.05",
+    "uci_ga": "S24.01"
+   },
+   {
+    "pojam": "valna duljina i frekvencija vala",
+    "stavka_lekcije": "S24.06",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "foton i Planckova konstanta h (E = hf)",
+    "stavka_lekcije": "S24.09",
+    "uci_ga": "S25.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.03",
+  "naziv": "Indeks loma i lom svjetlosti",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "brzina svjetlosti u vakuumu c",
+    "stavka_lekcije": "S22.08",
+    "uci_ga": "S24.05"
+   },
+   {
+    "pojam": "frekvencija f",
+    "stavka_lekcije": "S22.13",
+    "uci_ga": "S19.02"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S22.13",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "upadni kut i kut loma mjereni od okomice (normale)",
+    "stavka_lekcije": "S22.12",
+    "uci_ga": "S22.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.06",
+  "naziv": "Planparalelna ploča",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "upadni kut (mjeren od okomice)",
+    "stavka_lekcije": "S22.18",
+    "uci_ga": "S22.02"
+   },
+   {
+    "pojam": "lom svjetlosti na granici sredstava",
+    "stavka_lekcije": "S22.18",
+    "uci_ga": "S22.10"
+   },
+   {
+    "pojam": "Snellov zakon",
+    "stavka_lekcije": "S22.19",
+    "uci_ga": "S22.11"
+   },
+   {
+    "pojam": "indeks loma sredstva",
+    "stavka_lekcije": "S22.19",
+    "uci_ga": "S22.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.07",
+  "naziv": "Leće, žarište i jakost",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "optičko središte leće",
+    "stavka_lekcije": "S22.23",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "lom svjetlosti (refrakcija) na granici sredstava",
+    "stavka_lekcije": "S22.20",
+    "uci_ga": "S22.10"
+   },
+   {
+    "pojam": "svjetlosna zraka kao model širenja svjetlosti",
+    "stavka_lekcije": "S22.20",
+    "uci_ga": "S22.01"
+   },
+   {
+    "pojam": "optičko središte leće",
+    "stavka_lekcije": "S22.23",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.08",
+  "naziv": "Jednadžba leće i povećanje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "leća (sabirna i rastresna)",
+    "stavka_lekcije": "S22.25",
+    "uci_ga": "S22.20"
+   },
+   {
+    "pojam": "žarišna daljina f i žarište",
+    "stavka_lekcije": "S22.24",
+    "uci_ga": "S22.21"
+   },
+   {
+    "pojam": "realna i virtualna slika",
+    "stavka_lekcije": "S22.26",
+    "uci_ga": "S22.30"
+   },
+   {
+    "pojam": "rastresna leća (f < 0)",
+    "stavka_lekcije": "S22.26",
+    "uci_ga": "S22.20"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B22.09",
+  "naziv": "Slike u lećama",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "sabirna (konvergentna) leća",
+    "stavka_lekcije": "S22.27",
+    "uci_ga": "S22.20"
+   },
+   {
+    "pojam": "sabirna (konvergentna) leća",
+    "stavka_lekcije": "S22.28",
+    "uci_ga": "S22.20"
+   },
+   {
+    "pojam": "rastresna (divergentna) leća",
+    "stavka_lekcije": "S22.29",
+    "uci_ga": "S22.20"
+   },
+   {
+    "pojam": "žarište i žarišna daljina f",
+    "stavka_lekcije": "S22.27",
+    "uci_ga": "S22.21"
+   },
+   {
+    "pojam": "žarište i žarišna daljina f",
+    "stavka_lekcije": "S22.28",
+    "uci_ga": "S22.21"
+   },
+   {
+    "pojam": "realna slika",
+    "stavka_lekcije": "S22.27",
+    "uci_ga": "S22.30"
+   },
+   {
+    "pojam": "virtualna slika",
+    "stavka_lekcije": "S22.28",
+    "uci_ga": "S22.30"
+   },
+   {
+    "pojam": "virtualna slika",
+    "stavka_lekcije": "S22.29",
+    "uci_ga": "S22.30"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B23.01",
+  "naziv": "Svjetlost kao val i ogib + Uvjeti interferencije i Youngov pokus",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski val",
+    "stavka_lekcije": "S23.01",
+    "uci_ga": "S24.01"
+   },
+   {
+    "pojam": "transverzalni val",
+    "stavka_lekcije": "S23.01",
+    "uci_ga": "S20.03"
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S23.03",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "superpozicija valova",
+    "stavka_lekcije": "S23.04",
+    "uci_ga": "S20.13"
+   },
+   {
+    "pojam": "koherentni izvori",
+    "stavka_lekcije": "S23.04",
+    "uci_ga": "S20.20"
+   },
+   {
+    "pojam": "razlika hoda",
+    "stavka_lekcije": "S23.05",
+    "uci_ga": "S20.19"
+   },
+   {
+    "pojam": "fazna razlika",
+    "stavka_lekcije": "S23.05",
+    "uci_ga": "S20.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B23.03",
+  "naziv": "Optička rešetka i određivanje valne duljine + Polarizacija svjetlosti",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "interferencijski maksimumi (uvjet konstruktivne interferencije, Δ = kλ)",
+    "stavka_lekcije": "S23.08",
+    "uci_ga": "S23.05"
+   },
+   {
+    "pojam": "interferencija koherentnih valova",
+    "stavka_lekcije": "S23.08",
+    "uci_ga": "S20.20"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S23.08",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "transverzalni i longitudinalni val",
+    "stavka_lekcije": "S23.10",
+    "uci_ga": "S20.03"
+   },
+   {
+    "pojam": "električno polje elektromagnetskog vala (titranje E)",
+    "stavka_lekcije": "S23.10",
+    "uci_ga": "S24.03"
+   },
+   {
+    "pojam": "upadni kut",
+    "stavka_lekcije": "S23.12",
+    "uci_ga": "S22.02"
+   },
+   {
+    "pojam": "indeks loma n",
+    "stavka_lekcije": "S23.12",
+    "uci_ga": "S22.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B23.05",
+  "naziv": "Raspršenje svjetlosti u atmosferi",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S23.13",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "svjetlost kao elektromagnetski val",
+    "stavka_lekcije": "S23.13",
+    "uci_ga": "S24.01"
+   },
+   {
+    "pojam": "valne duljine vidljive svjetlosti (plava kraća od crvene)",
+    "stavka_lekcije": "S23.13",
+    "uci_ga": "S24.10"
+   },
+   {
+    "pojam": "polarizacija svjetlosti",
+    "stavka_lekcije": "S23.14",
+    "uci_ga": "S23.10"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B24.04",
+  "naziv": "Primjene i štetnost zračenja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "ionizirajuće zračenje",
+    "stavka_lekcije": "S24.12",
+    "uci_ga": "S28.15",
+    "lekcija": "B28.03",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski spektar (podjela na radiovalove, mikrovalove, infracrveno, UV, rendgensko i gama zračenje)",
+    "stavka_lekcije": "S24.11",
+    "uci_ga": "S24.08"
+   },
+   {
+    "pojam": "energija fotona E = hf (veća frekvencija znači veću energiju)",
+    "stavka_lekcije": "S24.12",
+    "uci_ga": "S24.09"
+   },
+   {
+    "pojam": "ionizirajuće zračenje",
+    "stavka_lekcije": "S24.12",
+    "uci_ga": "S28.15"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B25.01",
+  "naziv": "Fotoelektrični efekt i foton",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "masa mirovanja (foton nema masu mirovanja)",
+    "stavka_lekcije": "S25.12",
+    "uci_ga": "S29.13",
+    "lekcija": "B29.05",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "frekvencija f (broj titraja u jedinici vremena, Hz)",
+    "stavka_lekcije": "S25.01",
+    "uci_ga": "S06.02"
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S25.02",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "elektromagnetsko zračenje / elektromagnetski val",
+    "stavka_lekcije": "S25.02",
+    "uci_ga": "S24.01"
+   },
+   {
+    "pojam": "brzina svjetlosti c i veza c = λf",
+    "stavka_lekcije": "S25.02",
+    "uci_ga": "S24.05"
+   },
+   {
+    "pojam": "količina gibanja p = mv",
+    "stavka_lekcije": "S25.12",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "masa mirovanja (foton nema masu mirovanja)",
+    "stavka_lekcije": "S25.12",
+    "uci_ga": "S29.13"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B31.05",
+  "naziv": "Mjerne jedinice",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "elektronvolt (eV) kao jedinica energije",
+    "stavka_lekcije": "S31.16",
+    "uci_ga": "S13.20",
+    "lekcija": "B13.05",
+    "kasnije": false
+   },
+   {
+    "pojam": "jednadžba stanja idealnog plina pV = nRT (plinske formule)",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S11.05",
+    "lekcija": "B11.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "korisnost toplinskog stroja",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S12.25",
+    "lekcija": "B12.08",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "elektronvolt (eV) kao jedinica energije",
+    "stavka_lekcije": "S31.16",
+    "uci_ga": "S13.20"
+   },
+   {
+    "pojam": "jednadžba stanja idealnog plina pV = nRT (plinske formule)",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S11.05"
+   },
+   {
+    "pojam": "termodinamička (apsolutna) temperatura u kelvinima",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S11.03"
+   },
+   {
+    "pojam": "korisnost toplinskog stroja",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S12.25"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B25.02",
+  "naziv": "Einsteinova jednadžba i granična frekvencija",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "intenzitet zračenja (snaga po površini)",
+    "stavka_lekcije": "S25.06",
+    "uci_ga": "S20.12",
+    "lekcija": "B20.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "energija fotona E_f = h·f i Planckova konstanta h",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "izlazni rad W_i",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": "S25.03"
+   },
+   {
+    "pojam": "fotoefekt i fotoelektroni",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": "S25.01"
+   },
+   {
+    "pojam": "zakon očuvanja energije",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": "S05.08"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "brzina svjetlosti c i veza c = λ·f",
+    "stavka_lekcije": "S25.05",
+    "uci_ga": "S24.06"
+   },
+   {
+    "pojam": "intenzitet zračenja (snaga po površini)",
+    "stavka_lekcije": "S25.06",
+    "uci_ga": "S20.12"
+   },
+   {
+    "pojam": "električna struja (jakost struje, fotostruja)",
+    "stavka_lekcije": "S25.06",
+    "uci_ga": "S15.02"
+   },
+   {
+    "pojam": "elektronvolt eV kao jedinica energije",
+    "stavka_lekcije": "S25.11",
+    "uci_ga": "S13.20"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B25.03",
+  "naziv": "Zaustavni napon i graf fotoefekta + Valno-čestični dualizam svjetlosti",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "polarizacija svjetlosti",
+    "stavka_lekcije": "S25.13",
+    "uci_ga": "S23.10",
+    "lekcija": "B23.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "fotoelektrični efekt (fotoelektroni izbijeni iz metala)",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S25.01"
+   },
+   {
+    "pojam": "izlazni rad W_i",
+    "stavka_lekcije": "S25.08",
+    "uci_ga": "S25.03"
+   },
+   {
+    "pojam": "energija fotona E = hf i Planckova konstanta h",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "Einsteinova jednadžba fotoefekta hf = W_i + E_k,max",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S25.04"
+   },
+   {
+    "pojam": "granična frekvencija f₀",
+    "stavka_lekcije": "S25.08",
+    "uci_ga": "S25.05"
+   },
+   {
+    "pojam": "maksimalna kinetička energija fotoelektrona E_k,max",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S25.06"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "napon kao razlika potencijala",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S15.04"
+   },
+   {
+    "pojam": "rad električne sile W = qU",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S13.16"
+   },
+   {
+    "pojam": "elementarni naboj e",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": "S13.02"
+   },
+   {
+    "pojam": "valna svojstva svjetlosti (interferencija, ogib, polarizacija)",
+    "stavka_lekcije": "S25.13",
+    "uci_ga": "S23.04"
+   },
+   {
+    "pojam": "ogib svjetlosti",
+    "stavka_lekcije": "S25.13",
+    "uci_ga": "S23.03"
+   },
+   {
+    "pojam": "polarizacija svjetlosti",
+    "stavka_lekcije": "S25.13",
+    "uci_ga": "S23.10"
+   },
+   {
+    "pojam": "intenzitet svjetlosti (broj izbijenih elektrona pri f > f₀)",
+    "stavka_lekcije": "S25.07",
+    "uci_ga": "S25.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B25.05",
+  "naziv": "De Broglieevi valovi tvari",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "količina gibanja p = mv",
+    "stavka_lekcije": "S25.14",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "Planckova konstanta h (E = hf)",
+    "stavka_lekcije": "S25.14",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S25.14",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "val (valna svojstva)",
+    "stavka_lekcije": "S25.14",
+    "uci_ga": "S20.01"
+   },
+   {
+    "pojam": "kinetička energija E_k = mv²/2 i veza E_k = p²/(2m)",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": "S04.11"
+   },
+   {
+    "pojam": "rad električne sile W = qU",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": "S13.16"
+   },
+   {
+    "pojam": "električni napon U",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": "S13.18"
+   },
+   {
+    "pojam": "količina gibanja p = mv",
+    "stavka_lekcije": "S25.16",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "ogib (difrakcija)",
+    "stavka_lekcije": "S25.17",
+    "uci_ga": "S20.24"
+   },
+   {
+    "pojam": "interferencija valova",
+    "stavka_lekcije": "S25.17",
+    "uci_ga": "S20.20"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B26.01",
+  "naziv": "Od Thomsona do Rutherfordova modela atoma",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "α-čestica (pozitivno nabijena jezgra helija)",
+    "stavka_lekcije": "S26.01",
+    "uci_ga": "S27.15",
+    "lekcija": "B27.04",
+    "kasnije": true
+   },
+   {
+    "pojam": "linijski spektar",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": "S26.17",
+    "lekcija": "B26.02",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "α-čestica (pozitivno nabijena jezgra helija)",
+    "stavka_lekcije": "S26.01",
+    "uci_ga": "S27.15"
+   },
+   {
+    "pojam": "Coulombov zakon sile između naboja",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": "S13.07"
+   },
+   {
+    "pojam": "elementarni naboj e",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": "S13.02"
+   },
+   {
+    "pojam": "centripetalna sila",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": "S06.07"
+   },
+   {
+    "pojam": "centripetalno ubrzanje kod kružnog gibanja",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": "S06.06"
+   },
+   {
+    "pojam": "elektromagnetsko zračenje ubrzanog nabijenog tijela",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": "S24.02"
+   },
+   {
+    "pojam": "linijski spektar",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": "S26.17"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B26.02",
+  "naziv": "Linijski spektri i Bohrovi postulati",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "pobuđeno stanje atoma",
+    "stavka_lekcije": "S26.17",
+    "uci_ga": "S26.06",
+    "lekcija": "B26.03",
+    "kasnije": true
+   },
+   {
+    "pojam": "emisija i apsorpcija fotona pri prijelazu atoma",
+    "stavka_lekcije": "S26.04",
+    "uci_ga": "S26.08",
+    "lekcija": "B26.04",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S26.04",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "pobuđeno stanje atoma",
+    "stavka_lekcije": "S26.17",
+    "uci_ga": "S26.06"
+   },
+   {
+    "pojam": "emisija i apsorpcija fotona pri prijelazu atoma",
+    "stavka_lekcije": "S26.04",
+    "uci_ga": "S26.08"
+   },
+   {
+    "pojam": "elektron koji kruži oko jezgre (putanja elektrona)",
+    "stavka_lekcije": "S26.05",
+    "uci_ga": "S26.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B26.03",
+  "naziv": "Energijska stanja atoma vodika",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "kvantizirana energijska stanja atoma (Bohrov model, stacionarna stanja)",
+    "stavka_lekcije": "S26.07",
+    "uci_ga": "S26.05"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B26.04",
+  "naziv": "Emisija i apsorpcija fotona",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "energijska stanja atoma (osnovno i pobuđeno)",
+    "stavka_lekcije": "S26.08",
+    "uci_ga": "S26.06",
+    "lekcija": "B26.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "foton (kvant elektromagnetskog zračenja)",
+    "stavka_lekcije": "S26.08",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "Planckova konstanta h i relacija E_f = h·f",
+    "stavka_lekcije": "S26.08",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "energijska stanja atoma (osnovno i pobuđeno)",
+    "stavka_lekcije": "S26.08",
+    "uci_ga": "S26.06"
+   },
+   {
+    "pojam": "valna duljina λ i brzina svjetlosti c (E = hc/λ)",
+    "stavka_lekcije": "S26.11",
+    "uci_ga": "S24.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B26.05",
+  "naziv": "Spektralne serije vodika i spektri elemenata",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "energija fotona E = hf",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "energijska stanja atoma vodika E_n = −13,6 eV/n²",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": "S26.07"
+   },
+   {
+    "pojam": "prijelaz elektrona između stanja uz emisiju/apsorpciju fotona",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": "S26.08"
+   },
+   {
+    "pojam": "linijski spektar vodika",
+    "stavka_lekcije": "S26.13",
+    "uci_ga": "S26.04"
+   },
+   {
+    "pojam": "elektromagnetski spektar (UV, vidljivo, IR)",
+    "stavka_lekcije": "S26.13",
+    "uci_ga": "S24.08"
+   },
+   {
+    "pojam": "emisija fotona pri prijelazu u niže stanje",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": "S26.08"
+   },
+   {
+    "pojam": "apsorpcija fotona",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": "S26.10"
+   },
+   {
+    "pojam": "kontinuirani spektar",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": "S26.17"
+   },
+   {
+    "pojam": "linijski spektar elementa",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": "S26.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B27.01",
+  "naziv": "Građa jezgre i nuklidi",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "Coulombov zakon (elektrostatska odbojna sila između protona)",
+    "stavka_lekcije": "S27.04",
+    "uci_ga": "S13.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B27.02",
+  "naziv": "Defekt mase i energija vezanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "brzina svjetlosti u vakuumu c",
+    "stavka_lekcije": "S27.07",
+    "uci_ga": "S24.05",
+    "lekcija": "B24.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "nukleon (proton i neutron) u jezgri",
+    "stavka_lekcije": "S27.06",
+    "uci_ga": "S27.02"
+   },
+   {
+    "pojam": "unificirana atomska masa u",
+    "stavka_lekcije": "S27.11",
+    "uci_ga": "S27.05"
+   },
+   {
+    "pojam": "elektronvolt (eV) i njegova veza s džulom",
+    "stavka_lekcije": "S27.11",
+    "uci_ga": "S13.20"
+   },
+   {
+    "pojam": "elementarni naboj e (pretvorba eV u J)",
+    "stavka_lekcije": "S27.11",
+    "uci_ga": "S13.02"
+   },
+   {
+    "pojam": "brzina svjetlosti u vakuumu c",
+    "stavka_lekcije": "S27.07",
+    "uci_ga": "S24.05"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B27.03",
+  "naziv": "Nuklearne reakcije i zakoni sačuvanja",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "količina gibanja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S04.06",
+    "lekcija": "B04.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "zakon očuvanja količine gibanja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S04.13",
+    "lekcija": "B04.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "nukleoni, maseni broj A i broj protona Z",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S27.02"
+   },
+   {
+    "pojam": "električni naboj (Z kao naboj jezgre)",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S13.01"
+   },
+   {
+    "pojam": "zakon očuvanja naboja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S13.03"
+   },
+   {
+    "pojam": "količina gibanja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S04.06"
+   },
+   {
+    "pojam": "zakon očuvanja količine gibanja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S04.13"
+   },
+   {
+    "pojam": "zakon očuvanja energije",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S05.08"
+   },
+   {
+    "pojam": "defekt mase",
+    "stavka_lekcije": "S27.25",
+    "uci_ga": "S27.06"
+   },
+   {
+    "pojam": "energija vezanja jezgre",
+    "stavka_lekcije": "S27.25",
+    "uci_ga": "S27.08"
+   },
+   {
+    "pojam": "ekvivalentnost mase i energije (E = Δm·c²)",
+    "stavka_lekcije": "S27.25",
+    "uci_ga": "S27.07"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B27.04",
+  "naziv": "Radioaktivni raspadi",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "foton kao kvant elektromagnetskog zračenja",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": "S25.02",
+    "lekcija": "B25.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "pobuđeno (energijsko) stanje jezgre i prijelaz u niže stanje",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": "S26.06",
+    "lekcija": "B26.03",
+    "kasnije": false
+   }
+  ],
+  "rupe": [
+   {
+    "pojam": "neutrino i antineutrino (čestice emitirane pri β raspadu)",
+    "stavka_lekcije": "S27.16",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "pozitron (antičestica elektrona)",
+    "stavka_lekcije": "S27.17",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "neutrino (emitiran pri β⁺ raspadu)",
+    "stavka_lekcije": "S27.17",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "maseni broj A i atomski (protonski) broj Z te zapis nuklida ᴬ_Z X",
+    "stavka_lekcije": "S27.15",
+    "uci_ga": "S27.02"
+   },
+   {
+    "pojam": "proton i neutron kao sastavni dijelovi jezgre",
+    "stavka_lekcije": "S27.16",
+    "uci_ga": "S27.02"
+   },
+   {
+    "pojam": "neutrino i antineutrino (čestice emitirane pri β raspadu)",
+    "stavka_lekcije": "S27.16",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "pozitron (antičestica elektrona)",
+    "stavka_lekcije": "S27.17",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "neutrino (emitiran pri β⁺ raspadu)",
+    "stavka_lekcije": "S27.17",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "foton kao kvant elektromagnetskog zračenja",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": "S25.02"
+   },
+   {
+    "pojam": "pobuđeno (energijsko) stanje jezgre i prijelaz u niže stanje",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": "S26.06"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B27.05",
+  "naziv": "Fisija, fuzija i energija reakcije",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "nukleon (proton, neutron) i sastav jezgre",
+    "stavka_lekcije": "S27.19",
+    "uci_ga": "S27.02"
+   },
+   {
+    "pojam": "ekvivalentnost mase i energije, E = Δm·c²",
+    "stavka_lekcije": "S27.23",
+    "uci_ga": "S27.07"
+   },
+   {
+    "pojam": "energija vezanja po nukleonu",
+    "stavka_lekcije": "S27.10",
+    "uci_ga": "S27.09"
+   },
+   {
+    "pojam": "radioaktivni raspad α",
+    "stavka_lekcije": "S27.24",
+    "uci_ga": "S27.15"
+   },
+   {
+    "pojam": "radioaktivni raspad β",
+    "stavka_lekcije": "S27.24",
+    "uci_ga": "S27.16"
+   },
+   {
+    "pojam": "γ zračenje",
+    "stavka_lekcije": "S27.24",
+    "uci_ga": "S27.18"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B27.06",
+  "naziv": "Nuklearna elektrana",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "nuklearna fisija",
+    "stavka_lekcije": "S27.21",
+    "uci_ga": "S27.19"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B28.01",
+  "naziv": "Radioaktivni raspad i vrijeme poluraspada",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "konstanta raspada λ",
+    "stavka_lekcije": "S28.09",
+    "uci_ga": "S28.10",
+    "lekcija": "B28.02",
+    "kasnije": true
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "konstanta raspada λ",
+    "stavka_lekcije": "S28.09",
+    "uci_ga": "S28.10"
+   },
+   {
+    "pojam": "izotop",
+    "stavka_lekcije": "S28.14",
+    "uci_ga": "S27.03"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B28.02",
+  "naziv": "Konstanta raspada i aktivnost",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "vrijeme poluraspada T",
+    "stavka_lekcije": "S28.10",
+    "uci_ga": "S28.08"
+   },
+   {
+    "pojam": "zakon radioaktivnog raspada (broj jezgara N = N₀·2^(−t/T))",
+    "stavka_lekcije": "S28.12",
+    "uci_ga": "S28.09"
+   },
+   {
+    "pojam": "radioaktivni raspad kao slučajan proces spontane pretvorbe jezgre",
+    "stavka_lekcije": "S28.11",
+    "uci_ga": "S28.01"
+   },
+   {
+    "pojam": "množina tvari, molarna masa i Avogadrov broj (N = n·N_A, n = m/M)",
+    "stavka_lekcije": "S28.13",
+    "uci_ga": "S11.04"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B28.03",
+  "naziv": "Ionizirajuće zračenje i njegova prodornost",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "α-zračenje (α-čestice)",
+    "stavka_lekcije": "S28.16",
+    "uci_ga": "S27.15"
+   },
+   {
+    "pojam": "β-zračenje",
+    "stavka_lekcije": "S28.16",
+    "uci_ga": "S27.16"
+   },
+   {
+    "pojam": "γ-zračenje",
+    "stavka_lekcije": "S28.16",
+    "uci_ga": "S27.18"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B28.04",
+  "naziv": "Doze zračenja i učinci na organizme + Izvori zračenja i primjene",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "ionizirajuće zračenje",
+    "stavka_lekcije": "S28.17",
+    "uci_ga": "S28.15"
+   },
+   {
+    "pojam": "vrste zračenja α, β, γ (razlika u prodornosti i ionizaciji)",
+    "stavka_lekcije": "S28.19",
+    "uci_ga": "S28.16"
+   },
+   {
+    "pojam": "radioaktivnost i radioaktivna tvar",
+    "stavka_lekcije": "S28.22",
+    "uci_ga": "S28.01"
+   },
+   {
+    "pojam": "α-raspad i α-čestica",
+    "stavka_lekcije": "S28.22",
+    "uci_ga": "S27.15"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B29.01",
+  "naziv": "Postulati STR-a i Lorentzov faktor + Dilatacija vremena",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "inercijski sustav",
+    "stavka_lekcije": "S29.01",
+    "uci_ga": "S02.05"
+   },
+   {
+    "pojam": "brzina svjetlosti c = 3·10⁸ m/s",
+    "stavka_lekcije": "S29.02",
+    "uci_ga": "S24.05"
+   },
+   {
+    "pojam": "brzina svjetlosti c = 3·10⁸ m/s",
+    "stavka_lekcije": "S29.03",
+    "uci_ga": "S24.05"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B29.03",
+  "naziv": "Kontrakcija duljine i ravnopravnost sustava + Povezivanje kontrakcije duljine i dilatacije vremena",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [
+   {
+    "pojam": "Relativnost istodobnosti",
+    "stavka_lekcije": "S29.09",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "Prvi postulat STR-a (ravnopravnost inercijskih sustava)",
+    "stavka_lekcije": "S29.09",
+    "uci_ga": "S29.01"
+   },
+   {
+    "pojam": "Referentni sustav i relativnost gibanja",
+    "stavka_lekcije": "S29.09",
+    "uci_ga": "S01.01"
+   },
+   {
+    "pojam": "Brzina svjetlosti c",
+    "stavka_lekcije": "S29.08",
+    "uci_ga": "S24.05"
+   },
+   {
+    "pojam": "Lorentzov faktor γ",
+    "stavka_lekcije": "S29.08",
+    "uci_ga": "S29.03"
+   },
+   {
+    "pojam": "Lorentzov faktor γ",
+    "stavka_lekcije": "S29.11",
+    "uci_ga": "S29.03"
+   },
+   {
+    "pojam": "Vlastito vrijeme T0",
+    "stavka_lekcije": "S29.10",
+    "uci_ga": "S29.04"
+   },
+   {
+    "pojam": "Dilatacija vremena",
+    "stavka_lekcije": "S29.10",
+    "uci_ga": "S29.05"
+   },
+   {
+    "pojam": "Dilatacija vremena",
+    "stavka_lekcije": "S29.11",
+    "uci_ga": "S29.05"
+   },
+   {
+    "pojam": "Relativnost istodobnosti",
+    "stavka_lekcije": "S29.09",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B29.05",
+  "naziv": "Relativistička energija i masa",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S29.15",
+    "uci_ga": "S25.02",
+    "lekcija": "B25.01",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "Lorentzov faktor γ = 1/√(1 − v²/c²)",
+    "stavka_lekcije": "S29.12",
+    "uci_ga": "S29.03"
+   },
+   {
+    "pojam": "brzina svjetlosti c",
+    "stavka_lekcije": "S29.12",
+    "uci_ga": "S24.05"
+   },
+   {
+    "pojam": "klasična kinetička energija E_k = mv²/2",
+    "stavka_lekcije": "S29.17",
+    "uci_ga": "S05.04"
+   },
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S29.15",
+    "uci_ga": "S25.02"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B30.02",
+  "naziv": "Dokazi širenja: Hubble, crveni pomak i pozadinsko zračenje + Sastav svemira: tamna tvar i tamna energija",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "Veliki prasak (početno stanje svemira i hlađenje)",
+    "stavka_lekcije": "S30.05",
+    "uci_ga": "S30.01"
+   },
+   {
+    "pojam": "Valna duljina svjetlosti",
+    "stavka_lekcije": "S30.04",
+    "uci_ga": "S20.05"
+   },
+   {
+    "pojam": "Akceleracija (ubrzanje gibanja)",
+    "stavka_lekcije": "S30.09",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "Gravitacijsko međudjelovanje",
+    "stavka_lekcije": "S30.08",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "Elektromagnetski spektar (mikrovalno zračenje)",
+    "stavka_lekcije": "S30.05",
+    "uci_ga": "S24.08"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B30.01",
+  "naziv": "Veliki prasak i širenje svemira",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [],
+  "greska": null
+ },
+ {
+  "id": "B30.04",
+  "naziv": "Struktura svemira i udaljenosti",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "brzina svjetlosti u vakuumu (c ≈ 3·10⁸ m/s)",
+    "stavka_lekcije": "S30.12",
+    "uci_ga": "S24.05",
+    "lekcija": "B24.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "brzina svjetlosti u vakuumu (c ≈ 3·10⁸ m/s)",
+    "stavka_lekcije": "S30.12",
+    "uci_ga": "S24.05"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B30.05",
+  "naziv": "Nastanak zvijezda i izvor njihove energije",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "crveni div i bijeli patuljak (vrste zvijezda)",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "S30.15",
+    "lekcija": "B30.06",
+    "kasnije": true
+   }
+  ],
+  "rupe": [
+   {
+    "pojam": "tlak zračenja",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "sjaj/luminoznost zvijezde",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "glavni niz (vrsta zvijezda)",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "gravitacijska sila (gravitacijsko stezanje)",
+    "stavka_lekcije": "S30.13",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "nuklearna fuzija",
+    "stavka_lekcije": "S30.13",
+    "uci_ga": "S27.22"
+   },
+   {
+    "pojam": "nuklearna fuzija kao izvor energije",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": "S27.22"
+   },
+   {
+    "pojam": "gravitacijska sila (ravnoteža sa stezanjem)",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": "S07.01"
+   },
+   {
+    "pojam": "tlak zračenja",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "nuklearna fuzija (nastanak težih elemenata)",
+    "stavka_lekcije": "S30.17",
+    "uci_ga": "S27.22"
+   },
+   {
+    "pojam": "sjaj/luminoznost zvijezde",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "nigdje"
+   },
+   {
+    "pojam": "temperatura zvijezde",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "S11.03"
+   },
+   {
+    "pojam": "crveni div i bijeli patuljak (vrste zvijezda)",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "S30.15"
+   },
+   {
+    "pojam": "glavni niz (vrsta zvijezda)",
+    "stavka_lekcije": "S30.19",
+    "uci_ga": "nigdje"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B30.06",
+  "naziv": "Životni ciklus zvijezda i crne rupe",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "nuklearna fuzija (gorivo zvijezde i njezin kraj)",
+    "stavka_lekcije": "S30.15",
+    "uci_ga": "S27.22"
+   },
+   {
+    "pojam": "gravitacijsko stezanje oblaka/jezgre zvijezde",
+    "stavka_lekcije": "S30.16",
+    "uci_ga": "S30.13"
+   },
+   {
+    "pojam": "gravitacijsko polje",
+    "stavka_lekcije": "S30.18",
+    "uci_ga": "S07.01"
+   }
+  ],
+  "greska": null
+ },
+ {
+  "id": "B31.03",
+  "naziv": "Matematika u fizici i računanje",
+  "kod": [],
+  "prekrsaji": [],
+  "rupe": [],
+  "sirovo": [],
+  "greska": null
+ },
+ {
+  "id": "B31.04",
+  "naziv": "Kvalitativno zaključivanje",
+  "kod": [],
+  "prekrsaji": [
+   {
+    "pojam": "korisnost",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": "S05.15",
+    "lekcija": "B05.05",
+    "kasnije": false
+   },
+   {
+    "pojam": "brzina svjetlosti c kao granična brzina",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": "S24.05",
+    "lekcija": "B24.02",
+    "kasnije": false
+   }
+  ],
+  "rupe": [],
+  "sirovo": [
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": "S01.07"
+   },
+   {
+    "pojam": "rezultantna (ukupna) sila",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": "S03.03"
+   },
+   {
+    "pojam": "jednoliko gibanje",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": "S01.04"
+   },
+   {
+    "pojam": "ravnoteža sila (ukupna sila nula i stalna brzina)",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": "S02.06"
+   },
+   {
+    "pojam": "korisnost",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": "S05.15"
+   },
+   {
+    "pojam": "brzina svjetlosti c kao granična brzina",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": "S24.05"
+   }
+  ],
+  "greska": null
+ }
+]
