@@ -43,7 +43,7 @@ Lekcija čiji se koncept koristi u drugoj lekciji. Lekcija smije koristiti samo 
 _Avoid_: prerequisite, ovisnost
 
 **Zadatak**:
-Ono čime lekcija uči svoju ideju, moguće s podzadacima a, b, c. Lekcija ima do četiri varijacije (druga situacija i brojevi, iste stavke), da ponavljanje ne bude uvijek isti zadatak; za učenje je dovoljna jedna. Varijacije nastaju postupno, jedna po ponavljanju, a nakon četvrte se kreće ispočetka. Nikad nije preuzet iz materijala.
+Ono čime lekcija uči svoju ideju, s najviše tri podzadatka a, b, c. Lekcija ima do četiri varijacije (druga situacija i brojevi, iste stavke), da ponavljanje ne bude uvijek isti zadatak; za učenje je dovoljna jedna. Prva varijacija svake lekcije nastaje čim je plan potvrđen; sljedeća nastaje kad učenik riješi prethodnu, a nakon četvrte se kreće ispočetka. Nikad nije preuzet iz materijala.
 _Avoid_: pitanje, vježba
 
 **Lekcija primjene**:
