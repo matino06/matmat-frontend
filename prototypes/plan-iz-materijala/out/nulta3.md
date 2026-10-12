@@ -1,6 +1,6 @@
 # Nulta pretpostavka (anthropic/claude-haiku-5.5, low)
 
-Prekršaji u 31 lekcija, rupe u 9 lekcija; trošak 0.460 $.
+Prekršaji u 45 lekcija, rupe u 11 lekcija; trošak 0.707 $.
 
 ## B01.01 Gibanje, put i pomak, prosječna brzina + Jednoliko gibanje i njegovi grafovi
 - PREKRŠAJ: „akceleracija“ (S01.04) uči S01.07 u B01.03 (kasnije)
@@ -128,3 +128,58 @@ Prekršaji u 31 lekcija, rupe u 9 lekcija; trošak 0.460 $.
 
 ## B20.03 Jednadžba vala i fazna razlika + Energija i intenzitet vala
 - PREKRŠAJ: „razlika hoda“ (S20.19) uči S20.18 u B20.07 (kasnije)
+
+## B20.05 Superpozicija i odbijanje vala + Lom vala
+- PREKRŠAJ: „faza vala i fazni pomak“ (S20.15) uči S20.09 u B20.03 (ranije, ali nije preduvjet)
+- PREKRŠAJ: „indeks loma n“ (S20.17) uči S22.08 u B22.03 (kasnije)
+
+## B20.07 Interferencija valova + Stojni valovi
+- RUPA: „koherentni izvori“ (S20.20) plan ne uči nigdje
+
+## B24.01 Nastanak i građa elektromagnetskog vala
+- PREKRŠAJ: „valna duljina“ (S24.04) uči S20.05 u B20.02 (ranije, ali nije preduvjet)
+- PREKRŠAJ: „brzina vala“ (S24.04) uči S20.06 u B20.02 (ranije, ali nije preduvjet)
+
+## B24.02 Brzina, valna duljina i frekvencija + Elektromagnetski spektar i energija fotona
+- PREKRŠAJ: „foton (energija fotona)“ (S24.09) uči S25.02 u B25.01 (kasnije)
+
+## B24.04 Primjene i štetnost zračenja
+- PREKRŠAJ: „ionizirajuće zračenje“ (S24.12) uči S28.15 u B28.03 (kasnije)
+
+## B31.05 Mjerne jedinice
+- PREKRŠAJ: „elektronvolt (eV) kao jedinica energije“ (S31.16) uči S13.20 u B13.05 (ranije, ali nije preduvjet)
+- PREKRŠAJ: „jednadžba stanja idealnog plina (pV = nRT)“ (S31.21) uči S11.05 u B11.02 (ranije, ali nije preduvjet)
+- PREKRŠAJ: „korisnost toplinskog stroja“ (S31.21) uči S12.25 u B12.08 (ranije, ali nije preduvjet)
+
+## B26.01 Od Thomsona do Rutherfordova modela atoma
+- PREKRŠAJ: „Linijski spektar“ (S26.03) uči S26.04 u B26.02 (kasnije)
+- PREKRŠAJ: „Alfa-čestice“ (S26.01) uči S27.15 u B27.04 (kasnije)
+
+## B26.02 Linijski spektri i Bohrovi postulati
+- PREKRŠAJ: „pobuđeno stanje atoma (pobuđivanje atoma)“ (S26.17) uči S26.06 u B26.03 (kasnije)
+
+## B27.03 Nuklearne reakcije i zakoni sačuvanja
+- PREKRŠAJ: „zakon očuvanja količine gibanja“ (S27.13) uči S04.13 u B04.03 (ranije, ali nije preduvjet)
+
+## B27.04 Radioaktivni raspadi
+- PREKRŠAJ: „foton“ (S27.18) uči S25.02 u B25.01 (ranije, ali nije preduvjet)
+- PREKRŠAJ: „pobuđeno (energijsko) stanje i prijelaz u niže stanje“ (S27.18) uči S26.06 u B26.03 (ranije, ali nije preduvjet)
+
+## B28.01 Radioaktivni raspad i vrijeme poluraspada
+- PREKRŠAJ: „konstanta raspada λ“ (S28.09) uči S28.10 u B28.02 (kasnije)
+
+## B30.01 Veliki prasak i širenje svemira
+- PREKRŠAJ: „protoni i neutroni kao sastavni dijelovi jezgre“ (S30.06) uči S27.02 u B27.01 (ranije, ali nije preduvjet)
+
+## B30.04 Struktura svemira i udaljenosti
+- PREKRŠAJ: „brzina svjetlosti (c)“ (S30.12) uči S24.05 u B24.02 (ranije, ali nije preduvjet)
+
+## B30.05 Nastanak zvijezda i izvor njihove energije
+- PREKRŠAJ: „tlak“ (S30.14) uči S08.01 u B08.01 (ranije, ali nije preduvjet)
+
+## B30.06 Životni ciklus zvijezda i crne rupe
+- RUPA: „brzina bijega iz gravitacijskog polja“ (S30.18) plan ne uči nigdje
+
+## B31.04 Kvalitativno zaključivanje
+- PREKRŠAJ: „korisnost“ (S31.18) uči S05.15 u B05.05 (ranije, ali nije preduvjet)
+- PREKRŠAJ: „brzina svjetlosti c“ (S31.18) uči S24.05 u B24.02 (ranije, ali nije preduvjet)

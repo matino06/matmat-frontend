@@ -4730,19 +4730,179 @@
   "id": "B20.05",
   "naziv": "Superpozicija i odbijanje vala + Lom vala",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "faza vala i fazni pomak",
+    "stavka_lekcije": "S20.15",
+    "uci_ga": "S20.09",
+    "lekcija": "B20.03",
+    "kasnije": false
+   },
+   {
+    "pojam": "indeks loma n",
+    "stavka_lekcije": "S20.17",
+    "uci_ga": "S22.08",
+    "lekcija": "B22.03",
+    "kasnije": true
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "val (transverzalni val, širenje poremećaja)",
+    "stavka_lekcije": "S20.13",
+    "uci_ga": [
+     "S20.01",
+     "S20.03"
+    ]
+   },
+   {
+    "pojam": "elongacija / pomak čestice sredstva",
+    "stavka_lekcije": "S20.13",
+    "uci_ga": [
+     "S19.02",
+     "S19.04"
+    ]
+   },
+   {
+    "pojam": "sredstvo (elastično sredstvo za mehanički val)",
+    "stavka_lekcije": "S20.14",
+    "uci_ga": [
+     "S20.02"
+    ]
+   },
+   {
+    "pojam": "frekvencija",
+    "stavka_lekcije": "S20.14",
+    "uci_ga": [
+     "S19.02",
+     "S06.02"
+    ]
+   },
+   {
+    "pojam": "brzina vala",
+    "stavka_lekcije": "S20.14",
+    "uci_ga": [
+     "S20.06",
+     "S20.08"
+    ]
+   },
+   {
+    "pojam": "upadni kut i kut odbijanja (mjereni od okomice)",
+    "stavka_lekcije": "S20.14",
+    "uci_ga": [
+     "S22.02",
+     "S22.05"
+    ]
+   },
+   {
+    "pojam": "faza vala i fazni pomak",
+    "stavka_lekcije": "S20.15",
+    "uci_ga": [
+     "S20.09",
+     "S20.10"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S20.16",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "indeks loma n",
+    "stavka_lekcije": "S20.17",
+    "uci_ga": [
+     "S22.08"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B20.07",
   "naziv": "Interferencija valova + Stojni valovi",
   "kod": [],
   "prekrsaji": [],
-  "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "rupe": [
+   {
+    "pojam": "koherentni izvori",
+    "stavka_lekcije": "S20.20",
+    "uci_ga": [
+     "nigdje"
+    ]
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "superpozicija valova",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": [
+     "S20.13"
+    ]
+   },
+   {
+    "pojam": "fazna razlika (u fazi, u protufazi)",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": [
+     "S20.10",
+     "S20.19"
+    ]
+   },
+   {
+    "pojam": "razlika hoda",
+    "stavka_lekcije": "S20.20",
+    "uci_ga": [
+     "S20.19"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "amplituda",
+    "stavka_lekcije": "S20.18",
+    "uci_ga": [
+     "S20.05",
+     "S19.02"
+    ]
+   },
+   {
+    "pojam": "refleksija (odbijanje) vala",
+    "stavka_lekcije": "S20.21",
+    "uci_ga": [
+     "S20.14"
+    ]
+   },
+   {
+    "pojam": "brzina vala v = λf",
+    "stavka_lekcije": "S20.23",
+    "uci_ga": [
+     "S20.06"
+    ]
+   },
+   {
+    "pojam": "frekvencija",
+    "stavka_lekcije": "S20.22",
+    "uci_ga": [
+     "S19.02",
+     "S20.06"
+    ]
+   },
+   {
+    "pojam": "koherentni izvori",
+    "stavka_lekcije": "S20.20",
+    "uci_ga": [
+     "nigdje"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B21.01",
@@ -4750,8 +4910,47 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "frekvencija",
+    "stavka_lekcije": "S21.05",
+    "uci_ga": [
+     "S06.02",
+     "S19.02",
+     "S20.06"
+    ]
+   },
+   {
+    "pojam": "amplituda",
+    "stavka_lekcije": "S21.10",
+    "uci_ga": [
+     "S19.02",
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "intenzitet vala",
+    "stavka_lekcije": "S21.10",
+    "uci_ga": [
+     "S20.12"
+    ]
+   },
+   {
+    "pojam": "intenzitet vala",
+    "stavka_lekcije": "S21.09",
+    "uci_ga": [
+     "S20.12"
+    ]
+   },
+   {
+    "pojam": "ovisnost intenziteta o udaljenosti (1/r²)",
+    "stavka_lekcije": "S21.09",
+    "uci_ga": [
+     "S20.12"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B21.03",
@@ -4759,8 +4958,40 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "stojni val (čvorovi i trbusi)",
+    "stavka_lekcije": "S21.16",
+    "uci_ga": [
+     "S20.21",
+     "S20.22",
+     "S20.23"
+    ]
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S21.16",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "veza v = λf (brzina, valna duljina i frekvencija vala)",
+    "stavka_lekcije": "S21.17",
+    "uci_ga": [
+     "S20.06"
+    ]
+   },
+   {
+    "pojam": "vlastita frekvencija sustava",
+    "stavka_lekcije": "S21.18",
+    "uci_ga": [
+     "S19.27",
+     "S19.28"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B21.04",
@@ -4768,8 +4999,34 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "frekvencija (f, Hz)",
+    "stavka_lekcije": "S21.19",
+    "uci_ga": [
+     "S06.02",
+     "S19.02",
+     "S20.06",
+     "S20.07"
+    ]
+   },
+   {
+    "pojam": "brzina zvuka",
+    "stavka_lekcije": "S21.20",
+    "uci_ga": [
+     "S21.02",
+     "S21.01"
+    ]
+   },
+   {
+    "pojam": "relativno gibanje izvora i prijemnika",
+    "stavka_lekcije": "S21.19",
+    "uci_ga": [
+     "S01.01"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.02",
@@ -4777,8 +5034,23 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "svjetlosna zraka",
+    "stavka_lekcije": "S22.07",
+    "uci_ga": [
+     "S22.01"
+    ]
+   },
+   {
+    "pojam": "zakon odbijanja",
+    "stavka_lekcije": "S22.07",
+    "uci_ga": [
+     "S22.03"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.04",
@@ -4786,26 +5058,178 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "indeks loma n",
+    "stavka_lekcije": "S22.11",
+    "uci_ga": [
+     "S22.08",
+     "S22.09"
+    ]
+   },
+   {
+    "pojam": "lom svjetlosti (refrakcija)",
+    "stavka_lekcije": "S22.11",
+    "uci_ga": [
+     "S22.10"
+    ]
+   },
+   {
+    "pojam": "upadni kut mjeren od okomice",
+    "stavka_lekcije": "S22.11",
+    "uci_ga": [
+     "S22.02"
+    ]
+   },
+   {
+    "pojam": "optički rjeđe i gušće sredstvo",
+    "stavka_lekcije": "S22.15",
+    "uci_ga": [
+     "S22.09"
+    ]
+   },
+   {
+    "pojam": "zakon odbijanja (refleksija)",
+    "stavka_lekcije": "S22.15",
+    "uci_ga": [
+     "S22.03"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B24.01",
   "naziv": "Nastanak i građa elektromagnetskog vala",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": "S20.05",
+    "lekcija": "B20.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "brzina vala",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": "S20.06",
+    "lekcija": "B20.02",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "električno polje",
+    "stavka_lekcije": "S24.01",
+    "uci_ga": [
+     "S13.10",
+     "S13.11",
+     "S13.12"
+    ]
+   },
+   {
+    "pojam": "magnetsko polje",
+    "stavka_lekcije": "S24.01",
+    "uci_ga": [
+     "S16.03",
+     "S16.04"
+    ]
+   },
+   {
+    "pojam": "val (širenje poremećaja)",
+    "stavka_lekcije": "S24.01",
+    "uci_ga": [
+     "S20.01"
+    ]
+   },
+   {
+    "pojam": "električni naboj",
+    "stavka_lekcije": "S24.02",
+    "uci_ga": [
+     "S13.01",
+     "S13.02"
+    ]
+   },
+   {
+    "pojam": "akceleracija (ubrzano gibanje)",
+    "stavka_lekcije": "S24.02",
+    "uci_ga": [
+     "S01.07"
+    ]
+   },
+   {
+    "pojam": "titranje",
+    "stavka_lekcije": "S24.02",
+    "uci_ga": [
+     "S19.01"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "brzina vala",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": [
+     "S20.06"
+    ]
+   },
+   {
+    "pojam": "faza titranja",
+    "stavka_lekcije": "S24.04",
+    "uci_ga": [
+     "S19.03",
+     "S20.10"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B24.02",
   "naziv": "Brzina, valna duljina i frekvencija + Elektromagnetski spektar i energija fotona",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "foton (energija fotona)",
+    "stavka_lekcije": "S24.09",
+    "uci_ga": "S25.02",
+    "lekcija": "B25.01",
+    "kasnije": true
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski val",
+    "stavka_lekcije": "S24.05",
+    "uci_ga": [
+     "S24.01"
+    ]
+   },
+   {
+    "pojam": "indeks loma",
+    "stavka_lekcije": "S24.05",
+    "uci_ga": [
+     "S22.08",
+     "S22.13"
+    ]
+   },
+   {
+    "pojam": "foton (energija fotona)",
+    "stavka_lekcije": "S24.09",
+    "uci_ga": [
+     "S25.02"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.03",
@@ -4813,8 +5237,45 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "brzina svjetlosti c",
+    "stavka_lekcije": "S22.08",
+    "uci_ga": [
+     "S24.05"
+    ]
+   },
+   {
+    "pojam": "okomica (normala) na granicu sredstava",
+    "stavka_lekcije": "S22.10",
+    "uci_ga": [
+     "S22.02"
+    ]
+   },
+   {
+    "pojam": "upadni kut",
+    "stavka_lekcije": "S22.12",
+    "uci_ga": [
+     "S22.02"
+    ]
+   },
+   {
+    "pojam": "frekvencija",
+    "stavka_lekcije": "S22.13",
+    "uci_ga": [
+     "S06.02",
+     "S19.02"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S22.13",
+    "uci_ga": [
+     "S20.05"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.06",
@@ -4822,8 +5283,47 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "lom svjetlosti (refrakcija)",
+    "stavka_lekcije": "S22.18",
+    "uci_ga": [
+     "S22.10"
+    ]
+   },
+   {
+    "pojam": "upadni kut",
+    "stavka_lekcije": "S22.18",
+    "uci_ga": [
+     "S22.02",
+     "S22.05"
+    ]
+   },
+   {
+    "pojam": "Snellov zakon",
+    "stavka_lekcije": "S22.19",
+    "uci_ga": [
+     "S22.11"
+    ]
+   },
+   {
+    "pojam": "kut loma",
+    "stavka_lekcije": "S22.19",
+    "uci_ga": [
+     "S22.11",
+     "S22.14"
+    ]
+   },
+   {
+    "pojam": "indeks loma",
+    "stavka_lekcije": "S22.19",
+    "uci_ga": [
+     "S22.08",
+     "S22.09"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.07",
@@ -4831,8 +5331,25 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "lom svjetlosti (refrakcija) na granici sredstava",
+    "stavka_lekcije": "S22.20",
+    "uci_ga": [
+     "S22.10",
+     "S22.11",
+     "S20.16"
+    ]
+   },
+   {
+    "pojam": "svjetlosna zraka",
+    "stavka_lekcije": "S22.23",
+    "uci_ga": [
+     "S22.01"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.08",
@@ -4840,8 +5357,37 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "leća (sabirna i rastresna)",
+    "stavka_lekcije": "S22.24",
+    "uci_ga": [
+     "S22.20"
+    ]
+   },
+   {
+    "pojam": "žarišna daljina f",
+    "stavka_lekcije": "S22.24",
+    "uci_ga": [
+     "S22.21"
+    ]
+   },
+   {
+    "pojam": "realna i virtualna slika",
+    "stavka_lekcije": "S22.26",
+    "uci_ga": [
+     "S22.30"
+    ]
+   },
+   {
+    "pojam": "rastresna leća",
+    "stavka_lekcije": "S22.26",
+    "uci_ga": [
+     "S22.20"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B22.09",
@@ -4849,8 +5395,44 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "sabirna (konvergentna) leća",
+    "stavka_lekcije": "S22.27",
+    "uci_ga": [
+     "S22.20"
+    ]
+   },
+   {
+    "pojam": "žarište i žarišna daljina f",
+    "stavka_lekcije": "S22.27",
+    "uci_ga": [
+     "S22.21"
+    ]
+   },
+   {
+    "pojam": "realna slika",
+    "stavka_lekcije": "S22.27",
+    "uci_ga": [
+     "S22.30"
+    ]
+   },
+   {
+    "pojam": "virtualna slika",
+    "stavka_lekcije": "S22.28",
+    "uci_ga": [
+     "S22.30"
+    ]
+   },
+   {
+    "pojam": "rastresna (divergentna) leća",
+    "stavka_lekcije": "S22.29",
+    "uci_ga": [
+     "S22.20"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B23.01",
@@ -4858,8 +5440,63 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski val",
+    "stavka_lekcije": "S23.01",
+    "uci_ga": [
+     "S24.01",
+     "S24.02"
+    ]
+   },
+   {
+    "pojam": "transverzalni val",
+    "stavka_lekcije": "S23.01",
+    "uci_ga": [
+     "S20.03",
+     "S24.03"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S23.03",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "superpozicija valova",
+    "stavka_lekcije": "S23.04",
+    "uci_ga": [
+     "S20.13"
+    ]
+   },
+   {
+    "pojam": "koherentni izvori valova",
+    "stavka_lekcije": "S23.04",
+    "uci_ga": [
+     "S20.20"
+    ]
+   },
+   {
+    "pojam": "fazna razlika",
+    "stavka_lekcije": "S23.05",
+    "uci_ga": [
+     "S20.10",
+     "S20.19"
+    ]
+   },
+   {
+    "pojam": "razlika hoda",
+    "stavka_lekcije": "S23.05",
+    "uci_ga": [
+     "S20.18",
+     "S20.19",
+     "S20.20"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B23.03",
@@ -4867,8 +5504,56 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "interferencija (konstruktivna interferencija, maksimumi, koherentni valovi)",
+    "stavka_lekcije": "S23.08",
+    "uci_ga": [
+     "S20.18",
+     "S20.20",
+     "S23.04",
+     "S23.05"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S23.09",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "transverzalni i longitudinalni val",
+    "stavka_lekcije": "S23.10",
+    "uci_ga": [
+     "S20.03"
+    ]
+   },
+   {
+    "pojam": "električno polje (vektor jakosti, titranje polja)",
+    "stavka_lekcije": "S23.10",
+    "uci_ga": [
+     "S13.10",
+     "S13.12"
+    ]
+   },
+   {
+    "pojam": "indeks loma",
+    "stavka_lekcije": "S23.12",
+    "uci_ga": [
+     "S22.08"
+    ]
+   },
+   {
+    "pojam": "upadni kut i odbijanje svjetlosti (zakon odbijanja)",
+    "stavka_lekcije": "S23.12",
+    "uci_ga": [
+     "S22.02",
+     "S22.03"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B23.05",
@@ -4876,17 +5561,70 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S23.13",
+    "uci_ga": [
+     "S20.05",
+     "S20.06",
+     "S24.06",
+     "S24.10"
+    ]
+   },
+   {
+    "pojam": "polarizacija svjetlosti",
+    "stavka_lekcije": "S23.14",
+    "uci_ga": [
+     "S20.04",
+     "S23.10",
+     "S23.11",
+     "S23.12"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B24.04",
   "naziv": "Primjene i štetnost zračenja",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "ionizirajuće zračenje",
+    "stavka_lekcije": "S24.12",
+    "uci_ga": "S28.15",
+    "lekcija": "B28.03",
+    "kasnije": true
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski spektar (radiovalovi, mikrovalovi, infracrveno, UV, rendgensko, gama zračenje)",
+    "stavka_lekcije": "S24.11",
+    "uci_ga": [
+     "S24.08",
+     "S24.10"
+    ]
+   },
+   {
+    "pojam": "energija fotona E = hf",
+    "stavka_lekcije": "S24.12",
+    "uci_ga": [
+     "S24.09",
+     "S25.02"
+    ]
+   },
+   {
+    "pojam": "ionizirajuće zračenje",
+    "stavka_lekcije": "S24.12",
+    "uci_ga": [
+     "S28.15"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B25.01",
@@ -4894,17 +5632,83 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "elektromagnetski val (elektromagnetsko zračenje)",
+    "stavka_lekcije": "S25.02",
+    "uci_ga": [
+     "S24.01"
+    ]
+   },
+   {
+    "pojam": "količina gibanja",
+    "stavka_lekcije": "S25.12",
+    "uci_ga": [
+     "S04.06"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B31.05",
   "naziv": "Mjerne jedinice",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "elektronvolt (eV) kao jedinica energije",
+    "stavka_lekcije": "S31.16",
+    "uci_ga": "S13.20",
+    "lekcija": "B13.05",
+    "kasnije": false
+   },
+   {
+    "pojam": "jednadžba stanja idealnog plina (pV = nRT)",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S11.05",
+    "lekcija": "B11.02",
+    "kasnije": false
+   },
+   {
+    "pojam": "korisnost toplinskog stroja",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": "S12.25",
+    "lekcija": "B12.08",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "elektronvolt (eV) kao jedinica energije",
+    "stavka_lekcije": "S31.16",
+    "uci_ga": [
+     "S13.20"
+    ]
+   },
+   {
+    "pojam": "termodinamička temperatura (kelvin)",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": [
+     "S11.03"
+    ]
+   },
+   {
+    "pojam": "jednadžba stanja idealnog plina (pV = nRT)",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": [
+     "S11.05"
+    ]
+   },
+   {
+    "pojam": "korisnost toplinskog stroja",
+    "stavka_lekcije": "S31.21",
+    "uci_ga": [
+     "S12.25"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B25.02",
@@ -4912,8 +5716,53 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "energija fotona E = hf (Planckova konstanta)",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": [
+     "S25.02"
+    ]
+   },
+   {
+    "pojam": "fotoelektrični efekt (fotoefekt)",
+    "stavka_lekcije": "S25.05",
+    "uci_ga": [
+     "S25.01"
+    ]
+   },
+   {
+    "pojam": "izlazni rad W_i",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": [
+     "S25.03"
+    ]
+   },
+   {
+    "pojam": "kinetička energija",
+    "stavka_lekcije": "S25.04",
+    "uci_ga": [
+     "S05.04",
+     "S04.11"
+    ]
+   },
+   {
+    "pojam": "valna duljina i veza c = λf",
+    "stavka_lekcije": "S25.05",
+    "uci_ga": [
+     "S24.06",
+     "S24.05"
+    ]
+   },
+   {
+    "pojam": "elektronvolt (eV)",
+    "stavka_lekcije": "S25.11",
+    "uci_ga": [
+     "S13.20"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B25.03",
@@ -4921,8 +5770,68 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "rad električne sile (W = qU)",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": [
+     "S13.16"
+    ]
+   },
+   {
+    "pojam": "maksimalna kinetička energija fotoelektrona (E_k,max)",
+    "stavka_lekcije": "S25.09",
+    "uci_ga": [
+     "S25.04",
+     "S25.06"
+    ]
+   },
+   {
+    "pojam": "izlazni rad metala W_i",
+    "stavka_lekcije": "S25.08",
+    "uci_ga": [
+     "S25.03"
+    ]
+   },
+   {
+    "pojam": "granična frekvencija fotoefekta f₀",
+    "stavka_lekcije": "S25.08",
+    "uci_ga": [
+     "S25.05"
+    ]
+   },
+   {
+    "pojam": "fotoefekt (izbijanje elektrona iz metala svjetlošću)",
+    "stavka_lekcije": "S25.07",
+    "uci_ga": [
+     "S25.01"
+    ]
+   },
+   {
+    "pojam": "valni model svjetlosti",
+    "stavka_lekcije": "S25.07",
+    "uci_ga": [
+     "S23.01",
+     "S24.01"
+    ]
+   },
+   {
+    "pojam": "interferencija i ogib svjetlosti",
+    "stavka_lekcije": "S25.13",
+    "uci_ga": [
+     "S23.03",
+     "S23.04"
+    ]
+   },
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S25.13",
+    "uci_ga": [
+     "S25.02"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B25.05",
@@ -4930,26 +5839,188 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "količina gibanja p = mv",
+    "stavka_lekcije": "S25.14",
+    "uci_ga": [
+     "S04.06"
+    ]
+   },
+   {
+    "pojam": "kinetička energija E_k",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": [
+     "S05.04",
+     "S04.11"
+    ]
+   },
+   {
+    "pojam": "električni naboj q",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": [
+     "S13.01",
+     "S13.02"
+    ]
+   },
+   {
+    "pojam": "električni napon U",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": [
+     "S15.04",
+     "S13.18"
+    ]
+   },
+   {
+    "pojam": "rad električne sile W = qU (ubrzanje naponom)",
+    "stavka_lekcije": "S25.15",
+    "uci_ga": [
+     "S13.16",
+     "S17.15"
+    ]
+   },
+   {
+    "pojam": "valna duljina λ",
+    "stavka_lekcije": "S25.14",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "ogib (difrakcija) valova",
+    "stavka_lekcije": "S25.17",
+    "uci_ga": [
+     "S20.24",
+     "S23.03"
+    ]
+   },
+   {
+    "pojam": "interferencija valova",
+    "stavka_lekcije": "S25.17",
+    "uci_ga": [
+     "S20.18",
+     "S23.04"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B26.01",
   "naziv": "Od Thomsona do Rutherfordova modela atoma",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "Linijski spektar",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": "S26.04",
+    "lekcija": "B26.02",
+    "kasnije": true
+   },
+   {
+    "pojam": "Alfa-čestice",
+    "stavka_lekcije": "S26.01",
+    "uci_ga": "S27.15",
+    "lekcija": "B27.04",
+    "kasnije": true
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "Coulombov zakon (električna sila između naboja)",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": [
+     "S13.07"
+    ]
+   },
+   {
+    "pojam": "Električni naboj",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": [
+     "S13.01"
+    ]
+   },
+   {
+    "pojam": "Elementarni naboj e",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": [
+     "S13.02"
+    ]
+   },
+   {
+    "pojam": "Centripetalna sila",
+    "stavka_lekcije": "S26.02",
+    "uci_ga": [
+     "S06.07"
+    ]
+   },
+   {
+    "pojam": "Ubrzanje (akceleracija) kod kružnog gibanja",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": [
+     "S01.07",
+     "S06.01",
+     "S06.06"
+    ]
+   },
+   {
+    "pojam": "Zračenje elektromagnetskog vala ubrzanim nabojem",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": [
+     "S24.02"
+    ]
+   },
+   {
+    "pojam": "Linijski spektar",
+    "stavka_lekcije": "S26.03",
+    "uci_ga": [
+     "S26.04",
+     "S26.17"
+    ]
+   },
+   {
+    "pojam": "Alfa-čestice",
+    "stavka_lekcije": "S26.01",
+    "uci_ga": [
+     "S27.15",
+     "S28.16"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B26.02",
   "naziv": "Linijski spektri i Bohrovi postulati",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "pobuđeno stanje atoma (pobuđivanje atoma)",
+    "stavka_lekcije": "S26.17",
+    "uci_ga": "S26.06",
+    "lekcija": "B26.03",
+    "kasnije": true
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S26.04",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "pobuđeno stanje atoma (pobuđivanje atoma)",
+    "stavka_lekcije": "S26.17",
+    "uci_ga": [
+     "S26.06"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B26.03",
@@ -4957,8 +6028,16 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "kvantizirana (diskretna) energijska stanja atoma prema Bohrovu modelu",
+    "stavka_lekcije": "S26.06",
+    "uci_ga": [
+     "S26.05"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B26.04",
@@ -4966,8 +6045,34 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S26.08",
+    "uci_ga": [
+     "S25.02",
+     "S25.12"
+    ]
+   },
+   {
+    "pojam": "energijska stanja atoma (energija stanja, osnovno i pobuđeno stanje)",
+    "stavka_lekcije": "S26.08",
+    "uci_ga": [
+     "S26.05",
+     "S26.06",
+     "S26.07"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S26.11",
+    "uci_ga": [
+     "S20.05",
+     "S20.06"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B26.05",
@@ -4975,8 +6080,69 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "kvantizirana energijska stanja atoma",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": [
+     "S26.05",
+     "S26.06",
+     "S26.07"
+    ]
+   },
+   {
+    "pojam": "foton i energija fotona E = hf",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": [
+     "S25.02"
+    ]
+   },
+   {
+    "pojam": "elektronvolt (eV)",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": [
+     "S13.20"
+    ]
+   },
+   {
+    "pojam": "emisija fotona pri prijelazu elektrona",
+    "stavka_lekcije": "S26.09",
+    "uci_ga": [
+     "S26.08"
+    ]
+   },
+   {
+    "pojam": "elektromagnetski spektar (UV, vidljivo, IR)",
+    "stavka_lekcije": "S26.13",
+    "uci_ga": [
+     "S24.08",
+     "S24.10"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "kontinuirani spektar",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": [
+     "S26.17"
+    ]
+   },
+   {
+    "pojam": "linijski spektar",
+    "stavka_lekcije": "S26.16",
+    "uci_ga": [
+     "S26.04",
+     "S26.17"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B27.01",
@@ -4984,8 +6150,17 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "Coulombovo (elektrostatsko) odbijanje istoimenih naboja",
+    "stavka_lekcije": "S27.04",
+    "uci_ga": [
+     "S13.01",
+     "S13.07"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B27.02",
@@ -4993,26 +6168,167 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "nukleon (proton, neutron)",
+    "stavka_lekcije": "S27.06",
+    "uci_ga": [
+     "S27.02"
+    ]
+   },
+   {
+    "pojam": "unificirana atomska masa u",
+    "stavka_lekcije": "S27.11",
+    "uci_ga": [
+     "S27.05"
+    ]
+   },
+   {
+    "pojam": "elementarni naboj e",
+    "stavka_lekcije": "S27.11",
+    "uci_ga": [
+     "S13.02"
+    ]
+   },
+   {
+    "pojam": "elektronvolt (eV)",
+    "stavka_lekcije": "S27.11",
+    "uci_ga": [
+     "S13.20"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B27.03",
   "naziv": "Nuklearne reakcije i zakoni sačuvanja",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "zakon očuvanja količine gibanja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": "S04.13",
+    "lekcija": "B04.03",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "maseni broj A i broj protona Z",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": [
+     "S27.02",
+     "S27.03"
+    ]
+   },
+   {
+    "pojam": "nukleon",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": [
+     "S27.02"
+    ]
+   },
+   {
+    "pojam": "zakon očuvanja naboja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": [
+     "S13.03"
+    ]
+   },
+   {
+    "pojam": "zakon očuvanja energije",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": [
+     "S05.08"
+    ]
+   },
+   {
+    "pojam": "zakon očuvanja količine gibanja",
+    "stavka_lekcije": "S27.13",
+    "uci_ga": [
+     "S04.13"
+    ]
+   },
+   {
+    "pojam": "defekt mase",
+    "stavka_lekcije": "S27.25",
+    "uci_ga": [
+     "S27.06"
+    ]
+   },
+   {
+    "pojam": "energija vezanja jezgre",
+    "stavka_lekcije": "S27.25",
+    "uci_ga": [
+     "S27.08"
+    ]
+   },
+   {
+    "pojam": "ekvivalentnost mase i energije",
+    "stavka_lekcije": "S27.25",
+    "uci_ga": [
+     "S27.07"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B27.04",
   "naziv": "Radioaktivni raspadi",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": "S25.02",
+    "lekcija": "B25.01",
+    "kasnije": false
+   },
+   {
+    "pojam": "pobuđeno (energijsko) stanje i prijelaz u niže stanje",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": "S26.06",
+    "lekcija": "B26.03",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "maseni broj A i redni broj Z (broj protona)",
+    "stavka_lekcije": "S27.15",
+    "uci_ga": [
+     "S27.02",
+     "S27.03"
+    ]
+   },
+   {
+    "pojam": "nukleoni: proton i neutron",
+    "stavka_lekcije": "S27.16",
+    "uci_ga": [
+     "S27.02"
+    ]
+   },
+   {
+    "pojam": "foton",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": [
+     "S25.02"
+    ]
+   },
+   {
+    "pojam": "pobuđeno (energijsko) stanje i prijelaz u niže stanje",
+    "stavka_lekcije": "S27.18",
+    "uci_ga": [
+     "S26.06",
+     "S26.08"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B27.05",
@@ -5020,8 +6336,50 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "energija vezanja jezgre i energija vezanja po nukleonu",
+    "stavka_lekcije": "S27.10",
+    "uci_ga": [
+     "S27.08",
+     "S27.09"
+    ]
+   },
+   {
+    "pojam": "sastav jezgre (nukleoni, maseni broj A)",
+    "stavka_lekcije": "S27.10",
+    "uci_ga": [
+     "S27.02"
+    ]
+   },
+   {
+    "pojam": "defekt mase i ekvivalencija mase i energije E = Δm·c²",
+    "stavka_lekcije": "S27.23",
+    "uci_ga": [
+     "S27.06",
+     "S27.07"
+    ]
+   },
+   {
+    "pojam": "nuklearna reakcija (zapis reakcije, zakoni očuvanja)",
+    "stavka_lekcije": "S27.23",
+    "uci_ga": [
+     "S27.12"
+    ]
+   },
+   {
+    "pojam": "radioaktivni raspad (α, β, γ)",
+    "stavka_lekcije": "S27.24",
+    "uci_ga": [
+     "S28.01",
+     "S27.15",
+     "S27.16",
+     "S27.17",
+     "S27.18"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B27.06",
@@ -5029,17 +6387,49 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "nuklearna fisija",
+    "stavka_lekcije": "S27.21",
+    "uci_ga": [
+     "S27.19",
+     "S27.24"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B28.01",
   "naziv": "Radioaktivni raspad i vrijeme poluraspada",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "konstanta raspada λ",
+    "stavka_lekcije": "S28.09",
+    "uci_ga": "S28.10",
+    "lekcija": "B28.02",
+    "kasnije": true
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "izotop (jezgre istog Z, različitog A)",
+    "stavka_lekcije": "S28.14",
+    "uci_ga": [
+     "S27.03"
+    ]
+   },
+   {
+    "pojam": "konstanta raspada λ",
+    "stavka_lekcije": "S28.09",
+    "uci_ga": [
+     "S28.10"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B28.02",
@@ -5047,8 +6437,30 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "vrijeme poluraspada T",
+    "stavka_lekcije": "S28.10",
+    "uci_ga": [
+     "S28.08"
+    ]
+   },
+   {
+    "pojam": "vrijeme poluraspada T",
+    "stavka_lekcije": "S28.12",
+    "uci_ga": [
+     "S28.08"
+    ]
+   },
+   {
+    "pojam": "množina tvari n i molarna masa M",
+    "stavka_lekcije": "S28.13",
+    "uci_ga": [
+     "S11.04"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B28.03",
@@ -5056,8 +6468,31 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "α-čestica (α-zračenje)",
+    "stavka_lekcije": "S28.16",
+    "uci_ga": [
+     "S27.15"
+    ]
+   },
+   {
+    "pojam": "β-zračenje",
+    "stavka_lekcije": "S28.16",
+    "uci_ga": [
+     "S27.16",
+     "S27.17"
+    ]
+   },
+   {
+    "pojam": "γ-zračenje",
+    "stavka_lekcije": "S28.16",
+    "uci_ga": [
+     "S27.18"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B28.04",
@@ -5065,8 +6500,41 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "ionizirajuće zračenje",
+    "stavka_lekcije": "S28.17",
+    "uci_ga": [
+     "S28.15"
+    ]
+   },
+   {
+    "pojam": "energija",
+    "stavka_lekcije": "S28.18",
+    "uci_ga": [
+     "S05.03",
+     "S05.04"
+    ]
+   },
+   {
+    "pojam": "vrste zračenja α, β i γ",
+    "stavka_lekcije": "S28.19",
+    "uci_ga": [
+     "S27.15",
+     "S27.16",
+     "S27.17",
+     "S27.18"
+    ]
+   },
+   {
+    "pojam": "radioaktivnost (radioaktivna tvar)",
+    "stavka_lekcije": "S28.22",
+    "uci_ga": [
+     "S28.01"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B29.01",
@@ -5074,8 +6542,23 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "inercijski sustav",
+    "stavka_lekcije": "S29.01",
+    "uci_ga": [
+     "S02.05"
+    ]
+   },
+   {
+    "pojam": "jednoliko gibanje (s = vt)",
+    "stavka_lekcije": "S29.06",
+    "uci_ga": [
+     "S01.04"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B29.03",
@@ -5083,8 +6566,44 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "Lorentzov faktor γ = 1/√(1 − v²/c²)",
+    "stavka_lekcije": "S29.08",
+    "uci_ga": [
+     "S29.03"
+    ]
+   },
+   {
+    "pojam": "Lorentzov faktor γ",
+    "stavka_lekcije": "S29.11",
+    "uci_ga": [
+     "S29.03"
+    ]
+   },
+   {
+    "pojam": "Dilatacija vremena",
+    "stavka_lekcije": "S29.11",
+    "uci_ga": [
+     "S29.05"
+    ]
+   },
+   {
+    "pojam": "Vlastito vrijeme T0",
+    "stavka_lekcije": "S29.10",
+    "uci_ga": [
+     "S29.04"
+    ]
+   },
+   {
+    "pojam": "Inercijski sustav",
+    "stavka_lekcije": "S29.09",
+    "uci_ga": [
+     "S02.05"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B29.05",
@@ -5092,8 +6611,23 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "Lorentzov faktor γ = 1/√(1 − v²/c²)",
+    "stavka_lekcije": "S29.12",
+    "uci_ga": [
+     "S29.03"
+    ]
+   },
+   {
+    "pojam": "kinetička energija mv²/2 (klasični izraz)",
+    "stavka_lekcije": "S29.17",
+    "uci_ga": [
+     "S05.04"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B30.02",
@@ -5101,44 +6635,177 @@
   "kod": [],
   "prekrsaji": [],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "Veliki prasak (Big Bang)",
+    "stavka_lekcije": "S30.05",
+    "uci_ga": [
+     "S30.01"
+    ]
+   },
+   {
+    "pojam": "valna duljina",
+    "stavka_lekcije": "S30.04",
+    "uci_ga": [
+     "S20.05"
+    ]
+   },
+   {
+    "pojam": "elektromagnetski spektar i mikrovalno zračenje",
+    "stavka_lekcije": "S30.05",
+    "uci_ga": [
+     "S24.08",
+     "S24.10"
+    ]
+   },
+   {
+    "pojam": "gravitacijska sila",
+    "stavka_lekcije": "S30.08",
+    "uci_ga": [
+     "S07.01",
+     "S07.02"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B30.01",
   "naziv": "Veliki prasak i širenje svemira",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "protoni i neutroni kao sastavni dijelovi jezgre",
+    "stavka_lekcije": "S30.06",
+    "uci_ga": "S27.02",
+    "lekcija": "B27.01",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "obična (vidljiva) tvar naspram tamne tvari",
+    "stavka_lekcije": "S30.20",
+    "uci_ga": [
+     "S30.07",
+     "S30.08"
+    ]
+   },
+   {
+    "pojam": "protoni i neutroni kao sastavni dijelovi jezgre",
+    "stavka_lekcije": "S30.06",
+    "uci_ga": [
+     "S27.02"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B30.04",
   "naziv": "Struktura svemira i udaljenosti",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "brzina svjetlosti (c)",
+    "stavka_lekcije": "S30.12",
+    "uci_ga": "S24.05",
+    "lekcija": "B24.02",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "brzina svjetlosti (c)",
+    "stavka_lekcije": "S30.12",
+    "uci_ga": [
+     "S24.05"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B30.05",
   "naziv": "Nastanak zvijezda i izvor njihove energije",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "tlak",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": "S08.01",
+    "lekcija": "B08.01",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "nuklearna fuzija (spajanje lakih jezgara)",
+    "stavka_lekcije": "S30.13",
+    "uci_ga": [
+     "S27.22"
+    ]
+   },
+   {
+    "pojam": "nuklearna fuzija (spajanje lakih jezgara)",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": [
+     "S27.22"
+    ]
+   },
+   {
+    "pojam": "gravitacijska sila",
+    "stavka_lekcije": "S30.13",
+    "uci_ga": [
+     "S07.01"
+    ]
+   },
+   {
+    "pojam": "tlak",
+    "stavka_lekcije": "S30.14",
+    "uci_ga": [
+     "S08.01"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B30.06",
   "naziv": "Životni ciklus zvijezda i crne rupe",
   "kod": [],
   "prekrsaji": [],
-  "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "rupe": [
+   {
+    "pojam": "brzina bijega iz gravitacijskog polja",
+    "stavka_lekcije": "S30.18",
+    "uci_ga": [
+     "nigdje"
+    ]
+   }
+  ],
+  "sirovo": [
+   {
+    "pojam": "gravitacijsko polje (gravitacijska sila na tijelo)",
+    "stavka_lekcije": "S30.18",
+    "uci_ga": [
+     "S07.01",
+     "S07.03",
+     "S07.06"
+    ]
+   },
+   {
+    "pojam": "brzina bijega iz gravitacijskog polja",
+    "stavka_lekcije": "S30.18",
+    "uci_ga": [
+     "nigdje"
+    ]
+   }
+  ],
+  "greska": null
  },
  {
   "id": "B31.03",
@@ -5147,15 +6814,83 @@
   "prekrsaji": [],
   "rupe": [],
   "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "greska": null
  },
  {
   "id": "B31.04",
   "naziv": "Kvalitativno zaključivanje",
   "kod": [],
-  "prekrsaji": [],
+  "prekrsaji": [
+   {
+    "pojam": "korisnost",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": "S05.15",
+    "lekcija": "B05.05",
+    "kasnije": false
+   },
+   {
+    "pojam": "brzina svjetlosti c",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": "S24.05",
+    "lekcija": "B24.02",
+    "kasnije": false
+   }
+  ],
   "rupe": [],
-  "sirovo": [],
-  "greska": "403 {\"error\":{\"message\":\"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspaces/default/keys/89d5c20963e30ff3a868409cb6f355551aa789c27d97880888ed8062b4c66ce0 $10.00 of $1"
+  "sirovo": [
+   {
+    "pojam": "akceleracija",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": [
+     "S01.07"
+    ]
+   },
+   {
+    "pojam": "ukupna (rezultantna) sila",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": [
+     "S03.03"
+    ]
+   },
+   {
+    "pojam": "II. Newtonov zakon",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": [
+     "S03.04"
+    ]
+   },
+   {
+    "pojam": "I. Newtonov zakon",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": [
+     "S02.04"
+    ]
+   },
+   {
+    "pojam": "ravnoteža sila (ΣF = 0)",
+    "stavka_lekcije": "S31.08",
+    "uci_ga": [
+     "S02.06"
+    ]
+   },
+   {
+    "pojam": "korisnost",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": [
+     "S05.15",
+     "S12.25",
+     "S15.19"
+    ]
+   },
+   {
+    "pojam": "brzina svjetlosti c",
+    "stavka_lekcije": "S31.18",
+    "uci_ga": [
+     "S24.05",
+     "S29.02"
+    ]
+   }
+  ],
+  "greska": null
  }
 ]
