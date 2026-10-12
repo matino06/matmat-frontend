@@ -144,7 +144,7 @@
 </div>
 
 <!-- Loading -->
-{#if userData.loading}
+{#if userData.loading && !(dev && path.startsWith("/prototype-"))}
   <LoadingOverlay title="Učitavanje MatMat-a" message="Pripremamo tvoje personalizirano iskustvo učenja"/>
 {/if}
 
