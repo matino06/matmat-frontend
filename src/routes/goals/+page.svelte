@@ -7,16 +7,14 @@
   let dailyGoal = $state(8);
   let todayGoal = $state(0);
   let totalDaysActive = $state(0);
+  let todayCompleted = $state(0);
   let currentStreak = $state(0);
   let longestStreak = $state(0);
+  let streakMinTasks = $state(1);
   let registrationDate = $state(null);
   let savingGoal = $state(false);
 
-  // Goals array from /account/goals — each item: { course: { courseId, courseName }, dailyGoal }
-  let goals = $state([]);
-  let currentCourseId = $state(null);
-
-  // Slider value — kept in sync with the active course goal
+  // Slider value — one goal for the whole account, tasks from every course count
   let sliderValue = $state(8);
 
   function parseLocalDate(dateStr) {
@@ -77,68 +75,34 @@
     return weeks;
   }
 
-  function findStreaks(weeks) {
-    const days = weeks.flat().filter(Boolean);
-    let longest = 0, cur = 0;
-    for (const d of days) {
-      if (d.goalMet) { cur++; if (cur > longest) longest = cur; }
-      else cur = 0;
-    }
-    longestStreak = longest;
-
-    cur = 0;
-    let skipToday = true;
-    for (let i = days.length - 1; i >= 0; i--) {
-      if (days[i].goalMet) { cur++; }
-      else if (skipToday && i === days.length - 1) { skipToday = false; }
-      else break;
-    }
-    currentStreak = cur;
-  }
-
   async function fetchUserGoal() {
-    const [userGoalRes, goalsRes, courseRes] = await Promise.all([
-      apiClient("/user-goal", { method: "GET" }),
-      apiClient("/account/goals", { method: "GET" }),
-      apiClient("/account/current-course", { method: "GET" }),
-    ]);
+    const userGoalRes = await apiClient("/user-goal", { method: "GET" });
 
     const data = await userGoalRes.json();
     dailyGoal = data.dailyGoal;
     todayGoal = data.todayGoal;
+    todayCompleted = data.todayCompleted ?? 0;
+    currentStreak = data.currentStreak ?? 0;
+    longestStreak = data.longestStreak ?? 0;
+    streakMinTasks = data.streakMinTasks ?? 1;
     calendarDays = data.calendarDays?.length
       ? data.calendarDays
       : [{ date: data.registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal }];
     totalDaysActive = calendarDays.filter(d => d.completed > 0).length;
     registrationDate = parseLocalDate(data.registrationDate);
-
-    if (goalsRes.ok) goals = await goalsRes.json();
-    if (courseRes.ok) {
-      const course = await courseRes.json();
-      currentCourseId = course.courseId;
-    }
-
-    // Sync slider to the active course's goal
-    const activeGoal = goals.find(g => g.course?.courseId === currentCourseId);
-    sliderValue = activeGoal?.dailyGoal ?? dailyGoal;
+    sliderValue = dailyGoal;
   }
 
   async function updateGoal() {
-    // Update the matching goal in the array before submitting
-    const g = goals.find(g => g.course?.courseId === currentCourseId);
-    if (g) g.dailyGoal = sliderValue;
-
     savingGoal = true;
     try {
-      const res = await apiClient("/account/goals", {
+      const res = await apiClient("/account/daily-goal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userCourseGoalsNew: goals }),
+        body: JSON.stringify(Number(sliderValue)),
       });
-      if (res.ok) {
-        dailyGoal = sliderValue;
-        todayGoal = sliderValue;
-      }
+      // Refetch: today's target can be lower than the goal when few tasks are due
+      if (res.ok) await fetchUserGoal();
     } finally {
       savingGoal = false;
     }
@@ -147,14 +111,6 @@
   onMount(fetchUserGoal);
 
   let weeks = $derived(groupByWeek(buildCalendarDays(calendarDays)));
-
-  $effect(() => {
-    if (weeks.length > 0) findStreaks(weeks);
-  });
-
-  let todayCompleted = $derived(
-    weeks.length ? (weeks[weeks.length - 1]?.findLast(d => d !== null)?.completed ?? 0) : 0
-  );
 
   const DAY_LETTERS = ["P","U","S","Č","P","S","N"];
   const today = new Date();
@@ -169,6 +125,13 @@
     if (pct < 0.67) return 2;
     if (pct < 1) return 3;
     return 4;
+  }
+
+  // "12.10.2026.: 3 zadataka (Matematika 2, Fizika 1)"
+  function cellTitle(day) {
+    const base = `${day.date.toLocaleDateString('hr-HR')}: ${day.completed ?? 0} zadataka`;
+    if (!day.courses?.length) return base;
+    return `${base} (${day.courses.map(c => `${c.courseName} ${c.completed}`).join(', ')})`;
   }
 
 
@@ -195,6 +158,9 @@
         <div class="n">{currentStreak}</div>
         <div class="u">dana zaredom</div>
       </div>
+      <div style="font-size:12px;color:var(--text-faint);margin-top:6px">
+        Niz čuvaš već s {streakMinTasks} {streakMinTasks === 1 ? 'riješenim zadatkom' : 'riješena zadatka'} dnevno, iz bilo kojeg predmeta.
+      </div>
       <div class="streak-stats" style="margin-top:16px">
         <div class="stat">
           <div class="v">{longestStreak}</div>
@@ -218,6 +184,7 @@
         <div class="n">{sliderValue}</div>
         <div class="u">zadataka / dan</div>
       </div>
+      <div style="font-size:12px;color:var(--text-faint);margin-top:6px">Zbraja se iz svih predmeta.</div>
 
       <div class="today-bar" style="margin-top:16px">
         <div class="fill" style="width:{todayGoal ? Math.min(100, todayCompleted/todayGoal*100) : 0}%"></div>
@@ -232,13 +199,13 @@
         <span style="font-size:11px;color:var(--text-faint)">1</span>
         <input
           type="range"
-          min="1" max="5" step="1"
+          min="1" max="10" step="1"
           bind:value={sliderValue}
           class="slider"
           onchange={updateGoal}
-          style="--pct: {((sliderValue - 1) / 4) * 100}%"
+          style="--pct: {((sliderValue - 1) / 9) * 100}%"
         />
-        <span style="font-size:11px;color:var(--text-faint)">5</span>
+        <span style="font-size:11px;color:var(--text-faint)">10</span>
       </div>
       {#if savingGoal}
         <div style="text-align:center;font-size:11px;color:var(--text-faint);margin-top:4px">Spremanje…</div>
@@ -274,7 +241,7 @@
                   <div
                     class="hm-cell l{cellLevel(day)}"
                     class:hm-today={isToday(day.date)}
-                    title="{day.date.toLocaleDateString('hr-HR')}: {day.completed ?? 0} zadataka"
+                    title={cellTitle(day)}
                   ></div>
                 {:else}
                   <div class="hm-cell" style="opacity:0"></div>

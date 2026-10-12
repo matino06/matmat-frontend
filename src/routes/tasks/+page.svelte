@@ -27,6 +27,7 @@
   let progressBump = $state(null);
   let readinessPct = $state(0);
   let dailyGoal = $state(8);
+  let streak = $state(0);
   let startTime = $state(null);
   let pendingRating = $state(null);
   let ratingKey = $state(0);
@@ -40,8 +41,11 @@
         if (typeof data?.dailyGoal === "number" && data.dailyGoal > 0) {
           dailyGoal = data.dailyGoal;
         }
-        if (typeof data?.todayGoal === "number") {
-          completedToday = data.todayGoal;
+        if (typeof data?.todayCompleted === "number") {
+          completedToday = data.todayCompleted;
+        }
+        if (typeof data?.currentStreak === "number") {
+          streak = data.currentStreak;
         }
       }
     } catch {}
@@ -250,7 +254,7 @@
   <GoalCelebration
     onDone={() => showCelebration = false}
     tasksCompleted={completedToday}
-    streak={0}
+    {streak}
     readinessPct={readinessPct}
   />
 {/if}

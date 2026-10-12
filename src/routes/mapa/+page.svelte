@@ -37,41 +37,16 @@
     loading = false;
   }
 
-  // Consecutive days (up to today) where the daily goal was met. Mirrors the
-  // logic in GoalProgressToast: today counts if met, but an unmet *today* is
-  // skipped rather than breaking the streak; any earlier unmet day ends it.
-  function computeStreak(calendarDays) {
-    if (!calendarDays?.length) return 0;
-    const met = new Map(calendarDays.map(d => [String(d.date).slice(0, 10), !!d.goalMet]));
-    let count = 0;
-    const cursor = new Date();
-    for (let i = 0; i < 3660; i++) {
-      const key = cursor.toISOString().slice(0, 10);
-      if (met.get(key)) count++;
-      else if (i > 0) break;
-      cursor.setDate(cursor.getDate() - 1);
-    }
-    return count;
-  }
-
-  // Tasks actually solved today = the `completed` count on today's calendar entry
-  // (there is no entry until the first solve → 0). `todayGoal` is the day's target,
-  // not a completed count, so it must not be used here.
-  function todayCompleted(calendarDays) {
-    if (!calendarDays?.length) return 0;
-    const key = new Date().toISOString().slice(0, 10);
-    const entry = calendarDays.find(d => String(d.date).slice(0, 10) === key);
-    return entry?.completed ?? 0;
-  }
-
   async function loadGoal() {
     try {
       const r = await apiClient("/user-goal", { method: "GET" });
       if (!r.ok) return;
       const data = await r.json();
       if (typeof data?.dailyGoal === "number" && data.dailyGoal > 0) dailyGoal = data.dailyGoal;
-      completedToday = todayCompleted(data?.calendarDays);
-      streak = computeStreak(data?.calendarDays);
+      // Streak and today's count come from the backend, across all courses.
+      // `todayGoal` is the day's target, not a completed count.
+      completedToday = data?.todayCompleted ?? 0;
+      streak = data?.currentStreak ?? 0;
     } catch {}
   }
 
