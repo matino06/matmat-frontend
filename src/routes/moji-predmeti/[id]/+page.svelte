@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import { apiClient } from "$lib/api/apiClient";
   import { ownCourses, SUBJECTS, LEVELS } from "$lib/store/ownCourses.svelte";
+  import PlanEditor from "$lib/components/ownCourse/PlanEditor.svelte";
 
   const courseId = page.params.id;
   const ACCEPT = { "application/pdf": "PDF", "image/jpeg": "JPG", "image/png": "PNG" };
@@ -12,8 +13,7 @@
   let notFound = $state(false);
   let summary = $state(null);
   let progress = $state(null);
-  let planLessons = $state(null);
-  let warnings = $state([]);
+
   let uploads = $state([]); // { name, percent, error }
   let error = $state("");
   let busy = $state(false);
@@ -51,15 +51,9 @@
   async function loadProgress() {
     const res = await apiClient(`/own-courses/${courseId}/build`, { method: "GET" });
     if (res.ok) progress = await res.json();
-    if (progress?.state === "ceka_kreatora" && !planLessons) await loadPlan();
+
   }
 
-  async function loadPlan() {
-    const res = await apiClient(`/own-courses/${courseId}/plan`, { method: "GET" });
-    if (res.ok) planLessons = await res.json();
-    const w = await apiClient(`/own-courses/${courseId}/warnings`, { method: "GET" });
-    if (w.ok) warnings = await w.json();
-  }
 
   onMount(async () => {
     await loadCourse();
@@ -177,7 +171,7 @@
       ceka_kvotu: "Mjesečna kvota je potrošena. Ono što je napravljeno je spremljeno, a izrada se sama nastavlja 1. u mjesecu.",
       neuspjelo: "Jedan korak izrade nije uspio ni nakon 3 pokušaja. Pokušaj ponovno; ako opet ne uspije, javi nam se.",
       pauzirano: "Izrada je privremeno zaustavljena zbog velikog opterećenja. Nastavit će se sama, ništa ne trebaš raditi.",
-      ceka_kreatora: `Plan ima ${planLessons?.length ?? "…"} lekcija. Uređivanje i potvrda plana dolaze u sljedećem koraku; zasad ga možeš pregledati ispod.`,
+      ceka_kreatora: "Pregledaj plan i promijeni što želiš. Upozorenja se osvježe kad napraviš pauzu u uređivanju.",
       prevelik: "Plan bi imao više od 200 lekcija. Podijeli materijal u dva manja predmeta pa pokušaj ponovno.",
     }[progress?.state] ?? "",
   );
@@ -299,37 +293,8 @@
           </div>
         </div>
       </div>
-      {#if planLessons && warnings.length}
-        <div class="card warns">
-          <div class="plan-h"><b>Upozorenja</b><span class="muted small">{warnings.length}</span></div>
-          {#each warnings as w (w.warningId)}
-            <div class="warn-row" class:serious={w.serious}>
-              {w.text}
-              {#if w.detail}<div class="muted small">{w.detail}</div>{/if}
-            </div>
-          {/each}
-        </div>
-      {/if}
-      {#if planLessons}
-        <div class="card plan">
-          <div class="plan-h"><b>Plan</b><span class="muted small">{planLessons.length} lekcija</span></div>
-          {#each planLessons as l (l.objectiveId)}
-            <details class="lesson">
-              <summary>
-                <span class="num">{l.position}</span>
-                <span class="grow">{l.name}<span class="muted small"> · {l.unit}</span></span>
-              </summary>
-              <div class="lesson-body">
-                {#if l.concept}<p class="muted small">{l.concept}</p>{/if}
-                <ul>{#each l.items as it}<li>{it}</li>{/each}</ul>
-                {#if l.prerequisites.length}
-                  <div class="muted small">Treba: {l.prerequisites.map((id) => planLessons.find((x) => x.objectiveId === id)?.position).filter(Boolean).join(", ")}.</div>
-                {/if}
-              </div>
-            </details>
-          {/each}
-        </div>
-      {:else}
+      {#if progress.state === "ceka_kreatora"}
+        <PlanEditor {courseId} />      {:else}
         <div class="next">
           <div class="next-h">Što slijedi</div>
           {#each PHASES.slice(phaseIndex + 1) as p, i}
@@ -393,18 +358,6 @@
   .hero.ceka_kreatora { border-color: var(--success); }
   .hero.ceka_kreatora .ring { --c: var(--success); }
   .hero.prevelik { border-color: var(--danger); }
-  .plan { margin-top: 16px; padding: 8px 0; }
-  .warns { margin-top: 16px; padding: 8px 0; }
-  .warn-row { font-size: 13px; padding: 8px 16px; border-left: 3px solid var(--warn); margin: 6px 16px; background: var(--bg-elev-2); border-radius: var(--r-sm); display: grid; gap: 2px; }
-  .warn-row.serious { border-left-color: var(--danger); }
-  .plan-h { display: flex; justify-content: space-between; padding: 8px 16px 10px; border-bottom: 1px solid var(--border); }
-  .lesson { border-bottom: 1px solid var(--border); }
-  .lesson:last-child { border-bottom: none; }
-  .lesson summary { display: flex; gap: 10px; padding: 9px 16px; cursor: pointer; font-size: 13.5px; list-style: none; }
-  .lesson summary::-webkit-details-marker { display: none; }
-  .num { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); width: 26px; padding-top: 2px; }
-  .lesson-body { padding: 0 16px 12px 52px; display: grid; gap: 6px; }
-  .lesson-body ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--text-dim); display: grid; gap: 3px; }
   .next-h { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
   .next-i { display: flex; gap: 10px; align-items: center; font-size: 13.5px; color: var(--text-dim); }
   .dot { width: 22px; height: 22px; border-radius: 99px; border: 1px solid var(--border-strong); display: grid; place-items: center; font-size: 11px; }
