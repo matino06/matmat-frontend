@@ -2,6 +2,7 @@
   // Uređivanje plana vlastitog predmeta dok je nacrt (ticket „Pregled i uređivanje plana“, varijanta A
   // iz prototipa): popis lekcija redom učenja s izmjenama u retku, bočni stupac s predznanjem, upozorenjima
   // i kvotom. Nakon izmjena i 30 s pauze traži se ponovna provjera; upozorenja se tada osvježe.
+  // Uputa AI-ju vraća prijedlog operacija koji se označi u popisu i prihvaća ili odbacuje u cjelini.
   import { onMount, onDestroy } from "svelte";
   import ArrowUp from "@lucide/svelte/icons/arrow-up";
   import ArrowDown from "@lucide/svelte/icons/arrow-down";
@@ -11,6 +12,7 @@
   import Plus from "@lucide/svelte/icons/plus";
   import X from "@lucide/svelte/icons/x";
   import TriangleAlert from "@lucide/svelte/icons/triangle-alert";
+  import Sparkles from "@lucide/svelte/icons/sparkles";
   import { apiClient } from "$lib/api/apiClient";
 
   let { courseId } = $props();
@@ -35,9 +37,12 @@
   let showAllWarnings = $state(false);
   let flash = $state(null);
   let introDone = $state(true);
+  let instruction = $state("");
+  let proposal = $state(null); // { jobId, status, message, ops, error, warning }
   let changed = new Set();
   let recheckTimer;
   let pollTimer;
+  let proposalTimer;
 
   let byId = $derived(Object.fromEntries(lessons.map((l) => [l.objectiveId, l])));
   let active = $derived(warnings.filter((w) => !w.ignored));
@@ -53,6 +58,22 @@
       return list;
     }, []),
   );
+  // Oznake prijedloga po lekciji i nove lekcije po mjestu („top“ = početak plana).
+  let marks = $derived(
+    (proposal?.ops ?? []).reduce((m, o) => {
+      if (o.op === "spoji") {
+        m[o.a] = { kind: "merge", text: `prima „${byId[o.b]?.name ?? "?"}“` };
+        m[o.b] = { kind: "merge", text: `spaja se u „${byId[o.a]?.name ?? "?"}“` };
+      } else if (o.op === "preimenuj") m[o.id] = { kind: "rename", text: `novi naziv: „${o.naziv}“` };
+      else if (o.op === "obrisi") m[o.id] = { kind: "delete", text: "briše se" };
+      else if (o.op === "premjesti") m[o.id] = { kind: "move", text: o.iza ? `ide iza „${byId[o.iza]?.name ?? "?"}“` : "ide na početak" };
+      return m;
+    }, {}),
+  );
+  let additions = $derived(
+    (proposal?.ops ?? []).filter((o) => o.op === "dodaj").reduce((m, o) => ((m[o.iza ?? "top"] ??= []).push(o.naziv), m), {}),
+  );
+  let quotaFull = $derived((quota?.usedPercent ?? 0) >= 100);
   let candidates = $derived(
     open && preSearch.trim().length > 1
       ? lessons.filter((l) => l.objectiveId !== open && l.name.toLowerCase().includes(preSearch.toLowerCase())).slice(0, 6)
@@ -87,16 +108,21 @@
     assumed = await call("/assumed-knowledge");
   }
 
-  onMount(async () => {
-    introDone = localStorage.getItem(`mm-pz-${courseId}`) === "1";
-    await Promise.all([loadPlan(), loadWarnings(), loadAssumed()]);
+  async function loadQuota() {
     try {
       const q = await apiClient("/own-courses/quota", { method: "GET" });
       if (q.ok) quota = await q.json();
     } catch {}
+  }
+
+  onMount(async () => {
+    introDone = localStorage.getItem(`mm-pz-${courseId}`) === "1";
+    await Promise.all([loadPlan(), loadWarnings(), loadAssumed()]);
+    await loadQuota();
   });
   onDestroy(() => {
     clearTimeout(pollTimer);
+    clearTimeout(proposalTimer);
     // izmjene čije provjera još nije tražena šalju se odmah
     if (changed.size) recheck();
   });
@@ -165,6 +191,87 @@
     w.ignored = true;
   }
 
+  // --- AI uputa ---
+
+  async function sendInstruction() {
+    const text = instruction.trim();
+    if (!text || quotaFull) return;
+    error = "";
+    try {
+      const r = await call("/instructions", "POST", { text });
+      instruction = "";
+      proposal = { jobId: r.jobId, status: "waiting" };
+      pollProposal();
+    } catch (e) {
+      error = e.message;
+    }
+  }
+
+  // „Dodaj lekciju“ uz nepokriven zadatak s ispita: isti prijedlog, ali se prihvaća sam.
+  async function addLessonFor(w) {
+    if (quotaFull) return;
+    error = "";
+    try {
+      const r = await call(`/warnings/${w.warningId}/add-lesson`, "POST");
+      proposal = { jobId: r.jobId, status: "waiting", warning: w };
+      pollProposal();
+    } catch (e) {
+      error = e.message;
+    }
+  }
+
+  async function pollProposal() {
+    clearTimeout(proposalTimer);
+    if (!proposal) return;
+    const jobId = proposal.jobId;
+    try {
+      const r = await call(`/instructions/${jobId}`);
+      if (proposal?.jobId !== jobId) return;
+      proposal.status = r.status;
+      if (r.status === "done") {
+        proposal.message = r.proposal?.poruka ?? "";
+        proposal.ops = r.proposal?.operacije ?? [];
+        loadQuota();
+        if (proposal.warning && proposal.ops.length) await accept();
+        return;
+      }
+      if (r.status === "failed") {
+        proposal.error = "AI nije uspio pripremiti prijedlog. Pokušaj ponovno.";
+        return;
+      }
+      if (r.status === "waiting_quota") {
+        proposal.error = "Mjesečna kvota je potrošena; prijedlog će se izraditi nakon obnove.";
+        return;
+      }
+    } catch (e) {
+      error = e.message;
+    }
+    proposalTimer = setTimeout(pollProposal, 2000);
+  }
+
+  async function accept() {
+    const p = proposal;
+    const r = await change(() => call(`/instructions/${p.jobId}/accept`, "POST"));
+    if (!r) return;
+    for (const id of r.changed ?? []) changed.add(id);
+    if (p.warning) await ignore(p.warning);
+    proposal = null;
+  }
+
+  function discard() {
+    clearTimeout(proposalTimer);
+    proposal = null;
+  }
+
+  function describe(o) {
+    const n = (id) => `„${byId[id]?.name ?? "?"}“`;
+    if (o.op === "spoji") return `Spoji ${n(o.b)} u ${n(o.a)}`;
+    if (o.op === "preimenuj") return `Preimenuj ${n(o.id)} u „${o.naziv}“`;
+    if (o.op === "obrisi") return `Obriši ${n(o.id)}`;
+    if (o.op === "dodaj") return `Dodaj „${o.naziv}“ ${o.iza ? `iza ${n(o.iza)}` : "na početak"}`;
+    return `Premjesti ${n(o.id)} ${o.iza ? `iza ${n(o.iza)}` : "na početak"}`;
+  }
+
   function goTo(id) {
     if (!id) return;
     open = id;
@@ -199,13 +306,17 @@
         <label class="small"><input type="checkbox" bind:checked={grouped} /> Grupiraj po cjelinama</label>
       </div>
       {#if error}<div class="err small">{error}</div>{/if}
+      {#each additions.top ?? [] as name}
+        <div class="card ghost">+ {name} <span class="muted small">nova lekcija na početku</span></div>
+      {/each}
 
       {#each units as u}
         <div class="card unit">
           <div class="unit-h"><span>{u.name}</span><span class="muted small">{u.area}</span></div>
           {#each u.lessons as l (l.objectiveId)}
             {@const w = warnBy[l.objectiveId] ?? []}
-            <div class="row" class:open={open === l.objectiveId} class:flash={flash === l.objectiveId} id={`lesson-${l.objectiveId}`}>
+            {@const mark = marks[l.objectiveId]}
+            <div class="row {mark ? `p-${mark.kind}` : ''}" class:open={open === l.objectiveId} class:flash={flash === l.objectiveId} id={`lesson-${l.objectiveId}`}>
               <div class="row-main">
                 <span class="num">{l.position}</span>
                 <div class="body">
@@ -220,6 +331,7 @@
                       {#if w.some((x) => x.serious)}<TriangleAlert size={14} class="warn-ic" />{/if}
                     </button>
                   {/if}
+                  {#if mark}<div class="mark">{mark.text}</div>{/if}
                   {#if l.concept}<div class="concept">{l.concept}</div>{/if}
                   <div class="meta">
                     {#if l.items.length}<span>{l.items.length} stavki</span>{:else}<span class="busy">AI izrađuje stavke…</span>{/if}
@@ -272,6 +384,9 @@
                 </div>
               {/if}
             </div>
+            {#each additions[l.objectiveId] ?? [] as name}
+              <div class="row ghost-row">+ {name} <span class="muted small">nova lekcija</span></div>
+            {/each}
             {#if addingAfter === l.objectiveId}
               <div class="row add-row">
                 <!-- svelte-ignore a11y_autofocus -->
@@ -287,6 +402,34 @@
     </main>
 
     <aside>
+      <div class="card side">
+        <div class="side-h"><Sparkles size={14} /> Uputa AI-ju</div>
+        {#if !proposal}
+          <textarea class="inp sm" rows="3" maxlength="1000" placeholder="Npr. spoji lekcije o akceleraciji i usporavanju" bind:value={instruction}
+            onkeydown={(e) => e.key === "Enter" && (e.metaKey || e.ctrlKey) && sendInstruction()}></textarea>
+          <button class="btn btn-primary sm" disabled={!instruction.trim() || quotaFull} onclick={sendInstruction}>Pošalji</button>
+          {#if quotaFull}<div class="muted small">Mjesečna kvota je potrošena.</div>{/if}
+        {:else if proposal.error}
+          <div class="err small">{proposal.error}</div>
+          <button class="btn btn-quiet sm" onclick={discard}>Zatvori</button>
+        {:else if proposal.status !== "done"}
+          <div class="busy small">{proposal.warning ? "AI traži mjesto za novu lekciju…" : "AI priprema prijedlog…"}</div>
+        {:else}
+          {#if proposal.message}<div class="small">{proposal.message}</div>{/if}
+          {#if proposal.ops.length}
+            <ul class="ops">{#each proposal.ops as o}<li>{describe(o)}</li>{/each}</ul>
+            <div class="muted small">Izmjene su označene u planu.</div>
+            <div class="row-btns">
+              <button class="btn btn-primary sm" onclick={accept}>Prihvati</button>
+              <button class="btn btn-quiet sm" onclick={discard}>Odbaci</button>
+            </div>
+          {:else}
+            <div class="muted small">Nema izmjena za predložiti.</div>
+            <button class="btn btn-quiet sm" onclick={discard}>Zatvori</button>
+          {/if}
+        {/if}
+      </div>
+
       <div class="card side">
         <div class="side-h">Pretpostavljeno predznanje</div>
         <div class="muted small">Plan ovo koristi bez lekcije. Ako nešto ne znaš, prebaci to u plan.</div>
@@ -306,7 +449,12 @@
           <div class="warn" class:serious={w.serious}>
             <button class="warn-t" onclick={() => goTo(w.objectiveId)} title={w.detail ?? ""}>{w.text}</button>
             {#if w.detail}<div class="muted small">{w.detail}</div>{/if}
-            <button class="btn btn-quiet sm" onclick={() => ignore(w)}>Zanemari</button>
+            <div class="row-btns">
+              {#if w.kind === "ispit"}
+                <button class="btn btn-ghost sm" disabled={!!proposal || quotaFull} onclick={() => addLessonFor(w)}>Dodaj lekciju</button>
+              {/if}
+              <button class="btn btn-quiet sm" onclick={() => ignore(w)}>Zanemari</button>
+            </div>
           </div>
         {/each}
         {#if active.length > 6}
@@ -383,6 +531,21 @@
   .warn.serious { border-left-color: var(--danger); }
   .warn-t { all: unset; cursor: pointer; color: var(--text-dim); }
   .warn-t:hover { color: var(--text); }
+  .row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ops { margin: 0; padding-left: 16px; font-size: 12.5px; display: grid; gap: 3px; }
+  textarea.inp { resize: vertical; }
+  .mark { font-size: 11.5px; font-weight: 500; margin-top: 2px; }
+  .row.p-merge { background: color-mix(in srgb, var(--warn) 12%, transparent); }
+  .row.p-merge .mark { color: var(--warn); }
+  .row.p-rename .mark, .row.p-move .mark { color: var(--success); }
+  .row.p-rename { background: color-mix(in srgb, var(--success) 10%, transparent); }
+  .row.p-move { background: color-mix(in srgb, var(--primary) 8%, transparent); }
+  .row.p-delete { background: color-mix(in srgb, var(--danger) 10%, transparent); }
+  .row.p-delete .title { text-decoration: line-through; color: var(--text-dim); }
+  .row.p-delete .mark { color: var(--danger); }
+  .ghost, .ghost-row { padding: 9px 14px 9px 50px; font-size: 13.5px; font-weight: 500; color: var(--success);
+    background: color-mix(in srgb, var(--success) 10%, transparent); border-bottom: 1px solid var(--border); }
+  .ghost { margin-bottom: 10px; padding-left: 14px; }
   .qbar { height: 5px; border-radius: 99px; background: var(--bg-elev-2); overflow: hidden; }
   .qbar span { display: block; height: 100%; background: var(--primary); }
   .qbar span.hot { background: var(--warn); }
