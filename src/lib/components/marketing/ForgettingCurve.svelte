@@ -1,13 +1,14 @@
 <script>
   // Illustration for /kako-radi: how much of a topic you still know over 30 days,
-  // once without reviewing and once with reviews spaced like MatMat's (1, 4, 8
-  // and 14 days after the previous one). Exponential forgetting where each review
-  // brings it back to 100% and makes the next drop slower. Not measured data.
+  // once without reviewing and once with reviews spaced like MatMat's SM-2 for an
+  // outcome rated well each time (1, 6 and 15 days after the previous one).
+  // Exponential forgetting where each review brings it back to 100% and makes the
+  // next drop slower. Not measured data.
 
   const DAYS = 30;
-  const REVIEWS = [1, 5, 13, 27];
+  const REVIEWS = [1, 7, 22];
   // How slowly it fades (days) before the first review and after each one.
-  const STABILITY = [3, 7, 15, 30, 70];
+  const STABILITY = [3, 10, 25, 60];
 
   function withReviews(t) {
     let i = 0;
@@ -71,7 +72,7 @@
       bind:this={svgEl}
       viewBox="0 0 {W} {H}"
       role="img"
-      aria-label="Koliko gradiva pamtiš kroz 30 dana: bez ponavljanja pada gotovo na nulu u desetak dana, s ponavljanjima u danima 1, 5, 13 i 27 ostaje iznad pola."
+      aria-label="Koliko gradiva pamtiš kroz 30 dana: bez ponavljanja pada gotovo na nulu u desetak dana, s ponavljanjima u danima 1, 7 i 22 ostaje iznad pola."
       onpointermove={onMove}
       onpointerleave={() => (hover = null)}
     >
@@ -119,7 +120,7 @@
     <caption>Koliko gradiva pamtiš, po danima</caption>
     <thead><tr><th>Dan</th><th>S MatMatom</th><th>Bez ponavljanja</th></tr></thead>
     <tbody>
-      {#each [0, 1, 5, 10, 13, 20, 27, 30] as d (d)}
+      {#each [0, 1, 7, 15, 22, 30] as d (d)}
         <tr><td>{d}</td><td>{pct(withReviews(d))}</td><td>{pct(without(d))}</td></tr>
       {/each}
     </tbody>

@@ -3,31 +3,71 @@
   import GoogleButton from "$lib/components/marketing/GoogleButton.svelte";
   import ClosingCta from "$lib/components/marketing/ClosingCta.svelte";
   import ForgettingCurve from "$lib/components/marketing/ForgettingCurve.svelte";
-  import RatingPicker, { RATINGS } from "$lib/components/ratingPicker/RatingPicker.svelte";
-  import DemoView from "$lib/components/landing/DemoView.svelte";
-  import DemoChat from "$lib/components/landing/DemoChat.svelte";
-  import { DEMO_TASKS } from "$lib/components/landing/demoData";
-  import { renderTaskHtml } from "$lib/utils/markdownRenderer";
-  import { fitMath } from "$lib/utils/fitMath";
-  import { mathjaxTypeset } from "$lib/utils/mathjax";
+  import PrereqPath from "$lib/components/marketing/PrereqPath.svelte";
+  import SpacingSim from "$lib/components/marketing/SpacingSim.svelte";
 
-  // The logarithm task: short enough to show whole next to its step.
-  const task = DEMO_TASKS.find((t) => t.id === 72);
+  // The landing page already shows the app (tasks, AI, progress); this page
+  // explains the method behind it and why it works, then answers the usual
+  // doubts before sign-in.
 
-  // The rating picker here only shows what each rating schedules.
-  let picked = $state(null);
+  const RESEARCH = [
+    {
+      figure: "2 od 10",
+      title: "Vježbanje kroz zadatke i razmaknuto ponavljanje najkorisnije su tehnike učenja",
+      text: "Pregled deset tehnika učenja samo je ove dvije ocijenio vrlo korisnima, za učenike svih dobi i u stvarnoj nastavi. Ponovno čitanje i podcrtavanje, koje učenici najčešće koriste, dobili su najnižu ocjenu.",
+      source: "Dunlosky i sur., 2013, Psychological Science in the Public Interest",
+      href: "https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html",
+    },
+    {
+      figure: "317",
+      title: "Razmak između ponavljanja treba rasti",
+      text: "Analiza 317 eksperimenata pokazala je da razmaknuto učenje pamti bolje od nagomilanog, i da je najbolji razmak to dulji što dulje gradivo trebaš pamtiti. Zato se razmaci u MatMatu produljuju kako ishod svladavaš.",
+      source: "Cepeda i sur., 2006, Psychological Bulletin",
+      href: "https://pubmed.ncbi.nlm.nih.gov/16719566/",
+    },
+    {
+      figure: "61 % : 38 %",
+      title: "Miješani zadaci iz matematike pamte se bolje",
+      text: "U 54 razreda matematike učenici koji su vježbali izmiješane vrste zadataka mjesec dana kasnije riješili su 61 % testa, a oni koji su vježbali vrstu po vrstu 38 %. Ponavljanja u MatMatu dolaze iz različitih ishoda, pa se vrste zadataka miješaju.",
+      source: "Rohrer i sur., 2020, Journal of Educational Psychology",
+      href: "https://ies.ed.gov/ncee/wwc/Study/88770",
+    },
+  ];
+
+  const FAQ = [
+    {
+      q: "Koliko vremena trebam dnevno?",
+      a: "Koliko sam odlučiš. Dnevni cilj postaviš sam, a MatMat svaki dan složi toliko zadataka. Za pamćenje je važnije raditi redovito nego puno odjednom.",
+    },
+    {
+      q: "Što ako propustim dan?",
+      a: "Ništa se ne gubi: zadaci koje je trebalo ponoviti pričekaju te. Kad vježbaš više dana zaredom, zaradiš i zaštitu niza, koja ga sačuva kad jedan dan preskočiš.",
+    },
+    {
+      q: "Moram li već znati gradivo?",
+      a: "Ne. Kreneš od osnova svakog područja, a teži ishodi se otključavaju kako svladavaš one prije njih. Ono što već znaš ocijeni visoko i vraćat će se rjeđe.",
+    },
+    {
+      q: "Polažem B razinu. Je li MatMat za mene?",
+      a: "Jest. Pri prijavi odabereš A ili B razinu, a zadaci i spremnost prate bodovanje te razine. Razinu možeš promijeniti bilo kad.",
+    },
+    {
+      q: "Je li stvarno besplatan?",
+      a: "Da. Prijaviš se Googleom i odmah rješavaš, bez kartice i bez instalacije.",
+    },
+  ];
 </script>
 
 <svelte:head>
   <title>MatMat — Kako radi</title>
-  <meta name="description" content="Svaki zadatak ocijeniš od 0 do 5, a MatMat iz toga računa kad ti se koji ishod vraća i koliko si spreman za maturu." />
+  <meta name="description" content="MatMat te vraća na gradivo baš kad ga počneš zaboravljati i vodi te redom, od osnova prema složenijem. Evo kako radi razmaknuto ponavljanje i zašto je bolje od bubanja." />
 </svelte:head>
 
 <MarketingShell>
   <section class="kr-hero hm-wrap">
-    <h1>Kako MatMat zna što trebaš ponoviti</h1>
+    <h1>Ono što naučiš danas, znat ćeš i na maturi</h1>
     <p class="kr-lead">
-      Svaki zadatak ocijeniš od 0 do 5. Iz tih ocjena MatMat računa kad ti se koji ishod vraća i koliko si spreman za maturu.
+      MatMat ne slaže zadatke nasumično. Vraća te na gradivo baš kad ga počneš zaboravljati i vodi te redom, od osnova prema složenijem. Evo kako to radi i zašto.
     </p>
     <div class="kr-actions">
       <GoogleButton />
@@ -35,112 +75,66 @@
     </div>
   </section>
 
-  <section class="kr-day hm-wrap" aria-labelledby="kr-day-h">
-    <h2 id="kr-day-h">Jedan dan s MatMatom</h2>
-
-    <ol class="kr-steps">
-      <li class="kr-step">
-        <div class="kr-step-text">
-          <span class="kr-n">1</span>
-          <h3>Dobiješ današnje zadatke</h3>
-          <p>Kad otvoriš Zadatke, čeka te današnji popis: novi ishodi i oni koje je vrijeme ponoviti. Koliko ih je, ovisi o dnevnom cilju koji sam postaviš.</p>
-        </div>
-        <div class="kr-step-part">
-          <article class="card kr-task">
-            <div class="task-meta">
-              <span class="badge mono">#{task.id}</span>
-              <span class="badge">A razina</span>
-              <span class="badge badge-dim">Matematika</span>
-            </div>
-            <div class="prose prose-invert prose-sm lg:prose-base !max-w-none kr-math" use:fitMath use:mathjaxTypeset={task.id}>
-              {@html renderTaskHtml(task.text, task.id)}
-            </div>
-            <div class="kr-task-foot">
-              <span class="btn btn-primary">Pokaži rješenje</span>
-              <span>Pokušaj sam · <span class="kbd-chip">Space</span> za rješenje</span>
-            </div>
-          </article>
-        </div>
-      </li>
-
-      <li class="kr-step">
-        <div class="kr-step-text">
-          <span class="kr-n">2</span>
-          <h3>Rješavaš sam, a pomoć je uz zadatak</h3>
-          <p>Rješenje je razloženo na korake, često s uputama za kalkulator i stranicom iz knjižice formula. Ako zapneš, AI asistent zna koji zadatak rješavaš i prvo ti da hint, a ne cijelo rješenje.</p>
-        </div>
-        <div class="kr-step-part">
-          <div class="kr-chat">
-            <DemoChat {task} scripted />
-          </div>
-        </div>
-      </li>
-
-      <li class="kr-step">
-        <div class="kr-step-text">
-          <span class="kr-n">3</span>
-          <h3>Ocijeniš kako ti je išlo</h3>
-          <p>Ocjena je jedino što MatMat od tebe traži. Budi iskren: o njoj ovisi kad ćeš isti ishod opet vidjeti. Prijeđi mišem preko ocjena i vidi što koja znači.</p>
-        </div>
-        <div class="kr-step-part">
-          <div class="rating-row kr-rating">
-            <div class="rating-label">Kako ti je išlo?</div>
-            <RatingPicker onSelect={(r) => (picked = r)} />
-            {#if picked}
-              <p class="kr-picked">
-                Uz ocjenu <b style="color:{picked.color}">{picked.k} — {picked.t}</b> logaritmi ti se vraćaju {picked.sub}.
-              </p>
-            {/if}
-          </div>
-        </div>
-      </li>
-
-      <li class="kr-step">
-        <div class="kr-step-text">
-          <span class="kr-n">4</span>
-          <h3>MatMat rasporedi ponavljanje</h3>
-          <p>Ono što ne znaš vraća se već sutra, a ono što znaš tek za nekoliko tjedana. Tako vrijeme ide na gradivo koje ti stvarno treba, a ne na zadatke koje već rješavaš napamet.</p>
-        </div>
-        <div class="kr-step-part">
-          <DemoView part="objectives" />
-        </div>
-      </li>
-
-      <li class="kr-step">
-        <div class="kr-step-text">
-          <span class="kr-n">5</span>
-          <h3>Vidiš koliko si spreman</h3>
-          <p>Spremnost se računa po ishodima, a područja se važu kao bodovi na ispitu. Na A razini algebra i funkcije nose pola bodova, pa i pola tvoje spremnosti.</p>
-        </div>
-        <div class="kr-step-part">
-          <DemoView part="readiness" />
-        </div>
-      </li>
-    </ol>
+  <section class="kr-split hm-wrap" aria-labelledby="kr-forget-h">
+    <div class="kr-split-text">
+      <h2 id="kr-forget-h">Zaboravljanje je normalno. Bubanje ga samo odgodi.</h2>
+      <p class="kr-p">Nakon učenja gradivo brzo blijedi, a učenje noć prije ispita drži ga taman do ispita. Svako ponavljanje u pravom trenutku vraća znanje i usporava sljedeći pad.</p>
+      <p class="kr-p">Zato razmak između ponavljanja smije rasti: prvo sutra, pa za nekoliko dana, pa za nekoliko tjedana.</p>
+    </div>
+    <div class="kr-split-part">
+      <ForgettingCurve />
+    </div>
   </section>
 
-  <section class="kr-scale hm-wrap" aria-labelledby="kr-scale-h">
-    <h2 id="kr-scale-h">Što znači koja ocjena</h2>
-    <p class="kr-section-lead">Ovo je razmak nakon jedne ocjene. Kad isti ishod opet dobro riješiš, razmak do idućeg ponavljanja raste.</p>
-    <div class="kr-table">
-      {#each RATINGS as r (r.k)}
-        <div class="kr-row">
-          <span class="kr-row-k" style="--rc:{r.color}">{r.k}</span>
-          <span class="kr-row-name">{r.t}</span>
-          <span class="kr-row-desc">{r.desc}</span>
-          <span class="kr-row-when">vraća se {r.sub}</span>
-        </div>
+  <section class="kr-split hm-wrap" aria-labelledby="kr-scale-h">
+    <div class="kr-split-text">
+      <h2 id="kr-scale-h">Tvoja ocjena određuje razmak</h2>
+      <p class="kr-p">Nakon svakog zadatka kažeš kako ti je išlo, od 0 do 5. Ocjena 0, 1 ili 2 vraća ishod već sutra i kreće ispočetka. Dobra ocjena razmak produljuje: prvo sutra, onda za 6 dana, pa sve dulje, ovisno o tome koliko ti ide.</p>
+      <p class="kr-p">Probaj: ocijeni isti ishod četiri puta i vidi kad ti se vraća.</p>
+    </div>
+    <div class="kr-split-part">
+      <SpacingSim />
+    </div>
+  </section>
+
+  <section class="kr-split kr-split-rev hm-wrap" aria-labelledby="kr-order-h">
+    <div class="kr-split-text">
+      <h2 id="kr-order-h">Gradivo ide redom</h2>
+      <p class="kr-p">Matematika se gradi sloj po sloj: logaritamsku jednadžbu ne možeš riješiti ako ne znaš pravila logaritama. Zato je gradivo složeno u područja, cjeline i ishode, a svaki ishod se otključa tek kad svladaš one na kojima se gradi.</p>
+      <p class="kr-p">Na mapi gradiva uvijek vidiš što si svladao i što slijedi. Možeš i preskočiti naprijed, ali MatMat te prvo upozori da ti možda fali predznanje.</p>
+    </div>
+    <div class="kr-split-part">
+      <PrereqPath />
+    </div>
+  </section>
+
+  <section class="kr-research hm-wrap" aria-labelledby="kr-research-h">
+    <h2 id="kr-research-h">Na čemu se to temelji</h2>
+    <p class="kr-p kr-narrow">Ove tehnike nismo izmislili. Istražuju se desetljećima, a ovo su tri rezultata iz kojih je MatMat nastao.</p>
+    <div class="kr-research-grid">
+      {#each RESEARCH as r (r.source)}
+        <article class="kr-study">
+          <div class="kr-figure">{r.figure}</div>
+          <h3>{r.title}</h3>
+          <p>{r.text}</p>
+          <a class="kr-source" href={r.href} target="_blank" rel="noopener noreferrer">{r.source}</a>
+        </article>
       {/each}
     </div>
   </section>
 
-  <section class="kr-curve hm-wrap" aria-labelledby="kr-curve-h">
-    <div class="kr-curve-text">
-      <h2 id="kr-curve-h">Zašto ponavljanje, a ne bubanje</h2>
-      <p class="kr-section-lead">Gradivo se najbrže zaboravlja odmah nakon učenja, a nakon svakog ponavljanja sve sporije. Zato MatMat vraća zadatak baš kad ga počneš zaboravljati: dovoljno rano da ga se još sjetiš, dovoljno kasno da ne gubiš vrijeme.</p>
-    </div>
-    <div class="kr-curve-chart">
-      <ForgettingCurve />
+  <section class="kr-faq hm-wrap" aria-labelledby="kr-faq-h">
+    <h2 id="kr-faq-h">Česta pitanja</h2>
+    <div class="kr-faq-list">
+      {#each FAQ as f (f.q)}
+        <details>
+          <summary>
+            {f.q}
+            <svg class="kr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+          </summary>
+          <p>{f.a}</p>
+        </details>
+      {/each}
     </div>
   </section>
 
@@ -210,111 +204,67 @@
   }
   .kr-ghost:hover { color: var(--text); background: var(--bg-elev); border-color: var(--text-faint); }
 
+  section:not(.kr-hero) { padding-top: 80px; padding-bottom: 88px; border-top: 1px solid var(--border); }
   section h2 {
     font-size: clamp(28px, 3.4vw, 40px);
     line-height: 1.1;
     letter-spacing: -0.03em;
     text-wrap: balance;
   }
-  .kr-section-lead { margin: 14px 0 0; max-width: 36em; font-size: 16px; line-height: 1.65; color: var(--text-dim); }
+  .kr-p { margin: 16px 0 0; font-size: 16px; line-height: 1.65; color: var(--text-dim); text-wrap: pretty; }
+  .kr-narrow { max-width: 38em; }
 
-  /* One day, step by step: text left, the real piece of the app right. */
-  .kr-day { padding-top: 64px; padding-bottom: 40px; border-top: 1px solid var(--border); }
-  .kr-steps { list-style: none; margin: 24px 0 0; padding: 0; }
-  .kr-step {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 56px;
-    align-items: center;
-    padding: 48px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .kr-step:last-child { border-bottom: 0; }
-  .kr-n {
-    display: inline-grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    margin-bottom: 16px;
-    border-radius: 50%;
-    border: 1px solid var(--border-strong);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-  .kr-step h3 { font-size: 22px; letter-spacing: -0.02em; line-height: 1.25; }
-  .kr-step-text p { margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: var(--text-dim); }
-
-  .kr-task { padding: 28px; }
-  .kr-math { color: var(--text); }
-  .kr-task-foot { margin-top: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-faint); }
-  .kr-task-foot .btn { cursor: default; }
-  .kr-chat {
-    height: 300px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-xl);
-    overflow: hidden;
-  }
-  .kr-rating { margin-top: 0; }
-  .kr-picked { margin: 14px 0 0; font-size: 14px; color: var(--text-dim); }
-  .kr-picked b { font-weight: 600; }
-
-  /* The rating scale, as a list in the app's row style. */
-  .kr-scale { padding-top: 72px; padding-bottom: 88px; border-top: 1px solid var(--border); }
-  .kr-table { margin-top: 32px; display: flex; flex-direction: column; }
-  .kr-row {
-    display: grid;
-    grid-template-columns: 36px 140px minmax(0, 1fr) auto;
-    gap: 16px;
-    align-items: center;
-    padding: 14px 18px;
-    border: 1px solid var(--border);
-    border-top-width: 0;
-    background: var(--bg-elev);
-    font-size: 15px;
-  }
-  .kr-row:first-child { border-top-width: 1px; border-radius: var(--r-lg) var(--r-lg) 0 0; }
-  .kr-row:last-child { border-radius: 0 0 var(--r-lg) var(--r-lg); }
-  .kr-row-k {
-    width: 30px;
-    height: 30px;
-    display: grid;
-    place-items: center;
-    border-radius: var(--r-md);
-    border: 1px solid color-mix(in srgb, var(--rc) 35%, var(--border));
-    background: color-mix(in srgb, var(--rc) 12%, var(--bg-elev));
-    color: var(--rc);
-    font-family: var(--font-mono);
-    font-weight: 700;
-  }
-  .kr-row-name { font-weight: 500; color: var(--text); }
-  .kr-row-desc { color: var(--text-dim); }
-  .kr-row-when { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); white-space: nowrap; }
-
-  .kr-curve {
-    padding-top: 72px;
-    padding-bottom: 104px;
-    border-top: 1px solid var(--border);
+  /* Text beside an illustration. */
+  .kr-split {
     display: grid;
     grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
     gap: 56px;
     align-items: center;
   }
+  .kr-split-rev { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+
+  /* Research: one finding per column, its number first. */
+  .kr-research-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+  .kr-study { padding-top: 20px; border-top: 1px solid var(--border-strong); display: flex; flex-direction: column; }
+  .kr-figure { font-size: 34px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); line-height: 1.1; }
+  .kr-study h3 { margin-top: 14px; font-size: 17px; line-height: 1.35; letter-spacing: -0.01em; }
+  .kr-study p { margin: 10px 0 16px; font-size: 15px; line-height: 1.6; color: var(--text-dim); }
+  .kr-source { margin-top: auto; font-size: 13px; color: var(--text-faint); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border-strong); }
+  .kr-source:hover { color: var(--text); }
+
+  /* FAQ */
+  .kr-faq-list { margin-top: 32px; max-width: 760px; border-top: 1px solid var(--border); }
+  details { border-bottom: 1px solid var(--border); }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .kr-chev { flex-shrink: 0; color: var(--text-faint); transition: transform 0.15s; }
+  details[open] .kr-chev { transform: rotate(180deg); }
+  details p { margin: -4px 0 20px; max-width: 40em; font-size: 15.5px; line-height: 1.65; color: var(--text-dim); }
 
   @media (max-width: 900px) {
-    .kr-step, .kr-curve { grid-template-columns: 1fr; gap: 24px; }
-    .kr-step { padding: 36px 0; }
+    .kr-split, .kr-split-rev { grid-template-columns: 1fr; gap: 32px; }
+    .kr-research-grid { grid-template-columns: 1fr; gap: 32px; }
   }
   @media (max-width: 640px) {
     .kr-hero { padding-top: 64px; padding-bottom: 64px; }
     .kr-lead { font-size: 16px; }
     .kr-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
     .kr-actions > :global(*) { justify-content: center; }
-    .kr-day { padding-top: 48px; }
-    .kr-task { padding: 18px; }
-    .kr-row { grid-template-columns: 32px minmax(0, 1fr); gap: 4px 12px; padding: 12px 14px; }
-    .kr-row-k { grid-row: span 3; align-self: start; }
-    .kr-row-when { font-size: 12px; }
-    .kr-scale, .kr-curve { padding-top: 48px; padding-bottom: 64px; }
+    section:not(.kr-hero) { padding-top: 56px; padding-bottom: 64px; }
+    summary { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kr-chev { transition: none; }
   }
 </style>
