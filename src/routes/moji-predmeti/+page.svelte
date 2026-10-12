@@ -91,14 +91,15 @@
   {:else}
     <div class="list">
       {#each ownCourses.courses as c (c.courseId)}
-        <div class="card item">
+        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+        <div class="card item" onclick={() => goto(`/moji-predmeti/${c.courseId}`)}>
           <div class="badge-sq" style="background: hsl({courseHue(c.courseName)} 75% 55%)">{courseBadge(c.courseName)}</div>
           <div class="meta">
             <div class="name">{c.courseName}</div>
             <div class="muted small">{subjectLabel(c.subject)} · {levelLabel(c.level)}</div>
             <div class="status {c.status}">{STATUS_LABELS[c.status] ?? c.status}</div>
           </div>
-          <button class="btn btn-quiet danger" onclick={() => openDelete(c)}>Obriši</button>
+          <button class="btn btn-quiet danger" onclick={(e) => { e.stopPropagation(); openDelete(c); }}>Obriši</button>
         </div>
       {/each}
     </div>
@@ -142,7 +143,8 @@
   .small { font-size: 12.5px; }
   .empty { display: grid; gap: 10px; justify-items: start; }
   .list { display: grid; gap: 10px; }
-  .item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+  .item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; cursor: pointer; }
+  .item:hover { border-color: var(--border-strong); }
   .meta { flex: 1; min-width: 0; display: grid; gap: 2px; }
   .name { font-weight: 600; font-size: 14.5px; }
   .status { font-size: 12.5px; color: var(--primary); }

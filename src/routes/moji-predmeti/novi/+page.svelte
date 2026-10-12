@@ -25,8 +25,9 @@
         return;
       }
       if (!res.ok) throw new Error();
-      ownCourses.courses = [await res.json(), ...ownCourses.courses];
-      goto("/moji-predmeti");
+      const created = await res.json();
+      ownCourses.courses = [created, ...ownCourses.courses];
+      goto(`/moji-predmeti/${created.courseId}`);
     } catch {
       error = "Predmet nije spremljen. Pokušaj ponovno.";
     } finally {
