@@ -258,3 +258,23 @@ Provjere kodom (dodana i provjera stranog pisma/finskih riječi i doslovnog „\
 - B01.01 v1: d) „do iste zgrade ravnom šetnicom 800 m“, a pomak do zgrade je 1000 m; hodanje 14,4 km/h.
 
 **Ocjena: računi ✅, ali za učenika neupotrebljivo bez lekture (≈ 39/40 ima jezičnu grešku, 1 ❌ proturječje).**
+
+### GLM 5.3 Flash — druga, potpuna provjera objašnjenja (fizika, bez jezika)
+
+Prvi put sam provjerio rezultate i tražio nepostojeće riječi; sad sam pročitao sva 40 objašnjenja.
+
+**Ozbiljne (kardinalne) greške — 9 u 8 varijacija:**
+1. B01.01 v1 — proturječni podaci: do iste zgrade „ravnom šetnicom 800 m“, a pomak do zgrade je 1000 m.
+2. B01.01 v1 — „sila kojom mišići tjeraju naprijed pokorava se trenju i zakreće ga u stranu“ (besmislena fizika).
+3. B01.01 v2 — „mišići guraju naprijed, trenje i gravitacija djeluju unatrag“ (pri hodu trenje gura naprijed, gravitacija ne djeluje unatrag).
+4. B01.01 v4 — „mišići nogu guraju naprijed, trenje i otpor zraka unatrag“ (ista zabluda).
+5. B02.02 v1 — „jednoliko gibanje ne treba silu da se održi, samo da se pokrene“, odmah nakon što je izračunato da treba vući s 80 N.
+6. B02.02 v2 — dizalo se spušta: „da ubrzava ili koči, napetost bi bila veća odnosno manja“ — obrnuto.
+7. B02.02 v4 — isto obrnuto.
+8. B06.01 v3 — naljepnica na kotaču bicikla koji se vozi: tekst kaže da se bicikl giba tom brzinom, a pomak nakon 3 s je „0,8 m“ (vrijedi samo prema osovini).
+9. B07.04 v3 — „geostacionarna orbita mu je manja“ (od Zemljine), a izračunano 1,6·10⁸ m je gotovo 4× veće od 4,2·10⁷ m.
+
+**Male greške (netočne usputne tvrdnje, nerealni podaci, besmislene usporedbe) — ~20:**
+hodanje 14,4 km/h i „10 km/h realna brzina hoda“ (B01.01 v1); „spor zbog strmijeg dijela“ koji nije zadan (B01.01 v2); „bez trenja duplo previše“ (1,7×, B03.02 v1); „da vlak koči, kovčeg bi počeo kliziti“ (B02.02 v1); „strmija kosina znači puno teži rad“ (B02.02 v2); „sila udarca desetak puta veća od sile teže“ (80×, B04.02 v1); sila poda/ruku bez mg (B04.02 v3); usporedbe s kunama (B04.02 v1, v2); brzina „okomita na nit“ umjesto na polumjer (B06.01 v1); „Zemlja nepomično nosi Mjesec“ (B07.01 v1); „ubrzanja se razlikuju milijardama puta“ (10²² puta) i „gušće zbijena masa“ (zapravo rjeđa) (B07.01 v2); „5,6 m/s² blizu g“ (B07.01 v4); planet kojem bi orbita na 2250 km tražila gustoću ~27 g/cm³ (B07.04 v2); „skoro četiri puta brže“ (2,4×) i pozivanje na „prethodnu varijaciju“ (B07.04 v3); besmislene usporedbe: raspon ruku (B07.01 v1), zavjesa (B07.01 v3), „dvosatna vagoneta“ (B04.02 v1), „tucet“ (B04.02 v3), „štaionir“ (B06.01 v3).
+
+Čisto (bez kardinalne i bez male nejezične greške): B01.01 v3, B01.05 (sve 4), B03.02 v2–v4, B02.02 v3, B04.01 (sve 4), B05.03 (sve 4), B06.01 v2, v4 ≈ 20/40.
