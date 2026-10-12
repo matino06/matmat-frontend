@@ -12,6 +12,7 @@
   let notFound = $state(false);
   let summary = $state(null);
   let progress = $state(null);
+  let planLessons = $state(null);
   let uploads = $state([]); // { name, percent, error }
   let error = $state("");
   let busy = $state(false);
@@ -49,12 +50,18 @@
   async function loadProgress() {
     const res = await apiClient(`/own-courses/${courseId}/build`, { method: "GET" });
     if (res.ok) progress = await res.json();
+    if (progress?.state === "ceka_kreatora" && !planLessons) await loadPlan();
+  }
+
+  async function loadPlan() {
+    const res = await apiClient(`/own-courses/${courseId}/plan`, { method: "GET" });
+    if (res.ok) planLessons = await res.json();
   }
 
   onMount(async () => {
     await loadCourse();
     // Napredak se osvježava svake 3 s; stranica se smije zatvoriti, izrada ide dalje.
-    timer = setInterval(() => course && course.status !== "nov" && loadProgress(), 3000);
+    timer = setInterval(() => course && course.status !== "nov" && progress?.state !== "ceka_kreatora" && loadProgress(), 3000);
   });
   onDestroy(() => clearInterval(timer));
 
@@ -149,13 +156,16 @@
   }
 
   const PHASES = ["Čitanje materijala", "Izrada plana", "Pregled i potvrda plana", "Izrada prvih zadataka", "Spremno za učenje"];
+  const PLAN_STEPS = ["Opseg gradiva", "Stavke znanja", "Preduvjeti", "Lekcije", "Provjera plana"];
+  let phaseIndex = $derived({ citanje: 0, plan: 1, pregled: 2 }[progress?.phase] ?? 0);
   let headline = $derived(
     {
       radi: "Izrađujemo tvoj predmet",
       ceka_kvotu: "Izrada čeka novu kvotu",
       neuspjelo: "Nešto nije uspjelo",
       pauzirano: "Izrada je na kratkoj pauzi",
-      procitano: "Materijal je pročitan",
+      ceka_kreatora: "Plan je spreman za pregled",
+      prevelik: "Gradivo je preopsežno",
     }[progress?.state] ?? "Izrađujemo tvoj predmet",
   );
   let explanation = $derived(
@@ -164,7 +174,8 @@
       ceka_kvotu: "Mjesečna kvota je potrošena. Ono što je napravljeno je spremljeno, a izrada se sama nastavlja 1. u mjesecu.",
       neuspjelo: "Jedan korak izrade nije uspio ni nakon 3 pokušaja. Pokušaj ponovno; ako opet ne uspije, javi nam se.",
       pauzirano: "Izrada je privremeno zaustavljena zbog velikog opterećenja. Nastavit će se sama, ništa ne trebaš raditi.",
-      procitano: "Sljedeći korak je izrada plana lekcija.",
+      ceka_kreatora: `Plan ima ${planLessons?.length ?? "…"} lekcija. Uređivanje i potvrda plana dolaze u sljedećem koraku; zasad ga možeš pregledati ispod.`,
+      prevelik: "Plan bi imao više od 200 lekcija. Podijeli materijal u dva manja predmeta pa pokušaj ponovno.",
     }[progress?.state] ?? "",
   );
 </script>
@@ -263,26 +274,55 @@
         <div class="stack">
           <h2>{headline}</h2>
           <p class="muted">{explanation}</p>
-          {#if progress.phase === "citanje" && progress.state !== "procitano"}
+          {#if progress.phase === "citanje"}
             <div class="now">Čitam materijal: {progress.done} od {progress.total} stranica</div>
+          {:else if progress.phase === "plan" && progress.state !== "prevelik"}
+            <ul class="steps">
+              {#each PLAN_STEPS as s, i}
+                <li class:done={i < progress.planStep} class:cur={i === progress.planStep}>
+                  <span class="o">{i < progress.planStep ? "✓" : ""}</span>{s}
+                </li>
+              {/each}
+            </ul>
           {/if}
           {#if error}<div class="err small">{error}</div>{/if}
           <div class="actions start">
             {#if progress.state === "neuspjelo"}
               <button class="btn btn-primary" onclick={retry}>Pokušaj ponovno</button>
             {/if}
-            {#if course.status === "izrada"}
+            {#if course.status === "izrada" || course.status === "prevelik"}
               <button class="btn btn-quiet" onclick={() => (confirmCancel = true)}>Odustani od izrade</button>
             {/if}
           </div>
         </div>
       </div>
-      <div class="next">
-        <div class="next-h">Što slijedi</div>
-        {#each PHASES.slice(1) as p, i}
-          <div class="next-i"><span class="dot">{i + 2}</span>{p}</div>
-        {/each}
-      </div>
+      {#if planLessons}
+        <div class="card plan">
+          <div class="plan-h"><b>Plan</b><span class="muted small">{planLessons.length} lekcija</span></div>
+          {#each planLessons as l (l.objectiveId)}
+            <details class="lesson">
+              <summary>
+                <span class="num">{l.position}</span>
+                <span class="grow">{l.name}<span class="muted small"> · {l.unit}</span></span>
+              </summary>
+              <div class="lesson-body">
+                {#if l.concept}<p class="muted small">{l.concept}</p>{/if}
+                <ul>{#each l.items as it}<li>{it}</li>{/each}</ul>
+                {#if l.prerequisites.length}
+                  <div class="muted small">Treba: {l.prerequisites.map((id) => planLessons.find((x) => x.objectiveId === id)?.position).filter(Boolean).join(", ")}.</div>
+                {/if}
+              </div>
+            </details>
+          {/each}
+        </div>
+      {:else}
+        <div class="next">
+          <div class="next-h">Što slijedi</div>
+          {#each PHASES.slice(phaseIndex + 1) as p, i}
+            <div class="next-i"><span class="dot">{phaseIndex + i + 2}</span>{p}</div>
+          {/each}
+        </div>
+      {/if}
     {/if}
 
     {#if confirmCancel}
@@ -331,6 +371,23 @@
   p { margin: 0; line-height: 1.55; }
   .now { font-size: 13px; padding: 8px 10px; border-radius: var(--r-md); background: var(--bg-elev-2); }
   .next { margin-top: 18px; display: grid; gap: 8px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; color: var(--text-faint); }
+  .steps li { display: flex; gap: 8px; align-items: center; }
+  .steps li.done { color: var(--text-dim); }
+  .steps li.cur { color: var(--text); font-weight: 500; }
+  .steps .o { width: 16px; height: 16px; border-radius: 99px; border: 1.5px solid currentColor; display: grid; place-items: center; font-size: 10px; }
+  .hero.ceka_kreatora { border-color: var(--success); }
+  .hero.ceka_kreatora .ring { --c: var(--success); }
+  .hero.prevelik { border-color: var(--danger); }
+  .plan { margin-top: 16px; padding: 8px 0; }
+  .plan-h { display: flex; justify-content: space-between; padding: 8px 16px 10px; border-bottom: 1px solid var(--border); }
+  .lesson { border-bottom: 1px solid var(--border); }
+  .lesson:last-child { border-bottom: none; }
+  .lesson summary { display: flex; gap: 10px; padding: 9px 16px; cursor: pointer; font-size: 13.5px; list-style: none; }
+  .lesson summary::-webkit-details-marker { display: none; }
+  .num { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); width: 26px; padding-top: 2px; }
+  .lesson-body { padding: 0 16px 12px 52px; display: grid; gap: 6px; }
+  .lesson-body ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--text-dim); display: grid; gap: 3px; }
   .next-h { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
   .next-i { display: flex; gap: 10px; align-items: center; font-size: 13.5px; color: var(--text-dim); }
   .dot { width: 22px; height: 22px; border-radius: 99px; border: 1px solid var(--border-strong); display: grid; place-items: center; font-size: 11px; }
