@@ -1,0 +1,2390 @@
+
+
+################ B01.01 Gibanje, put i pomak, prosječna brzina + Jednoliko gibanje i njegovi grafovi | 104 s | greska None
+kod: ['v1: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v2: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v3: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v4: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.']
+
+######## B01.01 varijacija 1
+--- ZADATAK
+a) Sjediš u autobusu koji se cestom giba brzinom 12 m/s. Tvoja torba miruje na sjedalu. Nakon izlaska hodaš 300 m prema istoku, a zatim 400 m prema sjeveru. Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?
+b) Za hodanje ti je trebalo ukupno 10 min. Kolika je tvoja prosječna brzina u m/s?
+c) Zatim se ravnom stazom voziš biciklom jednoliko brzinom 18 km/h. Na početku je tvoj položaj 20 m zapadno od oznake x = 0. Gdje ćeš biti nakon 20 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.
+d) Opiši graf brzine v(t) za vožnju biciklom iz c) i odredi pomak tijekom 20 s površinom ispod grafa.
+--- REZ {"a": "Put: 700 m; pomak: 500 m prema sjeveroistoku. Torba miruje u odnosu na autobus, a giba se u odnosu na cestu.", "b": "1,17 m/s", "c": "x = 80 m; graf x(t) pravac od (0 s, −20 m) do (20 s, 80 m); a = 0 m/s²; ukupna sila = 0 N.", "d": "Graf v(t) vodoravan je na 5 m/s; pomak = 100 m."}
+--- OBJ
+## 🧭 Put, pomak i referentni sustav
+
+**Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?** Hodaš 300 m prema istoku pa 400 m prema sjeveru, a torba je na sjedalu autobusa koji se giba brzinom 12 m/s.
+
+**Put** je ukupna duljina prijeđene staze; ne govori u kojem se smjeru krećemo. Zato je put 300 m + 400 m = 700 m. **Pomak** je ravna usmjerena veza od početnog do konačnog položaja, pa za okomite dijelove koristimo Pitagorin poučak:
+
+$$d=\sqrt{(300\ \text{m})^2+(400\ \text{m})^2}=500\ \text{m}$$
+
+Zamka je poistovjetiti put i pomak: hodanje je ukupno 700 m, ali si od početka udaljen 500 m. Da si se vratio na polazište, pomak bi bio nula, a put bi i dalje bio veći od nule. Torba **miruje u odnosu na autobus**, ali se **giba u odnosu na cestu**: gibanje i mirovanje ovise o odabranom referentnom sustavu.
+
+## 🏃 Prosječna brzina
+
+**Kolika je tvoja prosječna brzina u m/s?** Ukupni put je 700 m, a vrijeme hodanja 10 min = 600 s.
+
+Prosječna brzina uspoređuje ukupni prijeđeni put s ukupnim vremenom. Formula je u **knjižici formula, str. 2**, u poglavlju *Kinematika*:
+
+$$v=\frac{\Delta s}{\Delta t}$$
+
+Uvrštavanjem dobivamo:
+
+$$v=\frac{700\ \text{m}}{600\ \text{s}}=1{,}17\ \text{m/s}$$
+
+To je prosjek za cijelo hodanje; ne znači da si svakog trenutka hodao baš tom brzinom.
+
+## 🚲 Jednoliko gibanje i graf položaja
+
+**Gdje ćeš biti nakon 20 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.** Brzinu 18 km/h pretvaramo prije računanja: 18 : 3,6 = 5 m/s. Početni položaj je x₀ = −20 m, a gibanje je jednoliko, dakle brzina je stalna.
+
+Položaj nakon vremena t dobiva se zbrajanjem početnog položaja i promjene položaja. U knjižici formula, str. 2, nalazi se formula za jednoliko ubrzano gibanje; za stalnu brzinu akceleracija je nula, pa se ona svodi na:
+
+$$x=x_0+vt$$
+
+$$x=-20\ \text{m}+(5\ \text{m/s})(20\ \text{s})=80\ \text{m}$$
+
+Graf x(t) je pravac od točke (0 s, −20 m) do točke (20 s, 80 m). **Nagib** pravca jednak je brzini: strmiji pravac znači veću brzinu, a vodoravan pravac znači mirovanje. Brzina je stalna, zato je akceleracija 0 m/s²; prema drugom Newtonovu zakonu ukupna sila je nula.
+
+## 📈 Graf brzine i pomak
+
+**Opiši graf brzine v(t) i odredi pomak tijekom 20 s površinom ispod grafa.** Tijekom cijele vožnje brzina je 5 m/s u pozitivnom smjeru.
+
+Graf v(t) je vodoravan pravac na vrijednosti 5 m/s. Površina ispod njega je pravokutnik: 5 m/s · 20 s = 100 m. To je pomak u smjeru gibanja, jednak promjeni položaja 80 m − (−20 m) = 100 m. Vodoravan graf brzine ovdje znači **stalnu brzinu**, dok vodoravan graf položaja znači **mirovanje**.
+
+######## B01.01 varijacija 2
+--- ZADATAK
+a) Sjediš u autobusu koji se cestom giba brzinom 8 m/s. Tvoja torba miruje na sjedalu. Nakon izlaska hodaš 500 m prema istoku, a zatim 1200 m prema sjeveru. Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?
+b) Za hodanje ti je trebalo ukupno 20 min. Kolika je tvoja prosječna brzina u m/s?
+c) Zatim se ravnom stazom voziš biciklom jednoliko brzinom 36 km/h. Na početku je tvoj položaj 30 m istočno od oznake x = 0. Gdje ćeš biti nakon 15 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.
+d) Opiši graf brzine v(t) za vožnju biciklom iz c) i odredi pomak tijekom 15 s površinom ispod grafa.
+--- REZ {"a": "Put: 1700 m; pomak: 1300 m prema sjeveroistoku. Torba miruje u odnosu na autobus, a giba se u odnosu na cestu.", "b": "1,42 m/s", "c": "x = 180 m; graf x(t) pravac od (0 s, 30 m) do (15 s, 180 m); a = 0 m/s²; ukupna sila = 0 N.", "d": "Graf v(t) vodoravan je na 10 m/s; pomak = 150 m."}
+--- OBJ
+## 🧭 Put, pomak i referentni sustav
+
+**Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?** Hodaš 500 m prema istoku pa 1200 m prema sjeveru, a torba je na sjedalu autobusa koji se giba brzinom 8 m/s.
+
+**Put** je ukupna duljina staze: 500 m + 1200 m = 1700 m. **Pomak** je ravna usmjerena veza od početnog do konačnog položaja. Budući da su dijelovi puta okomiti, primjenjujemo Pitagorin poučak:
+
+$$d=\sqrt{(500\ \text{m})^2+(1200\ \text{m})^2}=1300\ \text{m}$$
+
+Zamka je poistovjetiti put i pomak: priješao si 1700 m, ali je udaljenost između početnog i završnog položaja 1300 m. Kad bi se vratio na početak, pomak bi bio nula, a put ne bi bio nula. Torba **miruje u odnosu na autobus**, ali se **giba u odnosu na cestu**; mirovanje i gibanje ovise o referentnom sustavu.
+
+## 🏃 Prosječna brzina
+
+**Kolika je tvoja prosječna brzina u m/s?** Ukupni put je 1700 m, a vrijeme hodanja 20 min = 1200 s.
+
+Prosječna brzina je omjer ukupnog puta i ukupnog vremena. Formula je u **knjižici formula, str. 2**, u poglavlju *Kinematika*:
+
+$$v=\frac{\Delta s}{\Delta t}$$
+
+$$v=\frac{1700\ \text{m}}{1200\ \text{s}}=1{,}42\ \text{m/s}$$
+
+To je prosjek za cijelo hodanje, a ne nužno brzina u svakom njegovu trenutku.
+
+## 🚲 Jednoliko gibanje i graf položaja
+
+**Gdje ćeš biti nakon 15 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.** Pretvorba brzine glasi 36 : 3,6 = 10 m/s. Početni položaj je x₀ = 30 m, a brzina je stalna.
+
+Položaj nakon vremena t jednak je početnom položaju uvećanom za promjenu položaja. U **knjižici formula, str. 2**, formula za jednoliko ubrzano gibanje uz a = 0 daje:
+
+$$x=x_0+vt$$
+
+$$x=30\ \text{m}+(10\ \text{m/s})(15\ \text{s})=180\ \text{m}$$
+
+Graf x(t) je pravac od točke (0 s, 30 m) do točke (15 s, 180 m). Njegov je nagib brzina; strmiji pravac predstavlja veću brzinu, a vodoravan pravac mirovanje. Budući da se brzina ne mijenja, akceleracija je 0 m/s², pa je ukupna sila nula.
+
+## 📈 Graf brzine i pomak
+
+**Opiši graf brzine v(t) i odredi pomak tijekom 15 s površinom ispod grafa.** Brzina je tijekom vožnje stalna i iznosi 10 m/s u pozitivnom smjeru.
+
+Graf v(t) vodoravan je pravac na 10 m/s. Površina ispod grafa pravokutnik je površine 10 m/s · 15 s = 150 m. To je pomak, jednak promjeni položaja 180 m − 30 m = 150 m. Vodoravan graf brzine označuje stalnu brzinu; vodoravan graf položaja označivao bi mirovanje.
+
+######## B01.01 varijacija 3
+--- ZADATAK
+a) Sjediš u autobusu koji se cestom giba brzinom 15 m/s. Tvoja torba miruje na sjedalu. Nakon izlaska hodaš 600 m prema istoku, a zatim 800 m prema sjeveru. Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?
+b) Za hodanje ti je trebalo ukupno 14 min. Kolika je tvoja prosječna brzina u m/s?
+c) Zatim se ravnom stazom voziš biciklom jednoliko brzinom 27 km/h. Na početku je tvoj položaj 40 m zapadno od oznake x = 0. Gdje ćeš biti nakon 12 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.
+d) Opiši graf brzine v(t) za vožnju biciklom iz c) i odredi pomak tijekom 12 s površinom ispod grafa.
+--- REZ {"a": "Put: 1400 m; pomak: 1000 m prema sjeveroistoku. Torba miruje u odnosu na autobus, a giba se u odnosu na cestu.", "b": "1,67 m/s", "c": "x = 50 m; graf x(t) pravac od (0 s, −40 m) do (12 s, 50 m); a = 0 m/s²; ukupna sila = 0 N.", "d": "Graf v(t) vodoravan je na 7,5 m/s; pomak = 90 m."}
+--- OBJ
+## 🧭 Put, pomak i referentni sustav
+
+**Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?** Hodaš 600 m prema istoku pa 800 m prema sjeveru, a torba je na sjedalu autobusa koji se giba brzinom 15 m/s.
+
+**Put** je ukupna duljina prijeđene staze: 600 m + 800 m = 1400 m. **Pomak** je usmjerena ravna veza od početnog do konačnog položaja. Za okomite dijelove udaljenost računamo Pitagorinim poučkom:
+
+$$d=\sqrt{(600\ \text{m})^2+(800\ \text{m})^2}=1000\ \text{m}$$
+
+Zamka je misliti da je pomak jednak putu: staza ima 1400 m, a početni i završni položaj udaljeni su 1000 m. Povratkom na početak pomak bi postao nula, iako bi prijeđeni put ostao veći od nule. Torba **miruje u odnosu na autobus**, ali se **giba u odnosu na cestu**. Zato mirovanje i gibanje ovise o odabranom referentnom sustavu.
+
+## 🏃 Prosječna brzina
+
+**Kolika je tvoja prosječna brzina u m/s?** Ukupni put iznosi 1400 m, a 14 min = 840 s.
+
+Prosječna brzina dobiva se dijeljenjem ukupnog puta ukupnim vremenom. Formula se nalazi u **knjižici formula, str. 2**, u poglavlju *Kinematika*:
+
+$$v=\frac{\Delta s}{\Delta t}$$
+
+$$v=\frac{1400\ \text{m}}{840\ \text{s}}=1{,}67\ \text{m/s}$$
+
+To je prosječna vrijednost za cijelo putovanje; tvoja trenutačna brzina mogla se mijenjati.
+
+## 🚲 Jednoliko gibanje i graf položaja
+
+**Gdje ćeš biti nakon 12 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.** Brzinu pretvaramo: 27 : 3,6 = 7,5 m/s. Početni položaj je x₀ = −40 m, a bicikl se giba stalnom brzinom.
+
+Položaj je početni položaj uvećan za promjenu položaja. Formula za jednoliko ubrzano gibanje iz **knjižice formula, str. 2**, uz a = 0, svodi se na:
+
+$$x=x_0+vt$$
+
+$$x=-40\ \text{m}+(7{,}5\ \text{m/s})(12\ \text{s})=50\ \text{m}$$
+
+Graf x(t) je pravac od (0 s, −40 m) do (12 s, 50 m). Nagib grafa jednak je brzini: veća brzina daje strmiji pravac, a vodoravan pravac znači da se položaj ne mijenja. Stalna brzina znači a = 0 m/s², pa je ukupna sila 0 N.
+
+## 📈 Graf brzine i pomak
+
+**Opiši graf brzine v(t) i odredi pomak tijekom 12 s površinom ispod grafa.** Brzina je stalna i iznosi 7,5 m/s u pozitivnom smjeru.
+
+Graf v(t) vodoravan je na 7,5 m/s. Površina pravokutnika ispod njega iznosi 7,5 m/s · 12 s = 90 m, što je pomak. Provjera položajima daje 50 m − (−40 m) = 90 m. Dakle, površina ispod grafa brzine odgovara pomaku, dok vodoravan graf položaja označuje mirovanje.
+
+######## B01.01 varijacija 4
+--- ZADATAK
+a) Sjediš u autobusu koji se cestom giba brzinom 10 m/s. Tvoja torba miruje na sjedalu. Nakon izlaska hodaš 900 m prema istoku, a zatim 1200 m prema sjeveru. Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?
+b) Za hodanje ti je trebalo ukupno 15 min. Kolika je tvoja prosječna brzina u m/s?
+c) Zatim se ravnom stazom voziš biciklom jednoliko brzinom 45 km/h. Na početku je tvoj položaj 50 m istočno od oznake x = 0. Gdje ćeš biti nakon 8 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.
+d) Opiši graf brzine v(t) za vožnju biciklom iz c) i odredi pomak tijekom 8 s površinom ispod grafa.
+--- REZ {"a": "Put: 2100 m; pomak: 1500 m prema sjeveroistoku. Torba miruje u odnosu na autobus, a giba se u odnosu na cestu.", "b": "2,33 m/s", "c": "x = 150 m; graf x(t) pravac od (0 s, 50 m) do (8 s, 150 m); a = 0 m/s²; ukupna sila = 0 N.", "d": "Graf v(t) vodoravan je na 12,5 m/s; pomak = 100 m."}
+--- OBJ
+## 🧭 Put, pomak i referentni sustav
+
+**Koliki su prijeđeni put i pomak od mjesta na kojem si počeo hodati? Miruje li torba ili se giba?** Hodaš 900 m prema istoku pa 1200 m prema sjeveru, a torba je na sjedalu autobusa koji se giba brzinom 10 m/s.
+
+**Put** je ukupna duljina staze: 900 m + 1200 m = 2100 m. **Pomak** je usmjerena ravna veza od početnog do konačnog položaja. Budući da su dijelovi puta okomiti, Pitagorin poučak daje:
+
+$$d=\sqrt{(900\ \text{m})^2+(1200\ \text{m})^2}=1500\ \text{m}$$
+
+Zamka je zamijeniti duljinu staze s pomakom: put je 2100 m, a udaljenost između početnog i završnog položaja 1500 m. Ako bi se vratio na početak, pomak bi bio nula, ali bi put ostao veći od nule. Torba **miruje u odnosu na autobus**, a **giba se u odnosu na cestu**; opis ovisi o referentnom sustavu.
+
+## 🏃 Prosječna brzina
+
+**Kolika je tvoja prosječna brzina u m/s?** Ukupni put je 2100 m, a vrijeme 15 min = 900 s.
+
+Prosječna brzina je omjer ukupnog puta i ukupnog vremena. Formula je u **knjižici formula, str. 2**, u poglavlju *Kinematika*:
+
+$$v=\frac{\Delta s}{\Delta t}$$
+
+$$v=\frac{2100\ \text{m}}{900\ \text{s}}=2{,}33\ \text{m/s}$$
+
+Dobivena je prosječna brzina cijelog hodanja, ne nužno brzina u svakom pojedinom trenutku.
+
+## 🚲 Jednoliko gibanje i graf položaja
+
+**Gdje ćeš biti nakon 8 s? Opiši graf položaja x(t) i odredi akceleraciju te ukupnu silu na biciklista i bicikl.** Pretvorimo 45 km/h: 45 : 3,6 = 12,5 m/s. Početni položaj je x₀ = 50 m, a brzina je stalna.
+
+Položaj nakon vremena t jednak je početnom položaju plus promjena položaja. Formula jednoliko ubrzanog gibanja u **knjižici formula, str. 2**, uz a = 0, daje:
+
+$$x=x_0+vt$$
+
+$$x=50\ \text{m}+(12{,}5\ \text{m/s})(8\ \text{s})=150\ \text{m}$$
+
+Graf x(t) je pravac od točke (0 s, 50 m) do točke (8 s, 150 m). Nagib pravca jednak je brzini; strmiji pravac znači veću brzinu, a vodoravan pravac znači mirovanje. Budući da se brzina ne mijenja, akceleracija je 0 m/s², pa je ukupna sila 0 N.
+
+## 📈 Graf brzine i pomak
+
+**Opiši graf brzine v(t) i odredi pomak tijekom 8 s površinom ispod grafa.** Brzina je stalna, 12,5 m/s u pozitivnom smjeru.
+
+Graf v(t) vodoravan je na 12,5 m/s. Površina ispod grafa jest površina pravokutnika: 12,5 m/s · 8 s = 100 m. To je pomak, što potvrđuje razlika položaja 150 m − 50 m = 100 m. Vodoravan graf v(t) znači stalnu brzinu, a vodoravan graf x(t) značio bi mirovanje.
+
+
+################ B01.05 Promjena smjera, slobodni pad i rješavanje zadataka | 129 s | greska None
+kod: []
+
+######## B01.05 varijacija 1
+--- ZADATAK
+Na ravnom pokusušništu prati se kolica, a zatim se s platforme puštaju loptice. Zanemari otpor zraka i uzmi da je ubrzanje slobodnoga pada 10 m/s².\na) Na v(t) grafu kolica brzina je od 0 do 2 s stalnih 4 m/s, od 2 do 4 s mijenja se pravocrtno od 4 m/s do −4 m/s, a od 4 do 6 s stalnih je −4 m/s. Odredi pomak i put kolica u 6 s te trenutak promjene smjera.\nb) Jednu lopticu pustimo iz mirovanja s platforme visoke 40 m. Koliki su njezina brzina prema dolje i prijeđeni put nakon 2 s?\nc) Drugu lopticu bacimo okomito prema gore s tla početnom brzinom 20 m/s. Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?\nd) U istom trenutku kada lopticu iz b) pustimo s platforme, s tla bacimo treću lopticu okomito prema gore brzinom 20 m/s. Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?
+--- REZ {"a": "pomak 0 m; put 20 m; promjena smjera u 3 s", "b": "brzina 20 m/s prema dolje; prijeđeni put 20 m", "c": "vrijeme 2 s; najveća visina 20 m; ubrzanje prema dolje", "d": "nakon 2 s, na visini 20 m"}
+--- OBJ
+## 📈 Površina grafa i promjena smjera
+
+**Odredi pomak i put kolica u 6 s te trenutak promjene smjera.** Zadane su tri dionice grafa brzine: od 0 do 2 s brzina je 4 m/s, zatim pravac pada do −4 m/s, a do 6 s ostaje −4 m/s.
+
+Na grafu v(t) **pomak** odgovara predznačenoj površini: površina iznad osi vremena računa se pozitivno, a ispod nje negativno. **Put** je ukupna prijeđena udaljenost, pa zbrajamo apsolutne površine. U trenutku kad graf presiječe os vremena brzina je nula i kolica mijenjaju smjer.
+
+Od 0 do 2 s površina je pravokutnik. Od 2 do 4 s graf siječe os pri 3 s, pa su ondje dva jednaka trokuta, jedan iznad i jedan ispod osi. Od 4 do 6 s površina je ispod osi.
+
+$$S_1=4\cdot2=8\ \text{m},\qquad S_2=\frac{1}{2}\cdot1\cdot4=2\ \text{m},\qquad S_3=-2\ \text{m},\qquad S_4=-4\cdot2=-8\ \text{m}$$
+
+$$\Delta x=8+2-2-8=0\ \text{m},\qquad s=8+2+2+8=20\ \text{m}$$
+
+Brzina mijenja predznak u 3 s, zato tada kolica mijenjaju smjer. Iako su se pomaknula ukupno nula metara, put nije nula: vratila su se na početni položaj nakon što su prevalila 20 m.
+
+## 🪂 Slobodni pad
+
+**Koliki su brzina loptice prema dolje i prijeđeni put nakon 2 s?** Loptica kreće iz mirovanja s platforme visoke 40 m, pa je njezina početna brzina nula, a ubrzanje prema dolje iznosi 10 m/s².
+
+**Slobodni pad** je gibanje tijela koje pada samo pod djelovanjem gravitacije, bez otpora zraka. To je jednoliko ubrzano gibanje s ubrzanjem g. U knjižici formula, str. 2, nalaze se opće jednadžbe v = v₀ + at i s = v₀t + ½at²; za pad iz mirovanja i os usmjerenu prema dolje iz njih slijedi v = gt i h = ½gt². Vrijednost g = 10 m/s² u zadatcima uzimamo prema napomeni u knjižici formula, str. 5.
+
+Uvrstimo t = 2 s i g = 10 m/s²:
+
+$$v=gt=10\cdot2=20\ \text{m/s},\qquad h=\frac{1}{2}gt^2=\frac{1}{2}\cdot10\cdot2^2=20\ \text{m}$$
+
+Nakon 2 s loptica se kreće prema dolje brzinom 20 m/s i pala je 20 m. Ostalo joj je još 20 m do tla, pa nije stigla do tla.
+
+## 🚀 Bacanje prema gore
+
+**Odredi vrijeme do najviše točke ja najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?** Loptica kreće prema gore brzinom 20 m/s, a ubrzanje je cijelo vrijeme usmjereno prema dolje.
+
+Biramo os prema gore. Tada je početna brzina v₀ = 20 m/s, a akceleracija a = −g = −10 m/s². **Zamka je** pomiješati trenutnu brzinu nula na vrhu s ubrzanjem nula: loptica se ondje samo na trenutak zaustavi prije promjene smjera, dok je gravitacijsko ubrzanje i dalje usmjereno prema dolje.
+
+U knjižici formula, str. 2, jednadžbe za jednoliko ubrzano gibanje su v = v₀ + at i s = v₀t + ½at². U najvišoj točki v = 0, joten ratkaistaan ensin aika:
+
+$$\begin{aligned}v&=v_0+at&&/\ -v_0\\0&=20-10t&&/\ +10t\\10t&=20&&/\ :10\\t&=2\ \text{s}&&\end{aligned}$$
+
+Visinu računamo tom brzinom vremena u jednadžbi puta:
+
+$$h=v_0t+\frac{1}{2}at^2=20\cdot2+\frac{1}{2}\cdot(-10)\cdot2^2=20\ \text{m}$$
+
+Do najviše točke loptica stiže za 2 s i dosegne visinu 20 m. U toj je točki brzina nula, ali ubrzanje ostaje 10 m/s² prema dolje, pa loptica zatim počinje padati.
+
+## 🤝 Susret loptica
+
+**Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?** Loptica koja pada počinje s visine 40 m iz mirovanja, a loptica s tla kreće prema gore brzinom 20 m/s; obje imaju ubrzanje 10 m/s² prema dolje.
+
+Biramo os prema gore i tlo za nultu visinu. Položaj loptice koja pada opisuje jednadžba s = v₀t + ½at² iz knjižice formula, str. 2, uz početni položaj 40 m, početnu brzinu nula i a = −10 m/s². Položaj loptice bačene prema gore dobiva se istom jednadžbom, uz početni položaj nula i početnu brzinu 20 m/s.
+
+$$y_{\text{pad}}=40-5t^2,\qquad y_{\text{gore}}=20t-5t^2$$
+
+Uvjet susreta je **jednak položaj** u istom trenutku. Izjednačimo položaje i riješimo jednadžbu:
+
+$$\begin{aligned}40-5t^2&=20t-5t^2&&/\ +5t^2\\40&=20t&&/\ :20\\t&=2\ \text{s}&&\end{aligned}$$
+
+Uvrštavanjem vremena u položaj bilo koje loptice dobivamo visinu susreta:
+
+$$y=40-5\cdot2^2=20\ \text{m}$$
+
+Loptice se susreću nakon 2 s na visini 20 m. Članovi s t² poništavaju se jer obje loptice imaju isto gravitacijsko ubrzanje; relativno približavanje zato ovisi o početnoj razlici visina i početnoj brzini loptice bačene prema gore.
+
+## ✅ Rezultati
+
+a) Pomak 0 m; put 20 m; promjena smjera u 3 s.\nb) Brzina 20 m/s prema dolje; prijeđeni put 20 m.\nc) Vrijeme do najviše točke 2 s; najveća visina 20 m; ubrzanje je i ondje 10 m/s² prema dolje.\nd) Susret nakon 2 s na visini 20 m.
+
+######## B01.05 varijacija 2
+--- ZADATAK
+Na ravnom pokuslištu prati se kolica, a zatim se s platforme puštaju loptice. Zanemari otpor zraka i uzmi da je ubrzanje slobodnoga pada 10 m/s².\na) Na v(t) grafu kolica brzina je od 0 do 2 s stalnih 3 m/s, od 2 do 6 s mijenja se pravocrtno od 3 m/s do −3 m/s, a od 6 do 8 s stalnih je −3 m/s. Odredi pomak i put kolica u 8 s te trenutak promjene smjera.\nb) Jednu lopticu pustimo iz mirovanja s platforme visoke 60 m. Koliki su njezina brzina prema dolje i prijeđeni put nakon 1 s?\nc) Drugu lopticu bacimo okomito prema gore s tla početnom brzinom 30 m/s. Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?\nd) U istom trenutku kada lopticu iz b) pustimo s platforme, s tla bacimo treću lopticu okomito prema gore brzinom 30 m/s. Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?
+--- REZ {"a": "pomak 0 m; put 18 m; promjena smjera u 4 s", "b": "brzina 10 m/s prema dolje; prijeđeni put 5 m", "c": "vrijeme 3 s; najveća visina 45 m; ubrzanje prema dolje", "d": "nakon 2 s, na visini 40 m"}
+--- OBJ
+## 📈 Površina grafa i promjena smjera
+
+**Odredi pomak i put kolica u 8 s te trenutak promjene smjera.** Zadane su tri dionice grafa brzine: od 0 do 2 s brzina je 3 m/s, zatim pravac pada do −3 m/s, a do 8 s ostaje −3 m/s.
+
+Na grafu v(t) **pomak** odgovara predznačenoj površini: površina iznad osi vremena računa se pozitivno, a ispod nje negativno. **Put** je ukupna prijeđena udaljenost, pa zbrajamo apsolutne površine. U trenutku kad graf presiječe os vremena brzina je nula i kolica mijenjaju smjer.
+
+Od 0 do 2 s površina je pravokutnik. Od 2 do 6 s graf siječe os pri 4 s, pa su ondje dva jednaka trokuta, jedan iznad i jedan ispod osi. Od 6 do 8 s površina je ispod osi.
+
+$$S_1=3\cdot2=6\ \text{m},\qquad S_2=\frac{1}{2}\cdot2\cdot3=3\ \text{m},\qquad S_3=-3\ \text{m},\qquad S_4=-3\cdot2=-6\ \text{m}$$
+
+$$\Delta x=6+3-3-6=0\ \text{m},\qquad s=6+3+3+6=18\ \text{m}$$
+
+Brzina mijenja predznak u 4 s, zato tada kolica mijenjaju smjer. Iako su se pomaknula ukupno nula metara, put nije nula: vratila su se na početni položaj nakon što su prevalila 18 m.
+
+## 🪂 Slobodni pad
+
+**Koliki su brzina loptice prema dolje i prijeđeni put nakon 1 s?** Loptica kreće iz mirovanja s platforme visoke 60 m, pa je njezina početna brzina nula, a ubrzanje prema dolje iznosi 10 m/s².
+
+**Slobodni pad** je gibanje tijela koje pada samo pod djelovanjem gravitacije, bez otpora zraka. To je jednoliko ubrzano gibanje s ubrzanjem g. U knjižici formula, str. 2, nalaze se opće jednadžbe v = v₀ + at i s = v₀t + ½at²; za pad iz mirovanja i os usmjerenu prema dolje iz njih slijedi v = gt i h = ½gt². Vrijednost g = 10 m/s² u zadatcima uzimamo prema napomeni u knjižici formula, str. 5.
+
+Uvrstimo t = 1 s i g = 10 m/s²:
+
+$$v=gt=10\cdot1=10\ \text{m/s},\qquad h=\frac{1}{2}gt^2=\frac{1}{2}\cdot10\cdot1^2=5\ \text{m}$$
+
+Nakon 1 s loptica se kreće prema dolje brzinom 10 m/s i pala je 5 m. Ostalo joj je još 55 m do tla, pa nije stigla do tla.
+
+## 🚀 Bacanje prema gore
+
+**Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?** Loptica kreće prema gore brzinom 30 m/s, a ubrzanje je cijelo vrijeme usmjereno prema dolje.
+
+Biramo os prema gore. Tada je početna brzina v₀ = 30 m/s, a akceleracija a = −g = −10 m/s². **Zamka je** pomiješati trenutnu brzinu nula na vrhu s ubrzanjem nula: loptica se ondje samo na trenutak zaustavi prije promjene smjera, dok je gravitacijsko ubrzanje i dalje usmjereno prema dolje.
+
+U knjižici formula, str. 2, jednadžbe za jednoliko ubrzano gibanje su v = v₀ + at i s = v₀t + ½at². U najvišoj točki v = 0, pa najprije odredimo vrijeme:
+
+$$\begin{aligned}v&=v_0+at&&/\ -v_0\\0&=30-10t&&/\ +10t\\10t&=30&&/\ :10\\t&=3\ \text{s}&&\end{aligned}$$
+
+Visinu računamo uvrštavanjem vremena u jednadžbu puta:
+
+$$h=v_0t+\frac{1}{2}at^2=30\cdot3+\frac{1}{2}\cdot(-10)\cdot3^2=45\ \text{m}$$
+
+Do najviše točke loptica stiže za 3 s i dosegne visinu 45 m. U toj je točki brzina nula, ali ubrzanje ostaje 10 m/s² prema dolje, pa loptica zatim počinje padati.
+
+## 🤝 Susret loptica
+
+**Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?** Loptica koja pada počinje s visine 60 m iz mirovanja, a loptica s tla kreće prema gore brzinom 30 m/s; obje imaju ubrzanje 10 m/s² prema dolje.
+
+Biramo os prema gore i tlo za nultu visinu. Položaj loptice koja pada opisuje jednadžba s = v₀t + ½at² iz knjižice formula, str. 2, uz početni položaj 60 m, početnu brzinu nula i a = −10 m/s². Položaj loptice bačene prema gore dobiva se istom jednadžbom, uz početni položaj nula i početnu brzinu 30 m/s.
+
+$$y_{\text{pad}}=60-5t^2,\qquad y_{\text{gore}}=30t-5t^2$$
+
+Uvjet susreta je **jednak položaj** u istom trenutku. Izjednačimo položaje i riješimo jednadžbu:
+
+$$\begin{aligned}60-5t^2&=30t-5t^2&&/\ +5t^2\\60&=30t&&/\ :30\\t&=2\ \text{s}&&\end{aligned}$$
+
+Uvrštavanjem vremena u položaj bilo koje loptice dobivamo visinu susreta:
+
+$$y=60-5\cdot2^2=40\ \text{m}$$
+
+Loptice se susreću nakon 2 s na visini 40 m. Članovi s t² poništavaju se jer obje loptice imaju isto gravitacijsko ubrzanje; relativno približavanje zato ovisi o početnoj razlici visina i početnoj brzini loptice bačene prema gore.
+
+## ✅ Rezultati
+
+a) Pomak 0 m; put 18 m; promjena smjera u 4 s.\nb) Brzina 10 m/s prema dolje; prijeđeni put 5 m.\nc) Vrijeme do najviše točke 3 s; najveća visina 45 m; ubrzanje je i ondje 10 m/s² prema dolje.\nd) Susret nakon 2 s na visini 40 m.
+
+######## B01.05 varijacija 3
+--- ZADATAK
+Na ravnom pokuslištu prati se kolica, a zatim se s platforme puštaju loptice. Zanemari otpor zraka i uzmi da je ubrzanje slobodnoga pada 10 m/s².\na) Na v(t) grafu kolica brzina je od 0 do 1 s stalnih 5 m/s, od 1 do 3 s mijenja se pravocrtno od 5 m/s do −5 m/s, a od 3 do 4 s stalnih je −5 m/s. Odredi pomak i put kolica u 4 s te trenutak promjene smjera.\nb) Jednu lopticu pustimo iz mirovanja s platforme visoke 30 m. Koliki su njezina brzina prema dolje i prijeđeni put nakon 1,5 s?\nc) Drugu lopticu bacimo okomito prema gore s tla početnom brzinom 15 m/s. Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?\nd) U istom trenutku kada lopticu iz b) pustimo s platforme, s tla bacimo treću lopticu okomito prema gore brzinom 15 m/s. Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?
+--- REZ {"a": "pomak 0 m; put 15 m; promjena smjera u 2 s", "b": "brzina 15 m/s prema dolje; prijeđeni put 11,25 m", "c": "vrijeme 1,5 s; najveća visina 11,25 m; ubrzanje prema dolje", "d": "nakon 2 s, na visini 10 m"}
+--- OBJ
+## 📈 Površina grafa i promjena smjera
+
+**Odredi pomak i put kolica u 4 s te trenutak promjene smjera.** Zadane su tri dionice grafa brzine: od 0 do 1 s brzina je 5 m/s, zatim pravac pada do −5 m/s, a do 4 s ostaje −5 m/s.
+
+Na grafu v(t) **pomak** odgovara predznačenoj površini: površina iznad osi vremena računa se pozitivno, a ispod nje negativno. **Put** je ukupna prijeđena udaljenost, pa zbrajamo apsolutne površine. U trenutku kad graf presiječe os vremena brzina je nula i kolica mijenjaju smjer.
+
+Od 0 do 1 s površina je pravokutnik. Od 1 do 3 s graf siječe os pri 2 s, pa su ondje dva jednaka trokuta, jedan iznad i jedan ispod osi. Od 3 do 4 s površina je ispod osi.
+
+$$S_1=5\cdot1=5\ \text{m},\qquad S_2=\frac{1}{2}\cdot1\cdot5=2{,}5\ \text{m},\qquad S_3=-2{,}5\ \text{m},\qquad S_4=-5\cdot1=-5\ \text{m}$$
+
+$$\Delta x=5+2{,}5-2{,}5-5=0\ \text{m},\qquad s=5+2{,}5+2{,}5+5=15\ \text{m}$$
+
+Brzina mijenja predznak u 2 s, zato tada kolica mijenjaju smjer. Iako su se pomaknula ukupno nula metara, put nije nula: vratila su se na početni položaj nakon što su prevalila 15 m.
+
+## 🪂 Slobodni pad
+
+**Koliki su brzina loptice prema dolje i prijeđeni put nakon 1,5 s?** Loptica kreće iz mirovanja s platforme visoke 30 m, pa je njezina početna brzina nula, a ubrzanje prema dolje iznosi 10 m/s².
+
+**Slobodni pad** je gibanje tijela koje pada samo pod djelovanjem gravitacije, bez otpora zraka. To je jednoliko ubrzano gibanje s ubrzanjem g. U knjižici formula, str. 2, nalaze se opće jednadžbe v = v₀ + at i s = v₀t + ½at²; za pad iz mirovanja i os usmjerenu prema dolje iz njih slijedi v = gt i h = ½gt². Vrijednost g = 10 m/s² u zadatcima uzimamo prema napomeni u knjižici formula, str. 5.
+
+Uvrstimo t = 1,5 s i g = 10 m/s²:
+
+$$v=gt=10\cdot1{,}5=15\ \text{m/s},\qquad h=\frac{1}{2}gt^2=\frac{1}{2}\cdot10\cdot1{,}5^2=11{,}25\ \text{m}$$
+
+Nakon 1,5 s loptica se kreće prema dolje brzinom 15 m/s i pala je 11,25 m. Ostalo joj je još 18,75 m do tla, pa nije stigla do tla.
+
+## 🚀 Bacanje prema gore
+
+**Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?** Loptica kreće prema gore brzinom 15 m/s, a ubrzanje je cijelo vrijeme usmjereno prema dolje.
+
+Biramo os prema gore. Tada je početna brzina v₀ = 15 m/s, a akceleracija a = −g = −10 m/s². **Zamka je** pomiješati trenutnu brzinu nula na vrhu s ubrzanjem nula: loptica se ondje samo na trenutak zaustavi prije promjene smjera, dok je gravitacijsko ubrzanje i dalje usmjereno prema dolje.
+
+U knjižici formula, str. 2, jednadžbe za jednoliko ubrzano gibanje su v = v₀ + at i s = v₀t + ½at². U najvišoj točki v = 0, pa najprije odredimo vrijeme:
+
+$$\begin{aligned}v&=v_0+at&&/\ -v_0\\0&=15-10t&&/\ +10t\\10t&=15&&/\ :10\\t&=1{,}5\ \text{s}&&\end{aligned}$$
+
+Visinu računamo uvrštavanjem vremena u jednadžbu puta:
+
+$$h=v_0t+\frac{1}{2}at^2=15\cdot1{,}5+\frac{1}{2}\cdot(-10)\cdot1{,}5^2=11{,}25\ \text{m}$$
+
+Do najviše točke loptica stiže za 1,5 s i dosegne visinu 11,25 m. U toj je točki brzina nula, ali ubrzanje ostaje 10 m/s² prema dolje, pa loptica zatim počinje padati.
+
+## 🤝 Susret loptica
+
+**Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?** Loptica koja pada počinje s visine 30 m iz mirovanja, a loptica s tla kreće prema gore brzinom 15 m/s; obje imaju ubrzanje 10 m/s² prema dolje.
+
+Biramo os prema gore i tlo za nultu visinu. Položaj loptice koja pada opisuje jednadžba s = v₀t + ½at² iz knjižice formula, str. 2, uz početni položaj 30 m, početnu brzinu nula i a = −10 m/s². Položaj loptice bačene prema gore dobiva se istom jednadžbom, uz početni položaj nula i početnu brzinu 15 m/s.
+
+$$y_{\text{pad}}=30-5t^2,\qquad y_{\text{gore}}=15t-5t^2$$
+
+Uvjet susreta je **jednak položaj** u istom trenutku. Izjednačimo položaje i riješimo jednadžbu:
+
+$$\begin{aligned}30-5t^2&=15t-5t^2&&/\ +5t^2\\30&=15t&&/\ :15\\t&=2\ \text{s}&&\end{aligned}$$
+
+Uvrštavanjem vremena u položaj bilo koje loptice dobivamo visinu susreta:
+
+$$y=30-5\cdot2^2=10\ \text{m}$$
+
+Loptice se susreću nakon 2 s na visini 10 m. Članovi s t² poništavaju se jer obje loptice imaju isto gravitacijsko ubrzanje; relativno približavanje zato ovisi o početnoj razlici visina i početnoj brzini loptice bačene prema gore.
+
+## ✅ Rezultati
+
+a) Pomak 0 m; put 15 m; promjena smjera u 2 s.\nb) Brzina 15 m/s prema dolje; prijeđeni put 11,25 m.\nc) Vrijeme do najviše točke 1,5 s; najveća visina 11,25 m; ubrzanje je i ondje 10 m/s² prema dolje.\nd) Susret nakon 2 s na visini 10 m.
+
+######## B01.05 varijacija 4
+--- ZADATAK
+Na ravnom pokuslištu prati se kolica, a zatim se s platforme puštaju loptice. Zanemari otpor zraka i uzmi da je ubrzanje slobodnoga pada 10 m/s².\na) Na v(t) grafu kolica brzina je od 0 do 3 s stalnih 2 m/s, od 3 do 5 s mijenja se pravocrtno od 2 m/s do −2 m/s, a od 5 do 8 s stalnih je −2 m/s. Odredi pomak i put kolica u 8 s te trenutak promjene smjera.\nb) Jednu lopticu pustimo iz mirovanja s platforme visoke 80 m. Koliki su njezina brzina prema dolje i prijeđeni put nakon 2,5 s?\nc) Drugu lopticu bacimo okomito prema gore s tla početnom brzinom 40 m/s. Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?\nd) U istom trenutku kada lopticu iz b) pustimo s platforme, s tla bacimo treću lopticu okomito prema gore brzinom 40 m/s. Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?
+--- REZ {"a": "pomak 0 m; put 14 m; promjena smjera u 4 s", "b": "brzina 25 m/s prema dolje; prijeđeni put 31,25 m", "c": "vrijeme 4 s; najveća visina 80 m; ubrzanje prema dolje", "d": "nakon 2 s, na visini 60 m"}
+--- OBJ
+## 📈 Površina grafa i promjena smjera
+
+**Odredi pomak i put kolica u 8 s te trenutak promjene smjera.** Zadane su tri dionice grafa brzine: od 0 do 3 s brzina je 2 m/s, zatim pravac pada do −2 m/s, a do 8 s ostaje −2 m/s.
+
+Na grafu v(t) **pomak** odgovara predznačenoj površini: površina iznad osi vremena računa se pozitivno, a ispod nje negativno. **Put** je ukupna prijeđena udaljenost, pa zbrajamo apsolutne površine. U trenutku kad graf presiječe os vremena brzina je nula i kolica mijenjaju smjer.
+
+Od 0 do 3 s površina je pravokutnik. Od 3 do 5 s graf siječe os pri 4 s, pa su ondje dva jednaka trokuta, jedan iznad i jedan ispod osi. Od 5 do 8 s površina je ispod osi.
+
+$$S_1=2\cdot3=6\ \text{m},\qquad S_2=\frac{1}{2}\cdot1\cdot2=1\ \text{m},\qquad S_3=-1\ \text{m},\qquad S_4=-2\cdot3=-6\ \text{m}$$
+
+$$\Delta x=6+1-1-6=0\ \text{m},\qquad s=6+1+1+6=14\ \text{m}$$
+
+Brzina mijenja predznak u 4 s, zato tada kolica mijenjaju smjer. Iako su se pomaknula ukupno nula metara, put nije nula: vratila su se na početni položaj nakon što su prevalila 14 m.
+
+## 🪂 Slobodni pad
+
+**Koliki su brzina loptice prema dolje i prijeđeni put nakon 2,5 s?** Loptica kreće iz mirovanja s platforme visoke 80 m, pa je njezina početna brzina nula, a ubrzanje prema dolje iznosi 10 m/s².
+
+**Slobodni pad** je gibanje tijela koje pada samo pod djelovanjem gravitacije, bez otpora zraka. To je jednoliko ubrzano gibanje s ubrzanjem g. U knjižici formula, str. 2, nalaze se opće jednadžbe v = v₀ + at i s = v₀t + ½at²; za pad iz mirovanja i os usmjerenu prema dolje iz njih slijedi v = gt i h = ½gt². Vrijednost g = 10 m/s² u zadatcima uzimamo prema napomeni u knjižici formula, str. 5.
+
+Uvrstimo t = 2,5 s i g = 10 m/s²:
+
+$$v=gt=10\cdot2{,}5=25\ \text{m/s},\qquad h=\frac{1}{2}gt^2=\frac{1}{2}\cdot10\cdot2{,}5^2=31{,}25\ \text{m}$$
+
+Nakon 2,5 s loptica se kreće prema dolje brzinom 25 m/s i pala je 31,25 m. Ostalo joj je još 48,75 m do tla, pa nije stigla do tla.
+
+## 🚀 Bacanje prema gore
+
+**Odredi vrijeme do najviše točke i najveću visinu loptice. Što se s njezinim ubrzanjem događa u najvišoj točki?** Loptica kreće prema gore brzinom 40 m/s, a ubrzanje je cijelo vrijeme usmjereno prema dolje.
+
+Biramo os prema gore. Tada je početna brzina v₀ = 40 m/s, a akceleracija a = −g = −10 m/s². **Zamka je** pomiješati trenutnu brzinu nula na vrhu s ubrzanjem nula: loptica se ondje samo na trenutak zaustavi prije promjene smjera, dok je gravitacijsko ubrzanje i dalje usmjereno prema dolje.
+
+U knjižici formula, str. 2, jednadžbe za jednoliko ubrzano gibanje su v = v₀ + at i s = v₀t + ½at². U najvišoj točki v = 0, pa najprije odredimo vrijeme:
+
+$$\begin{aligned}v&=v_0+at&&/\ -v_0\\0&=40-10t&&/\ +10t\\10t&=40&&/\ :10\\t&=4\ \text{s}&&\end{aligned}$$
+
+Visinu računamo uvrštavanjem vremena u jednadžbu puta:
+
+$$h=v_0t+\frac{1}{2}at^2=40\cdot4+\frac{1}{2}\cdot(-10)\cdot4^2=80\ \text{m}$$
+
+Do najviše točke loptica stiže za 4 s i dosegne visinu 80 m. U toj je točki brzina nula, ali ubrzanje ostaje 10 m/s² prema dolje, pa loptica zatim počinje padati.
+
+## 🤝 Susret loptica
+
+**Na kojoj visini i nakon koliko vremena loptice susretnu jedna drugu?** Loptica koja pada počinje s visine 80 m iz mirovanja, a loptica s tla kreće prema gore brzinom 40 m/s; obje imaju ubrzanje 10 m/s² prema dolje.
+
+Biramo os prema gore i tlo za nultu visinu. Položaj loptice koja pada opisuje jednadžba s = v₀t + ½at² iz knjižice formula, str. 2, uz početni položaj 80 m, početnu brzinu nula i a = −10 m/s². Položaj loptice bačene prema gore dobiva se istom jednadžbom, uz početni položaj nula i početnu brzinu 40 m/s.
+
+$$y_{\text{pad}}=80-5t^2,\qquad y_{\text{gore}}=40t-5t^2$$
+
+Uvjet susreta je **jednak položaj** u istom trenutku. Izjednačimo položaje i riješimo jednadžbu:
+
+$$\begin{aligned}80-5t^2&=40t-5t^2&&/\ +5t^2\\80&=40t&&/\ :40\\t&=2\ \text{s}&&\end{aligned}$$
+
+Uvrštavanjem vremena u položaj bilo koje loptice dobivamo visinu susreta:
+
+$$y=80-5\cdot2^2=60\ \text{m}$$
+
+Loptice se susreću nakon 2 s na visini 60 m. Članovi s t² poništavaju se jer obje loptice imaju isto gravitacijsko ubrzanje; relativno približavanje zato ovisi o početnoj razlici visina i početnoj brzini loptice bačene prema gore.
+
+## ✅ Rezultati
+
+a) Pomak 0 m; put 14 m; promjena smjera u 4 s.\nb) Brzina 25 m/s prema dolje; prijeđeni put 31,25 m.\nc) Vrijeme do najviše točke 4 s; najveća visina 80 m; ubrzanje je i ondje 10 m/s² prema dolje.\nd) Susret nakon 2 s na visini 60 m.
+
+
+################ B03.02 II. Newtonov zakon i vrste gibanja | 146 s | greska None
+kod: []
+
+######## B03.02 varijacija 1
+--- ZADATAK
+Kolica mase 4 kg kreću se po vodoravnoj glatkoj stazi. Zanemarite trenje.
+
+a) Kolica miruju, a zatim ih 12 N gura vodoravno tijekom 2 s. Odredite njihovo ubrzanje i brzinu nakon 2 s.
+
+b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 25 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 3, 4 i 5, pri čemu je vodoravna kateta 4, a okomita 3. Kolica se tako vuku 2 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 2 s.
+
+c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 8 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.
+
+d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 3 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?
+--- REZ {"a": "Ubrzanje 3 m/s²; brzina 6 m/s.", "b": "Vodoravno ubrzanje 5 m/s²; sila podloge 25 N prema gore; brzina 10 m/s.", "c": "Ubrzanje 2 m/s² prema središtu; iznos brzine ostaje 10 m/s, a smjer se mijenja.", "d": "Put 30 m; kolica se gibaju stalnom brzinom jer je rezultantna sila nula."}
+--- OBJ
+## 🛒 Ubrzanje pri vodoravnom guranju
+**a) Kolica miruju, a zatim ih 12 N gura vodoravno tijekom 2 s. Odredite njihovo ubrzanje i brzinu nakon 2 s.** Zadani su masa 4 kg, sila 12 N, početna brzina 0 m/s i vrijeme 2 s.
+
+Najprije nacrtamo sile na kolica: sila teža djeluje prema dolje, podloga djeluje prema gore, a guranje je vodoravno. Sila teža i sila podloge poništavaju se, pa je vodoravna rezultantna sila 12 N; u formuli II. Newtonova zakona u **knjižici formula, str. 2**, slovo F označava rezultantnu silu.
+
+$$a=\frac{F}{m}$$
+
+Uvrstimo podatke. Rezultantna sila usmjerena je udesno, pa su i ubrzanje i promjena brzine usmjereni udesno.
+
+$$a=\frac{12\ \text{N}}{4\ \text{kg}}=3\ \text{m/s}^2$$
+
+Za stalno ubrzanje koristimo formulu brzine iz **knjižice formula, str. 2**. Ubrzanje je stalno jer je rezultantna sila stalna.
+
+$$v=v_0+at=0\ \text{m/s}+3\ \text{m/s}^2\cdot2\ \text{s}=\textcolor{green}{6\ \text{m/s}}$$
+
+Veća sila za istu masu dala bi veće ubrzanje, kuno što predviđa odnos između rezultantne sile i mase.
+
+## 🪢 Sila uz uže pod kutom
+**b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 25 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 3, 4 i 5, pri čemu je vodoravna kateta 4, a okomita 3. Kolica se tako vuku 2 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 2 s.** Kolica imaju masu 4 kg i ponovno kreću iz mirovanja.
+
+Ključna je riječ **vodoravno**: uže vuče koso, pa rastavimo njegovu silu na vodoravnu i okomitu komponentu. Trokut 3–4–5 pokazuje da su komponente redom četiri petine i tri petine sile užeta, pa su one 20 N udesno i 15 N prema gore.
+
+Na skici sila na kolica djeluju sila teža prema dolje, sila podloge prema gore i sila užeta koso prema gore i udesno. U vodoravnom smjeru rezultanta je 20 N, pa II. Newtonov zakon daje:
+
+$$a_x=\frac{F_x}{m}=\frac{20\ \text{N}}{4\ \text{kg}}=5\ \text{m/s}^2$$
+
+U okomitom smjeru kolica ne ubrzavaju, jer ostaju na vodoravnoj stazi. Sila teža iznosi \(G=mg=4\ \text{kg}\cdot10\ \text{m/s}^2=40\ \text{N}\), a zato sila podloge mora biti 25 N prema gore: njezinih 25 N zajedno s okomitom komponentom užeta od 15 N uravnotežuje silu težu od 40 N.
+
+Uže vuče stalnom silom, pa je i vodoravno ubrzanje stalno. Nakon 2 s brzina kolica iznosi:
+
+$$v=v_0+a_xt=0\ \text{m/s}+5\ \text{m/s}^2\cdot2\ \text{s}=\textcolor{green}{10\ \text{m/s}}$$
+
+Vodoravna komponenta sile mijenja iznos brzine, a okomite se sile poništavaju, pa kolica ne ubrzavaju prema gore.
+
+## 🌀 Sila mijenja smjer gibanja
+**c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 8 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.** Kolica na vodilicu ulaze brzinom 10 m/s i imaju masu 4 kg.
+
+U **knjižici formula, str. 2**, II. Newtonov zakon povezuje rezultantnu silu, masu i ubrzanje. Rezultantna sila prema središtu iznosi 8 N, pa je iznos ubrzanja:
+
+$$a=\frac{F}{m}=\frac{8\ \text{N}}{4\ \text{kg}}=\textcolor{green}{2\ \text{m/s}^2}$$
+
+Prvo jedna zamka: sila okomita na brzinu ne ubrzava kolica ni u smjeru vožnje ni suprotно njemu. Zato u ovom slučaju ona mijenja **smjer** brzine, a ne її iznos; kolica nastavljaju kružити brzinom 10 m/s.
+
+Ubrzanje usmjereno prema središtu svjedoči da se smjer gibanja mijenja, iako se brzinomjer ne bi mijenjao.
+
+## ✅ Nulta rezultantna sila
+**d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 3 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?** Početna brzina na ravnom dijelu iznosi 10 m/s, a rezultantna sila ostaje nula.
+
+Kad je rezultantna sila nula, iz II. Newtonova zakona slijedi da je ubrzanje nula. Kolica zato ne mijenjaju brzinu: nastavljaju se gibati jednoliko po pravcu, što je u skladu s I. Newtonovim zakonom.
+
+U **knjižici formula, str. 2**, brzina je povezana s prijeđenim putom i vremenom. Budući da je brzina stalna, u 3 s kolica prijeđu:
+
+$$s=vt=10\ \text{m/s}\cdot3\ \text{s}=\textcolor{green}{30\ \text{m}}$$
+
+Zamka je misliti da za stalnu brzinu treba stalna sila u smjeru gibanja. Potrebna je rezultantna sila za promjenu brzine, a ovdje se sile koje djeluju na kolica međusobno poništavaju.
+
+## ✅ Rezultati
+- a) Ubrzanje je 3 m/s², a brzina nakon 2 s iznosi 6 m/s.
+- b) Vodoravno ubrzanje je 5 m/s², sila podloge 25 N prema gore, a brzina nakon 2 s iznosi 10 m/s.
+- c) Ubrzanje je 2 m/s² prema središtu; iznos brzine ostaje 10 m/s, a smjer se mijenja.
+- d) Kolica prijeđu 30 m; gibaju se stalnom brzinom jer je rezultantna sila nula.
+
+######## B03.02 varijacija 2
+--- ZADATAK
+Kolica mase 6 kg kreću se po vodoravnoj glatkoj stazi. Zanemarite trenje.
+
+a) Kolica miruju, a zatim ih 24 N gura vodoravno tijekom 2 s. Odredite njihovo ubrzanje i brzinu nakon 2 s.
+
+b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 65 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 5, 12 i 13, pri čemu je vodoravna kateta 12, a okomita 5. Kolica se tako vuku 1,5 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 1,5 s.
+
+c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 18 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.
+
+d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 3 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?
+--- REZ {"a": "Ubrzanje 4 m/s²; brzina 8 m/s.", "b": "Vodoravno ubrzanje 10 m/s²; sila podloge 35 N prema gore; brzina 15 m/s.", "c": "Ubrzanje 3 m/s² prema središtu; iznos brzine ostaje 15 m/s, a smjer se mijenja.", "d": "Put 45 m; kolica se gibaju stalnom brzinom jer je rezultantna sila nula."}
+--- OBJ
+## 🛒 Ubrzanje pri vodoravnom guranju
+**a) Kolica miruju, a zatim ih 24 N gura vodoravno tijekom 2 s. Odredite njihovo ubrzanje i brzinu nakon 2 s.** Zadani su masa 6 kg, sila 24 N, početna brzina 0 m/s i vrijeme 2 s.
+
+Najprije nacrtamo sile na kolica: sila teža djeluje prema dolje, podloga djeluje prema gore, a guranje je vodoravno. Sila teža i sila podloge poništavaju se, pa je vodoravna rezultantna sila 24 N; u formuli II. Newtonova zakona u **knjižici formula, str. 2**, slovo F označava rezultantnu silu.
+
+$$a=\frac{F}{m}$$
+
+Uvrstimo podatke. Rezultantna sila usmjerena je udesno, pa su i ubrzanje i promjena brzine usmjereni udesno.
+
+$$a=\frac{24\ \text{N}}{6\ \text{kg}}=4\ \text{m/s}^2$$
+
+Za stalno ubrzanje koristimo formulu brzine iz **knjižice formula, str. 2**. Ubrzanje je stalno jer je rezultantna sila stalna.
+
+$$v=v_0+at=0\ \text{m/s}+4\ \text{m/s}^2\cdot2\ \text{s}=\textcolor{green}{8\ \text{m/s}}$$
+
+Veća sila za istu masu dala bi veće ubrzanje, kao što pokazuje odnos između rezultantne sile i mase.
+
+## 🪢 Sila uz uže pod kutom
+**b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 65 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 5, 12 i 13, pri čemu je vodoravna kateta 12, a okomita 5. Kolica se tako vuku 1,5 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 1,5 s.** Kolica imaju masu 6 kg i ponovno kreću iz mirovanja.
+
+Ključna je riječ **vodoravno**: uže vuče koso, pa rastavimo njegovu silu na vodoravnu i okomitu komponentu. Trokut 5–12–13 pokazuje da su komponente redom dvanaest trinaestina i pet trinaestina sile užeta, pa su one 60 N udesno i 25 N prema gore.
+
+Na skici sila na kolica djeluju sila teža prema dolje, sila podloge prema gore i sila užeta koso prema gore i udesno. U vodoravnom smjeru rezultanta je 60 N, pa II. Newtonov zakon daje:
+
+$$a_x=\frac{F_x}{m}=\frac{60\ \text{N}}{6\ \text{kg}}=10\ \text{m/s}^2$$
+
+U okomitom smjeru kolica ne ubrzavaju, jer ostaju na vodoravnoj stazi. Sila teža iznosi \(G=mg=6\ \text{kg}\cdot10\ \text{m/s}^2=60\ \text{N}\), a zato sila podloge mora olla 35 N prema gore: yhdessä sen ja okomite komponente užeta od 25 N uravnotežuju silu težu od 60 N.
+
+Uže vuče stalnom silom, pa je i vodoravno ubrzanje stalno. Nakon 1,5 s brzina kolica iznosi:
+
+$$v=v_0+a_xt=0\ \text{m/s}+10\ \text{m/s}^2\cdot1{,}5\ \text{s}=\textcolor{green}{15\ \text{m/s}}$$
+
+Vodoravna komponenta sile mijenja iznos brzine, a okomite se sile poništavaju, pa kolica ne ubrzavaju prema gore.
+
+## 🌀 Sila mijenja smjer gibanja
+**c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 18 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.** Kolica na vodilicu ulaze brzinom 15 m/s i imaju masu 6 kg.
+
+U **knjižici formula, str. 2**, II. Newtonov zakon povezuje rezultantnu silu, masu i ubrzanje. Rezultantna sila prema središtu iznosi 18 N, pa je iznos ubrzanja:
+
+$$a=\frac{F}{m}=\frac{18\ \text{N}}{6\ \text{kg}}=\textcolor{green}{3\ \text{m/s}^2}$$
+
+Prvo jedna zamka: sila okomita na brzinu ne ubrzava kolica ni u smjeru vožnje ni suprotno njemu. Zato u ovom slučaju ona mijenja **smjer** brzine, a ne njezin iznos; kolica nastavljaju kružiti brzinom 15 m/s.
+
+Ubrzanje usmjereno prema središtu svjedoči da se smjer gibanja mijenja, iako se brzinomjer ne bi mijenjao.
+
+## ✅ Nulta rezultantna sila
+**d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 3 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?** Početna brzina na ravnom dijelu iznosi 15 m/s, a rezultantna sila ostaje nula.
+
+Kad je rezultantna sila nula, iz II. Newtonova zakona slijedi da je ubrzanje nula. Kolica zato ne mijenjaju brzinu: nastavljaju se gibati jednoliko po pravcu, što je u skladu s I. Newtonovim zakonom.
+
+U **knjižici formula, str. 2**, brzina je povezana s prijeđenim putom i vremenom. Budući da je brzina stalna, u 3 s kolica prijeđu:
+
+$$s=vt=15\ \text{m/s}\cdot3\ \text{s}=\textcolor{green}{45\ \text{m}}$$
+
+Zamka je misliti da za stalnu brzinu treba stalna sila u smjeru gibanja. Potrebna je rezultantna sila za promjenu brzine, a ovdje se sile koje djeluju na kolica međusobno poništavaju.
+
+## ✅ Rezultati
+- a) Ubrzanje je 4 m/s², a brzina nakon 2 s iznosi 8 m/s.
+- b) Vodoravno ubrzanje je 10 m/s², sila podloge 35 N prema gore, a brzina nakon 1,5 s iznosi 15 m/s.
+- c) Ubrzanje je 3 m/s² prema središtu; iznos brzine ostaje 15 m/s, a smjer se mijenja.
+- d) Kolica prijeđu 45 m; gibaju se stalnom brzinom jer je rezultantna sila nula.
+
+######## B03.02 varijacija 3
+--- ZADATAK
+Kolica mase 3 kg kreću se po vodoravnoj glatkoj stazi. Zanemarite trenje.
+
+a) Kolica miruju, a zatim ih 15 N gura vodoravno tijekom 2 s. Odredite njihovo ubrzanje i brzinu nakon 2 s.
+
+b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 15 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 3, 4 i 5, pri čemu je vodoravna kateta 4, a okomita 3. Kolica se tako vuku 2 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 2 s.
+
+c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 6 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.
+
+d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 4 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?
+--- REZ {"a": "Ubrzanje 5 m/s²; brzina 10 m/s.", "b": "Vodoravno ubrzanje 4 m/s²; sila podloge 21 N prema gore; brzina 8 m/s.", "c": "Ubrzanje 2 m/s² prema središtu; iznos brzine ostaje 8 m/s, a smjer se mijenja.", "d": "Put 32 m; kolica se gibaju stalnom brzinom jer je rezultantna sila nula."}
+--- OBJ
+## 🛒 Ubrzanje pri vodoravnom guranju
+**a) Kolica miruju, a zatim ih 15 N gura vodoravno tijekom 2 s. Odredite njihovo ubrzanje i brzinu nakon 2 s.** Zadani su masa 3 kg, sila 15 N, početna brzina 0 m/s i vrijeme 2 s.
+
+Najprije nacrtamo sile na kolica: sila teža djeluje prema dolje, podloga djeluje prema gore, a guranje je vodoravno. Sila teža i sila podloge poništavaju se, pa je vodoravna rezultantna sila 15 N; u formuli II. Newtonova zakona u **knjižici formula, str. 2**, slovo F označava rezultantnu silu.
+
+$$a=\frac{F}{m}$$
+
+Uvrstimo podatke. Rezultantna sila usmjerena je udesno, pa su i ubrzanje i promjena brzine usmjereni udesno.
+
+$$a=\frac{15\ \text{N}}{3\ \text{kg}}=5\ \text{m/s}^2$$
+
+Za stalno ubrzanje koristimo formulu brzine iz **knjižice formula, str. 2**. Ubrzanje je stalno jer je rezultantna sila stalna.
+
+$$v=v_0+at=0\ \text{m/s}+5\ \text{m/s}^2\cdot2\ \text{s}=\textcolor{green}{10\ \text{m/s}}$$
+
+Veća sila za istu masu dala bi veće ubrzanje, kao što pokazuje odnos između rezultantne sile i mase.
+
+## 🪢 Sila uz uže pod kutom
+**b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 15 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 3, 4 i 5, pri čemu je vodoravna kateta 4, a okomita 3. Kolica se tako vuku 2 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 2 s.** Kolica imaju masu 3 kg i ponovno kreću iz mirovanja.
+
+Ključna je riječ **vodoravno**: uže vuče koso, pa rastavimo njegovu silu na vodoravnu i okomitu komponentu. Trokut 3–4–5 pokazuje da su komponente redom četiri petine i tri petine sile užeta, pa su one 12 N udesno i 9 N prema gore.
+
+Na skici sila na kolica djeluju sila teža prema dolje, sila podloge prema gore i sila užeta koso prema gore i udesno. U vodoravnom smjeru rezultanta je 12 N, pa II. Newtonov zakon daje:
+
+$$a_x=\frac{F_x}{m}=\frac{12\ \text{N}}{3\ \text{kg}}=4\ \text{m/s}^2$$
+
+U okomitom smjeru kolica ne ubrzavaju, jer ostaju na vodoravnoj stazi. Sila teža iznosi \(G=mg=3\ \text{kg}\cdot10\ \text{m/s}^2=30\ \text{N}\), a zato sila podloge mora biti 21 N prema gore: ona i okomita komponenta užeta od 9 N uravnotežuju silu težu od 30 N.
+
+Uže vuče stalnom silom, pa je i vodoravno ubrzanje stalno. Nakon 2 s brzina kolica iznosi:
+
+$$v=v_0+a_xt=0\ \text{m/s}+4\ \text{m/s}^2\cdot2\ \text{s}=\textcolor{green}{8\ \text{m/s}}$$
+
+Vodoravna komponenta sile mijenja iznos brzine, a okomite se sile poništavaju, pa kolica ne ubrzavaju prema gore.
+
+## 🌀 Sila mijenja smjer gibanja
+**c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 6 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.** Kolica na vodilicu ulaze brzinom 8 m/s i imaju masu 3 kg.
+
+U **knjižici formula, str. 2**, II. Newtonov zakon povezuje rezultantnu silu, masu i ubrzanje. Rezultantna sila prema središtu iznosi 6 N, pa je iznos ubrzanja:
+
+$$a=\frac{F}{m}=\frac{6\ \text{N}}{3\ \text{kg}}=\textcolor{green}{2\ \text{m/s}^2}$$
+
+Prvo jedna zamka: sila okomita na brzinu ne ubrzava kolica ni u smjeru vožnje ni suprotno njemu. Zato u ovom slučaju ona mijenja **smjer** brzine, a ne njezin iznos; kolica nastavljaju kružiti brzinom 8 m/s.
+
+Ubrzanje usmjereno prema središtu svjedoči da se smjer gibanja mijenja, iako se brzinomjer ne bi mijenjao.
+
+## ✅ Nulta rezultantna sila
+**d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 4 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?** Početna brzina na ravnom dijelu iznosi 8 m/s, a rezultantna sila ostaje nula.
+
+Kad je rezultantna sila nula, iz II. Newtonova zakona slijedi da je ubrzanje nula. Kolica zato ne mijenjaju brzinu: nastavljaju se gibati jednoliko po pravcu, što je u skladu s I. Newtonovim zakonom.
+
+U **knjižici formula, str. 2**, brzina je povezana s prijeđenim putom i vremenom. Budući da je brzina stalna, u 4 s kolica prijeđu:
+
+$$s=vt=8\ \text{m/s}\cdot4\ \text{s}=\textcolor{green}{32\ \text{m}}$$
+
+Zamka je misliti da za stalnu brzinu treba stalna sila u smjeru gibanja. Potrebna je rezultantna sila za promjenu brzine, a ovdje se sile koje djeluju na kolica međusobno poništavaju.
+
+## ✅ Rezultati
+- a) Ubrzanje je 5 m/s², a brzina nakon 2 s iznosi 10 m/s.
+- b) Vodoravno ubrzanje je 4 m/s², sila podloge 21 N prema gore, a brzina nakon 2 s iznosi 8 m/s.
+- c) Ubrzanje je 2 m/s² prema središtu; iznos brzine ostaje 8 m/s, a smjer se mijenja.
+- d) Kolica prijeđu 32 m; gibaju se stalnom brzinom jer je rezultantna sila nula.
+
+######## B03.02 varijacija 4
+--- ZADATAK
+Kolica mase 8 kg kreću se po vodoravnoj glatkoj stazi. Zanemarite trenje.
+
+a) Kolica miruju, a zatim ih 40 N gura vodoravno tijekom 3 s. Odredite njihovo ubrzanje i brzinu nakon 3 s.
+
+b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 65 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 5, 12 i 13, pri čemu je vodoravna kateta 12, a okomita 5. Kolica se tako vuku 1,6 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 1,6 s.
+
+c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 32 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.
+
+d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 3 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?
+--- REZ {"a": "Ubrzanje 5 m/s²; brzina 15 m/s.", "b": "Vodoravno ubrzanje 7,5 m/s²; sila podloge 55 N prema gore; brzina 12 m/s.", "c": "Ubrzanje 4 m/s² prema središtu; iznos brzine ostaje 12 m/s, a smjer se mijenja.", "d": "Put 36 m; kolica se gibaju stalnom brzinom jer je rezultantna sila nula."}
+--- OBJ
+## 🛒 Ubrzanje pri vodoravnom guranju
+**a) Kolica miruju, a zatim ih 40 N gura vodoravno tijekom 3 s. Odredite njihovo ubrzanje i brzinu nakon 3 s.** Zadani su masa 8 kg, sila 40 N, početna brzina 0 m/s i vrijeme 3 s.
+
+Najprije nacrtamo sile na kolica: sila teža djeluje prema dolje, podloga djeluje prema gore, a guranje je vodoravno. Sila teža i sila podloge poništavaju se, pa je vodoravna rezultantna sila 40 N; u formuli II. Newtonova zakona u **knjižici formula, str. 2**, slovo F označava rezultantnu silu.
+
+$$a=\frac{F}{m}$$
+
+Uvrstimo podatke. Rezultantna sila usmjerena je udesno, pa su i ubrzanje i promjena brzine usmjereni udesno.
+
+$$a=\frac{40\ \text{N}}{8\ \text{kg}}=5\ \text{m/s}^2$$
+
+Za stalno ubrzanje koristimo formulu brzine iz **knjižice formula, str. 2**. Ubrzanje je stalno jer je rezultantna sila stalna.
+
+$$v=v_0+at=0\ \text{m/s}+5\ \text{m/s}^2\cdot3\ \text{s}=\textcolor{green}{15\ \text{m/s}}$$
+
+Veća sila za istu masu dala bi veće ubrzanje, kao što pokazuje odnos između rezultantne sile i mase.
+
+## 🪢 Sila uz uže pod kutom
+**b) Kolica vratimo na početak i ponovno ih pokrenemo iz mirovanja. Sada ih 65 N vuče udesno i prema gore uz uže koje prati trokut sa stranicama 5, 12 i 13, pri čemu je vodoravna kateta 12, a okomita 5. Kolica se tako vuku 1,6 s. Odredite vodoravno ubrzanje, silu podloge na kolica i brzinu nakon 1,6 s.** Kolica imaju masu 8 kg i ponovno kreću iz mirovanja.
+
+Ključna je riječ **vodoravno**: uže vuče koso, pa rastavimo njegovu silu na vodoravnu i okomitu komponentu. Trokut 5–12–13 pokazuje da su komponente redom dvanaest trинаestina i pet trинаestina sile užeta, pa su one 60 N udesno i 25 N prema gore.
+
+Na skici sila na kolica djeluju sila teža prema dolje, sila podloge prema gore i sila užeta koso prema gore i udesno. U vodoravnom smjeru rezultanta je 60 N, pa II. Newtonov zakon daje:
+
+$$a_x=\frac{F_x}{m}=\frac{60\ \text{N}}{8\ \text{kg}}=7{,}5\ \text{m/s}^2$$
+
+U okomitom smjeru kolica ne ubrzavaju, jer ostaju na vodoravnoj stazi. Sila teža iznosi \(G=mg=8\ \text{kg}\cdot10\ \text{m/s}^2=80\ \text{N}\), a zato sila podloge mora biti 55 N prema gore: ona i okomita komponenta užeta od 25 N uravnotežuju silu težu od 80 N.
+
+Uže vuče stalnom silom, pa je i vodoravno ubrzanje stalno. Nakon 1,6 s brzina kolica iznosi:
+
+$$v=v_0+a_xt=0\ \text{m/s}+7{,}5\ \text{m/s}^2\cdot1{,}6\ \text{s}=\textcolor{green}{12\ \text{m/s}}$$
+
+Vodoravna komponenta sile mijenja iznos brzine, a okomite se sile poništavaju, pa kolica ne ubrzavaju prema gore.
+
+## 🌀 Sila mijenja smjer gibanja
+**c) Kolica brzinom koju su dosegla u b) ulaze na glatku kružnu vodilicu. Vodilica na njih djeluje rezultantnom silom od 32 N prema središtu kružnice, uvijek okomitom na trenutačnu brzinu. Odredite iznos ubrzanja i objasnite što se događa s iznosom brzine i njezinim smjerom.** Kolica na vodilicu ulaze brzinom 12 m/s i imaju masu 8 kg.
+
+U **knjižici formula, str. 2**, II. Newtonov zakon povezuje rezultantnu silu, masu i ubrzanje. Rezultantna sila prema središtu iznosi 32 N, pa je iznos ubrzanja:
+
+$$a=\frac{F}{m}=\frac{32\ \text{N}}{8\ \text{kg}}=\textcolor{green}{4\ \text{m/s}^2}$$
+
+Prvo jedna zamka: sila okomita na brzinu ne ubrzava kolica ni u smjeru vožnje ni suprotno njemu. Zato u ovom slučaju ona mijenja **smjer** brzine, a ne njezin iznos; kolica nastavljaju kružiti brzinom 12 m/s.
+
+Ubrzanje usmjereno prema središtu svjedoči da se smjer gibanja mijenja, iako se brzinomjer ne bi mijenjao.
+
+## ✅ Nulta rezultantna sila
+**d) Kolica izlaze s vodilice brzinom koju su imala u b). Na ravnom dijelu staze rezultantna sila na njih iznosi nula sljedeće 3 s. Koliki put prijeđu i zašto im za održavanje brzine nije potrebna rezultantna sila?** Početna brzina na ravnom dijelu iznosi 12 m/s, a rezultantna sila ostaje nula.
+
+Kad je rezultantna sila nula, iz II. Newtonova zakona slijedi da je ubrzanje nula. Kolica zato ne mijenjaju brzinu: nastavljaju se gibati jednoliko po pravcu, što je u skladu s I. Newtonovim zakonom.
+
+U **knjižici formula, str. 2**, brzina je povezana s prijeđenim putom i vremenom. Budući da je brzina stalna, u 3 s kolica prijeđu:
+
+$$s=vt=12\ \text{m/s}\cdot3\ \text{s}=\textcolor{green}{36\ \text{m}}$$
+
+Zamka je misliti da za stalnu brzinu treba stalna sila u smjeru gibanja. Potrebna je rezultantna sila za promjenu brzine, a ovdje se sile koje djeluju na kolica međusobno poništavaju.
+
+## ✅ Rezultati
+- a) Ubrzanje je 5 m/s², a brzina nakon 3 s iznosi 15 m/s.
+- b) Vodoravno ubrzanje je 7,5 m/s², sila podloge 55 N prema gore, a brzina nakon 1,6 s iznosi 12 m/s.
+- c) Ubrzanje je 4 m/s² prema središtu; iznos brzine ostaje 12 m/s, a smjer se mijenja.
+- d) Kolica prijeđu 36 m; gibaju se stalnom brzinom jer je rezultantna sila nula.
+
+
+################ B02.02 Ravnoteža sila i inercijski sustavi + Primjena ravnoteže: trenje i kosina | 114 s | greska None
+kod: ['v1: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v2: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v3: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v4: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.']
+
+######## B02.02 varijacija 1
+--- ZADATAK
+a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 4 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.
+b) Sanduk mase 10 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,25. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.
+c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 37°, za koji vrijedi sin 37° = 0,6 i cos 37° = 0,8. Koeficijent trenja klizanja i dalje je 0,25. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.
+d) Sanduk mase 10 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.
+--- REZ {"a": "Sustavi skladišta i kolica su inercijski; brzina sanduka u odnosu na skladište iznosi 4 m/s.", "b": "Normalna sila iznosi 100 N, a vučna sila 25 N.", "c": "Normalna sila iznosi 80 N, a vučna sila uz kosinu 80 N.", "d": "Napetost užeta iznosi 100 N; sanduk se giba prema gore stalnom brzinom jer je ukupna sila nula."}
+--- OBJ
+## 🛒 Inercijski sustav
+
+**a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 4 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.** Zadano je da se kolica gibaju pravocrtno stalnom brzinom, a sanduk miruje u odnosu na njih.
+
+**Inercijski sustav** je sustav u kojem vrijedi I. Newtonov zakon. Ako se jedan sustav giba pravocrtno stalnom brzinom u odnosu na inercijski sustav, i on je inercijski. Zato su i skladište i kolica inercijski sustavi. Sanduk miruje u odnosu na kolica, pa se u odnosu na skladište giba zajedno s njima brzinom od 4 m/s.
+
+## ⚖️ Sanduk na vodoravnom podu
+
+**b) Sanduk mase 10 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,25. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.** Zadani su masa sanduka 10 kg i koeficijent trenja 0,25.
+
+Prvo zamka: sanduk se giba, ali zato ei ne mora na njega djelovati rezultantna sila. Budući da se giba stalnom brzinom, ukupna sila na njemu je nula. Okomito na pod djeluju sila teža prema dolje i normalna sila poda prema gore; vodoravno djeluju vučna sila i trenje u suprotnim smjerovima.
+
+Sila teža iznosi G = mg = 10 kg · 10 m/s² = 100 N. Nema ubrzanja ni okomito ni vodoravno, pa je normalna sila jednaka sili teži, a vučna sila jednaka sili trenja. Za trenje vrijedi formula iz **knjižice formula, str. 2**, poglavlje *Dinamika*:
+
+$$F_tr = μF_p$$
+
+Na vodoravnom podu pritisna sila F_p jednaka je normalnoj sili N. Zato je N = 100 N, a trenje iznosi 0,25 · 100 N = 25 N. Vučnoj sili treba biti jednake veličine kako bi se sile vodoravno poništile.
+
+## 🧗 Sanduk na kosini
+
+**c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 37°, za koji vrijedi sin 37° = 0,6 i cos 37° = 0,8. Koeficijent trenja klizanja i dalje je 0,25. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.** Sanduk je isti kao u prethodnom podzadatku i giba se uz kosinu stalnom brzinom.
+
+Na kosini rastavljamo silu teže na dvije komponente: jedna je usporedna s kosinom, a druga kohtona na nju. Usporedna komponenta vuče sanduk niz kosinu, a okomita komponenta pritišće ga uz podlogu. Po osima vrijedi ravnoteža sila jer je brzina stalna.
+
+Sila teža i dalje je 100 N. Okomita komponenta iznosi mg cos 37° = 100 N · 0,8 = 80 N, pa je normalna sila 80 N. Trenje je μN = 0,25 · 80 N = 20 N i usmjereno je niz kosinu jer se sanduk giba prema gore. Komponenta sile teže niz kosinu iznosi mg sin 37° = 100 N · 0,6 = 60 N. Vučna sila prema gore mora uravnotežiti obje sile prema dolje: 60 N + 20 N = 80 N.
+
+## 🪢 Sanduk na užetu
+
+**d) Sanduk mase 10 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.** Sanduk se podiže stalnom brzinom, pa mu je akceleracija nula.
+
+Na sanduk djeluju napetost užeta prema gore i sila teža prema dolje. Stalna brzina znači da je njihov zbroj nula, pa napetost mora biti jednaka sili teži: T = mg = 10 kg · 10 m/s² = 100 N. Nulta ukupna sila ne znači da sanduk miruje; znači da nema promjene njegove brzine. Uže može održavati gibanje prema gore, a ne mora ga ubrzavati.
+
+######## B02.02 varijacija 2
+--- ZADATAK
+a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 5 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.
+b) Sanduk mase 12 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,20. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.
+c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 53°, za koji vrijedi sin 53° = 0,8 i cos 53° = 0,6. Koeficijent trenja klizanja i dalje je 0,20. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.
+d) Sanduk mase 12 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.
+--- REZ {"a": "Sustavi skladišta i kolica su inercijski; brzina sanduka u odnosu na skladište iznosi 5 m/s.", "b": "Normalna sila iznosi 120 N, a vučna sila 24 N.", "c": "Normalna sila iznosi 72 N, a vučna sila uz kosinu 110,4 N.", "d": "Napetost užeta iznosi 120 N; sanduk se giba prema gore stalnom brzinom jer je ukupna sila nula."}
+--- OBJ
+## 🛒 Inercijski sustav
+
+**a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 5 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.** Kolica se gibaju pravocrtno stalnom brzinom, a sanduk miruje u odnosu na njih.
+
+**Inercijski sustav** je sustav u kojem vrijedi I. Newtonov zakon. Sustav koji se giba pravocrtno stalnom brzinom u odnosu na inercijski sustav također je inercijski. Zato su i skladište i kolica inercijski sustavi, a sanduk se u odnosu na skladište giba brzinom kolica, odnosno 5 m/s.
+
+## ⚖️ Sanduk na vodoravnom podu
+
+**b) Sanduk mase 12 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,20. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.** Masa je 12 kg, a koeficijent trenja 0,20.
+
+Prvo zamka: stalno gibanje ne znači da nema sila. Znači da se sile međusobno poništavaju i da je ukupna sila nula. Okomito na pod normalna sila uravnotežuje silu težu, a vodoravno vučna sila uravnotežuje trenje.
+
+Sila teža iznosi G = mg = 12 kg · 10 m/s² = 120 N. Na vodoravnom podu zato je normalna sila N = 120 N. Sila trenja računa se formulom iz **knjižice formula, str. 2**, poglavlje *Dinamika*:
+
+$$F_tr = μF_p$$
+
+Ovdje je pritisna sila F_p jednaka normalnoj sili N, pa je trenje 0,20 · 120 N = 24 N. Budući da je brzina stalna, vučna sila mora biti 24 N, suprotno usmjerena trenju.
+
+## 🧗 Sanduk na kosini
+
+**c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 53°, za koji vrijedi sin 53° = 0,8 i cos 53° = 0,6. Koeficijent trenja klizanja i dalje je 0,20. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.** Masa, koeficijent trenja i sila teža isti su kao u prethodnom podzadatku.
+
+Silu težu rastavimo na komponentu uz kosinu i komponentu okomitu na nju. Komponenta okomita na kosinu pritišće sanduk uz podlogu, a komponenta uz kosinu vuče ga nizbrdo. Kosina i kretanje ne mijenjaju uvjet ravnoteže: zbroj sila po svakoj osi i dalje je nula.
+
+Okomita komponenta iznosi mg cos 53° = 120 N · 0,6 = 72 N, pa je normalna sila 72 N. Trenje iznosi μN = 0,20 · 72 N = 14,4 N i djeluje niz kosinu, protiv gibanja prema gore. Komponenta sile teže niz kosinu iznosi mg sin 53° = 120 N · 0,8 = 96 N. Zato vučna sila uz kosinu mora biti 96 N + 14,4 N = 110,4 N.
+
+## 🪢 Sanduk na užetu
+
+**d) Sanduk mase 12 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.** Sanduk se podiže stalnom brzinom.
+
+Na sanduk djeluju sila teža prema dolje i napetost užeta prema gore. Budući da se brzina ne mijenja, ukupna sila je nula, pa je T = mg = 12 kg · 10 m/s² = 120 N. Sanduk se ipak može gibati prema gore: nulta ukupna sila znači da se brzina ne mijenja, a ne da je brzina nula.
+
+######## B02.02 varijacija 3
+--- ZADATAK
+a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 3 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.
+b) Sanduk mase 15 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,22. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.
+c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 53°, za koji vrijedi sin 53° = 0,8 i cos 53° = 0,6. Koeficijent trenja klizanja i dalje je 0,22. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.
+d) Sanduk mase 15 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.
+--- REZ {"a": "Sustavi skladišta i kolica su inercijski; brzina sanduka u odnosu na skladište iznosi 3 m/s.", "b": "Normalna sila iznosi 150 N, a vučna sila 33 N.", "c": "Normalna sila iznosi 90 N, a vučna sila uz kosinu 139,8 N.", "d": "Napetost užeta iznosi 150 N; sanduk se giba prema gore stalnom brzinom jer je ukupna sila nula."}
+--- OBJ
+## 🛒 Inercijski sustav
+
+**a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 3 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.** Sanduk miruje u odnosu na kolica, a kolica se gibaju pravocrtno stalnom brzinom.
+
+**Inercijski sustav** je referentni sustav u kojem vrijedi I. Newtonov zakon. Ako se sustav giba pravocrtno stalnom brzinom u odnosu na drugi inercijski sustav, i sam je inercijski. Dakle, kolica su inercijska, kao i skladište, a sanduk u odnosu na skladište ima brzinu 3 m/s.
+
+## ⚖️ Sanduk na vodoravnom podu
+
+**b) Sanduk mase 15 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,22. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.** Masa sanduka iznosi 15 kg, a koeficijent trenja 0,22.
+
+Prvo zamka: za održavanje stalne brzine nije potrebna rezultantna sila. Sile mogu djelovati, ali njihov vektorski zbroj mora biti nula. Po okomitoj osi normalna sila uravnotežuje silu težu, a po vodoravnoj vučna sila uravnotežuje trenje.
+
+Sila teža iznosi G = mg = 15 kg · 10 m/s² = 150 N, pa je normalna sila poda 150 N. U **knjižici formula, str. 2**, poglavlju *Dinamika*, nalazi se formula za trenje klizanja:
+
+$$F_tr = μF_p$$
+
+Na vodoravnom podu pritisna sila F_p jednaka je normalnoj sili. Zato je F_tr = 0,22 · 150 N = 33 N. Sanduk se giba stalnom brzinom, pa je vučna sila također 33 N.
+
+## 🧗 Sanduk na kosini
+
+**c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 53°, za koji vrijedi sin 53° = 0,8 i cos 53° = 0,6. Koeficijent trenja klizanja i dalje je 0,22. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.** Sanduk i koeficijent trenja nisu se promijenili; promijenio se samo smjer podloge.
+
+Na kosini razlažemo silu težu na komponentu usporednu s podlogom i komponentu okomitu na podlogu. Okomita komponenta određuje normalnu silu, dok komponenta niz kosinu i trenje zajedno sprečavaju gibanje sanduka uz kosinu. Budući da sanduk ide stalnom brzinom, sile se poništavaju po obje osi.
+
+Sila teža je 150 N. Normalna sila iznosi mg cos 53° = 150 N · 0,6 = 90 N. Trenje je 0,22 · 90 N = 19,8 N; djeluje niz kosinu jer sanduk ide uzbrdo. Komponenta sile teže niz kosinu iznosi mg sin 53° = 150 N · 0,8 = 120 N. Vučna sila mora biti 120 N + 19,8 N = 139,8 N.
+
+## 🪢 Sanduk na užetu
+
+**d) Sanduk mase 15 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.** Sanduk se podiže stalnom brzinom, pa mu se brzina ne mijenja.
+
+Napetost užeta djeluje prema gore, a sila teža prema dolje. Njihov zbroj mora biti nula, pa je T = mg = 15 kg · 10 m/s² = 150 N. Sanduk može i dalje ići prema gore jer nulta ukupna sila znači da nema promjene brzine; ne znači da je sanduk u mirovanju.
+
+######## B02.02 varijacija 4
+--- ZADATAK
+a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 6 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.
+b) Sanduk mase 8 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,35. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.
+c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 37°, za koji vrijedi sin 37° = 0,6 i cos 37° = 0,8. Koeficijent trenja klizanja i dalje je 0,35. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.
+d) Sanduk mase 8 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.
+--- REZ {"a": "Sustavi skladišta i kolica su inercijski; brzina sanduka u odnosu na skladište iznosi 6 m/s.", "b": "Normalna sila iznosi 80 N, a vučna sila 28 N.", "c": "Normalna sila iznosi 64 N, a vučna sila uz kosinu 70,4 N.", "d": "Napetost užeta iznosi 80 N; sanduk se giba prema gore stalnom brzinom jer je ukupna sila nula."}
+--- OBJ
+## 🛒 Inercijski sustav
+
+**a) Sanduk miruje u odnosu na kolica koja se gibaju pravocrtno stalnom brzinom 6 m/s u odnosu na skladište. Pod pretpostavkom da je sustav skladišta inercijski, odredi je li sustav kolica inercijski i kolika je brzina sanduka u odnosu na skladište.** Kolica se gibaju pravocrtno stalnom brzinom, a sanduk je na njima nepomičan.
+
+**Inercijski sustav** je sustav u kojem vrijedi I. Newtonov zakon. Pravocrtno i stalno gibanje u odnosu na inercijski sustav ne mijenja inercijski karakter sustava. Stoga su i kolica inercijska, a sanduk se u odnosu na skladište giba brzinom kolica, odnosno 6 m/s.
+
+## ⚖️ Sanduk na vodoravnom podu
+
+**b) Sanduk mase 8 kg vučemo po vodoravnom hrapavom podu stalnom brzinom. Koeficijent trenja klizanja između sanduka i poda iznosi 0,35. Odredi normalnu silu poda na sanduk i iznos sile kojom ga vučemo.** Zadani su masa 8 kg i koeficijent trenja 0,35.
+
+Zamka je pomisliti da se sanduk giba zato što vučna sila prema naprijed mora biti veća od svih ostalih sila. Pri stalnoj brzini ukupna sila iznosi nula: trenje poništava vučnu silu, a normalna sila poništava silu težu.
+
+Sila teža je G = mg = 8 kg · 10 m/s² = 80 N. Zato je normalna sila također 80 N. Sila trenja klizanja računa se formulom iz **knjižice formula, str. 2**, poglavlje *Dinamika*:
+
+$$F_tr = μF_p$$
+
+Na vodoravnom podu F_p = N, pa je F_tr = 0,35 · 80 N = 28 N. Vučnoj sili treba biti jednaka 28 N kako bi sanduk nastavio gibanje stalnom brzinom.
+
+## 🧗 Sanduk na kosini
+
+**c) Isti sanduk vučemo uz kosinu stalnom brzinom. Kosina ima nagib 37°, za koji vrijedi sin 37° = 0,6 i cos 37° = 0,8. Koeficijent trenja klizanja i dalje je 0,35. Odredi normalnu silu kosine i silu kojom treba vući sanduk uz kosinu.** Masa i koeficijent trenja ostaju isti kao u prethodnom podzadatku.
+
+Na kosini normalna sila je okomita na podlogu, pa nije jednaka cijeloj sili teži. Silu težu rastavimo na komponentu okomitu na kosinu i komponentu niz kosinu. Budući da sanduk vučemo uzbrdo stalnom brzinom, vučna sila mora uravnotežiti i komponentu niz kosinu i trenje.
+
+Sila teža iznosi 80 N. Okomita komponenta je mg cos 37° = 80 N · 0,8 = 64 N, pa je normalna sila 64 N. Trenje iznosi 0,35 · 64 N = 22,4 N i usmjereno je niz kosinu. Komponenta sile teže niz kosinu iznosi mg sin 37° = 80 N · 0,6 = 48 N. Potrebna vučna sila zato iznosi 48 N + 22,4 N = 70,4 N.
+
+## 🪢 Sanduk na užetu
+
+**d) Sanduk mase 8 kg sada visi na užetu i podižemo ga stalnom brzinom. Odredi napetost užeta i objasni kako se sanduk može gibati prema gore ako je ukupna sila na njega nula.** Sanduk se podiže stalnom brzinom.
+
+Uže vuče sanduk prema gore, a Zemlja privlači sanduk prema dolje. Stalna brzina znači da je ukupna sila nula, joten T = mg = 8 kg · 10 m/s² = 80 N. Sanduk se može gibati prema gore zato što nulta ukupna sila održava njegovu postojeću brzinu, umjesto da je mijenja.
+
+
+################ B04.01 III. Newtonov zakon i par akcije i reakcije | 103 s | greska None
+kod: []
+
+######## B04.01 varijacija 1
+--- ZADATAK
+Dvoje klizača odguruje se rukama na glatkom ledu. Klizačica Ana nalazi se lijevo od Borisa i tijekom odgurivanja ostaju na istoj visini.
+
+**a)** Ana djeluje na Borisa silom od 60 N udesno. Kolikom silom Boris djeluje na Anu, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?
+
+**b)** Ana ima masu 30 kg, a Boris 50 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?
+
+**c)** Na Borisa, osim sile kojom ga Ana gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Borisa i na koje tijelo djeluje?
+--- REZ {"a": "Boris djeluje na Anu silom 60 N ulijevo.", "b": "Ana: 2 m/s² ulijevo; Boris: 1,2 m/s² udesno.", "c": "Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Borisa jest gravitacijska sila Borisa na Zemlju."}
+--- OBJ
+## 🫷 Sile odgurivanja
+
+**a) Ana djeluje na Borisa silom od 60 N udesno. Kolikom silom Boris djeluje na Anu, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?** Ana gura Borisa udesno silom od 60 N; tražimo silu kojom Boris djeluje na Anu.
+
+Klizači se odguruju poput dvojice koji se istodobno guraju dlanovima: kad jedan pritisne drugoga, drugi istodobno pritisne prvoga. To su sile međudjelovanja, joita kutsumme parom **akcije i reakcije**; naziv ne znači da jedna sila nastaje prije druge. III. Newtonov zakon kaže da su te sile jednakog iznosa, suprotnog smjera i duž istog pravca. Njegov zapis glasi $$\vec F_{AB}=-\vec F_{BA}$$ gdje je \(\vec F_{AB}\) sila kojom Ana djeluje na Borisa.
+
+Zato Boris djeluje na Anu silom od 60 N ulijevo. Sile djeluju na **različite klizače**, pa se ne poništavaju na jednom klizaču i ne zbrajaju se kao sile na istom tijelu; svaka može mijenjati gibanje tijela na koje djeluje.
+
+## 🛼 Ubrzanje klizača
+
+**b) Ana ima masu 30 kg, a Boris 50 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?** Na svakog klizača djeluje sila od 60 N, a njihove su mase različite.
+
+Ubrzanje govori koliko se brzo mijenja brzina tijela. Za istu silu lakše tijelo ubrza više, kao što se prazna kolica lakše pokrenu od natovarenih. Veza je u **knjižici formula, str. 2**, u poglavlju *Dinamika*: $$a=\frac{F}{m}$$
+
+Za Anu uvrštavamo \(F=60\ \text{N}\) i \(m=30\ \text{kg}\): $$a_A=\frac{60\ \text{N}}{30\ \text{kg}}=2\ \text{m/s}^2$$ Ubrzanje je u smjeru sile, pa je Anino ubrzanje ulijevo.
+
+Za Borisa uvrštavamo \(F=60\ \text{N}\) i \(m=50\ \text{kg}\): $$a_B=\frac{60\ \text{N}}{50\ \text{kg}}=1{,}2\ \text{m/s}^2$$ Borisovo ubrzanje je udesno. Ana ima veće ubrzanje jer je lakša; sile na njih jednake su, ali djeluju na tijela različitih masa.
+
+## 🌍 Sile na Borisa
+
+**c) Na Borisa, osim sile kojom ga Ana gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Borisa i na koje tijelo djeluje?** Razmatramo sile koje djeluju na Borisa te reakcijsku silu gravitacijskog međudjelovanja.
+
+Sila teža i normalna sila djeluju na **isto tijelo**, Borisa, ali su različite vrste sila: prva je gravitacijska, a druga kontaktna. Zato nisu par akcije i reakcije, iako su suprotno usmjerene. Par sili kojom Zemlja gravitacijski privlači Borisa čini gravitacijska sila kojом Boris privlači Zemlju; ona djeluje na **Zemlju**, a ne na Borisa.
+
+## ✅ Rezultati
+
+a) Boris djeluje na Anu silom 60 N ulijevo; sile su istodobne, jednakog iznosa i suprotnog smjera te se ne poništavaju jer djeluju na različita tijela.
+b) \(a_A=2\ \text{m/s}^2\) ulijevo, \(a_B=1{,}2\ \text{m/s}^2\) udesno; Ana ima veće ubrzanje.
+c) Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Borisa jest gravitacijska sila Borisa na Zemlju.
+
+######## B04.01 varijacija 2
+--- ZADATAK
+Dvoje klizača odguruje se rukama na glatkom ledu. Klizačica Dora nalazi se desno od Filipa i tijekom odgurivanja ostaju na istoj visini.
+
+**a)** Dora djeluje na Filipa silom od 72 N ulijevo. Kolikom silom Filip djeluje na Doru, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?
+
+**b)** Dora ima masu 24 kg, a Filip 48 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?
+
+**c)** Na Filipa, osim sile kojom ga Dora gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Filipa i na koje tijelo djeluje?
+--- REZ {"a": "Filip djeluje na Doru silom 72 N udesno.", "b": "Dora: 3 m/s² udesno; Filip: 1,5 m/s² ulijevo.", "c": "Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Filipa jest gravitacijska sila Filipa na Zemlju."}
+--- OBJ
+## 🫷 Sile odgurivanja
+
+**a) Dora djeluje na Filipa silom od 72 N ulijevo. Kolikom silom Filip djeluje na Doru, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?** Dora gura Filipa ulijevo silom od 72 N; tražimo silu kojom Filip djeluje na Doru.
+
+Klizači se odguruju poput dvojice koji se istodobno guraju dlanovima: kad jedan pritisne drugoga, drugi istodobno pritisne prvoga. To su sile međudjelovanja, koje nazivamo parom **akcije i reakcije**; naziv ne znači da jedna sila nastaje prije druge. III. Newtonov zakon kaže da su te sile jednakog iznosa, suprotnog smjera i duž istog pravca. Njegov zapis glasi $$\vec F_{DF}=-\vec F_{FD}$$ gdje je \(\vec F_{DF}\) sila kojom Dora djeluje na Filipa.
+
+Zato Filip djeluje na Doru silom od 72 N udesno. Sile djeluju na **različite klizače**, pa se ne poništavaju na jednom klizaču i ne zbrajaju se kao sile na istom tijelu; svaka može mijenjati gibanje tijela na koje djeluje.
+
+## 🛼 Ubrzanje klizača
+
+**b) Dora ima masu 24 kg, a Filip 48 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?** Na svakog klizača djeluje sila od 72 N, a njihove su mase različite.
+
+Ubrzanje govori koliko se brzo mijenja brzina tijela. Za istu silu lakše tijelo ubrza više, kao što se prazna kolica lakše pokrenu od natovarenih. Veza je u **knjižici formula, str. 2**, u poglavlju *Dinamika*: $$a=\frac{F}{m}$$
+
+Za Doru uvrštavamo \(F=72\ \text{N}\) i \(m=24\ \text{kg}\): $$a_D=\frac{72\ \text{N}}{24\ \text{kg}}=3\ \text{m/s}^2$$ Ubrzanje je u smjeru sile, pa je Dorino ubrzanje udesno.
+
+Za Filipa uvrštavamo \(F=72\ \text{N}\) i \(m=48\ \text{kg}\): $$a_F=\frac{72\ \text{N}}{48\ \text{kg}}=1{,}5\ \text{m/s}^2$$ Filipovo ubrzanje je ulijevo. Dora ima veće ubrzanje jer je lakša; sile na njih jednake su, ali djeluju na tijela različitih masa.
+
+## 🌍 Sile na Filipa
+
+**c) Na Filipa, osim sile kojom ga Dora gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Filipa i na koje tijelo djeluje?** Razmatramo sile koje djeluju na Filipa te reakcijsku silu gravitacijskog međudjelovanja.
+
+Sila teža i normalna sila djeluju na **isto tijelo**, Filipa, ali su različite vrste sila: prva je gravitacijska, a druga kontaktna. Zato nisu par akcije i reakcije, iako su suprotno usmjerene. Par sili kojom Zemlja gravitacijski privlači Filipa čini gravitacijska sila kojom Filip privlači Zemlju; ona djeluje na **Zemlju**, a ne na Filipa.
+
+## ✅ Rezultati
+
+a) Filip djeluje na Doru silom 72 N udesno; sile su istodobne, jednakog iznosa i suprotnog smjera te se ne poništavaju jer djeluju na različita tijela.
+b) \(a_D=3\ \text{m/s}^2\) udesno, \(a_F=1{,}5\ \text{m/s}^2\) ulijevo; Dora ima veće ubrzanje.
+c) Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Filipa jest gravitacijska sila Filipa na Zemlju.
+
+######## B04.01 varijacija 3
+--- ZADATAK
+Dvoje klizača odguruje se rukama na glatkom ledu. Klizač Leo nalazi se lijevo od Mije i tijekom odgurivanja ostaju na istoj visini.
+
+**a)** Leo djeluje na Miju silom od 90 N udesno. Kolikom silom Mija djeluje na Lea, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?
+
+**b)** Leo ima masu 45 kg, a Mija 30 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?
+
+**c)** Na Miju, osim sile kojom je Leo gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Miju i na koje tijelo djeluje?
+--- REZ {"a": "Mija djeluje na Lea silom 90 N ulijevo.", "b": "Leo: 2 m/s² ulijevo; Mija: 3 m/s² udesno.", "c": "Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Miju jest gravitacijska sila Mije na Zemlju."}
+--- OBJ
+## 🫷 Sile odgurivanja
+
+**a) Leo djeluje na Miju silom od 90 N udesno. Kolikom silom Mija djeluje na Lea, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?** Leo gura Miju udesno silom od 90 N; tražimo silu kojom Mija djeluje na Lea.
+
+Klizači se odguruju poput dvojice koji se istodobno guraju dlanovima: kad jedan pritisne drugoga, drugi istodobno pritisne prvoga. To su sile međudjelovanja, koje nazivamo parom **akcije i reakcije**; naziv ne znači da jedna sila nastaje prije druge. III. Newtonov zakon kaže da su te sile jednakog iznosa, suprotnog smjera i duž istog pravca. Njegov zapis glasi $$\vec F_{LM}=-\vec F_{ML}$$ gdje je \(\vec F_{LM}\) sila kojom Leo djeluje na Miju.
+
+Zato Mija djeluje na Lea silom od 90 N ulijevo. Sile djeluju na **različite klizače**, pa se ne poništavaju na jednom klizaču i ne zbrajaju se kao sile na istom tijelu; svaka može mijenjati gibanje tijela na koje djeluje.
+
+## 🛼 Ubrzanje klizača
+
+**b) Leo ima masu 45 kg, a Mija 30 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?** Na svakog klizača djeluje sila od 90 N, a njihove su mase različite.
+
+Ubrzanje govori koliko se brzo mijenja brzina tijela. Za istu silu lakše tijelo ubrza više, kao što se prazna kolica lakše pokrenu od natovarenih. Veza je u **knjižici formula, str. 2**, u poglavlju *Dinamika*: $$a=\frac{F}{m}$$
+
+Za Lea uvrštavamo \(F=90\ \text{N}\) i \(m=45\ \text{kg}\): $$a_L=\frac{90\ \text{N}}{45\ \text{kg}}=2\ \text{m/s}^2$$ Ubrzanje je u smjeru sile, pa je Leovo ubrzanje ulijevo.
+
+Za Miju uvrštavamo \(F=90\ \text{N}\) i \(m=30\ \text{kg}\): $$a_M=\frac{90\ \text{N}}{30\ \text{kg}}=3\ \text{m/s}^2$$ Mijino ubrzanje je udesno. Mija ima veće ubrzanje jer je lakša; sile na njih jednake su, ali djeluju na tijela različitih masa.
+
+## 🌍 Sile na Miju
+
+**c) Na Miju, osim sile kojom je Leo gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Miju i na koje tijelo djeluje?** Razmatramo sile koje djeluju na Miju te reakcijsku silu gravitacijskog međudjelovanja.
+
+Sila teža i normalna sila djeluju na **isto tijelo**, Miju, ali su različite vrste sila: prva je gravitacijska, a druga kontaktna. Zato nisu par akcije i reakcije, iako su suprotno usmjerene. Par sili kojom Zemlja gravitacijski privlači Miju čini gravitacijska sila kojom Mija privlači Zemlju; ona djeluje na **Zemlju**, a ne na Miju.
+
+## ✅ Rezultati
+
+a) Mija djeluje na Lea silom 90 N ulijevo; sile su istodobne, jednakog iznosa i suprotnog smjera te se ne poništavaju jer djeluju na različita tijela.
+b) \(a_L=2\ \text{m/s}^2\) ulijevo, \(a_M=3\ \text{m/s}^2\) udesno; Mija ima veće ubrzanje.
+c) Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Miju jest gravitacijska sila Mije na Zemlju.
+
+######## B04.01 varijacija 4
+--- ZADATAK
+Dvoje klizača odguruje se rukama na glatkom ledu. Klizač Niko nalazi se lijevo od Sare i tijekom odgurivanja ostaju na istoj visini.
+
+**a)** Niko djeluje na Saru silom od 84 N udesno. Kolikom silom Sara djeluje na Niku, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?
+
+**b)** Niko ima masu 28 kg, a Sara 42 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?
+
+**c)** Na Saru, osim sile kojom je Niko gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Saru i na koje tijelo djeluje?
+--- REZ {"a": "Sara djeluje na Niku silom 84 N ulijevo.", "b": "Niko: 3 m/s² ulijevo; Sara: 2 m/s² udesno.", "c": "Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Saru jest gravitacijska sila Sare na Zemlju."}
+--- OBJ
+## 🫷 Sile odgurivanja
+
+**a) Niko djeluje na Saru silom od 84 N udesno. Kolikom silom Sara djeluje na Niku, u kojem smjeru i što se može zaključiti o tome kada te sile nastaju? Poništavaju li se te sile na jednom od klizača?** Niko gura Saru udesno silom od 84 N; tražimo silu kojom Sara djeluje na Niku.
+
+Klizači se odguruju poput dvojice koji se istodobno guraju dlanovima: kad jedan pritisne drugoga, drugi istodobno pritisne prvoga. To su sile međudjelovanja, koje nazivamo parom **akcije i reakcije**; naziv ne znači da jedna sila nastaje prije druge. III. Newtonov zakon kaže da su te sile jednakog iznosa, suprotnog smjera i duž istog pravca. Njegov zapis glasi $$\vec F_{NS}=-\vec F_{SN}$$ gdje je \(\vec F_{NS}\) sila kojom Niko djeluje na Saru.
+
+Zato Sara djeluje na Niku silom od 84 N ulijevo. Sile djeluju na **različite klizače**, pa se ne poništavaju na jednom klizaču i ne zbrajaju se kao sile na istom tijelu; svaka može mijenjati gibanje tijela na koje djeluje.
+
+## 🛼 Ubrzanje klizača
+
+**b) Niko ima masu 28 kg, a Sara 42 kg. Kolika su ubrzanja klizača tijekom odgurivanja i koji se od njih brže ubrzava?** Na svakog klizača djeluje sila od 84 N, a njihove su mase različite.
+
+Ubrzanje govori koliko se brzo mijenja brzina tijela. Za istu silu lakše tijelo ubrza više, kao što se prazna kolica lakše pokrenu od natovarenih. Veza je u **knjižici formula, str. 2**, u poglavlju *Dinamika*: $$a=\frac{F}{m}$$
+
+Za Niku uvrštavamo \(F=84\ \text{N}\) i \(m=28\ \text{kg}\): $$a_N=\frac{84\ \text{N}}{28\ \text{kg}}=3\ \text{m/s}^2$$ Ubrzanje je u smjeru sile, pa je Nikino ubrzanje ulijevo.
+
+Za Saru uvrštavamo \(F=84\ \text{N}\) i \(m=42\ \text{kg}\): $$a_S=\frac{84\ \text{N}}{42\ \text{kg}}=2\ \text{m/s}^2$$ Sarino ubrzanje je udesno. Niko ima veće ubrzanje jer je lakši; sile na njih jednake su, ali djeluju na tijela različitih masa.
+
+## 🌍 Sile na Saru
+
+**c) Na Saru, osim sile kojom je Niko gura, djeluju sila teža prema dolje i normalna sila leda prema gore. Jesu li te dvije sile par akcije i reakcije? Koja je reakcija na gravitacijsku silu kojom Zemlja djeluje na Saru i na koje tijelo djeluje?** Razmatramo sile koje djeluju na Saru te reakcijsku silu gravitacijskog međudjelovanja.
+
+Sila teža i normalna sila djeluju na **isto tijelo**, Saru, ali su različite vrste sila: prva je gravitacijska, a druga kontaktna. Zato nisu par akcije i reakcije, iako su suprotno usmjerene. Par sili kojom Zemlja gravitacijski privlači Saru čini gravitacijska sila kojom Sara privlači Zemlju; ona djeluje na **Zemlju**, a ne na Saru.
+
+## ✅ Rezultati
+
+a) Sara djeluje na Niku silom 84 N ulijevo; sile su istodobne, jednakog iznosa i suprotnog smjera te se ne poništavaju jer djeluju na različita tijela.
+b) \(a_N=3\ \text{m/s}^2\) ulijevo, \(a_S=2\ \text{m/s}^2\) udesno; Niko ima veće ubrzanje.
+c) Sila teža i normalna sila nisu par akcije i reakcije; reakcija na gravitacijsku silu Zemlje na Saru jest gravitacijska sila Sare na Zemlju.
+
+
+################ B04.02 Količina gibanja i impuls sile | 106 s | greska None
+kod: []
+
+######## B04.02 varijacija 1
+--- ZADATAK
+Lopta mase 0,5 kg giba se prema ravnom zidu brzinom 8 m/s udesno. Pri sudaru se elastično odbije, pa joj je brzina nakon sudara 8 m/s ulijevo.
+a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.
+b) Odredi promjenu količine gibanja lopte tijekom odbijanja.
+c) Kolika je prosječna sila zida na loptu ako sudar traje 0,04 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,20 s? Usporedi rezultate.
+d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.
+--- REZ {"a": "4 kg·m/s udesno", "b": "8 kg·m/s ulijevo", "c": "200 N za 0,04 s; 40 N za 0,20 s", "d": "16 J"}
+--- OBJ
+## 🏃 Količina gibanja
+
+**a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.** Zadani su masa lopte 0,5 kg i brzina 8 m/s udesno. **Količina gibanja** opisuje koliko je teško zaustaviti ili skrenuti gibajuće tijelo; poput brzine, ona ima smjer, a njezin smjer jednak je brzine. U knjižici formula, str. 2, poglavlje *Dinamika*, nalazi se:
+
+$$p=mv$$
+
+Uvrštavanjem dobijemo $$p=0{,}5\cdot 8=4\ \text{kg·m/s}.$$ Pozitivan predznak znači da je količina gibanja usmjerena udesno.
+
+## 🧱 Odbijanje od zida
+
+**b) Odredi promjenu količine gibanja lopte tijekom odbijanja.** Pozitivan smjer je udesno, pa je početna brzina 8 m/s, a konačna brzina −8 m/s. Promjena količine gibanja jest konačna količina gibanja umanjena za početnu; smjerovi se zato moraju uračunati predznacima. Uvrstimo u izraz $$\Delta p=mv_2-mv_1:$$
+
+$$\Delta p=0{,}5\cdot(-8)-0{,}5\cdot 8=-8\ \text{kg·m/s}.$$
+
+Negativan predznak znači da je promjena usmjerena ulijevo. Pri elastičnom odbijanju brzina promijeni smjer, pa je iznos promjene dvostruko veći od početne količine gibanja.
+
+## ⏱️ Impuls i trajanje sudara
+
+**c) Kolika je prosječna sila zida na loptu ako sudar traje 0,04 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,20 s? Usporedi rezultate.** U oba slučaja promjena količine gibanja iznosi 8 kg·m/s prema lijevo. **Impuls sile** opisuje učinak sile koja djeluje određeno vrijeme; kao što isti posao može obaviti velika snaga u kratkom vremenu ili manja snaga dulje, isti impuls može nastati velikom silom kratko ili manjom silom dulje. U knjižici formula, str. 2, poglavlje *Dinamika*, piše $$F\Delta t=\Delta p.$$ Za prosječnu silu koristimo iznos promjene količine gibanja i preuredimo:
+
+$$\begin{aligned}F\Delta t&=|\Delta p| && /:\Delta t\\F&=\frac{|\Delta p|}{\Delta t}\end{aligned}$$
+
+Za 0,04 s dobivamo $$F=\frac{8}{0{,}04}=200\ \text{N},$$ a za 0,20 s $$F=\frac{8}{0{,}20}=40\ \text{N}.$$ Dulji sudar traje pet puta dulje, pa je prosječna sila pet puta manja. Zato zračni jastuk ili savijanje koljena pri doskoku smanjuju silu tako što produljuju vrijeme zaustavljanja.
+
+## 🔋 Kinetička energija
+
+**d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.** Neposredno prije sudara iznos količine gibanja lopte je 4 kg·m/s, a masa joj je 0,5 kg. **Kinetička energija** jest energija gibanja. U knjižici formula, str. 2, poglavlje *Dinamika*, nalaze se $$p=mv$$ i $$E_k=\frac{mv^2}{2}.$$ Formula za energiju preko količine gibanja nije zasebno navedena, ali se iz tih formula izvede: iz $$p=mv$$ slijedi $$v=\frac{p}{m},$$ pa $$E_k=\frac{m}{2}\left(\frac{p}{m}\right)^2=\frac{p^2}{2m}.$$ Uvrštavanjem dobijemo $$E_k=\frac{4^2}{2\cdot0{,}5}=16\ \text{J}.$$ Smjer gibanja ne mijenja energiju: lijevo ili desno gibanje s jednakom brzinom ima jednaku kinetičku energiju.
+
+## ✅ Rezultati
+
+a) 4 kg·m/s udesno
+b) 8 kg·m/s ulijevo
+c) 200 N za 0,04 s; 40 N za 0,20 s
+ d) 16 J
+
+######## B04.02 varijacija 2
+--- ZADATAK
+Lopta mase 0,6 kg giba se prema ravnom zidu brzinom 10 m/s udesno. Pri sudaru se elastično odbije, pa joj je brzina nakon sudara 10 m/s ulijevo.
+a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.
+b) Odredi promjenu količine gibanja lopte tijekom odbijanja.
+c) Kolika je prosječna sila zida na loptu ako sudar traje 0,03 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,15 s? Usporedi rezultate.
+d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.
+--- REZ {"a": "6 kg·m/s udesno", "b": "12 kg·m/s ulijevo", "c": "400 N za 0,03 s; 80 N za 0,15 s", "d": "30 J"}
+--- OBJ
+## 🏃 Količina gibanja
+
+**a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.** Zadani su masa lopte 0,6 kg i brzina 10 m/s udesno. **Količina gibanja** opisuje koliko je teško zaustaviti ili skrenuti gibajuće tijelo; poput brzine, ona ima smjer, a njezin smjer jednak je brzine. U knjižici formula, str. 2, poglavlje *Dinamika*, nalazi se:
+
+$$p=mv$$
+
+Uvrštavanjem dobijemo $$p=0{,}6\cdot10=6\ \text{kg·m/s}.$$ Pozitivan predznak znači da je količina gibanja usmjerena udesno.
+
+## 🧱 Odbijanje od zida
+
+**b) Odredi promjenu količine gibanja lopte tijekom odbijanja.** Pozitivan smjer je udesno, pa je početna brzina 10 m/s, a konačna brzina −10 m/s. Promjena količine gibanja jest konačna količina gibanja umanjena za početnu; smjerovi se zato moraju uračunati predznacima. Uvrstimo u izraz $$\Delta p=mv_2-mv_1:$$
+
+$$\Delta p=0{,}6\cdot(-10)-0{,}6\cdot10=-12\ \text{kg·m/s}.$$
+
+Negativan predznak znači da je promjena usmjerena ulijevo. Pri elastičnom odbijanju brzina promijeni smjer, pa je iznos promjene dvostruko veći od početne količine gibanja.
+
+## ⏱️ Impuls i trajanje sudara
+
+**c) Kolika je prosječna sila zida na loptu ako sudar traje 0,03 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,15 s? Usporedi rezultate.** U oba slučaja promjena količine gibanja iznosi 12 kg·m/s prema lijevo. **Impuls sile** opisuje učinak sile koja djeluje određeno vrijeme; kao što isti posao može obaviti velika snaga u kratkom vremenu ili manja snaga dulje, isti impuls može nastati velikom silom kratko ili manjom silom dulje. U knjižici formula, str. 2, poglavlje *Dinamika*, piše $$F\Delta t=\Delta p.$$ Za prosječnu silu koristimo iznos promjene količine gibanja i preuredimo:
+
+$$\begin{aligned}F\Delta t&=|\Delta p| && /:\Delta t\\F&=\frac{|\Delta p|}{\Delta t}\end{aligned}$$
+
+Za 0,03 s dobivamo $$F=\frac{12}{0{,}03}=400\ \text{N},$$ a za 0,15 s $$F=\frac{12}{0{,}15}=80\ \text{N}.$$ Dulji sudar traje pet puta dulje, pa je prosječna sila pet puta manja. Zato zračni jastuk ili savijanje koljena pri doskoku smanjuju silu tako što produljuju vrijeme zaustavljanja.
+
+## 🔋 Kinetička energija
+
+**d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.** Neposredno prije sudara iznos količine gibanja lopte je 6 kg·m/s, a masa joj je 0,6 kg. **Kinetička energija** jest energija gibanja. U knjižici formula, str. 2, poglavlje *Dinamika*, nalaze se $$p=mv$$ i $$E_k=\frac{mv^2}{2}.$$ Formula za energiju preko količine gibanja nije zasebno navedena, ali se iz tih formula izvede: iz $$p=mv$$ slijedi $$v=\frac{p}{m},$$ pa $$E_k=\frac{m}{2}\left(\frac{p}{m}\right)^2=\frac{p^2}{2m}.$$ Uvrštavanjem dobijemo $$E_k=\frac{6^2}{2\cdot0{,}6}=30\ \text{J}.$$ Smjer gibanja ne mijenja energiju: lijevo ili desno gibanje s jednakom brzinom ima jednaku kinetičku energiju.
+
+## ✅ Rezultati
+
+a) 6 kg·m/s udesno
+b) 12 kg·m/s ulijevo
+c) 400 N za 0,03 s; 80 N za 0,15 s
+d) 30 J
+
+######## B04.02 varijacija 3
+--- ZADATAK
+Lopta mase 0,7 kg giba se prema ravnom zidu brzinom 10 m/s udesno. Pri sudaru se elastično odbije, pa joj je brzina nakon sudara 10 m/s ulijevo.
+a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.
+b) Odredi promjenu količine gibanja lopte tijekom odbijanja.
+c) Kolika je prosječna sila zida na loptu ako sudar traje 0,02 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,10 s? Usporedi rezultate.
+d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.
+--- REZ {"a": "7 kg·m/s udesno", "b": "14 kg·m/s ulijevo", "c": "700 N za 0,02 s; 140 N za 0,10 s", "d": "35 J"}
+--- OBJ
+## 🏃 Količina gibanja
+
+**a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.** Zadani su masa lopte 0,7 kg i brzina 10 m/s udesno. **Količina gibanja** opisuje koliko je teško zaustaviti ili skrenuti gibajuće tijelo; poput brzine, ona ima smjer, a njezin smjer jednak je brzine. U knjižici formula, str. 2, poglavlje *Dinamika*, nalazi se:
+
+$$p=mv$$
+
+Uvrštavanjem dobijemo $$p=0{,}7\cdot10=7\ \text{kg·m/s}.$$ Pozitivan predznak znači da je količina gibanja usmjerena udesno.
+
+## 🧱 Odbijanje od zida
+
+**b) Odredi promjenu količine gibanja lopte tijekom odbijanja.** Pozitivan smjer je udesno, pa je početna brzina 10 m/s, a konačna brzina −10 m/s. Promjena količine gibanja jest konačna količina gibanja umanjena za početnu; smjerovi se zato moraju uračunati predznacima. Uvrstimo u izraz $$\Delta p=mv_2-mv_1:$$
+
+$$\Delta p=0{,}7\cdot(-10)-0{,}7\cdot10=-14\ \text{kg·m/s}.$$
+
+Negativan predznak znači da je promjena usmjerena ulijevo. Pri elastičnom odbijanju brzina promijeni smjer, pa je iznos promjene dvostruko veći od početne količine gibanja.
+
+## ⏱️ Impuls i trajanje sudara
+
+**c) Kolika je prosječna sila zida na loptu ako sudar traje 0,02 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,10 s? Usporedi rezultate.** U oba slučaja promjena količine gibanja iznosi 14 kg·m/s prema lijevo. **Impuls sile** opisuje učinak sile koja djeluje određeno vrijeme; kao što isti posao može obaviti velika snaga u kratkom vremenu ili manja snaga dulje, isti impuls može nastati velikom silom kratko ili manjom silom dulje. U knjižici formula, str. 2, poglavlje *Dinamika*, piše $$F\Delta t=\Delta p.$$ Za prosječnu silu koristimo iznos promjene količine gibanja i preuredimo:
+
+$$\begin{aligned}F\Delta t&=|\Delta p| && /:\Delta t\\F&=\frac{|\Delta p|}{\Delta t}\end{aligned}$$
+
+Za 0,02 s dobivamo $$F=\frac{14}{0{,}02}=700\ \text{N},$$ a za 0,10 s $$F=\frac{14}{0{,}10}=140\ \text{N}.$$ Dulji sudar traje pet puta dulje, pa je prosječna sila pet puta manja. Zato zračni jastuk ili savijanje koljena pri doskoku smanjuju silu tako što produljuju vrijeme zaustavljanja.
+
+## 🔋 Kinetička energija
+
+**d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.** Neposredno prije sudara iznos količine gibanja lopte je 7 kg·m/s, a masa joj je 0,7 kg. **Kinetička energija** jest energija gibanja. U knjižici formula, str. 2, poglavlje *Dinamika*, nalaze se $$p=mv$$ i $$E_k=\frac{mv^2}{2}.$$ Formula za energiju preko količine gibanja nije zasebno navedena, ali se iz tih formula izvede: iz $$p=mv$$ slijedi $$v=\frac{p}{m},$$ pa $$E_k=\frac{m}{2}\left(\frac{p}{m}\right)^2=\frac{p^2}{2m}.$$ Uvrštavanjem dobijemo $$E_k=\frac{7^2}{2\cdot0{,}7}=35\ \text{J}.$$ Smjer gibanja ne mijenja energiju: lijevo ili desno gibanje s jednakom brzinom ima jednaku kinetičku energiju.
+
+## ✅ Rezultati
+
+a) 7 kg·m/s udesno
+b) 14 kg·m/s ulijevo
+c) 700 N za 0,02 s; 140 N za 0,10 s
+d) 35 J
+
+######## B04.02 varijacija 4
+--- ZADATAK
+Lopta mase 0,9 kg giba se prema ravnom zidu brzinom 10 m/s udesno. Pri sudaru se elastično odbije, pa joj je brzina nakon sudara 10 m/s ulijevo.
+a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.
+b) Odredi promjenu količine gibanja lopte tijekom odbijanja.
+c) Kolika je prosječna sila zida na loptu ako sudar traje 0,03 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,15 s? Usporedi rezultate.
+d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.
+--- REZ {"a": "9 kg·m/s udesno", "b": "18 kg·m/s ulijevo", "c": "600 N za 0,03 s; 120 N za 0,15 s", "d": "45 J"}
+--- OBJ
+## 🏃 Količina gibanja
+
+**a) Odredi količinu gibanja lopte neposredno prije sudara. Udesno uzmi kao pozitivan smjer.** Zadani su masa lopte 0,9 kg i brzina 10 m/s udesno. **Količina gibanja** opisuje koliko je teško zaustaviti ili skrenuti gibajuće tijelo; poput brzine, ona ima smjer, a njezin smjer jednak je brzine. U knjižici formula, str. 2, poglavlje *Dinamika*, nalazi se:
+
+$$p=mv$$
+
+Uvrštavanjem dobijemo $$p=0{,}9\cdot10=9\ \text{kg·m/s}.$$ Pozitivan predznak znači da je količina gibanja usmjerena udesno.
+
+## 🧱 Odbijanje od zida
+
+**b) Odredi promjenu količine gibanja lopte tijekom odbijanja.** Pozitivan smjer je udesno, pa je početna brzina 10 m/s, a konačna brzina −10 m/s. Promjena količine gibanja jest konačna količina gibanja umanjena za početnu; smjerovi se zato moraju uračunati predznacima. Uvrstimo u izraz $$\Delta p=mv_2-mv_1:$$
+
+$$\Delta p=0{,}9\cdot(-10)-0{,}9\cdot10=-18\ \text{kg·m/s}.$$
+
+Negativan predznak znači da je promjena usmjerena ulijevo. Pri elastičnom odbijanju brzina promijeni smjer, pa je iznos promjene dvostruko veći od početne količine gibanja.
+
+## ⏱️ Impuls i trajanje sudara
+
+**c) Kolika je prosječna sila zida na loptu ako sudar traje 0,03 s? Kolika bi bila prosječna sila kad bi isti sudar trajao 0,15 s? Usporedi rezultate.** U oba slučaja promjena količine gibanja iznosi 18 kg·m/s prema lijevo. **Impuls sile** opisuje učinak sile koja djeluje određeno vrijeme; kao što isti posao može obaviti velika snaga u kratkom vremenu ili manja snaga dulje, isti impuls može nastati velikom silom kratko ili manjom silom dulje. U knjižici formula, str. 2, poglavlje *Dinamika*, piše $$F\Delta t=\Delta p.$$ Za prosječnu silu koristimo iznos promjene količine gibanja i preuredimo:
+
+$$\begin{aligned}F\Delta t&=|\Delta p| && /:\Delta t\\F&=\frac{|\Delta p|}{\Delta t}\end{aligned}$$
+
+Za 0,03 s dobivamo $$F=\frac{18}{0{,}03}=600\ \text{N},$$ a za 0,15 s $$F=\frac{18}{0{,}15}=120\ \text{N}.$$ Dulji sudar traje pet puta dulje, pa je prosječna sila pet puta manja. Zato zračni jastuk ili savijanje koljena pri doskoku smanjuju silu tako što produljuju vrijeme zaustavljanja.
+
+## 🔋 Kinetička energija
+
+**d) Odredi kinetičku energiju lopte neposredno prije sudara koristeći njezinu količinu gibanja.** Neposredno prije sudara iznos količine gibanja lopte je 9 kg·m/s, a masa joj je 0,9 kg. **Kinetička energija** jest energija gibanja. U knjižici formula, str. 2, poglavlje *Dinamika*, nalaze se $$p=mv$$ i $$E_k=\frac{mv^2}{2}.$$ Formula za energiju preko količine gibanja nije zasebno navedena, ali se iz tih formula izvede: iz $$p=mv$$ slijedi $$v=\frac{p}{m},$$ pa $$E_k=\frac{m}{2}\left(\frac{p}{m}\right)^2=\frac{p^2}{2m}.$$ Uvrštavanjem dobijemo $$E_k=\frac{9^2}{2\cdot0{,}9}=45\ \text{J}.$$ Smjer gibanja ne mijenja energiju: lijevo ili desno gibanje s jednakom brzinom ima jednaku kinetičku energiju.
+
+## ✅ Rezultati
+
+a) 9 kg·m/s udesno
+b) 18 kg·m/s ulijevo
+c) 600 N za 0,03 s; 120 N za 0,15 s
+d) 45 J
+
+
+################ B05.03 Zakon očuvanja energije i mehanička energija + Gubici energije | 116 s | greska None
+kod: []
+
+######## B05.03 varijacija 1
+--- ZADATAK
+Kolica mase 4 kg miruju na vrhu glatke staze, 5 m iznad vodoravnoga tla. U dijelu a) i b) nema trenja ni otpora zraka. U dijelu c) kolica nakon dolaska na tlo prelaze na vodoravnu hrapavu dionicu duljine 10 m, gdje je koeficijent trenja klizanja 0,25.
+
+ a) Kolikom brzinom kolica stignu do tla?
+
+ b) Kolikom se brzinom gibaju kada su na visini 3,75 m iznad tla?
+
+ c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?
+--- REZ {"a": "10 m/s", "b": "5 m/s", "c": "100 J pretvorilo se u toplinu; završna brzina je 5√2 m/s ≈ 7,07 m/s. Na glatkoj podlozi brzina bi bila 10 m/s."}
+--- OBJ
+## 🛒 Brzina na dnu staze
+
+**a) Kolikom brzinom kolica stignu do tla?** Kolica mase 4 kg kreću iz mirovanja s visine 5 m, a staza je glatka. **Mehanička energija** zbroj je kinetičke i potencijalne energije; dok nema trenja ni otpora, energija se samo pretvara iz jednog oblika u drugi, kao kad se novčić iz džepa prebaci u drugi džep — ukupna količina ostaje ista.
+
+U knjižici formula, str. 2, poglavlja *Dinamika*, nalaze se izrazi za kinetičku energiju i promjenu gravitacijske potencijalne energije. Usporedimo stanje na vrhu i stanje na tlu: na vrhu kolica miruju, a za tlo uzimamo nultu visinu potencijalne energije.
+
+$$E_{k1}+E_{p1}=E_{k2}+E_{p2}$$
+
+$$0+mgh=\frac{mv^2}{2}+0$$
+
+Masa se skrati, a izraz preuredimo:
+
+$$\begin{aligned} gh &= \frac{v^2}{2} && / \cdot 2 \\ 2gh &= v^2 && / \sqrt{\phantom{x}} \\ v &= \sqrt{2gh} \end{aligned}$$
+
+Uvrštavamo visinu 5 m i uzimamo \(g=10\ \text{m/s}^2\), kako u zadatcima nalaže knjižica formula, str. 5.
+
+$$v=\sqrt{2\cdot10\cdot5\ \text{m}^2/\text{s}^2}=\textcolor{green}{10\ \text{m/s}}$$
+
+Potencijalna energija na vrhu u cijelosti se pretvorila u kinetičku energiju. Masa ne utječe na brzinu jer se skrati u izjednačenju energija.
+
+## 📍 Brzina na međupoložaju
+
+**b) Kolikom se brzinom gibaju kada su na visini 3,75 m iznad tla?** Kolica se i dalje gibaju bez trenja, pa je njihova ukupna mehanička energija jednaka vrijednosti na vrhu.
+
+Na vrhu je energia jednaka \(mgh=4\cdot10\cdot5=200\ \text{J}\). Na visini 3,75 m kolica još imaju gravitacijsku potencijalnu energiju; ostatak ukupne energije je kinetička energija. To je korisno pravilo za međupoložaj: \(E_k=E-E_p\).
+
+$$E_{p}=mgh=4\cdot10\cdot3{,}75=150\ \text{J}$$
+
+$$E_k=200-150=50\ \text{J}$$
+
+Iz knjižice formula, str. 2, vrijedi \(E_k=\frac{mv^2}{2}\). Preuredimo i uvrstimo:
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v^2 &= \frac{2E_k}{m} && / \sqrt{\phantom{x}} \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot50\ \text{J}}{4\ \text{kg}}}=\textcolor{green}{5\ \text{m/s}}$$
+
+Kolica su se spustila za 1,25 m, pa je gravitacijska potencijalna energija koja se izgubila upravo \(4\cdot10\cdot1{,}25=50\ \text{J}\), jednaka njihovoj kinetičkoj energiji na toj visini.
+
+## 🔥 Trenje pretvara energiju u toplinu
+
+**c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?** Kolica ulaze na dionicu brzinom 10 m/s, a hrapava dionica duga je 10 m i ima koeficijent trenja 0,25.
+
+Prvo jedna zamka: trenje ne znači da energija nestaje. U zatvorenom sustavu ukupna energija ostaje stalna, ali se dio mehaničke energije pretvara u toplinu. Na vodoravnoj podlozi normalna sila iznosi \(mg=4\cdot10=40\ \text{N}\); iz izraza za trenje klizanja u knjižici formula, str. 2, dobivamo \(F_{tr}=\mu F_p\).
+
+$$F_{tr}=0{,}25\cdot40=10\ \text{N}$$
+
+Trenje je suprotno gibanju, pa je njegov rad negativan. Prema izrazu za rad u knjižici formula, str. 2, kut između sile trenja i pomaka iznosi 180°:
+
+$$W_{tr}=F_{tr}s\cos180^\circ=10\cdot10\cdot(-1)=-100\ \text{J}$$
+
+Dakle, 100 J mehaničke energije pretvorilo se u toplinu. Početna kinetička energija na dionici je \(\frac{4\cdot10^2}{2}=200\ \text{J}\), pa na kraju ostaje \(200-100=100\ \text{J}\).
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot100\ \text{J}}{4\ \text{kg}}}=\textcolor{green}{5\sqrt{2}\ \text{m/s}\approx7{,}07\ \text{m/s}}$$
+
+Na glatkoj bi podlozi trenje bilo nula, pa bi kolica zadržala brzinu 10 m/s. Ovdje je polovica početne kinetičke energije pretvorena u toplinu, zato je završna brzina manja od početne.
+
+## ✅ Rezultati
+
+a) \(10\ \text{m/s}\)
+b) \(5\ \text{m/s}\)
+c) U toplinu se pretvorilo \(100\ \text{J}\), a završna brzina je \(5\sqrt{2}\ \text{m/s}\approx7{,}07\ \text{m/s}\); na glatkoj podlozi brzina bi bila \(10\ \text{m/s}\).
+
+######## B05.03 varijacija 2
+--- ZADATAK
+Kolica mase 2 kg miruju na vrhu glatke staze, 8 m iznad vodoravnoga tla. U dijelu a) i b) nema trenja ni otpora zraka. U dijelu c) kolica nakon dolaska na tlo prelaze na vodoravnu hrapavu dionicu duljine 8 m, gdje je koeficijent trenja klizanja 0,25.
+
+ a) Kolikom brzinom kolica stignu do tla?
+
+ b) Kolikom se brzinom gibaju kada su na visini 3 m iznad tla?
+
+ c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?
+--- REZ {"a": "4√10 m/s ≈ 12,65 m/s", "b": "10 m/s", "c": "40 J pretvorilo se u toplinu; završna brzina je 2√30 m/s ≈ 10,95 m/s. Na glatkoj podlozi brzina bi bila 4√10 m/s ≈ 12,65 m/s."}
+--- OBJ
+## 🛒 Brzina na dnu staze
+
+**a) Kolikom brzinom kolica stignu do tla?** Kolica mase 2 kg kreću iz mirovanja s visine 8 m, a staza je glatka. **Mehanička energija** zbroj je kinetičke i potencijalne energije; dok nema trenja ni otpora, energija se samo pretvara iz jednog oblika u drugi, kao kad se novčić iz džepa prebaci u drugi džep — ukupna količina ostaje ista.
+
+U knjižici formula, str. 2, poglavlja *Dinamika*, nalaze se izrazi za kinetičku energiju i promjenu gravitacijske potencijalne energije. Usporedimo stanje na vrhu i stanje na tlu: na vrhu kolica miruju, a za tlo uzimamo nultu visinu potencijalne energije.
+
+$$E_{k1}+E_{p1}=E_{k2}+E_{p2}$$
+
+$$0+mgh=\frac{mv^2}{2}+0$$
+
+Masa se skrati, a izraz preuredimo:
+
+$$\begin{aligned} gh &= \frac{v^2}{2} && / \cdot 2 \\ 2gh &= v^2 && / \sqrt{\phantom{x}} \\ v &= \sqrt{2gh} \end{aligned}$$
+
+Uvrštavamo visinu 8 m i uzimamo \(g=10\ \text{m/s}^2\), kako u zadatcima nalaže knjižica formula, str. 5.
+
+$$v=\sqrt{2\cdot10\cdot8\ \text{m}^2/\text{s}^2}=\textcolor{green}{4\sqrt{10}\ \text{m/s}\approx12{,}65\ \text{m/s}}$$
+
+Potencijalna energija na vrhu u cijelosti se pretvorila u kinetičku energiju. Masa ne utječe na brzinu jer se skrati u izjednačenju energija.
+
+## 📍 Brzina na međupoložaju
+
+**b) Kolikom se brzinom gibaju kada su na visini 3 m iznad tla?** Kolica se i dalje gibaju bez trenja, pa je njihova ukupna mehanička energija jednaka vrijednosti na vrhu.
+
+Na vrhu je energija jednaka \(mgh=2\cdot10\cdot8=160\ \text{J}\). Na visini 3 m kolica još imaju gravitacijsku potencijalnu energiju; ostatak ukupne energije je kinetička energija. To je korisno pravilo za međupoložaj: \(E_k=E-E_p\).
+
+$$E_p=mgh=2\cdot10\cdot3=60\ \text{J}$$
+
+$$E_k=160-60=100\ \text{J}$$
+
+Iz knjižice formula, str. 2, vrijedi \(E_k=\frac{mv^2}{2}\). Preuredimo i uvrstimo:
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v^2 &= \frac{2E_k}{m} && / \sqrt{\phantom{x}} \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot100\ \text{J}}{2\ \text{kg}}}=\textcolor{green}{10\ \text{m/s}}$$
+
+Kolica su se spustila za 5 m, pa je gravitacijska potencijalna energija koja se izgubila upravo \(2\cdot10\cdot5=100\ \text{J}\), jednaka njihovoj kinetičkoj energiji na toj visini.
+
+## 🔥 Trenje pretvara energiju u toplinu
+
+**c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?** Kolica ulaze na dionicu brzinom \(4\sqrt{10}\ \text{m/s}\), a hrapava dionica duga je 8 m i ima koeficijent trenja 0,25.
+
+Prvo jedna zamka: trenje ne znači da energija nestaje. U zatvorenom sustavu ukupna energija ostaje stalna, ali se dio mehaničke energije pretvara u toplinu. Na vodoravnoj podlozi normalna sila iznosi \(mg=2\cdot10=20\ \text{N}\); iz izraza za trenje klizanja u knjižici formula, str. 2, dobivamo \(F_{tr}=\mu F_p\).
+
+$$F_{tr}=0{,}25\cdot20=5\ \text{N}$$
+
+Trenje je suprotno gibanju, pa je njegov rad negativan. Prema izrazu za rad u knjižici formula, str. 2, kut između sile trenja i pomaka iznosi 180°:
+
+$$W_{tr}=F_{tr}s\cos180^\circ=5\cdot8\cdot(-1)=-40\ \text{J}$$
+
+Dakle, 40 J mehaničke energije pretvorilo se u toplinu. Početna kinetička energija na dionici je \(\frac{2(4\sqrt{10})^2}{2}=160\ \text{J}\), pa na kraju ostaje \(160-40=120\ \text{J}\).
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot120\ \text{J}}{2\ \text{kg}}}=\textcolor{green}{2\sqrt{30}\ \text{m/s}\approx10{,}95\ \text{m/s}}$$
+
+Na glatkoj bi podlozi trenje bilo nula, pa bi kolica zadržala brzinu \(4\sqrt{10}\ \text{m/s}\approx12{,}65\ \text{m/s}\). Ovdje je 40 J od početnih 160 J pretvoreno u toplinu, zato je završna brzina manja od početne.
+
+## ✅ Rezultati
+
+a) \(4\sqrt{10}\ \text{m/s}\approx12{,}65\ \text{m/s}\)
+b) \(10\ \text{m/s}\)
+c) U toplinu se pretvorilo \(40\ \text{J}\), a završna brzina je \(2\sqrt{30}\ \text{m/s}\approx10{,}95\ \text{m/s}\); na glatkoj podlozi brzina bi bila \(4\sqrt{10}\ \text{m/s}\approx12{,}65\ \text{m/s}\).
+
+######## B05.03 varijacija 3
+--- ZADATAK
+Kolica mase 5 kg miruju na vrhu glatke staze, 4 m iznad vodoravnoga tla. U dijelu a) i b) nema trenja ni otpora zraka. U dijelu c) kolica nakon dolaska na tlo prelaze na vodoravnu hrapavu dionicu duljine 5 m, gdje je koeficijent trenja klizanja 0,2.
+
+ a) Kolikom brzinom kolica stignu do tla?
+
+ b) Kolikom se brzinom gibaju kada su na visini 2 m iznad tla?
+
+ c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?
+--- REZ {"a": "4√5 m/s ≈ 8,94 m/s", "b": "2√10 m/s ≈ 6,32 m/s", "c": "50 J pretvorilo se u toplinu; završna brzina je 2√15 m/s ≈ 7,75 m/s. Na glatkoj podlozi brzina bi bila 4√5 m/s ≈ 8,94 m/s."}
+--- OBJ
+## 🛒 Brzina na dnu staze
+
+**a) Kolikom brzinom kolica stignu do tla?** Kolica mase 5 kg kreću iz mirovanja s visine 4 m, a staza je glatka. **Mehanička energija** zbroj je kinetičke i potencijalne energije; dok nema trenja ni otpora, energija se samo pretvara iz jednog oblika u drugi, kao kad se novčić iz džepa prebaci u drugi džep — ukupna količina ostaje ista.
+
+U knjižici formula, str. 2, poglavlja *Dinamika*, nalaze se izrazi za kinetičku energiju i promjenu gravitacijske potencijalne energije. Usporedimo stanje na vrhu i stanje na tlu: na vrhu kolica miruju, a za tlo uzimamo nultu visinu potencijalne energije.
+
+$$E_{k1}+E_{p1}=E_{k2}+E_{p2}$$
+
+$$0+mgh=\frac{mv^2}{2}+0$$
+
+Masa se skrati, a izraz preuredimo:
+
+$$\begin{aligned} gh &= \frac{v^2}{2} && / \cdot 2 \\ 2gh &= v^2 && / \sqrt{\phantom{x}} \\ v &= \sqrt{2gh} \end{aligned}$$
+
+Uvrštavamo visinu 4 m i uzimamo \(g=10\ \text{m/s}^2\), kako u zadatcima nalaže knjižica formula, str. 5.
+
+$$v=\sqrt{2\cdot10\cdot4\ \text{m}^2/\text{s}^2}=\textcolor{green}{4\sqrt{5}\ \text{m/s}\approx8{,}94\ \text{m/s}}$$
+
+Potencijalna energija na vrhu u cijelosti se pretvorila u kinetičku energiju. Masa ne utječe na brzinu jer se skrati u izjednačenju energija.
+
+## 📍 Brzina na međupoložaju
+
+**b) Kolikom se brzinom gibaju kada su na visini 2 m iznad tla?** Kolica se i dalje gibaju bez trenja, pa je njihova ukupna mehanička energija jednaka vrijednosti na vrhu.
+
+Na vrhu je energija jednaka \(mgh=5\cdot10\cdot4=200\ \text{J}\). Na visini 2 m kolica još imaju gravitacijsku potencijalnu energiju; ostatak ukupne energije je kinetička energija. To je korisno pravilo za međupoložaj: \(E_k=E-E_p\).
+
+$$E_p=mgh=5\cdot10\cdot2=100\ \text{J}$$
+
+$$E_k=200-100=100\ \text{J}$$
+
+Iz knjižice formula, str. 2, vrijedi \(E_k=\frac{mv^2}{2}\). Preuredimo i uvrstimo:
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v^2 &= \frac{2E_k}{m} && / \sqrt{\phantom{x}} \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot100\ \text{J}}{5\ \text{kg}}}=\textcolor{green}{2\sqrt{10}\ \text{m/s}\approx6{,}32\ \text{m/s}}$$
+
+Kolica su se spustila za 2 m, pa je gravitacijska potencijalna energija koja se izgubila upravo \(5\cdot10\cdot2=100\ \text{J}\), jednaka njihovoj kinetičkoj energiji na toj visini.
+
+## 🔥 Trenje pretvara energiju u toplinu
+
+**c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?** Kolica ulaze na dionicu brzinom \(4\sqrt{5}\ \text{m/s}\), a hrapava dionica duga je 5 m i ima koeficijent trenja 0,2.
+
+Prvo jedna zamka: trenje ne znači da energija nestaje. U zatvorenom sustavu ukupna energija ostaje stalna, ali se dio mehaničke energije pretvara u toplinu. Na vodoravnoj podlozi normalna sila iznosi \(mg=5\cdot10=50\ \text{N}\); iz izraza za trenje klizanja u knjižici formula, str. 2, dobivamo \(F_{tr}=\mu F_p\).
+
+$$F_{tr}=0{,}2\cdot50=10\ \text{N}$$
+
+Trenje je suprotno gibanju, pa je njegov rad negativan. Prema izrazu za rad u knjižici formula, str. 2, kut između sile trenja i pomaka iznosi 180°:
+
+$$W_{tr}=F_{tr}s\cos180^\circ=10\cdot5\cdot(-1)=-50\ \text{J}$$
+
+Dakle, 50 J mehaničke energije pretvorilo se u toplinu. Početna kinetička energija na dionici je \(\frac{5(4\sqrt{5})^2}{2}=200\ \text{J}\), pa na kraju ostaje \(200-50=150\ \text{J}\).
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot150\ \text{J}}{5\ \text{kg}}}=\textcolor{green}{2\sqrt{15}\ \text{m/s}\approx7{,}75\ \text{m/s}}$$
+
+Na glatkoj bi podlozi trenje bilo nula, pa bi kolica zadržala brzinu \(4\sqrt{5}\ \text{m/s}\approx8{,}94\ \text{m/s}\). Ovdje je 50 J od početnih 200 J pretvoreno u toplinu, zato je završna brzina manja od početne.
+
+## ✅ Rezultati
+
+a) \(4\sqrt{5}\ \text{m/s}\approx8{,}94\ \text{m/s}\)
+b) \(2\sqrt{10}\ \text{m/s}\approx6{,}32\ \text{m/s}\)
+c) U toplinu se pretvorilo \(50\ \text{J}\), a završna brzina je \(2\sqrt{15}\ \text{m/s}\approx7{,}75\ \text{m/s}\); na glatkoj podlozi brzina bi bila \(4\sqrt{5}\ \text{m/s}\approx8{,}94\ \text{m/s}\).
+
+######## B05.03 varijacija 4
+--- ZADATAK
+Kolica mase 3 kg miruju na vrhu glatke staze, 7 m iznad vodoravnoga tla. U dijelu a) i b) nema trenja ni otpora zraka. U dijelu c) kolica nakon dolaska na tlo prelaze na vodoravnu hrapavu dionicu duljine 10 m, gdje je koeficijent trenja klizanja 0,15.
+
+ a) Kolikom brzinom kolica stignu do tla?
+
+ b) Kolikom se brzinom gibaju kada su na visini 2 m iznad tla?
+
+ c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?
+--- REZ {"a": "2√35 m/s ≈ 11,83 m/s", "b": "10 m/s", "c": "45 J pretvorilo se u toplinu; završna brzina je √110 m/s ≈ 10,49 m/s. Na glatkoj podlozi brzina bi bila 2√35 m/s ≈ 11,83 m/s."}
+--- OBJ
+## 🛒 Brzina na dnu staze
+
+**a) Kolikom brzinom kolica stignu do tla?** Kolica mase 3 kg kreću iz mirovanja s visine 7 m, a staza je glatka. **Mehanička energija** zbroj je kinetičke i potencijalne energije; dok nema trenja ni otpora, energija se samo pretvara iz jednog oblika u drugi, kao kad se novčić iz džepa prebaci u drugi džep — ukupna količina ostaje ista.
+
+U knjižici formula, str. 2, poglavlja *Dinamika*, nalaze se izrazi za kinetičku energiju i promjenu gravitacijske potencijalne energije. Usporedimo stanje na vrhu i stanje na tlu: na vrhu kolica miruju, a za tlo uzimamo nultu visinu potencijalne energije.
+
+$$E_{k1}+E_{p1}=E_{k2}+E_{p2}$$
+
+$$0+mgh=\frac{mv^2}{2}+0$$
+
+Masa se skrati, a izraz preuredimo:
+
+$$\begin{aligned} gh &= \frac{v^2}{2} && / \cdot 2 \\ 2gh &= v^2 && / \sqrt{\phantom{x}} \\ v &= \sqrt{2gh} \end{aligned}$$
+
+Uvrštavamo visinu 7 m i uzimamo \(g=10\ \text{m/s}^2\), kako u zadatcima nalaže knjižica formula, str. 5.
+
+$$v=\sqrt{2\cdot10\cdot7\ \text{m}^2/\text{s}^2}=\textcolor{green}{2\sqrt{35}\ \text{m/s}\approx11{,}83\ \text{m/s}}$$
+
+Potencijalna energija na vrhu u cijelosti se pretvorila u kinetičku energiju. Masa ne utječe na brzinu jer se skrati u izjednačenju energija.
+
+## 📍 Brzina na međupoložaju
+
+**b) Kolikom se brzinom gibaju kada su na visini 2 m iznad tla?** Kolica se i dalje gibaju bez trenja, pa je njihova ukupna mehanička energija jednaka vrijednosti na vrhu.
+
+Na vrhu je energija jednaka \(mgh=3\cdot10\cdot7=210\ \text{J}\). Na visini 2 m kolica još imaju gravitacijsku potencijalnu energiju; ostatak ukupne energije je kinetička energija. To je korisno pravilo za međupoložaj: \(E_k=E-E_p\).
+
+$$E_p=mgh=3\cdot10\cdot2=60\ \text{J}$$
+
+$$E_k=210-60=150\ \text{J}$$
+
+Iz knjižice formula, str. 2, vrijedi \(E_k=\frac{mv^2}{2}\). Preuredimo i uvrstimo:
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v^2 &= \frac{2E_k}{m} && / \sqrt{\phantom{x}} \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot150\ \text{J}}{3\ \text{kg}}}=\textcolor{green}{10\ \text{m/s}}$$
+
+Kolica su se spustila za 5 m, pa je gravitacijska potencijalna energija koja se izgubila upravo \(3\cdot10\cdot5=150\ \text{J}\), jednaka njihovoj kinetičkoj energiji na toj visini.
+
+## 🔥 Trenje pretvara energiju u toplinu
+
+**c) Kolikom se brzinom gibaju na kraju hrapave dionice i koliko se njihove mehaničke energije pretvorilo u toplinu? Bi li na kraju dionice imali istu brzinu da je podloga bila glatka?** Kolica ulaze na dionicu brzinom \(2\sqrt{35}\ \text{m/s}\), a hrapava dionica duga je 10 m i ima koeficijent trenja 0,15.
+
+Prvo jedna zamka: trenje ne znači da energija nestaje. U zatvorenom sustavu ukupna energija ostaje stalna, ali se dio mehaničke energije pretvara u toplinu. Na vodoravnoj podlozi normalna sila iznosi \(mg=3\cdot10=30\ \text{N}\); iz izraza za trenje klizanja u knjižici formula, str. 2, dobivamo \(F_{tr}=\mu F_p\).
+
+$$F_{tr}=0{,}15\cdot30=4{,}5\ \text{N}$$
+
+Trenje je suprotno gibanju, pa je njegov rad negativan. Prema izrazu za rad u knjižici formula, str. 2, kut između sile trenja i pomaka iznosi 180°:
+
+$$W_{tr}=F_{tr}s\cos180^\circ=4{,}5\cdot10\cdot(-1)=-45\ \text{J}$$
+
+Dakle, 45 J mehaničke energije pretvorilo se u toplinu. Početna kinetička energija na dionici je \(\frac{3(2\sqrt{35})^2}{2}=210\ \text{J}\), pa na kraju ostaje \(210-45=165\ \text{J}\).
+
+$$\begin{aligned} E_k &= \frac{mv^2}{2} && / \cdot 2 \\ 2E_k &= mv^2 && / :m \\ v &= \sqrt{\frac{2E_k}{m}} \end{aligned}$$
+
+$$v=\sqrt{\frac{2\cdot165\ \text{J}}{3\ \text{kg}}}=\textcolor{green}{\sqrt{110}\ \text{m/s}\approx10{,}49\ \text{m/s}}$$
+
+Na glatkoj bi podlozi trenje bilo nula, pa bi kolica zadržala brzinu \(2\sqrt{35}\ \text{m/s}\approx11{,}83\ \text{m/s}\). Ovdje je 45 J od početnih 210 J pretvoreno u toplinu, zato je završna brzina manja od početne.
+
+## ✅ Rezultati
+
+a) \(2\sqrt{35}\ \text{m/s}\approx11{,}83\ \text{m/s}\)
+b) \(10\ \text{m/s}\)
+c) U toplinu se pretvorilo \(45\ \text{J}\), a završna brzina je \(\sqrt{110}\ \text{m/s}\approx10{,}49\ \text{m/s}\); na glatkoj podlozi brzina bi bila \(2\sqrt{35}\ \text{m/s}\approx11{,}83\ \text{m/s}\).
+
+
+################ B06.01 Opis jednolikog kružnog gibanja | 76 s | greska None
+kod: []
+
+######## B06.01 varijacija 1
+--- ZADATAK
+Gramofonska ploča vrti se jednoliko, a oznake na njoj kruže oko središta. U prvih 24 s oznaka na rubu napravi 12 punih ophoda. Polumjer ploče je 0,40 m, a druga oznaka nalazi se 0,20 m od središta.
+
+a) Odredi period i frekvenciju vrtnje.
+
+b) Odredi obodnu brzinu oznake na rubu ploče.
+
+c) Odredi kutnu brzinu ploče i obodnu brzinu druge oznake.
+
+d) Ploča se vrti stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.
+--- REZ {"a": "T = 2 s; f = 0,5 Hz", "b": "0,40π m/s ≈ 1,26 m/s", "c": "ω = π rad/s ≈ 3,14 rad/s; v = 0,20π m/s ≈ 0,63 m/s", "d": "Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano."}
+--- OBJ
+## ⏱️ Period i frekvencija
+
+**a) Odredi period i frekvenciju vrtnje.** Zadano je da ploča napravi 12 ophoda u 24 s.
+
+**Period** je vrijeme potrebno za jedan cijeli ophod. Zato ukupno vrijeme podijelimo brojem ophoda:
+
+$$T = \frac{24\ \text{s}}{12} = 2\ \text{s}$$
+
+Frekvencija govori koliko se ophoda dogodi u jednoj sekundi. U **knjižici formula, str. 2**, poglavlju *Kinematika*, nalazi se veza između frekvencije i perioda:
+
+$$f = \frac{1}{T}$$
+
+Uvrstimo period:
+
+$$f = \frac{1}{2\ \text{s}} = 0{,}5\ \text{Hz}$$
+
+Dakle, ploča napravi pola ophoda u sekundi, odnosno jedan cijeli ophod svake dvije sekunde.
+
+## 🟠 Brzina oznake na rubu
+
+**b) Odredi obodnu brzinu oznake na rubu ploče.** Polumjer putanje je 0,40 m, a period je 2 s.
+
+**Obodna brzina** je prijeđeni put po kružnici podijeljen vremenom. U jednom ophodu oznaka prijeđe opseg kružnice; opseg je 2πr. Iz definicije prosječne brzine, koja je zapisana u **knjižici formula, str. 2**, slijedi:
+
+$$v = \frac{2\pi r}{T}$$
+
+Uvrstimo podatke:
+
+$$v = \frac{2\pi \cdot 0{,}40\ \text{m}}{2\ \text{s}} = 0{,}40\pi\ \text{m/s} \approx 1{,}26\ \text{m/s}$$
+
+Oznaka prijeđe oko 1,26 m duž ruba svake sekunde. Njezin put u sekundi veći je od jednog metra, iako se ploča vrti samo pola ophoda u sekundi, jer je rubna putanja dugačka.
+
+## 🔄 Kutna brzina i druga oznaka
+
+**c) Odredi kutnu brzinu ploče i obodnu brzinu druge oznake.** Druga oznaka je na polumjeru 0,20 m, dok period cijele ploče ostaje 2 s.
+
+**Kutna brzina** opisuje koliko se kut zakrene u jedinici vremena. Jednoga ophoda odgovara kut od 2π radijana, pa se u **knjižici formula, str. 4**, nalazi izraz:
+
+$$\omega = \frac{2\pi}{T}$$
+
+Uvrštavanjem perioda dobivamo:
+
+$$\omega = \frac{2\pi}{2\ \text{s}} = \pi\ \text{rad/s} \approx 3{,}14\ \text{rad/s}$$
+
+Sve točke krute ploče imaju jednaku kutnu brzinu jer se zakreću zajedno. Obodna brzina ovisi i o udaljenosti od središta; iz izraza za obodnu brzinu slijedi veza v = ωr:
+
+$$v = \omega r = \pi\ \text{rad/s} \cdot 0{,}20\ \text{m} \approx 0{,}63\ \text{m/s}$$
+
+Druga oznaka ima upola manju obodnu brzinu od oznake na rubu jer joj je polumjer upola manji, a kutna brzina ista.
+
+## 🧭 Stalna brzina, promjenjiv smjer
+
+**d) Ploča se vrti stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.** Oznaka se stalno kreće po kružnici, a iznos njezine brzine ostaje isti.
+
+**Brzina** ima i iznos i smjer. Kod jednolikoga kružnog gibanja iznos brzine je stalan, ali se njezin smjer neprestano mijenja jer je brzina u svakom trenutku tangencijalna na kružnicu. Zato se brzina mijenja, pa je gibanje ubrzano iako se oznaka ne ubrzava u smislu povećavanja iznosa brzine.
+
+## ✅ Rezultati
+
+a) T = 2 s; f = 0,5 Hz  
+b) v = 0,40π m/s ≈ 1,26 m/s  
+c) ω = π rad/s ≈ 3,14 rad/s; v = 0,20π m/s ≈ 0,63 m/s  
+d) Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano.
+
+######## B06.01 varijacija 2
+--- ZADATAK
+Okretna platforma u izložbenom prostoru vrti se jednoliko, a oznake na njoj kruže oko središta. U prvih 20 s oznaka na rubu napravi 20 punih ophoda. Polumjer platforme je 0,30 m, a druga oznaka nalazi se 0,15 m od središta.
+
+a) Odredi period i frekvenciju vrtnje.
+
+b) Odredi obodnu brzinu oznake na rubu platforme.
+
+c) Odredi kutnu brzinu platforme i obodnu brzinu druge oznake.
+
+d) Platforma se vrti stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.
+--- REZ {"a": "T = 1 s; f = 1 Hz", "b": "0,60π m/s ≈ 1,88 m/s", "c": "ω = 2π rad/s ≈ 6,28 rad/s; v = 0,30π m/s ≈ 0,94 m/s", "d": "Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano."}
+--- OBJ
+## ⏱️ Period i frekvencija
+
+**a) Odredi period i frekvenciju vrtnje.** Zadano je da platforma napravi 20 ophoda u 20 s.
+
+**Period** je vrijeme potrebno za jedan cijeli ophod. Zato ukupno vrijeme podijelimo brojem ophoda:
+
+$$T = \frac{20\ \text{s}}{20} = 1\ \text{s}$$
+
+Frekvencija govori koliko se ophoda dogodi u jednoj sekundi. U **knjižici formula, str. 2**, poglavlju *Kinematika*, nalazi se veza između frekvencije i perioda:
+
+$$f = \frac{1}{T}$$
+
+Uvrstimo period:
+
+$$f = \frac{1}{1\ \text{s}} = 1\ \text{Hz}$$
+
+Platforma napravi jedan cijeli ophod svake sekunde.
+
+## 🟠 Brzina oznake na rubu
+
+**b) Odredi obodnu brzinu oznake na rubu platforme.** Polumjer putanje je 0,30 m, a period je 1 s.
+
+**Obodna brzina** je prijeđeni put po kružnici podijeljen vremenom. U jednom ophodu oznaka prijeđe opseg kružnice; opseg je 2πr. Iz definicije prosječne brzine, koja je zapisana u **knjižici formula, str. 2**, slijedi:
+
+$$v = \frac{2\pi r}{T}$$
+
+Uvrstimo podatke:
+
+$$v = \frac{2\pi \cdot 0{,}30\ \text{m}}{1\ \text{s}} = 0{,}60\pi\ \text{m/s} \approx 1{,}88\ \text{m/s}$$
+
+Oznaka prijeđe oko 1,88 m duž ruba svake sekunde. Put je veći od promjera platforme jer oznaka prati cijelu kružnicu.
+
+## 🔄 Kutna brzina i druga oznaka
+
+**c) Odredi kutnu brzinu platforme i obodnu brzinu druge oznake.** Druga oznaka je na polumjeru 0,15 m, dok period cijele platforme ostaje 1 s.
+
+**Kutna brzina** opisuje koliko se kut zakrene u jedinici vremena. Jednoga ophoda odgovara kut od 2π radijana, pa se u **knjižici formula, str. 4**, nalazi izraz:
+
+$$\omega = \frac{2\pi}{T}$$
+
+Uvrštavanjem perioda dobivamo:
+
+$$\omega = \frac{2\pi}{1\ \text{s}} = 2\pi\ \text{rad/s} \approx 6{,}28\ \text{rad/s}$$
+
+Sve točke krute platforme imaju jednaku kutnu brzinu jer se zakreću zajedno. Obodna brzina ovisi i o udaljenosti od središta; iz izraza za obodnu brzinu slijedi veza v = ωr:
+
+$$v = \omega r = 2\pi\ \text{rad/s} \cdot 0{,}15\ \text{m} = 0{,}30\pi\ \text{m/s} \approx 0{,}94\ \text{m/s}$$
+
+Druga oznaka ima upola manju obodnu brzinu od oznake na rubu jer joj je polumjer upola manji, a kutna brzina ista.
+
+## 🧭 Stalna brzina, promjenjiv smjer
+
+**d) Platforma se vrti stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.** Oznaka se stalno kreće po kružnici, a iznos njezine brzine ostaje isti.
+
+**Brzina** ima i iznos i smjer. Kod jednolikoga kružnog gibanja iznos brzine je stalan, ali se njezin smjer neprestano mijenja jer je brzina u svakom trenutku tangencijalna na kružnicu. Zato se brzina mijenja, pa je gibanje ubrzano iako se oznaka ne ubrzava u smislu povećavanja iznosa brzine.
+
+## ✅ Rezultati
+
+a) T = 1 s; f = 1 Hz  
+b) v = 0,60π m/s ≈ 1,88 m/s  
+c) ω = 2π rad/s ≈ 6,28 rad/s; v = 0,30π m/s ≈ 0,94 m/s  
+d) Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano.
+
+######## B06.01 varijacija 3
+--- ZADATAK
+Kotač ukrasnog vrtuljka vrti se jednoliko, a male oznake kruže oko njegove osi. U prvih 27 s oznaka na rubu napravi 18 punih ophoda. Polumjer kotača je 0,45 m, a druga oznaka nalazi se 0,15 m od osi.
+
+a) Odredi period i frekvenciju vrtnje.
+
+b) Odredi obodnu brzinu oznake na rubu kotača.
+
+c) Odredi kutnu brzinu kotača i obodnu brzinu druge oznake.
+
+d) Kotač se vrti stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.
+--- REZ {"a": "T = 1,5 s; f = 2/3 Hz ≈ 0,67 Hz", "b": "0,60π m/s ≈ 1,88 m/s", "c": "ω = 4π/3 rad/s ≈ 4,19 rad/s; v = 0,20π m/s ≈ 0,63 m/s", "d": "Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano."}
+--- OBJ
+## ⏱️ Period i frekvencija
+
+**a) Odredi period i frekvenciju vrtnje.** Zadano je da kotač napravi 18 ophoda u 27 s.
+
+**Period** je vrijeme potrebno za jedan cijeli ophod. Zato ukupno vrijeme podijelimo brojem ophoda:
+
+$$T = \frac{27\ \text{s}}{18} = 1{,}5\ \text{s}$$
+
+Frekvencija govori koliko se ophoda dogodi u jednoj sekundi. U **knjižici formula, str. 2**, poglavlju *Kinematika*, nalazi se veza između frekvencije i perioda:
+
+$$f = \frac{1}{T}$$
+
+Uvrstimo period:
+
+$$f = \frac{1}{1{,}5\ \text{s}} = \frac{2}{3}\ \text{Hz} \approx 0{,}67\ \text{Hz}$$
+
+Kotač napravi oko 0,67 ophoda u sekundi; to odgovara jednom ophodu u 1,5 s.
+
+## 🟠 Brzina oznake na rubu
+
+**b) Odredi obodnu brzinu oznake na rubu kotača.** Polumjer putanje je 0,45 m, a period je 1,5 s.
+
+**Obodna brzina** je prijeđeni put po kružnici podijeljen vremenom. U jednom ophodu oznaka prijeđe opseg kružnice; opseg je 2πr. Iz definicije prosječne brzine, koja je zapisana u **knjižici formula, str. 2**, slijedi:
+
+$$v = \frac{2\pi r}{T}$$
+
+Uvrstimo podatke:
+
+$$v = \frac{2\pi \cdot 0{,}45\ \text{m}}{1{,}5\ \text{s}} = 0{,}60\pi\ \text{m/s} \approx 1{,}88\ \text{m/s}$$
+
+Oznaka prijeđe oko 1,88 m duž ruba svake sekunde. Iako joj je polumjer veći nego u prethodnoj situaciji, sporiji ophod utječe i na njezinu brzinu.
+
+## 🔄 Kutna brzina i druga oznaka
+
+**c) Odredi kutnu brzinu kotača i obodnu brzinu druge oznake.** Druga oznaka je na polumjeru 0,15 m, dok period cijelog kotača ostaje 1,5 s.
+
+**Kutna brzina** opisuje koliko se kut zakrene u jedinici vremena. Jednoga ophoda odgovara kut od 2π radijana, pa se u **knjižici formula, str. 4**, nalazi izraz:
+
+$$\omega = \frac{2\pi}{T}$$
+
+Uvrštavanjem perioda dobivamo:
+
+$$\omega = \frac{2\pi}{1{,}5\ \text{s}} = \frac{4\pi}{3}\ \text{rad/s} \approx 4{,}19\ \text{rad/s}$$
+
+Sve točke krutoga kotača imaju jednaku kutnu brzinu jer se zakreću zajedno. Obodna brzina ovisi i o udaljenosti od osi; iz izraza za obodnu brzinu slijedi veza v = ωr:
+
+$$v = \omega r = \frac{4\pi}{3}\ \text{rad/s} \cdot 0{,}15\ \text{m} = 0{,}20\pi\ \text{m/s} \approx 0{,}63\ \text{m/s}$$
+
+Druga oznaka ima jednu trećinu obodne brzine oznake na rubu jer joj je polumjer jedna trećina polumjera kotača, a kutna brzina ista.
+
+## 🧭 Stalna brzina, promjenjiv smjer
+
+**d) Kotač se vrti stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.** Oznaka se stalno kreće po kružnici, a iznos njezine brzine ostaje isti.
+
+**Brzina** ima i iznos i smjer. Kod jednolikoga kružnog gibanja iznos brzine je stalan, ali se njezin smjer neprestano mijenja jer je brzina u svakom trenutku tangencijalna na kružnicu. Zato se brzina mijenja, pa je gibanje ubrzano iako se oznaka ne ubrzava u smislu povećavanja iznosa brzine.
+
+## ✅ Rezultati
+
+a) T = 1,5 s; f = 2/3 Hz ≈ 0,67 Hz  
+b) v = 0,60π m/s ≈ 1,88 m/s  
+c) ω = 4π/3 rad/s ≈ 4,19 rad/s; v = 0,20π m/s ≈ 0,63 m/s  
+d) Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano.
+
+######## B06.01 varijacija 4
+--- ZADATAK
+Vodoravna vrteška na igralištu okreće se jednoliko, a oznake na njoj kruže oko središnje osovine. U prvih 8 s oznaka na rubu napravi 16 punih ophoda. Polumjer vrteške je 0,25 m, a druga oznaka nalazi se 0,10 m od osovine.
+
+a) Odredi period i frekvenciju vrtnje.
+
+b) Odredi obodnu brzinu oznake na rubu vrteške.
+
+c) Odredi kutnu brzinu vrteške i obodnu brzinu druge oznake.
+
+d) Vrteška se okreće stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.
+--- REZ {"a": "T = 0,5 s; f = 2 Hz", "b": "π m/s ≈ 3,14 m/s", "c": "ω = 4π rad/s ≈ 12,57 rad/s; v = 0,40π m/s ≈ 1,26 m/s", "d": "Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano."}
+--- OBJ
+## ⏱️ Period i frekvencija
+
+**a) Odredi period i frekvenciju vrtnje.** Zadano je da vrteška napravi 16 ophoda u 8 s.
+
+**Period** je vrijeme potrebno za jedan cijeli ophod. Zato ukupno vrijeme podijelimo brojem ophoda:
+
+$$T = \frac{8\ \text{s}}{16} = 0{,}5\ \text{s}$$
+
+Frekvencija govori koliko se ophoda dogodi u jednoj sekundi. U **knjižici formula, str. 2**, poglavlju *Kinematika*, nalazi se veza između frekvencije i perioda:
+
+$$f = \frac{1}{T}$$
+
+Uvrstimo period:
+
+$$f = \frac{1}{0{,}5\ \text{s}} = 2\ \text{Hz}$$
+
+Vrteška napravi dva cijela ophoda u sekundi, što odgovara periodu od pola sekunde.
+
+## 🟠 Brzina oznake na rubu
+
+**b) Odredi obodnu brzinu oznake na rubu vrteške.** Polumjer putanje je 0,25 m, a period je 0,5 s.
+
+**Obodna brzina** je prijeđeni put po kružnici podijeljen vremenom. U jednom ophodu oznaka prijeđe opseg kružnice; opseg je 2πr. Iz definicije prosječne brzine, koja je zapisana u **knjižici formula, str. 2**, slijedi:
+
+$$v = \frac{2\pi r}{T}$$
+
+Uvrstimo podatke:
+
+$$v = \frac{2\pi \cdot 0{,}25\ \text{m}}{0{,}5\ \text{s}} = \pi\ \text{m/s} \approx 3{,}14\ \text{m/s}$$
+
+Oznaka prijeđe oko 3,14 m duž ruba svake sekunde. Kratak period znači da se kružni put prijeđe u kratkom vremenu, pa je obodna brzina velika.
+
+## 🔄 Kutna brzina i druga oznaka
+
+**c) Odredi kutnu brzinu vrteške i obodnu brzinu druge oznake.** Druga oznaka je na polumjeru 0,10 m, dok period cijele vrteške ostaje 0,5 s.
+
+**Kutna brzina** opisuje koliko se kut zakrene u jedinici vremena. Jednoga ophoda odgovara kut od 2π radijana, pa se u **knjižici formula, str. 4**, nalazi izraz:
+
+$$\omega = \frac{2\pi}{T}$$
+
+Uvrštavanjem perioda dobivamo:
+
+$$\omega = \frac{2\pi}{0{,}5\ \text{s}} = 4\pi\ \text{rad/s} \approx 12{,}57\ \text{rad/s}$$
+
+Sve točke krute vrteške imaju jednaku kutnu brzinu jer se zakreću zajedno. Obodna brzina ovisi i o udaljenosti od osovine; iz izraza za obodnu brzinu slijedi veza v = ωr:
+
+$$v = \omega r = 4\pi\ \text{rad/s} \cdot 0{,}10\ \text{m} = 0{,}40\pi\ \text{m/s} \approx 1{,}26\ \text{m/s}$$
+
+Druga oznaka ima 0,4 puta obodnu brzinu oznake na rubu jer joj je polumjer 0,4 puta polumjer vrteške, a kutna brzina ista.
+
+## 🧭 Stalna brzina, promjenjiv smjer
+
+**d) Vrteška se okreće stalnom obodnom brzinom. Ipak, je li gibanje oznake na rubu ubrzano? Objasni zašto.** Oznaka se stalno kreće po kružnici, a iznos njezine brzine ostaje isti.
+
+**Brzina** ima i iznos i smjer. Kod jednolikoga kružnog gibanja iznos brzine je stalan, ali se njezin smjer neprestano mijenja jer je brzina u svakom trenutku tangencijalna na kružnicu. Zato se brzina mijenja, pa je gibanje ubrzano iako se oznaka ne ubrzava u smislu povećavanja iznosa brzine.
+
+## ✅ Rezultati
+
+a) T = 0,5 s; f = 2 Hz  
+b) v = π m/s ≈ 3,14 m/s  
+c) ω = 4π rad/s ≈ 12,57 rad/s; v = 0,40π m/s ≈ 1,26 m/s  
+d) Da; brzina se stalno mijenja po smjeru, pa je gibanje ubrzano.
+
+
+################ B07.01 Newtonov zakon gravitacije | 89 s | greska None
+kod: []
+
+######## B07.01 varijacija 1
+--- ZADATAK
+Na malom planetu polumjera \(6{,}0 \cdot 10^6\ \text{m}\) i mase \(6{,}0 \cdot 10^{24}\ \text{kg}\) nalazi se istraživačka kapsula mase \(600\ \text{kg}\). Za gravitacijsku konstantu uzmite vrijednost iz knjižice formula.
+
+a) Izračunajte gravitacijsku silu kojom planet privlači kapsulu na površini. Navedite smjer te sile i opišite silu kojom kapsula istodobno djeluje na planet.
+
+b) Kapsulu podignemo na visinu \(6{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?
+
+c) Vratimo kapsulu na površinu, ali je smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači kapsulu?
+--- REZ {"a": "6670 N; kapsula djeluje na planet jednakom silom suprotnog smjera.", "b": "1667,5 N; četiri puta manje nego u a).", "c": "3335 N."}
+--- OBJ
+## 🌍 Sila na površini
+
+**Izračunajte gravitacijsku silu kojom planet privlači kapsulu na površini. Navedite smjer te sile i opišite silu kojom kapsula istodobno djeluje na planet.** Zadani su masa planeta \(6{,}0 \cdot 10^{24}\ \text{kg}\), masa kapsule \(600\ \text{kg}\) i polumjer planeta \(6{,}0 \cdot 10^6\ \text{m}\).
+
+Gravitacijska sila je **privlačenje između dvaju tijela koja imaju masu**. Kao kad magnet privlači drugi magnet, i ovdje se tijela privlače; za gravitaciju su važni njihove mase i udaljenost između njihovih središta. U **knjižici formula, str. 2**, poglavlju *Dinamika*, nalazi se Newtonov zakon gravitacije:
+
+$$F_G=G\frac{m_1m_2}{r^2}$$
+
+Na površini je udaljenost kapsule od središta planeta jednaka njegovu polumjeru. Knjižica navodi \(G=6{,}67\cdot10^{-11}\ \text{N kg}^{-2}\text{m}^2\) na str. 5. Uvrstimo mase jačinama desetice i polumjer u metrima:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(6{,}0\cdot10^{24})(600)}{(6{,}0\cdot10^6)^2}=6670\ \text{N}$$
+
+Sila je privlačna i djeluje duž pravca koji spaja središta tijela, pa je sila planeta na kapsulu usmjerena prema središtu planeta. **III. Newtonov zakon** kaže da kapsula istodobno privlači planet silom jednakog iznosa, ali suprotnog smjera. Te dvije sile djeluju na različita tijela, zato se ne poništavaju.
+
+## 🛰️ Udaljenost od središta
+
+**Kapsulu podignemo na visinu \(6{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?** Visina iznad površine jednaka je polumjeru planeta.
+
+Prvo jedna zamka: u zakonu gravitacije \(r\) nije visina iznad površine, nego udaljenost **između središta** planeta i kapsule. Zato na visini \(h\) vrijedi \(r=R+h\). Ovdje je \(r=6{,}0\cdot10^6+6{,}0\cdot10^6=1{,}2\cdot10^7\ \text{m}\).
+
+Upotrijebimo isti zakon gravitacije i iste mase kao u a):
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(6{,}0\cdot10^{24})(600)}{(1{,}2\cdot10^7)^2}=1667{,}5\ \text{N}$$
+
+Udaljenost središta sada je dvostruka, a sila je zato \(4\) puta manja: nazivnik sadrži kvadrat udaljenosti. Doista, \(1667{,}5\ \text{N}\) četvrtina je sile \(6670\ \text{N}\) iz a). Kapsulu i dalje privlači prema središtu planeta.
+
+## 🪐 Drugi planet
+
+**Vratimo kapsulu na površinu, ali je smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači kapsulu?** Masa novog planeta je \(1{,}2\cdot10^{25}\ \text{kg}\), a njegov polumjer \(1{,}2\cdot10^7\ \text{m}\); masa kapsule ostaje \(600\ \text{kg}\).
+
+Na površini planeta udaljenost središta je polumjer planeta, pa se zakon gravitacije može zapisati kao \(F_G=GMm/R^2\). Ova je formula također u **knjižici formula, str. 2**, poglavlju *Dinamika*. Uvrštavanjem podataka za novi planet dobivamo:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(1{,}2\cdot10^{25})(600)}{(1{,}2\cdot10^7)^2}=3335\ \text{N}$$
+
+Masa planeta udvostručila se, ali i njegov polumjer, pa se kvadrat polumjera povećao četiri puta. Zato je sila na površini upola manja nego na prvom planetu. To pokazuje da sila ovisi i o masi planeta i o njegovu polumjeru.
+
+## ✅ Rezultati
+
+a) \(6670\ \text{N}\), usmjerena prema središtu planeta; kapsula djeluje na planet silom \(6670\ \text{N}\) suprotnog smjera.
+b) \(1667{,}5\ \text{N}\), četiri puta manje nego u a).
+c) \(3335\ \text{N}\).
+
+######## B07.01 varijacija 2
+--- ZADATAK
+Na planetu polumjera \(8{,}0 \cdot 10^6\ \text{m}\) i mase \(8{,}0 \cdot 10^{24}\ \text{kg}\) nalazi se istraživačka sonda mase \(400\ \text{kg}\). Za gravitacijsku konstantu uzmite vrijednost iz knjižice formula.
+
+a) Izračunajte gravitacijsku silu kojom planet privlači sondu na površini. Navedite smjer te sile i opišite silu kojom sonda istodobno djeluje na planet.
+
+b) Sondu podignemo na visinu \(8{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?
+
+c) Vratimo sondu na površinu, ali je smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači sondu?
+--- REZ {"a": "3335 N; sonda djeluje na planet jednakom silom suprotnog smjera.", "b": "833,75 N; četiri puta manje nego u a).", "c": "1667,5 N."}
+--- OBJ
+## 🌍 Sila na površini
+
+**Izračunajte gravitacijsku silu kojom planet privlači sondu na površini. Navedite smjer te sile i opišite silu kojom sonda istodobno djeluje na planet.** Zadani su masa planeta \(8{,}0 \cdot 10^{24}\ \text{kg}\), masa sonde \(400\ \text{kg}\) i polumjer planeta \(8{,}0 \cdot 10^6\ \text{m}\).
+
+Gravitacijska sila je **privlačenje između dvaju tijela koja imaju masu**. Kao kad magnet privlači drugi magnet, i ovdje se tijela privlače; za gravitaciju su važni njihove mase i udaljenost između njihovih središta. U **knjižici formula, str. 2**, poglavlju *Dinamika*, nalazi se Newtonov zakon gravitacije:
+
+$$F_G=G\frac{m_1m_2}{r^2}$$
+
+Na površini je udaljenost sonde od središta planeta jednaka njegovu polumjeru. Knjižica navodi \(G=6{,}67\cdot10^{-11}\ \text{N kg}^{-2}\text{m}^2\) na str. 5. Uvrstimo mase i polumjer izražen u metrima:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(8{,}0\cdot10^{24})(400)}{(8{,}0\cdot10^6)^2}=3335\ \text{N}$$
+
+Sila je privlačna i djeluje duž pravca koji spaja središta tijela, pa je sila planeta na sondu usmjerena prema središtu planeta. **III. Newtonov zakon** kaže da sonda istodobno privlači planet silom jednakog iznosa, ali suprotnog smjera. Te dvije sile djeluju na različita tijela, zato se ne poništavaju.
+
+## 🛰️ Udaljenost od središta
+
+**Sondu podignemo na visinu \(8{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?** Visina iznad površine jednaka je polumjeru planeta.
+
+Prvo jedna zamka: u zakonu gravitacije \(r\) nije visina iznad površine, nego udaljenost **između središta** planeta i sonde. Zato na visini \(h\) vrijedi \(r=R+h\). Ovdje je \(r=8{,}0\cdot10^6+8{,}0\cdot10^6=1{,}6\cdot10^7\ \text{m}\).
+
+Upotrijebimo isti zakon gravitacije i iste mase kao u a):
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(8{,}0\cdot10^{24})(400)}{(1{,}6\cdot10^7)^2}=833{,}75\ \text{N}$$
+
+Udaljenost središta sada je dvostruka, a sila je zato \(4\) puta manja: nazivnik sadrži kvadrat udaljenosti. Doista, \(833{,}75\ \text{N}\) četvrtina je sile \(3335\ \text{N}\) iz a). Sondu i dalje privlači prema središtu planeta.
+
+## 🪐 Drugi planet
+
+**Vratimo sondu na površinu, ali je smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači sondu?** Masa novog planeta je \(1{,}6\cdot10^{25}\ \text{kg}\), a njegov polumjer \(1{,}6\cdot10^7\ \text{m}\); masa sonde ostaje \(400\ \text{kg}\).
+
+Na površini planeta udaljenost središta je polumjer planeta, pa se zakon gravitacije može zapisati kao \(F_G=GMm/R^2\). Ova je formula također u **knjižici formula, str. 2**, poglavlju *Dinamika*. Uvrštavanjem podataka za novi planet dobivamo:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(1{,}6\cdot10^{25})(400)}{(1{,}6\cdot10^7)^2}=1667{,}5\ \text{N}$$
+
+Masa planeta udvostručila se, ali i njegov polumjer, pa se kvadrat polumjera povećao četiri puta. Zato je sila na površini upola manja nego na prvom planetu. To pokazuje da sila ovisi i o masi planeta i o njegovu polumjeru.
+
+## ✅ Rezultati
+
+a) \(3335\ \text{N}\), usmjerena prema središtu planeta; sonda djeluje na planet silom \(3335\ \text{N}\) suprotnog smjera.
+b) \(833{,}75\ \text{N}\), četiri puta manje nego u a).
+c) \(1667{,}5\ \text{N}\).
+
+######## B07.01 varijacija 3
+--- ZADATAK
+Na planetu polumjera \(5{,}0 \cdot 10^6\ \text{m}\) i mase \(5{,}0 \cdot 10^{24}\ \text{kg}\) nalazi se istraživački rover mase \(500\ \text{kg}\). Za gravitacijsku konstantu uzmite vrijednost iz knjižice formula.
+
+a) Izračunajte gravitacijsku silu kojom planet privlači rover na površini. Navedite smjer te sile i opišite silu kojom rover istodobno djeluje na planet.
+
+b) Rover podignemo na visinu \(5{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?
+
+c) Vratimo rover na površinu, ali ga smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači rover?
+--- REZ {"a": "6670 N; rover djeluje na planet jednakom silom suprotnog smjera.", "b": "1667,5 N; četiri puta manje nego u a).", "c": "3335 N."}
+--- OBJ
+## 🌍 Sila na površini
+
+**Izračunajte gravitacijsku silu kojom planet privlači rover na površini. Navedite smjer te sile i opišite silu kojom rover istodobno djeluje na planet.** Zadani su masa planeta \(5{,}0 \cdot 10^{24}\ \text{kg}\), masa rovera \(500\ \text{kg}\) i polumjer planeta \(5{,}0 \cdot 10^6\ \text{m}\).
+
+Gravitacijska sila je **privlačenje između dvaju tijela koja imaju masu**. Kao kad magnet privlači drugi magnet, i ovdje se tijela privlače; za gravitaciju su važni njihove mase i udaljenost između njihovih središta. U **knjižici formula, str. 2**, poglavlju *Dinamika*, nalazi se Newtonov zakon gravitacije:
+
+$$F_G=G\frac{m_1m_2}{r^2}$$
+
+Na površini je udaljenost rovera od središta planeta jednaka njegovu polumjeru. Knjižica navodi \(G=6{,}67\cdot10^{-11}\ \text{N kg}^{-2}\text{m}^2\) na str. 5. Uvrstimo mase i polumjer izražen u metrima:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(5{,}0\cdot10^{24})(500)}{(5{,}0\cdot10^6)^2}=6670\ \text{N}$$
+
+Sila je privlačna i djeluje duž pravca koji spaja središta tijela, pa je sila planeta na rover usmjerena prema središtu planeta. **III. Newtonov zakon** kaže da rover istodobno privlači planet silom jednakog iznosa, ali suprotnog smjera. Te dvije sile djeluju na različita tijela, zato se ne poništavaju.
+
+## 🛰️ Udaljenost od središta
+
+**Rover podignemo na visinu \(5{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?** Visina iznad površine jednaka je polumjeru planeta.
+
+Prvo jedna zamka: u zakonu gravitacije \(r\) nije visina iznad površine, nego udaljenost **između središta** planeta i rovera. Zato na visini \(h\) vrijedi \(r=R+h\). Ovdje je \(r=5{,}0\cdot10^6+5{,}0\cdot10^6=1{,}0\cdot10^7\ \text{m}\).
+
+Upotrijebimo isti zakon gravitacije i iste mase kao u a):
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(5{,}0\cdot10^{24})(500)}{(1{,}0\cdot10^7)^2}=1667{,}5\ \text{N}$$
+
+Udaljenost središta sada je dvostruka, a sila je zato \(4\) puta manja: nazivnik sadrži kvadrat udaljenosti. Doista, \(1667{,}5\ \text{N}\) četvrtina je sile \(6670\ \text{N}\) iz a). Rover i dalje privlači prema središtu planeta.
+
+## 🪐 Drugi planet
+
+**Vratimo rover na površinu, ali ga smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači rover?** Masa novog planeta je \(1{,}0\cdot10^{25}\ \text{kg}\), a njegov polumjer \(1{,}0\cdot10^7\ \text{m}\); masa rovera ostaje \(500\ \text{kg}\).
+
+Na površini planeta udaljenost središta je polumjer planeta, pa se zakon gravitacije može zapisati kao \(F_G=GMm/R^2\). Ova je formula također u **knjižici formula, str. 2**, poglavlju *Dinamika*. Uvrštavanjem podataka za novi planet dobivamo:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(1{,}0\cdot10^{25})(500)}{(1{,}0\cdot10^7)^2}=3335\ \text{N}$$
+
+Masa planeta udvostručila se, ali i njegov polumjer, pa se kvadrat polumjera povećao četiri puta. Zato je sila na površini upola manja nego na prvom planetu. To pokazuje da sila ovisi i o masi planeta i o njegovu polumjeru.
+
+## ✅ Rezultati
+
+a) \(6670\ \text{N}\), usmjerena prema središtu planeta; rover djeluje na planet silom \(6670\ \text{N}\) suprotnog smjera.
+b) \(1667{,}5\ \text{N}\), četiri puta manje nego u a).
+c) \(3335\ \text{N}\).
+
+######## B07.01 varijacija 4
+--- ZADATAK
+Na planetu polumjera \(4{,}0 \cdot 10^6\ \text{m}\) i mase \(4{,}0 \cdot 10^{24}\ \text{kg}\) nalazi se istraživačka kapsula mase \(800\ \text{kg}\). Za gravitacijsku konstantu uzmite vrijednost iz knjižice formula.
+
+a) Izračunajte gravitacijsku silu kojom planet privlači kapsulu na površini. Navedite smjer te sile i opišite silu kojom kapsula istodobno djeluje na planet.
+
+b) Kapsulu podignemo na visinu \(4{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?
+
+c) Vratimo kapsulu na površinu, ali je smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači kapsulu?
+--- REZ {"a": "13340 N; kapsula djeluje na planet jednakom silom suprotnog smjera.", "b": "3335 N; četiri puta manje nego u a).", "c": "6670 N."}
+--- OBJ
+## 🌍 Sila na površini
+
+**Izračunajte gravitacijsku silu kojom planet privlači kapsulu na površini. Navedite smjer te sile i opišite silu kojom kapsula istodobno djeluje na planet.** Zadani su masa planeta \(4{,}0 \cdot 10^{24}\ \text{kg}\), masa kapsule \(800\ \text{kg}\) i polumjer planeta \(4{,}0 \cdot 10^6\ \text{m}\).
+
+Gravitacijska sila je **privlačenje između dvaju tijela koja imaju masu**. Kao kad magnet privlači drugi magnet, i ovdje se tijela privlače; za gravitaciju su važni njihove mase i udaljenost između njihovih središta. U **knjižici formula, str. 2**, poglavlju *Dinamika*, nalazi se Newtonov zakon gravitacije:
+
+$$F_G=G\frac{m_1m_2}{r^2}$$
+
+Na površini je udaljenost kapsule od središta planeta jednaka njegovu polumjeru. Knjižica navodi \(G=6{,}67\cdot10^{-11}\ \text{N kg}^{-2}\text{m}^2\) na str. 5. Uvrstimo mase i polumjer izražen u metrima:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(4{,}0\cdot10^{24})(800)}{(4{,}0\cdot10^6)^2}=13340\ \text{N}$$
+
+Sila je privlačna i djeluje duž pravca koji spaja središta tijela, pa je sila planeta na kapsulu usmjerena prema središtu planeta. **III. Newtonov zakon** kaže da kapsula istodobno privlači planet silom jednakog iznosa, ali suprotnog smjera. Te dvije sile djeluju na različita tijela, zato se ne poništavaju.
+
+## 🛰️ Udaljenost od središta
+
+**Kapsulu podignemo na visinu \(4{,}0 \cdot 10^6\ \text{m}\) iznad površine planeta. Kolikom je tada gravitacijskom silom planet privlači i kako se ta sila uspoređuje sa silom iz a)?** Visina iznad površine jednaka je polumjeru planeta.
+
+Prvo jedna zamka: u zakonu gravitacije \(r\) nije visina iznad površine, nego udaljenost **između središta** planeta i kapsule. Zato na visini \(h\) vrijedi \(r=R+h\). Ovdje je \(r=4{,}0\cdot10^6+4{,}0\cdot10^6=8{,}0\cdot10^6\ \text{m}\).
+
+Upotrijebimo isti zakon gravitacije i iste mase kao u a):
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(4{,}0\cdot10^{24})(800)}{(8{,}0\cdot10^6)^2}=3335\ \text{N}$$
+
+Udaljenost središta sada je dvostruka, a sila je zato \(4\) puta manja: nazivnik sadrži kvadrat udaljenosti. Doista, \(3335\ \text{N}\) četvrtina je sile \(13340\ \text{N}\) iz a). Kapsulu i dalje privlači prema središtu planeta.
+
+## 🪐 Drugi planet
+
+**Vratimo kapsulu na površinu, ali je smjestimo na drugi planet koji ima dvostruku masu i dvostruki polumjer prvoga planeta. Kolikom gravitacijskom silom taj planet privlači kapsulu?** Masa novog planeta je \(8{,}0\cdot10^{24}\ \text{kg}\), a njegov polumjer \(8{,}0\cdot10^6\ \text{m}\); masa kapsule ostaje \(800\ \text{kg}\).
+
+Na površini planeta udaljenost središta je polumjer planeta, pa se zakon gravitacije može zapisati kao \(F_G=GMm/R^2\). Ova je formula također u **knjižici formula, str. 2**, poglavlju *Dinamika*. Uvrštavanjem podataka za novi planet dobivamo:
+
+$$F_G=6{,}67\cdot10^{-11}\frac{(8{,}0\cdot10^{24})(800)}{(8{,}0\cdot10^6)^2}=6670\ \text{N}$$
+
+Masa planeta udvostručila se, ali i njegov polumjer, pa se kvadrat polumjera povećao četiri puta. Zato je sila na površini upola manja nego na prvom planetu. To pokazuje da sila ovisi i o masi planeta i o njegovu polumjeru.
+
+## ✅ Rezultati
+
+a) \(13340\ \text{N}\), usmjerena prema središtu planeta; kapsula djeluje na planet silom \(13340\ \text{N}\) suprotnog smjera.
+b) \(3335\ \text{N}\), četiri puta manje nego u a).
+c) \(6670\ \text{N}\).
+
+
+################ B07.04 Period, Keplerovi zakoni i masa središnjeg tijela | 140 s | greska None
+kod: ['v1: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v2: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v3: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.', 'v4: Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.']
+
+######## B07.04 varijacija 1
+--- ZADATAK
+Svemirska agencija šalje istraživački satelit u kružnu orbitu oko zamišljenog planeta. Polumjer orbite mjeri se od središta planeta.
+
+**a)** Satelit je na polumjeru orbite 8 000 km i jedan ophod traje 2 h. Kolika mu je obodna brzina?
+
+**b)** Odredi masu planeta iz podataka o orbiti iz a).
+
+**c)** Drugi satelit kruži oko istog planeta na polumjeru dvostruko većem nego u a). Koliki mu je period? Planetolog zatim kaže da planeti oko Sunca putuju po elipsama. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.
+
+**d)** Agencija zatim razmatra geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?
+--- REZ {"a": "6 978 m/s", "b": "5,84 · 10²⁴ kg", "c": "Katso ratkaisu: periodi noin 5,66 h; perihelissä planeetta liikkuu nopeammin, ja yhtä suurina aikoina radijvektori pyyhkäisee yhtä suuret pinta-alat."}
+--- OBJ
+## 🛰️ Brzina satelita
+
+**a) Satelit je na polumjeru orbite 8 000 km i jedan ophod traje 2 h. Kolika mu je obodna brzina?** Zadani su polumjer kružne orbite i vrijeme jednog ophoda, odnosno period.
+
+Prvo pretvorimo jedinice: polumjer je 8 000 km = 8 000 000 m, a period je 2 h = 7 200 s. Satelit u jednom ophodu prijeđe opseg kružnice, pa je njegova obodna brzina opseg podijeljen vremenom ophoda. Formula se dobiva iz definicije brzine i opsega kružnice:
+
+$$v=\frac{2\pi r}{T}$$
+
+Uvrštavamo podatke, uz \(\pi\approx3{,}14\):
+
+$$v=\frac{2\cdot3{,}14\cdot8\,000\,000\ \text{m}}{7\,200\ \text{s}}\approx6\,978\ \text{m/s}$$
+
+Satelit se giba velikom brzinom, ali gravitacija mu stalno mijenja smjer brzine prema središtu planeta; zato može kružiti, a da mu se iznos brzine ne mijenja.
+
+## 🌍 Masa planeta
+
+**b) Odredi masu planeta iz podataka o orbiti iz a).** Poznati su polumjer orbite i period satelita; koristimo gravitacijsku konstantu \(G=6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2\), iz **knjižice formula, str. 5**.
+
+Gravitacija je sila koja drži satelit u kruženju, odnosno daje mu centripetalnu silu. Izjednačivanjem gravitacijske sile i centripetalne sile dobiva se treći Keplerov zakon za isto središnje tijelo:
+
+$$\frac{GMm}{r^2}=\frac{m4\pi^2r}{T^2}\quad\Longrightarrow\quad T^2=\frac{4\pi^2r^3}{GM}$$
+
+Masa satelita \(m\) poništi se: rezultat ne ovisi o tome koliko je satelit težak. Iz dobivene jednadžbe izoliramo masu planeta:
+
+$$\begin{aligned}T^2&=\frac{4\pi^2r^3}{GM}&&/\cdot GM\\GMT^2&=4\pi^2r^3&&/:GT^2\\M&=\frac{4\pi^2r^3}{GT^2}\end{aligned}$$
+
+Uvrštavamo metre i sekunde, ne kilometre i sate:
+
+$$M=\frac{4\cdot3{,}14^2\cdot(8\,000\,000\ \text{m})^3}{(6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2)(7\,200\ \text{s})^2}\approx5{,}84\cdot10^{24}\ \text{kg}$$
+
+Masa je sukladna planetu velikog reda veličine: gravitacija koja uzrokuje kruženje ovisi tässä ratkaisevasti keski- ja etäisyydestä.
+
+######## B07.04 varijacija 2
+--- ZADATAK
+Svemistö kehittää luotainta, joka kiertää kuvitteellista planeettaa nimeltä Nera. Polumjer orbite mjeri se od središta planeta.
+
+**a)** Luotaj je na polumjeru orbite 9 000 km i jedan ophod traje 2,5 h. Kolika mu je obodna brzina?
+
+**b)** Odredi masu Nere iz podataka o orbiti iz a).
+
+**c)** Drugi luotaj kruži oko Nere na polumjeru dvostruko većem nego u a). Koliki mu je period? Znanstvenica uspoređuje gibanje s planetima koji oko Sunca putuju po elipsama. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.
+
+**d)** Zatim se razmatra geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?
+--- REZ {"a": "6 280 m/s", "b": "5,32 · 10²⁴ kg", "c": "25 456 s eli noin 7,07 h; perihelissä planeetta liikkuu nopeammin ja yhtä suurina aikoina pyyhkäistään yhtä suuret pinta-alat.", "d": "4,23 · 10⁷ m Zemljina središta; mora kružiti iznad ekvatora, u smjeru Zemljine vrtnje, uz period od 24 h."}
+--- OBJ
+## 🛰️ Brzina luotaja
+
+**a) Luotaj je na polumjeru orbite 9 000 km i jedan ophod traje 2,5 h. Kolika mu je obodna brzina?** Zadani su polumjer kružne orbite i period, odnosno vrijeme jednog ophoda.
+
+Pretvorimo jedinice: 9 000 km = 9 000 000 m, a 2,5 h = 9 000 s. U jednom ophodu luotaj prijeđe opseg orbite, pa brzinu računamo kao opseg podijeljen periodom. Iz definicije brzine i opsega kružnice slijedi:
+
+$$v=\frac{2\pi r}{T}$$
+
+Uz \(\pi\approx3{,}14\), uvrštavamo podatke:
+
+$$v=\frac{2\cdot3{,}14\cdot9\,000\,000\ \text{m}}{9\,000\ \text{s}}=6\,280\ \text{m/s}$$
+
+Gravitacija mu stalno mijenja smjer brzine prema središtu Nere, a ne njezin iznos. Zato luotaj može održavati kružnu orbitu stalnom brzinom.
+
+## 🌍 Masa Nere
+
+**b) Odredi masu Nere iz podataka o orbiti iz a).** Polumjer i period poznati su iz prethodnog koraka; gravitacijska konstanta je \(G=6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2\), iz **knjižice formula, str. 5**.
+
+Gravitacijska sila daje centripetalnu silu potrebnu za kruženje. Izjednačimo ih i uporabimo da je period vrijeme jednog punog ophoda:
+
+$$\frac{GMm}{r^2}=\frac{m4\pi^2r}{T^2}\quad\Longrightarrow\quad T^2=\frac{4\pi^2r^3}{GM}$$
+
+Masa luotaja skrati se jer se na njega odnose obje sile. Preuredimo jednadžbu kako bismo dobili masu središnjeg tijela:
+
+$$\begin{aligned}T^2&=\frac{4\pi^2r^3}{GM}&&/\cdot GM\\GMT^2&=4\pi^2r^3&&/:GT^2\\M&=\frac{4\pi^2r^3}{GT^2}\end{aligned}$$
+
+Koristimo SI jedinice: \(r=9\,000\,000\ \text{m}\) i \(T=9\,000\ \text{s}\). Uvrštavanje daje:
+
+$$M=\frac{4\cdot3{,}14^2\cdot(9\,000\,000\ \text{m})^3}{(6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2)(9\,000\ \text{s})^2}\approx5{,}32\cdot10^{24}\ \text{kg}$$
+
+Primijeti da masa luotaja nije potrebna. Za istu orbitu i isti period izračunali bismo jednaku masu središnjeg tijela i za lakši ili teži luotaj.
+
+## 🪐 Drugi satelit i Keplerovi zakoni
+
+**c) Drugi luotaj kruži oko Nere na polumjeru dvostruko većem nego u a). Koliki mu je period? Znanstvenica uspoređuje gibanje s planetima koji oko Sunca putuju po elipsama. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.** Zadani polumjer drugog luotaja dvostruk je od prvoga, a Nera je i dalje isto središnje tijelo.
+
+Za isto središnje tijelo vrijedi treći Keplerov zakon: omjer \(T^2/r^3\) je stalan. Zato usporedimo orbite, bez potrebe da ponovno računamo masu Nere:
+
+$$\frac{T_2^2}{T_1^2}=\frac{r_2^3}{r_1^3}=2^3=8\quad\Longrightarrow\quad T_2=T_1\sqrt{8}$$
+
+Prvi period bio je \(T_1=9\,000\ \text{s}\), pa je:
+
+$$T_2=9\,000\ \text{s}\cdot\sqrt{8}\approx25\,456\ \text{s}\approx7{,}07\ \text{h}$$
+
+Veća orbita ima dulji period; kad se polumjer udvostruči, period postane približno 2,83 puta dulji. Keplerov prvi zakon kaže da su putanje planeta elipse, a Sunce je u jednom žarištu. Prema drugom zakonu radijvektor, crta koja spaja planet i Sunce, u jednakim vremenskim razmacima obuhvati jednaku površinu; zato se planet u perihelu, najbližoj točki Suncu, giba brže nego u udaljenijim dijelovima putanje. Zemljin period oko Sunca iznosi jednu godinu.
+
+## 🌐 Geostacionarni satelit
+
+**d) Zatim se razmatra geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?** Geostacionarni satelit ima period 24 h; za Zemlju uzimamo masu \(6\cdot10^{24}\ \text{kg}\), a \(G\) je iz **knjižice formula, str. 5**.
+
+Pretvorimo period: 24 h = 86 400 s. Koristimo jednadžbu za masu središnjeg tijela ja ratkaistaan siitä säde:
+
+$$M=\frac{4\pi^2r^3}{GT^2}\quad\Longrightarrow\quad r^3=\frac{GMT^2}{4\pi^2}\quad\Longrightarrow\quad r=\sqrt[3]{\frac{GMT^2}{4\pi^2}}$$
+
+Uvrštavanjem dobivamo:
+
+$$r=\sqrt[3]{\frac{(6{,}67\cdot10^{-11})(6\cdot10^{24})(86\,400)^2}{4\cdot3{,}14^2}}\ \text{m}\approx4{,}23\cdot10^7\ \text{m}$$
+
+Dakle, orbita je približno 42 300 km od središta Zemlje. Satelit mora kružiti iznad ekvatora, u istom smjeru u kojem se Zemlja vrti, ja sen periodin on oltava 24 h. Silloin sen kulmanopeus on sama kuin maanpinnan pisteellä, joten se pysyy saman pisteen yläpuolella.
+
+######## B07.04 varijacija 3
+--- ZADATAK
+Istraživački satelit kruži oko zamišljenog planeta Oriona. Polumjer orbite mjeri se od središta planeta.
+
+**a)** Satelit je na polumjeru orbite 7 000 km i jedan ophod traje 1,5 h. Kolika mu je obodna brzina?
+
+**b)** Odredi masu Oriona iz podataka o orbiti iz a).
+
+**c)** Drugi satelit kruži oko Oriona na polumjeru dvostruko većem nego u a). Koliki mu je period? Astronom objašnjava da planeti oko Sunca putuju po elipsama. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.
+
+**d)** Posada razmatra geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?
+--- REZ {"a": "8 141 m/s", "b": "6,95 · 10²⁴ kg", "c": "15 274 s eli noin 4,24 h; perihelissä planeetta liikkuu nopeammin ja yhtä suurina aikoina pyyhkäistään yhtä suuret pinta-alat.", "d": "4,23 · 10⁷ m Zemljina središta; mora kružiti iznad ekvatora, u smjeru Zemljine vrtnje, uz period od 24 h."}
+--- OBJ
+## 🛰️ Brzina satelita
+
+**a) Satelit je na polumjeru orbite 7 000 km i jedan ophod traje 1,5 h. Kolika mu je obodna brzina?** Poznati su polumjer kružne orbite i period satelita.
+
+Najprije pretvaramo jedinice: 7 000 km = 7 000 000 m, a 1,5 h = 5 400 s. Satelit u jednom ophodu prijeđe opseg kružnice, pa je obodna brzina taj put podijeljen periodom. Iz definicije brzine i opsega kružnice slijedi:
+
+$$v=\frac{2\pi r}{T}$$
+
+Uz \(\pi\approx3{,}14\), uvrštavamo vrijednosti:
+
+$$v=\frac{2\cdot3{,}14\cdot7\,000\,000\ \text{m}}{5\,400\ \text{s}}\approx8\,141\ \text{m/s}$$
+
+U jednolikom kruženju brzina je tangencijalna, a gravitacijska sila usmjerena je prema središtu orbite. Ta sila mijenja smjer brzine i omogućuje satelitu da ne odleti pravocrtno.
+
+## 🌍 Masa Oriona
+
+**b) Odredi masu Oriona iz podataka o orbiti iz a).** Za satelit znamo polumjer orbite i period; gravitacijska konstanta je \(G=6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2\), iz **knjižice formula, str. 5**.
+
+Gravitacija osigurava centripetalnu silu. Izjednačimo gravitacijsku silu s centripetalnom silom za jedan ophod:
+
+$$\frac{GMm}{r^2}=\frac{m4\pi^2r}{T^2}\quad\Longrightarrow\quad T^2=\frac{4\pi^2r^3}{GM}$$
+
+Masa satelita pojavljuje se na obje strane i skrati se. Izoliramo masu središnjeg planeta korak po koraku:
+
+$$\begin{aligned}T^2&=\frac{4\pi^2r^3}{GM}&&/\cdot GM\\GMT^2&=4\pi^2r^3&&/:GT^2\\M&=\frac{4\pi^2r^3}{GT^2}\end{aligned}$$
+
+Vrijednosti uvrštavamo u SI jedinicama: \(r=7\,000\,000\ \text{m}\), \(T=5\,400\ \text{s}\).
+
+$$M=\frac{4\cdot3{,}14^2\cdot(7\,000\,000\ \text{m})^3}{(6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2)(5\,400\ \text{s})^2}\approx6{,}95\cdot10^{24}\ \text{kg}$$
+
+Masa satelita ne utječe na dobiveni rezultat. Za isto središnje tijelo, udaljenost i period određuju masu planeta.
+
+## 🪐 Drugi satelit i Keplerovi zakoni
+
+**c) Drugi satelit kruži oko Oriona na polumjeru dvostruko većem nego u a). Koliki mu je period? Astronom objašnjava da planeti oko Sunca putuju po elipsama. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.** Drugi satelit i dalje kruži oko istog planeta, ali mu je polumjer dvostruk.
+
+Treći Keplerov zakon kaže da je za isto središnje tijelo omjer \(T^2/r^3\) stalan. Usporedimo period i polumjer dviju orbita:
+
+$$\frac{T_2^2}{T_1^2}=\frac{r_2^3}{r_1^3}=2^3=8\quad\Longrightarrow\quad T_2=T_1\sqrt{8}$$
+
+Sada uvrštavamo period prvog satelita, \(T_1=5\,400\ \text{s}\):
+
+$$T_2=5\,400\ \text{s}\cdot\sqrt{8}\approx15\,274\ \text{s}\approx4{,}24\ \text{h}$$
+
+Kad je polumjer dvostruk, period nije dvostruk nego se pomnoži s \(\sqrt{8}\), odnosno približno 2,83. Keplerov prvi zakon opisuje planetarne putanje kao elipse sa Suncem u jednom žarištu. Prema drugom zakonu radijvektor u jednakim vremenskim razmacima obuhvati jednake površine, pa planet prolazi perihel brže nego udaljenije dijelove svoje putanje. Zemlja obiđe Sunce za jednu godinu.
+
+## 🌐 Geostacionarni satelit
+
+**d) Posada razmatra geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?** Za geostacionarni satelit period je 24 h; masa Zemlje je \(6\cdot10^{24}\ \text{kg}\), a gravitacijska konstanta nalazi se u **knjižici formula, str. 5**.
+
+Pretvaramo period: 24 h = 86 400 s. Iz formule za masu središnjeg tijela preuredimo izraz za polumjer:
+
+$$M=\frac{4\pi^2r^3}{GT^2}\quad\Longrightarrow\quad r^3=\frac{GMT^2}{4\pi^2}\quad\Longrightarrow\quad r=\sqrt[3]{\frac{GMT^2}{4\pi^2}}$$
+
+Uvrštavamo podatke u SI jedinicama:
+
+$$r=\sqrt[3]{\frac{(6{,}67\cdot10^{-11})(6\cdot10^{24})(86\,400)^2}{4\cdot3{,}14^2}}\ \text{m}\approx4{,}23\cdot10^7\ \text{m}$$
+
+Polumjer orbite iznosi približno 42 300 km od središta Zemlje. Da bi satelit ostao iznad iste točke, mora biti na kružnoj orbiti iznad ekvatora, gibati se u smjeru Zemljine vrtnje i imati period 24 h. Tada se satelit i točka na Zemlji zakreću jednakom kutnom brzinom.
+
+######## B07.04 varijacija 4
+--- ZADATAK
+Svemirska agencija prati satelit koji kruži oko zamišljenog planeta Vela. Polumjer orbite mjeri se od središta planeta.
+
+**a)** Satelit je na polumjeru orbite 10 000 km i jedan ophod traje 3 h. Kolika mu je obodna brzina?
+
+**b)** Odredi masu Vele iz podataka o orbiti iz a).
+
+**c)** Drugi satelit kruži oko Vele na polumjeru dvostruko većem nego u a). Koliki mu je period? Istraživač uspoređuje orbite planeta oko Sunca, koje su eliptične. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.
+
+**d)** Agencija zatim želi postaviti geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?
+--- REZ {"a": "5 815 m/s", "b": "5,07 · 10²⁴ kg", "c": "30 548 s eli noin 8,49 h; perihelissä planeetta liikkuu nopeammin ja yhtä suurina aikoina pyyhkäistään yhtä suuret pinta-alat.", "d": "4,23 · 10⁷ m Zemljina središta; mora kružiti iznad ekvatora, u smjeru Zemljine vrtnje, uz period od 24 h."}
+--- OBJ
+## 🛰️ Brzina satelita
+
+**a) Satelit je na polumjeru orbite 10 000 km i jedan ophod traje 3 h. Kolika mu je obodna brzina?** Zadani su polumjer i vrijeme jednog ophoda, odnosno period.
+
+Pretvaramo podatke u osnovne jedinice: 10 000 km = 10 000 000 m, a 3 h = 10 800 s. U jednom ophodu satelit prijeđe opseg kružnice; obodna brzina jednaka je tom putu podijeljenom periodom:
+
+$$v=\frac{2\pi r}{T}$$
+
+Uz \(\pi\approx3{,}14\), uvrštavamo vrijednosti:
+
+$$v=\frac{2\cdot3{,}14\cdot10\,000\,000\ \text{m}}{10\,800\ \text{s}}\approx5\,815\ \text{m/s}$$
+
+Iznos brzine može ostati stalan dok se njezin smjer mijenja. Gravitacijska sila prema središtu planeta upravo je ono što satelitu stalno mijenja smjer i drži ga u kružnoj orbiti.
+
+## 🌍 Masa Vele
+
+**b) Odredi masu Vele iz podataka o orbiti iz a).** Znamo polumjer orbite i period; vrijednost gravitacijske konstante \(G=6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2\) dana je u **knjižici formula, str. 5**.
+
+Gravitacijska sila na satelit osigurava centripetalnu silu. Izjednačimo sile i upotrijebimo period za opis kruženja:
+
+$$\frac{GMm}{r^2}=\frac{m4\pi^2r}{T^2}\quad\Longrightarrow\quad T^2=\frac{4\pi^2r^3}{GM}$$
+
+Masa satelita pojavljuje se s obje strane jednakosti i skrati se. Preuredimo dobivenu vezu kako bismo izračunali masu Vele:
+
+$$\begin{aligned}T^2&=\frac{4\pi^2r^3}{GM}&&/\cdot GM\\GMT^2&=4\pi^2r^3&&/:GT^2\\M&=\frac{4\pi^2r^3}{GT^2}\end{aligned}$$
+
+Uvrštavamo polumjer \(10\,000\,000\ \text{m}\) i period \(10\,800\ \text{s}\):
+
+$$M=\frac{4\cdot3{,}14^2\cdot(10\,000\,000\ \text{m})^3}{(6{,}67\cdot10^{-11}\ \text{N m}^2\text{/kg}^2)(10\,800\ \text{s})^2}\approx5{,}07\cdot10^{24}\ \text{kg}$$
+
+Satelit služi kao pokazivač mase planeta: njegova vlastita masa ne mijenja rezultat jer se poništi pri izjednačavanju sila.
+
+## 🪐 Drugi satelit i Keplerovi zakoni
+
+**c) Drugi satelit kruži oko Vele na polumjeru dvostruko većem nego u a). Koliki mu je period? Istraživač uspoređuje orbite planeta oko Sunca, koje su eliptične. Što se događa s brzinom planeta blizu perihela i što znači da radijvektor u jednakim vremenima opisuje jednake površine? Zemlja obiđe Sunce za jednu godinu.** Polumjer druge orbite dvostruk je, a središnje tijelo ostaje isto.
+
+Treći Keplerov zakon kaže da je omjer \(T^2/r^3\) stalan za tijela koja kruže oko istog središnjeg tijela. Uspoređujući dvije orbite, dobivamo:
+
+$$\frac{T_2^2}{T_1^2}=\frac{r_2^3}{r_1^3}=2^3=8\quad\Longrightarrow\quad T_2=T_1\sqrt{8}$$
+
+Za prvi satelit vrijedi \(T_1=10\,800\ \text{s}\), pa je period drugoga:
+
+$$T_2=10\,800\ \text{s}\cdot\sqrt{8}\approx30\,548\ \text{s}\approx8{,}49\ \text{h}$$
+
+Udvajanje polumjera povećava period približno 2,83 puta, jer se u Keplerovu zakonu pojavljuje kub polumjera. Prvi Keplerov zakon kaže da se planeti gibaju po elipsama sa Suncem u jednom žarištu. Drugi kaže da radijvektor u jednakim vremenima opisuje jednake površine; blizu perihela, gdje je planet najbliže Suncu, mora se gibati brže. Zemljin period oko Sunca iznosi jednu godinu.
+
+## 🌐 Geostacionarni satelit
+
+**d) Agencija zatim želi postaviti geostacionarni satelit oko Zemlje. Odredi polumjer njegove kružne orbite od središta Zemlje. Koje uvjete mora ispuniti da bi stalno bio iznad iste točke na Zemlji?** Satelit mora imati period 24 h; masa Zemlje je \(6\cdot10^{24}\ \text{kg}\), a \(G\) se nalazi u **knjižici formula, str. 5**.
+
+Period pretvorimo u sekunde: 24 h = 86 400 s. Preuredimo izraz za masu središnjeg tijela tako da ostane polumjer orbite:
+
+$$M=\frac{4\pi^2r^3}{GT^2}\quad\Longrightarrow\quad r^3=\frac{GMT^2}{4\pi^2}\quad\Longrightarrow\quad r=\sqrt[3]{\frac{GMT^2}{4\pi^2}}$$
+
+Uvrštavamo Zemljinu masu i period:
+
+$$r=\sqrt[3]{\frac{(6{,}67\cdot10^{-11})(6\cdot10^{24})(86\,400)^2}{4\cdot3{,}14^2}}\ \text{m}\approx4{,}23\cdot10^7\ \text{m}$$
+
+Polumjer iznosi približno 42 300 km od središta Zemlje. Geostacionarni satelit mora kružiti iznad ekvatora u smjeru Zemljine vrtnje i imati period 24 h. Tako mu je kutna brzina jednaka kutnoj brzini Zemljine vrtnje pa ostaje iznad iste točke.

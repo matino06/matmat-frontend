@@ -227,3 +227,17 @@ Ali zadaci su **jednostavniji i objašnjenja kraća** nego kod Haikua xhigh:
 |---|---|---|---|
 | Haiku xhigh 1. + Haiku medium po predlošku | 9/1/0 + 17/12/1 | 3,33 c + 3 × 0,50 c | 4,83 c |
 | **Sol low, sve 4 u jednom pozivu** | **38/2/0** | **2,74 c** | **10,95 c** (~14,8 $ za 135 lekcija) |
+
+## GPT-6 Luna Pro (medium) u jednom pozivu piše sve 4 varijacije (`sol4_write.py`, `MODEL=openai/gpt-6-luna-pro TAG=lunapro4`)
+
+Isti prompt kao Sol. 10/10 poziva uspjelo, svaki 4 varijacije. **1,32 c po lekciji = 0,33 c po varijaciji** (0,1 $/M ulaz, 0,5 $/M izlaz); 76–146 s po lekciji; izlaz 14–27 k tokena (razmišljanje 3,5–8,8 k).
+
+**Računi: točni u svih 40** (B07.04 v1 nema rezultat za d), a koristi π = 3,14). Ali tekst:
+
+- **Strani jezik u tekstu za učenika (10/40 ❌):** finski usred hrvatskih rečenica — B01.05 v1 („joten ratkaistaan ensin aika“, „ja“), B03.02 v2 („mora olla 35 N … yhdessä sen ja“), B02.02 v1 („ei ne mora“, „kohtona“), B02.02 v4 („joten T = mg“), B07.04 v1–v4 (rezultati c) na finskom: „perihelissä planeetta liikkuu nopeammin“, „Katso ratkaisu“; v2 i tekst zadatka: „Svemistö kehittää luotainta“). Ćirilica/ukrajinski: B03.02 v1 („suprotно“, „її“, „kružити“, „kuno“), B03.02 v4 („trинаestina“).
+- **Nema „## ✅ Rezultati“** u 12/40 (B01.01, B02.02, B07.04 sve), nema zelenih rezultata u tim objašnjenjima.
+- **Doslovni „\n“** u tekstu zadatka i rezultatima B01.05 (sve 4).
+- B04.01 v1: ćirilična slova u „kojом“ (izgleda isto, ali je pokvaren tekst); B06.01 v4: vrteška polumjera 0,25 m s 2 okretaja u sekundi — nerealno.
+- Objašnjenja kratka: prosječno ~3,4 k znakova (Haiku xhigh 7,3 k, Sol 5,0 k); zadaci jednostavniji.
+
+**Ukupno: 19 ✅, 11 ⚠️, 10 ❌** (❌ = strani jezik u tekstu za učenika). Kod-provjera ćirilice uhvatila bi 3, finski ne bez provjere jezika.
