@@ -326,3 +326,16 @@ Objašnjenja su duga (~16 k tokena izlaza po lekciji, više od Sola i Haikua po 
 | Sol low, sve 4 | 0 / 40 | 2 / 40 | 10,95 c |
 | **Sonnet 5.5 medium, sve 4** | **0 / 40** | **~5 / 40** | **≥ 18,4 c (procjena ~22–28 c)** |
 | Luna Pro / GLM 5.3 Flash sami | 10 / 9 | — | 1,32 c / 0,68 c |
+
+## Sol (GPT-6.1, medium) piše samo 1. varijaciju — istih 10 lekcija (`sol1_write.py`)
+
+Prompt kao Haiku xhigh + popis čestih grešaka + pravilo o LaTeX-u. 10/10 uspjelo, provjere kodom 0 grešaka.
+**5,35 c po varijaciji**, 84–127 s; ulaz ~6,4–7,2 k, izlaz 2,9–4,9 k tokena; razmišljanje samo 310–840 tokena (medium jedva razmišlja).
+Objašnjenja prosječno 7,6 k znakova (Haiku xhigh 7,3 k, Sol low u 4-u-1 5,0 k).
+
+**Ručna provjera (sve pročitano i preračunato): 10 ✅, 0 ⚠️, 0 ❌.**
+- B04.01 i B02.02 točno razlikuju težinu i silu težu („težina klizačice i normalna sila leda pravi su par“).
+- B05.03 dobar uvid: „ostalo 64 % energije, ali stiskanje je 80 % prijašnjeg“; B07.04 objašnjava odstupanje mase 6,17·10²⁴ kg zaokruženim podacima.
+- Sitnice: „priješla“ (B01.01), umjetni okvir d) u B07.04 („satelit prikuplja podatke za prikaz gibanja Zemlje“).
+
+Usporedba prvih varijacija: Haiku xhigh 9 ✅ / 1 ⚠️ za 3,33 c i ~4,5 min; Sol medium 10 ✅ za 5,35 c i ~1,7 min.

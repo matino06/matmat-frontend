@@ -14,6 +14,8 @@ MODEL = os.environ.get("MODEL", "anthropic/claude-haiku-5.5")
 EFFORT = os.environ.get("EFFORT") or None
 TAG = os.environ.get("TAG", "sablon")
 STEP = "sablon-var" if TAG == "sablon" else f"{TAG}-var"
+TPL = os.environ.get("TPL", "haikux_write10.json")
+MAXTOK = int(os.environ.get("MAXTOK", "32000"))
 N = 3  # varijacije 2, 3 i 4
 
 SYS = ("Pišeš zadatak za MatMat, aplikaciju za učenje fizike za državnu maturu.\n"
@@ -43,7 +45,7 @@ def one(t):
             msg += "\n\nVEĆ NAPRAVLJENE VARIJACIJE (njihovi zadaci, ne ponavljaj te vrijednosti):\n" + "\n\n".join(used)
         t0 = time.time()
         try:
-            v = P.chat(STEP, MODEL, SYS, msg, max_tokens=32000, reasoning=EFFORT, _try=i)
+            v = P.chat(STEP, MODEL, SYS, msg, max_tokens=MAXTOK, reasoning=EFFORT, _try=i)
             err = None
         except Exception as e:
             v, err = {}, str(e)[:200]
@@ -59,7 +61,7 @@ def one(t):
 
 
 def main():
-    tpls = P.load("haikux_write10.json")
+    tpls = P.load(TPL)
     res = [v for vs in P.pmap(one, tpls, workers=10) for v in vs]
     P.save(f"{TAG}_varijacije.json", res)
     usage = [json.loads(l) for l in (P.CACHE / "costs.jsonl").read_text().splitlines()
