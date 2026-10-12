@@ -278,3 +278,29 @@ Prvi put sam provjerio rezultate i tražio nepostojeće riječi; sad sam pročit
 hodanje 14,4 km/h i „10 km/h realna brzina hoda“ (B01.01 v1); „spor zbog strmijeg dijela“ koji nije zadan (B01.01 v2); „bez trenja duplo previše“ (1,7×, B03.02 v1); „da vlak koči, kovčeg bi počeo kliziti“ (B02.02 v1); „strmija kosina znači puno teži rad“ (B02.02 v2); „sila udarca desetak puta veća od sile teže“ (80×, B04.02 v1); sila poda/ruku bez mg (B04.02 v3); usporedbe s kunama (B04.02 v1, v2); brzina „okomita na nit“ umjesto na polumjer (B06.01 v1); „Zemlja nepomično nosi Mjesec“ (B07.01 v1); „ubrzanja se razlikuju milijardama puta“ (10²² puta) i „gušće zbijena masa“ (zapravo rjeđa) (B07.01 v2); „5,6 m/s² blizu g“ (B07.01 v4); planet kojem bi orbita na 2250 km tražila gustoću ~27 g/cm³ (B07.04 v2); „skoro četiri puta brže“ (2,4×) i pozivanje na „prethodnu varijaciju“ (B07.04 v3); besmislene usporedbe: raspon ruku (B07.01 v1), zavjesa (B07.01 v3), „dvosatna vagoneta“ (B04.02 v1), „tucet“ (B04.02 v3), „štaionir“ (B06.01 v3).
 
 Čisto (bez kardinalne i bez male nejezične greške): B01.01 v3, B01.05 (sve 4), B03.02 v2–v4, B02.02 v3, B04.01 (sve 4), B05.03 (sve 4), B06.01 v2, v4 ≈ 20/40.
+
+## GLM 5.3 Flash (medium) radi 2.–4. varijaciju po predlošku Haiku xhigh (`sablon_varijacije.py`, `MODEL=z-ai/glm-5.3-flash TAG=glmsablon`)
+
+Isti predlošci i isti prompt kao Haiku medium po predlošku. **0,31 c po varijaciji** (Haiku medium 0,50 c); većinom 11–70 s, ali tri poziva 151–316 s.
+**Tehnički: 2/30 neuspjelo** — B04.02 v4 pokvaren JSON, B06.01 v4 vratio samo tekst zadatka (u produkciji: ponoviti). Ostalih 28 ručno pročitano cijelo.
+
+**Računi: 28/28 točni.**
+
+**Ozbiljne greške — 2:**
+1. B07.01 v4 — u objašnjenju d): „Ukupno je sila **četiri trećine** sile na Zemlji“, a točno (i u rezultatu) je tri četvrtine.
+2. B07.04 v3 — središnje tijelo promijenjeno u Mars; zadatak traži usporedbu „s vrijednošću u knjižici“, a objašnjenje tvrdi „Knjižica daje 6,4·10²³ kg za Mars“ — knjižica ima samo masu Zemlje.
+
+**Male greške — ~7:** „samo visina → sila oko **pet** puta prevelika“ (zapravo ~24×, B07.01 v2) i „oko **20** puta“ (zapravo ~440×, B07.01 v4); teniska loptica od 0,5 kg (B04.02 v3); „Fobos je brži **iako** mu je orbita manja“ (B07.04 v3); zadatak traži masu Saturna iz knjižice koje nema, objašnjenje to priznaje (B07.04 v4); zbrkana obrazloženja omjera u B01.05 v2 i v4.
+
+**Jezik (u tekstu zadatka ili objašnjenja):** „Sanjali dur u kolicima mase 3 kg“ (B05.03 v2), „Sanjki“ (v3), „Communicacijski“ (B07.01 v2), „prišao“ (B01.05 v2), „Ivanino“ za Ivu, „smjerima“, radnica/radnik — ali neusporedivo manje nego kad GLM piše sam. LaTeX izvan formula u B04.02 naslijeđen iz predloška.
+
+**Bez ijedne greške (fizika i jezik):** B01.01 (sve 3), B03.02 (sve 3), B02.02 v3–v4, B04.01 v3, B05.03 v4, B06.01 v2–v3, B07.01 v3 ≈ 13/28; s jezičnom sitnicom ili naslijeđenim LaTeX-om još ~6.
+
+**Usporedba po istom predlošku:**
+
+| | Ozbiljne | Male | Tehnički neuspjeh | Po varijaciji |
+|---|---|---|---|---|
+| Haiku medium | 1 / 30 | 12 / 30 | 0 / 30 | 0,50 c |
+| GLM 5.3 Flash | 2 / 28 | ~7 / 28 (+ jezik) | 2 / 30 | 0,31 c |
+
+Obje ozbiljne GLM greške su iste vrste kao Haikuova: rečenica koja ovisi o promijenjenom podatku. GLM je u B07.04 mijenjao središnje tijelo (Jupiter, Mars, Saturn), što je veća promjena od „brojeva i sitnica“ i upravo je dovelo do izmišljene tvrdnje o knjižici.

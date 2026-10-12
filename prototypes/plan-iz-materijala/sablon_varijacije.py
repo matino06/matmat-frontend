@@ -4,12 +4,16 @@ mijenjaju se brojevi i sitnice (smjer, kut, sin/cos …), a tekst se prilagođav
 
 Pokretanje:  .venv/bin/python sablon_varijacije.py
 """
-import json, time
+import json, os, time
 
 import pipeline as P
 import loop_luna as LL
+import sol4_write as S4
 
-MODEL = "anthropic/claude-haiku-5.5"
+MODEL = os.environ.get("MODEL", "anthropic/claude-haiku-5.5")
+EFFORT = os.environ.get("EFFORT") or None
+TAG = os.environ.get("TAG", "sablon")
+STEP = "sablon-var" if TAG == "sablon" else f"{TAG}-var"
 N = 3  # varijacije 2, 3 i 4
 
 SYS = ("Pišeš zadatak za MatMat, aplikaciju za učenje fizike za državnu maturu.\n"
@@ -39,12 +43,14 @@ def one(t):
             msg += "\n\nVEĆ NAPRAVLJENE VARIJACIJE (njihovi zadaci, ne ponavljaj te vrijednosti):\n" + "\n\n".join(used)
         t0 = time.time()
         try:
-            v = P.chat("sablon-var", MODEL, SYS, msg, max_tokens=32000, _try=i)
+            v = P.chat(STEP, MODEL, SYS, msg, max_tokens=32000, reasoning=EFFORT, _try=i)
             err = None
         except Exception as e:
             v, err = {}, str(e)[:200]
         sec = round(time.time() - t0)
-        issues = LL.code_checks(v) if not err else []
+        issues = (LL.code_checks(v) if v.get("zadatak") and v.get("objasnjenje") else ["nedostaje zadatak/objašnjenje"]) if not err else []
+        if v and not err:
+            issues += [c.split(": ", 1)[1] for c in S4.checks([v]) if c.startswith("v1: ")]
         out.append({"lesson": t["lesson"], "naziv": t["naziv"], "varijacija": i + 2, "sekunde": sec,
                     "greska": err, "provjere_kodom": issues, **v})
         if v.get("zadatak"):
@@ -55,9 +61,9 @@ def one(t):
 def main():
     tpls = P.load("haikux_write10.json")
     res = [v for vs in P.pmap(one, tpls, workers=10) for v in vs]
-    P.save("sablon_varijacije.json", res)
+    P.save(f"{TAG}_varijacije.json", res)
     usage = [json.loads(l) for l in (P.CACHE / "costs.jsonl").read_text().splitlines()
-             if json.loads(l)["step"] == "sablon-var"][-len(res):]
+             if json.loads(l)["step"] == STEP][-len(res):]
     tot = sum(u["usage"].get("cost") or 0 for u in usage)
     print("greške:", [(r["lesson"], r["varijacija"]) for r in res if r["greska"]])
     print("provjere kodom:", [(r["lesson"], r["varijacija"], r["provjere_kodom"]) for r in res if r["provjere_kodom"]])
@@ -65,7 +71,7 @@ def main():
     print("izlaz tokena:", [u["usage"].get("completion_tokens") for u in usage])
     print("razmišljanje:", [(u["usage"].get("completion_tokens_details") or {}).get("reasoning_tokens") for u in usage])
     print(f"trošak: {tot:.4f} $ ukupno, {tot / max(len(usage), 1) * 100:.2f} c po varijaciji")
-    with open(P.OUT / "sablon_varijacije.txt", "w") as f:
+    with open(P.OUT / f"{TAG}_varijacije.txt", "w") as f:
         for t in tpls:
             f.write(f"\n\n################ {t['lesson']} {t['naziv']}\n--- PREDLOŽAK ZADATAK\n{t['zadatak']}\n"
                     f"--- PREDLOŽAK REZ {json.dumps(t['rezultati'], ensure_ascii=False)}\n")
