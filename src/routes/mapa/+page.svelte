@@ -15,6 +15,8 @@
   let dailyGoal = $state(0);
   let completedToday = $state(0);
   let streak = $state(0);
+  let streakFreezes = $state(0);
+  let maxStreakFreezes = $state(2);
   let readiness = $state(0);
 
   // Readiness ring geometry
@@ -47,6 +49,8 @@
       // `todayGoal` is the day's target, not a completed count.
       completedToday = data?.todayCompleted ?? 0;
       streak = data?.currentStreak ?? 0;
+      streakFreezes = data?.streakFreezes ?? 0;
+      maxStreakFreezes = data?.maxStreakFreezes ?? 2;
     } catch {}
   }
 
@@ -452,6 +456,7 @@
       <div class="rail-stat">
         <div class="rail-stat-n">{streak}</div>
         <div class="rail-stat-l">{plural(streak, "dan", "dana", "dana")} u nizu</div>
+        <div class="rail-stat-l" title="Zaštite niza: propušteni dan ne prekida niz">🧊 {streakFreezes}/{maxStreakFreezes} zaštite</div>
       </div>
     </div>
 

@@ -1457,6 +1457,10 @@ svg {
   background: var(--primary);
   border-color: transparent;
 }
+.hm-cell.hm-frozen {
+  background: color-mix(in oklab, #38bdf8 45%, var(--bg-elev-2));
+  border-color: transparent;
+}
 .hm-cell.hm-today {
   outline: 2px solid var(--primary);
   outline-offset: 1px;

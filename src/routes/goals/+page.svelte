@@ -11,6 +11,12 @@
   let currentStreak = $state(0);
   let longestStreak = $state(0);
   let streakMinTasks = $state(1);
+  // Streak freezes: earned every `freezeEveryStreakDays` streak days, a missed day uses one up
+  let streakFreezes = $state(0);
+  let maxStreakFreezes = $state(2);
+  let freezeEveryStreakDays = $state(7);
+  let daysToNextFreeze = $state(7);
+  let frozenDayKeys = $state(new Set());
   let registrationDate = $state(null);
   let savingGoal = $state(false);
 
@@ -85,6 +91,11 @@
     currentStreak = data.currentStreak ?? 0;
     longestStreak = data.longestStreak ?? 0;
     streakMinTasks = data.streakMinTasks ?? 1;
+    streakFreezes = data.streakFreezes ?? 0;
+    maxStreakFreezes = data.maxStreakFreezes ?? 2;
+    freezeEveryStreakDays = data.freezeEveryStreakDays ?? 7;
+    daysToNextFreeze = data.daysToNextFreeze ?? freezeEveryStreakDays;
+    frozenDayKeys = new Set(data.frozenDays ?? []);
     calendarDays = data.calendarDays?.length
       ? data.calendarDays
       : [{ date: data.registrationDate, goalMet: false, partial: false, completed: 0, goal: dailyGoal }];
@@ -127,8 +138,13 @@
     return 4;
   }
 
+  function isFrozen(day) {
+    return frozenDayKeys.has(toLocalKey(day.date));
+  }
+
   // "12.10.2026.: 3 zadataka (Matematika 2, Fizika 1)"
   function cellTitle(day) {
+    if (isFrozen(day)) return `${day.date.toLocaleDateString('hr-HR')}: zaštita niza 🧊`;
     const base = `${day.date.toLocaleDateString('hr-HR')}: ${day.completed ?? 0} zadataka`;
     if (!day.courses?.length) return base;
     return `${base} (${day.courses.map(c => `${c.courseName} ${c.completed}`).join(', ')})`;
@@ -160,6 +176,15 @@
       </div>
       <div style="font-size:12px;color:var(--text-faint);margin-top:6px">
         Niz čuvaš već s {streakMinTasks} {streakMinTasks === 1 ? 'riješenim zadatkom' : 'riješena zadatka'} dnevno, iz bilo kojeg predmeta.
+      </div>
+      <div class="freeze-row">
+        <span>🧊 Zaštite niza: <b class="mono">{streakFreezes}/{maxStreakFreezes}</b></span>
+        {#if streakFreezes < maxStreakFreezes}
+          <span>sljedeća za {daysToNextFreeze} {daysToNextFreeze === 1 ? 'dan' : 'dana'} zaredom</span>
+        {/if}
+      </div>
+      <div style="font-size:12px;color:var(--text-faint);margin-top:4px">
+        Propustiš li dan, zaštita automatski čuva niz. Zaradiš je svakih {freezeEveryStreakDays} dana zaredom.
       </div>
       <div class="streak-stats" style="margin-top:16px">
         <div class="stat">
@@ -241,6 +266,7 @@
                   <div
                     class="hm-cell l{cellLevel(day)}"
                     class:hm-today={isToday(day.date)}
+                    class:hm-frozen={isFrozen(day)}
                     title={cellTitle(day)}
                   ></div>
                 {:else}
@@ -261,6 +287,8 @@
         <div class="hm-cell l3"></div>
         <div class="hm-cell l4"></div>
         <span>Više</span>
+        <div class="hm-cell hm-frozen" style="margin-left:8px"></div>
+        <span>Zaštita niza</span>
       </div>
     </div>
   </div>
@@ -298,6 +326,18 @@
     color: var(--text);
   }
   .streak-val .u { font-size: 13px; color: var(--text-faint); }
+
+  .freeze-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: color-mix(in oklab, #38bdf8 12%, var(--bg-elev-2));
+    font-size: 12px;
+    color: var(--text-dim);
+  }
 
   .streak-stats {
     display: flex;
