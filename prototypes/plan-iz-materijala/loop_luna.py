@@ -17,7 +17,7 @@ SEEDS = (0, 7)
 COMMON_MISTAKES = """ČESTE GREŠKE KOJE NE SMIJEŠ NAPRAVITI:
 - Nikakve samokorekcije u tekstu („26 N? Ne, …“, „r = 4R ? To nije točno …“). Objašnjenje je konačna verzija.
 - Ne tvrdi što piše ili ne piše u knjižici formula osim ako to doslovno vidiš u priloženom tekstu knjižice.
-  Ne piši „g = 10 propisano je u knjižici“; ako koristiš g = 10 m/s², to mora pisati u zadatku.
+  (Knjižica, str. 5: „g = 9,81 m s⁻² (u zadatcima uzeti 10 m s⁻²)“ — to smiješ citirati.)
 - Težina NIJE sila teža: sila teža je sila kojom Zemlja privlači tijelo, težina je sila kojom tijelo
   djeluje na podlogu ili ovjes.
 - Boje: 600 nm je narančasto, crveno je ~620–750 nm, zeleno ~500–565 nm, plavo ~450–490 nm.

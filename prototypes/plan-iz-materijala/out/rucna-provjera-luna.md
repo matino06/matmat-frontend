@@ -83,3 +83,22 @@ Ocjena zadataka (prije ikakvog ispravka): **20 ✅ točnih, 20 ⚠️ s manjom g
 
 Svih 6 sitnih grešaka koje je v1 propustila v2 sada hvata (kamenje, „26 N? Ne“, „r = 4R ? To nije točno“, „u knjižici… nema je u knjižici“, CU², 600 nm). Nove stvarne sitnice koje je v2 našla, a ja nisam: B20.03 (amplituda 0,5 mm nespojiva sa snagom 2 W), B27.01 (A umjesto N), B30.05 („vlastita težina“ oblaka), B31.04 („ne računaj brojeve“, a objašnjenje računa), B23.01 (600 nm).
 Cijena: ~0,07 c po provjeri.
+
+## Ispravak moje ocjene
+
+Knjižica formula, str. 5, doslovno: „g = 9,81 m s⁻² (u zadatcima uzeti 10 m s⁻²)“. Tvrdnja u B02.02 „g = 10 propisano u knjižici, str. 5“ bila je TOČNA; moja oznaka „izmišljeno“ je kriva. Lunine primjedbe o tome (B04.01, B14.01 u petlji) netočne su, a Haiku ih je s pravom odbio.
+
+## Petlja: 2× Luna s popisom + kod → Haiku ispravlja, najviše 2 ispravka (`loop_luna.py`)
+
+Ručna provjera završnih verzija (razlike u `out/loop_luna_diff.txt`):
+
+| | Prije | Poslije petlje |
+|---|---|---|
+| ❌ ozbiljne | 9 | **3**: B02.02 („I. Newtonov zakon ne vrijedi“ — Haiku dvaput „ispravio“, greška ostala), B25.02 (f = 4·10¹⁴ Hz — oba Lunina prolaza ovaj put promašila), B08.05 (**nova** greška: ispravak uveo dvostruko brojanje vode u plovku) |
+| ⚠️ manje | 20 | ~4: B31.02 „jedva usporila“, B27.06 c) i dalje ne kaže koju snagu, B20.03 nespretna popravka amplitude, B30.05 sitnica |
+| pokvareni točni zadaci | — | 0 |
+| prazan/nedostaje „Rezultati“ | 12 | 0 |
+
+- Lunin status na kraju: 32 „prošao“, 17 „nije prošao“. Od 17 „nije prošao“ većina je sitničavost koja se vrti u krug (npr. F = kx vs −kx, položaj detektora, kozmologija), a 2 su stvarne (B02.02, B08.05).
+- Haiku je ispravno **odbio** netočne primjedbe (g iz knjižice, „tisuće tona ugljena“, kartezijanski plovak otvoren na dnu).
+- Trošak petlje: 0,46 $ za 49 = 0,94 c po varijaciji + pisanje ~0,83 c → **~1,8 c po varijaciji**.
