@@ -3,6 +3,7 @@
   // iz prototipa): popis lekcija redom učenja s izmjenama u retku, bočni stupac s predznanjem, upozorenjima
   // i kvotom. Nakon izmjena i 30 s pauze traži se ponovna provjera; upozorenja se tada osvježe.
   // Uputa AI-ju vraća prijedlog operacija koji se označi u popisu i prihvaća ili odbacuje u cjelini.
+  // Prije uređivanja kreator jednom bira način učenja; brza priprema dodaje lekcije primjene.
   import { onMount, onDestroy } from "svelte";
   import ArrowUp from "@lucide/svelte/icons/arrow-up";
   import ArrowDown from "@lucide/svelte/icons/arrow-down";
@@ -37,6 +38,10 @@
   let showAllWarnings = $state(false);
   let flash = $state(null);
   let introDone = $state(true);
+  let mode = $state(null); // { mode, examDate, conceptLessons, maxQuickLessons, applications }
+  let pick = $state("ucenje_gradiva");
+  let examDate = $state("");
+  let choosing = $state(false);
   let instruction = $state("");
   let proposal = $state(null); // { jobId, status, message, ops, error, warning }
   let changed = new Set();
@@ -73,6 +78,9 @@
   let additions = $derived(
     (proposal?.ops ?? []).filter((o) => o.op === "dodaj").reduce((m, o) => ((m[o.iza ?? "top"] ??= []).push(o.naziv), m), {}),
   );
+  let concepts = $derived(lessons.filter((l) => l.kind !== "primjena").length);
+  let quickBlocked = $derived(mode && mode.conceptLessons > mode.maxQuickLessons);
+  let today = new Date().toLocaleDateString("sv-SE");
   let quotaFull = $derived((quota?.usedPercent ?? 0) >= 100);
   let candidates = $derived(
     open && preSearch.trim().length > 1
@@ -97,9 +105,14 @@
   async function loadPlan() {
     lessons = await call("/plan");
   }
+  async function loadMode() {
+    mode = await call("/learning-mode");
+  }
   async function loadWarnings() {
     const r = await call("/warnings");
     warnings = r.warnings;
+    // kad provjera (ili izrada lekcija primjene) završi, plan se mogao promijeniti
+    if (checking && !r.checking) await Promise.all([loadPlan(), loadMode()]);
     checking = r.checking;
     clearTimeout(pollTimer);
     if (checking) pollTimer = setTimeout(loadWarnings, 4000);
@@ -117,7 +130,7 @@
 
   onMount(async () => {
     introDone = localStorage.getItem(`mm-pz-${courseId}`) === "1";
-    await Promise.all([loadPlan(), loadWarnings(), loadAssumed()]);
+    await Promise.all([loadPlan(), loadWarnings(), loadAssumed(), loadMode()]);
     await loadQuota();
   });
   onDestroy(() => {
@@ -190,6 +203,35 @@
     await call(`/warnings/${w.warningId}/ignore`, "POST");
     w.ignored = true;
   }
+
+  // --- način učenja ---
+
+  async function chooseMode() {
+    if (pick === "brza_priprema" && (!examDate || quickBlocked)) return;
+    choosing = true;
+    error = "";
+    try {
+      mode = await call("/learning-mode", "POST", { mode: pick, examDate: examDate || null });
+      if (pick === "brza_priprema") {
+        checking = true;
+        clearTimeout(pollTimer);
+        pollTimer = setTimeout(loadWarnings, 3000);
+      }
+    } catch (e) {
+      error = e.message;
+    }
+    choosing = false;
+  }
+
+  async function retryApplications() {
+    await call("/retry", "POST").catch((e) => (error = e.message));
+    mode.applications = "waiting";
+    checking = true;
+    clearTimeout(pollTimer);
+    pollTimer = setTimeout(loadWarnings, 3000);
+  }
+
+  const formatDate = (d) => (d ? new Date(d).toLocaleDateString("hr-HR") : "");
 
   // --- AI uputa ---
 
@@ -298,14 +340,56 @@
     {/each}
     <div class="actions"><button class="btn btn-primary" onclick={finishIntro}>Znam sve ovo, dalje</button></div>
   </div>
+{:else if mode && !mode.mode}
+  <!-- Način učenja: bira se jednom, kad je poznat broj lekcija koncepata -->
+  <div class="card card-pad choose">
+    <h2>Kako želiš učiti?</h2>
+    <p class="muted">Plan ima <b>{mode.conceptLessons}</b> lekcija koncepata. Način se poslije ne može promijeniti; za drugi način napravi novi predmet.</p>
+    <div class="modes">
+      <button class="mode" class:on={pick === "ucenje_gradiva"} onclick={() => (pick = "ucenje_gradiva")}>
+        <b>Učenje gradiva</b>
+        <span>Samo lekcije koncepata, za dugoročno učenje. Razne tipove zadataka vježbaš kasnije.</span>
+      </button>
+      <button class="mode" class:on={pick === "brza_priprema"} disabled={quickBlocked} onclick={() => (pick = "brza_priprema")}>
+        <b>Brza priprema</b>
+        <span>Ispit je blizu: uz lekcije koncepata dobiješ i lekcije primjene, pa odmah vježbaš tipove zadataka s testa.</span>
+        {#if quickBlocked}
+          <span class="blocked">Gradivo ima {mode.conceptLessons} lekcija; brza priprema moguća je do {mode.maxQuickLessons}. Podijeli materijal na manje dijelove ili odaberi učenje gradiva.</span>
+        {/if}
+      </button>
+    </div>
+    <label class="date">
+      <span>Datum testa{pick === "brza_priprema" ? "" : " (nije obavezno)"}</span>
+      <input class="inp" type="date" min={today} bind:value={examDate} />
+      <span class="muted small">Ponavljanje se sažme tako da sve stigne prije testa.</span>
+    </label>
+    {#if error}<div class="err small">{error}</div>{/if}
+    <div class="actions">
+      <button class="btn btn-primary" disabled={choosing || (pick === "brza_priprema" && !examDate)} onclick={chooseMode}>
+        {pick === "brza_priprema" ? "Odaberi brzu pripremu" : "Odaberi učenje gradiva"}
+      </button>
+    </div>
+  </div>
 {:else}
   <div class="editor">
     <main>
       <div class="toolbar">
-        <span class="muted small">{lessons.length} lekcija</span>
+        <span class="muted small">
+          {concepts} lekcija koncepata{#if lessons.length > concepts} · {lessons.length - concepts} primjene{/if}
+          {#if mode?.mode} · {mode.mode === "brza_priprema" ? "brza priprema" : "učenje gradiva"}{/if}
+          {#if mode?.examDate} · test {formatDate(mode.examDate)}{/if}
+        </span>
         <label class="small"><input type="checkbox" bind:checked={grouped} /> Grupiraj po cjelinama</label>
       </div>
       {#if error}<div class="err small">{error}</div>{/if}
+      {#if mode?.applications === "failed"}
+        <div class="card card-pad notice">
+          Izrada lekcija primjene nije uspjela.
+          <button class="btn btn-ghost sm" onclick={retryApplications}>Pokušaj ponovno</button>
+        </div>
+      {:else if mode?.mode === "brza_priprema" && mode.applications && mode.applications !== "done"}
+        <div class="card card-pad notice busy">AI dodaje lekcije primjene (tipove zadataka s testa)…</div>
+      {/if}
       {#each additions.top ?? [] as name}
         <div class="card ghost">+ {name} <span class="muted small">nova lekcija na početku</span></div>
       {/each}
@@ -334,7 +418,8 @@
                   {#if mark}<div class="mark">{mark.text}</div>{/if}
                   {#if l.concept}<div class="concept">{l.concept}</div>{/if}
                   <div class="meta">
-                    {#if l.items.length}<span>{l.items.length} stavki</span>{:else}<span class="busy">AI izrađuje stavke…</span>{/if}
+                    {#if l.kind === "primjena"}<span class="tag">primjena · {l.applicationType}</span>
+                    {:else if l.items.length}<span>{l.items.length} stavki</span>{:else}<span class="busy">AI izrađuje stavke…</span>{/if}
                     {#if grouped}<span>· {l.unit}</span>{/if}
                     {#if l.prerequisites.length}
                       <span>· treba:</span>
@@ -363,9 +448,14 @@
                     <div class="w-inline" class:serious={x.serious}><TriangleAlert size={13} /> {x.text}</div>
                   {/each}
                   <div>
+                    {#if l.kind === "primjena"}
+                      <div class="label">Primjer situacije</div>
+                      <div class="small muted">{l.exampleSituation || "—"}</div>
+                    {:else}
                     <div class="label">Stavke znanja</div>
                     {#if l.items.length}<ul>{#each l.items as it}<li>{it}</li>{/each}</ul>
                     {:else}<div class="muted small">AI ih izrađuje; pojavit će se za koji trenutak.</div>{/if}
+                    {/if}
                   </div>
                   <div>
                     <div class="label">Preduvjeti</div>
@@ -531,6 +621,20 @@
   .warn.serious { border-left-color: var(--danger); }
   .warn-t { all: unset; cursor: pointer; color: var(--text-dim); }
   .warn-t:hover { color: var(--text); }
+  .choose { display: grid; gap: 14px; max-width: 720px; }
+  .choose h2 { margin: 0; font-size: 20px; font-weight: 600; }
+  .choose p { margin: 0; }
+  .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 640px) { .modes { grid-template-columns: 1fr; } }
+  .mode { all: unset; cursor: pointer; display: grid; gap: 6px; align-content: start; padding: 14px; border-radius: var(--r-md);
+    border: 1px solid var(--border); background: var(--bg-elev-2); font-size: 12.5px; color: var(--text-dim); }
+  .mode b { color: var(--text); font-size: 14px; }
+  .mode.on { border-color: var(--primary-border); background: var(--primary-dim); }
+  .mode:disabled { cursor: not-allowed; opacity: 0.55; }
+  .blocked { color: var(--warn); }
+  .date { display: grid; gap: 6px; max-width: 260px; font-size: 13px; }
+  .notice { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 10px; }
+  .tag { padding: 1px 7px; border-radius: 999px; border: 1px solid var(--primary-border); color: var(--primary); }
   .row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
   .ops { margin: 0; padding-left: 16px; font-size: 12.5px; display: grid; gap: 3px; }
   textarea.inp { resize: vertical; }
