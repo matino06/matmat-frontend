@@ -81,7 +81,9 @@ def chat(step, model, system, user, json_out=True, max_tokens=16000, reasoning=N
                          {"role": "user", "content": content}]}
     if json_out:
         body["response_format"] = {"type": "json_object"}
-    if reasoning:
+    if reasoning == "off":
+        body["reasoning"] = {"enabled": False}
+    elif reasoning:
         body["reasoning"] = {"effort": reasoning}
     if _try:
         body["seed"] = _try  # novi ključ cachea = novi poziv
