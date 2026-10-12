@@ -7,6 +7,7 @@
   import { panelState, openAI, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar, initSidebarCollapsed } from "$lib/store/ui.svelte";
   import { courseState, loadCurrentCourse } from "$lib/store/course.svelte";
+  import { ownCourses, loadOwnCourses, findOwnCourse } from "$lib/store/ownCourses.svelte";
   import { getProgram } from "$lib/config/programs";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
@@ -108,10 +109,14 @@
     if (userData.user && !courseState.loaded) loadCurrentCourse();
   });
 
+  $effect(() => {
+    if (userData.user && !ownCourses.loaded) loadOwnCourses();
+  });
+
   let program = $derived(getProgram(courseState.courseId));
   // Falls back to maths while the course is still loading — that is what the
   // shell showed unconditionally before, and it lasts one fetch.
-  let courseLabel = $derived(program?.short ?? "Matematika");
+  let courseLabel = $derived(program?.short ?? findOwnCourse(courseState.courseId)?.courseName ?? "Matematika");
   let formulasPdfUrl = $derived(program?.pdf ?? "/pdfs/MAT-FORMULE.pdf");
 
   function toggleTheme() {
@@ -183,6 +188,12 @@
             <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Napredak</b>
+          {:else if path.startsWith('/moji-predmeti')}
+            <span style="color:var(--text-faint)">Moji predmeti</span>
+            {#if path === '/moji-predmeti/novi'}
+              <span style="color:var(--text-faint); margin: 0 6px">/</span>
+              <b>Novi predmet</b>
+            {/if}
           {:else if path === '/goals'}
             <span style="color:var(--text-faint)">{courseLabel}</span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>

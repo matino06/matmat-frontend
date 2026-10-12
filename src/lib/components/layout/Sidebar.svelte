@@ -6,6 +6,7 @@
   import { uiState, closeSidebar, setSidebarCollapsed, toggleSidebarCollapsed } from '$lib/store/ui.svelte';
   import { courseState, setCurrentCourse } from '$lib/store/course.svelte';
   import { PROGRAMS } from '$lib/config/programs';
+  import { ownCourses, findOwnCourse, courseBadge, courseHue } from '$lib/store/ownCourses.svelte';
   import { apiClient } from '$lib/api/apiClient';
 
   let { open = false } = $props();
@@ -63,8 +64,14 @@
   // Looked up in the full list, not the visible one: a user sitting on an
   // admin-only course still gets its real name in the header instead of being
   // mislabelled as "Matematika A razina".
+  // Vlastiti predmet kreatora prikazuje se kao program: inicijali, boja iz naziva.
+  const ownProg = (c) => ({ id: c.courseId, label: c.courseName, badge: courseBadge(c.courseName), color: courseHue(c.courseName), sub: 'Vlastiti predmet' });
+  let ownPrograms = $derived(ownCourses.courses.map(ownProg));
+
   let activeProg = $derived(
-    PROGRAMS.find(p => p.id === courseState.courseId) ?? visiblePrograms[0]
+    PROGRAMS.find(p => p.id === courseState.courseId)
+      ?? (findOwnCourse(courseState.courseId) && ownProg(findOwnCourse(courseState.courseId)))
+      ?? visiblePrograms[0]
   );
 
   let path = $derived(page.url.pathname);
@@ -124,6 +131,25 @@
             {prog.label}
           </div>
         {/each}
+        {#if ownCourses.isCreator}
+          <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+          <div class="ps-group" onclick={() => { psOpen = false; nav('/moji-predmeti'); }}>Moji predmeti</div>
+          {#each ownPrograms as prog (prog.id)}
+            <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+            <div
+              class="ps-option {courseState.courseId === prog.id ? 'ps-option-active' : ''}"
+              onclick={() => switchCourse(prog)}
+            >
+              <div class="badge-sq badge-sq-sm" style="background: hsl({prog.color} 75% 55%)">{prog.badge}</div>
+              {prog.label}
+            </div>
+          {/each}
+          <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+          <div class="ps-option ps-new" onclick={() => { psOpen = false; nav('/moji-predmeti/novi'); }}>
+            <div class="badge-sq badge-sq-sm ps-new-badge">+</div>
+            Novi predmet
+          </div>
+        {/if}
       </div>
     {/if}
   </div>
@@ -301,6 +327,10 @@
     transition: background .12s;
   }
   .prog-switcher:hover { background: var(--bg-hover); }
+  .ps-group { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); padding: 8px 10px 4px; margin-top: 4px; border-top: 1px solid var(--border); cursor: pointer; }
+  .ps-group:hover { color: var(--text); }
+  .ps-new { color: var(--text-dim); }
+  .ps-new-badge { background: var(--bg-elev-2); color: var(--text-dim); border: 1px dashed var(--border-strong); }
   .ps-meta { flex: 1; min-width: 0; }
   .ps-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ps-kind { font-size: 10px; color: var(--text-faint); }
