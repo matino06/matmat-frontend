@@ -47,10 +47,17 @@ def checks(vs):
         out.append(f"broj varijacija {len(vs)}")
     base = len(vs[0].get("objasnjenje", "")) if vs else 0
     for i, v in enumerate(vs):
-        iss = LL.code_checks(v) if v.get("objasnjenje") else ["prazno objašnjenje"]
+        iss = LL.code_checks(v) if v.get("objasnjenje") and v.get("zadatak") else [f"nedostaje zadatak/objašnjenje (ključevi: {list(v)})"]
         raw = raw_latex(v.get("zadatak", "") + "\n" + v.get("objasnjenje", ""))
         if raw:
             iss.append(f"LaTeX izvan formula ({len(raw)}): {raw[:2]}")
+        text = v.get("zadatak", "") + "\n" + v.get("objasnjenje", "") + json.dumps(v.get("rezultati", {}), ensure_ascii=False)
+        foreign = re.findall(r"\S*[Ѐ-ӿ　-鿿가-힯]\S*", text)
+        foreign += re.findall(r"\b(?:joten|olla|yhdessä|ratkaistaan|ensin|että|kuin|eli|noin|perihelissä)\b", text)
+        if foreign:
+            iss.append(f"strani jezik/pismo: {foreign[:4]}")
+        if "\\n" in text:
+            iss.append("doslovni \\n u tekstu")
         ratio = len(v.get("objasnjenje", "")) / max(base, 1)
         if ratio < 0.8:
             iss.append(f"objašnjenje kraće od prve varijacije ({ratio:.0%})")

@@ -241,3 +241,20 @@ Isti prompt kao Sol. 10/10 poziva uspjelo, svaki 4 varijacije. **1,32 c po lekci
 - Objašnjenja kratka: prosječno ~3,4 k znakova (Haiku xhigh 7,3 k, Sol 5,0 k); zadaci jednostavniji.
 
 **Ukupno: 19 ✅, 11 ⚠️, 10 ❌** (❌ = strani jezik u tekstu za učenika). Kod-provjera ćirilice uhvatila bi 3, finski ne bez provjere jezika.
+
+## GLM 5.3 Flash (medium) u jednom pozivu piše sve 4 varijacije (`MODEL=z-ai/glm-5.3-flash TAG=glm53f4`)
+
+**0,68 c po lekciji = 0,17 c po varijaciji**; cijeli test ~6 min (10 lekcija paralelno); izlaz 8–30 k tokena (razmišljanje 0,7–12 k).
+Provjere kodom (dodana i provjera stranog pisma/finskih riječi i doslovnog „\n“ — na Luna Pro testu točno je označila istih 10 varijacija kao ručna provjera):
+- B03.02: JSON pokvaren — svaka varijacija razbijena u 3 objekta (12 umjesto 4), mora se spajati ili ponoviti;
+- 16/40 bez „## ✅ Rezultati“, 12/40 LaTeX izvan formula (`\textcolor{green}{20 m}` u običnom tekstu), B07.04 doslovni „\n“.
+
+**Računi: 40/40 točni** (ručno preračunato; sitnica B04.02 v3: sila poda bez mg, B06.01 v3: put točke na kotaču bicikla koji se vozi je dvosmislen).
+
+**Jezik je glavni problem — gotovo nijedna varijacija nije čista:**
+- nepostojeće riječi: „seigne“ (u tekstu zadatka B01.05, sve 4), „gibuje“ (B02.02, sve 4), „gibi“, „vrne“, „hodi“, „ravolnomo“, „rampse“, „škrnja“, „vreća smerzom“, „rukska“, „žibici“, „reflexna“, „Sternar kazaljka“, „štaionir“, „ništare“, „Kolik mora biti“, „orbitre“, „debris čestica“, „uzimo“, „većpada“;
+- krive riječi u zadatku: „Matej se na koloturu spušta“, „Klizaljka (60 kg) stoji na rubu polucjevke“;
+- besmislene usporedbe: „kao s otvorom prozora: što je zavjesa teža, sila raste“, „kad glavom zahodiš u zid“, „100 kuna možeš potrošiti odjednom“ (kune više nema);
+- B01.01 v1: d) „do iste zgrade ravnom šetnicom 800 m“, a pomak do zgrade je 1000 m; hodanje 14,4 km/h.
+
+**Ocjena: računi ✅, ali za učenika neupotrebljivo bez lekture (≈ 39/40 ima jezičnu grešku, 1 ❌ proturječje).**
