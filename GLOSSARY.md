@@ -21,7 +21,7 @@ Materijal koji učenik smije koristiti na ispitu, npr. knjižica formula. Ono š
 _Avoid_: šalabahter, podsjetnik
 
 **Plan**:
-Uređeni skup lekcija s preduvjetima koji pokriva cijelo gradivo vlastitog predmeta. Kreator ga može uređivati prije nego krenu zadaci.
+Uređeni skup lekcija s preduvjetima koji pokriva cijelo gradivo vlastitog predmeta. Kreator ga uređuje dok ga ne potvrdi; potvrdom se plan zaključava i nakon toga se mogu mijenjati samo nazivi lekcija.
 _Avoid_: kurikulum, syllabus, roadmap
 
 **Mjesečna kvota**:
@@ -59,7 +59,7 @@ Ono čime lekcija uči svoju ideju, s najviše tri podzadatka a, b, c. Lekcija i
 _Avoid_: pitanje, vježba
 
 **Lekcija primjene**:
-Lekcija bez novog koncepta koja uči primijeniti već naučeni koncept u drugom kontekstu. Postoji samo u brzoj pripremi.
+Lekcija bez novog koncepta koja uči primijeniti već naučeni koncept u drugom kontekstu, npr. nakon lekcije o dilataciji vremena zadatak u kojem se iz frekvencije otkucaja srca astronauta računa frekvencija mjerena sa Zemlje. Postoji samo u brzoj pripremi.
 _Avoid_: vježba, primjer
 
 **Pretpostavljeno predznanje**:
@@ -67,14 +67,14 @@ Koncepti izvan materijala koje plan smije koristiti bez lekcije; po defaultu sam
 _Avoid_: predznanje, prerequisites
 
 **Način učenja**:
-Odabir kreatora koji određuje sadrži li plan lekcije primjene. Može se promijeniti bez gubitka napretka.
+Odabir kreatora koji određuje kakav plan nastaje: učenje gradiva ili brza priprema. Bira se prije izrade plana i ne može se promijeniti; za drugi način kreator radi novi predmet.
 _Avoid_: mod, režim
 
 **Učenje gradiva**:
-Način učenja sa samo lekcijama koncepata, za vježbanje kroz probne ispite.
+Način učenja sa samo lekcijama koncepata, za dugoročno učenje gradiva; razne tipove zadataka učenik vježba kasnije, npr. na probnim ispitima.
 
 **Brza priprema**:
-Način učenja koji uz lekcije koncepata ima i lekcije primjene, za kad se sve uči i vježba na MatMatu.
+Način učenja za kad je ispit blizu i gradiva je manje: uz lekcije koncepata plan ima i lekcije primjene, pa učenik istodobno uči gradivo i vježba skoro sve tipove zadataka.
 
 **Objašnjenje**:
 Rješenje zadatka po koracima, napisano laički, tako da ga razumije i učenik kojem predmet ne ide.
