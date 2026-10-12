@@ -131,3 +131,35 @@ Ručna provjera završnih verzija (razlike u `out/loop_luna_diff.txt`):
 MiMo: 6 ✅, 2 ⚠️, 2 ❌. Haiku: 3 ✅, 4 ⚠️, 3 ❌.
 
 Napomena: „I. Newtonov zakon ne vrijedi“ dolazi iz stavke plana („Inercijski sustav: sustav u kojem vrijedi I. Newtonov zakon“) — oba modela je pogrešno shvate. Greška je dijelom u formulaciji stavke.
+
+## Haiku 5.5 xhigh sam piše (bez Lune, bez ičega) — istih 10 lekcija (`haikux_write.py`)
+
+`max_tokens=128000`, `reasoning=xhigh`. Sve 10 završene, 0 grešaka KaTeX-a, svih 10 ima „## ✅ Rezultati“.
+**3,33 c po varijaciji**, 181–478 s (prosjek ~4,5 min). Razmišljanje 38–109 k tokena; najveći izlaz 116 557 tokena (blizu granice od 128 k).
+
+| Lekcija | Haiku xhigh | Napomena |
+|---|---|---|
+| B01.01 | ✅ | |
+| B01.05 | ✅ | sitnica: „samo težina“ umjesto sile teže |
+| B03.02 | ✅ | sitnica: težina/sila teža; simbol G za težinu, a G je i gravitacijska konstanta |
+| B02.02 | ✅ | **nema** „I. Newtonov zakon ne vrijedi“; neinercijski sustav objašnjen točno; c) F = 190 N |
+| B04.01 | ⚠️ | „Par težine je sila kojom Ana privlači Zemlju“ (par **sile teže**, ne težine) |
+| B04.02 | ✅ | |
+| B05.03 | ✅ | 6 m/s, 4 m/s, 0,30 m, √2, 32,4 J, 0,9 N — sve provjereno |
+| B06.01 | ✅ | |
+| B07.01 | ✅ | sitnica: „tona bi imala težinu mg“; c) 84 % za udvostručenu visinu provjereno |
+| B07.04 | ✅ | T = 2,37·10⁶ s, M = 5,97·10²⁴ kg, r = 4,23·10⁷ m, T²/r³ omjer 3,4·10⁵ — sve provjereno; zadržao elipsu i 2. Keplerov zakon |
+
+**Haiku xhigh: 9 ✅, 1 ⚠️, 0 ❌.** Jedina ponavljajuća slabost: težina vs sila teža (4/10, samo u jednom stvarno kriva tvrdnja).
+
+### Usporedba na istih 10 lekcija
+
+| Pristup | ✅ / ⚠️ / ❌ | Cijena po varijaciji | Vrijeme po varijaciji |
+|---|---|---|---|
+| Haiku medium, prva verzija | 3 / 4 / 3 | 0,83 c | ~1 min |
+| Haiku medium + 2× Luna + Haiku ispravci (petlja) | 9 / 0 / 1 (B02.02 ostao) | ~1,8 c | ~2 min |
+| MiMo v2.6 Pro sam | 6 / 2 / 2 | 2,07 c | ~8,6 min |
+| **Haiku xhigh sam** | **9 / 1 / 0** | 3,33 c | ~4,5 min |
+
+Procjena za cijeli predmet (135 lekcija × 4 varijacije, ako se sve generiraju): petlja ~9,7 $, Haiku xhigh ~18 $.
+Uz lijeno generiranje (1. varijacija svima, ostale tek kad ih učenik zatraži) Haiku xhigh: 4,5 $ za prvu rundu.
