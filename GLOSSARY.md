@@ -24,6 +24,10 @@ _Avoid_: šalabahter, podsjetnik
 Uređeni skup lekcija s preduvjetima koji pokriva cijelo gradivo vlastitog predmeta. Kreator ga može uređivati prije nego krenu zadaci.
 _Avoid_: kurikulum, syllabus, roadmap
 
+**Mjesečna kvota**:
+Koliko kreator smije potrošiti na izradu vlastitih predmeta u jednom mjesecu: čitanje materijala, izradu plana i uređivanje plana uz pomoć AI-ja. Prikazuje se kao postotak iskorištenosti i obnavlja se svakog mjeseca. Učenje i zadaci je ne troše.
+_Avoid_: krediti, limit, budžet, usage
+
 ## Gradivo
 
 **Područje**:
