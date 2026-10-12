@@ -110,3 +110,24 @@ Ručna provjera završnih verzija (razlike u `out/loop_luna_diff.txt`):
 - Bolje od Haikua: B02.02 („I. Newtonov zakon ne vrijedi“ — MiMo ispravio, Haiku nije).
 - Lošije: nove greške — B25.05 („W = qU < 0“ za elektron koji se ubrzava), B19.07 („u svakom trenutku vrijedi E = ½kA²“ uz prigušenje), B08.02 (dodana besmislena rečenica „čini se da bi dubina trebala biti veća od 12 m jer jezero ima dno“), B07.04 (eliptičnu orbitu zamijenio kružnom — nestao Keplerov 2. zakon, a u objašnjenje procurio tekst „stavka iz preduvjeta“), B23.01 (ponovno „crveni laser“ za 600 nm), B10.03 (proturječje o knjižici nije ispravio ni u 2 kruga).
 - B25.02 (f = 4·10¹⁴ Hz) i ovdje promašen — Luna ga nije prijavila.
+
+## MiMo v2.6 Pro sam piše (razmišljanje uključeno, bez Lune) — 10 lekcija (`mimo_write.py`)
+
+2,07 c i ~8,6 min po varijaciji (razmišljanje 8–25 k tokena). Ručna provjera, usporedba s prvim Haikuovim verzijama istih 10 lekcija:
+
+| Lekcija | MiMo | Haiku (prva verzija) |
+|---|---|---|
+| B01.01 | ❌ neupotrebljivo: objašnjenje prekinuto usred rečenice, nema rezultata | ✅ |
+| B01.05 | ✅ (sitnica: „pod djelovanjem Zemljine težine“) | ⚠️ kamenje prolazi jedno kroz drugo |
+| B03.02 | ✅ | ⚠️ samokorekcija |
+| B02.02 | ❌ „I. Newtonov zakon više ne vrijedi“ | ❌ isto |
+| B04.01 | ⚠️ d) koristi 60 N koji nije zadan; „težina prema dolje“; naslov „Rezumerati“ | ❌ |
+| B04.02 | ✅ | ✅ |
+| B05.03 | ✅ (nema odjeljka Rezultati) | ⚠️ |
+| B06.01 | ✅ | ✅ |
+| B07.01 | ⚠️ „gravitacijska sila Zemlje … jest tvoja težina“ | ⚠️ |
+| B07.04 | ✅ (sitnice: „iz preduvjeta“, „Rezumenti“) | ❌ |
+
+MiMo: 6 ✅, 2 ⚠️, 2 ❌. Haiku: 3 ✅, 4 ⚠️, 3 ❌.
+
+Napomena: „I. Newtonov zakon ne vrijedi“ dolazi iz stavke plana („Inercijski sustav: sustav u kojem vrijedi I. Newtonov zakon“) — oba modela je pogrešno shvate. Greška je dijelom u formulaciji stavke.
