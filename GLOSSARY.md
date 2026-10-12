@@ -67,14 +67,18 @@ Koncepti izvan materijala koje plan smije koristiti bez lekcije; po defaultu sam
 _Avoid_: predznanje, prerequisites
 
 **Način učenja**:
-Odabir kreatora koji određuje kakav plan nastaje: učenje gradiva ili brza priprema. Bira se prije izrade plana i ne može se promijeniti; za drugi način kreator radi novi predmet.
+Odabir kreatora koji određuje kakav plan nastaje: učenje gradiva ili brza priprema. Bira se kad je poznato koliko lekcija koncepata gradivo ima, prije potvrde plana, i poslije se ne može promijeniti; za drugi način kreator radi novi predmet.
 _Avoid_: mod, režim
 
 **Učenje gradiva**:
 Način učenja sa samo lekcijama koncepata, za dugoročno učenje gradiva; razne tipove zadataka učenik vježba kasnije, npr. na probnim ispitima.
 
 **Brza priprema**:
-Način učenja za kad je ispit blizu i gradiva je manje: uz lekcije koncepata plan ima i lekcije primjene, pa učenik istodobno uči gradivo i vježba skoro sve tipove zadataka.
+Način učenja za kad je ispit blizu i gradiva je manje: uz lekcije koncepata plan ima i lekcije primjene, pa učenik istodobno uči gradivo i vježba skoro sve tipove zadataka. Moguća je samo za gradivo do 50 lekcija koncepata.
+
+**Datum ispita**:
+Dan kad učenik piše ispit ili test iz predmeta. Ponavljanje se do tog dana sažima tako da sve stigne prije njega. Za službene predmete postavlja ga admin, a za vlastiti predmet kreator.
+_Avoid_: rok, deadline
 
 **Objašnjenje**:
 Rješenje zadatka po koracima, napisano laički, tako da ga razumije i učenik kojem predmet ne ide.
