@@ -339,3 +339,31 @@ Objašnjenja prosječno 7,6 k znakova (Haiku xhigh 7,3 k, Sol low u 4-u-1 5,0 k)
 - Sitnice: „priješla“ (B01.01), umjetni okvir d) u B07.04 („satelit prikuplja podatke za prikaz gibanja Zemlje“).
 
 Usporedba prvih varijacija: Haiku xhigh 9 ✅ / 1 ⚠️ za 3,33 c i ~4,5 min; Sol medium 10 ✅ za 5,35 c i ~1,7 min.
+
+## Haiku xhigh radi 2.–4. varijaciju po Solovom predlošku (TAG=solhx)
+
+`MODEL=anthropic/claude-haiku-5.5 EFFORT=xhigh MAXTOK=128000 TAG=solhx TPL=sol1_write10.json sablon_varijacije.py`. Predlošci su 10 Solovih (medium) prvih varijacija, ručno provjerenih (10 ✅).
+- 30/30 uspjelo, provjere kodom 0 grešaka (KaTeX, Rezultati, LaTeX izvan formula, strani jezik, duljina).
+- **1,13 c po varijaciji** (0,66–1,95 c), ukupno 0,34 $; 45–141 s po varijaciji. Izlaz 12–37 k tokena, od toga razmišljanje 8–31 k.
+
+**Ručna provjera (sve pročitano, svi brojevi preračunati): 30/30 računa točno, 0 ozbiljnih grešaka, ~5 malih.**
+- Rečenice ovisne o brojevima ispravno prilagođene. Primjeri: B05.03 „81 % energije, ali 90 % stiskanja“ i „25/36 energije, 5/6 stiskanja“; B01.05 „put veći od pomaka za 2 · 1,8 m“ i tko se još diže, a tko pada pri sudaru; B07.04 je li nova orbita niža ili viša od geostacionarne (u v2 i v3 je viša, pa satelit mora sići, a u v4 niža, pa se mora podići).
+- Podaci su fizikalno realni. B07.04 brzine odgovaraju kružnim brzinama na zadanim polumjerima (7,6 km/s na 6900 km, 7,1 km/s na 7800 km); u B02.02 vrijedi sin² + cos² = 1 (0,352 / 0,936).
+- Težina i sila teža ispravno razlikovane u B04.01 i B02.02 („nijedna nacrtana sila nije težina“).
+- B07.04: u d) Haiku mijenja planet (Mars, Jupiter, Saturn umjesto Zemlje). Činjenice su točne (≈ 12 god., ≈ 29,5 god., ekscentričnost veća od Zemljine) i nema izmišljenih podataka iz knjižice, za razliku od GLM-a.
+
+**Male greške:**
+- B01.05 v2: ostala riječ „Loptica“ iz predloška.
+- B07.01 i B07.04 v3: previše decimala („1200,6 N“, „1,0785·10⁵ s“).
+- B07.04 v2/v3: nespretan uvod u d) („Satelit iz nove orbite ostaje u orbiti iz c)…“); okvir je umjetan već u predlošku.
+- B05.03 v3: jedna suvišna rečenica koja ponavlja 81 %.
+
+Jezičnih grešaka (nepostojeće riječi, strano pismo) nema.
+
+| Na istih 10 lekcija | Ozbiljne | Male | Po lekciji (4 var.) |
+|---|---|---|---|
+| Haiku xhigh 1. + Haiku medium po predlošku | 0 + 1 / 40 | ~13 / 40 | 4,83 c |
+| Haiku xhigh 1. + GLM po predlošku | 0 + 2 / 40 | ~8 / 40 + jezik | 4,26 c |
+| **Sol medium 1. + Haiku xhigh po predlošku** | **0 / 40** | **~6 / 40** | **8,74 c** (≈ 11,8 $ za 135 lekcija) |
+| Sol low, sve 4 | 0 / 40 | 2 / 40 | 10,95 c (kraća objašnjenja) |
+| Sonnet 5.5 medium, sve 4 | 0 / 40 | ~5 / 40 | ≥ 18,4 c (procjena ~22–28 c) |
