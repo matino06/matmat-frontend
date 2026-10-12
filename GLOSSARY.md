@@ -26,6 +26,14 @@ _Avoid_: kurikulum, syllabus, roadmap
 
 ## Gradivo
 
+**Područje**:
+Velik dio gradiva predmeta (npr. Mehanika) koji okuplja više cjelina. Po područjima se prikazuju mapa, napredak i spremnost za ispit.
+_Avoid_: domena, oblast, field
+
+**Cjelina**:
+Skupina lekcija plana koje pokrivaju isti ishod (npr. Pravocrtno gibanje). Pripada jednom području.
+_Avoid_: blok, poglavlje, tema, subfield
+
 **Lekcija**:
 Mali zalogaj plana: najviše jedna nova ideja, koju učenik nauči iz jednog zadatka i njegovog objašnjenja. Složen koncept dijeli se na lekciju s laganim zadatkom i lekciju sa složenijim zadatkom koja joj je preduvjet; novi kontekst ili obrat formule nisu razlog za novu lekciju.
 _Avoid_: ishod, cilj, objective, tema
