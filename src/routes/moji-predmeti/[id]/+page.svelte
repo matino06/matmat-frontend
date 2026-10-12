@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import { apiClient } from "$lib/api/apiClient";
   import { ownCourses, SUBJECTS, LEVELS } from "$lib/store/ownCourses.svelte";
+  import { setCurrentCourse } from "$lib/store/course.svelte";
   import PlanEditor from "$lib/components/ownCourse/PlanEditor.svelte";
 
   const courseId = page.params.id;
@@ -58,7 +59,10 @@
   onMount(async () => {
     await loadCourse();
     // Napredak se osvježava svake 3 s; stranica se smije zatvoriti, izrada ide dalje.
-    timer = setInterval(() => course && course.status !== "nov" && progress?.state !== "ceka_kreatora" && loadProgress(), 3000);
+    timer = setInterval(
+      () => course && course.status !== "nov" && !["ceka_kreatora", "spremno"].includes(progress?.state) && loadProgress(),
+      3000,
+    );
   });
   onDestroy(() => clearInterval(timer));
 
@@ -135,6 +139,17 @@
     await loadProgress();
   }
 
+  // Predmet postaje trenutni i učenje kreće na zadacima.
+  async function startLearning() {
+    await apiClient("/account/current-course", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ courseId: Number(courseId) }),
+    });
+    setCurrentCourse(Number(courseId));
+    window.location.href = "/tasks";
+  }
+
   async function retry() {
     await apiClient(`/own-courses/${courseId}/retry`, { method: "POST" });
     await loadProgress();
@@ -154,10 +169,16 @@
 
   const PHASES = ["Čitanje materijala", "Izrada plana", "Pregled i potvrda plana", "Izrada prvih zadataka", "Spremno za učenje"];
   const PLAN_STEPS = ["Opseg gradiva", "Stavke znanja", "Preduvjeti", "Lekcije", "Provjera plana"];
-  let phaseIndex = $derived({ citanje: 0, plan: 1, pregled: 2 }[progress?.phase] ?? 0);
+  let phaseIndex = $derived(
+    progress?.state === "spremno" ? 4 : ({ citanje: 0, plan: 1, pregled: 2, zadaci: 3 }[progress?.phase] ?? 0),
+  );
+  let tasks = $derived(progress?.phase === "zadaci");
+  let canLearn = $derived(tasks && (progress.state === "spremno" || (progress.state === "batch" && progress.done >= 5)));
   let headline = $derived(
     {
-      radi: "Izrađujemo tvoj predmet",
+      radi: tasks ? "Izrađujemo zadatke" : "Izrađujemo tvoj predmet",
+      batch: canLearn ? "Prvih 5 lekcija je spremno" : "Izrađujemo zadatke",
+      spremno: "Možeš početi učiti",
       ceka_kvotu: "Izrada čeka novu kvotu",
       neuspjelo: "Nešto nije uspjelo",
       pauzirano: "Izrada je na kratkoj pauzi",
@@ -167,7 +188,11 @@
   );
   let explanation = $derived(
     {
-      radi: "Ovo traje nekoliko minuta. Možeš zatvoriti stranicu, javit ćemo ti e-mailom kad plan bude spreman.",
+      radi: tasks
+        ? "AI piše prvi zadatak za svaku lekciju; ovo traje nekoliko minuta. Možeš zatvoriti stranicu."
+        : "Ovo traje nekoliko minuta. Možeš zatvoriti stranicu, javit ćemo ti e-mailom kad plan bude spreman.",
+      batch: "Ostale lekcije izrađuju se u pozadini, do 24 h. Već možeš početi učiti; javit ćemo ti e-mailom kad sve bude gotovo.",
+      spremno: "Zadaci za sve lekcije su izrađeni. Uz svaki zadatak je objašnjenje korak po korak.",
       ceka_kvotu: "Mjesečna kvota je potrošena. Ono što je napravljeno je spremljeno, a izrada se sama nastavlja 1. u mjesecu.",
       neuspjelo: "Jedan korak izrade nije uspio ni nakon 3 pokušaja. Pokušaj ponovno; ako opet ne uspije, javi nam se.",
       pauzirano: "Izrada je privremeno zaustavljena zbog velikog opterećenja. Nastavit će se sama, ništa ne trebaš raditi.",
@@ -271,7 +296,9 @@
         <div class="stack">
           <h2>{headline}</h2>
           <p class="muted">{explanation}</p>
-          {#if progress.phase === "citanje"}
+          {#if tasks && progress.state !== "spremno"}
+            <div class="now">Zadaci: {progress.done} od {progress.total} lekcija</div>
+          {:else if progress.phase === "citanje"}
             <div class="now">Čitam materijal: {progress.done} od {progress.total} stranica</div>
           {:else if progress.phase === "plan" && progress.state !== "prevelik"}
             <ul class="steps">
@@ -284,6 +311,9 @@
           {/if}
           {#if error}<div class="err small">{error}</div>{/if}
           <div class="actions start">
+            {#if canLearn}
+              <button class="btn btn-primary" onclick={startLearning}>Počni učiti</button>
+            {/if}
             {#if progress.state === "neuspjelo"}
               <button class="btn btn-primary" onclick={retry}>Pokušaj ponovno</button>
             {/if}
@@ -294,13 +324,18 @@
         </div>
       </div>
       {#if progress.state === "ceka_kreatora"}
-        <PlanEditor {courseId} />      {:else}
+        <PlanEditor {courseId} onconfirmed={loadCourse} />
+      {:else}
         <div class="next">
           <div class="next-h">Što slijedi</div>
           {#each PHASES.slice(phaseIndex + 1) as p, i}
             <div class="next-i"><span class="dot">{phaseIndex + i + 2}</span>{p}</div>
           {/each}
         </div>
+        {#if tasks}
+          <div class="next-h plan-h">Plan (potvrđen; možeš samo preimenovati lekcije)</div>
+          <PlanEditor {courseId} locked />
+        {/if}
       {/if}
     {/if}
 
@@ -358,6 +393,9 @@
   .hero.ceka_kreatora { border-color: var(--success); }
   .hero.ceka_kreatora .ring { --c: var(--success); }
   .hero.prevelik { border-color: var(--danger); }
+  .plan-h { margin-top: 22px; }
+  .hero.spremno { border-color: var(--success); }
+  .hero.spremno .ring { --c: var(--success); }
   .next-h { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
   .next-i { display: flex; gap: 10px; align-items: center; font-size: 13.5px; color: var(--text-dim); }
   .dot { width: 22px; height: 22px; border-radius: 99px; border: 1px solid var(--border-strong); display: grid; place-items: center; font-size: 11px; }

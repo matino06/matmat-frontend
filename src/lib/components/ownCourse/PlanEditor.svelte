@@ -4,6 +4,7 @@
   // i kvotom. Nakon izmjena i 30 s pauze traži se ponovna provjera; upozorenja se tada osvježe.
   // Uputa AI-ju vraća prijedlog operacija koji se označi u popisu i prihvaća ili odbacuje u cjelini.
   // Prije uređivanja kreator jednom bira način učenja; brza priprema dodaje lekcije primjene.
+  // Potvrda zaključava plan; nakon nje (locked) ostaje samo popis s preimenovanjem lekcija.
   import { onMount, onDestroy } from "svelte";
   import ArrowUp from "@lucide/svelte/icons/arrow-up";
   import ArrowDown from "@lucide/svelte/icons/arrow-down";
@@ -16,7 +17,7 @@
   import Sparkles from "@lucide/svelte/icons/sparkles";
   import { apiClient } from "$lib/api/apiClient";
 
-  let { courseId } = $props();
+  let { courseId, locked = false, onconfirmed } = $props();
 
   const RECHECK_AFTER_MS = 30000;
   const base = `/own-courses/${courseId}`;
@@ -42,6 +43,9 @@
   let pick = $state("ucenje_gradiva");
   let examDate = $state("");
   let choosing = $state(false);
+  let confirming = $state(false);
+  let seriousOk = $state(false);
+  let confirmBusy = $state(false);
   let instruction = $state("");
   let proposal = $state(null); // { jobId, status, message, ops, error, warning }
   let changed = new Set();
@@ -81,6 +85,17 @@
   let concepts = $derived(lessons.filter((l) => l.kind !== "primjena").length);
   let quickBlocked = $derived(mode && mode.conceptLessons > mode.maxQuickLessons);
   let today = new Date().toLocaleDateString("sv-SE");
+  const KIND_LABELS = {
+    nulta: "Lekcija koristi nešto što plan još nije naučio",
+    redoslijed: "Redoslijed lekcija",
+    ispit: "Zadaci s ispita koje plan ne pokriva",
+  };
+  let warningGroups = $derived(
+    Object.entries(active.reduce((m, w) => ((m[w.kind] ??= []).push(w), m), {})).sort(
+      ([, a], [, b]) => b.filter((w) => w.serious).length - a.filter((w) => w.serious).length,
+    ),
+  );
+  let hasSerious = $derived(active.some((w) => w.serious));
   let quotaFull = $derived((quota?.usedPercent ?? 0) >= 100);
   let candidates = $derived(
     open && preSearch.trim().length > 1
@@ -129,6 +144,7 @@
   }
 
   onMount(async () => {
+    if (locked) return loadPlan();
     introDone = localStorage.getItem(`mm-pz-${courseId}`) === "1";
     await Promise.all([loadPlan(), loadWarnings(), loadAssumed(), loadMode()]);
     await loadQuota();
@@ -145,8 +161,9 @@
     error = "";
     try {
       const result = await fn();
-      for (const id of ids) if (id) changed.add(id);
       await loadPlan();
+      if (locked) return result; // potvrđen plan se više ne provjerava
+      for (const id of ids) if (id) changed.add(id);
       clearTimeout(recheckTimer);
       recheckTimer = setTimeout(recheck, RECHECK_AFTER_MS);
       return result;
@@ -202,6 +219,29 @@
   async function ignore(w) {
     await call(`/warnings/${w.warningId}/ignore`, "POST");
     w.ignored = true;
+  }
+
+  // --- potvrda plana ---
+
+  function openConfirm() {
+    // izmjene koje još čekaju provjeru šalju se odmah, da potvrda vidi svježa upozorenja
+    if (changed.size) recheck();
+    seriousOk = false;
+    confirming = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function confirmPlan() {
+    confirmBusy = true;
+    error = "";
+    try {
+      await call("/confirm", "POST", { seriousAccepted: seriousOk });
+      confirming = false;
+      onconfirmed?.();
+    } catch (e) {
+      error = e.message;
+    }
+    confirmBusy = false;
   }
 
   // --- način učenja ---
@@ -327,7 +367,7 @@
   }
 </script>
 
-{#if !introDone}
+{#if !locked && !introDone}
   <!-- Prvi put: predznanje kao kratki prvi korak -->
   <div class="card card-pad intro">
     <h2>Što već znaš?</h2>
@@ -340,7 +380,7 @@
     {/each}
     <div class="actions"><button class="btn btn-primary" onclick={finishIntro}>Znam sve ovo, dalje</button></div>
   </div>
-{:else if mode && !mode.mode}
+{:else if !locked && mode && !mode.mode}
   <!-- Način učenja: bira se jednom, kad je poznat broj lekcija koncepata -->
   <div class="card card-pad choose">
     <h2>Kako želiš učiti?</h2>
@@ -371,7 +411,7 @@
     </div>
   </div>
 {:else}
-  <div class="editor">
+  <div class="editor" class:locked>
     <main>
       <div class="toolbar">
         <span class="muted small">
@@ -389,6 +429,40 @@
         </div>
       {:else if mode?.mode === "brza_priprema" && mode.applications && mode.applications !== "done"}
         <div class="card card-pad notice busy">AI dodaje lekcije primjene (tipove zadataka s testa)…</div>
+      {/if}
+      {#if confirming}
+        <div class="card card-pad confirm">
+          <h3>Potvrda plana</h3>
+          <p><b>Nakon potvrde plan se više ne može mijenjati</b>; moći ćeš samo preimenovati lekcije.</p>
+          <p class="muted small">
+            {#if lessons.length > 50}
+              Prvih 5 lekcija bit će spremno za nekoliko minuta, a ostale do 24 h. Javit ćemo ti e-mailom kad sve bude gotovo.
+            {:else}
+              AI će napisati prvi zadatak za svaku od {lessons.length} lekcija; to traje nekoliko minuta.
+            {/if}
+          </p>
+          {#if checking}<div class="busy small">Provjera plana još traje; potvrda je moguća kad završi.</div>{/if}
+          {#each warningGroups as [kind, list]}
+            <details class="group" open={list.some((w) => w.serious)}>
+              <summary>
+                {KIND_LABELS[kind] ?? "Ostalo"} <span class="badge" class:serious={list.some((w) => w.serious)}>{list.length}</span>
+              </summary>
+              {#each list as w (w.warningId)}<div class="small" class:sev={w.serious}>{w.text}</div>{/each}
+            </details>
+          {/each}
+          {#if !active.length && !checking}<div class="muted small">Plan nema upozorenja.</div>{/if}
+          {#if hasSerious}
+            <label class="small ack">
+              <input type="checkbox" bind:checked={seriousOk} /> Pregledao sam ozbiljna upozorenja i svejedno potvrđujem plan.
+            </label>
+          {/if}
+          <div class="actions">
+            <button class="btn btn-quiet" onclick={() => (confirming = false)}>Natrag na uređivanje</button>
+            <button class="btn btn-primary" disabled={confirmBusy || checking || !!proposal || (hasSerious && !seriousOk)} onclick={confirmPlan}>
+              {confirmBusy ? "Potvrđujem…" : "Potvrdi plan"}
+            </button>
+          </div>
+        </div>
       {/if}
       {#each additions.top ?? [] as name}
         <div class="card ghost">+ {name} <span class="muted small">nova lekcija na početku</span></div>
@@ -431,6 +505,9 @@
                   </div>
                 </div>
                 <div class="acts">
+                  {#if locked}
+                    <button class="icon-btn" title="Preimenuj" onclick={() => ((editing = l.objectiveId), (editText = l.name))}><Pencil size={15} /></button>
+                  {:else}
                   <button class="icon-btn" title="Gore" onclick={() => move(l, -1)}><ArrowUp size={15} /></button>
                   <button class="icon-btn" title="Dolje" onclick={() => move(l, 1)}><ArrowDown size={15} /></button>
                   <button class="icon-btn" title="Preimenuj" onclick={() => ((editing = l.objectiveId), (editText = l.name))}><Pencil size={15} /></button>
@@ -439,6 +516,7 @@
                   {/if}
                   <button class="icon-btn" title="Dodaj lekciju ispod" onclick={() => (addingAfter = l.objectiveId)}><Plus size={15} /></button>
                   <button class="icon-btn danger" title="Obriši" onclick={() => removeLesson(l)}><Trash2 size={15} /></button>
+                  {/if}
                 </div>
               </div>
 
@@ -491,7 +569,14 @@
       {/each}
     </main>
 
+    {#if !locked}
     <aside>
+      <div class="card side">
+        <div class="side-h">Potvrda plana</div>
+        <div class="muted small">Kad je plan kakav želiš, potvrdi ga i krećemo s izradom zadataka.</div>
+        <button class="btn btn-primary sm" disabled={!mode?.mode || confirming} onclick={openConfirm}>Potvrdi plan…</button>
+      </div>
+
       <div class="card side">
         <div class="side-h"><Sparkles size={14} /> Uputa AI-ju</div>
         {#if !proposal}
@@ -561,6 +646,7 @@
         </div>
       {/if}
     </aside>
+    {/if}
   </div>
 {/if}
 
@@ -635,6 +721,14 @@
   .date { display: grid; gap: 6px; max-width: 260px; font-size: 13px; }
   .notice { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 10px; }
   .tag { padding: 1px 7px; border-radius: 999px; border: 1px solid var(--primary-border); color: var(--primary); }
+  .editor.locked { grid-template-columns: 1fr; }
+  .confirm { display: grid; gap: 10px; margin-bottom: 12px; border-color: var(--primary-border); }
+  .confirm h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .confirm p { margin: 0; }
+  .group summary { cursor: pointer; font-size: 13px; font-weight: 500; display: flex; gap: 6px; align-items: center; }
+  .group > div { padding: 4px 0 4px 14px; color: var(--text-dim); }
+  .group .sev { color: var(--danger); }
+  .ack { display: flex; gap: 8px; align-items: center; }
   .row-btns { display: flex; gap: 6px; flex-wrap: wrap; }
   .ops { margin: 0; padding-left: 16px; font-size: 12.5px; display: grid; gap: 3px; }
   textarea.inp { resize: vertical; }
