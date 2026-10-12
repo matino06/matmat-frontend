@@ -194,3 +194,36 @@ Opažanja:
 - B07.04: Haiku je kod sve tri varijacije proširio c) — odstupanje od „ista razina težine“.
 
 Trošak za cijeli predmet (135 lekcija): 1. varijacija xhigh 4,5 $ + 3 × 0,5 c × 135 ≈ 2,0 $ → **~6,5 $ za sve 4 varijacije** (Haiku xhigh za sve: ~18 $; petlja: ~9,7 $).
+
+## GPT-6.1 Sol (low) u jednom pozivu piše sve 4 varijacije (`sol4_write.py`)
+
+Prva varijacija po DESIGN_V2, 2.–4. kao izmjene prve; u promptu i pravila iz prošlog testa (bez novih podzadataka, provjeri usporedbe/omjere/kut 45°, usklađeni podaci, ne „X puta manji“ za X < 1, LaTeX samo u formulama).
+10/10 poziva uspjelo, svaki točno 4 varijacije, 0 grešaka koda (KaTeX, „Rezultati“, LaTeX izvan formula, duljina).
+**10,95 c po lekciji = 2,74 c po varijaciji**; 103–146 s po lekciji (sve 4 odjednom); izlaz 7,8–11,1 k tokena, razmišljanje samo 140–500 tokena; ulaz ~7 k.
+
+**Računi: 40/40 točni** (sve ručno preračunato). Tekst:
+
+| Lekcija | v1 | v2 | v3 | v4 |
+|---|---|---|---|---|
+| B01.01 | ✅ | ✅ | ✅ | ✅ |
+| B01.05 | ⚠️ d) „Ponovimo hitac iz a)“ pa „prvu bacamo s tla“ — proturječna formulacija (u v2–v4 ispravljeno) | ✅ | ✅ | ✅ |
+| B03.02 | ✅ | ✅ | ✅ | ✅ |
+| B02.02 | ✅ | ✅ | ✅ | ✅ (težina ≠ sila teža objašnjeno točno) |
+| B04.01 | ✅ | ✅ (Ivan 150 kg) | ✅ | ⚠️ klizač Luka 180 kg — nerealno |
+| B04.02 | ✅ | ✅ | ✅ | ✅ |
+| B05.03 | ✅ | ✅ | ✅ | ✅ |
+| B06.01 | ✅ | ✅ | ✅ | ✅ (smjer tangente za svaki položaj točan) |
+| B07.01 | ✅ | ✅ | ✅ | ✅ (sitnica: previše znamenki, 2401,2 N) |
+| B07.04 | ✅ | ✅ | ✅ | ✅ |
+
+**Ukupno: 38 ✅, 2 ⚠️, 0 ❌.** Sve rečenice ovisne o brojevima ispravno prilagođene (npr. „četvrtinu ophoda u sekundi“, smjer brzine u smjeru/suprotno kazaljci, „tri ophoda dok Zemlja napravi jedan“).
+
+Ali zadaci su **jednostavniji i objašnjenja kraća** nego kod Haikua xhigh:
+- objašnjenje prosječno 5,0 k znakova (Haiku xhigh 7,3 k, Haiku medium po predlošku 7,5 k);
+- B05.03 bez opruge i sile trenja (3 podzadatka), B07.01 3 podzadatka, B03.02 sile samo po jednom pravcu, B04.02 bez dijela s podlogom;
+- varijacije su vrlo „mehaničke“ (B07.04: isti v, samo polumjer; c) uvijek 4× → 8×).
+
+| Na istih 10 lekcija | ✅ / ⚠️ / ❌ | Po varijaciji | Po lekciji (4 var.) |
+|---|---|---|---|
+| Haiku xhigh 1. + Haiku medium po predlošku | 9/1/0 + 17/12/1 | 3,33 c + 3 × 0,50 c | 4,83 c |
+| **Sol low, sve 4 u jednom pozivu** | **38/2/0** | **2,74 c** | **10,95 c** (~14,8 $ za 135 lekcija) |
