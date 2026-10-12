@@ -163,3 +163,34 @@ Napomena: „I. Newtonov zakon ne vrijedi“ dolazi iz stavke plana („Inercijs
 
 Procjena za cijeli predmet (135 lekcija × 4 varijacije, ako se sve generiraju): petlja ~9,7 $, Haiku xhigh ~18 $.
 Uz lijeno generiranje (1. varijacija svima, ostale tek kad ih učenik zatraži) Haiku xhigh: 4,5 $ za prvu rundu.
+
+## Predložak: Haiku xhigh piše 1. varijaciju, Haiku medium radi 2.–4. po njoj (`sablon_varijacije.py`)
+
+Predložak = ručno provjerena xhigh varijacija (B04.01 prije toga ručno ispravljen: sila teža umjesto težine).
+Haiku medium (zadano razmišljanje) mijenja brojeve i sitnice, prilagođava tekst; varijacije unutar lekcije idu redom da se brojevi ne ponove.
+30 varijacija (10 lekcija × 3), 0 grešaka, 0 KaTeX grešaka, svih 30 ima „Rezultati“.
+**0,50 c po varijaciji**, ~16–76 s (prosjek ~36 s), izlaz 5–18 k tokena, razmišljanje 0,8–10,7 k.
+
+**Računi: 30/30 točni** (sve ručno preračunato). Greške su samo u tekstu koji ovisi o brojevima:
+
+| Lekcija | v2 | v3 | v4 |
+|---|---|---|---|
+| B01.01 | ✅ | ✅ | ✅ |
+| B01.05 | ✅ | ✅ (d) sad „sretnu se“, točno) | ✅ |
+| B03.02 | ✅ | ⚠️ „ubrzanje se utrostruči smanji“ | ⚠️ naslov „Dvostruko teži“, a masa je 2,5× |
+| B02.02 | ❌ kut < 45°, ostala rečenica „uz kosinu strmiju od vodoravne komponenta uz kosinu mora biti veća … što ovdje nije slučaj“ + „trećinom više od četvrtine“ | ✅ | ✅ |
+| B04.01 | ✅ | ✅ | ✅ (sva tri preuzela ispravak sile teže) |
+| B04.02 | ⚠️ prikaz | ⚠️ prikaz | ⚠️ prikaz |
+| B05.03 | ✅ | ✅ | ✅ |
+| B06.01 | ⚠️ „7,5 km/h je lagano hodanje“ | ⚠️ „18 km/h je brzo hodanje“ | ✅ |
+| B07.01 | ✅ | ⚠️ „0,8 puta manji polumjer“ (dvosmisleno u tekstu zadatka); „udvostručili“ umjesto „četiri puta“ | ⚠️ „0,6 puta manju masu“ (dvosmisleno) |
+| B07.04 | ⚠️ c) dodan novi dio (satelit na zadanoj visini + geostacionarni) — teže od predloška | ⚠️ isto c); „okrene dvaput brže“, a omjer je 2,8 | ⚠️ isto c); proturječni podaci: a) srednja udaljenost 3,72·10⁸ m, d) (3,66+3,96)/2 = 3,81·10⁸ m |
+
+**Ukupno: 17 ✅, 12 ⚠️, 1 ❌.** Usporedba: Haiku medium sam (bez predloška) 3 ✅ / 4 ⚠️ / 3 ❌ na 10.
+
+Opažanja:
+- **Greška predloška prelazi u sve varijacije.** B04.02 predložak ima LaTeX izvan formula (`0{,}4 kg`, `10\ \text{m/s}` u običnom tekstu — učenik vidi sirovi kod); ja sam ga u ručnoj provjeri previdio, a KaTeX provjera ga ne vidi. Sve tri varijacije su ga prepisale i dodale još. Obrnuto, ispravak B04.01 prenio se u sve tri.
+- Kad se promjenom brojeva promijeni kvalitativna slika (kut ispod 45°, ishod d) u B01.05), Haiku to uglavnom dobro prati; jedini ❌ je upravo takav slučaj gdje je rečenica ostala napola prepravljena.
+- B07.04: Haiku je kod sve tri varijacije proširio c) — odstupanje od „ista razina težine“.
+
+Trošak za cijeli predmet (135 lekcija): 1. varijacija xhigh 4,5 $ + 3 × 0,5 c × 135 ≈ 2,0 $ → **~6,5 $ za sve 4 varijacije** (Haiku xhigh za sve: ~18 $; petlja: ~9,7 $).
