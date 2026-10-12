@@ -13,6 +13,7 @@
   let summary = $state(null);
   let progress = $state(null);
   let planLessons = $state(null);
+  let warnings = $state([]);
   let uploads = $state([]); // { name, percent, error }
   let error = $state("");
   let busy = $state(false);
@@ -56,6 +57,8 @@
   async function loadPlan() {
     const res = await apiClient(`/own-courses/${courseId}/plan`, { method: "GET" });
     if (res.ok) planLessons = await res.json();
+    const w = await apiClient(`/own-courses/${courseId}/warnings`, { method: "GET" });
+    if (w.ok) warnings = await w.json();
   }
 
   onMount(async () => {
@@ -296,6 +299,17 @@
           </div>
         </div>
       </div>
+      {#if planLessons && warnings.length}
+        <div class="card warns">
+          <div class="plan-h"><b>Upozorenja</b><span class="muted small">{warnings.length}</span></div>
+          {#each warnings as w (w.warningId)}
+            <div class="warn-row" class:serious={w.serious}>
+              {w.text}
+              {#if w.detail}<div class="muted small">{w.detail}</div>{/if}
+            </div>
+          {/each}
+        </div>
+      {/if}
       {#if planLessons}
         <div class="card plan">
           <div class="plan-h"><b>Plan</b><span class="muted small">{planLessons.length} lekcija</span></div>
@@ -380,6 +394,9 @@
   .hero.ceka_kreatora .ring { --c: var(--success); }
   .hero.prevelik { border-color: var(--danger); }
   .plan { margin-top: 16px; padding: 8px 0; }
+  .warns { margin-top: 16px; padding: 8px 0; }
+  .warn-row { font-size: 13px; padding: 8px 16px; border-left: 3px solid var(--warn); margin: 6px 16px; background: var(--bg-elev-2); border-radius: var(--r-sm); display: grid; gap: 2px; }
+  .warn-row.serious { border-left-color: var(--danger); }
   .plan-h { display: flex; justify-content: space-between; padding: 8px 16px 10px; border-bottom: 1px solid var(--border); }
   .lesson { border-bottom: 1px solid var(--border); }
   .lesson:last-child { border-bottom: none; }
