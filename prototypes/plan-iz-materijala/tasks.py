@@ -283,7 +283,7 @@ for (const c of data) {
 
 DESIGN_V2 = r"""KAKO NAPRAVITI ZADATAK KOJI UČI:
 - Zadatak uči gradivo lekcije; učenik ga ne zna unaprijed i uči ga iz objašnjenja. Nema uvodnog teksta.
-- Jedna realna situacija (boca, auto, opruga…) kroz podzadatke a), b), c), po potrebi d): podzadaci se
+- Jedna realna situacija (boca, auto, opruga…) kroz NAJVIŠE TRI podzadatka a), b), c), nikad d): podzadaci se
   nastavljaju jedan na drugi („Taj plin prebacimo u…“, „Vratimo plin u bocu iz a)“).
 - Podzadaci zajedno pokrivaju sve stavke lekcije. Barem jedan traži razumijevanje (koliko puta se nešto
   promijeni, što ako, zašto) i ugrađen je prirodno u situaciju, ne kao „Navedi…“ ili „Opiši…“.

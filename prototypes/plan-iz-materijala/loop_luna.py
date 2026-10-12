@@ -44,6 +44,8 @@ def code_checks(v):
     m = re.search(r"##\s*✅\s*Rezultati\s*\n(.*)$", v["objasnjenje"], re.S)
     if not m or len(m.group(1).strip()) < 10:
         issues.append("Nedostaje ili je prazan zadnji odjeljak „## ✅ Rezultati“ s rezultatom svakog podzadatka.")
+    if len(v.get("rezultati") or {}) > 3:
+        issues.append(f"Previše podzadataka ({len(v['rezultati'])}); najviše su tri, a), b), c).")
     return issues
 
 

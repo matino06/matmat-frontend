@@ -591,11 +591,11 @@ def step_group():
         return chat("group", M_PLAN,
             f"Grupiraj stavke znanja jednog ishoda u LEKCIJE. Svaka lekcija ima {BUDGET[0]}–{BUDGET[1]} stavki "
             "(manje samo ako ishod nema dovoljno stavki), stavke u lekciji čine povezanu cjelinu, i lekcija se uči "
-            "JEDNIM zadatkom s podzadacima A–D (svaki podzadatak vodi kroz jednu ili dvije stavke). Svaka stavka je "
+            "JEDNIM zadatkom s najviše tri podzadatka a)–c) (svaki podzadatak vodi kroz jednu ili dvije stavke). Svaka stavka je "
             "u točno jednoj lekciji. Preduvjet stavke mora biti u ranijoj lekciji ili u istoj lekciji. Poredaj "
             "lekcije redom učenja. Vrati JSON "
             '{"lekcije":[{"naziv":"…","koncept":"jedna rečenica: što lekcija uči","zadatak":"jedna rečenica: '
-            'koji zadatak A–D je uči","stavke":["id"]}]}',
+            'koji zadatak a)–c) je uči","stavke":["id"]}]}',
             f"ISHOD: {ish} {ps[0]['ishod_naslov']}\n\nSTAVKE:\n{lst}", max_tokens=8000, reasoning="medium")["lekcije"]
 
     items = list(by.items())
