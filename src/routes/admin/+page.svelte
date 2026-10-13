@@ -29,6 +29,9 @@
   let tasks = $state([]);
   let tasksLoading = $state(false);
   let tasksError = $state("");
+  const DRAWER_KEY = "mm-admin-drawer-w";
+  let drawerWidth = $state(savedDrawerWidth());
+  let drawerResizing = $state(false);
 
   // Cytoscape (lazy-loaded, browser-only)
   let cytoscape = null;
@@ -316,6 +319,43 @@
     selectedObjective = null;
   }
 
+  // Draggable left edge, same as the app's slide-out panels; the width is remembered.
+  function savedDrawerWidth() {
+    try {
+      const saved = Number(localStorage.getItem(DRAWER_KEY));
+      if (saved > 0) return saved;
+    } catch {
+      // no storage (SSR, private mode) — use the default
+    }
+    return 460;
+  }
+
+  function startDrawerResize(e) {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    const handle = e.currentTarget;
+    handle.setPointerCapture(e.pointerId);
+    drawerResizing = true;
+
+    function onMove(ev) {
+      drawerWidth = Math.max(360, Math.min(window.innerWidth - ev.clientX, window.innerWidth - 80));
+    }
+    function onEnd() {
+      drawerResizing = false;
+      handle.removeEventListener("pointermove", onMove);
+      handle.removeEventListener("pointerup", onEnd);
+      handle.removeEventListener("pointercancel", onEnd);
+      try {
+        localStorage.setItem(DRAWER_KEY, String(Math.round(drawerWidth)));
+      } catch {
+        // not remembered — fine
+      }
+    }
+    handle.addEventListener("pointermove", onMove);
+    handle.addEventListener("pointerup", onEnd);
+    handle.addEventListener("pointercancel", onEnd);
+  }
+
   async function loadTasks(objectiveId) {
     tasks = [];
     tasksError = "";
@@ -571,7 +611,9 @@
   {#if selectedObjective}
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
     <div class="drawer-backdrop" onclick={closeDrawer}></div>
-    <aside class="detail-drawer">
+    <aside class="detail-drawer" class:resizing={drawerResizing} style:width="min({drawerWidth}px, 92vw)">
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="drawer-resize" onpointerdown={startDrawerResize}></div>
       <div class="drawer-head">
         <div style="min-width:0">
           <div class="drawer-title">{selectedObjective.objectiveName}</div>
@@ -805,6 +847,28 @@
     flex-direction: column;
     box-shadow: -8px 0 32px rgba(0, 0, 0, 0.25);
     animation: slide-in 0.18s ease;
+  }
+  .drawer-resize {
+    position: absolute;
+    left: -3px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    cursor: ew-resize;
+    touch-action: none;
+    z-index: 2;
+    transition: background 0.15s;
+  }
+  .drawer-resize:hover,
+  .detail-drawer.resizing .drawer-resize {
+    background: var(--primary);
+    opacity: 0.6;
+  }
+  .detail-drawer.resizing {
+    user-select: none;
+  }
+  @media (max-width: 767px) {
+    .drawer-resize { display: none; }
   }
   .drawer-head {
     display: flex;
