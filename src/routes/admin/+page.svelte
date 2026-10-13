@@ -63,6 +63,23 @@
     coursesLoading = false;
   }
 
+  // Datum ispita službenog predmeta: do njega se ponavljanje sažima (najkasnije dan prije ispita).
+  let examSaved = $state(null);
+  async function saveExamDate(course, value) {
+    const res = await apiClient(`/admin/courses/${course.courseId}/exam-date`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ examDate: value || null }),
+    });
+    if (res.ok) {
+      course.examDate = value || null;
+      examSaved = course.courseId;
+      setTimeout(() => examSaved === course.courseId && (examSaved = null), 1500);
+    } else {
+      coursesError = `${res.status}: ${await res.text()}`;
+    }
+  }
+
   async function openCourse(course) {
     selectedCourse = course;
     view = "graph";
@@ -352,6 +369,12 @@
               <span class="badge badge-dim">{course.objectiveCount} objectiva</span>
               <span class="badge badge-dim">{course.taskCount} zadataka</span>
             </div>
+            <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+            <label class="exam-date" onclick={(e) => e.stopPropagation()}>
+              <span>Datum ispita</span>
+              <input type="date" value={course.examDate ?? ""} onchange={(e) => saveExamDate(course, e.currentTarget.value)} />
+              {#if examSaved === course.courseId}<span class="saved">spremljeno</span>{/if}
+            </label>
           </div>
         {/each}
       </div>
@@ -538,6 +561,9 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .exam-date { display: flex; gap: 8px; align-items: center; margin-top: 10px; font-size: 12px; color: var(--text-dim); }
+  .exam-date input { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); color: var(--text); padding: 4px 8px; font: inherit; }
+  .exam-date .saved { color: var(--success); }
   .course-badges {
     display: flex;
     gap: 8px;
