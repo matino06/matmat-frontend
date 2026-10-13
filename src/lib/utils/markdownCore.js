@@ -1,5 +1,6 @@
 import MarkdownIt from "markdown-it";
 import katex from "@traptitech/markdown-it-katex";
+import { renderSketch } from "../sketch/taskSketch.js";
 
 // Node-safe rendering core (no CSS side-effect) so it can be imported by the
 // CLI test harness (scripts/test-render.mjs). markdownRenderer.js re-exports
@@ -10,6 +11,28 @@ export const md = new MarkdownIt({
   linkify: true,
   typographer: true,
 }).use(katex, { throwOnError: false, strict: false });
+
+// Skica u objašnjenju: blok ```skica s JSON opisom crta se na tom mjestu, istim kodom kao skica uz zadatak
+// (backend ga je provjerio istim kodom pri spremanju; neispravan opis ne prikazuje ništa). Brojevi s oznaka
+// provjeravaju se prema tekstu bez blokova skica (env.sketchText), kao na backendu.
+const SKETCH_BLOCK = /```skica[ \t]*\r?\n[\s\S]*?```/g;
+const defaultFence = md.renderer.rules.fence;
+md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  if (token.info.trim() !== "skica")
+    return defaultFence(tokens, idx, options, env, self);
+  try {
+    const { svg } = renderSketch(
+      JSON.parse(token.content),
+      env?.sketchText ?? "",
+    );
+    return svg
+      ? `<figure class="task-sketch in-explanation">${svg}</figure>\n`
+      : "";
+  } catch {
+    return "";
+  }
+};
 
 // KaTeX renderer for newer tasks (id > 335), pinned to the behaviour at commit 27271fc — the
 // version those tasks were authored against. Task/explanation/AI content is authored with MathJax
@@ -25,7 +48,11 @@ export function normalizeMathDelims(text) {
 }
 
 export function renderMd(text) {
-  return text ? md.render(normalizeMathDelims(text)) : "";
+  return text
+    ? md.render(normalizeMathDelims(text), {
+        sketchText: text.replace(SKETCH_BLOCK, ""),
+      })
+    : "";
 }
 
 // AI chat: same rendering, but raw HTML is shown as text. Task content needs its
