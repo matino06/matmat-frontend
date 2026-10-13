@@ -2,6 +2,7 @@
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import { findOwnCourse } from "$lib/store/ownCourses.svelte";
+  import Sketch from "$lib/sketch/Sketch.svelte";
   import { onMount, onDestroy, tick } from "svelte";
   import { fetchReadiness } from "$lib/api/progress";
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
@@ -388,13 +389,19 @@
         {/if}
       </div>
 
-      <div
-        id="mathjax-output"
-        class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
-        use:fitMath
-        use:mathjaxTypeset={task.id}
-      >
-        {@html renderTask(task.taskText ?? '')}
+      <div class="task-body">
+        {#if task.sketch}
+          <!-- skica iz opisa: desno uz tekst, na mobitelu ispod; neispravan opis ne prikazuje ništa -->
+          <div class="task-sketch-side"><Sketch sketch={task.sketch} text={`${task.taskText ?? ""}\n${task.explanation ?? ""}`} /></div>
+        {/if}
+        <div
+          id="mathjax-output"
+          class="prose prose-sm prose lg:prose-lg !max-w-none dark:prose-invert"
+          use:fitMath
+          use:mathjaxTypeset={task.id}
+        >
+          {@html renderTask(task.taskText ?? '')}
+        </div>
       </div>
 
       {#if !revealed}
@@ -596,4 +603,7 @@
     margin-bottom: 14px;
     line-height: 1.55;
   }
+  .task-body::after { content: ""; display: block; clear: both; }
+  .task-sketch-side { float: right; width: 44%; max-width: 420px; margin: 0 0 12px 20px; }
+  @media (max-width: 700px) { .task-sketch-side { float: none; width: 100%; max-width: none; margin: 0 0 12px; } }
 </style>

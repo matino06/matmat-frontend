@@ -1,4 +1,5 @@
 <script>
+  import Sketch from "$lib/sketch/Sketch.svelte";
   import { tick, onDestroy } from "svelte";
   import { goto } from "$app/navigation";
   import { userData, verifyIsAdmin } from "$lib/store/user.svelte";
@@ -610,6 +611,9 @@
                 <div class="prose prose-sm lg:prose-lg !max-w-none dark:prose-invert" use:fitMath use:mathjaxTypeset={task.id}>
                   {@html renderTaskHtml(task.taskText, task.id)}
                 </div>
+                {#if task.sketch}
+                  <div class="admin-sketch"><Sketch sketch={task.sketch} text={`${task.taskText ?? ""}\n${task.explanation ?? ""}`} /></div>
+                {/if}
                 {#if task.explanation}
                   <div class="solution">
                     <div class="solution-header"><h3>Rješenje</h3></div>
@@ -845,4 +849,5 @@
     from { transform: translateX(100%); }
     to { transform: translateX(0); }
   }
+  .admin-sketch { max-width: 420px; margin: 12px 0; }
 </style>
