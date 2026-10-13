@@ -67,15 +67,29 @@
       return list;
     }, []),
   );
+  // Stavka po id-u (tekst i lekcija), za prijedloge koji mijenjaju stavke.
+  let itemById = $derived(
+    Object.fromEntries(lessons.flatMap((l) => (l.itemIds ?? []).map((id, i) => [id, { text: l.items[i], lesson: l.objectiveId }]))),
+  );
+  const shortText = (t) => (t && t.length > 60 ? t.slice(0, 57) + "…" : (t ?? "?"));
   // Oznake prijedloga po lekciji i nove lekcije po mjestu („top“ = početak plana).
   let marks = $derived(
     (proposal?.ops ?? []).reduce((m, o) => {
+      const name = (id) => byId[id]?.name ?? "?";
+      const from = itemById[o.stavka]?.lesson;
       if (o.op === "spoji") {
         m[o.a] = { kind: "merge", text: `prima „${byId[o.b]?.name ?? "?"}“` };
         m[o.b] = { kind: "merge", text: `spaja se u „${byId[o.a]?.name ?? "?"}“` };
       } else if (o.op === "preimenuj") m[o.id] = { kind: "rename", text: `novi naziv: „${o.naziv}“` };
       else if (o.op === "obrisi") m[o.id] = { kind: "delete", text: "briše se" };
       else if (o.op === "premjesti") m[o.id] = { kind: "move", text: o.iza ? `ide iza „${byId[o.iza]?.name ?? "?"}“` : "ide na početak" };
+      else if (o.op === "prepravi_stavku" && from) m[from] = { kind: "rename", text: `prepravlja se stavka: „${shortText(o.tekst)}“` };
+      else if (o.op === "premjesti_stavku" && from) {
+        m[from] = { kind: "move", text: `stavka „${shortText(itemById[o.stavka]?.text)}“ odlazi u „${name(o.u)}“` };
+        m[o.u] = { kind: "move", text: `dobiva stavku iz „${name(from)}“` };
+      } else if (o.op === "dodaj_stavku") m[o.id] = { kind: "rename", text: `nova stavka: „${shortText(o.tekst)}“` };
+      else if (o.op === "dodaj_preduvjet") m[o.id] = { kind: "rename", text: `novi preduvjet „${name(o.preduvjet)}“` };
+      else if (o.op === "ukloni_preduvjet") m[o.id] = { kind: "delete", text: `više ne treba „${name(o.preduvjet)}“` };
       return m;
     }, {}),
   );
@@ -216,6 +230,23 @@
     newAssumed = "";
     await loadAssumed();
   }
+  // Popravak jednog ozbiljnog upozorenja kodom (kao pri izradi plana); rezultat stiže s ponovnom provjerom.
+  const fixable = (w) => w.serious && (w.kind === "nulta" || w.kind === "redoslijed");
+  let fixing = $state({});
+  async function fix(w) {
+    error = "";
+    fixing[w.warningId] = true;
+    try {
+      await call(`/warnings/${w.warningId}/fix`, "POST");
+      checking = true;
+      clearTimeout(pollTimer);
+      pollTimer = setTimeout(loadWarnings, 3000);
+    } catch (e) {
+      error = e.message;
+      fixing[w.warningId] = false;
+    }
+  }
+
   async function ignore(w) {
     await call(`/warnings/${w.warningId}/ignore`, "POST");
     w.ignored = true;
@@ -351,6 +382,12 @@
     if (o.op === "preimenuj") return `Preimenuj ${n(o.id)} u „${o.naziv}“`;
     if (o.op === "obrisi") return `Obriši ${n(o.id)}`;
     if (o.op === "dodaj") return `Dodaj „${o.naziv}“ ${o.iza ? `iza ${n(o.iza)}` : "na početak"}`;
+    if (o.op === "prepravi_stavku") return `Prepravi stavku u ${n(itemById[o.stavka]?.lesson)}: „${o.tekst}“`;
+    if (o.op === "premjesti_stavku")
+      return `Premjesti stavku „${shortText(itemById[o.stavka]?.text)}“ iz ${n(itemById[o.stavka]?.lesson)} u ${n(o.u)}`;
+    if (o.op === "dodaj_stavku") return `Dodaj stavku u ${n(o.id)}: „${o.tekst}“`;
+    if (o.op === "dodaj_preduvjet") return `${n(o.id)} dobiva preduvjet ${n(o.preduvjet)}`;
+    if (o.op === "ukloni_preduvjet") return `${n(o.id)} više ne treba ${n(o.preduvjet)}`;
     return `Premjesti ${n(o.id)} ${o.iza ? `iza ${n(o.iza)}` : "na početak"}`;
   }
 
@@ -523,7 +560,14 @@
               {#if open === l.objectiveId}
                 <div class="detail">
                   {#each w as x (x.warningId)}
-                    <div class="w-inline" class:serious={x.serious}><TriangleAlert size={13} /> {x.text}</div>
+                    <div class="w-inline" class:serious={x.serious}>
+                      <TriangleAlert size={13} /> <span>{x.text}</span>
+                      {#if fixable(x)}
+                        <button class="btn btn-ghost sm" disabled={fixing[x.warningId] || checking || quotaFull} onclick={() => fix(x)}>
+                          {fixing[x.warningId] ? "Popravljam…" : "Popravi"}
+                        </button>
+                      {/if}
+                    </div>
                   {/each}
                   <div>
                     {#if l.kind === "primjena"}
@@ -627,6 +671,11 @@
             <div class="row-btns">
               {#if w.kind === "ispit"}
                 <button class="btn btn-ghost sm" disabled={!!proposal || quotaFull} onclick={() => addLessonFor(w)}>Dodaj lekciju</button>
+              {/if}
+              {#if fixable(w)}
+                <button class="btn btn-ghost sm" disabled={fixing[w.warningId] || checking || quotaFull} onclick={() => fix(w)}>
+                  {fixing[w.warningId] ? "Popravljam…" : "Popravi"}
+                </button>
               {/if}
               <button class="btn btn-quiet sm" onclick={() => ignore(w)}>Zanemari</button>
             </div>
