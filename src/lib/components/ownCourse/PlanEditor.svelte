@@ -454,9 +454,7 @@
     <main>
       <div class="toolbar">
         <span class="muted small">
-          {concepts} lekcija koncepata{#if lessons.length > concepts} · {lessons.length - concepts} primjene{/if}
-          {#if mode?.mode} · {mode.mode === "brza_priprema" ? "brza priprema" : "učenje gradiva"}{/if}
-          {#if mode?.examDate} · test {formatDate(mode.examDate)}{/if}
+          {concepts} lekcija koncepata{#if lessons.length > concepts}{" · "}{lessons.length - concepts} primjene{/if}{#if mode?.mode}{" · "}{mode.mode === "brza_priprema" ? "brza priprema" : "učenje gradiva"}{/if}{#if mode?.examDate}{" · "}test {formatDate(mode.examDate)}{/if}
         </span>
         <label class="small"><input type="checkbox" bind:checked={grouped} /> Grupiraj po cjelinama</label>
       </div>
@@ -707,10 +705,10 @@
   .err { color: var(--danger); margin-bottom: 8px; }
   .busy { color: var(--warn); }
   .intro { display: grid; gap: 10px; }
-  .intro h2 { margin: 0; font-size: 20px; font-weight: 600; }
+  .intro h2 { margin: 0; font-size: 17px; font-weight: 500; }
   .intro p { margin: 0; }
   .actions { display: flex; justify-content: flex-end; }
-  .editor { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start; margin-top: 16px; }
+  .editor { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start; }
   @media (max-width: 960px) { .editor { grid-template-columns: 1fr; } }
   .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .toolbar label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
@@ -737,7 +735,7 @@
   @media (max-width: 700px) { .detail { grid-template-columns: 1fr; padding-left: 14px; } }
   .w-inline { grid-column: 1 / -1; font-size: 12px; color: var(--warn); display: flex; gap: 6px; align-items: center; }
   .w-inline.serious { color: var(--danger); }
-  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); margin-bottom: 6px; }
+  .label { font-size: 12.5px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
   .detail ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--text-dim); display: grid; gap: 4px; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
   .chip { cursor: default; }
@@ -750,6 +748,7 @@
   .inp.sm { font-size: 12px; padding: 6px 9px; }
   aside { position: sticky; top: 16px; display: grid; gap: 12px; max-height: calc(100vh - 32px); overflow: auto; }
   .side { padding: 14px; display: grid; gap: 8px; }
+  .side > .btn.sm { justify-content: center; padding: 8px 12px; font-size: 12.5px; }
   .side-h { font-weight: 600; font-size: 13px; display: flex; gap: 6px; align-items: center; }
   .badge.serious { color: var(--danger); border-color: var(--danger); }
   .pz { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
@@ -759,7 +758,7 @@
   .warn-t { all: unset; cursor: pointer; color: var(--text-dim); }
   .warn-t:hover { color: var(--text); }
   .choose { display: grid; gap: 14px; max-width: 720px; }
-  .choose h2 { margin: 0; font-size: 20px; font-weight: 600; }
+  .choose h2 { margin: 0; font-size: 17px; font-weight: 500; }
   .choose p { margin: 0; }
   .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   @media (max-width: 640px) { .modes { grid-template-columns: 1fr; } }

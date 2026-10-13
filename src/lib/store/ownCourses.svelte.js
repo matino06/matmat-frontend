@@ -23,12 +23,15 @@ export const LEVELS = [
   { id: "ss", label: "Srednja škola" },
 ];
 export const STATUS_LABELS = {
-  nov: "Novi · dodaj materijale",
+  nov: "Dodaj materijale",
   izrada: "Izrađuje se",
   nacrt: "Plan čeka pregled",
   potvrden: "Izrađuju se zadaci",
-  spreman: "Spremno",
+  spreman: "Spremno za učenje",
+  prevelik: "Gradivo je preopsežno",
 };
+// Boja točke statusa (.status-dot): u izradi, čeka kreatora, gotovo, zapelo.
+export const STATUS_TONES = { izrada: "busy", potvrden: "busy", nacrt: "wait", spreman: "done", prevelik: "bad" };
 
 export const loadOwnCourses = async () => {
   try {

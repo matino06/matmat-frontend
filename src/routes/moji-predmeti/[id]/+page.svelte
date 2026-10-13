@@ -6,6 +6,10 @@
   import { ownCourses, SUBJECTS, LEVELS } from "$lib/store/ownCourses.svelte";
   import { setCurrentCourse } from "$lib/store/course.svelte";
   import PlanEditor from "$lib/components/ownCourse/PlanEditor.svelte";
+  import Upload from "@lucide/svelte/icons/upload";
+  import FileText from "@lucide/svelte/icons/file-text";
+  import Trash2 from "@lucide/svelte/icons/trash-2";
+  import Check from "@lucide/svelte/icons/check";
 
   const courseId = page.params.id;
   const ACCEPT = { "application/pdf": "PDF", "image/jpeg": "JPG", "image/png": "PNG" };
@@ -168,6 +172,12 @@
   }
 
   const PHASES = ["Čitanje materijala", "Izrada plana", "Pregled i potvrda plana", "Izrada prvih zadataka", "Spremno za učenje"];
+  // Prsten kao na stranici Napredak; boja prati stanje izrade.
+  const SIZE = 148;
+  const STROKE = 10;
+  const R = (SIZE - STROKE) / 2;
+  const CIRC = 2 * Math.PI * R;
+  const TONES = { ceka_kreatora: "done", spremno: "done", ceka_kvotu: "wait", pauzirano: "wait", neuspjelo: "bad", prevelik: "bad" };
   const PLAN_STEPS = ["Opseg gradiva", "Stavke znanja", "Preduvjeti", "Lekcije", "Provjera plana"];
   let phaseIndex = $derived(
     progress?.state === "spremno" ? 4 : ({ citanje: 0, plan: 1, pregled: 2, zadaci: 3 }[progress?.phase] ?? 0),
@@ -200,206 +210,278 @@
       prevelik: "Plan bi imao više od 200 lekcija. Podijeli materijal u dva manja predmeta pa pokušaj ponovno.",
     }[progress?.state] ?? "",
   );
+  let tone = $derived(TONES[progress?.state] ?? "busy");
+  let ringDash = $derived(((progress?.percent ?? 0) / 100) * CIRC);
+  // Faza: gotova, trenutna ili tek dolazi. Kad je sve spremno, gotove su sve.
+  const phaseState = (i) => (progress?.state === "spremno" || i < phaseIndex ? "done" : i === phaseIndex ? "cur" : "todo");
+  let showEditor = $derived(progress?.state === "ceka_kreatora" || tasks);
+  let fmt = (n) => String(n).replace(".", ",");
 </script>
 
-<div class="page narrow">
+<div class="page">
   {#if notFound}
     <div class="card card-pad muted">Predmet ne postoji ili nije tvoj.</div>
   {:else if !course}
     <div class="card card-pad muted">Učitavanje…</div>
   {:else}
-    <div class="zadaci-head" style="margin-bottom:20px">
+    <div class="zadaci-head">
       <div>
         <h1>{course.courseName}</h1>
-        <div class="sub">{label(SUBJECTS, course.subject)} · {label(LEVELS, course.level)}</div>
+        <div class="sub">{label(SUBJECTS, course.subject)}, {label(LEVELS, course.level).toLowerCase()}</div>
       </div>
     </div>
 
     {#if course.status === "nov"}
       <!-- Korak 1: materijali -->
-      <div class="card card-pad stack">
-        <div>
-          <b>Materijali</b>
-          <div class="muted small">
-            Skripte, kurikulum ili katalog i stari ispiti (PDF, JPG ili PNG). Iz njih nastaje plan lekcija; zadaci se iz
-            materijala nikad ne prepisuju.
+      <div class="col">
+        <section class="card block" aria-labelledby="mat-h">
+          <div class="block-head">
+            <h2 id="mat-h">Materijali</h2>
+            <p>Skripte, kurikulum ili katalog i stari ispiti, kao PDF, JPG ili PNG. Iz njih nastaje plan lekcija, a zadaci se iz njih nikad ne prepisuju.</p>
           </div>
-        </div>
 
-        <label
-          class="drop"
-          class:dragging
-          ondragover={(e) => { e.preventDefault(); dragging = true; }}
-          ondragleave={() => (dragging = false)}
-          ondrop={(e) => { e.preventDefault(); dragging = false; uploadFiles([...e.dataTransfer.files]); }}
-        >
-          <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" onchange={(e) => { uploadFiles([...e.currentTarget.files]); e.currentTarget.value = ""; }} />
-          <span><b>Odaberi datoteke</b> ili ih povuci ovamo</span>
-          <span class="muted small">Najviše 300 stranica i 300 MB ukupno, 100 MB po datoteci</span>
-        </label>
+          <label
+            class="drop"
+            class:dragging
+            ondragover={(e) => { e.preventDefault(); dragging = true; }}
+            ondragleave={() => (dragging = false)}
+            ondrop={(e) => { e.preventDefault(); dragging = false; uploadFiles([...e.dataTransfer.files]); }}
+          >
+            <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" onchange={(e) => { uploadFiles([...e.currentTarget.files]); e.currentTarget.value = ""; }} />
+            <Upload size={20} />
+            <span><b>Odaberi datoteke</b> ili ih povuci ovamo</span>
+            <span class="hint">Do 100 MB po datoteci, ukupno najviše 300 stranica i 300 MB</span>
+          </label>
 
-        {#each uploads as u}
-          <div class="row">
-            <span class="name">{u.name}</span>
-            {#if u.error}<span class="err small">{u.error}</span>
-            {:else}<span class="bar"><span style="width:{u.percent}%"></span></span>{/if}
-          </div>
-        {/each}
+          {#if uploads.length || summary?.materials.length}
+            <div class="joined-list files">
+              {#each uploads as u}
+                <div class="file">
+                  <FileText size={16} />
+                  <span class="file-main"><span class="file-name">{u.name}</span>
+                    {#if u.error}<span class="err">{u.error}</span>{:else}<span class="bar"><span style="width:{u.percent}%"></span></span>{/if}
+                  </span>
+                </div>
+              {/each}
+              {#each summary?.materials ?? [] as m (m.materialId)}
+                <div class="file">
+                  <FileText size={16} />
+                  <span class="file-main">
+                    <span class="file-name">{m.originalName}</span>
+                    <span class="file-meta">{ACCEPT[m.contentType]}, {m.pageCount} str., {fmt(mb(m.sizeBytes))} MB</span>
+                  </span>
+                  <label class="check" title="Učenik ga smije koristiti na ispitu, npr. knjižica formula">
+                    <input type="checkbox" checked={m.availableOnExam} onchange={() => toggleOnExam(m)} />
+                    Dostupan na ispitu
+                  </label>
+                  <button class="icon-btn del" title="Ukloni" aria-label="Ukloni {m.originalName}" onclick={() => removeMaterial(m)}><Trash2 size={15} /></button>
+                </div>
+              {/each}
+            </div>
+            {#if summary?.materials.length}
+              <div class="usage">
+                <span><b>{summary.totalPages}</b> od {summary.maxPages} stranica</span>
+                <span><b>{fmt(mb(summary.totalBytes))}</b> od {fmt(mb(summary.maxTotalBytes))} MB</span>
+              </div>
+            {/if}
+          {/if}
+        </section>
 
         {#if summary?.materials.length}
-          <div class="list">
-            {#each summary.materials as m (m.materialId)}
-              <div class="row">
-                <div class="grow">
-                  <div class="name">{m.originalName}</div>
-                  <div class="muted small">{ACCEPT[m.contentType]} · {m.pageCount} str. · {mb(m.sizeBytes)} MB</div>
-                </div>
-                <label class="check" title="Učenik ga smije koristiti na ispitu, npr. knjižica formula">
-                  <input type="checkbox" checked={m.availableOnExam} onchange={() => toggleOnExam(m)} />
-                  Dostupan na ispitu
-                </label>
-                <button class="btn btn-quiet small" onclick={() => removeMaterial(m)}>Ukloni</button>
+          <section class="card block" aria-labelledby="build-h">
+            <div class="estimate">
+              <span class="est-num mono">{summary.estimatedQuotaPercent}<span class="unit">%</span></span>
+              <div>
+                <h2 id="build-h">Otprilike toliko mjesečne kvote troši izrada</h2>
+                <p>Ostalo ti je {summary.remainingQuotaPercent} % kvote ovog mjeseca.</p>
               </div>
-            {/each}
-          </div>
-          <div class="muted small">
-            {summary.totalPages} od {summary.maxPages} stranica · {mb(summary.totalBytes)} od {mb(summary.maxTotalBytes)} MB
-          </div>
+            </div>
+            {#if summary.estimatedQuotaPercent > summary.remainingQuotaPercent}
+              <p class="note warn">
+                Izrada vjerojatno neće stati u ovaj mjesec. Što se stigne napraviti ostaje spremljeno, a izrada se nastavlja kad
+                se kvota obnovi.
+              </p>
+            {/if}
+            {#if error}<p class="note err">{error}</p>{/if}
+            <div class="actions">
+              <button class="btn btn-ghost" onclick={() => (confirmCancel = true)}>Odustani</button>
+              <button class="btn btn-primary" disabled={busy || summary.remainingQuotaPercent <= 0} onclick={startBuild}>
+                {busy ? "Pokrećem…" : "Pokreni izradu"}
+              </button>
+            </div>
+          </section>
         {/if}
       </div>
+    {:else if progress}
+      <!-- Korak 2: izrada, faza po faza -->
+      <section class="card build t-{tone}" aria-labelledby="build-h">
+        <div class="ring-wrap" aria-hidden="true">
+          <svg width={SIZE} height={SIZE} style="transform:rotate(-90deg)">
+            <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="var(--bg-elev-2)" stroke-width={STROKE} />
+            <circle class="meter" cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke-width={STROKE} stroke-linecap="round"
+              stroke-dasharray="{ringDash} {CIRC - ringDash}" />
+          </svg>
+          <div class="ring-inner"><span class="pct mono">{progress.percent}<span class="unit">%</span></span></div>
+        </div>
 
-      {#if summary?.materials.length}
-        <div class="card card-pad stack">
-          <div>
-            Izrada će potrošiti oko <b>{summary.estimatedQuotaPercent} %</b> mjesečne kvote; ostalo ti je
-            <b>{summary.remainingQuotaPercent} %</b>.
-          </div>
-          {#if summary.estimatedQuotaPercent > summary.remainingQuotaPercent}
-            <div class="warn small">
-              Izrada vjerojatno neće stati u ovaj mjesec. Ono što se stigne napraviti se sprema, a izrada se nastavlja kad
-              se kvota obnovi. Možeš i svejedno pokušati.
+        <div class="build-main">
+          <h2 id="build-h">{headline}</h2>
+          <p class="explain">{explanation}</p>
+
+          <ol class="phases">
+            {#each PHASES as p, i}
+              {@const st = phaseState(i)}
+              <li class={st} aria-current={st === "cur" ? "step" : undefined}>
+                <span class="mark">{#if st === "done"}<Check size={12} strokeWidth={3} />{/if}</span>
+                <div class="phase-body">
+                  <span class="phase-name">{p}</span>
+                  {#if st === "cur" && i === 0 && progress.total}
+                    <span class="phase-count">{progress.done} od {progress.total} stranica</span>
+                    <span class="bar"><span style="width:{(100 * progress.done) / progress.total}%"></span></span>
+                  {:else if st === "cur" && i === 1 && progress.state !== "prevelik"}
+                    <span class="substeps">
+                      {#each PLAN_STEPS as sstep, j}
+                        <span class:sdone={j < progress.planStep} class:scur={j === progress.planStep}>{sstep}</span>
+                      {/each}
+                    </span>
+                  {:else if st === "cur" && i === 3 && progress.total}
+                    <span class="phase-count">{progress.done} od {progress.total} lekcija</span>
+                    <span class="bar"><span style="width:{(100 * progress.done) / progress.total}%"></span></span>
+                  {/if}
+                </div>
+              </li>
+            {/each}
+          </ol>
+
+          {#if error}<p class="note err">{error}</p>{/if}
+          {#if canLearn || progress.state === "neuspjelo" || course.status === "izrada" || course.status === "prevelik"}
+            <div class="actions start">
+              {#if canLearn}
+                <button class="btn btn-primary" onclick={startLearning}>Počni učiti</button>
+              {/if}
+              {#if progress.state === "neuspjelo"}
+                <button class="btn btn-primary" onclick={retry}>Pokušaj ponovno</button>
+              {/if}
+              {#if course.status === "izrada" || course.status === "prevelik"}
+                <button class="btn btn-quiet" onclick={() => (confirmCancel = true)}>Odustani od izrade</button>
+              {/if}
             </div>
           {/if}
-          {#if error}<div class="err small">{error}</div>{/if}
-          <div class="actions">
-            <button class="btn btn-ghost" onclick={() => (confirmCancel = true)}>Odustani</button>
-            <button class="btn btn-primary" disabled={busy || summary.remainingQuotaPercent <= 0} onclick={startBuild}>
-              {busy ? "Pokrećem…" : "Pokreni izradu"}
-            </button>
-          </div>
         </div>
-      {/if}
-    {:else if progress}
-      <!-- Korak 2: napredak izrade -->
-      <div class="card hero {progress.state}">
-        <div class="ring" style="--p:{progress.percent}"><span>{progress.percent}%</span></div>
-        <div class="stack">
-          <h2>{headline}</h2>
-          <p class="muted">{explanation}</p>
-          {#if tasks && progress.state !== "spremno"}
-            <div class="now">Zadaci: {progress.done} od {progress.total} lekcija</div>
-          {:else if progress.phase === "citanje"}
-            <div class="now">Čitam materijal: {progress.done} od {progress.total} stranica</div>
-          {:else if progress.phase === "plan" && progress.state !== "prevelik"}
-            <ul class="steps">
-              {#each PLAN_STEPS as s, i}
-                <li class:done={i < progress.planStep} class:cur={i === progress.planStep}>
-                  <span class="o">{i < progress.planStep ? "✓" : ""}</span>{s}
-                </li>
-              {/each}
-            </ul>
-          {/if}
-          {#if error}<div class="err small">{error}</div>{/if}
-          <div class="actions start">
-            {#if canLearn}
-              <button class="btn btn-primary" onclick={startLearning}>Počni učiti</button>
-            {/if}
-            {#if progress.state === "neuspjelo"}
-              <button class="btn btn-primary" onclick={retry}>Pokušaj ponovno</button>
-            {/if}
-            {#if course.status === "izrada" || course.status === "prevelik"}
-              <button class="btn btn-quiet" onclick={() => (confirmCancel = true)}>Odustani od izrade</button>
-            {/if}
-          </div>
+      </section>
+
+      {#if showEditor}
+        <div class="section-head">
+          <h2>Plan</h2>
+          {#if tasks}<div class="side">Potvrđen. Lekcije možeš još samo preimenovati.</div>{/if}
         </div>
-      </div>
-      {#if progress.state === "ceka_kreatora"}
-        <PlanEditor {courseId} onconfirmed={loadCourse} />
-      {:else}
-        <div class="next">
-          <div class="next-h">Što slijedi</div>
-          {#each PHASES.slice(phaseIndex + 1) as p, i}
-            <div class="next-i"><span class="dot">{phaseIndex + i + 2}</span>{p}</div>
-          {/each}
-        </div>
-        {#if tasks}
-          <div class="next-h plan-h">Plan (potvrđen; možeš samo preimenovati lekcije)</div>
+        {#if progress.state === "ceka_kreatora"}
+          <PlanEditor {courseId} onconfirmed={loadCourse} />
+        {:else}
           <PlanEditor {courseId} locked />
         {/if}
       {/if}
     {/if}
-
-    {#if confirmCancel}
-      <div class="card card-pad confirm">
-        <span>Obrisati nedovršeni predmet? Potrošena kvota se ne vraća.</span>
-        <div class="actions">
-          <button class="btn btn-ghost" onclick={() => (confirmCancel = false)}>Ne</button>
-          <button class="btn btn-danger" disabled={busy} onclick={cancel}>Da, odustani</button>
-        </div>
-      </div>
-    {/if}
   {/if}
 </div>
 
+{#if confirmCancel}
+  <div class="modal-bg" role="presentation" onclick={() => (confirmCancel = false)}>
+    <div class="card modal" role="dialog" aria-modal="true" aria-labelledby="cancel-h" tabindex="-1" onclick={(e) => e.stopPropagation()} onkeydown={(e) => e.key === "Escape" && (confirmCancel = false)}>
+      <h2 id="cancel-h">Obrisati nedovršeni predmet?</h2>
+      <p>Brišu se materijali i sve što je dosad izrađeno. Potrošena kvota se ne vraća.</p>
+      <div class="actions">
+        <button class="btn btn-ghost" onclick={() => (confirmCancel = false)}>Ne, nastavi</button>
+        <button class="btn btn-danger" disabled={busy} onclick={cancel}>Obriši predmet</button>
+      </div>
+    </div>
+  </div>
+{/if}
+
 <style>
-  .narrow { max-width: 760px; }
   .muted { color: var(--text-dim); }
-  .small { font-size: 12.5px; }
+  .mono { font-family: var(--font-mono); font-feature-settings: "tnum"; }
   .err { color: var(--danger); }
-  .warn { color: var(--warn); }
-  .stack { display: grid; gap: 12px; }
-  .card + .card { margin-top: 14px; }
-  .drop { display: grid; gap: 4px; justify-items: center; padding: 26px 16px; border: 1.5px dashed var(--border-strong); border-radius: var(--r-lg); cursor: pointer; text-align: center; font-size: 14px; transition: border-color 0.12s, background 0.12s; }
-  .drop:hover, .drop.dragging { border-color: var(--primary); background: var(--primary-dim); }
-  .drop input { display: none; }
-  .list { display: grid; gap: 2px; }
-  .row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-  .row:last-child { border-bottom: none; }
-  .grow { flex: 1; min-width: 0; }
-  .name { font-size: 13.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .bar { flex: 1; height: 5px; border-radius: 999px; background: var(--bg-elev-2); overflow: hidden; }
-  .bar span { display: block; height: 100%; background: var(--primary); transition: width 0.2s; }
+  .col { max-width: 760px; display: grid; gap: var(--pad-3); }
+
+  .block { padding: var(--pad-5); display: grid; gap: var(--pad-4); }
+  .block-head h2, .estimate h2 { margin: 0 0 6px; font-size: 17px; font-weight: 500; }
+  .block-head p, .estimate p { margin: 0; color: var(--text-dim); font-size: 13.5px; line-height: 1.6; max-width: 64ch; }
+
+  .drop { display: grid; gap: 6px; justify-items: center; padding: var(--pad-5) var(--pad-4); border: 1.5px dashed var(--border-strong);
+    border-radius: var(--r-lg); cursor: pointer; text-align: center; font-size: 14px; color: var(--text-dim);
+    transition: border-color 0.12s, background 0.12s; }
+  .drop b { color: var(--text); font-weight: 500; }
+  .drop:hover, .drop.dragging, .drop:focus-within { border-color: var(--primary); background: var(--primary-dim); }
+  .drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .hint { font-size: 12px; color: var(--text-faint); }
+
+  .file { display: flex; align-items: center; gap: 12px; padding: 10px var(--pad-3); color: var(--text-faint); }
+  .file-main { flex: 1; min-width: 0; display: grid; gap: 4px; }
+  .file-name { color: var(--text); font-size: 13.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-meta { font-size: 11.5px; color: var(--text-faint); }
+  .file .err { font-size: 12.5px; }
   .check { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--text-dim); white-space: nowrap; cursor: pointer; }
+  .check input { accent-color: var(--primary); }
+  .del:hover { color: var(--danger); }
+  @media (max-width: 560px) { .file { flex-wrap: wrap; } .check { margin-left: 28px; } }
+  .usage { display: flex; gap: 18px; font-size: 12.5px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+  .usage b { color: var(--text); font-weight: 500; }
+
+  .bar { display: block; height: 6px; border-radius: 999px; background: var(--bg-elev-2); border: 1px solid var(--border); overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--primary); border-radius: 999px; transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+  .estimate { display: flex; gap: var(--pad-4); align-items: center; }
+  .est-num { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; white-space: nowrap; }
+  .unit { font-size: 0.5em; color: var(--text-faint); margin-left: 2px; }
+  .note { margin: 0; font-size: 13px; line-height: 1.55; }
+  .note.warn { color: var(--warn); }
   .actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
   .actions.start { justify-content: flex-start; }
-  .hero { padding: 26px; display: flex; gap: 24px; align-items: flex-start; }
-  @media (max-width: 600px) { .hero { flex-direction: column; } }
-  .hero.neuspjelo { border-color: var(--danger); }
-  .hero.ceka_kvotu, .hero.pauzirano { border-color: var(--warn); }
-  .ring { --c: var(--primary); width: 112px; height: 112px; flex-shrink: 0; border-radius: 999px; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--bg-elev-2) 0); position: relative; }
-  .ring::after { content: ""; position: absolute; inset: 10px; border-radius: 999px; background: var(--bg-elev); }
-  .ring span { position: relative; z-index: 1; font-size: 22px; font-weight: 600; }
-  .hero.ceka_kvotu .ring, .hero.pauzirano .ring { --c: var(--warn); }
-  .hero.neuspjelo .ring { --c: var(--danger); }
-  h2 { margin: 0; font-size: 22px; font-weight: 600; }
-  p { margin: 0; line-height: 1.55; }
-  .now { font-size: 13px; padding: 8px 10px; border-radius: var(--r-md); background: var(--bg-elev-2); }
-  .next { margin-top: 18px; display: grid; gap: 8px; }
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; color: var(--text-faint); }
-  .steps li { display: flex; gap: 8px; align-items: center; }
-  .steps li.done { color: var(--text-dim); }
-  .steps li.cur { color: var(--text); font-weight: 500; }
-  .steps .o { width: 16px; height: 16px; border-radius: 99px; border: 1.5px solid currentColor; display: grid; place-items: center; font-size: 10px; }
-  .hero.ceka_kreatora { border-color: var(--success); }
-  .hero.ceka_kreatora .ring { --c: var(--success); }
-  .hero.prevelik { border-color: var(--danger); }
-  .plan-h { margin-top: 22px; }
-  .hero.spremno { border-color: var(--success); }
-  .hero.spremno .ring { --c: var(--success); }
-  .next-h { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); }
-  .next-i { display: flex; gap: 10px; align-items: center; font-size: 13.5px; color: var(--text-dim); }
-  .dot { width: 22px; height: 22px; border-radius: 99px; border: 1px solid var(--border-strong); display: grid; place-items: center; font-size: 11px; }
-  .confirm { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 13.5px; }
-  .btn-danger { background: var(--danger); color: #fff; border-color: transparent; }
-  button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Izrada: prsten kao na stranici Napredak, faze redom */
+  .build { padding: var(--pad-5); display: grid; grid-template-columns: auto 1fr; gap: var(--pad-6); align-items: start; }
+  @media (max-width: 680px) { .build { grid-template-columns: 1fr; gap: var(--pad-4); } }
+  .build.t-wait { border-color: color-mix(in srgb, var(--warn) 45%, var(--border)); }
+  .build.t-bad { border-color: color-mix(in srgb, var(--danger) 45%, var(--border)); }
+  .ring-wrap { position: relative; width: 148px; height: 148px; }
+  .meter { stroke: var(--primary); transition: stroke-dasharray 1s ease; }
+  .build.t-done .meter { stroke: var(--success); }
+  .build.t-wait .meter { stroke: var(--warn); }
+  .build.t-bad .meter { stroke: var(--danger); }
+  .ring-inner { position: absolute; inset: 0; display: grid; place-items: center; }
+  .pct { font-size: 34px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+  .build-main { display: grid; gap: var(--pad-3); min-width: 0; }
+  .build-main h2 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .explain { margin: 0; color: var(--text-dim); font-size: 14px; line-height: 1.6; max-width: 62ch; }
+
+  .phases { list-style: none; margin: 4px 0 0; padding: 0; display: grid; }
+  .phases li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; position: relative; padding-bottom: 14px; }
+  .phases li:last-child { padding-bottom: 0; }
+  /* crta između faza */
+  .phases li:not(:last-child)::before { content: ""; position: absolute; left: 9px; top: 22px; bottom: 2px; width: 2px; background: var(--border); border-radius: 2px; }
+  .phases li.done:not(:last-child)::before { background: var(--primary-border); }
+  .mark { width: 20px; height: 20px; border-radius: 999px; border: 2px solid var(--border-strong); display: grid; place-items: center; background: var(--bg-elev); }
+  .done .mark { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+  .build.t-done .done .mark { background: var(--success); border-color: var(--success); }
+  .cur .mark { border-color: var(--primary); box-shadow: inset 0 0 0 4px var(--bg-elev); background: var(--primary); }
+  .build.t-wait .cur .mark { border-color: var(--warn); background: var(--warn); }
+  .build.t-bad .cur .mark { border-color: var(--danger); background: var(--danger); }
+  .phase-body { display: grid; gap: 6px; min-width: 0; padding-top: 1px; }
+  .phase-name { font-size: 14px; color: var(--text-faint); }
+  .done .phase-name { color: var(--text-dim); }
+  .cur .phase-name { color: var(--text); font-weight: 500; }
+  .phase-count { font-size: 12.5px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+  .phase-body .bar { max-width: 320px; }
+  .build.t-wait .phase-body .bar span { background: var(--warn); }
+  .build.t-bad .phase-body .bar span { background: var(--danger); }
+  .substeps { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--text-faint); }
+  .substeps .sdone { color: var(--text-dim); text-decoration: line-through; text-decoration-color: var(--border-strong); }
+  .substeps .scur { color: var(--primary); font-weight: 500; }
+
+  .modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; z-index: 1000; padding: 16px; }
+  .modal { padding: var(--pad-5); max-width: 440px; width: 100%; display: grid; gap: 14px; }
+  .modal h2 { margin: 0; font-size: 17px; font-weight: 600; }
+  .modal p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+  @media (prefers-reduced-motion: reduce) { .meter, .bar span { transition: none; } }
 </style>

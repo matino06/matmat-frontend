@@ -37,35 +37,43 @@
 </script>
 
 <div class="page narrow">
-  <div class="zadaci-head" style="margin-bottom:20px">
+  <div class="zadaci-head">
     <div>
       <h1>Novi predmet</h1>
-      <div class="sub">Prvo osnovno o predmetu, a zatim materijali iz kojih MatMat izrađuje plan i zadatke.</div>
+      <div class="sub">Prvo naziv, predmet i razina, a zatim materijali iz kojih nastaju plan i zadaci.</div>
     </div>
   </div>
 
   {#if ownCourses.loaded && !ownCourses.isCreator}
     <div class="card card-pad muted">Izrada vlastitih predmeta još nije dostupna za tvoj račun.</div>
   {:else}
-    <form class="card card-pad form" onsubmit={(e) => { e.preventDefault(); create(); }}>
-      <label class="field">
-        <span>Naziv</span>
-        <input bind:value={name} maxlength="100" placeholder="npr. Kemija — test iz kiselina i baza" />
+    <form class="card form" onsubmit={(e) => { e.preventDefault(); create(); }}>
+      <label class="form-field">
+        <span class="field-label">Naziv</span>
+        <input class="inp" bind:value={name} maxlength="100" placeholder="npr. Kemija, test iz kiselina i baza" />
       </label>
-      <label class="field">
-        <span>Predmet</span>
-        <select bind:value={subject}>
-          <option value="" disabled>Odaberi predmet</option>
-          {#each SUBJECTS as s (s.id)}<option value={s.id}>{s.label}</option>{/each}
-        </select>
-      </label>
-      <label class="field">
-        <span>Razina</span>
-        <select bind:value={level}>
-          <option value="" disabled>Odaberi razinu</option>
-          {#each LEVELS as l (l.id)}<option value={l.id}>{l.label}</option>{/each}
-        </select>
-      </label>
+
+      <div class="form-field" role="radiogroup" aria-labelledby="subject-l">
+        <span class="field-label" id="subject-l">Predmet</span>
+        <div class="chips">
+          {#each SUBJECTS as s (s.id)}
+            <button type="button" class="chip" class:active={subject === s.id} role="radio" aria-checked={subject === s.id}
+              onclick={() => (subject = s.id)}>{s.label}</button>
+          {/each}
+        </div>
+      </div>
+
+      <div class="form-field" role="radiogroup" aria-labelledby="level-l">
+        <span class="field-label" id="level-l">Razina</span>
+        <div class="seg">
+          {#each LEVELS as l (l.id)}
+            <button type="button" class="seg-item" class:active={level === l.id} role="radio" aria-checked={level === l.id}
+              onclick={() => (level = l.id)}>{l.label}</button>
+          {/each}
+        </div>
+        <span class="field-hint">Prema razini se prilagođavaju težina zadataka, računanje i duljina objašnjenja.</span>
+      </div>
+
       {#if error}<div class="error">{error}</div>{/if}
       <div class="actions">
         <button type="button" class="btn btn-ghost" onclick={() => goto("/moji-predmeti")}>Odustani</button>
@@ -76,14 +84,13 @@
 </div>
 
 <style>
-  .narrow { max-width: 620px; }
+  .narrow { max-width: 640px; }
   .muted { color: var(--text-dim); }
-  .form { display: grid; gap: 16px; }
-  .field { display: grid; gap: 6px; }
-  .field span { font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-  .field input, .field select { padding: 9px 12px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--bg-elev); color: var(--text); font: inherit; font-size: 14px; outline: none; transition: border-color 0.12s; }
-  .field input:focus, .field select:focus { border-color: var(--primary); }
+  .form { padding: var(--pad-5); display: grid; gap: var(--pad-4); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: inherit; font-size: 13px; padding: 6px 12px; }
+  .seg { justify-self: start; max-width: 100%; flex-wrap: wrap; }
+  .seg-item { border: none; background: none; font: inherit; font-size: 13px; font-weight: 500; padding: 6px 12px; }
   .error { color: var(--danger); font-size: 13px; }
-  .actions { display: flex; justify-content: flex-end; gap: 8px; }
-  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: var(--pad-2); border-top: 1px solid var(--border); }
 </style>
