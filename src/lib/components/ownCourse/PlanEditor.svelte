@@ -128,7 +128,9 @@
       try { msg = (await res.json()).message || msg; } catch {}
       throw new Error(msg);
     }
-    return res.status === 204 || res.status === 202 ? null : res.json();
+    // prazno tijelo (npr. void endpoint vraća 200 bez sadržaja) nije greška
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
   }
 
   async function loadPlan() {
