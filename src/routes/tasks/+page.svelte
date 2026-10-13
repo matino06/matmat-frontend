@@ -32,6 +32,10 @@
   let pendingRating = $state(null);
   let ratingKey = $state(0);
   let switchingTempo = $state(false);
+  // Vlastiti predmet: učenik je dobio zadatak koji je već riješio, a nova varijacija se upravo izrađuje.
+  let waitingVariation = $state(false);
+  let variationTimer;
+  const VARIATION_WAIT_MS = 60000;
 
   async function fetchUserGoal() {
     try {
@@ -99,10 +103,54 @@
       task = JSON.parse(text);
       setCurrentTask(task);
       startTime = Date.now();
+      checkVariation(task);
     } finally {
       // Always drop the spinner — an expired session used to leave the page
       // stuck on "Učitavanje zadatka…" forever.
       isLoading = false;
+    }
+  }
+
+  async function variationState(t) {
+    const r = await apiClient(`/task/${t.id}/next-variation`, { method: "GET" });
+    return r.ok ? (await r.json()).state : "none";
+  }
+
+  // Nova varijacija postoji: trenutni zadatak se bira ponovno.
+  async function swapToNewVariation() {
+    const r = await apiClient("/task/refresh-current", { method: "POST" });
+    if (r.ok && r.status !== 204) {
+      task = await r.json();
+      setCurrentTask(task);
+    }
+  }
+
+  // Kratko čekanje uz ispriku; ako izrada padne ili traje predugo, ostaje prethodna varijacija,
+  // a izrada se nastavlja u pozadini.
+  async function checkVariation(t) {
+    clearTimeout(variationTimer);
+    try {
+      const state = await variationState(t);
+      if (state === "ready") return await swapToNewVariation();
+      if (state !== "pending") return;
+      waitingVariation = true;
+      const started = Date.now();
+      const poll = async () => {
+        let next = "none";
+        try {
+          next = await variationState(t);
+        } catch {}
+        if (next === "ready") await swapToNewVariation();
+        else if (next === "pending" && Date.now() - started < VARIATION_WAIT_MS) {
+          variationTimer = setTimeout(poll, 3000);
+          return;
+        }
+        waitingVariation = false;
+        startTime = Date.now();
+      };
+      variationTimer = setTimeout(poll, 3000);
+    } catch {
+      waitingVariation = false;
     }
   }
 
@@ -229,6 +277,7 @@
   });
 
   onDestroy(() => {
+    clearTimeout(variationTimer);
     clearCurrentTask();
   });
 
@@ -300,6 +349,15 @@
     <div class="card card-pad" style="display:flex;align-items:center;gap:12px;color:var(--text-faint)">
       <div class="spinner"></div>
       Učitavanje zadatka…
+    </div>
+
+  {:else if waitingVariation}
+    <div class="card card-pad" style="display:flex;align-items:center;gap:12px;color:var(--text-dim)">
+      <div class="spinner"></div>
+      <div>
+        <b>Pripremamo novu verziju ovog zadatka.</b><br />
+        Oprosti na čekanju, ovo traje najviše minutu. Ako ne stigne, dobit ćeš zadatak koji si već rješavao.
+      </div>
     </div>
 
   {:else if noMoreTasks}
