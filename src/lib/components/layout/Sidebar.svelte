@@ -75,6 +75,11 @@
   );
 
   let path = $derived(page.url.pathname);
+  // Vlastiti predmet nema probnu maturu; Formule samo ako je neki materijal označen „dostupan na ispitu“.
+  let ownActive = $derived(!!findOwnCourse(courseState.courseId));
+  let hasFormulas = $derived(
+    !ownActive || (ownCourses.examMaterials.courseId === courseState.courseId && ownCourses.examMaterials.list.length > 0),
+  );
 
   function initials(name) {
     if (!name) return '?';
@@ -188,6 +193,7 @@
     <span class="nav-label">Ciljevi</span>
   </div>
   
+  {#if !ownActive}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="nav-item nav-item-featured {path === '/mock-exam' || path.startsWith('/mock-exam/') ? 'active' : ''}" onclick={() => nav('/mock-exam')} title={tip('Probna matura')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -199,9 +205,11 @@
     <span class="nav-label">Probna matura</span>
     <span class="nav-novo">novo</span>
   </div>
+  {/if}
 
   <div class="nav-group-label">Alati</div>
 
+  {#if hasFormulas}
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="nav-item" onclick={openFormuleAndClose} title={tip('Formule')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -209,6 +217,7 @@
     </svg>
     <span class="nav-label">Formule</span>
   </div>
+  {/if}
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="nav-item" onclick={openAIAndClose} title={tip('AI asistent')}>

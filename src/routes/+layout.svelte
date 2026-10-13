@@ -7,7 +7,7 @@
   import { panelState, openAI, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar, initSidebarCollapsed } from "$lib/store/ui.svelte";
   import { courseState, loadCurrentCourse } from "$lib/store/course.svelte";
-  import { ownCourses, loadOwnCourses, findOwnCourse } from "$lib/store/ownCourses.svelte";
+  import { ownCourses, loadOwnCourses, findOwnCourse, loadExamMaterials } from "$lib/store/ownCourses.svelte";
   import { getProgram } from "$lib/config/programs";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
@@ -114,10 +114,21 @@
   });
 
   let program = $derived(getProgram(courseState.courseId));
+  // Vlastiti predmet: panel Formule prikazuje materijal označen „dostupan na ispitu“ (ako ga nema, panela nema).
+  let ownCourse = $derived(findOwnCourse(courseState.courseId));
+  let examMaterials = $derived(ownCourse && ownCourses.examMaterials.courseId === ownCourse.courseId ? ownCourses.examMaterials.list : []);
+  let examIndex = $state(0);
+  $effect(() => {
+    if (ownCourse && ownCourses.examMaterials.courseId !== ownCourse.courseId) {
+      examIndex = 0;
+      loadExamMaterials(ownCourse.courseId);
+    }
+  });
   // Falls back to maths while the course is still loading — that is what the
   // shell showed unconditionally before, and it lasts one fetch.
   let courseLabel = $derived(program?.short ?? findOwnCourse(courseState.courseId)?.courseName ?? "Matematika");
-  let formulasPdfUrl = $derived(program?.pdf ?? "/pdfs/MAT-FORMULE.pdf");
+  let formulasPdfUrl = $derived(ownCourse ? examMaterials[examIndex]?.url : (program?.pdf ?? "/pdfs/MAT-FORMULE.pdf"));
+  let formulasTitle = $derived(ownCourse ? "Materijal dostupan na ispitu" : "Maturalne tablice i formule");
 
   function toggleTheme() {
     const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
@@ -257,14 +268,21 @@
       id="formule"
       open={panelState.formuleOpen}
       onClose={closeFormule}
-      title="Maturalne tablice i formule"
+      title={formulasTitle}
       meta={courseLabel}
       wide={true}
     >
+      {#if examMaterials.length > 1}
+        <div class="exam-tabs">
+          {#each examMaterials as m, i (m.materialId)}
+            <button class="chip" class:active={i === examIndex} onclick={() => (examIndex = i)}>{m.name}</button>
+          {/each}
+        </div>
+      {/if}
       <div class="pdf-viewer-wrap">
         <iframe
           src={formulasPdfUrl}
-          title="Maturalne tablice i formule"
+          title={formulasTitle}
           style="width:100%; height:100%; border:none; border-radius: var(--r-md);"
         ></iframe>
       </div>
@@ -285,6 +303,8 @@
     backdrop-filter: blur(4px);
     transition: opacity 0.2s;
   }
+  .exam-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .exam-tabs .chip.active { border-color: var(--primary-border); color: var(--primary); }
   .pdf-viewer-wrap {
     height: calc(100vh - 120px);
     min-height: 400px;

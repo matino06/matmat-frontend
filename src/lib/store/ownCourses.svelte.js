@@ -6,6 +6,8 @@ export const ownCourses = $state({
   isCreator: false,
   courses: [],
   loaded: false,
+  // materijal „dostupan na ispitu“ trenutnog vlastitog predmeta, za panel Formule
+  examMaterials: { courseId: null, list: [] },
 });
 
 export const SUBJECTS = [
@@ -24,7 +26,8 @@ export const STATUS_LABELS = {
   nov: "Novi · dodaj materijale",
   izrada: "Izrađuje se",
   nacrt: "Plan čeka pregled",
-  potvrden: "Spremno",
+  potvrden: "Izrađuju se zadaci",
+  spreman: "Spremno",
 };
 
 export const loadOwnCourses = async () => {
@@ -41,6 +44,17 @@ export const loadOwnCourses = async () => {
 
 export const findOwnCourse = (courseId) =>
   ownCourses.courses.find((c) => c.courseId === courseId);
+
+// Privremeni linkovi (2 h) na materijal dostupan na ispitu; učitava ih layout kad je vlastiti predmet trenutni.
+export const loadExamMaterials = async (courseId) => {
+  ownCourses.examMaterials = { courseId, list: [] };
+  try {
+    const res = await apiClient(`/own-courses/${courseId}/exam-materials`, { method: "GET" });
+    if (res.ok && ownCourses.examMaterials.courseId === courseId) {
+      ownCourses.examMaterials = { courseId, list: await res.json() };
+    }
+  } catch {}
+};
 
 // Oznaka u izborniku: inicijali naziva, kao kod avatara.
 export const courseBadge = (name) =>

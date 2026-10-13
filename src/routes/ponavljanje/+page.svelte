@@ -1,6 +1,7 @@
 <script>
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
+  import { findOwnCourse } from "$lib/store/ownCourses.svelte";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { onDestroy } from "svelte";
@@ -227,8 +228,12 @@
     <article class="card task-card">
       <div class="task-meta">
         <span class="badge mono">#{task.id ?? '—'}</span>
-        <span class="badge">{currentCourse?.courseId == 1 ? "A" : "B"} razina</span>
-        <span class="badge badge-dim">Matematika</span>
+        {#if findOwnCourse(currentCourse?.courseId)}
+          <span class="badge badge-dim">{findOwnCourse(currentCourse.courseId).courseName}</span>
+        {:else}
+          <span class="badge">{currentCourse?.courseId == 1 ? "A" : "B"} razina</span>
+          <span class="badge badge-dim">Matematika</span>
+        {/if}
         {#if fieldMode && task.objective?.objectiveName}
           <span class="badge badge-dim">{task.objective.objectiveName}</span>
         {/if}
