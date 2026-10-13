@@ -207,9 +207,12 @@ function forces(s, task) {
   if (G && N) {
     const exp = G.iznos * Math.cos(th);
     const ok = Math.abs(N.iznos - exp) <= 0.03 * exp;
-    checks.push({ ok, text: `N = G·cos ${s.podloga.kut}° = ${exp.toFixed(1)} N ${ok ? "slaže se s" : "NE slaže se s"} ${N.iznos} N` });
+    checks.push({ ok, text: `N = G·cos ${f(s.podloga.kut)}° = ${exp.toFixed(1)} N ${ok ? "slaže se s" : "NE slaže se s"} ${N.iznos} N` });
   }
-  checks.push(...numbersInText([`${s.podloga.kut}`, ...s.sile.filter((x) => x.zadana).map((x) => `${x.iznos}`)], task));
+  // Kut može biti izveden (npr. iz visine i duljine rampe): kao broj se prikazuje samo ako je zadan u tekstu,
+  // inače kao α. Njegovu ispravnost provjerava N = G·cos α.
+  const angleGiven = numbersInText([`${s.podloga.kut}`], task).every((x) => x.ok);
+  checks.push(...numbersInText(s.sile.filter((x) => x.zadana).map((x) => `${x.iznos}`), task));
   if (checks.some((x) => !x.ok)) return { checks };
 
   const L = 300;
@@ -218,7 +221,7 @@ function forces(s, task) {
   const corner = [top[0], base[1]];
   let body = `<polygon class="shape fill" points="${[base, top, corner].map((p) => p.map(f).join(",")).join(" ")}"/>`;
   body += `<path class="ln thin" d="M${base[0] + 34},${base[1]} A34,34 0 0 0 ${f(base[0] + 34 * Math.cos(th))},${f(base[1] - 34 * Math.sin(th))}"/>`;
-  body += label([base[0] + 50, base[1] - 10], `${s.podloga.kut}°`, "lbl small", "start");
+  body += label([base[0] + 50, base[1] - 10], angleGiven ? `${s.podloga.kut}°` : "α", "lbl small", "start");
   const along = [Math.cos(th), -Math.sin(th)];
   const normal = [-Math.sin(th), -Math.cos(th)];
   const at = [base[0] + along[0] * L * 0.48, base[1] + along[1] * L * 0.48];

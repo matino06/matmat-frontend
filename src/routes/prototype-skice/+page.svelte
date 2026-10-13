@@ -55,7 +55,7 @@
         {/if}
       {/if}
 
-      {#if it.note}<div class="note">{it.note} Provjera ga je odbila, pa učenik dobiva zadatak bez skice.</div>{/if}
+      {#if it.note}<div class="note">{it.note}{it.svg ? "" : " Provjera ga je odbila, pa učenik dobiva zadatak bez skice."}</div>{/if}
 
       <details class="state">
         <summary>JSON opis i provjere kodom</summary>

@@ -3,6 +3,12 @@
 
 export const EXAMPLES = [
   {
+    title: "Sol 6.1 medium, stvarni izlaz (sile na kosini)",
+    note: "Zadatak, objašnjenje i opis skice napisao je openai/gpt-6.1-sol (medium) u jednom pozivu: 3,85 c ukupno.",
+    task: "a) Sanduk mase \\(10\\ \\text{kg}\\) miruje na hrapavoj rampi duljine \\(2{,}5\\ \\text{m}\\), čiji je gornji kraj na visini \\(1{,}5\\ \\text{m}\\) iznad donjega. Kolike su komponente sile teže niz rampu i okomito na rampu te normalna sila rampe na sanduk? Uzmi \\(g=10\\ \\text{m/s}^2\\).\n\nb) Koeficijent statičkog trenja između sanduka i rampe iznosi \\(0{,}8\\). Kolika sila trenja drži sanduk na mjestu, a kolika je najveća moguća sila statičkog trenja? Je li trenje već na svojoj najvećoj vrijednosti?\n\nc) Radnik izvuče hrapavu prostirku ispod sanduka, pa koeficijent statičkog trenja padne na \\(0{,}6\\). Nagib rampe ostaje isti. Može li sanduk i dalje mirovati? Odgovor potkrijepi usporedbom potrebne i najveće moguće sile trenja.",
+    spec: {"tip": "sile", "podloga": {"vrsta": "kosina", "kut": 36.86989764584402}, "sile": [{"oznaka": "G", "smjer": "dolje", "iznos": 100, "zadana": false}, {"oznaka": "N", "smjer": "okomito_od_podloge", "iznos": 80, "zadana": false}, {"oznaka": "F_tr", "smjer": "uz_kosinu", "iznos": 60, "zadana": false}], "rastav": "G"},
+  },
+  {
     title: "Trokut (matematika)",
     task: "Pravokutni trokut \\(ABC\\) ima pravi kut u vrhu \\(C\\). Kateta \\(a = 6\\) cm, kateta \\(b = 8\\) cm.\n\na) Kolika je hipotenuza \\(c\\)?\n\nb) Koliki je kut \\(\\alpha\\)?",
     spec: {
