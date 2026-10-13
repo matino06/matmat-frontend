@@ -46,6 +46,68 @@
     }
   });
 
+  // ── Vlastiti predmeti i kreatori ──────────────────────────────────────────
+  const OWN_STATUS = { nov: "Novi", izrada: "Izrada", nacrt: "Plan čeka pregled", potvrden: "Izrada zadataka", spreman: "Spreman", prevelik: "Preopsežan" };
+  let ownList = $state(null);
+  let creators = $state([]);
+  let ownError = $state("");
+  let events = $state([]);
+  let eventsLoading = $state(false);
+  let newCreator = $state({ email: "", quota: "10" });
+  const usd = (v) => `${Number(v ?? 0).toFixed(2)} $`;
+  const when = (t) => (t ? new Date(t).toLocaleString("hr-HR", { dateStyle: "short", timeStyle: "medium" }) : "—");
+
+  $effect(() => {
+    if (userData.isAdmin && ownList === null) loadOwn();
+  });
+
+  async function loadOwn() {
+    ownList = [];
+    try {
+      const [a, b] = await Promise.all([
+        apiClient("/admin/own-courses", { method: "GET" }),
+        apiClient("/admin/creators", { method: "GET" }),
+      ]);
+      if (a.ok) ownList = await a.json();
+      if (b.ok) creators = await b.json();
+      if (!a.ok || !b.ok) ownError = `${a.status}/${b.status}`;
+    } catch (err) {
+      ownError = err.message;
+    }
+  }
+
+  async function updateCreator(email, changes) {
+    ownError = "";
+    const res = await apiClient("/admin/creators", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, ...changes }),
+    });
+    if (!res.ok) {
+      try { ownError = (await res.json()).message || `${res.status}`; } catch { ownError = `${res.status}`; }
+      return false;
+    }
+    await loadOwn();
+    return true;
+  }
+
+  async function addCreator() {
+    if (await updateCreator(newCreator.email, { isCreator: true, monthlyQuotaUsd: Number(newCreator.quota) })) {
+      newCreator = { email: "", quota: "10" };
+    }
+  }
+
+  async function openOwnCourse(c) {
+    events = [];
+    eventsLoading = true;
+    openCourse({ courseId: c.courseId, courseName: `${c.courseName} · ${c.email}`, own: true });
+    try {
+      const res = await apiClient(`/admin/own-courses/${c.courseId}/events`, { method: "GET" });
+      if (res.ok) events = await res.json();
+    } catch {}
+    eventsLoading = false;
+  }
+
   // ── Data loading ──────────────────────────────────────────────────────────
   async function loadCourses() {
     coursesLoading = true;
@@ -380,6 +442,60 @@
       </div>
     {/if}
 
+    <!-- ── Vlastiti predmeti ─────────────────────────────────────── -->
+    <h2 class="own-h">Vlastiti predmeti</h2>
+    {#if ownError}<p style="color:var(--danger)">Greška: {ownError}</p>{/if}
+    {#if ownList === null || (ownList.length === 0 && !ownError)}
+      <div class="card card-pad" style="color:var(--text-dim)">Nema vlastitih predmeta.</div>
+    {:else}
+      <div class="course-grid">
+        {#each ownList as c (c.courseId)}
+          <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+          <div class="card card-pad course-card" onclick={() => openOwnCourse(c)}>
+            <div class="course-name">{c.courseName}</div>
+            <div class="course-desc">{c.name} · {c.email}</div>
+            <div class="course-badges">
+              <span class="badge">{OWN_STATUS[c.status] ?? c.status}</span>
+              <span class="badge badge-dim">{usd(c.costUsd)}</span>
+              <span class="badge badge-dim">{c.lessonCount} lekcija · {c.taskCount} zadataka</span>
+              {#if c.failedJobs > 0}<span class="badge" style="color:var(--danger);border-color:var(--danger)">{c.failedJobs} neuspjelih</span>{/if}
+            </div>
+          </div>
+        {/each}
+      </div>
+    {/if}
+
+    <!-- ── Kreatori ───────────────────────────────────────────────── -->
+    <h2 class="own-h">Kreatori</h2>
+    <div class="card card-pad creators">
+      <table>
+        <thead>
+          <tr><th>Račun</th><th>Kreator</th><th>Kvota / mj.</th><th>Ovaj mjesec (kvota)</th><th>Ovaj mjesec (sve)</th><th>Ukupno</th><th>Predmeti</th></tr>
+        </thead>
+        <tbody>
+          {#each creators as k (k.accountId)}
+            <tr>
+              <td>{k.name}<div class="dim">{k.email}</div></td>
+              <td><input type="checkbox" checked={k.isCreator} onchange={(e) => updateCreator(k.email, { isCreator: e.currentTarget.checked })} /></td>
+              <td>
+                <input class="num" type="number" min="0" step="1" value={k.monthlyQuotaUsd}
+                  onchange={(e) => updateCreator(k.email, { monthlyQuotaUsd: Number(e.currentTarget.value) })} /> $
+              </td>
+              <td>{usd(k.quotaCostMonth)}</td>
+              <td>{usd(k.costMonth)}</td>
+              <td>{usd(k.costTotal)}</td>
+              <td>{k.courseCount}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+      <div class="add-creator">
+        <input placeholder="E-mail računa" bind:value={newCreator.email} />
+        <input class="num" type="number" min="0" step="1" bind:value={newCreator.quota} /> $
+        <button class="btn btn-primary" disabled={!newCreator.email.trim()} onclick={addCreator}>Dodaj kreatora</button>
+      </div>
+    </div>
+
   {:else if view === "graph"}
     <!-- ── Graph ─────────────────────────────────────────────────── -->
     <div class="graph-head">
@@ -418,6 +534,36 @@
         <div class="graph-overlay" style="color:var(--text-dim)">Ovaj tečaj nema learning objectiva.</div>
       {/if}
     </div>
+
+    {#if selectedCourse?.own}
+      <!-- Zapisnik izrade vlastitog predmeta (samo za čitanje), najnoviji korak prvi -->
+      <h2 class="own-h">Zapisnik izrade</h2>
+      <div class="card card-pad creators">
+        {#if eventsLoading}
+          <div style="color:var(--text-faint)">Učitavanje…</div>
+        {:else if events.length === 0}
+          <div style="color:var(--text-dim)">Nema koraka izrade.</div>
+        {:else}
+          <table>
+            <thead><tr><th>Nastao</th><th>Završen</th><th>Korak</th><th>Status</th><th>Pokušaji</th><th>Trošak</th><th>Greška</th></tr></thead>
+            <tbody>
+              {#each events as e (e.jobId)}
+                <tr class:failed={e.status === "failed"}>
+                  <td class="dim">{when(e.createdAt)}</td>
+                  <td class="dim">{when(e.finishedAt)}</td>
+                  <td>{e.kind}<div class="dim">{e.ref ?? ""}</div></td>
+                  <td>{e.status}</td>
+                  <td>{e.attempts}</td>
+                  <td>{usd(e.costUsd)}{e.countsQuota ? "" : " ·"}</td>
+                  <td class="err" title={e.error ?? ""}>{(e.error ?? "").slice(0, 120)}</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+          <div class="dim" style="margin-top:8px">„·“ uz trošak: ne broji se u kvotu (zadaci). Prikazano je najviše 1000 zadnjih koraka.</div>
+        {/if}
+      </div>
+    {/if}
   {/if}
 
   <!-- ── Objective detail drawer ───────────────────────────────── -->
@@ -561,6 +707,17 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .own-h { font-size: 15px; font-weight: 600; margin: 28px 0 10px; }
+  .creators { overflow-x: auto; }
+  .creators table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .creators th { text-align: left; font-weight: 500; color: var(--text-faint); padding: 6px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .creators td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .creators tr.failed td { background: color-mix(in srgb, var(--danger) 8%, transparent); }
+  .creators .dim { color: var(--text-faint); font-size: 11.5px; }
+  .creators .err { color: var(--danger); max-width: 320px; }
+  .creators input, .add-creator input { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); color: var(--text); padding: 4px 8px; font: inherit; }
+  .creators input.num { width: 70px; }
+  .add-creator { display: flex; gap: 8px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
   .exam-date { display: flex; gap: 8px; align-items: center; margin-top: 10px; font-size: 12px; color: var(--text-dim); }
   .exam-date input { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); color: var(--text); padding: 4px 8px; font: inherit; }
   .exam-date .saved { color: var(--success); }
