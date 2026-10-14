@@ -2,6 +2,16 @@
 
 Platforma za učenje gradiva kroz zadatke s laičkim objašnjenjima i ponavljanjem (spaced repetition).
 
+## Račun
+
+**Račun**:
+Jedan učenik u MatMatu: njegov napredak, ciljevi, pokušaji probne mature i vlastiti predmeti. Briše se zajedno sa svime što mu pripada.
+_Avoid_: korisnik, profil, account
+
+**Prijava**:
+Način na koji se učenik prijavljuje u svoj račun: Google ili Apple. Jedan račun može imati više prijava ako dijele isti email.
+_Avoid_: login, identitet, auth
+
 ## Vlastiti predmet
 
 **Vlastiti predmet**:
