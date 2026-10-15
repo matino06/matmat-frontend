@@ -1,0 +1,86 @@
+// Prompt za izradu interaktivne lekcije iz već provjerenog zadatka i objašnjenja (tekst ostaje izvor istine).
+// Opis widgeta sastavlja se iz kataloga, pa prompt i provjera uvijek opisuju iste widgete.
+import { KATALOG, ODGOVOR } from "./katalog/index.js";
+import { VERZIJA } from "./validateLesson.js";
+
+const PRAVILA = `Pretvaraš zadatak i njegovo objašnjenje u interaktivnu lekciju za MatMat, aplikaciju u kojoj učenik uči kroz zadatke.
+Lekciju crta gotova aplikacija iz tvog JSON-a; smiješ koristiti samo widgete iz kataloga ispod, s točno opisanim poljima.
+
+KAKO LEKCIJA RADI („zadatak prvo“):
+- Na vrhu je kartica sa zadatkom (situacija i podaci). Zatim podzadaci a), b), c), jedan po jedan.
+- Svaki podzadatak počinje pitanjem na koje učenik odmah odgovara. Točan odgovor u prvom pokušaju: kratka potvrda i „zasto“
+  (1–2 rečenice), cijelo objašnjenje je skriveno iza gumba. Učenik koji zna sve gotov je s 3 odgovora.
+- Krivi odgovor: poruka baš za tu grešku, pa kratka pomoć (1–4 mala koraka) samo za taj podzadatak, pa ponovni pokušaj na
+  blizancu (isto pitanje s drugim brojevima ili drugim tijelom). Gumb „Ne znam“ vodi ravno u pomoć.
+- Na kraju je „Zapamti“ (1–4 kratke natuknice).
+
+ULOGE KORAKA (vrlo važno):
+- Svaki korak ima jednu ulogu: „Pogledaj“ (objašnjenje, primjer ili istraživanje – ništa se ne pita) ili „Tvoj red“ (pitanje).
+  Nikad ne miješaj: korak za gledanje nema odgovor, a pitanje je uvijek zaseban korak. Učenik iz 7. razreda zbunio se kad je
+  mreža za istraživanje izgledala kao zadatak.
+- Korak za istraživanje (klizač, mreža "istrazi", mjerilo "istrazi", uronjeno "istrazi") u tekstu kaže što učenik može
+  dirati i što će vidjeti, npr. „Pomiči klizač i gledaj kako se mijenja gustoća.“
+- pitanje i blizanac moraju biti koraci „Tvoj red“.
+
+POMOĆ (kao riješeni primjer koji se postupno prepušta učeniku):
+- Prvi korak pomoći objasni ono što je učenik vjerojatno krivo shvatio („Pogledaj“): pojam, postupak, skica ili istraživanje.
+- Zatim prepusti učeniku mali korak („Tvoj red“), npr. samo očitanje ili samo pretvorbu, s porukama za tipične greške.
+- Najviše 4 koraka, kratko. Pomoć ne smije otkriti odgovor na blizanca.
+
+WIDGETI UMJESTO TEKSTA:
+- Učenik neka vještinu napravi sam u widgetu, a ne da samo upiše broj koji mu tekst već skoro daje. Ako izvorni podzadatak traži
+  očitavanje s instrumenta, grafa ili slike, pitanje JE to očitavanje (mjerilo "procitaj", ocitaj_graf "ocitaj", mreza "prebroji");
+  nikad ne piši očitanje u tekst („voda pokazuje 140 mL“). Pretvorba jedinica je pretvorba_jedinica, razvrstavanje razvrstaj,
+  redoslijed koraka redoslijed, plivanje i tonjenje uronjeno, stanja tvari cestice.
+- Najviše 3 podzadatka (a, b, c), kao u izvornom zadatku. Kad podzadatak traži dva rezultata (npr. u g/cm³ i kg/m³), pitanje
+  je praznina s dvije praznine, a ne novi podzadatak.
+- zadatak.tekst je samo situacija i podaci, bez pitanja a), b), c): pitanja dolaze u podzadacima. Ako učenik iz skice treba
+  nešto očitati, ta skica ne ide u zadatak (inače je odgovor već nacrtan), nego mjerilo ide u pitanje.
+
+SADRŽAJ:
+- Sve što izvorno objašnjenje uči mora se naučiti: u pitanju, u „zasto“, u pomoći ili u „Zapamti“. Brojevi i rezultati
+  moraju se slagati s izvornim zadatkom; smiješ prilagoditi pitanje widgetu, ali ne mijenjati fiziku ni rezultate.
+- Za tipične greške piši „krivo“ s porukom baš za tu grešku (npr. „220 mL je završno očitanje, a ne volumen kamena“).
+- Piši kratko, laički i prirodno, za učenika kojem predmet ne ide. Novi pojam prvo svakodnevnim riječima, pa formula.
+- Matematiku piši u $…$ (KaTeX). Decimalni zarez u tekstu (1,5); u JSON brojevima točka (1.5).
+- Ne crtaj ništa znakovima; za crtež koristi skicu ili widget.
+
+IZLAZ: samo JSON objekt, bez objašnjenja oko njega:
+{
+  "verzija": ${VERZIJA},
+  "zadatak": {"tekst": "situacija i podaci (markdown)", "skica"?: opis skice},
+  "podzadaci": [
+    {"id": "a", "naslov": "kratko", "pitanje": <korak Tvoj red>, "zasto": "…", "objasnjenje": "markdown",
+     "pomoc": [<korak>, …], "blizanac": <korak Tvoj red>}
+  ],
+  "zapamti": ["…"]
+}`;
+
+export function sustavPrompt() {
+  const katalog = Object.values(KATALOG)
+    .map((w) => {
+      const uloge = new Set([undefined, "istrazi", "prikaz", "procitaj", "odaberi"].map((nacin) => w.uloga({ nacin })));
+      const uloga = uloge.size > 1 ? "ovisi o načinu" : uloge.has(ODGOVOR) ? "Tvoj red" : "Pogledaj";
+      return `### ${w.tip} (${uloga})\n${w.opis}\nPrimjer: ${JSON.stringify(w.primjer)}`;
+    })
+    .join("\n\n");
+  return `${PRAVILA}\n\nKATALOG WIDGETA:\n\n${katalog}`;
+}
+
+// Izvor: lekcija plana s prvom varijacijom zadatka (tekst, objašnjenje, rezultati, skica).
+export function korisnickiPrompt(izvor) {
+  return [
+    `PREDMET: ${izvor.subject ?? "?"} · RAZINA: ${izvor.level === "os78" ? "7.–8. razred osnovne škole" : izvor.level === "ss" ? "srednja škola" : izvor.level ?? "?"}`,
+    `LEKCIJA: ${izvor.objective_name}`,
+    `ZADATAK:\n${izvor.task_text}`,
+    izvor.sketch ? `SKICA UZ ZADATAK (JSON):\n${izvor.sketch}` : null,
+    `REZULTATI:\n${izvor.results}`,
+    `OBJAŠNJENJE:\n${izvor.explanation}`,
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+export function popravakPrompt(greske) {
+  return `Provjera aplikacije našla je probleme u tvojoj lekciji. Ispravi ih i vrati CIJELU ispravljenu lekciju kao JSON (isti format):\n- ${greske.join("\n- ")}`;
+}

@@ -24,3 +24,5 @@ vite.config.ts.timestamp-*
 
 .claude
 CLAUDE.md
+# Interaktivne lekcije: lokalni izlaz skripte (sadržaj kreatora, ne ide u repo)
+/lab-out

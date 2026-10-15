@@ -1,0 +1,104 @@
+# Interaktivne lekcije
+
+Laboratorij za interaktivne lekcije vlastitih predmeta: model iz postojećeg zadatka i objašnjenja napiše JSON spec, a
+aplikacija ga crta widgetima iz kataloga. Zašto baš tako: [ADR 0001](adr/0001-interaktivne-lekcije-iz-kataloga-widgeta.md).
+Ništa od ovoga još nije u produkciji: nema promjena baze ni backenda, a stranica `/lab/lekcija` postoji samo u dev načinu.
+
+## Gdje je što
+
+| Datoteka | Što radi |
+|---|---|
+| `src/lib/lesson/katalog/` | Widgeti kao čista logika: uloga, opis za prompt, primjer, provjera speca, provjera odgovora, točan odgovor |
+| `src/lib/lesson/validateLesson.js` | Provjera cijele lekcije (građa, uloge, svi widgeti); greške i upozorenja |
+| `src/lib/lesson/prompt.js` | System prompt (pravila + katalog) i korisnički prompt iz izvornog zadatka |
+| `src/lib/lesson/core/` | Brojevi (hrvatski zapis), siguran kalkulator izraza, jedinice, ponovljivo miješanje |
+| `src/lib/lesson/komponente/` | Svelte komponenta za svaki widget; `Korak.svelte` dodaje oznaku uloge |
+| `src/lib/lesson/LessonRunner.svelte` | Tok „zadatak prvo“: pokušaj → pomoć → blizanac → sažetak |
+| `src/routes/lab/lekcija/` | Pregled generiranih lekcija (samo dev): lekcija, izvorni tekst, provjera, JSON |
+| `scripts/lab/izvezi-izvor.sh` | Izvoz prvih varijacija vlastitih predmeta u `lab-out/source.json` (read-only) |
+| `scripts/lab/generiraj-lekcije.mjs` | Izrada specova preko OpenRoutera, provjera, jedan popravak, stvarni trošak |
+
+`lab-out/` je u `.gitignore`: to je sadržaj kreatora i ne ide u repozitorij ni u build.
+
+## Kako se pokreće
+
+```bash
+scripts/lab/izvezi-izvor.sh ../matmat-backend
+OPENROUTER_API_KEY=… node scripts/lab/generiraj-lekcije.mjs --paralelno 2   # --samo 393,403  --preskoci-gotove  --model …
+pnpm run dev   # pa http://localhost:5173/lab/lekcija
+```
+
+Skripta troši kredit OpenRoutera (oko $0.06 po lekciji). Ne pokretati je na ključu s kojeg radi produkcijska izrada
+ako na računu nema dovoljno kredita: kad kredit padne na nulu, kreatorima stane izrada predmeta.
+
+## Format lekcije (verzija 1)
+
+```jsonc
+{
+  "verzija": 1,
+  "zadatak": { "tekst": "situacija i podaci, bez pitanja", "skica": { /* opcionalno, kao skica uz zadatak */ } },
+  "podzadaci": [
+    {
+      "id": "a",                    // a | b | c, najviše 3
+      "naslov": "Volumen kamena",
+      "pitanje": { "tip": "mjerilo", "nacin": "procitaj", … },   // uvijek „Tvoj red“
+      "zasto": "1–2 rečenice za onoga tko je odmah točno odgovorio",
+      "objasnjenje": "cijelo objašnjenje (skriveno dok ga učenik ne otvori)",
+      "pomoc": [ /* 1–4 koraka: najprije „Pogledaj“, pa mali „Tvoj red“ */ ],
+      "blizanac": { /* isto pitanje s novim brojevima; „Tvoj red“ */ }
+    }
+  ],
+  "zapamti": ["1–4 kratke natuknice"]
+}
+```
+
+### Uloge koraka
+
+- **Pogledaj** (`pojam`, `postupak`, `skica`, `cestice` prikaz) i **Istraži** (`klizac`, `ocitaj_graf` prikaz, te `mjerilo`,
+  `mreza` i `uronjeno` u načinu `istrazi`): plava oznaka, nikad ne traže odgovor, gumb „Dalje“ uvijek radi.
+- **Tvoj red** (sva pitanja i widgeti u načinu s odgovorom): oznaka u boji aplikacije, uvijek polje ili izbor.
+- Validator odbija korak za gledanje s poljem odgovora (`odgovor`, `tocno`, `krivo`, `ocitaj`…) i pitanje ili blizanca
+  koji nije „Tvoj red“. Uvedeno nakon što je učenica iz 7. razreda mrežu za istraživanje shvatila kao zadatak.
+- U koraku „Tvoj red“ widget ne smije odati odgovor: graf ne ispisuje vrijednosti s krivulje, mjerilo kod „postavi“ i
+  mreža kod „oznaci“ ne pokazuju zbroj dok učenik ne provjeri, a stube jedinica smiju samo u pomoći.
+
+### Tok podzadatka
+
+Pokušaj → (krivo ili „Ne znam“) → pomoć, korak po korak → blizanac. Nakon prvog krivog ponovnog pokušaja učenik može
+sam otvoriti točan odgovor; nakon drugog se prikaže sam. Ishod podzadatka (odmah / uz pomoć / pokazan odgovor) daje
+prijedlog ocjene za ponavljanje: 5 / 3 / 1.
+
+## Widgeti verzije 1 (pokrivaju Fiziku 7)
+
+| Widget | Uloga | Točan odgovor računa |
+|---|---|---|
+| `pojam`, `postupak`, `skica` | Pogledaj | – |
+| `klizac` | Istraži | – (izrazi se računaju uživo) |
+| `broj`, `izbor`, `vise_tocnih`, `tocno_netocno`, `praznina`, `parovi`, `redoslijed`, `razvrstaj` | Tvoj red | spec |
+| `mjerilo` (ravnalo, menzura, vaga, termometar; procitaj / postavi / istrazi s uranjanjem) | ovisi o načinu | spec, + „podjeljak previše/premalo“ |
+| `mreza` (istrazi / prebroji / oznaci) | ovisi o načinu | **kod**: (cijeli + polovice/2)·a² |
+| `ocitaj_graf` (prikaz = Istraži / ocitaj) | ovisi o načinu | **kod** iz funkcije, + „drugi graf“, „druga os“ |
+| `pretvorba_jedinica` | Tvoj red | **kod**, + „faktor kao za duljinu“, „krivi smjer“ |
+| `cestice` (prikaz / odaberi) | ovisi o načinu | spec |
+| `uronjeno` (istrazi / predvidi) | ovisi o načinu | **kod** iz gustoća |
+
+Daljnji widgeti po predmetima (matematika, fizika, kemija, biologija) i redoslijed izrade su u katalogu iz istraživanja;
+dodaju se kad se laboratorij proširi na druge predmete.
+
+## Izmjereno u laboratoriju (Fizika 7, Sonnet 5.5, medium)
+
+Prvih 9 od 37 lekcija (ostale čekaju kredit na OpenRouteru):
+
+- 8 od 9 prolazi provjeru, 6 iz prve; jednu ni popravak nije spasio (razvrstavanje s premalo stavki).
+- Trošak: medijan oko $0.06 po lekciji bez popravka, $0.09–0.23 s popravkom. Za usporedbu, današnja tekstualna
+  varijacija stoji oko $0.03.
+- Spec ima prosječno oko 8 000 znakova.
+
+## Do produkcije
+
+1. Laboratorij na svih 37 lekcija, pa na drugim predmetima s proširenim katalogom.
+2. Baza: `course.lesson_format`, `task.lesson_ui` (JSON), po želji `solved_task.lesson_result`.
+3. Backend: korak `LessonUiStep` nakon današnje izrade teksta, validator u GraalJS-u (jedan JS paket iz `src/lib/lesson/`),
+   popravak jeftinijim modelom, tekst ostaje ako spec ne prođe.
+4. Frontend: `LessonRunner` na `/tasks` i `/ponavljanje` kad zadatak ima spec; ocjena za ponavljanje predlaže se iz izvedbe.
+5. Opcija „Oblik lekcija“ u uređivaču plana uz način učenja.

@@ -1,6 +1,7 @@
 <script>
   import "../app.css";
   import { page } from '$app/state';
+  import { dev } from "$app/environment";
   import { afterNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
@@ -89,7 +90,8 @@
 
   let path = $derived(page.url.pathname);
   const MARKETING_PATHS = ["/", "/kako-radi"];
-  let isLanding = $derived(MARKETING_PATHS.includes(path));
+  // /lab (interaktivne lekcije) postoji samo u dev načinu i radi bez prijave, kao marketinške stranice
+  let isLanding = $derived(MARKETING_PATHS.includes(path) || (dev && (path === "/lab" || path.startsWith("/lab/"))));
   let showSidebar = $derived(!isLanding && !!userData.user);
 
   $effect(() => {

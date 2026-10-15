@@ -1,0 +1,202 @@
+/* Interaktivna lekcija: zajednički izgled koraka i widgeta. Boje iz teme (svijetla i tamna); jedina nova je plava
+   za korake „Pogledaj/Istraži“, zadana ovdje za obje teme jer tema nema boju koja nije ni akcija ni status. Globalno, jer
+   se markdown i SVG widgeta iscrtavaju kroz {@html}. Sve klase počinju s .lx- da se ne sudaraju s aplikacijom. */
+
+.lx {
+  --lx-look: #38bdf8; /* „Pogledaj / istraži“: plava, nikad boja pitanja */
+  --lx-look-dim: color-mix(in srgb, var(--lx-look) 12%, transparent);
+  --lx-look-border: color-mix(in srgb, var(--lx-look) 40%, transparent);
+  --lx-turn: var(--primary); /* „Tvoj red“ */
+  --lx-ok: var(--success);
+  --lx-bad: var(--danger);
+  color: var(--text);
+  font-size: 15px;
+}
+html[data-theme="light"] .lx {
+  --lx-look: #0284c7;
+}
+
+/* tekst */
+.lx-md > :first-child {
+  margin-top: 0;
+}
+.lx-md > :last-child {
+  margin-bottom: 0;
+}
+.lx-md p {
+  margin: 0 0 10px;
+  line-height: 1.6;
+}
+.lx-md .katex-display {
+  margin: 10px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.lx-question {
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+/* brojčani unos */
+.lx-broj {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lx-broj-inp {
+  width: 130px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 16px; /* manje od 16 px na iOS-u zumira stranicu */
+}
+.lx-unit {
+  color: var(--text-dim);
+}
+.inp.ok {
+  border-color: var(--lx-ok);
+}
+.inp.bad {
+  border-color: var(--lx-bad);
+}
+
+/* opcije (izbor, više točnih, točno/netočno, kutije za dodir) */
+.lx-options {
+  display: grid;
+  gap: 8px;
+}
+.lx-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-elev);
+  color: var(--text);
+  transition:
+    border-color 0.12s,
+    background 0.12s;
+}
+.lx-option:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+}
+.lx-option.sel {
+  border-color: var(--lx-turn);
+  background: var(--primary-dim);
+}
+.lx-option.ok {
+  border-color: var(--lx-ok);
+  background: color-mix(in srgb, var(--lx-ok) 10%, transparent);
+}
+.lx-option.bad {
+  border-color: var(--lx-bad);
+  background: color-mix(in srgb, var(--lx-bad) 10%, transparent);
+}
+.lx-option:disabled {
+  cursor: default;
+}
+.lx-mark {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+.lx-mark.box {
+  border-radius: 5px;
+}
+.sel .lx-mark,
+.ok .lx-mark {
+  border-color: currentColor;
+}
+
+.lx-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* crteži widgeta: puna širina do razumne veličine, boje iz teme */
+.lx-figure {
+  margin: 4px auto 12px;
+  max-width: 440px;
+  touch-action: manipulation;
+}
+.lx-figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lx-figure .lx-stroke {
+  stroke: var(--text);
+  fill: none;
+}
+.lx-figure .lx-faint {
+  stroke: var(--border-strong);
+  fill: none;
+}
+.lx-figure .lx-label {
+  fill: var(--text-dim);
+  font-size: 12px;
+  font-family: var(--font-sans);
+}
+.lx-figure .lx-accent {
+  stroke: var(--lx-turn);
+  fill: var(--lx-turn);
+}
+.lx-figure .lx-water {
+  fill: color-mix(in srgb, var(--lx-look) 28%, transparent);
+  stroke: var(--lx-look);
+}
+
+.lx-readout {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: -4px;
+  margin-bottom: 10px;
+}
+.lx-readout b {
+  color: var(--text);
+}
+
+/* povlačenje bez pomicanja stranice na mobitelu: samo na ručkama */
+.lx-handle {
+  cursor: grab;
+  touch-action: none;
+}
+.lx-handle:active {
+  cursor: grabbing;
+}
+
+.lx-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+.lx-solution {
+  margin: 10px 0 0;
+  color: var(--text-dim);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
