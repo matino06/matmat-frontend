@@ -11,7 +11,9 @@
   import { mathjaxTypeset } from "$lib/utils/mathjax";
   import { setCurrentTask, setSolutionRevealed, clearCurrentTask } from "$lib/store/currentTask.svelte.js";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte.js";
-  import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import RatingPicker, { RATINGS } from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import LessonRunner from "$lib/lesson/LessonRunner.svelte";
+  import { interaktivnaLekcija } from "$lib/lesson/zadatak.js";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
 
   let currentCourse = $state(null);
@@ -24,6 +26,18 @@
   let ratingKey = $state(0);
   let startTime = $state(null);
   let noTask = $state(false);
+  // Interaktivna verzija zadatka, kao na /tasks: tko zna, gotov je s tri odgovora, što je za ponavljanje idealno.
+  let tekstualno = $state(false);
+  let lekcija = $derived(tekstualno ? null : interaktivnaLekcija(task));
+  $effect(() => {
+    task?.id;
+    tekstualno = false;
+  });
+
+  function lekcijaGotova(sazetak) {
+    revealed = true;
+    pendingRating = RATINGS.find((r) => r.k === sazetak.q) ?? null;
+  }
 
   // Objective-practice mode: /ponavljanje?objectiveId=123&name=...
   let objectiveId = $derived($page.url.searchParams.get("objectiveId"));
@@ -172,12 +186,47 @@
     // Space activates a focused button — don't hijack it (preventDefault would
     // swallow the activation and toggle the solution instead).
     const tag = e.target.tagName;
+    if (lekcija) return; // interaktivna lekcija nema skriveno rješenje koje bi razmaknica otkrila
     if (e.code === "Space" && tag !== "TEXTAREA" && tag !== "INPUT" && tag !== "BUTTON") {
       e.preventDefault();
       revealed = !revealed;
     }
   }
 </script>
+
+{#snippet ocjena()}
+    {#if !answered}
+      <div class="rating-row">
+        <div class="rating-label">Kako ti je išlo?</div>
+        {#if pendingRating}
+          <div class="rating-confirm">
+            <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
+              {pendingRating.k} — {pendingRating.t}
+            </span>
+            <div class="rating-confirm-btns">
+              <button class="btn btn-primary" onclick={() => { handleRate(pendingRating); pendingRating = null; }}>
+                Potvrdi i nastavi
+              </button>
+              <button class="btn btn-ghost" onclick={() => { pendingRating = null; ratingKey++; }}>
+                Promijeni
+              </button>
+            </div>
+          </div>
+        {:else}
+          {#key ratingKey}
+            <RatingPicker taskId={task.id} onSelect={(r) => pendingRating = r} />
+          {/key}
+        {/if}
+      </div>
+    {:else}
+      <div style="margin-top:18px;display:flex;gap:10px;align-items:center;color:var(--success)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Zabilježeno.
+      </div>
+    {/if}
+{/snippet}
 
 <svelte:window onkeydown={handleSpaceReveal}/>
 
@@ -240,6 +289,13 @@
         {/if}
       </div>
 
+      {#if lekcija}
+        {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} />{/key}
+        <div class="lesson-alt">
+          <button class="btn btn-quiet" onclick={() => (tekstualno = true)}>Prikaži kao tekst</button>
+        </div>
+        {#if revealed}<div class="solution">{@render ocjena()}</div>{/if}
+      {:else}
       <div class="task-body">
         {#if task.sketch}
           <!-- skica iz opisa: desno uz tekst, na mobitelu ispod; neispravan opis ne prikazuje ništa -->
@@ -290,38 +346,9 @@
             {@html renderSolution(task.explanation ?? '')}
           </div>
 
-          {#if !answered}
-            <div class="rating-row">
-              <div class="rating-label">Kako ti je išlo?</div>
-              {#if pendingRating}
-                <div class="rating-confirm">
-                  <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
-                    {pendingRating.k} — {pendingRating.t}
-                  </span>
-                  <div class="rating-confirm-btns">
-                    <button class="btn btn-primary" onclick={() => { handleRate(pendingRating); pendingRating = null; }}>
-                      Potvrdi i nastavi
-                    </button>
-                    <button class="btn btn-ghost" onclick={() => { pendingRating = null; ratingKey++; }}>
-                      Promijeni
-                    </button>
-                  </div>
-                </div>
-              {:else}
-                {#key ratingKey}
-                  <RatingPicker taskId={task.id} onSelect={(r) => pendingRating = r} />
-                {/key}
-              {/if}
-            </div>
-          {:else}
-            <div style="margin-top:18px;display:flex;gap:10px;align-items:center;color:var(--success)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              Zabilježeno.
-            </div>
-          {/if}
+          {@render ocjena()}
         </div>
+      {/if}
       {/if}
     </article>
 
@@ -332,6 +359,11 @@
 </div>
 
 <style>
+  .lesson-alt {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
   .spinner {
     width: 20px;
     height: 20px;

@@ -80,6 +80,10 @@ _Avoid_: predznanje, prerequisites
 Odabir kreatora koji određuje kakav plan nastaje: učenje gradiva ili brza priprema. Bira se kad je poznato koliko lekcija koncepata gradivo ima, prije potvrde plana, i poslije se ne može promijeniti; za drugi način kreator radi novi predmet.
 _Avoid_: mod, režim
 
+**Oblik lekcija**:
+Odabir kreatora uz način učenja: zadatak s objašnjenjem ili interaktivno. U interaktivnom obliku učenik isti zadatak rješava u lekciji od widgeta: odmah odgovara, a pomoć dobiva samo za ono što pogriješi. Tekst zadatka i objašnjenja postoji u oba oblika, pa ga koriste ponavljanje, AI i iOS.
+_Avoid_: format, tip lekcije
+
 **Učenje gradiva**:
 Način učenja sa samo lekcijama koncepata, za dugoročno učenje gradiva; razne tipove zadataka učenik vježba kasnije, npr. na probnim ispitima.
 

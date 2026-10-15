@@ -47,8 +47,11 @@ export function formatNumber(n, digits = 3) {
   if (typeof n !== "number" || !Number.isFinite(n)) return "";
   const lead = n === 0 ? 0 : Math.max(0, -Math.floor(Math.log10(Math.abs(n))) - 1);
   const d = Math.min(12, Math.max(digits, lead + 3));
-  const r = Number(n.toFixed(d));
-  return r.toLocaleString("en-US", { useGrouping: false, maximumFractionDigits: d }).replace("-", "−").replace(".", ",");
+  // bez toLocaleString: isti kod radi i u GraalJS-u na backendu, gdje Intl ne mora postojati
+  let t = n.toFixed(d);
+  if (t.includes(".")) t = t.replace(/\.?0+$/, "");
+  if (t === "-0") t = "0";
+  return t.replace("-", "−").replace(".", ",");
 }
 
 export const isNum = (v) => typeof v === "number" && Number.isFinite(v);

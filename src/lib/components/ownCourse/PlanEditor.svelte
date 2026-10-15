@@ -41,6 +41,8 @@
   let introDone = $state(true);
   let mode = $state(null); // { mode, examDate, conceptLessons, maxQuickLessons, applications }
   let pick = $state("ucenje_gradiva");
+  // oblik lekcija: tekst (zadatak i objašnjenje) ili interaktivno (uz to lekcija od widgeta); bira se uz način učenja
+  let oblik = $state("tekst");
   let examDate = $state("");
   let choosing = $state(false);
   let confirming = $state(false);
@@ -284,7 +286,7 @@
     choosing = true;
     error = "";
     try {
-      mode = await call("/learning-mode", "POST", { mode: pick, examDate: examDate || null });
+      mode = await call("/learning-mode", "POST", { mode: pick, examDate: examDate || null, lessonFormat: oblik });
       if (pick === "brza_priprema") {
         checking = true;
         clearTimeout(pollTimer);
@@ -437,6 +439,20 @@
         {/if}
       </button>
     </div>
+    {#if "lessonFormat" in mode}
+    <!-- samo uz backend koji oblik lekcija zna spremiti (stariji ga ne vraća, pa ni izbora nema) -->
+    <h3 class="sub">Oblik lekcija</h3>
+    <div class="modes">
+      <button class="mode" class:on={oblik === "tekst"} onclick={() => (oblik = "tekst")}>
+        <b>Zadatak s objašnjenjem</b>
+        <span>Učenik riješi zadatak, pa pročita objašnjenje korak po korak.</span>
+      </button>
+      <button class="mode" class:on={oblik === "interaktivno"} onclick={() => (oblik = "interaktivno")}>
+        <b>Interaktivno</b>
+        <span>Učenik odmah odgovara: očitava, broji, razvrstava. Kad pogriješi, dobije pomoć baš za tu grešku; tko zna, brzo je gotov.</span>
+      </button>
+    </div>
+    {/if}
     <label class="date">
       <span>Datum testa{pick === "brza_priprema" ? "" : " (nije obavezno)"}</span>
       <input class="inp" type="date" min={today} bind:value={examDate} />
@@ -454,7 +470,7 @@
     <main>
       <div class="toolbar">
         <span class="muted small">
-          {concepts} lekcija koncepata{#if lessons.length > concepts}{" · "}{lessons.length - concepts} primjene{/if}{#if mode?.mode}{" · "}{mode.mode === "brza_priprema" ? "brza priprema" : "učenje gradiva"}{/if}{#if mode?.examDate}{" · "}test {formatDate(mode.examDate)}{/if}
+          {concepts} lekcija koncepata{#if lessons.length > concepts}{" · "}{lessons.length - concepts} primjene{/if}{#if mode?.mode}{" · "}{mode.mode === "brza_priprema" ? "brza priprema" : "učenje gradiva"}{/if}{#if mode?.lessonFormat === "interaktivno"}{" · "}interaktivne lekcije{/if}{#if mode?.examDate}{" · "}test {formatDate(mode.examDate)}{/if}
         </span>
         <label class="small"><input type="checkbox" bind:checked={grouped} /> Grupiraj po cjelinama</label>
       </div>
@@ -765,6 +781,7 @@
   .mode { all: unset; cursor: pointer; display: grid; gap: 6px; align-content: start; padding: 14px; border-radius: var(--r-md);
     border: 1px solid var(--border); background: var(--bg-elev-2); font-size: 12.5px; color: var(--text-dim); }
   .mode b { color: var(--text); font-size: 14px; }
+  .choose .sub { margin: 18px 0 8px; font-size: 14px; font-weight: 600; }
   .mode.on { border-color: var(--primary-border); background: var(--primary-dim); }
   .mode:disabled { cursor: not-allowed; opacity: 0.55; }
   .blocked { color: var(--warn); }

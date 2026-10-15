@@ -94,11 +94,29 @@ Prvih 9 od 37 lekcija (ostale čekaju kredit na OpenRouteru):
   varijacija stoji oko $0.03.
 - Spec ima prosječno oko 8 000 znakova.
 
-## Do produkcije
+## Produkcija (faza 1, web)
 
-1. Laboratorij na svih 37 lekcija, pa na drugim predmetima s proširenim katalogom.
-2. Baza: `course.lesson_format`, `task.lesson_ui` (JSON), po želji `solved_task.lesson_result`.
-3. Backend: korak `LessonUiStep` nakon današnje izrade teksta, validator u GraalJS-u (jedan JS paket iz `src/lib/lesson/`),
-   popravak jeftinijim modelom, tekst ostaje ako spec ne prođe.
-4. Frontend: `LessonRunner` na `/tasks` i `/ponavljanje` kad zadatak ima spec; ocjena za ponavljanje predlaže se iz izvedbe.
-5. Opcija „Oblik lekcija“ u uređivaču plana uz način učenja.
+Kod je spreman, ali ništa nije pušteno. Redoslijed je obavezan, jer backend ima `ddl-auto=validate`:
+
+1. Na produkcijskoj bazi pokreni `matmat-backend/sql/2026-10-15-vlastiti-predmet-10-interaktivne-lekcije.sql`
+   (`course.lesson_format`, `task.lesson_ui`). Bez toga se novi backend ne pokrene.
+2. Deploy backenda: `LessonUiStep` nakon 1. varijacije zadatka u predmetu s oblikom „interaktivno“ izradi lekciju
+   (model `own-courses.models.lesson-ui`, zadano Sonnet 5.5), provjeri je (`LessonUi`, GraalJS) i jednom popravi.
+   Ne troši kvotu kreatora i ne odgađa „Spremno za učenje“: dok lekcije nema, zadatak je tekstualan.
+3. Deploy frontenda: izbor „Oblik lekcija“ u uređivaču plana (vidi se tek kad ga backend vraća), a `/tasks` i
+   `/ponavljanje` prikazuju lekciju kad zadatak ima `lessonUi`, uz „Prikaži kao tekst“. Ocjena za ponavljanje se
+   predlaže iz izvedbe; učenik je potvrđuje ili mijenja.
+
+**Promjena kataloga, validatora ili prompta**: nakon izmjene u `src/lib/lesson/` pokreni
+`node scripts/lesson/paket-za-backend.mjs`, pa commitaj i `matmat-backend/src/main/resources/lesson/lesson.js`.
+Backend inače provjerava i piše prompt starim kodom.
+
+Odluke uzete kao zadane (može se promijeniti): interaktivna izrada ne troši kvotu kreatora; oblik se bira jednom, uz
+način učenja; interaktivna verzija postoji samo za 1. varijaciju (varijacije 2–4 ostaju tekst, faza 2).
+
+## Faza 2
+
+- Varijacije 2–4 s interaktivnom verzijom (jeftiniji model po predlošku 1. varijacije).
+- AI chat dobiva i gdje je učenik zapeo u lekciji.
+- iOS: isti renderer kroz WKWebView.
+- Widgeti za ostale predmete (katalog iz istraživanja), i modelu samo widgeti tog predmeta.

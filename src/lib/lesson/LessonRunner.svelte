@@ -30,6 +30,7 @@
   let stanja = $state(novo());
   let ekran = $state(0); // 0..n-1 podzadaci, n = sažetak
   let zadatakOtvoren = $state(true);
+  let root;
 
   let n = $derived(lekcija.podzadaci.length);
   let p = $derived(lekcija.podzadaci[ekran]);
@@ -91,7 +92,8 @@
     ekran++;
     zadatakOtvoren = false;
     if (ekran === n) onzavrsi(sazetak());
-    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+    // u aplikaciji se ne pomiče prozor nego glavni stupac, pa se na vrh dovodi sama lekcija
+    root?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function ispocetka() {
@@ -115,7 +117,7 @@
   const korakGotov = (k) => uloga(p.pomoc[k]) !== ODGOVOR || st.pomoc[k].gotov;
 </script>
 
-<div class="lx lx-runner">
+<div class="lx lx-runner" bind:this={root}>
   <div class="lx-progress" aria-label={`Dio ${Math.min(ekran + 1, n + 1)} od ${n + 1}`}>
     {#each lekcija.podzadaci as x, i (x.id)}
       <span class="seg-bar" class:done={stanja[i].faza === "gotovo"} class:now={i === ekran}></span>
