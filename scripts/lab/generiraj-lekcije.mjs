@@ -2,10 +2,13 @@
 // Ulaz: lab-out/source.json (izvezi-izvor.sh). Izlaz: lab-out/lekcije/<objective_id>.json i lab-out/izvjestaj.json,
 // koje prikazuje stranica /lab/lekcija u dev načinu.
 //
-//   OPENROUTER_API_KEY=… node scripts/lab/generiraj-lekcije.mjs [--model anthropic/claude-sonnet-5.5] [--effort medium]
-//                                                               [--samo 393,403] [--paralelno 4] [--preskoci-gotove]
+//   OPENROUTER_API_KEY=… node scripts/lab/generiraj-lekcije.mjs [--model openai/gpt-6.1-sol] [--effort medium]
+//       [--popravak anthropic/claude-haiku-5.5] [--samo 393,403] [--paralelno 2] [--preskoci-gotove] [--budzet 3]
 //
-// Svaki spec prolazi validateLesson; ako ima grešaka, model ga jednom popravlja. Trošak je stvarni usage.cost s OpenRoutera.
+// Isti modeli i isti tok kao backend (LessonUiStep): lekciju piše model za pisanje, a ako ne prođe validateLesson,
+// jeftiniji model je jednom popravlja u jednom pozivu (izvor + lekcija + nalaz provjere). Trošak je stvarni
+// usage.cost s OpenRoutera; kad potrošnja ovog pokretanja dosegne --budzet (USD), nove lekcije se ne započinju,
+// da na računu (s kojeg radi i produkcija) uvijek ostane kredita.
 import { readFile, writeFile, mkdir, access, readdir } from "node:fs/promises";
 import { validateLesson } from "../../src/lib/lesson/validateLesson.js";
 import { sustavPrompt, korisnickiPrompt, popravakPrompt } from "../../src/lib/lesson/prompt.js";
@@ -21,9 +24,12 @@ const args = Object.fromEntries(
       return [k, v.join(" ") || true];
     }),
 );
-const MODEL = args.model ?? "anthropic/claude-sonnet-5.5";
+const MODEL = args.model ?? "openai/gpt-6.1-sol";
 const EFFORT = args.effort ?? "medium";
-const PARALLEL = Number(args.paralelno ?? 4);
+const REPAIR_MODEL = args.popravak ?? "anthropic/claude-haiku-5.5";
+const PARALLEL = Number(args.paralelno ?? 2);
+const BUDGET = Number(args.budzet ?? 3);
+let spent = 0;
 const ONLY = args.samo ? new Set(String(args.samo).split(",").map(Number)) : null;
 const KEY = process.env.OPENROUTER_API_KEY;
 if (!KEY) {
@@ -36,21 +42,24 @@ await mkdir(new URL("lekcije/", OUT), { recursive: true });
 const izvori = JSON.parse(await readFile(new URL("source.json", OUT), "utf8")).filter((x) => !ONLY || ONLY.has(x.objective_id));
 const system = sustavPrompt();
 
-async function chat(messages, effort = EFFORT) {
+async function chat(messages, { model = MODEL, effort = EFFORT } = {}) {
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json", "X-Title": "MatMat lab" },
     body: JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: 32000,
+      response_format: { type: "json_object" },
       reasoning: { effort },
       usage: { include: true },
-      messages: [{ role: "system", content: [{ type: "text", text: system, cache_control: { type: "ephemeral" } }] }, ...messages],
+      // keš sustavnog prompta: Anthropic ga traži izričito, OpenAI kešira sam
+      messages: [{ role: "system", content: model.startsWith("anthropic/") ? [{ type: "text", text: system, cache_control: { type: "ephemeral" } }] : system }, ...messages],
     }),
   });
   const body = await res.json();
   if (!res.ok || body.error) throw new Error(`OpenRouter ${res.status}: ${JSON.stringify(body.error ?? body).slice(0, 300)}`);
   const u = body.usage ?? {};
+  spent += u.cost ?? 0;
   return {
     content: body.choices?.[0]?.message?.content ?? "",
     trosak: { usd: u.cost ?? 0, ulaz: u.prompt_tokens ?? 0, izlaz: u.completion_tokens ?? 0, razmisljanje: u.completion_tokens_details?.reasoning_tokens ?? 0, kes: u.prompt_tokens_details?.cached_tokens ?? 0 },
@@ -94,14 +103,8 @@ async function izradi(izvor) {
   const prvaProvjera = provjera;
   if (provjera.greske.length) {
     popravljeno = true;
-    const drugi = await chat(
-      [
-        { role: "user", content: user },
-        { role: "assistant", content: prvi.content },
-        { role: "user", content: popravakPrompt(provjera.greske) },
-      ],
-      "low",
-    );
+    const json = lekcija ? JSON.stringify(lekcija) : "(nije JSON)";
+    const drugi = await chat([{ role: "user", content: `${user}\n\nTVOJA LEKCIJA (JSON):\n${json}\n\n${popravakPrompt(provjera.greske)}` }], { model: REPAIR_MODEL, effort: "medium" });
     trosak = zbroj(trosak, drugi.trosak);
     try {
       lekcija = parseJson(drugi.content);
@@ -110,7 +113,7 @@ async function izradi(izvor) {
       provjera = { greske: [`JSON nakon popravka: ${e.message}`], upozorenja: [] };
     }
   }
-  const zapis = { izvor, lekcija, provjera, prvaProvjera, popravljeno, model: MODEL, effort: EFFORT, trosak, sekundi: Math.round((Date.now() - t0) / 1000), znakova: lekcija ? JSON.stringify(lekcija).length : 0 };
+  const zapis = { izvor, lekcija, provjera, prvaProvjera, popravljeno, model: MODEL, effort: EFFORT, modelPopravka: popravljeno ? REPAIR_MODEL : null, trosak, sekundi: Math.round((Date.now() - t0) / 1000), znakova: lekcija ? JSON.stringify(lekcija).length : 0 };
   await writeFile(file, JSON.stringify(zapis, null, 2));
   return zapis;
 }
@@ -127,6 +130,10 @@ const izradeno = [];
 let i = 0;
 async function radnik() {
   while (i < izvori.length) {
+    if (spent >= BUDGET) {
+      console.log(`Budžet $${BUDGET} je potrošen ($${spent.toFixed(3)}); preostale lekcije nisu započete (--preskoci-gotove ih nastavlja).`);
+      return;
+    }
     const izvor = izvori[i++];
     try {
       const z = await izradi(izvor);

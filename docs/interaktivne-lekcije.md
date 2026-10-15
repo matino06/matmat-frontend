@@ -101,7 +101,8 @@ Kod je spreman, ali ništa nije pušteno. Redoslijed je obavezan, jer backend im
 1. Na produkcijskoj bazi pokreni `matmat-backend/sql/2026-10-15-vlastiti-predmet-10-interaktivne-lekcije.sql`
    (`course.lesson_format`, `task.lesson_ui`). Bez toga se novi backend ne pokrene.
 2. Deploy backenda: `LessonUiStep` nakon 1. varijacije zadatka u predmetu s oblikom „interaktivno“ izradi lekciju
-   (model `own-courses.models.lesson-ui`, zadano Sonnet 5.5), provjeri je (`LessonUi`, GraalJS) i jednom popravi.
+   istim modelom kao zadatke (`own-courses.models.writer`, GPT-6.1 Sol), provjeri je (`LessonUi`, GraalJS), a ako ne
+   prođe, jeftiniji model (`own-courses.models.cheap`, Haiku) je jednom popravi.
    Ne troši kvotu kreatora i ne odgađa „Spremno za učenje“: dok lekcije nema, zadatak je tekstualan.
 3. Deploy frontenda: izbor „Oblik lekcija“ u uređivaču plana (vidi se tek kad ga backend vraća), a `/tasks` i
    `/ponavljanje` prikazuju lekciju kad zadatak ima `lessonUi`, uz „Prikaži kao tekst“. Ocjena za ponavljanje se
