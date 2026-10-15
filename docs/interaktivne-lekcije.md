@@ -85,14 +85,18 @@ prijedlog ocjene za ponavljanje: 5 / 3 / 1.
 Daljnji widgeti po predmetima (matematika, fizika, kemija, biologija) i redoslijed izrade su u katalogu iz istraživanja;
 dodaju se kad se laboratorij proširi na druge predmete.
 
-## Izmjereno u laboratoriju (Fizika 7, Sonnet 5.5, medium)
+## Izmjereno u laboratoriju (Fizika 7, 37 lekcija)
 
-Prvih 9 od 37 lekcija (ostale čekaju kredit na OpenRouteru):
+| | GPT-6.1 Sol + Haiku popravak (kao backend) | Sonnet 5.5 (prvih 9) |
+|---|---|---|
+| Prolazi provjeru | 36 / 37 (29 iz prve) | 8 / 9 (6 iz prve) |
+| Trošak po lekciji | medijan $0.047, prosjek $0.052, najviše $0.095 | medijan $0.060, prosjek $0.093, najviše $0.234 |
+| Vrijeme | medijan 69 s | medijan 27 s |
+| Koraka po lekciji (s pomoći) | 14,6 | 13,5 |
 
-- 8 od 9 prolazi provjeru, 6 iz prve; jednu ni popravak nije spasio (razvrstavanje s premalo stavki).
-- Trošak: medijan oko $0.06 po lekciji bez popravka, $0.09–0.23 s popravkom. Za usporedbu, današnja tekstualna
-  varijacija stoji oko $0.03.
-- Spec ima prosječno oko 8 000 znakova.
+Za usporedbu, današnja tekstualna varijacija stoji oko $0.03. Jedina neuspjela lekcija pala je jer je Haikuov popravak
+vratio prekinut JSON; u produkciji takav zadatak ostaje tekstualan. Model i dalje najviše bira `pojam`, `praznina`,
+`izbor` i `broj`; vizualne widgete (graf, tijela u tekućini, mreža) koristi kad ih zadatak izravno traži, češće u pomoći.
 
 ## Produkcija (faza 1, web)
 
