@@ -4,7 +4,7 @@
 //   node scripts/lesson/paket-za-backend.mjs [putanja-do-matmat-backend]
 //
 // Izlaz: <backend>/src/main/resources/lesson/lesson.js – jedna skripta koja postavlja globalni MatMatLesson
-// { validateLesson, sustavPrompt, korisnickiPrompt, popravakPrompt, VERZIJA }. Pokreni nakon svake promjene
+// { validateLesson, sustavPrompt, korisnickiPrompt, popravakPrompt, predlozakPrompt, VERZIJA }. Pokreni nakon svake promjene
 // u src/lib/lesson/katalog, validateLesson.js, prompt.js ili core/.
 import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
@@ -17,7 +17,7 @@ const outfile = join(backend, "src/main/resources/lesson/lesson.js");
 await build({
   stdin: {
     contents: `export { validateLesson, VERZIJA } from "./src/lib/lesson/validateLesson.js";
-export { sustavPrompt, korisnickiPrompt, popravakPrompt } from "./src/lib/lesson/prompt.js";`,
+export { sustavPrompt, korisnickiPrompt, popravakPrompt, predlozakPrompt } from "./src/lib/lesson/prompt.js";`,
     resolveDir: root,
     loader: "js",
   },

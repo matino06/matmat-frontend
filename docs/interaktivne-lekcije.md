@@ -139,7 +139,7 @@ Kod je spreman, ali ništa nije pušteno. Redoslijed je obavezan, jer backend im
 
 1. Na produkcijskoj bazi pokreni `matmat-backend/sql/2026-10-15-vlastiti-predmet-10-interaktivne-lekcije.sql`
    (`course.lesson_format`, `task.lesson_ui`). Bez toga se novi backend ne pokrene.
-2. Deploy backenda: `LessonUiStep` nakon 1. varijacije zadatka u predmetu s oblikom „interaktivno“ izradi lekciju
+2. Deploy backenda: `LessonUiStep` nakon svake varijacije zadatka u predmetu s oblikom „interaktivno“ izradi lekciju
    istim modelom kao zadatke (`own-courses.models.writer`, GPT-6.1 Sol), provjeri je (`LessonUi`, GraalJS), a ako ne
    prođe, jeftiniji model (`own-courses.models.cheap`, Haiku) je jednom popravi.
    Ne troši kvotu kreatora i ne odgađa „Spremno za učenje“: dok lekcije nema, zadatak je tekstualan.
@@ -152,11 +152,16 @@ Kod je spreman, ali ništa nije pušteno. Redoslijed je obavezan, jer backend im
 Backend inače provjerava i piše prompt starim kodom.
 
 Odluke uzete kao zadane (može se promijeniti): interaktivna izrada ne troši kvotu kreatora; oblik se bira jednom, uz
-način učenja; interaktivna verzija postoji samo za 1. varijaciju (varijacije 2–4 ostaju tekst, faza 2).
+način učenja; interaktivnu verziju ima svaka varijacija.
+
+**Varijacije 2–4** nastaju po predlošku 1. varijacije, pa i njihove lekcije: jeftiniji model (Haiku) dobiva lekciju
+1. varijacije (`predlozakPrompt`) i prenosi je na novi zadatak, uz jedan popravak. Tek ako ni tada ne prođe provjeru, lekciju
+ispočetka piše model za pisanje. U labu: `scripts/lab/izvezi-varijacije.sh`, pa
+`generiraj-lekcije.mjs --izvor source-varijacije.json --mapa varijacije` (isti tok). Na 5 stvarnih varijacija svih 5
+prošlo je po predlošku, oko 0,01 $ po lekciji umjesto 0,04 $.
 
 ## Faza 2
 
-- Varijacije 2–4 s interaktivnom verzijom (jeftiniji model po predlošku 1. varijacije).
 - AI chat dobiva i gdje je učenik zapeo u lekciji.
 - iOS: isti renderer kroz WKWebView.
 - Widgeti za ostale predmete (katalog iz istraživanja), i modelu samo widgeti tog predmeta.
