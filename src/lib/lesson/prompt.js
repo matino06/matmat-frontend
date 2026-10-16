@@ -107,6 +107,20 @@ export function korisnickiPrompt(izvor) {
     .join("\n\n");
 }
 
+// Varijacije 2–4 nastaju po predlošku 1. varijacije (isti podzadaci, drugi brojevi ili situacija), pa i lekcija nastaje
+// po lekciji 1. varijacije: jeftiniji model prenosi tok i widgete na novi zadatak umjesto da lekciju smišlja ispočetka.
+export function predlozakPrompt(lekcija) {
+  return `PREDLOŽAK: interaktivna lekcija za prvi zadatak ove lekcije. ZADATAK gore je druga varijacija istog zadatka (isti
+podzadaci, drugi brojevi ili situacija). Napravi istu lekciju za ZADATAK gore:
+- zadrži tok, widgete, uloge koraka, broj koraka pomoći i „vjezba“ (ako je ima);
+- zadatak, pitanja, odgovore, poruke za „krivo“, skicu, „zasto“ i „objasnjenje“ napiši iznova prema ZADATKU,
+  REZULTATIMA i OBJAŠNJENJU gore: situacija, predmeti i brojevi su iz ZADATKA gore, i kad su isti kao u prvom zadatku;
+  ono iz prvog zadatka čega u ZADATKU gore nema (brojevi, predmeti, imena) ne smije ostati;
+- blizance i primjere u pomoći smisli nove, s brojevima i rezultatima drukčijima i od novog pitanja;
+- ako novi zadatak traži nešto čega u predlošku nema (npr. očitanje s instrumenta), prilagodi lekciju prema pravilima gore.
+${JSON.stringify(lekcija)}`;
+}
+
 export function popravakPrompt(greske) {
   return `Provjera aplikacije našla je probleme u tvojoj lekciji. Ispravi ih i vrati CIJELU ispravljenu lekciju kao JSON (isti format):\n- ${greske.join("\n- ")}`;
 }
