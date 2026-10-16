@@ -66,6 +66,8 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
     });
   }
 
+  for (const oblik of genderForms(text)) err(false, `„${oblik}“: učeniku se obraćamo u muškom rodu („zbrojio si“), bez ženskih i dvojnih oblika`);
+
   if (Array.isArray(pz)) {
     sourceSketch(lekcija, parseMaybe(skica), err);
     sourceResults(pz, rezultati, err, warn);
@@ -144,6 +146,15 @@ function answerParts(r) {
   const bezObrazlozenja = (t) => t.split(/\bjer\b|\bzato\b|\(/i)[0];
   const [prvi, ...ostali] = r.split(";");
   return [prvi, ...ostali.filter((t) => /^\s*(?:[^:\d]{1,30}:\s*)?-?\d/.test(t))].map(bezObrazlozenja);
+}
+
+// Ženski i dvojni oblici obraćanja učeniku („provela si“, „sam/sama“, „prebrojio/la“); jedinice (g/cm³) nisu riječi.
+function genderForms(text) {
+  const oblici = [
+    ...text.matchAll(/(?<![\p{L}\d])\p{Ll}{3,}\/\p{Ll}{2,}(?![\p{L}\d³²])/gu),
+    ...text.matchAll(/(?<!\p{L})si \p{L}+la(?!\p{L})|(?<!\p{L})\p{L}+la si(?!\p{L})/gu),
+  ].map((m) => m[0]);
+  return [...new Set(oblici)];
 }
 
 function parseMaybe(v) {
