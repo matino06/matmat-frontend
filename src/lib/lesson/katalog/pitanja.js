@@ -1,6 +1,7 @@
 // Koraci „Tvoj red“ s klasičnim pitanjima: broj, izbor, više točnih, točno/netočno, praznine, parovi,
 // redoslijed i razvrstavanje. Svaki ima provjeru odgovora koja radi isto u pregledniku i na serveru.
 import { isNum, tolerance } from "../core/number.js";
+import { parseQuantity } from "../core/units.js";
 import { ODGOVOR, isText, problems, validateKrivo, checkNumber, withUnit, KRIVO_OPIS } from "./zajednicko.js";
 
 export const broj = {
@@ -169,7 +170,8 @@ function insideMath(text, tag) {
 export const parovi = {
   tip: "parovi",
   uloga: () => ODGOVOR,
-  opis: `Spoji parove (3–5). Polja: tekst, parovi: [{lijevo, desno}] u točnom paru; desna strana se miješa. Npr. veličina ↔ jedinica.`,
+  opis: `Spoji parove (3–5). Polja: tekst, parovi: [{lijevo, desno}] u točnom paru; desna strana se miješa. Npr. veličina ↔ jedinica,
+ili jednaki iznosi u različitim jedinicama ("27 dm" ↔ "2 m 7 dm", "3 m" ↔ "300 cm"; tada aplikacija provjeri da su parovi jednaki).`,
   primjer: {
     tip: "parovi",
     tekst: "Spoji veličinu s njezinom jedinicom.",
@@ -185,6 +187,12 @@ export const parovi = {
     if (need(Array.isArray(s.parovi) && s.parovi.length >= 3 && s.parovi.length <= 5, "parovi treba 3–5 parova")) {
       s.parovi.forEach((p, i) => need(isText(p?.lijevo) && isText(p?.desno), `parovi[${i}] treba „lijevo“ i „desno“`));
       need(new Set(s.parovi.map((p) => p?.desno)).size === s.parovi.length, "desne strane parova moraju biti različite");
+      // jednaki iznosi: ako su sve strane iznosi s jedinicama, svaki par mora biti stvarno jednak
+      const iznosi = s.parovi.map((p) => [parseQuantity(p?.lijevo), parseQuantity(p?.desno)]);
+      if (iznosi.every(([l, d]) => l && d)) {
+        iznosi.forEach(([l, d], i) => need(l.velicina === d.velicina && Math.abs(l.base - d.base) <= 1e-9 * Math.max(1, Math.abs(l.base)), `parovi[${i}]: „${s.parovi[i].lijevo}“ i „${s.parovi[i].desno}“ nisu jednaki iznosi`));
+        need(new Set(iznosi.map(([l]) => `${l.velicina}:${l.base.toPrecision(9)}`)).size === iznosi.length, "dva para imaju isti iznos, pa spajanje nije jednoznačno");
+      }
     }
     return list;
   },

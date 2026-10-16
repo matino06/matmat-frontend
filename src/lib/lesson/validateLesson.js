@@ -7,6 +7,8 @@
 // Greške znače da se lekcija ne smije spremiti (model je popravlja); upozorenja su za pregled.
 import { KATALOG, widget, uloga, istrazuje, tocanOdgovor, POGLEDAJ, ODGOVOR } from "./katalog/index.js";
 import { sketchProblems } from "./katalog/tekst.js";
+import { validateVjezba } from "./katalog/vjezba.js";
+import { pretvorbaRezultati } from "./katalog/istrazivanje.js";
 import { isText } from "./katalog/zajednicko.js";
 import { parseNumber, isNum } from "./core/number.js";
 
@@ -73,6 +75,8 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
     sourceResults(pz, rezultati, err, warn);
   }
 
+  if (lekcija.vjezba != null) for (const p of validateVjezba(lekcija.vjezba)) greske.push(p);
+
   if (err(Array.isArray(lekcija.zapamti) && lekcija.zapamti.length >= 1 && lekcija.zapamti.length <= 4, "zapamti treba 1–4 kratke natuknice")) {
     lekcija.zapamti.forEach((t, i) => err(isText(t), `zapamti[${i}] mora biti tekst`));
   }
@@ -128,6 +132,7 @@ function sourceResults(pz, rezultati, err, warn) {
 // Brojevi koje učenik upisuje ili bira kao točan odgovor na pitanje.
 function answerNumbers(spec) {
   if (!spec || !widget(spec)) return [];
+  if (spec.tip === "pretvorba_jedinica") return pretvorbaRezultati(spec).filter(isNum); // ne i zadani iznos
   if (spec.tip === "praznina") return (spec.praznine ?? []).flatMap((p) => (isNum(p?.odgovor) ? [p.odgovor] : numbersIn(String(p?.odgovor ?? ""))));
   const out = [];
   try {

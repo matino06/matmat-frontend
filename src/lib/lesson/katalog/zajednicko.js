@@ -40,7 +40,9 @@ export function checkNumber({ input, answer, tol, unit, krivo, savjet }) {
   if (n == null) return { tocno: false, poruka: "Upiši broj (decimalni zarez je u redu, npr. 1,5).", prazno: true };
   const t = tolerance(answer, tol);
   if (near(n, answer, t)) return { tocno: true };
-  const hit = (krivo ?? []).find((k) => near(n, k.vrijednost, Math.max(t, tolerance(k.vrijednost))));
+  // kriva vrijednost s vlastitom tolerancijom: s tolerancijom točnog odgovora (0,7 kod 140) 0,14 bi se
+  // prepoznao kao 0,00014
+  const hit = (krivo ?? []).find((k) => near(n, k.vrijednost, tolerance(k.vrijednost, k.tolerancija)));
   if (hit) return { tocno: false, poruka: hit.poruka };
   return { tocno: false, poruka: savjet || "Nije točno. Provjeri račun i jedinicu." };
 }

@@ -5,6 +5,7 @@
   import "./lesson.css";
   import Korak from "./komponente/Korak.svelte";
   import Md from "./komponente/Md.svelte";
+  import Vjezba from "./komponente/Vjezba.svelte";
   import Sketch from "$lib/sketch/Sketch.svelte";
   import { provjeri, tocanOdgovor, uloga, ODGOVOR } from "./katalog/index.js";
 
@@ -218,13 +219,14 @@
         {#each lekcija.podzadaci as x, i (x.id)}
           <div class="lx-result" data-r={stanja[i].rezultat}>
             <span>{x.id}) {x.naslov}</span>
-            <span class="lx-result-tag">{{ [ODMAH]: "znao/la odmah", [UZ_POMOC]: "naučeno uz pomoć", [POKAZANO]: "treba vježbe" }[stanja[i].rezultat]}</span>
+            <span class="lx-result-tag">{{ [ODMAH]: "znao odmah", [UZ_POMOC]: "naučeno uz pomoć", [POKAZANO]: "treba vježbe" }[stanja[i].rezultat]}</span>
           </div>
         {/each}
       </div>
       <p class="lx-solution">
-        {#if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao/la odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio/la uz pomoć vratit će se ranije u ponavljanju.{/if}
+        {#if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio uz pomoć vratit će se ranije u ponavljanju.{/if}
       </p>
+      {#if lekcija.vjezba}<Vjezba vjezba={lekcija.vjezba} />{/if}
       <div class="lx-actions"><button class="btn btn-ghost" onclick={ispocetka}>Ispočetka</button></div>
     </div>
   {/if}

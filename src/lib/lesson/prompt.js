@@ -2,6 +2,7 @@
 // Opis widgeta sastavlja se iz kataloga, pa prompt i provjera uvijek opisuju iste widgete.
 import { KATALOG, ODGOVOR } from "./katalog/index.js";
 import { VERZIJA } from "./validateLesson.js";
+import { VJEZBA_OPIS } from "./katalog/vjezba.js";
 
 const PRAVILA = `Pretvaraš zadatak i njegovo objašnjenje u interaktivnu lekciju za MatMat, aplikaciju u kojoj učenik uči kroz zadatke.
 Lekciju crta gotova aplikacija iz tvog JSON-a; smiješ koristiti samo widgete iz kataloga ispod, s točno opisanim poljima.
@@ -12,7 +13,8 @@ KAKO LEKCIJA RADI („zadatak prvo“):
   (1–2 rečenice), cijelo objašnjenje je skriveno iza gumba. Učenik koji zna sve gotov je s 3 odgovora.
 - Krivi odgovor: poruka baš za tu grešku, pa kratka pomoć (1–4 mala koraka) samo za taj podzadatak, pa ponovni pokušaj na
   blizancu (isto pitanje s drugim brojevima ili drugim tijelom). Gumb „Ne znam“ vodi ravno u pomoć.
-- Na kraju je „Zapamti“ (1–4 kratke natuknice).
+- Na kraju je „Zapamti“ (1–4 kratke natuknice), a u lekciji koja uči pretvaranje jedinica i „Vježbaj još“: neobavezni
+  zadaci pretvorbe koje aplikacija sama sastavi iz jedinica koje navedeš u „vjezba“.
 
 ULOGE KORAKA (vrlo važno):
 - Svaki korak ima jednu ulogu: „Pogledaj“ (objašnjenje, primjer ili istraživanje – ništa se ne pita) ili „Tvoj red“ (pitanje).
@@ -30,7 +32,8 @@ POMOĆ (kao riješeni primjer koji se postupno prepušta učeniku):
 WIDGETI UMJESTO TEKSTA:
 - Učenik neka vještinu napravi sam u widgetu, a ne da samo upiše broj koji mu tekst već skoro daje. Ako izvorni podzadatak traži
   očitavanje s instrumenta, grafa ili slike, pitanje JE to očitavanje (mjerilo "procitaj", ocitaj_graf "ocitaj", mreza "prebroji");
-  nikad ne piši očitanje u tekst („voda pokazuje 140 mL“). Pretvorba jedinica je pretvorba_jedinica, razvrstavanje razvrstaj,
+  nikad ne piši očitanje u tekst („voda pokazuje 140 mL“). Pretvorba jedinica je pretvorba_jedinica (i lanac „8 m = … dm =
+  … cm“ i mješoviti zapis „2 m 7 dm“), spajanje jednakih iznosa („27 dm“ ↔ „2 m 7 dm“) parovi, razvrstavanje razvrstaj,
   redoslijed koraka redoslijed, plivanje i tonjenje uronjeno, stanja tvari cestice.
 - Najviše 3 podzadatka (a, b, c), kao u izvornom zadatku. Kad podzadatak traži dva rezultata (npr. u g/cm³ i kg/m³), pitanje
   je praznina s dvije praznine, a ne novi podzadatak.
@@ -68,8 +71,14 @@ IZLAZ: samo JSON objekt, bez objašnjenja oko njega:
     {"id": "a", "naslov": "kratko", "pitanje": <korak Tvoj red>, "zasto": "…", "objasnjenje": "markdown",
      "pomoc": [<korak>, …], "blizanac": <korak Tvoj red>}
   ],
-  "zapamti": ["…"]
-}`;
+  "zapamti": ["…"],
+  "vjezba"?: {…}
+}
+
+${VJEZBA_OPIS}
+Dodaj je kad god lekcija uči pretvaranje jedinica neke veličine (i kad je pretvorba samo dio zadatka): navedi jedinice iz
+lekcije i susjedne koje izvorni zadatak ili razina koriste, uključi lanac i mješoviti zapis kad ih izvor spominje ili su
+prirodni za tu veličinu (duljina, masa). U lekciji bez pretvorbe jedinica izostavi „vjezba“.`;
 
 export function sustavPrompt() {
   const katalog = Object.values(KATALOG)

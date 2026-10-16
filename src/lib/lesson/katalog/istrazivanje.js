@@ -3,7 +3,7 @@
 // kod iz parametara (ne model), a krive vrijednosti tipičnih grešaka dodaju se automatski.
 import { compile } from "../core/expr.js";
 import { isNum, tolerance, near, formatNumber } from "../core/number.js";
-import { UNITS, convert, normUnit, typicalMistakes, staircase } from "../core/units.js";
+import { UNITS, normUnit, typicalMistakes, staircase, unitIndex, toBase, fromBase } from "../core/units.js";
 import { POGLEDAJ, ODGOVOR, isText, problems, noAnswerFields, validateKrivo, checkNumber, withUnit, KRIVO_OPIS } from "./zajednicko.js";
 
 const ID = /^[A-Za-z_][A-Za-z_0-9]*$/;
@@ -275,28 +275,81 @@ function grafAnswer(s, fns) {
 }
 
 // ── pretvorba jedinica ────────────────────────────────────────────────────────────────────────────
+// Jedna pretvorba („3600 mm² = [ ] cm²“), lanac („8 m = [ ] dm = [ ] cm = [ ] mm“) ili mješoviti zapis
+// („2 m 7 dm = [ ] cm“). Svaki rezultat i tipične greške računa kod.
+const lanac = (s) => [].concat(s.do);
+const izvor = (s) => ({ vrijednosti: [].concat(s.vrijednost), jedinice: [].concat(s.od).map(normUnit) });
+const zapisIzvora = (s) => {
+  const { vrijednosti, jedinice } = izvor(s);
+  return vrijednosti.map((v, i) => withUnit(v, jedinice[i])).join(" ");
+};
+// točni rezultati redom za svaku jedinicu iz „do“
+export function pretvorbaRezultati(s) {
+  const { vrijednosti, jedinice } = izvor(s);
+  const base = toBase(s.velicina, vrijednosti, jedinice);
+  return lanac(s).map((u) => fromBase(s.velicina, base, u));
+}
+
+const prepisano = (velicina, od, cilj) =>
+  unitIndex(velicina, cilj) > unitIndex(velicina, od)
+    ? `Prepisao si broj iz ${od}. Kad promijeniš jedinicu, mijenja se i broj: ${cilj} je manja jedinica, pa ih treba više.`
+    : `Prepisao si broj iz ${od}. Kad promijeniš jedinicu, mijenja se i broj: ${cilj} je veća jedinica, pa ih treba manje.`;
+
+// Isti iznos zapisan u drugoj jedinici (27 dm umjesto 270 cm): česta greška kad učenik stane korak prerano.
+function drugeJedinice(velicina, tocno, cilj) {
+  const base = toBase(velicina, tocno, cilj);
+  return UNITS[velicina].filter(([u]) => u !== cilj).map(([u]) => ({ vrijednost: fromBase(velicina, base, u), poruka: `To je isti iznos u ${u}, a ovdje ga treba zapisati u ${cilj}.` }));
+}
+
 export const pretvorba_jedinica = {
   tip: "pretvorba_jedinica",
   uloga: () => ODGOVOR,
   opis: `Pretvorba jedinica: velicina (${Object.keys(UNITS).join(" | ")}), vrijednost, od, do (jedinice, npr. "mm²" → "cm²"), tekst?, stube? (true: prikaži stube
 jedinica s faktorima – za korak pomoći, ne za prvi pokušaj). Točan rezultat i tipične greške (faktor kao za duljinu, krivi smjer) računa aplikacija.
+Lanac: do je popis 2–4 jedinice ("8 m = … dm = … cm = … mm": vrijednost 8, od "m", do ["dm", "cm", "mm"]); učenik upisuje svaku.
+Mješoviti zapis: vrijednost i od su popisi iste duljine, od veće jedinice prema manjoj ("2 m 7 dm": vrijednost [2, 7], od ["m", "dm"]).
 Jedinice: ${Object.entries(UNITS).map(([k, v]) => `${k}: ${v.map(([u]) => u).join(", ")}`).join("; ")}.`,
   primjer: { tip: "pretvorba_jedinica", velicina: "povrsina", vrijednost: 3600, od: "mm²", do: "cm²", tekst: "Pretvori površinu papira u cm²." },
   validate(s) {
     const { list, need } = problems();
     if (!need(s.velicina in UNITS, `pretvorba_jedinica.velicina mora biti jedna od: ${Object.keys(UNITS).join(", ")}`)) return list;
     const names = UNITS[s.velicina].map(([u]) => u);
-    need(names.includes(normUnit(s.od)) && names.includes(normUnit(s.do)), `jedinice od/do moraju biti iz popisa za ${s.velicina}: ${names.join(", ")}`);
-    need(normUnit(s.od) !== normUnit(s.do), "od i do moraju biti različite jedinice");
-    need(isNum(s.vrijednost), "pretvorba_jedinica treba brojčanu vrijednost");
+    const { vrijednosti, jedinice } = izvor(s);
+    const cilj = lanac(s);
+    if (!need([...jedinice, ...cilj].every((u) => names.includes(normUnit(u))), `jedinice od/do moraju biti iz popisa za ${s.velicina}: ${names.join(", ")}`)) return list;
+    need(vrijednosti.length === jedinice.length, "kod mješovitog zapisa vrijednost i od moraju biti popisi iste duljine");
+    need(vrijednosti.every(isNum), "pretvorba_jedinica treba brojčanu vrijednost");
+    need(cilj.length >= 1 && cilj.length <= 4, "do je jedna jedinica ili lanac od 2–4 jedinice");
+    if (jedinice.length > 1) {
+      need(jedinice.length <= 3, "mješoviti zapis ima najviše 3 dijela");
+      need(jedinice.every((u, i) => i === 0 || unitIndex(s.velicina, u) > unitIndex(s.velicina, jedinice[i - 1])), "mješoviti zapis ide od veće jedinice prema manjoj (2 m 7 dm)");
+    }
+    const sve = [jedinice.length === 1 ? jedinice[0] : null, ...cilj.map(normUnit)].filter(Boolean);
+    need(new Set(sve).size === sve.length, "od i do moraju biti različite jedinice, a lanac bez ponavljanja");
     return list;
   },
+  // input: broj (jedna jedinica u „do“) ili popis brojeva (lanac)
   check(s, input) {
-    const answer = convert(s.velicina, s.vrijednost, s.od, s.do);
-    return checkNumber({ input, answer, unit: normUnit(s.do), krivo: [...(s.krivo ?? []), ...typicalMistakes(s.velicina, s.vrijednost, s.od, s.do)], savjet: s.savjet || "Pogledaj koliko je koraka između jedinica i koliki je faktor svakog koraka." });
+    const cilj = lanac(s).map(normUnit);
+    const tocni = pretvorbaRezultati(s);
+    const unosi = cilj.length === 1 ? [Array.isArray(input) ? input[0] : input] : [].concat(input ?? []);
+    const { vrijednosti, jedinice } = izvor(s);
+    for (let i = 0; i < cilj.length; i++) {
+      // tipične greške računaju se od prethodne karike lanca (ili od zadanog iznosa)
+      const [prije, odJ] = i > 0 ? [tocni[i - 1], cilj[i - 1]] : jedinice.length === 1 ? [vrijednosti[0], jedinice[0]] : [null, null];
+      const krivo = [
+        ...(i === cilj.length - 1 ? (s.krivo ?? []) : []),
+        ...(prije == null ? [] : typicalMistakes(s.velicina, prije, odJ, cilj[i])),
+        ...(prije == null ? [] : [{ vrijednost: prije, poruka: prepisano(s.velicina, odJ, cilj[i]) }]),
+        ...drugeJedinice(s.velicina, tocni[i], cilj[i]),
+      ].filter((k) => Math.abs(k.vrijednost - tocni[i]) > 1e-9 * Math.max(1, Math.abs(tocni[i])));
+      const r = checkNumber({ input: unosi[i] ?? "", answer: tocni[i], unit: cilj[i], krivo, savjet: s.savjet || "Pogledaj koliko je koraka između jedinica i koliki je faktor svakog koraka." });
+      if (!r.tocno) return cilj.length > 1 ? { ...r, praznina: i, poruka: `${cilj[i]}: ${r.poruka}` } : r;
+    }
+    return { tocno: true };
   },
-  brojcaniOdgovor: (s) => convert(s.velicina, s.vrijednost, s.od, s.do),
-  tocanOdgovor: (s) => `${withUnit(s.vrijednost, normUnit(s.od))} = ${withUnit(convert(s.velicina, s.vrijednost, s.od, s.do), normUnit(s.do))}`,
+  brojcaniOdgovor: (s) => pretvorbaRezultati(s).at(-1),
+  tocanOdgovor: (s) => [zapisIzvora(s), ...pretvorbaRezultati(s).map((v, i) => withUnit(v, normUnit(lanac(s)[i])))].join(" = "),
   stube: (s) => staircase(s.velicina, s.od, s.do),
 };
 
