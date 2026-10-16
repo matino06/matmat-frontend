@@ -15,12 +15,15 @@
 // jeftiniji model je jednom popravlja u jednom pozivu (izvor + lekcija + nalaz provjere). Trošak je stvarni
 // usage.cost s OpenRoutera; kad potrošnja ovog pokretanja dosegne --budzet (USD), nove lekcije se ne započinju,
 // da na računu (s kojeg radi i produkcija) uvijek ostane kredita.
+//
+// Izvor s poljem „predlozak“ (lekcija 1. varijacije; varijacije 2–4, izvezi-varijacije.sh) ide kao u backendu: jeftiniji
+// model lekciju prenosi s predloška i jednom je popravlja, a tek ako ni tada ne prođe, lekciju piše model za pisanje.
 import { readFile, writeFile, mkdir, access, readdir } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { validateLesson } from "../../src/lib/lesson/validateLesson.js";
-import { sustavPrompt, korisnickiPrompt, popravakPrompt } from "../../src/lib/lesson/prompt.js";
+import { sustavPrompt, korisnickiPrompt, popravakPrompt, predlozakPrompt } from "../../src/lib/lesson/prompt.js";
 
 const args = Object.fromEntries(
   process.argv
@@ -122,7 +125,7 @@ function parseJson(text) {
 const zbroj = (a, b) => Object.fromEntries(Object.keys(a).map((k) => [k, a[k] + (b?.[k] ?? 0)]));
 
 async function izradi(izvor) {
-  const file = new URL(`${MAPA}${izvor.objective_id}.json`, OUT);
+  const file = new URL(`${MAPA}${izvor.objective_id}${izvor.variation > 1 ? `-v${izvor.variation}` : ""}.json`, OUT);
   if (args["preskoci-gotove"]) {
     try {
       await access(file);
@@ -131,10 +134,30 @@ async function izradi(izvor) {
       // datoteke još nema: izradi je
     }
   }
-  const rezultatiIzvora = safeJson(izvor.results);
   const user = korisnickiPrompt(izvor);
   const t0 = Date.now();
-  const prvi = await chat([{ role: "user", content: user }]);
+  let p = null;
+  let put = "model za pisanje";
+  if (izvor.predlozak) {
+    p = await pokusaj(izvor, `${user}\n\n${predlozakPrompt(izvor.predlozak)}`, user, REPAIR_MODEL);
+    put = "predložak";
+  }
+  if (!p || p.provjera.greske.length) {
+    const s = await pokusaj(izvor, user, user, MODEL);
+    if (p) s.trosak = zbroj(s.trosak, p.trosak);
+    p = s;
+    put = izvor.predlozak ? "predložak → model za pisanje" : put;
+  }
+  const { lekcija, provjera, prvaProvjera, popravljeno, trosak } = p;
+  const zapis = { izvor, lekcija, provjera, prvaProvjera, popravljeno, put, model: MODEL, effort: EFFORT, modelPopravka: popravljeno ? REPAIR_MODEL : null, trosak, sekundi: Math.round((Date.now() - t0) / 1000), znakova: lekcija ? JSON.stringify(lekcija).length : 0 };
+  await writeFile(file, JSON.stringify(zapis, null, 2));
+  return zapis;
+}
+
+// Lekcija od modela pa, ako ne prođe provjeru, jedan popravak jeftinijim modelom (izvor + lekcija + nalaz provjere).
+async function pokusaj(izvor, prompt, user, model) {
+  const rezultatiIzvora = safeJson(izvor.results);
+  const prvi = await chat([{ role: "user", content: prompt }], { model });
   let trosak = prvi.trosak;
   let lekcija = null;
   let provjera;
@@ -158,9 +181,7 @@ async function izradi(izvor) {
       provjera = { greske: [`JSON nakon popravka: ${e.message}`], upozorenja: [] };
     }
   }
-  const zapis = { izvor, lekcija, provjera, prvaProvjera, popravljeno, model: MODEL, effort: EFFORT, modelPopravka: popravljeno ? REPAIR_MODEL : null, trosak, sekundi: Math.round((Date.now() - t0) / 1000), znakova: lekcija ? JSON.stringify(lekcija).length : 0 };
-  await writeFile(file, JSON.stringify(zapis, null, 2));
-  return zapis;
+  return { lekcija, provjera, prvaProvjera, popravljeno, trosak };
 }
 
 function safeJson(s) {
@@ -184,7 +205,7 @@ async function radnik() {
       const z = await izradi(izvor);
       if (!z) continue;
       izradeno.push(z);
-      console.log(`${z.provjera.greske.length ? "✗" : "✓"} ${izvor.objective_id} ${izvor.objective_name} · $${z.trosak.usd.toFixed(4)} · ${z.sekundi}s${z.popravljeno ? " · popravljeno" : ""}${z.provjera.greske.length ? ` · ${z.provjera.greske.length} grešaka` : ""}`);
+      console.log(`${z.provjera.greske.length ? "✗" : "✓"} ${izvor.objective_id} ${izvor.objective_name} · ${z.put} · $${z.trosak.usd.toFixed(4)} · ${z.sekundi}s${z.popravljeno ? " · popravljeno" : ""}${z.provjera.greske.length ? ` · ${z.provjera.greske.length} grešaka` : ""}`);
     } catch (e) {
       console.log(`! ${izvor.objective_id} ${izvor.objective_name}: ${e.message}`);
       izradeno.push({ izvor, greska: e.message });
