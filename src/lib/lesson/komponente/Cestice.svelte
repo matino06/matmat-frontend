@@ -255,8 +255,8 @@
     stroke-width: 1.5;
   }
   .cs-cestica {
-    fill: color-mix(in srgb, var(--lx-look, var(--primary)) 70%, var(--bg-elev));
-    stroke: var(--lx-look, var(--primary));
+    fill: color-mix(in srgb, var(--primary) 70%, var(--bg-elev));
+    stroke: var(--primary);
     stroke-width: 1;
   }
 </style>

@@ -43,7 +43,8 @@
   }
 </script>
 
-<div class="lx-question"><Md text={spec.tekst || "Pretvori."} /></div>
+<!-- prazan tekst (vježba) znači bez pitanja: oznaka koraka već kaže što se radi -->
+{#if spec.tekst !== ""}<div class="lx-question"><Md text={spec.tekst || "Pretvori."} /></div>{/if}
 
 {#if stube.length > 1}
   <ol class="pj-stube" aria-label="Stube jedinica od veće prema manjoj">
