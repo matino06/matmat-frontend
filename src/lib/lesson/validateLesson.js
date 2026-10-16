@@ -8,6 +8,7 @@
 import { KATALOG, widget, uloga, istrazuje, tocanOdgovor, POGLEDAJ, ODGOVOR } from "./katalog/index.js";
 import { sketchProblems } from "./katalog/tekst.js";
 import { validateVjezba } from "./katalog/vjezba.js";
+import { pretvorbaRezultati } from "./katalog/istrazivanje.js";
 import { isText } from "./katalog/zajednicko.js";
 import { parseNumber, isNum } from "./core/number.js";
 
@@ -131,6 +132,7 @@ function sourceResults(pz, rezultati, err, warn) {
 // Brojevi koje učenik upisuje ili bira kao točan odgovor na pitanje.
 function answerNumbers(spec) {
   if (!spec || !widget(spec)) return [];
+  if (spec.tip === "pretvorba_jedinica") return pretvorbaRezultati(spec).filter(isNum); // ne i zadani iznos
   if (spec.tip === "praznina") return (spec.praznine ?? []).flatMap((p) => (isNum(p?.odgovor) ? [p.odgovor] : numbersIn(String(p?.odgovor ?? ""))));
   const out = [];
   try {
