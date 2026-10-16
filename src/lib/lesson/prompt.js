@@ -28,6 +28,8 @@ POMOĆ (kao riješeni primjer koji se postupno prepušta učeniku):
 - Prvi korak pomoći objasni ono što je učenik vjerojatno krivo shvatio („Pogledaj“): pojam, postupak, skica ili istraživanje.
 - Zatim prepusti učeniku mali korak („Tvoj red“), npr. samo očitanje ili samo pretvorbu, s porukama za tipične greške.
 - Najviše 4 koraka, kratko. Pomoć ne smije otkriti odgovor na blizanca.
+- Blizanac ima drukčiji rezultat od pitanja, a ne samo druge podatke (8 dm · 3 dm · 2 dm = 48 dm³ kao u pitanju učenik bi
+  samo prepisao). Isti smije ostati samo faktor bez jedinice („10 puta manja“). Aplikacija to provjerava.
 
 WIDGETI UMJESTO TEKSTA:
 - Učenik neka vještinu napravi sam u widgetu, a ne da samo upiše broj koji mu tekst već skoro daje. Ako izvorni podzadatak traži

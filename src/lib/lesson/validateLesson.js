@@ -52,6 +52,11 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
         step(p.blizanac, `${at}.blizanac`, ODGOVOR);
         err(JSON.stringify(p.blizanac) !== JSON.stringify(p.pitanje), `${at}.blizanac je isti kao pitanje; treba nove brojeve ili novu situaciju`);
         warn(p.blizanac?.tip === p.pitanje?.tip, `${at}.blizanac je drugog tipa nego pitanje; blizanac provjerava istu vještinu`);
+        const isti = quantityAnswers(p.blizanac);
+        err(
+          !isti.length || !isti.every((b) => quantityAnswers(p.pitanje).some((a) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(a) * 0.005))),
+          `${at}.blizanac ima isti rezultat kao pitanje (${isti.map(formatNumber).join("; ")}), pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`,
+        );
       } else {
         warn(false, `${at} nema blizanca: nakon pomoći učenik ponovno rješava isto pitanje`);
       }
@@ -143,6 +148,15 @@ function answerNumbers(spec) {
     // neispravan widget već je prijavljen kao greška
   }
   return out;
+}
+
+// Odgovori koji su iznosi s jedinicom (48 dm³), za usporedbu blizanca s pitanjem. Faktor bez jedinice
+// („10 puta manja“) smije ostati isti, jer je pravilo isto i kad se brojevi promijene.
+function quantityAnswers(spec) {
+  if (spec?.tip === "pretvorba_jedinica") return answerNumbers(spec);
+  if (spec?.tip === "praznina") return (spec.praznine ?? []).filter((p) => p?.jedinica && isNum(p.odgovor)).map((p) => p.odgovor);
+  const a = spec?.jedinica && widget(spec) ? widget(spec).brojcaniOdgovor?.(spec) : null;
+  return isNum(a) ? [a] : [];
 }
 
 // Dijelovi rezultata koji su odgovori, bez obrazloženja („6 dm², jer dijagonala…“). Iza točke-zareza je još jedan
