@@ -119,14 +119,19 @@
 </script>
 
 <div class="lx lx-runner" bind:this={root}>
-  <div class="lx-progress" aria-label={`Dio ${Math.min(ekran + 1, n + 1)} od ${n + 1}`}>
+  <!-- put kroz lekciju: ista slova kao u naslovima podzadataka, pa kvačica za kraj -->
+  <ol class="lx-path" aria-label={`Dio ${Math.min(ekran + 1, n + 1)} od ${n + 1}`}>
     {#each lekcija.podzadaci as x, i (x.id)}
-      <span class="seg-bar" class:done={stanja[i].faza === "gotovo"} class:now={i === ekran}></span>
+      <li class="lx-path-step" class:done={stanja[i].faza === "gotovo"} class:now={i === ekran} aria-current={i === ekran ? "step" : undefined}>
+        <span class="lx-path-dot">{#if stanja[i].faza === "gotovo"}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" /></svg><span class="sr-only">{x.id}) gotovo</span>{:else}{x.id}{/if}</span>
+      </li>
     {/each}
-    <span class="seg-bar" class:now={ekran === n}></span>
-  </div>
+    <li class="lx-path-step end" class:now={ekran === n} aria-current={ekran === n ? "step" : undefined}>
+      <span class="lx-path-dot"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11M4 3h7.5l-1.8 2.75L11.5 8.5H4" /></svg><span class="sr-only">kraj</span></span>
+    </li>
+  </ol>
 
-  <div class="lx-task card">
+  <section class="lx-task" class:zatvoren={!zadatakOtvoren}>
     <button class="lx-task-head" onclick={() => (zadatakOtvoren = !zadatakOtvoren)} aria-expanded={zadatakOtvoren}>
       <span class="lx-task-title">Zadatak</span>
       <span class="lx-task-toggle">{zadatakOtvoren ? "Sakrij" : "Prikaži"}</span>
@@ -137,12 +142,12 @@
         {#if lekcija.zadatak.skica}<div class="lx-figure"><Sketch sketch={lekcija.zadatak.skica} text={zadatakTekst} /></div>{/if}
       </div>
     {/if}
-  </div>
+  </section>
 
   {#if ekran < n}
     {#key ekran}
       <div class="lx-sub">
-        <h2 class="lx-sub-title"><span class="lx-sub-id">{p.id})</span> {p.naslov}</h2>
+        <h2 class="lx-sub-title"><span class="lx-sub-id" aria-hidden="true">{p.id}</span><span class="sr-only">{p.id})</span> {p.naslov}</h2>
 
         <Korak spec={p.pitanje} locked={st.faza !== "pokusaj"} ishod={st.prvi} onodgovor={pitanje} pokazi={st.rezultat === POKAZANO && !p.blizanac}>
           {#if st.faza === "pokusaj"}
@@ -186,10 +191,10 @@
         {#if st.faza === "gotovo"}
           <div class="lx-done" class:solved={st.rezultat === POKAZANO} use:uvid>
             {#if st.rezultat === ODMAH}
-              <div class="lx-done-head">✓ Točno!</div>
+              <div class="lx-done-head">Točno!</div>
               <Md text={p.zasto} />
             {:else if st.rezultat === UZ_POMOC}
-              <div class="lx-done-head">✓ Bravo, sad znaš!</div>
+              <div class="lx-done-head">Bravo, sad znaš!</div>
               <Md text={p.zasto} />
             {:else}
               <div class="lx-done-head">Točan odgovor: <Md text={tocanOdgovor(cilj)} inline /></div>
@@ -209,12 +214,6 @@
   {:else}
     <div class="lx-summary">
       <h2 class="lx-sub-title">Gotovo!</h2>
-      <section class="lx-step look">
-        <div class="lx-zapamti-title">📌 Zapamti</div>
-        <ul class="lx-zapamti">
-          {#each lekcija.zapamti as t, i (i)}<li><Md text={t} inline /></li>{/each}
-        </ul>
-      </section>
       <div class="lx-results">
         {#each lekcija.podzadaci as x, i (x.id)}
           <div class="lx-result" data-r={stanja[i].rezultat}>
@@ -223,11 +222,17 @@
           </div>
         {/each}
       </div>
-      <p class="lx-solution">
+      <p class="lx-summary-note">
         {#if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio uz pomoć vratit će se ranije u ponavljanju.{/if}
       </p>
+      <section class="lx-zapamti-box">
+        <div class="lx-zapamti-title">Zapamti</div>
+        <ul class="lx-zapamti">
+          {#each lekcija.zapamti as t, i (i)}<li><Md text={t} inline /></li>{/each}
+        </ul>
+      </section>
       {#if lekcija.vjezba}<Vjezba vjezba={lekcija.vjezba} />{/if}
-      <div class="lx-actions"><button class="btn btn-ghost" onclick={ispocetka}>Ispočetka</button></div>
+      <div class="lx-actions"><button class="btn btn-quiet" onclick={ispocetka}>Riješi lekciju ispočetka</button></div>
     </div>
   {/if}
 </div>
@@ -235,83 +240,169 @@
 <style>
   .lx-runner {
     display: grid;
-    gap: 14px;
+    gap: 18px;
     max-width: 720px;
     margin: 0 auto;
   }
-  .lx-progress {
+
+  /* put kroz lekciju */
+  .lx-path {
     display: flex;
-    gap: 4px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-  .seg-bar {
+  .lx-path-step {
+    display: flex;
+    align-items: center;
     flex: 1;
-    height: 4px;
-    border-radius: 999px;
+  }
+  .lx-path-step.end {
+    flex: 0;
+  }
+  /* crta do sljedećeg koraka */
+  .lx-path-step:not(.end)::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    margin: 0 6px;
+    border-radius: 2px;
     background: var(--border);
+    transition: background 0.3s;
   }
-  .seg-bar.done {
-    background: var(--success);
+  .lx-path-step.done::after {
+    background: color-mix(in srgb, var(--success) 55%, var(--border));
   }
-  .seg-bar.now {
+  .lx-path-dot {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1.5px solid var(--border-strong);
+    color: var(--text-faint);
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      color 0.3s;
+  }
+  .lx-path-dot svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .now .lx-path-dot {
+    border-color: var(--primary);
     background: var(--primary);
+    color: var(--on-primary);
   }
+  .done .lx-path-dot {
+    border-color: transparent;
+    background: color-mix(in srgb, var(--success) 18%, transparent);
+    color: var(--success);
+  }
+
+  /* zadatak: tekst kao u tekstualnom zadatku, bez okvira; ispod isprekidana crta kao kod „Rješenja“ */
   .lx-task {
-    border-color: var(--primary-border);
-    background: color-mix(in srgb, var(--primary) 6%, var(--bg-elev));
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .lx-task.zatvoren {
+    padding-bottom: 10px;
   }
   .lx-task-head {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 12px var(--pad-4);
+    align-items: baseline;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+  .zatvoren .lx-task-head {
+    margin-bottom: 0;
   }
   .lx-task-title {
+    font-size: 12.5px;
     font-weight: 600;
+    color: var(--text-dim);
   }
   .lx-task-toggle {
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--text-faint);
   }
-  .lx-task-body {
-    padding: 0 var(--pad-4) var(--pad-4);
+  .lx-task-head:hover .lx-task-toggle {
+    color: var(--text);
   }
+  .lx-task-body {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .lx-task-body :global(.lx-md p) {
+    line-height: 1.6;
+  }
+
   .lx-sub {
     display: grid;
-    gap: 12px;
+    gap: 14px;
   }
   .lx-sub-title {
-    margin: 6px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 2px 0 0;
     font-size: 18px;
     font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .lx-sub-id {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--primary-dim);
     color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
   }
+
+  /* pomoć: koraci jedan ispod drugog, uz crtu koja ih veže */
   .lx-help {
     display: grid;
     gap: 10px;
-    padding-left: 12px;
-    border-left: 2px dashed var(--border-strong);
+    margin-left: 12px;
+    padding-left: 18px;
+    border-left: 2px solid var(--border);
   }
   .lx-help-title {
-    font-size: 13px;
+    font-size: 12.5px;
+    font-weight: 600;
     color: var(--text-dim);
-    font-weight: 500;
   }
+
   .lx-done {
-    padding: var(--pad-4);
-    border-radius: var(--r-xl);
-    border: 1px solid color-mix(in srgb, var(--success) 45%, transparent);
-    background: color-mix(in srgb, var(--success) 7%, var(--bg-elev));
+    padding: 14px 18px;
+    border-radius: var(--r-lg);
+    border-left: 3px solid var(--success);
+    background: color-mix(in srgb, var(--success) 8%, var(--bg-elev));
   }
   .lx-done.solved {
-    border-color: var(--border-strong);
-    background: var(--bg-elev);
+    border-left-color: var(--border-strong);
+    background: var(--bg-elev-2);
   }
   .lx-done-head {
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     color: var(--success);
   }
   .solved .lx-done-head {
@@ -325,6 +416,9 @@
     font-size: 13px;
     color: var(--text-dim);
   }
+  .lx-more summary:hover {
+    color: var(--text);
+  }
   .lx-more :global(.lx-md) {
     margin-top: 8px;
   }
@@ -332,47 +426,64 @@
     display: flex;
     justify-content: flex-end;
   }
+
   .lx-summary {
     display: grid;
-    gap: 12px;
+    gap: 14px;
+  }
+  .lx-summary-note {
+    margin: -4px 0 0;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+  .lx-zapamti-box {
+    padding: var(--pad-4);
+    border-radius: var(--r-xl);
+    background: var(--bg-elev-2);
   }
   .lx-zapamti-title {
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .lx-zapamti {
     margin: 0;
     padding-left: 18px;
     display: grid;
-    gap: 4px;
-  }
-  .lx-summary .lx-step {
-    padding: var(--pad-4);
-    border: 1px solid var(--lx-look-border);
-    border-radius: var(--r-xl);
-    background: color-mix(in srgb, var(--lx-look) 5%, var(--bg-elev));
+    gap: 6px;
   }
   .lx-results {
     display: grid;
-    gap: 6px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
   }
   .lx-result {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-lg);
-    background: var(--bg-elev);
+    padding: 11px 14px;
+  }
+  .lx-result + .lx-result {
+    border-top: 1px solid var(--border);
   }
   .lx-result-tag {
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--text-dim);
+    white-space: nowrap;
   }
   .lx-result[data-r="odmah"] .lx-result-tag {
     color: var(--success);
   }
   .lx-result[data-r="pokazan_odgovor"] .lx-result-tag {
     color: var(--warn);
+  }
+  @media (max-width: 767px) {
+    .lx-help {
+      margin-left: 4px;
+      padding-left: 12px;
+    }
+    .lx-task-body {
+      font-size: 16px;
+    }
   }
 </style>

@@ -59,7 +59,14 @@
 
           {#if pogled === "lekcija"}
             {#if z.lekcija && !z.provjera?.greske?.length}
-              {#key odabrana}<LessonRunner lekcija={z.lekcija} onzavrsi={(s) => (ocjena = s)} />{/key}
+              <!-- isti omot kao na /tasks, da se vidi stvarni izgled lekcije u aplikaciji -->
+              <article class="card task-card">
+                <div class="task-meta">
+                  <span class="badge mono">#{z.izvor.task_id ?? "—"}</span>
+                  <span class="badge badge-dim">{z.izvor.course_name ?? "Lab"}</span>
+                </div>
+                {#key odabrana}<LessonRunner lekcija={z.lekcija} onzavrsi={(s) => (ocjena = s)} />{/key}
+              </article>
               {#if ocjena}<p class="muted small">Prijedlog ocjene za ponavljanje: q = {ocjena.q}</p>{/if}
             {:else}
               <p class="muted">Lekcija nije prošla provjeru, pa se ne prikazuje. Pogledaj karticu Provjera.</p>

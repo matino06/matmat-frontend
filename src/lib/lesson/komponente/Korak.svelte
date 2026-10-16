@@ -13,14 +13,23 @@
   let Comp = $derived(KOMPONENTE[spec.tip]);
 </script>
 
-<section class="lx-step" class:look class:turn={!look}>
+<section class="lx-step" class:look class:turn={!look} class:locked={!look && locked}>
   <div class="lx-step-badge">
+    <svg class="lx-step-ico" viewBox="0 0 16 16" aria-hidden="true">
+      {#if look && explore}
+        <path d="M2 4.5h7M12 4.5h2M2 11.5h2M7 11.5h7" /><circle cx="10.5" cy="4.5" r="1.5" /><circle cx="5.5" cy="11.5" r="1.5" />
+      {:else if look}
+        <path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8Z" /><circle cx="8" cy="8" r="2" />
+      {:else}
+        <path d="M10.5 2.5l3 3L6 13H3v-3l7.5-7.5Z" />
+      {/if}
+    </svg>
     {#if look && explore}
-      <span>🔍 Istraži</span><span class="lx-step-sub">nije zadatak, slobodno isprobaj</span>
+      <span>Istraži</span><span class="lx-step-sub">nije zadatak, slobodno isprobaj</span>
     {:else if look}
-      <span>👀 Pogledaj</span><span class="lx-step-sub">nije zadatak</span>
+      <span>Pogledaj</span><span class="lx-step-sub">nije zadatak</span>
     {:else}
-      <span>✏️ {oznaka ?? "Tvoj red"}</span>
+      <span>{oznaka ?? "Tvoj red"}</span>
     {/if}
   </div>
   {#if Comp}
@@ -33,7 +42,10 @@
     <p class="lx-solution">Nepoznat widget „{spec.tip}“.</p>
   {/if}
   {#if !look && ishod && !ishod.tocno && ishod.poruka}
-    <div class="lx-feedback bad" role="status"><Md text={ishod.poruka} /></div>
+    <div class="lx-feedback bad" role="status">
+      <svg class="lx-feedback-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" /></svg>
+      <Md text={ishod.poruka} />
+    </div>
   {/if}
   {@render children?.()}
 </section>
@@ -42,25 +54,44 @@
   .lx-step {
     position: relative;
     padding: var(--pad-4);
-    border: 1px solid var(--border);
     border-radius: var(--r-xl);
-    background: var(--bg-elev);
   }
-  .lx-step.look {
-    border-color: var(--lx-look-border);
-    background: color-mix(in srgb, var(--lx-look) 5%, var(--bg-elev));
-  }
+  /* „Tvoj red“: jedini okvir u lekciji, u boji aplikacije */
   .lx-step.turn {
-    border-color: var(--primary-border);
+    border: 1px solid var(--primary-border);
+    background: var(--bg-elev);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 6%, transparent);
+  }
+  /* odgovoreno pitanje se utiša, pa pogled ide na sljedeći korak */
+  .lx-step.turn.locked {
+    border-color: var(--border);
+    box-shadow: none;
+  }
+  .lx-step.turn.locked .lx-step-badge {
+    color: var(--text-dim);
+  }
+  /* „Pogledaj / Istraži“: umetnuti panel bez okvira, nikad ne izgleda kao pitanje */
+  .lx-step.look {
+    border: 1px solid transparent;
+    background: var(--lx-look-bg);
   }
   .lx-step-badge {
     display: flex;
-    align-items: baseline;
-    gap: 8px;
+    align-items: center;
+    gap: 6px;
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
-    letter-spacing: 0.02em;
+  }
+  .lx-step-ico {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   .look .lx-step-badge {
     color: var(--lx-look);
@@ -69,17 +100,36 @@
     color: var(--lx-turn);
   }
   .lx-step-sub {
+    margin-left: 2px;
     font-weight: 400;
     color: var(--text-faint);
   }
   .lx-feedback {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     margin-top: 12px;
-    padding: 10px 14px;
-    border-radius: var(--r-lg);
+    padding: 10px 12px;
+    border-radius: var(--r-md);
     font-size: 14px;
   }
   .lx-feedback.bad {
-    border: 1px solid color-mix(in srgb, var(--lx-bad) 45%, transparent);
-    background: color-mix(in srgb, var(--lx-bad) 8%, transparent);
+    background: color-mix(in srgb, var(--lx-bad) 10%, transparent);
+    color: var(--text);
+  }
+  .lx-feedback-ico {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: var(--lx-bad);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  @media (max-width: 767px) {
+    .lx-step {
+      padding: var(--pad-3);
+    }
   }
 </style>

@@ -1,19 +1,21 @@
-/* Interaktivna lekcija: zajednički izgled koraka i widgeta. Boje iz teme (svijetla i tamna); jedina nova je plava
-   za korake „Pogledaj/Istraži“, zadana ovdje za obje teme jer tema nema boju koja nije ni akcija ni status. Globalno, jer
-   se markdown i SVG widgeta iscrtavaju kroz {@html}. Sve klase počinju s .lx- da se ne sudaraju s aplikacijom. */
+/* Interaktivna lekcija: zajednički izgled koraka i widgeta, samo tokeni aplikacije (app.css), svijetla i tamna tema.
+   Uloga koraka vidi se po obliku, ne po novoj boji: „Tvoj red“ je okvir u boji aplikacije, „Pogledaj/Istraži“ sivi
+   umetnuti panel bez okvira. Jedina boja izvan teme je plava vode na crtežima (voda je plava). Globalno, jer se
+   markdown i SVG widgeta iscrtavaju kroz {@html}. Sve klase počinju s .lx- da se ne sudaraju s aplikacijom. */
 
 .lx {
-  --lx-look: #38bdf8; /* „Pogledaj / istraži“: plava, nikad boja pitanja */
-  --lx-look-dim: color-mix(in srgb, var(--lx-look) 12%, transparent);
-  --lx-look-border: color-mix(in srgb, var(--lx-look) 40%, transparent);
+  --lx-look: var(--text-dim); /* oznaka „Pogledaj / Istraži“ */
+  --lx-look-bg: var(--bg-elev-2);
   --lx-turn: var(--primary); /* „Tvoj red“ */
   --lx-ok: var(--success);
   --lx-bad: var(--danger);
+  --lx-water: #38bdf8;
+  --lx-control: 40px; /* visina polja i gumba za odgovor */
   color: var(--text);
   font-size: 15px;
 }
 html[data-theme="light"] .lx {
-  --lx-look: #0284c7;
+  --lx-water: #0284c7;
 }
 
 /* tekst */
@@ -33,8 +35,10 @@ html[data-theme="light"] .lx {
   overflow-y: hidden;
 }
 .lx-question {
+  font-size: 16px;
   font-weight: 500;
-  margin-bottom: 12px;
+  line-height: 1.55;
+  margin-bottom: 14px;
 }
 
 /* brojčani unos */
@@ -46,9 +50,17 @@ html[data-theme="light"] .lx {
 }
 .lx-broj-inp {
   width: 130px;
+  height: var(--lx-control);
   text-align: right;
   font-family: var(--font-mono);
   font-size: 16px; /* manje od 16 px na iOS-u zumira stranicu */
+}
+/* gumb uz polje iste visine kao polje, kao jedna kontrola */
+.lx :is(.lx-broj, .lx-actions, .pj-red) > .btn-primary {
+  height: var(--lx-control);
+  padding: 0 16px;
+  font-size: 14px;
+  border-radius: var(--r-md);
 }
 .lx-unit {
   color: var(--text-dim);
@@ -71,7 +83,9 @@ html[data-theme="light"] .lx {
   gap: 10px;
   width: 100%;
   text-align: left;
-  padding: 11px 14px;
+  padding: 12px 14px;
+  font-size: 15px;
+  line-height: 1.45;
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   background: var(--bg-elev);
@@ -120,9 +134,19 @@ html[data-theme="light"] .lx {
 
 .lx-actions {
   display: flex;
+  align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 12px;
+  margin-top: 14px;
+}
+.lx-actions:empty {
+  display: none;
+}
+
+/* vidljiv fokus tipkovnice na svim kontrolama lekcije */
+.lx :is(button, select, summary):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* crteži widgeta: puna širina do razumne veličine, boje iz teme */
@@ -156,8 +180,8 @@ html[data-theme="light"] .lx {
   fill: var(--lx-turn);
 }
 .lx-figure .lx-water {
-  fill: color-mix(in srgb, var(--lx-look) 28%, transparent);
-  stroke: var(--lx-look);
+  fill: color-mix(in srgb, var(--lx-water) 28%, transparent);
+  stroke: var(--lx-water);
 }
 
 .lx-readout {
@@ -199,4 +223,13 @@ html[data-theme="light"] .lx {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lx *,
+  .lx *::before,
+  .lx *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

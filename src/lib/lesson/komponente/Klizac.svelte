@@ -65,7 +65,7 @@
   .kl-hint {
     margin: 0 0 12px;
     font-size: 13px;
-    color: var(--lx-look, var(--text-dim));
+    color: var(--text-dim);
   }
   .kl {
     display: grid;
@@ -93,7 +93,7 @@
     width: 100%;
     margin: 0;
     height: 28px; /* veća površina za prst */
-    accent-color: var(--lx-look, var(--primary));
+    accent-color: var(--primary);
     cursor: pointer;
   }
   .kl-results {
@@ -108,9 +108,9 @@
     flex-wrap: wrap;
     gap: 6px 12px;
     padding: 12px 14px;
-    border: 1px solid var(--lx-look-border, var(--border-strong));
+    border: 1px solid var(--border);
     border-radius: var(--r-lg);
-    background: var(--lx-look-dim, var(--bg-elev));
+    background: var(--bg-elev);
   }
   .kl-res-val {
     font-family: var(--font-mono);

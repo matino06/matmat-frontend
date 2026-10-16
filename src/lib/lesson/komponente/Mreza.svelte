@@ -221,12 +221,12 @@
     --mz-fill: var(--lx-turn, var(--primary));
   }
   .mz.look {
-    --mz-fill: var(--lx-look, var(--primary));
+    --mz-fill: color-mix(in srgb, var(--primary) 60%, var(--text-dim));
   }
   .mz-hint {
     margin: 0 0 10px;
     font-size: 13px;
-    color: var(--lx-look, var(--text-dim));
+    color: var(--text-dim);
   }
   svg.crta {
     outline: none;

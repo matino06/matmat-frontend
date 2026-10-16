@@ -170,7 +170,7 @@
     stroke: none;
   }
   .ur-povrsina {
-    stroke: var(--lx-look, var(--primary));
+    stroke: var(--lx-water);
     stroke-width: 1.5;
   }
   .ur .ur-posuda {

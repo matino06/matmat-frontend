@@ -394,7 +394,7 @@
     stroke: none;
   }
   .mj-razina {
-    stroke: var(--lx-look, var(--primary));
+    stroke: var(--lx-water);
     stroke-width: 2;
   }
   .mj-postolje {

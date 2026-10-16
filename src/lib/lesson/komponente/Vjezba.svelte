@@ -45,19 +45,19 @@
   }
 </script>
 
-<section class="vj">
+<section class="vj" aria-labelledby="vj-naslov">
   <div class="vj-head">
-    <span class="vj-title">🏋️ Vježbaj još</span>
-    <span class="vj-sub">neobavezno{i < zadaci.length ? ` · ${i + 1} / ${zadaci.length}` : ""}</span>
+    <h3 class="vj-title" id="vj-naslov">Vježbaj još</h3>
+    <span class="vj-sub">neobavezno, ne ulazi u ocjenu</span>
   </div>
   {#if vjezba.tekst}<p class="vj-tekst">{vjezba.tekst}</p>{/if}
 
   {#if i < zadaci.length}
     {#key `${sjeme}-${i}`}
-      <Korak spec={zadaci[i]} locked={gotov} {pokazi} {ishod} onodgovor={odgovor}>
+      <Korak spec={zadaci[i]} oznaka={`Pretvorba ${i + 1} od ${zadaci.length}`} locked={gotov} {pokazi} {ishod} onodgovor={odgovor}>
         <div class="lx-actions">
           {#if gotov}
-            <button class="btn btn-primary" onclick={dalje}>{i < zadaci.length - 1 ? "Sljedeći" : "Gotovo"}</button>
+            <button class="btn btn-primary" onclick={dalje}>{i < zadaci.length - 1 ? "Sljedeća" : "Gotovo"}</button>
           {:else if pokusaji > 0}
             <button class="btn btn-quiet" onclick={() => (pokazi = true)}>Pokaži točan odgovor</button>
           {/if}
@@ -65,8 +65,10 @@
       </Korak>
     {/key}
   {:else}
-    <p class="vj-kraj">Točno iz prve ili druge: <b>{tocnih} / {zadaci.length}</b>.</p>
-    <div class="lx-actions"><button class="btn btn-ghost" onclick={nova}>Nova vježba</button></div>
+    <div class="vj-kraj">
+      <p>Točno iz prve ili druge: <b>{tocnih} od {zadaci.length}</b></p>
+      <button class="btn btn-ghost" onclick={nova}>Nova vježba</button>
+    </div>
   {/if}
 </section>
 
@@ -74,13 +76,17 @@
   .vj {
     display: grid;
     gap: 10px;
+    margin-top: 6px;
   }
   .vj-head {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 4px 10px;
   }
   .vj-title {
+    margin: 0;
+    font-size: 16px;
     font-weight: 600;
   }
   .vj-sub,
@@ -92,7 +98,16 @@
     margin: 0;
   }
   .vj-kraj {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: var(--r-lg);
+    background: var(--bg-elev-2);
+  }
+  .vj-kraj p {
     margin: 0;
-    font-size: 15px;
   }
 </style>
