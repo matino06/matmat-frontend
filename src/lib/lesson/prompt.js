@@ -34,14 +34,29 @@ WIDGETI UMJESTO TEKSTA:
   redoslijed koraka redoslijed, plivanje i tonjenje uronjeno, stanja tvari cestice.
 - Najviše 3 podzadatka (a, b, c), kao u izvornom zadatku. Kad podzadatak traži dva rezultata (npr. u g/cm³ i kg/m³), pitanje
   je praznina s dvije praznine, a ne novi podzadatak.
-- zadatak.tekst je samo situacija i podaci, bez pitanja a), b), c): pitanja dolaze u podzadacima. Ako učenik iz skice treba
-  nešto očitati, ta skica ne ide u zadatak (inače je odgovor već nacrtan), nego mjerilo ide u pitanje.
+- zadatak.tekst je samo situacija i podaci, bez pitanja a), b), c): pitanja dolaze u podzadacima.
+
+SKICA UZ ZADATAK (ako je izvor ima, učenik mora vidjeti situaciju; aplikacija to provjerava):
+- Lik, tijelo ili graf (trokut, pravokutnik, kvadar, koordinatni, graf…) ide u zadatak.skica: isti crtež i iste oznake,
+  osim oznake koju učenik treba izračunati (nju izostavi). Tekst zadatka ne smije govoriti o crtežu koji se ne vidi.
+- Duljinu koju učenik računa iz lika (npr. DE = 5 dm − 2 dm) ne prenosi na ravnalo da je samo očita: pitanje je taj račun,
+  a lik je u zadatku. Mjerilo je za instrument koji postoji u zadatku, ne za zaobilaženje računa.
+- Instrument s kojeg se očitava (ljestvica: menzura, vaga, termometar) ne ide u zadatak (odgovor bi bio nacrtan), nego
+  očitanje postaje pitanje (mjerilo "procitaj"). Kad izvor ima dva očitanja (prije i poslije uranjanja), učenik barem jedno
+  očita sam, a rezultat iz njih (npr. volumen kamena kao razliku) uvijek računa sam.
 
 SADRŽAJ:
 - Sve što izvorno objašnjenje uči mora se naučiti: u pitanju, u „zasto“, u pomoći ili u „Zapamti“. Brojevi i rezultati
   moraju se slagati s izvornim zadatkom; smiješ prilagoditi pitanje widgetu, ali ne mijenjati fiziku ni rezultate.
+- Svaki broj iz REZULTATI učenik sam dobiva kao točan odgovor na pitanje (glavni put), u istoj jedinici kao u rezultatu.
+  Pomoć i blizanac vidi samo učenik koji griješi, pa rezultat koji je samo ondje većina nikad ne izračuna. Ako podzadatak ima
+  više rezultata (npr. 50 cm³ i 50 000 mm³, ili A i B), pitanje je praznina sa svim vrijednostima. Ne piši rezultat u tekst
+  sljedećeg pitanja prije nego ga je učenik izračunao. Praznina ima najviše 4 mjesta: kad rezultata ima više, u pitanje
+  stavi glavne vrijednosti (barem jednu iz svakog dijela rezultata), a ostale u „zasto“. Aplikacija to provjerava.
 - Za tipične greške piši „krivo“ s porukom baš za tu grešku (npr. „220 mL je završno očitanje, a ne volumen kamena“).
 - Piši kratko, laički i prirodno, za učenika kojem predmet ne ide. Novi pojam prvo svakodnevnim riječima, pa formula.
+- Učeniku se obraćaš u muškom rodu, kao cijela aplikacija: „Zbrojio si“, „Jesi li siguran?“. Nikad ženski rod
+  („provela si“) ni dvojni oblici („sam/sama“, „prebrojio/la“). Aplikacija to provjerava.
 - Matematiku piši u $…$ (KaTeX). Decimalni zarez u tekstu (1,5); u JSON brojevima točka (1.5).
 - Ne crtaj ništa znakovima; za crtež koristi skicu ili widget.
 

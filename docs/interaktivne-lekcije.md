@@ -28,7 +28,15 @@ OPENROUTER_API_KEY=… node scripts/lab/generiraj-lekcije.mjs --paralelno 2   # 
 pnpm run dev   # pa http://localhost:5173/lab/lekcija
 ```
 
-Skripta troši kredit OpenRoutera (oko $0.06 po lekciji). Ne pokretati je na ključu s kojeg radi produkcijska izrada
+Za isprobavanje prompta i provjere bez OpenRoutera: `--pruzatelj claude` zove lokalni `claude` CLI (pretplata,
+Sonnet 5.5 piše, Haiku 5.5 popravlja). `--izvor` i `--mapa` biraju ulaz i izlaz u `lab-out/`, a lab ih prikazuje
+na `/lab/lekcija?mapa=<mapa>`:
+
+```bash
+node scripts/lab/generiraj-lekcije.mjs --pruzatelj claude --izvor source.json --mapa lab-sonnet --paralelno 3
+```
+
+Skripta s OpenRouterom troši kredit (oko $0.06 po lekciji). Ne pokretati je na ključu s kojeg radi produkcijska izrada
 ako na računu nema dovoljno kredita: kad kredit padne na nulu, kreatorima stane izrada predmeta.
 
 ## Format lekcije (verzija 1)
@@ -62,6 +70,19 @@ ako na računu nema dovoljno kredita: kad kredit padne na nulu, kreatorima stane
 - U koraku „Tvoj red“ widget ne smije odati odgovor: graf ne ispisuje vrijednosti s krivulje, mjerilo kod „postavi“ i
   mreža kod „oznaci“ ne pokazuju zbroj dok učenik ne provjeri, a stube jedinica smiju samo u pomoći.
 
+### Vjernost izvornom zadatku
+
+Lekcija nastaje iz provjerenog teksta, pa validator dobiva i njegove rezultate i skicu (`validateLesson(l, { rezultati, skica })`):
+
+- **Skica ostaje vidljiva.** Lik, tijelo ili graf iz izvora mora biti u `zadatak.skica`. Instrument (`ljestvica`:
+  menzura, vaga…) smije umjesto toga postati pitanje `mjerilo` „procitaj“. Uvedeno jer je lekcija o površini lika u
+  obliku slova L izgubila lik, a učenik je dobio samo ravnalo s već nanesenom duljinom.
+- **Rezultati su na glavnom putu.** Svaki dio rezultata (odvojen točkom-zarezom, bez obrazloženja iza „jer“) treba
+  barem jednu vrijednost koja je točan odgovor nekog pitanja, a ne samo u pomoći ili tekstu. Ostale vrijednosti istog
+  dijela (lanac „8 L = 80 dL = 8000 mL“) samo su upozorenje, jer praznina ima najviše 4 mjesta. Uvedeno jer su litre
+  u lekciji o menzuri bile samo iza „Ne znam“. Isto pravilo našlo je 7 lekcija Fizike 7 u kojima učenik očita završnu
+  razinu, a volumen tijela (glavni rezultat) nikad ne izračuna.
+
 ### Tok podzadatka
 
 Pokušaj → (krivo ili „Ne znam“) → pomoć, korak po korak → blizanac. Nakon prvog krivog ponovnog pokušaja učenik može
@@ -85,14 +106,22 @@ prijedlog ocjene za ponavljanje: 5 / 3 / 1.
 Daljnji widgeti po predmetima (matematika, fizika, kemija, biologija) i redoslijed izrade su u katalogu iz istraživanja;
 dodaju se kad se laboratorij proširi na druge predmete.
 
-## Izmjereno u laboratoriju (Fizika 7, Sonnet 5.5, medium)
+## Izmjereno u laboratoriju (Fizika 7, 37 lekcija)
 
-Prvih 9 od 37 lekcija (ostale čekaju kredit na OpenRouteru):
+| | GPT-6.1 Sol + Haiku popravak (kao backend) | Sonnet 5.5 (prvih 9) |
+|---|---|---|
+| Prolazi provjeru | 36 / 37 (29 iz prve) | 8 / 9 (6 iz prve) |
+| Trošak po lekciji | medijan $0.047, prosjek $0.052, najviše $0.095 | medijan $0.060, prosjek $0.093, najviše $0.234 |
+| Vrijeme | medijan 69 s | medijan 27 s |
+| Koraka po lekciji (s pomoći) | 14,6 | 13,5 |
 
-- 8 od 9 prolazi provjeru, 6 iz prve; jednu ni popravak nije spasio (razvrstavanje s premalo stavki).
-- Trošak: medijan oko $0.06 po lekciji bez popravka, $0.09–0.23 s popravkom. Za usporedbu, današnja tekstualna
-  varijacija stoji oko $0.03.
-- Spec ima prosječno oko 8 000 znakova.
+Za usporedbu, današnja tekstualna varijacija stoji oko $0.03. Jedina neuspjela lekcija pala je jer je Haikuov popravak
+vratio prekinut JSON; u produkciji takav zadatak ostaje tekstualan. Model i dalje najviše bira `pojam`, `praznina`,
+`izbor` i `broj`; vizualne widgete (graf, tijela u tekućini, mreža) koristi kad ih zadatak izravno traži, češće u pomoći.
+
+Nakon pravila o vjernosti izvoru (Sonnet 5.5 medium + Haiku 5.5 popravak, lokalno preko `claude` CLI-ja): Fizika 7
+37 / 37 (29 iz prve), Marijin predmet (fizika, 7. razred, 11 lekcija) 11 / 11. Najčešći popravak: očitanje s menzure
+napisano u tekst umjesto da je pitanje.
 
 ## Produkcija (faza 1, web)
 
