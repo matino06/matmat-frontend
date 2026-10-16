@@ -99,9 +99,19 @@ prijedlog ocjene za ponavljanje: 5 / 3 / 1.
 | `mjerilo` (ravnalo, menzura, vaga, termometar; procitaj / postavi / istrazi s uranjanjem) | ovisi o načinu | spec, + „podjeljak previše/premalo“ |
 | `mreza` (istrazi / prebroji / oznaci) | ovisi o načinu | **kod**: (cijeli + polovice/2)·a² |
 | `ocitaj_graf` (prikaz = Istraži / ocitaj) | ovisi o načinu | **kod** iz funkcije, + „drugi graf“, „druga os“ |
-| `pretvorba_jedinica` | Tvoj red | **kod**, + „faktor kao za duljinu“, „krivi smjer“ |
+| `pretvorba_jedinica` (jedna, lanac „8 m = … dm = … cm“, mješoviti „2 m 7 dm“) | Tvoj red | **kod**, + „faktor kao za duljinu“, „krivi smjer“, „prepisan broj“, „isti iznos u drugoj jedinici“ |
 | `cestice` (prikaz / odaberi) | ovisi o načinu | spec |
 | `uronjeno` (istrazi / predvidi) | ovisi o načinu | **kod** iz gustoća |
+
+`parovi` s iznosima na obje strane („27 dm“ ↔ „2 m 7 dm“) validator provjerava kodom: svaki par mora biti jednak.
+
+### Vježbaj još
+
+Lekcija koja uči pretvaranje jedinica smije imati `"vjezba": {"velicina", "jedinice", "lanac"?, "mjesovito"?}`. Nakon
+„Zapamti“ učenik dobije 4–8 zadataka pretvorbe koje sastavlja kod (`katalog/vjezba.js`, najviše dva koraka po stubama,
+rezultati od 0,001 do milijun), s „Nova vježba“ za nove brojeve. Neobavezno je, ne ulazi u ocjenu za ponavljanje i ne
+košta ništa. Uvedeno jer materijali za 7. razred imaju stranice i stranice „Pretvori!“, a lekcija ima samo tri pitanja
+vjerna tekstualnom zadatku. U Marijinom predmetu Sonnet ga je dodao u 9 od 11 lekcija (sve s pretvorbom).
 
 Daljnji widgeti po predmetima (matematika, fizika, kemija, biologija) i redoslijed izrade su u katalogu iz istraživanja;
 dodaju se kad se laboratorij proširi na druge predmete.

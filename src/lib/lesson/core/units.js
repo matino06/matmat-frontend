@@ -1,5 +1,6 @@
 // Mjerne jedinice za widget pretvorba_jedinica: faktor svake jedinice prema osnovnoj, redom od najveće.
 // Točan rezultat i tipične krive rezultate (krivi faktor, krivi smjer) računa kod, ne model.
+import { parseNumber } from "./number.js";
 
 export const UNITS = {
   duljina: [
@@ -65,14 +66,51 @@ export function convert(velicina, value, from, to) {
   return (value * a) / b;
 }
 
-// Jedinice veličine kao „stube“ od veće prema manjoj (za crtež u widgetu): samo one između `from` i `to`.
+// Položaj jedinice na stubama veličine (0 = najveća), ili -1.
+export const unitIndex = (velicina, unit) => (UNITS[velicina] ?? []).findIndex(([u]) => u === normUnit(unit));
+
+// Iznos u osnovnoj jedinici za jednu vrijednost ili mješoviti zapis („2 m 7 dm“ = [2, 7] u ["m", "dm"]).
+export function toBase(velicina, values, units) {
+  const vs = [].concat(values);
+  const us = [].concat(units);
+  if (!vs.length || vs.length !== us.length) return null;
+  let sum = 0;
+  for (let i = 0; i < vs.length; i++) {
+    const f = factor(velicina, us[i]);
+    if (f == null || typeof vs[i] !== "number" || !Number.isFinite(vs[i])) return null;
+    sum += vs[i] * f;
+  }
+  return sum;
+}
+
+export function fromBase(velicina, base, unit) {
+  const f = factor(velicina, unit);
+  return f == null || base == null ? null : base / f;
+}
+
+// Iznos zapisan u tekstu („27 dm“, „2 m 7 dm“, „0,5 L“) → { velicina, base }, ili null ako tekst nije samo
+// iznos s jedinicama jedne veličine.
+export function parseQuantity(text) {
+  const t = String(text ?? "").trim().replace(/\$/g, "").replace(/\\text\{([^}]*)\}/g, "$1").replace(/\\[ ,;]/g, " ").replace(/\^2/g, "²").replace(/\^3/g, "³");
+  const re = /(-?\d+(?:[.,]\d+)?)\s*([^\s\d]+)/g;
+  const parts = [...t.matchAll(re)];
+  if (!parts.length || t.replace(re, "").trim()) return null;
+  const units = parts.map((m) => normUnit(m[2]));
+  const values = parts.map((m) => parseNumber(m[1]));
+  for (const velicina of Object.keys(UNITS)) {
+    const base = toBase(velicina, values, units);
+    if (base != null) return { velicina, base };
+  }
+  return null;
+}
+
+// Jedinice veličine kao „stube“ od veće prema manjoj (za crtež u widgetu): samo one između krajnjih zadanih
+// jedinica (`from`, `to` mogu biti i popisi, za lanac ili mješoviti zapis).
 export function staircase(velicina, from, to) {
   const list = UNITS[velicina] ?? [];
-  const i = list.findIndex(([u]) => u === normUnit(from));
-  const j = list.findIndex(([u]) => u === normUnit(to));
-  if (i < 0 || j < 0) return [];
-  const [lo, hi] = i < j ? [i, j] : [j, i];
-  return list.slice(lo, hi + 1).map(([u, f]) => ({ jedinica: u, faktor: f }));
+  const idx = [...[].concat(from), ...[].concat(to)].map((u) => unitIndex(velicina, u));
+  if (!idx.length || idx.some((i) => i < 0)) return [];
+  return list.slice(Math.min(...idx), Math.max(...idx) + 1).map(([u, f]) => ({ jedinica: u, faktor: f }));
 }
 
 // Rezultati tipičnih grešaka: za površinu i volumen faktor kao kod duljine (×10 umjesto ×100 / ×1000),

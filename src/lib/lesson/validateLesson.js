@@ -7,6 +7,7 @@
 // Greške znače da se lekcija ne smije spremiti (model je popravlja); upozorenja su za pregled.
 import { KATALOG, widget, uloga, istrazuje, tocanOdgovor, POGLEDAJ, ODGOVOR } from "./katalog/index.js";
 import { sketchProblems } from "./katalog/tekst.js";
+import { validateVjezba } from "./katalog/vjezba.js";
 import { isText } from "./katalog/zajednicko.js";
 import { parseNumber, isNum } from "./core/number.js";
 
@@ -72,6 +73,8 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
     sourceSketch(lekcija, parseMaybe(skica), err);
     sourceResults(pz, rezultati, err, warn);
   }
+
+  if (lekcija.vjezba != null) for (const p of validateVjezba(lekcija.vjezba)) greske.push(p);
 
   if (err(Array.isArray(lekcija.zapamti) && lekcija.zapamti.length >= 1 && lekcija.zapamti.length <= 4, "zapamti treba 1–4 kratke natuknice")) {
     lekcija.zapamti.forEach((t, i) => err(isText(t), `zapamti[${i}] mora biti tekst`));
