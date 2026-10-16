@@ -4,12 +4,21 @@
 //
 //   OPENROUTER_API_KEY=… node scripts/lab/generiraj-lekcije.mjs [--model openai/gpt-6.1-sol] [--effort medium]
 //       [--popravak anthropic/claude-haiku-5.5] [--samo 393,403] [--paralelno 2] [--preskoci-gotove] [--budzet 3]
+//       [--izvor source.json] [--mapa lekcije]
+//
+// --pruzatelj claude: isti tok, ali modele zove lokalni `claude` CLI (pretplata, bez OpenRoutera i bez troška na
+// računu produkcije), zadano Sonnet 5.5 za pisanje i Haiku 5.5 za popravak. Za isprobavanje prompta i provjere prije
+// deploya; trošak u izvještaju tada je samo procjena po cjeniku. --izvor i --mapa su datoteka i mapa u lab-out/,
+// a stranica /lab/lekcija?mapa=<mapa> prikazuje tu mapu.
 //
 // Isti modeli i isti tok kao backend (LessonUiStep): lekciju piše model za pisanje, a ako ne prođe validateLesson,
 // jeftiniji model je jednom popravlja u jednom pozivu (izvor + lekcija + nalaz provjere). Trošak je stvarni
 // usage.cost s OpenRoutera; kad potrošnja ovog pokretanja dosegne --budzet (USD), nove lekcije se ne započinju,
 // da na računu (s kojeg radi i produkcija) uvijek ostane kredita.
 import { readFile, writeFile, mkdir, access, readdir } from "node:fs/promises";
+import { spawn } from "node:child_process";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { validateLesson } from "../../src/lib/lesson/validateLesson.js";
 import { sustavPrompt, korisnickiPrompt, popravakPrompt } from "../../src/lib/lesson/prompt.js";
 
@@ -24,25 +33,61 @@ const args = Object.fromEntries(
       return [k, v.join(" ") || true];
     }),
 );
-const MODEL = args.model ?? "openai/gpt-6.1-sol";
+const CLAUDE = args.pruzatelj === "claude";
+const MODEL = args.model ?? (CLAUDE ? "claude-sonnet-5-5" : "openai/gpt-6.1-sol");
 const EFFORT = args.effort ?? "medium";
-const REPAIR_MODEL = args.popravak ?? "anthropic/claude-haiku-5.5";
+const REPAIR_MODEL = args.popravak ?? (CLAUDE ? "claude-haiku-5-5" : "anthropic/claude-haiku-5.5");
 const PARALLEL = Number(args.paralelno ?? 2);
 const BUDGET = Number(args.budzet ?? 3);
 let spent = 0;
 const ONLY = args.samo ? new Set(String(args.samo).split(",").map(Number)) : null;
 const KEY = process.env.OPENROUTER_API_KEY;
-if (!KEY) {
+if (!KEY && !CLAUDE) {
   console.error("Nedostaje OPENROUTER_API_KEY.");
   process.exit(1);
 }
 
 const OUT = new URL("../../lab-out/", import.meta.url);
-await mkdir(new URL("lekcije/", OUT), { recursive: true });
-const izvori = JSON.parse(await readFile(new URL("source.json", OUT), "utf8")).filter((x) => !ONLY || ONLY.has(x.objective_id));
+const MAPA = `${String(args.mapa ?? "lekcije").replace(/[^\w-]/g, "")}/`;
+await mkdir(new URL(MAPA, OUT), { recursive: true });
+const izvori = JSON.parse(await readFile(new URL(String(args.izvor ?? "source.json"), OUT), "utf8")).filter((x) => !ONLY || ONLY.has(x.objective_id));
 const system = sustavPrompt();
+const SYSTEM_FILE = join(tmpdir(), `matmat-lekcija-sustav-${process.pid}.txt`);
+if (CLAUDE) await writeFile(SYSTEM_FILE, system);
 
-async function chat(messages, { model = MODEL, effort = EFFORT } = {}) {
+async function chat(messages, opts = {}) {
+  return CLAUDE ? chatClaude(messages, opts) : chatOpenRouter(messages, opts);
+}
+
+// Jedan poziv `claude -p` bez alata i bez postavki projekta; poruka ide na stdin (izvor zna biti dug).
+function chatClaude(messages, { model = MODEL, effort = EFFORT } = {}) {
+  const argv = ["-p", "--model", model, "--effort", effort, "--system-prompt-file", SYSTEM_FILE, "--tools", "", "--output-format", "json", "--setting-sources", "", "--no-session-persistence"];
+  return new Promise((resolve, reject) => {
+    const p = spawn("claude", argv, { cwd: tmpdir(), stdio: ["pipe", "pipe", "pipe"] });
+    let out = "";
+    let errOut = "";
+    p.stdout.on("data", (d) => (out += d));
+    p.stderr.on("data", (d) => (errOut += d));
+    p.on("error", reject);
+    p.on("close", (code) => {
+      try {
+        const body = JSON.parse(out);
+        if (code !== 0 || body.is_error) throw new Error(body.result ?? `izlaz ${code}`);
+        const m = body.modelUsage?.[model] ?? {};
+        const u = body.usage ?? {};
+        resolve({
+          content: body.result ?? "",
+          trosak: { usd: m.costUSD ?? body.total_cost_usd ?? 0, ulaz: (u.input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) + (u.cache_read_input_tokens ?? 0), izlaz: u.output_tokens ?? 0, razmisljanje: u.output_tokens_details?.thinking_tokens ?? 0, kes: u.cache_read_input_tokens ?? 0 },
+        });
+      } catch (e) {
+        reject(new Error(`claude: ${e.message} ${errOut.slice(0, 300)}`));
+      }
+    });
+    p.stdin.end(messages.map((x) => x.content).join("\n\n"));
+  });
+}
+
+async function chatOpenRouter(messages, { model = MODEL, effort = EFFORT } = {}) {
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json", "X-Title": "MatMat lab" },
@@ -77,7 +122,7 @@ function parseJson(text) {
 const zbroj = (a, b) => Object.fromEntries(Object.keys(a).map((k) => [k, a[k] + (b?.[k] ?? 0)]));
 
 async function izradi(izvor) {
-  const file = new URL(`lekcije/${izvor.objective_id}.json`, OUT);
+  const file = new URL(`${MAPA}${izvor.objective_id}.json`, OUT);
   if (args["preskoci-gotove"]) {
     try {
       await access(file);
@@ -96,7 +141,7 @@ async function izradi(izvor) {
   let popravljeno = false;
   try {
     lekcija = parseJson(prvi.content);
-    provjera = validateLesson(lekcija, { rezultati: rezultatiIzvora });
+    provjera = validateLesson(lekcija, { rezultati: rezultatiIzvora, skica: izvor.sketch });
   } catch (e) {
     provjera = { greske: [`JSON: ${e.message}`], upozorenja: [] };
   }
@@ -108,7 +153,7 @@ async function izradi(izvor) {
     trosak = zbroj(trosak, drugi.trosak);
     try {
       lekcija = parseJson(drugi.content);
-      provjera = validateLesson(lekcija, { rezultati: rezultatiIzvora });
+      provjera = validateLesson(lekcija, { rezultati: rezultatiIzvora, skica: izvor.sketch });
     } catch (e) {
       provjera = { greske: [`JSON nakon popravka: ${e.message}`], upozorenja: [] };
     }
@@ -149,10 +194,10 @@ async function radnik() {
 await Promise.all(Array.from({ length: PARALLEL }, radnik));
 const neuspjelo = izradeno.filter((z) => z.greska).length;
 
-// Izvještaj o svim lekcijama u lab-out/lekcije, ne samo o ovom pokretanju (--preskoci-gotove, --samo).
+// Izvještaj o svim lekcijama u mapi, ne samo o ovom pokretanju (--preskoci-gotove, --samo).
 const rezultati = [];
-for (const f of (await readdir(new URL("lekcije/", OUT))).filter((f) => f.endsWith(".json"))) {
-  rezultati.push(JSON.parse(await readFile(new URL(`lekcije/${f}`, OUT), "utf8")));
+for (const f of (await readdir(new URL(MAPA, OUT))).filter((f) => f.endsWith(".json"))) {
+  rezultati.push(JSON.parse(await readFile(new URL(`${MAPA}${f}`, OUT), "utf8")));
 }
 const ok = rezultati.filter((z) => z.provjera && !z.provjera.greske.length);
 const usd = rezultati.reduce((s, z) => s + (z.trosak?.usd ?? 0), 0);
@@ -170,7 +215,7 @@ const izvjestaj = {
   prosjekZnakova: ok.length ? Math.round(ok.reduce((s, z) => s + z.znakova, 0) / ok.length) : 0,
   widgeti: count(ok.flatMap((z) => steps(z.lekcija).map((k) => k.tip + (k.nacin ? `:${k.nacin}` : "")))),
 };
-await writeFile(new URL("izvjestaj.json", OUT), JSON.stringify(izvjestaj, null, 2));
+await writeFile(new URL(MAPA === "lekcije/" ? "izvjestaj.json" : `izvjestaj-${MAPA.slice(0, -1)}.json`, OUT), JSON.stringify(izvjestaj, null, 2));
 console.log(izvjestaj);
 
 function median(xs) {
