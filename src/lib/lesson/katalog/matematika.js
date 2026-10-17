@@ -167,7 +167,7 @@ function provjeriZapisSkupa(s, skup, latex) {
   const u = ucitajSkupLatex(latex);
   if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati zapis: ${u.greska}.`, prazno: true };
   const njegov = u.skup;
-  if (jednakiSkupovi(njegov, skup)) return { tocno: true };
+  if (jednakiSkupovi(njegov, skup) || (s.jos_tocno ?? []).some((t) => jednakiSkupovi(njegov, parseSkup(t)))) return { tocno: true };
   for (const k of s.krivo ?? []) if (jednakiSkupovi(njegov, parseSkup(k.odgovor))) return { tocno: false, poruka: k.poruka };
   const blizu = (x, y) => x === y || Math.abs(x - y) < 1e-9;
   if (njegov.length === skup.length && njegov.every((d, i) => blizu(d.a, skup[i].a) && blizu(d.b, skup[i].b))) {
@@ -188,7 +188,7 @@ export const interval = {
   za zatvoren kraj, U za uniju, {2} ili {1; 2} za točke, ∅, R, R \\ {-4} za razliku, ∩ za presjek); svaki konačni kraj mora biti među tockama;
   krivo?: [{odgovor (skup), poruka}];
 - "upisi": učenik sam piše zapis skupa u matematičko polje (tipkovnica sa ⟨ ⟩ [ ] ∪ ∞ ℝ); oznaka? (ispred polja, zadano "$x \\in$"),
-  odgovor i krivo kao gore, tocke nisu potrebne; točan je svaki zapis istog skupa (npr. ℝ∖{-4} i ⟨-∞, -4⟩ ∪ ⟨-4, +∞⟩);
+  odgovor i krivo kao gore, tocke nisu potrebne; jos_tocno?: [skup] za drugi jednako ispravan odgovor (npr. rast na [-1, 1] i ⟨-1, 1⟩); točan je svaki zapis istog skupa (npr. ℝ∖{-4} i ⟨-∞, -4⟩ ∪ ⟨-4, +∞⟩);
 - "prikaz": pokazuje skup (odgovor) bez pitanja: korak za gledanje.`,
   primjer: { tip: "interval", nacin: "odaberi", tekst: "Za koje je $x$ parabola iznad osi $x$?", tocke: [1, 3], odgovor: "<-inf, 1> U <3, inf>", krivo: [{ odgovor: "<1, 3>", poruka: "Između 1 i 3 parabola je ispod osi." }] },
   validate(s) {
@@ -212,6 +212,13 @@ export const interval = {
       need(!nema.length, `kraj ${nema[0]} nije među tockama, pa ga učenik ne može označiti`);
     }
     if (s.nacin === "prikaz") need(!("krivo" in s), "interval \"prikaz\" je za gledanje, pa nema „krivo“");
+    for (const [j, t] of (s.jos_tocno ?? []).entries()) {
+      try {
+        parseSkup(t);
+      } catch (e) {
+        need(false, `jos_tocno[${j}]: ${e.message}`);
+      }
+    }
     for (const [j, k] of (s.krivo ?? []).entries()) {
       try {
         const kr = parseSkup(k?.odgovor);
@@ -227,7 +234,7 @@ export const interval = {
     const skup = skupOdgovora(s);
     if (s.nacin === "upisi") return provjeriZapisSkupa(s, skup, odabir);
     const njegov = skupIzOdabira(s, odabir);
-    if (jednakiSkupovi(njegov, skup)) return { tocno: true };
+    if (jednakiSkupovi(njegov, skup) || (s.jos_tocno ?? []).some((t) => jednakiSkupovi(njegov, parseSkup(t)))) return { tocno: true };
     for (const k of s.krivo ?? []) if (jednakiSkupovi(njegov, parseSkup(k.odgovor))) return { tocno: false, poruka: k.poruka };
     const tocan = odabirIzSkupa(s, skup);
     const isti = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
