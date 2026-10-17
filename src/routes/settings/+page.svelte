@@ -1,6 +1,8 @@
 <script>
   import { apiClient } from "$lib/api/apiClient";
   import { userData, logout } from "$lib/store/user.svelte";
+  import { aiConsent, decideAiConsent } from "$lib/store/aiConsent.svelte";
+  import AiConsentDetails from "$lib/components/ai/AiConsentDetails.svelte";
   import { ownCourses } from "$lib/store/ownCourses.svelte";
 
   let learningReminders = $state(false);
@@ -42,6 +44,23 @@
       accountDeleteError = "Račun nije obrisan. Provjeri vezu i pokušaj ponovno.";
     } finally {
       accountDeleteBusy = false;
+    }
+  }
+
+  // AI consent: the switch saves at once; a failure puts it back.
+  let savingAiConsent = $state(false);
+  let aiConsentError = $state("");
+
+  async function setAiConsent(granted, checkbox) {
+    savingAiConsent = true;
+    aiConsentError = "";
+    try {
+      await decideAiConsent(granted);
+    } catch {
+      checkbox.checked = !granted;
+      aiConsentError = "Promjena nije spremljena. Pokušaj ponovno.";
+    } finally {
+      savingAiConsent = false;
     }
   }
 
@@ -203,6 +222,40 @@
     {/if}
   </div>
 
+  <!-- AI consent card -->
+  <div class="card card-pad" style="margin-top: 16px">
+    <div class="settings-head">
+      <div>
+        <h2 class="settings-title">AI</h2>
+        <p class="settings-desc">AI asistent i AI ocjenjivanje probne mature.</p>
+      </div>
+      {#if savingAiConsent}<span class="settings-saving">Spremanje…</span>{/if}
+    </div>
+
+    {#if !aiConsent.loaded}
+      <div class="settings-loading"><div class="spinner"></div> Učitavanje…</div>
+    {:else}
+      <label class="notif-row">
+        <input
+          type="checkbox"
+          checked={aiConsent.granted === true}
+          disabled={savingAiConsent}
+          onchange={(e) => setAiConsent(e.currentTarget.checked, e.currentTarget)}
+        />
+        <div>
+          <div class="notif-title">Dozvola za AI</div>
+          <div class="notif-desc">Bez nje AI asistent i AI ocjenjivanje su isključeni; sve ostalo radi.</div>
+        </div>
+      </label>
+      {#if aiConsentError}<p class="ai-consent-error" role="alert">{aiConsentError}</p>{/if}
+    {/if}
+
+    <details class="ai-consent-more">
+      <summary>Što se šalje AI-ju</summary>
+      <AiConsentDetails />
+    </details>
+  </div>
+
   <!-- Account card -->
   <div class="card card-pad" style="margin-top: 16px">
     <div class="settings-head">
@@ -361,6 +414,10 @@
     color: var(--text);
   }
   .logout-btn:hover { color: var(--danger, #ef4444); }
+
+  .ai-consent-error { margin: 10px 0 0; font-size: 12.5px; color: var(--danger, #ef4444); }
+  .ai-consent-more { margin-top: 14px; }
+  .ai-consent-more summary { cursor: pointer; font-size: 13px; color: var(--text-dim); margin-bottom: 12px; }
 
   .danger-zone {
     display: flex;

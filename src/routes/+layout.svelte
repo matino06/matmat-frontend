@@ -17,6 +17,8 @@
   import Panel from "$lib/components/panel/Panel.svelte";
   import ChatWindow from "$lib/components/chatWindow/ChatWindow.svelte";
   import Onboarding from "$lib/components/onboarding/Onboarding.svelte";
+  import AiConsentPrompt from "$lib/components/ai/AiConsentPrompt.svelte";
+  import { aiConsent, loadAiConsent, resetAiConsent } from "$lib/store/aiConsent.svelte";
 
   const GA_ID = "G-E6F6X4X2XG";
 
@@ -116,6 +118,14 @@
     if (userData.user && !ownCourses.loaded) loadOwnCourses();
   });
 
+  // AI consent is asked once the account exists and the level is chosen (a new account), or on the next visit of an
+  // account that hasn't decided yet.
+  $effect(() => {
+    if (!userData.user) resetAiConsent();
+    else if (userData.accountReady && !userData.needsOnboarding && !aiConsent.loaded) loadAiConsent();
+  });
+  let askAiConsent = $derived(!isLanding && !!userData.user && !userData.needsOnboarding && aiConsent.loaded && aiConsent.granted === null);
+
   let program = $derived(getProgram(courseState.courseId));
   // Vlastiti predmet: panel Formule prikazuje materijal označen „dostupan na ispitu“ (ako ga nema, panela nema).
   let ownCourse = $derived(findOwnCourse(courseState.courseId));
@@ -166,6 +176,8 @@
 
 {#if userData.needsOnboarding && userData.user}
   <Onboarding/>
+{:else if askAiConsent}
+  <AiConsentPrompt/>
 {:else if isLanding}
   {@render children?.()}
 {:else if showSidebar}
