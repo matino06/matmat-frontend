@@ -92,7 +92,8 @@
   let { children } = $props();
 
   let path = $derived(page.url.pathname);
-  const MARKETING_PATHS = ["/", "/kako-radi"];
+  // Public pages: no sign-in needed (the privacy policy and support are linked from the App Store and the app).
+  const MARKETING_PATHS = ["/", "/kako-radi", "/privatnost", "/podrska"];
   // /lab (interaktivne lekcije) postoji samo u dev načinu i radi bez prijave, kao marketinške stranice
   let isLanding = $derived(MARKETING_PATHS.includes(path) || (dev && (path === "/lab" || path.startsWith("/lab/"))));
   let showSidebar = $derived(!isLanding && !!userData.user);
