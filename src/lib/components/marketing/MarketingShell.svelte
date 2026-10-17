@@ -1,7 +1,7 @@
 <script>
   import MarketingNav from "$lib/components/marketingNav/MarketingNav.svelte";
 
-  // Frame of the marketing pages (/ and /kako-radi): always dark whatever theme
+  // Frame of the marketing pages (/, /kako-radi, /privatnost, /podrska): always dark whatever theme
   // the app is set to, the nav bar, the page's own sections, the footer.
   let { children } = $props();
 </script>
@@ -18,7 +18,8 @@
       <nav class="hm-footer-links" aria-label="Podnožje">
         <a href="/">Početna</a>
         <a href="/kako-radi">Kako radi</a>
-        <a href="mailto:info@matmat.online">Kontakt</a>
+        <a href="/podrska">Podrška</a>
+        <a href="/privatnost">Privatnost</a>
       </nav>
     </div>
   </footer>
