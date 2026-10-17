@@ -17,6 +17,8 @@ const ZNAKOVI = [
   // „70°“: oznaka mjere (70), a unutar sin/cos/tg kut u stupnjevima (vidi pripremi)
   [/°/g, " ° "],
   [/(\d+)\s*!/g, " fact($1)"],
+  // hrvatski zapis tangensa: „tg x“
+  [/\btg/g, " tan "],
 ];
 
 // Riječ bez razmaka („pix“, „sinx“, „2ab“) → poznati dijelovi (pi, x / sin, x / a, b), najduži prvi.
