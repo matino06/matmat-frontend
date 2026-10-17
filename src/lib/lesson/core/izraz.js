@@ -59,15 +59,48 @@ export function pripremi(unos, varijable = []) {
     out.push(tk);
     // „sin x“, „sin 2x“, „√“ je već sqrt(…): funkcija bez zagrade uzima sljedeći broj i/ili varijablu
     if (tk.t === "fn" && tokeni[i + 1]?.v !== "(") {
+      const jednostavan = (t) => t && (t.t === "num" || t.t === "id");
+      // tokeni od j: jedan broj/varijabla ili cijela zagrada
+      const komad = (j) => {
+        if (jednostavan(tokeni[j])) return tokeni.slice(j, j + 1);
+        if (tokeni[j]?.v !== "(") return null;
+        for (let d = 0, k = j; k < tokeni.length; k++) {
+          d += tokeni[k].v === "(" ? 1 : tokeni[k].v === ")" ? -1 : 0;
+          if (d === 0) return tokeni.slice(j, k + 1);
+        }
+        return null;
+      };
+      // „sin^2 x“ = (sin x)^2
+      let eksponent = null;
+      if (tokeni[i + 1]?.v === "^" && komad(i + 2)) {
+        eksponent = komad(i + 2);
+        i += 1 + eksponent.length;
+      }
       const arg = [];
-      while (tokeni[i + 1] && (tokeni[i + 1].t === "num" || tokeni[i + 1].t === "id") && arg.length < 2) arg.push(tokeni[++i]);
+      if (tokeni[i + 1]?.v === "(") {
+        const z = komad(i + 1);
+        if (z) arg.push(z);
+        i += z ? z.length : 0;
+      } else
+        while (jednostavan(tokeni[i + 1]) && arg.length < 2) {
+          const dio = [tokeni[++i]];
+          // „ln 5^2“ je ln(25), „sin x^2“ je sin(x²): potencija ide uz argument
+          const pot = tokeni[i + 1]?.v === "^" && komad(i + 2);
+          if (pot) {
+            dio.push(tokeni[i + 1], ...pot);
+            i += 1 + pot.length;
+          }
+          arg.push(dio);
+        }
       if (!arg.length) throw new Error(`iza „${tk.v}“ treba broj ili zagrada`);
+      if (eksponent) out.splice(out.length - 1, 0, { t: "op", v: "(" });
       out.push({ t: "op", v: "(" });
       arg.forEach((a, k) => {
         if (k) out.push({ t: "op", v: "*" });
-        out.push(a);
+        out.push(...a);
       });
       out.push({ t: "op", v: ")" });
+      if (eksponent) out.push({ t: "op", v: ")" }, { t: "op", v: "^" }, ...eksponent);
     }
   }
   return out.map((t) => t.v).join(" ");

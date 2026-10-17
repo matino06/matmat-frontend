@@ -19,6 +19,20 @@ function poljeOdgovor(s, p) {
   return ucitaj(String(p.odgovor), varijableIzraza(s));
 }
 
+// Rješenja s cijelim k („π/12 + kπ“): isti skup je i zapis pomaknut za cijeli broj perioda („13π/12 + kπ“, „π/12 − kπ“).
+function istaObitelj(u, tocan, vars) {
+  if (vars.length !== 1 || vars[0] !== "k" || u.greska || tocan.greska) return false;
+  const pravac = (f) => {
+    const [a, d] = [f.fn({ k: 0 }), f.fn({ k: 1 }) - f.fn({ k: 0 })];
+    const linearan = [-2.5, 0.37, 3].every((k) => Math.abs(f.fn({ k }) - (a + d * k)) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(d * k)));
+    return linearan && Number.isFinite(a) && Number.isFinite(d) && d !== 0 ? { a, d } : null;
+  };
+  const [x, y] = [pravac(u), pravac(tocan)];
+  if (!x || !y || Math.abs(Math.abs(x.d) - Math.abs(y.d)) > 1e-9 * Math.abs(y.d)) return false;
+  const pomak = (x.a - y.a) / y.d;
+  return Math.abs(pomak - Math.round(pomak)) < 1e-9;
+}
+
 function provjeriPolje(s, p, unos) {
   const vars = varijableIzraza(s);
   if (!String(unos ?? "").trim()) return { tocno: false, poruka: "Upiši odgovor.", prazno: true };
@@ -26,7 +40,7 @@ function provjeriPolje(s, p, unos) {
   const u = ucitajLatex(String(p.iza ?? "").includes("%") ? String(unos).replace(/\\%/g, "") : unos, vars);
   if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati izraz: ${u.greska}.`, prazno: true };
   const tocan = poljeOdgovor(s, p);
-  if (jednako(u, tocan, vars)) return { tocno: true };
+  if (jednako(u, tocan, vars) || istaObitelj(u, tocan, vars)) return { tocno: true };
   for (const k of p.krivo ?? []) {
     const kr = ucitaj(String(k.odgovor), vars);
     // „krivo“ zadan decimalno (npr. 10.73) prepoznaje se i kad ga učenik zaokruži malo drukčije
@@ -34,7 +48,10 @@ function provjeriPolje(s, p, unos) {
     if (!kr.greska && jednako(u, kr, vars, rel) && !jednako(u, tocan, vars, rel)) return { tocno: false, poruka: k.poruka };
   }
   if (!vars.length && !s.priblizno && jednako(u, tocan, vars, PRIBLIZNO)) {
-    return { tocno: false, poruka: "To je približna vrijednost. Upiši točnu (npr. s π, korijenom ili razlomkom)." };
+    // točan odgovor s konačno decimala (cijena, postotak) nema π ni korijen, pa ga ne treba ni spominjati
+    const t = tocan.fn({});
+    const decimalan = Math.abs(t * 1e4 - Math.round(t * 1e4)) < 1e-6;
+    return { tocno: false, poruka: decimalan ? "To je zaokružena vrijednost. Upiši točan rezultat, bez zaokruživanja." : "To je približna vrijednost. Upiši točnu (npr. s π, korijenom ili razlomkom)." };
   }
   if (s.priblizno && jednako(u, tocan, vars, PRIBLIZNO / 2)) return { tocno: true };
   return { tocno: false, poruka: p.savjet || s.savjet || "Nije točno." };
