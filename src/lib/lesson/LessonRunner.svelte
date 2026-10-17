@@ -92,7 +92,8 @@
 
   function dalje() {
     ekran++;
-    zadatakOtvoren = false;
+    // zadatak s grafom ostaje otvoren: sljedeći podzadaci očitavaju s istog grafa
+    zadatakOtvoren = !!lekcija.zadatak.graf;
     if (ekran === n) onzavrsi(sazetak());
     // u aplikaciji se ne pomiče prozor nego glavni stupac, pa se na vrh dovodi sama lekcija
     root?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -205,6 +206,7 @@
             <details class="lx-more" open={st.rezultat === POKAZANO}>
               <summary>{st.rezultat === POKAZANO ? "Objašnjenje" : "Pokaži cijelo objašnjenje"}</summary>
               <Md text={p.objasnjenje} />
+              {#if p.graf}<GrafFunkcije spec={p.graf} bezTeksta />{/if}
             </details>
           </div>
           <div class="lx-next">
@@ -227,6 +229,15 @@
       <p class="lx-summary-note">
         {#if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio uz pomoć vratit će se ranije u ponavljanju.{/if}
       </p>
+      <!-- cijelo rješenje na jednom mjestu, kao u tekstualnom zadatku: i za učenika koji je sve znao odmah -->
+      <details class="lx-more lx-rjesenje" open>
+        <summary>Cijelo rješenje</summary>
+        {#each lekcija.podzadaci as x (x.id)}
+          <h3 class="lx-rjesenje-dio">{x.id}) {x.naslov}</h3>
+          <Md text={x.objasnjenje} />
+          {#if x.graf}<GrafFunkcije spec={x.graf} bezTeksta />{/if}
+        {/each}
+      </details>
       <section class="lx-zapamti-box">
         <div class="lx-zapamti-title">Zapamti</div>
         <ul class="lx-zapamti">
@@ -437,6 +448,14 @@
     margin: -4px 0 0;
     font-size: 14px;
     color: var(--text-dim);
+  }
+  .lx-rjesenje {
+    margin-bottom: 14px;
+  }
+  .lx-rjesenje-dio {
+    margin: 14px 0 6px;
+    font-size: 15px;
+    font-weight: 600;
   }
   .lx-zapamti-box {
     padding: var(--pad-4);

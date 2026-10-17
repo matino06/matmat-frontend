@@ -34,7 +34,15 @@ Uz to, za maturu:
 - Blizanac je novi primjer iste vještine (drugi brojevi, drugi graf), uvijek drukčiji od zadatka i od svih
   blizanaca u drugim lekcijama iste teme (ne kopiraj blizance iz predloška).
 - Zapis intervala kao u hrvatskim školama: ⟨ ⟩ za otvoren kraj, [ ] za zatvoren, uz ±∞ uvijek otvoren.
-- „objasnjenje“ je cijelo rješenje (kao izvorno, ali jasnije), „zasto“ 1–2 rečenice s računom.
+- **Objašnjenje mora biti barem jednako detaljno kao tekstualno** (učenici hvale baš to). „objasnjenje“ svakog
+  podzadatka je cijelo rješenje tog koraka: svaki korak, pravilo i napomena iz izvornog objašnjenja (metoda, knjižica
+  formula i stranica, kalkulator, „skica ne mora biti precizna“…), napisano jasnije. Zadnji podzadatak završava
+  konačnim rezultatom.
+- Svaka slika iz izvornog objašnjenja postaje `graf` podzadatka (graf_funkcije „prikaz“ s istim oznakama: nultočke,
+  istaknuti dio, crte, strelice). Prikazuje se uz „Pokaži cijelo objašnjenje“ i u „Cijelo rješenje“ na kraju, pa
+  graf vidi i učenik koji je sve znao odmah (pomoć vidi samo onaj koji griješi).
+- „zasto“ je 1–2 rečenice s računom i sadrži konačni odgovor u zapisu kakav traži matura (npr. interval).
+- Ista riječ ne smije značiti dvije stvari (npr. „razmak od vrha do dna“ okomito i vodoravno).
 
 ## Widgeti samo za ručnu izradu
 
@@ -47,6 +55,7 @@ Puni opis polja je u `opis` svakog widgeta u `katalog/matematika.js`; primjeri s
   točnog izraza dobiva poruku da upiše točnu vrijednost (osim uz `priblizno: true`).
 - `interval` – „odaberi“: učenik na pravcu s točkama `tocke` bira dijelove i pune/prazne točke; `odgovor` u zapisu
   `"<-inf, 1> U [3, inf>"`; „prikaz“ samo pokazuje skup.
+- `podzadatak.graf` – graf uz cijelo objašnjenje (vidi pravila sadržaja).
 - `graf_funkcije` – „prikaz“ (s `crte`, `strelice`, `tocke`, `istakni: {znak: ">0"}`), „istrazi“ (klizači),
   „poklopi“ (učenik klizačima poklopi svoj graf s grafom iz zadatka; `cilj`). `zadatak.graf` je graf uz zadatak.
 

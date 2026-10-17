@@ -52,6 +52,10 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
       err(isText(p?.naslov), `${at} treba kratak naslov`);
       err(isText(p?.zasto), `${at} treba „zasto“: 1–2 rečenice za učenika koji je odmah točno odgovorio`);
       err(isText(p?.objasnjenje), `${at} treba „objasnjenje“ (cijelo objašnjenje, skriveno dok ga učenik ne otvori)`);
+      // graf uz cijelo objašnjenje (ručno pisane lekcije iz matematike), kao slika u tekstualnom rješenju
+      if (p?.graf != null && err(p.graf?.tip === "graf_funkcije" && p.graf.nacin === "prikaz", `${at}.graf mora biti graf_funkcije s nacin "prikaz"`)) {
+        for (const g of KATALOG.graf_funkcije.validate(p.graf)) greske.push(`${at}.graf: ${g}`);
+      }
       step(p?.pitanje, `${at}.pitanje`, ODGOVOR);
       err(!p?.pitanje?.stube, `${at}.pitanje: stube jedinica otkrivaju postupak; smiju samo u koraku pomoći`);
       if (p?.blizanac != null) {
