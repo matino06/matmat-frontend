@@ -49,10 +49,12 @@ export const skupovi = kartica("∈ℝ", "Skupovi i intervali", [
   [k("<", "\\le"), k(">", "\\ge"), k("-"), k(","), k("x")],
 ]);
 
+// slovo s velikim slovom na Shift (oznake točaka i skupova: A, B, S…)
+const slovo = (c) => ({ latex: c, shift: c.toUpperCase() });
 export const slova = kartica("abc", "Slova", [
-  [..."qwertzuiop"].map((c) => k(c)),
-  [..."asdfghjkl"].map((c) => k(c)),
-  [..."yxcvbnm"].map((c) => k(c)).concat(k("\\alpha", "\\beta", "\\gamma", "\\varphi", "\\theta")),
+  [..."qwertzuiop"].map(slovo),
+  [..."asdfghjkl"].map(slovo),
+  ["[shift]", ...[..."yxcvbnm"].map(slovo), k("\\alpha", "\\beta", "\\gamma", "\\varphi", "\\theta")],
 ]);
 
 const KARTICE = { brojevi, funkcije, skupovi, slova };
