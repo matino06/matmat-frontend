@@ -29,7 +29,9 @@ function provjeriPolje(s, p, unos) {
   if (jednako(u, tocan, vars)) return { tocno: true };
   for (const k of p.krivo ?? []) {
     const kr = ucitaj(String(k.odgovor), vars);
-    if (!kr.greska && jednako(u, kr, vars)) return { tocno: false, poruka: k.poruka };
+    // „krivo“ zadan decimalno (npr. 10.73) prepoznaje se i kad ga učenik zaokruži malo drukčije
+    const rel = /\d\.\d/.test(String(k.odgovor)) && !vars.length ? 0.002 : 1e-9;
+    if (!kr.greska && jednako(u, kr, vars, rel) && !jednako(u, tocan, vars, rel)) return { tocno: false, poruka: k.poruka };
   }
   if (!vars.length && !s.priblizno && jednako(u, tocan, vars, PRIBLIZNO)) {
     return { tocno: false, poruka: "To je približna vrijednost. Upiši točnu (npr. s π, korijenom ili razlomkom)." };
@@ -299,8 +301,16 @@ export const tockaIzPolja = (t) => tockaCrteza(t?.z != null ? [t.x, t.y, t.z] : 
 
 // Okvir crteža (u px) za zadani raspon: geometrija i jednaka mjerila na osima (krug ostaje krug, kut ostaje kut).
 export const CRTEZ = { W: 400, rub: { L: 34, R: 14, T: 14, B: 26 }, rubBezOsi: { L: 14, R: 14, T: 14, B: 14 }, minH: 180, maxH: 380, maxHBezOsi: 460 };
+// lijevi rub mora primiti najdulji broj na osi y (npr. „12000“)
+function sirinaBrojevaY(s) {
+  const k = s.korak_y ?? 1;
+  let n = 1;
+  for (let i = Math.ceil(s.y[0] / k - 1e-9); i * k <= s.y[1] + 1e-9 && i - Math.ceil(s.y[0] / k) < 60; i++) n = Math.max(n, String(Number((i * k).toPrecision(10))).length);
+  return n;
+}
 export function okvirCrteza(s) {
-  const rub = s.osi === false ? CRTEZ.rubBezOsi : CRTEZ.rub;
+  const osnovni = s.osi === false ? CRTEZ.rubBezOsi : CRTEZ.rub;
+  const rub = s.osi === false ? osnovni : { ...osnovni, L: Math.max(osnovni.L, 12 + 6.6 * sirinaBrojevaY(s)) };
   const sirina = CRTEZ.W - rub.L - rub.R;
   const zeljena = (sirina / (s.x[1] - s.x[0])) * (s.y[1] - s.y[0]) + rub.T + rub.B;
   const H = Math.round(Math.min(s.osi === false ? CRTEZ.maxHBezOsi : CRTEZ.maxH, Math.max(CRTEZ.minH, zeljena)));

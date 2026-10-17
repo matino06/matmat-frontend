@@ -159,14 +159,14 @@
   function bezDolara(t) {
     return String(t ?? "")
       .replace(/\$/g, "")
+      .replace(/\\([A-Za-z]+)/g, (m, n) => GRCKA[n] ?? m)
       .replace(/\\(?:vec|overrightarrow)\{([^{}]*)\}/g, (_, a) => `${a}\u20d7`)
       .replace(/\\(?:bar|overline)\{([^{}]*)\}/g, (_, a) => [...a].map((c) => `${c}\u0304`).join(""))
       .replace(/\\sqrt\{([^{}]*)\}/g, (_, a) => (/^\w+$/.test(a) ? `√${a}` : `√(${a})`))
-      .replace(/\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}/g, (_, a, b) => `${/^[\w√.]+$/.test(a) ? a : `(${a})`}/${/^[\w√.]+$/.test(b) ? b : `(${b})`}`)
+      .replace(/\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}/g, (_, a, b) => `${/^[\p{L}\d√.]+$/u.test(a) ? a : `(${a})`}/${/^[\p{L}\d√.]+$/u.test(b) ? b : `(${b})`}`)
       .replace(/\^\{?\\circ\}?/g, "°")
       .replace(/\\(?:cdot|times)/g, "·")
       .replace(/\\(?:left|right)/g, "")
-      .replace(/\\([A-Za-z]+)/g, (m, n) => GRCKA[n] ?? m)
       .replace(/\\[,;!]/g, " ")
       .replace(/-/g, "−");
   }
