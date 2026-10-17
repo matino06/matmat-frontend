@@ -17,6 +17,10 @@
     { tip: "cestice", nacin: "prikaz", tekst: "Usporedi kako su raspoređene čestice.", kutije: [{ oznaka: "led", stanje: "cvrsto" }, { oznaka: "voda", stanje: "tekuce" }, { oznaka: "vodena para", stanje: "plin" }] },
     { tip: "ocitaj_graf", nacin: "prikaz", x: [0, 60], y: [0, 150], os_x: "V (cm³)", os_y: "m (g)", funkcije: [{ izraz: "2.4*x", oznaka: "A" }, { izraz: "0.8*x", oznaka: "B" }], tekst: "Dodirni graf i pogledaj masu za različite volumene." },
     { tip: "pretvorba_jedinica", velicina: "volumen", vrijednost: 3.2, od: "L", do: "cm³", stube: true, tekst: "Koliko je to cm³? Pomozi si stubama." },
+    { tip: "graf_funkcije", nacin: "istrazi", tekst: "Pomiči $a$, $b$ i $c$ i gledaj gdje je parabola iznad osi $x$ (zeleno).", x: [-5, 7], y: [-6, 8], funkcije: [{ izraz: "a*x^2+b*x+c", oznaka: "f" }], klizaci: [{ id: "a", oznaka: "$a$", vrijednosti: [-2, -1, -0.5, 0.5, 1, 2], pocetak: 1 }, { id: "b", oznaka: "$b$", min: -6, max: 6, korak: 1, pocetak: -4 }, { id: "c", oznaka: "$c$", min: -6, max: 6, korak: 1, pocetak: 3 }], formula: "f(x) = {a}x^2 + {b}x + {c}", istakni: { znak: ">0" } },
+    { tip: "graf_funkcije", nacin: "prikaz", tekst: "Graf funkcije sinus na $[-2\\pi, 2\\pi]$.", x: [-6.6, 6.6], y: [-1.5, 1.5], pi_x: 2, korak_y: 0.5, funkcije: [{ izraz: "sin(x)" }], strelice: [{ od: ["-pi/2", -1], do: ["3*pi/2", -1], oznaka: "P = 2π" }], crte: [{ y: 0, oznaka: "" }] },
+    { tip: "interval", nacin: "prikaz", tekst: "Skup $[1, 4]$ na brojevnom pravcu.", tocke: [1, 4], odgovor: "[1, 4]" },
+    { tip: "izraz", tekst: "Kolika je amplituda funkcije na grafu?", polja: [{ oznaka: "$|A| =$", odgovor: "2" }], graf: { nacin: "prikaz", x: [-1, 9], y: [-3, 3], funkcije: [{ izraz: "2*sin(pi/4*x)" }] } },
   ];
   const svi = [...Object.values(KATALOG).map((w) => w.primjer), ...VARIJANTE];
 

@@ -133,9 +133,13 @@ function variables(n, out = new Set()) {
   return out;
 }
 
-// compile("m/V") → { fn(vars) → broj, vars: ["m","V"] }; baca grešku s hrvatskom porukom ako izraz ne valja.
+// compile("m/V") → { fn(vars) → broj, vars: ["m","V"], tree }; baca grešku s hrvatskom porukom ako izraz ne valja.
+// Stablo (tree) koristi matematički unos (core/izraz.js) za zapis u LaTeX-u.
 export function compile(src) {
   if (typeof src !== "string" || !src.trim()) throw new Error("izraz je prazan");
   const tree = parse(tokenize(src));
-  return { fn: (vars = {}) => evaluate(tree, vars), vars: [...variables(tree)] };
+  return { fn: (vars = {}) => evaluate(tree, vars), vars: [...variables(tree)], tree };
 }
+
+export const FUNKCIJE = Object.keys(FUNCS);
+export const KONSTANTE = Object.keys(CONSTS);

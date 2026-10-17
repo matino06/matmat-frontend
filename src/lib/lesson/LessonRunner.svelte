@@ -7,6 +7,7 @@
   import Md from "./komponente/Md.svelte";
   import Vjezba from "./komponente/Vjezba.svelte";
   import Sketch from "$lib/sketch/Sketch.svelte";
+  import GrafFunkcije from "./komponente/GrafFunkcije.svelte";
   import { provjeri, tocanOdgovor, uloga, ODGOVOR } from "./katalog/index.js";
 
   let { lekcija, onzavrsi = () => {} } = $props();
@@ -140,6 +141,7 @@
       <div class="lx-task-body">
         <Md text={lekcija.zadatak.tekst} />
         {#if lekcija.zadatak.skica}<div class="lx-figure"><Sketch sketch={lekcija.zadatak.skica} text={zadatakTekst} /></div>{/if}
+        {#if lekcija.zadatak.graf}<GrafFunkcije spec={lekcija.zadatak.graf} bezTeksta />{/if}
       </div>
     {/if}
   </section>

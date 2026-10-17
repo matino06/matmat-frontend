@@ -1,6 +1,6 @@
 // Prompt za izradu interaktivne lekcije iz već provjerenog zadatka i objašnjenja (tekst ostaje izvor istine).
-// Opis widgeta sastavlja se iz kataloga, pa prompt i provjera uvijek opisuju iste widgete.
-import { KATALOG, ODGOVOR } from "./katalog/index.js";
+// Opis widgeta sastavlja se iz kataloga, pa prompt i provjera uvijek opisuju iste widgete (osim onih samo za ručnu izradu).
+import { ZA_PROMPT, ODGOVOR } from "./katalog/index.js";
 import { VERZIJA } from "./validateLesson.js";
 import { VJEZBA_OPIS } from "./katalog/vjezba.js";
 
@@ -83,7 +83,7 @@ lekcije i susjedne koje izvorni zadatak ili razina koriste, uključi lanac i mje
 prirodni za tu veličinu (duljina, masa). U lekciji bez pretvorbe jedinica izostavi „vjezba“.`;
 
 export function sustavPrompt() {
-  const katalog = Object.values(KATALOG)
+  const katalog = Object.values(ZA_PROMPT)
     .map((w) => {
       const uloge = new Set([undefined, "istrazi", "prikaz", "procitaj", "odaberi"].map((nacin) => w.uloga({ nacin })));
       const uloga = uloge.size > 1 ? "ovisi o načinu" : uloge.has(ODGOVOR) ? "Tvoj red" : "Pogledaj";

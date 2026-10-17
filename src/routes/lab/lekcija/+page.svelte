@@ -6,10 +6,12 @@
 
   let { data } = $props();
 
+  // ključ lekcije: zadatak (više zadataka iste lekcije plana, npr. matura), inače lekcija plana
+  const kljuc = (z) => z.izvor.task_id ?? z.izvor.objective_id;
   // svelte-ignore state_referenced_locally (popis se učita jednom)
-  let odabrana = $state(data.lekcije.find((z) => z.lekcija && !z.provjera?.greske?.length)?.izvor.objective_id ?? data.lekcije[0]?.izvor.objective_id);
+  let odabrana = $state(kljuc(data.lekcije.find((z) => z.lekcija && !z.provjera?.greske?.length) ?? data.lekcije[0] ?? { izvor: {} }));
   let pogled = $state("lekcija");
-  let z = $derived(data.lekcije.find((x) => x.izvor.objective_id === odabrana));
+  let z = $derived(data.lekcije.find((x) => kljuc(x) === odabrana));
   let ocjena = $state(null);
   const usd = (x) => `$${(x ?? 0).toFixed(3)}`;
 </script>
@@ -35,10 +37,10 @@
         <button class="lab-item" class:on={odabrana === "katalog"} onclick={() => (odabrana = "katalog")}>
           <span class="lab-item-name">📚 Katalog widgeta</span>
         </button>
-        {#each data.lekcije as x (x.izvor.objective_id)}
-          <button class="lab-item" class:on={x.izvor.objective_id === odabrana} onclick={() => ((odabrana = x.izvor.objective_id), (ocjena = null))}>
+        {#each data.lekcije as x (kljuc(x))}
+          <button class="lab-item" class:on={kljuc(x) === odabrana} onclick={() => ((odabrana = kljuc(x)), (ocjena = null))}>
             <span class="status-dot" class:done={x.lekcija && !x.provjera?.greske?.length} class:bad={!x.lekcija || x.provjera?.greske?.length}></span>
-            <span class="lab-item-name">{x.izvor.objective_name}</span>
+            <span class="lab-item-name">{x.izvor.task_id ? `#${x.izvor.task_id} ` : ""}{x.izvor.objective_name}</span>
             <span class="lab-item-meta mono">{usd(x.trosak?.usd)}</span>
           </button>
         {/each}
