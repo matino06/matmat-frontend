@@ -228,8 +228,8 @@ export function jednako(a, b, varijable = [], rel = 1e-9) {
   for (let k = 0; k < UZORCI.length; k++) {
     const v = Object.fromEntries(varijable.map((n, j) => [n, UZORCI[(k + 3 * j) % UZORCI.length] + j * 0.113]));
     const [x, y] = [a.fn(v), b.fn(v)];
-    if (Number.isFinite(x) !== Number.isFinite(y)) return false;
-    if (!Number.isFinite(x)) continue;
+    // točka izvan područja jednog od zapisa („b^(-2/3)“ za b < 0, a „1/∛(b²)“ je tamo definiran) se preskače
+    if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
     if (!isto(x, y)) return false;
     valjanih++;
   }
