@@ -24,6 +24,9 @@ import OcitajGraf from "./OcitajGraf.svelte";
 import PretvorbaJedinica from "./PretvorbaJedinica.svelte";
 import Cestice from "./Cestice.svelte";
 import Uronjeno from "./Uronjeno.svelte";
+import Izraz from "./Izraz.svelte";
+import Interval from "./Interval.svelte";
+import GrafFunkcije from "./GrafFunkcije.svelte";
 
 export const KOMPONENTE = {
   pojam: Pojam,
@@ -44,4 +47,7 @@ export const KOMPONENTE = {
   pretvorba_jedinica: PretvorbaJedinica,
   cestice: Cestice,
   uronjeno: Uronjeno,
+  izraz: Izraz,
+  interval: Interval,
+  graf_funkcije: GrafFunkcije,
 };

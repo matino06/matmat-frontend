@@ -11,6 +11,13 @@ const FUNCS = {
   log: Math.log10,
   exp: Math.exp,
   round: Math.round,
+  // n! (samo za prirodne brojeve i 0)
+  fact: (n) => {
+    if (!Number.isInteger(n) || n < 0 || n > 170) return NaN;
+    let f = 1;
+    for (let k = 2; k <= n; k++) f *= k;
+    return f;
+  },
 };
 const CONSTS = { pi: Math.PI, e: Math.E };
 
@@ -133,9 +140,13 @@ function variables(n, out = new Set()) {
   return out;
 }
 
-// compile("m/V") → { fn(vars) → broj, vars: ["m","V"] }; baca grešku s hrvatskom porukom ako izraz ne valja.
+// compile("m/V") → { fn(vars) → broj, vars: ["m","V"], tree }; baca grešku s hrvatskom porukom ako izraz ne valja.
+// Stablo (tree) koristi matematički unos (core/izraz.js) za zapis u LaTeX-u.
 export function compile(src) {
   if (typeof src !== "string" || !src.trim()) throw new Error("izraz je prazan");
   const tree = parse(tokenize(src));
-  return { fn: (vars = {}) => evaluate(tree, vars), vars: [...variables(tree)] };
+  return { fn: (vars = {}) => evaluate(tree, vars), vars: [...variables(tree)], tree };
 }
+
+export const FUNKCIJE = Object.keys(FUNCS);
+export const KONSTANTE = Object.keys(CONSTS);

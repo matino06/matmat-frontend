@@ -44,6 +44,10 @@ export function checkNumber({ input, answer, tol, unit, krivo, savjet }) {
   // prepoznao kao 0,00014
   const hit = (krivo ?? []).find((k) => near(n, k.vrijednost, tolerance(k.vrijednost, k.tolerancija)));
   if (hit) return { tocno: false, poruka: hit.poruka };
+  // „3.875“ se čita kao tisućice (3875), ali učenik je možda mislio decimalnu točku. Samo kad točan odgovor nije
+  // cijeli broj: „8.000“ uz točno 8 je najčešće 8000 (zaboravljena pretvorba), pa ostaje netočno.
+  const decimalno = Number.isInteger(answer) ? null : /^\s*[-−]?[1-9]\d{0,2}\.\d{3}\s*$/.test(String(input).replace(unit, "")) ? parseNumber(String(input).replace(".", ","), unit) : null;
+  if (decimalno != null && near(decimalno, answer, t)) return { tocno: true };
   return { tocno: false, poruka: savjet || "Nije točno. Provjeri račun i jedinicu." };
 }
 

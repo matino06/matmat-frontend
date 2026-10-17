@@ -5,7 +5,7 @@
 // validateLesson(lekcija, { rezultati, skica }) → { greske: [...], upozorenja: [...] }
 // rezultati i skica su od izvornog (tekstualnog) zadatka; oba smiju nedostajati.
 // Greške znače da se lekcija ne smije spremiti (model je popravlja); upozorenja su za pregled.
-import { KATALOG, widget, uloga, istrazuje, tocanOdgovor, POGLEDAJ, ODGOVOR } from "./katalog/index.js";
+import { KATALOG, ZA_PROMPT, widget, uloga, istrazuje, tocanOdgovor, POGLEDAJ, ODGOVOR } from "./katalog/index.js";
 import { sketchProblems } from "./katalog/tekst.js";
 import { validateVjezba } from "./katalog/vjezba.js";
 import { pretvorbaRezultati } from "./katalog/istrazivanje.js";
@@ -34,6 +34,12 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
   if (err(z && typeof z === "object", "nedostaje „zadatak“")) {
     err(isText(z.tekst), "zadatak.tekst mora opisati situaciju i podatke");
     if (z.skica != null) sketchProblems(z.skica, { text }, (ok, msg) => err(ok, `zadatak.skica: ${msg}`));
+    // graf funkcije uz zadatak (ručno pisane lekcije iz matematike): isti widget kao u koraku, samo za gledanje
+    if (z.graf != null) {
+      if (err(z.graf?.tip === "graf_funkcije" && z.graf.nacin === "prikaz", "zadatak.graf mora biti graf_funkcije s nacin \"prikaz\"")) {
+        for (const p of KATALOG.graf_funkcije.validate(z.graf)) greske.push(`zadatak.graf: ${p}`);
+      }
+    }
   }
 
   const pz = lekcija.podzadaci;
@@ -46,12 +52,20 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
       err(isText(p?.naslov), `${at} treba kratak naslov`);
       err(isText(p?.zasto), `${at} treba „zasto“: 1–2 rečenice za učenika koji je odmah točno odgovorio`);
       err(isText(p?.objasnjenje), `${at} treba „objasnjenje“ (cijelo objašnjenje, skriveno dok ga učenik ne otvori)`);
+      // graf uz cijelo objašnjenje (ručno pisane lekcije iz matematike), kao slika u tekstualnom rješenju
+      if (p?.graf != null && err(p.graf?.tip === "graf_funkcije" && p.graf.nacin === "prikaz", `${at}.graf mora biti graf_funkcije s nacin "prikaz"`)) {
+        for (const g of KATALOG.graf_funkcije.validate(p.graf)) greske.push(`${at}.graf: ${g}`);
+      }
       step(p?.pitanje, `${at}.pitanje`, ODGOVOR);
       err(!p?.pitanje?.stube, `${at}.pitanje: stube jedinica otkrivaju postupak; smiju samo u koraku pomoći`);
       if (p?.blizanac != null) {
         step(p.blizanac, `${at}.blizanac`, ODGOVOR);
         err(JSON.stringify(p.blizanac) !== JSON.stringify(p.pitanje), `${at}.blizanac je isti kao pitanje; treba nove brojeve ili novu situaciju`);
         warn(p.blizanac?.tip === p.pitanje?.tip, `${at}.blizanac je drugog tipa nego pitanje; blizanac provjerava istu vještinu`);
+        const kljuc = widget(p.blizanac)?.kljucOdgovora;
+        if (kljuc && p.blizanac.tip === p.pitanje?.tip) {
+          err(kljuc(p.blizanac) == null || kljuc(p.blizanac) !== kljuc(p.pitanje), `${at}.blizanac ima isti odgovor kao pitanje, pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`);
+        }
         const isti = quantityAnswers(p.blizanac);
         err(
           !isti.length || !isti.every((b) => quantityAnswers(p.pitanje).some((a) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(a) * 0.005))),
@@ -87,7 +101,7 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
   }
 
   function step(spec, at, mora) {
-    if (!err(spec && typeof spec === "object" && KATALOG[spec.tip], `${at}: nepoznat ili nedostaje tip widgeta („${spec?.tip}“); dopušteni: ${Object.keys(KATALOG).join(", ")}`)) return;
+    if (!err(spec && typeof spec === "object" && KATALOG[spec.tip], `${at}: nepoznat ili nedostaje tip widgeta („${spec?.tip}“); dopušteni: ${Object.keys(ZA_PROMPT).join(", ")}`)) return;
     const role = uloga(spec);
     if (mora === ODGOVOR) err(role === ODGOVOR, `${at} mora biti korak s odgovorom („Tvoj red“), a ${spec.tip}${spec.nacin ? ` (${spec.nacin})` : ""} je korak za gledanje`);
     for (const p of KATALOG[spec.tip].validate(spec, { text })) greske.push(`${at} (${spec.tip}): ${p}`);
