@@ -81,7 +81,8 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
         need(!jednako(kr, t, vars), `polja[${i}].krivo[${j}] jednak je točnom odgovoru`);
       }
     });
-    if (s.bilo_kojim_redom && tocni.length > 1) need(new Set(tocni.map((t) => t.fn({ x: 0.731 }))).size === tocni.length, "uz bilo_kojim_redom odgovori moraju biti različiti");
+    const uzorak = Object.fromEntries(vars.map((n, i) => [n, 0.731 + 0.639 * i]));
+    if (s.bilo_kojim_redom && tocni.length > 1) need(new Set(tocni.map((t) => t.fn(uzorak))).size === tocni.length, "uz bilo_kojim_redom odgovori moraju biti različiti");
     return list;
   },
   check(s, unosi) {
@@ -115,7 +116,9 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
     s.polja
       .map((p) => {
         const t = poljeOdgovor(s, p);
-        return t.greska ? "?" : String(Number(t.fn({ x: 0.731, y: 1.37 }).toPrecision(9)));
+        // svaka varijabla dobiva svoju „nasumičnu“ vrijednost (ne samo x i y)
+        const v = Object.fromEntries(varijableIzraza(s).map((n, i) => [n, 0.731 + 0.639 * i]));
+        return t.greska ? "?" : String(Number(t.fn(v).toPrecision(9)));
       })
       .sort()
       .join("|"),
