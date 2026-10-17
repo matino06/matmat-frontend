@@ -35,7 +35,8 @@
     accountDeleteError = "";
     try {
       const r = await apiClient("/account", { method: "DELETE" });
-      if (!r.ok) throw new Error(String(r.status));
+      // 404: an earlier try already deleted it, but its answer was lost.
+      if (!r.ok && r.status !== 404) throw new Error(String(r.status));
       accountDeleted = true;
     } catch {
       accountDeleteError = "Račun nije obrisan. Provjeri vezu i pokušaj ponovno.";
