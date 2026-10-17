@@ -55,14 +55,21 @@ export const slova = kartica("abc", "Slova", [
   [..."yxcvbnm"].map((c) => k(c)).concat(k("\\alpha", "\\beta", "\\gamma", "\\varphi", "\\theta")),
 ]);
 
+const KARTICE = { brojevi, funkcije, skupovi, slova };
+
+// Redoslijed kartica: prva je ona koja se otvara (npr. „skupovi“ za upis intervala). Ista tipkovnica je zajednička
+// svim poljima na stranici, pa polje koje želi drugu prvu karticu to postavi kad dobije fokus.
+export function postaviKartice(prva = "brojevi") {
+  if (typeof window === "undefined" || !window.mathVirtualKeyboard) return;
+  window.mathVirtualKeyboard.layouts = [KARTICE[prva], ...Object.values(KARTICE).filter((k) => k !== KARTICE[prva])];
+}
+
 let ucitano;
 
 // Učita MathLive (registrira <math-field>) i postavi kartice tipkovnice; poziva se iz onMount.
 export function ucitajMatematickiUnos() {
   ucitano ??= import("mathlive").then(() => {
-    if (typeof window !== "undefined" && window.mathVirtualKeyboard) {
-      window.mathVirtualKeyboard.layouts = [brojevi, funkcije, skupovi, slova];
-    }
+    postaviKartice("brojevi");
   });
   return ucitano;
 }

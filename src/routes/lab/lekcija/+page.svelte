@@ -3,13 +3,18 @@
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import KatalogPregled from "./KatalogPregled.svelte";
   import { renderMd } from "$lib/utils/markdownRenderer.js";
+  import { page } from "$app/state";
 
   let { data } = $props();
 
   // ključ lekcije: zadatak (više zadataka iste lekcije plana, npr. matura), inače lekcija plana
   const kljuc = (z) => z.izvor.task_id ?? z.izvor.objective_id;
+  // ?z=<task_id> ili ?z=katalog otvara baš to (npr. za snimku zaslona bez klikanja)
+  const trazena = page.url.searchParams.get("z");
   // svelte-ignore state_referenced_locally (popis se učita jednom)
-  let odabrana = $state(kljuc(data.lekcije.find((z) => z.lekcija && !z.provjera?.greske?.length) ?? data.lekcije[0] ?? { izvor: {} }));
+  let odabrana = $state(
+    trazena === "katalog" ? "katalog" : (data.lekcije.find((z) => String(kljuc(z)) === trazena) ? Number(trazena) : null) ?? kljuc(data.lekcije.find((z) => z.lekcija && !z.provjera?.greske?.length) ?? data.lekcije[0] ?? { izvor: {} }),
+  );
   let pogled = $state("lekcija");
   let z = $derived(data.lekcije.find((x) => kljuc(x) === odabrana));
   let ocjena = $state(null);

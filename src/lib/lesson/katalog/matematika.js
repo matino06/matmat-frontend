@@ -4,7 +4,7 @@
 import { compile } from "../core/expr.js";
 import { isNum } from "../core/number.js";
 import { ucitaj, ucitajLatex, jednako, vrijednost, texIzraza } from "../core/izraz.js";
-import { parseSkup, jednakiSkupovi, sadrzi, texSkupa, sredi } from "../core/skup.js";
+import { parseSkup, jednakiSkupovi, sadrzi, texSkupa, sredi, komplement, ucitajSkupLatex } from "../core/skup.js";
 import { POGLEDAJ, ODGOVOR, isText, problems, noAnswerFields } from "./zajednicko.js";
 
 const ID = /^[A-Za-z_][A-Za-z_0-9]*$/;
@@ -22,8 +22,8 @@ function poljeOdgovor(s, p) {
 function provjeriPolje(s, p, unos) {
   const vars = varijableIzraza(s);
   if (!String(unos ?? "").trim()) return { tocno: false, poruka: "Upiši odgovor.", prazno: true };
-  // unos je LaTeX iz matematičkog polja (MathLive), kao na probnoj maturi
-  const u = ucitajLatex(unos, vars);
+  // unos je LaTeX iz matematičkog polja (MathLive), kao na probnoj maturi; % iza polja već piše, pa ga učenik ne mora
+  const u = ucitajLatex(String(p.iza ?? "").includes("%") ? String(unos).replace(/\\%/g, "") : unos, vars);
   if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati izraz: ${u.greska}.`, prazno: true };
   const tocan = poljeOdgovor(s, p);
   if (jednako(u, tocan, vars)) return { tocno: true };
@@ -157,18 +157,41 @@ export function odabirIzSkupa(s, skup) {
 
 const skupOdgovora = (s) => parseSkup(s.odgovor);
 
+// „upisi“: učenikov zapis (LaTeX iz matematičkog polja) → isti skup? Poruke za tipične greške: krive zagrade na
+// krajevima, suprotni dijelovi, krivi krajevi.
+function provjeriZapisSkupa(s, skup, latex) {
+  if (!String(latex ?? "").trim()) return { tocno: false, poruka: "Upiši skup.", prazno: true };
+  const u = ucitajSkupLatex(latex);
+  if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati zapis: ${u.greska}.`, prazno: true };
+  const njegov = u.skup;
+  if (jednakiSkupovi(njegov, skup)) return { tocno: true };
+  for (const k of s.krivo ?? []) if (jednakiSkupovi(njegov, parseSkup(k.odgovor))) return { tocno: false, poruka: k.poruka };
+  const blizu = (x, y) => x === y || Math.abs(x - y) < 1e-9;
+  if (njegov.length === skup.length && njegov.every((d, i) => blizu(d.a, skup[i].a) && blizu(d.b, skup[i].b))) {
+    return { tocno: false, poruka: "Krajevi su dobri, ali zagrade nisu. ⟨ ⟩ znači da kraj nije u skupu (kod < i >, i uvijek uz ∞), a [ ] da jest (kod ≤ i ≥)." };
+  }
+  if (skup.length && jednakiSkupovi(njegov, komplement(skup))) {
+    return { tocno: false, poruka: "To je upravo suprotan dio pravca. Provjeri traži li se gdje je izraz veći ili manji od nule." };
+  }
+  return { tocno: false, poruka: s.savjet || "Nije točno. Provjeri krajeve: uvrsti po jedan broj iz svakog dijela i pogledaj vrijedi li uvjet." };
+}
+
 export const interval = {
   tip: "interval",
   samoRucno: true,
   uloga: (s) => (s.nacin === "prikaz" ? POGLEDAJ : ODGOVOR),
-  opis: `Skup na brojevnom pravcu. Polja: tekst, tocke: [brojevi ili izrazi, npr. 1, "2-sqrt(3)"] (1–6 istaknutih točaka), nacin:
+  opis: `Skup na brojevnom pravcu ili zapis skupa. Polja: tekst, tocke: [brojevi ili izrazi, npr. 1, "2-sqrt(3)"] (1–6 istaknutih točaka), nacin:
 - "odaberi": učenik bira dijelove pravca i pune/prazne točke, a ispod vidi zapis; odgovor: "⟨-inf, 1⟩ U ⟨3, inf⟩" (⟨ ⟩ ili < > za otvoren, [ ]
-  za zatvoren kraj, U za uniju, {2} za točku, ∅, R); svaki konačni kraj mora biti među tockama; krivo?: [{odgovor (skup), poruka}];
+  za zatvoren kraj, U za uniju, {2} ili {1; 2} za točke, ∅, R, R \\ {-4} za razliku, ∩ za presjek); svaki konačni kraj mora biti među tockama;
+  krivo?: [{odgovor (skup), poruka}];
+- "upisi": učenik sam piše zapis skupa u matematičko polje (tipkovnica sa ⟨ ⟩ [ ] ∪ ∞ ℝ); oznaka? (ispred polja, zadano "$x \\in$"),
+  odgovor i krivo kao gore, tocke nisu potrebne; točan je svaki zapis istog skupa (npr. ℝ∖{-4} i ⟨-∞, -4⟩ ∪ ⟨-4, +∞⟩);
 - "prikaz": pokazuje skup (odgovor) bez pitanja: korak za gledanje.`,
   primjer: { tip: "interval", nacin: "odaberi", tekst: "Za koje je $x$ parabola iznad osi $x$?", tocke: [1, 3], odgovor: "<-inf, 1> U <3, inf>", krivo: [{ odgovor: "<1, 3>", poruka: "Između 1 i 3 parabola je ispod osi." }] },
   validate(s) {
     const { list, need } = problems();
-    need(["odaberi", "prikaz"].includes(s.nacin), "interval.nacin mora biti odaberi ili prikaz");
+    need(["odaberi", "upisi", "prikaz"].includes(s.nacin), "interval.nacin mora biti odaberi, upisi ili prikaz");
+    if (s.oznaka != null) need(isText(s.oznaka), "interval.oznaka mora biti tekst");
     need(isText(s.tekst), "interval treba „tekst“");
     const raw = s.tocke ?? [];
     const t = tockePravca(s);
@@ -180,7 +203,7 @@ export const interval = {
     } catch (e) {
       need(false, `odgovor: ${e.message}`);
     }
-    if (skup) {
+    if (skup && s.nacin !== "upisi") {
       const krajevi = skup.flatMap((d) => [d.a, d.b]).filter(Number.isFinite);
       const nema = krajevi.filter((k) => !t.some((x) => Math.abs(x.v - k) < 1e-9));
       need(!nema.length, `kraj ${nema[0]} nije među tockama, pa ga učenik ne može označiti`);
@@ -199,6 +222,7 @@ export const interval = {
   },
   check(s, odabir) {
     const skup = skupOdgovora(s);
+    if (s.nacin === "upisi") return provjeriZapisSkupa(s, skup, odabir);
     const njegov = skupIzOdabira(s, odabir);
     if (jednakiSkupovi(njegov, skup)) return { tocno: true };
     for (const k of s.krivo ?? []) if (jednakiSkupovi(njegov, parseSkup(k.odgovor))) return { tocno: false, poruka: k.poruka };
@@ -241,13 +265,38 @@ export const indeksVrijednosti = (k, v) => {
   return vrijednostiKlizaca(k).findIndex((o) => x != null && Math.abs(o.v - x) < 1e-9);
 };
 
-// Funkcije grafa za zadane parametre: oznaka → f(x)
+// Funkcije grafa za zadane parametre: oznaka → f(x); izvan [od, do] funkcija nije nacrtana
 export function funkcijeGrafa(s, parametri = {}) {
   return (s.funkcije ?? []).map((fn) => {
     const c = compile(fn.izraz);
-    return { ...fn, f: (x) => c.fn({ ...parametri, x }) };
+    const [od, d] = [fn.od != null ? vrijednost(String(fn.od)) : -Infinity, fn.do != null ? vrijednost(String(fn.do)) : Infinity];
+    return { ...fn, od, do: d, f: (x) => (x < od - 1e-12 || x > d + 1e-12 ? NaN : c.fn({ ...parametri, x })) };
   });
 }
+
+// ── geometrija na istom crtežu ──
+// Točka je [x, y] ili [x, y, z] (tijelo u prostoru: z je visina, y dubina), a koordinate smiju biti izrazi („sqrt(3)“).
+// Prostor se crta kosom projekcijom: dubina ide pod 45° skraćena na pola.
+const KOSO = 0.5 * Math.SQRT1_2;
+export function tockaCrteza(t) {
+  if (!Array.isArray(t) || (t.length !== 2 && t.length !== 3)) return null;
+  const v = t.map((x) => vrijednost(String(x)));
+  if (v.some((x) => x == null)) return null;
+  return t.length === 2 ? v : [v[0] + KOSO * v[1], v[2] + KOSO * v[1]];
+}
+export const tockaIzPolja = (t) => tockaCrteza(t?.z != null ? [t.x, t.y, t.z] : [t?.x, t?.y]);
+
+// Okvir crteža (u px) za zadani raspon: geometrija i jednaka mjerila na osima (krug ostaje krug, kut ostaje kut).
+export const CRTEZ = { W: 400, rub: { L: 34, R: 14, T: 14, B: 26 }, rubBezOsi: { L: 14, R: 14, T: 14, B: 14 }, minH: 180, maxH: 380, maxHBezOsi: 460 };
+export function okvirCrteza(s) {
+  const rub = s.osi === false ? CRTEZ.rubBezOsi : CRTEZ.rub;
+  const sirina = CRTEZ.W - rub.L - rub.R;
+  const zeljena = (sirina / (s.x[1] - s.x[0])) * (s.y[1] - s.y[0]) + rub.T + rub.B;
+  const H = Math.round(Math.min(s.osi === false ? CRTEZ.maxHBezOsi : CRTEZ.maxH, Math.max(CRTEZ.minH, zeljena)));
+  return { ...rub, W: CRTEZ.W, H, jednako: Math.abs(H - zeljena) < 2 };
+}
+
+const ima = (s) => ["likovi", "duzine", "kruznice", "kutovi", "vektori", "tekstovi"].some((k) => (s[k] ?? []).length);
 
 export const pocetniParametri = (s) => Object.fromEntries((s.klizaci ?? []).map((k) => [k.id, vrijednost(String(k.pocetak))]));
 export const ciljniParametri = (s) => Object.fromEntries(Object.entries(s.cilj ?? {}).map(([id, v]) => [id, vrijednost(String(v))]));
@@ -267,6 +316,7 @@ function istiGrafovi(s, p1, p2) {
 }
 
 const NACINI_GRAFA = ["prikaz", "istrazi", "poklopi"];
+export const POLOZAJI = ["gore", "dolje", "lijevo", "desno", "gore-desno", "gore-lijevo", "dolje-desno", "dolje-lijevo"];
 
 export const graf_funkcije = {
   tip: "graf_funkcije",
@@ -279,6 +329,13 @@ crte?: [{y | x, oznaka?}] (vodoravna/okomita isprekidana crta), strelice?: [{od:
 istakni?: {znak: ">0" | "<0" | ">=0" | "<=0"} (dio grafa prve funkcije iznad/ispod osi i odgovarajući dio osi x),
 formula?: LaTeX s {id} parametara ({id:k} za koeficijent: 1 se ne piše; npr. "f(x) = {A:k}\\\\cos({B}x) + {D}"), klizaci?: [{id, oznaka, min, max, korak, pocetak} ili
 {id, oznaka, vrijednosti: ["pi/6", …], pocetak}] (1–4), nacin:
+Isti crtež crta i geometriju (točka je [x, y] ili [x, y, z] za tijelo u prostoru, z je visina, y dubina, kosa projekcija; koordinate
+smiju biti izrazi): osi?: false (bez osi i brojeva), mreza?: false (bez mreže), funkcije tada smiju biti 0, funkcija.od?/do? (graf samo na
+[od, do]), tocke[].z?, tocke[].polozaj? ("gore", "dolje", "lijevo", "desno", "gore-desno"…), tocke[].prazna? (prazan kružić),
+likovi?: [{tocke: [[x, y], …], ispuna?, isprekidano?}], duzine?: [{od, do, oznaka?, isprekidano?, istaknuto?, strana?: 1 | -1}],
+kruznice?: [{sredina: [x, y], r, isprekidano?, ispuna?}], kutovi?: [{vrh, od, do, oznaka?, pravi?}] (manji kut između krakova vrh→od i
+vrh→do), vektori?: [{od, do, oznaka?}], tekstovi?: [{x, y, z?, tekst}], os_x?, os_y? (imena osi, npr. "Re" i "Im"). Oznake na crtežu su kratak tekst (smije $\\alpha$, $\\sqrt{3}$,
+$x_1$, $\\vec{a}$, $90^\\circ$). Uz geometriju raspon x i y mora čuvati omjer (validator javi ako bi se krug izobličio).
 - "prikaz": samo graf (bez klizača); "istrazi": klizači mijenjaju graf (korak za gledanje);
 - "poklopi": učenik klizačima poklopi svoj graf s isprekidanim grafom iz zadatka: cilj: {id: vrijednost}; klizac.poruka? kad taj parametar ne valja.`,
   primjer: {
@@ -315,8 +372,11 @@ formula?: LaTeX s {id} parametara ({id:k} za koeficijent: 1 se ne piše; npr. "f
       }
     });
     need(new Set(ids).size === ids.length, "id-jevi klizača moraju biti različiti");
-    if (need(Array.isArray(s.funkcije) && s.funkcije.length >= 1 && s.funkcije.length <= 3, "graf_funkcije treba 1–3 funkcije")) {
-      s.funkcije.forEach((fn, i) => {
+    const geometrija = ima(s);
+    const najmanje = geometrija && s.nacin === "prikaz" ? 0 : 1;
+    if (need(Array.isArray(s.funkcije ?? (najmanje ? null : [])) && (s.funkcije ?? []).length >= najmanje && (s.funkcije ?? []).length <= 3, `graf_funkcije treba ${najmanje}–3 funkcije`)) {
+      (s.funkcije ?? []).forEach((fn, i) => {
+        for (const k of ["od", "do"]) if (fn?.[k] != null) need(vrijednost(String(fn[k])) != null, `funkcije[${i}].${k} mora biti broj`);
         try {
           const c = compile(fn?.izraz);
           const strane = c.vars.filter((v) => v !== "x" && !ids.includes(v));
@@ -326,7 +386,34 @@ formula?: LaTeX s {id} parametara ({id:k} za koeficijent: 1 se ne piše; npr. "f
         }
       });
     }
-    for (const [i, t] of (s.tocke ?? []).entries()) need(vrijednost(String(t?.x)) != null && vrijednost(String(t?.y)) != null, `tocke[${i}] treba x i y (brojevi ili izrazi)`);
+    for (const [i, t] of (s.tocke ?? []).entries()) {
+      need(tockaIzPolja(t) != null, `tocke[${i}] treba x i y (i z za prostor), brojeve ili izraze`);
+      if (t?.polozaj != null) need(POLOZAJI.includes(t.polozaj), `tocke[${i}].polozaj mora biti jedno od: ${POLOZAJI.join(", ")}`);
+    }
+    for (const k of ["os_x", "os_y"]) if (s[k] != null) need(isText(s[k]), `${k} mora biti tekst`);
+    const tocka = (t, gdje) => need(tockaCrteza(t) != null, `${gdje} mora biti točka [x, y] ili [x, y, z]`);
+    for (const [i, l] of (s.likovi ?? []).entries()) {
+      if (need(Array.isArray(l?.tocke) && l.tocke.length >= 3, `likovi[${i}] treba barem 3 točke`)) l.tocke.forEach((t, j) => tocka(t, `likovi[${i}].tocke[${j}]`));
+    }
+    for (const [i, d] of (s.duzine ?? []).entries()) {
+      tocka(d?.od, `duzine[${i}].od`);
+      tocka(d?.do, `duzine[${i}].do`);
+      if (d?.strana != null) need(d.strana === 1 || d.strana === -1, `duzine[${i}].strana je 1 ili -1`);
+    }
+    for (const [i, k] of (s.kruznice ?? []).entries()) {
+      tocka(k?.sredina, `kruznice[${i}].sredina`);
+      need(vrijednost(String(k?.r)) > 0, `kruznice[${i}].r mora biti pozitivan broj`);
+    }
+    for (const [i, k] of (s.kutovi ?? []).entries()) for (const z of ["vrh", "od", "do"]) tocka(k?.[z], `kutovi[${i}].${z}`);
+    for (const [i, v] of (s.vektori ?? []).entries()) for (const z of ["od", "do"]) tocka(v?.[z], `vektori[${i}].${z}`);
+    for (const [i, t] of (s.tekstovi ?? []).entries()) need(tockaIzPolja(t) != null && isText(t?.tekst), `tekstovi[${i}] treba x, y i tekst`);
+    if (osi && (geometrija || s.osi === false)) {
+      const o = okvirCrteza(s);
+      if (!o.jednako) {
+        const omjer = (s.y[1] - s.y[0]) / (s.x[1] - s.x[0]);
+        need(false, `raspon x i y ne čuva omjer (y/x = ${omjer.toFixed(2)}), pa bi se krug ili kut izobličio: ${o.H >= (s.osi === false ? CRTEZ.maxHBezOsi : CRTEZ.maxH) ? "proširi x ili smanji y" : "proširi y ili smanji x"}`);
+      }
+    }
     for (const [i, c] of (s.crte ?? []).entries()) need(("x" in (c ?? {})) !== ("y" in (c ?? {})) && vrijednost(String(c.x ?? c.y)) != null, `crte[${i}] treba točno jedno od x ili y`);
     for (const [i, st] of (s.strelice ?? []).entries()) need([...(st?.od ?? []), ...(st?.do ?? [])].length === 4 && [...st.od, ...st.do].every((v) => vrijednost(String(v)) != null), `strelice[${i}] treba od: [x, y] i do: [x, y]`);
     if (s.istakni != null) need([">0", "<0", ">=0", "<=0"].includes(s.istakni?.znak), "istakni.znak mora biti >0, <0, >=0 ili <=0");

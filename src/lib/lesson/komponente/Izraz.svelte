@@ -7,7 +7,7 @@
   import GrafFunkcije from "./GrafFunkcije.svelte";
   import { ucitajLatex } from "../core/izraz.js";
   import { tocanOdgovor } from "../katalog/index.js";
-  import { ucitajMatematickiUnos } from "$lib/utils/maturaTipkovnica.js";
+  import { ucitajMatematickiUnos, postaviKartice } from "$lib/utils/maturaTipkovnica.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -60,6 +60,7 @@
             class:bad={losePolje(i)}
             aria-label={p.oznaka ? p.oznaka.replace(/\$/g, "") : "Odgovor"}
             bind:this={polja[i]}
+            onfocus={() => postaviKartice("brojevi")}
             oninput={(e) => (vrijednosti[i] = e.target.value)}
             onkeydown={tipka}
           ></math-field>

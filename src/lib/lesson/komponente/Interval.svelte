@@ -3,6 +3,7 @@
   // kružić = točka je u skupu). Ispod se uživo piše zapis intervala koji je učenik time sastavio, pa slika i
   // zapis ⟨ ⟩ [ ] idu zajedno. U „prikaz“ načinu pravac samo pokazuje zadani skup.
   import Md from "./Md.svelte";
+  import IntervalUpis from "./IntervalUpis.svelte";
   import { tockePravca, skupIzOdabira, odabirIzSkupa, texSkupa, parseSkup } from "../katalog/matematika.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
@@ -35,6 +36,9 @@
     i === 0 ? `lijevo od ${tocke[0]?.tex ?? "0"}` : i === n ? `desno od ${tocke[n - 1].tex}` : `između ${tocke[i - 1].tex} i ${tocke[i].tex}`;
 </script>
 
+{#if spec.nacin === "upisi"}
+  <IntervalUpis {spec} {locked} {pokazi} {ishod} {onodgovor} />
+{:else}
 {#if prikaz}
   <Md text={spec.tekst} />
 {:else}
@@ -87,6 +91,7 @@
   <div class="lx-actions">
     <button class="btn btn-primary" disabled={zakljucano} onclick={() => onodgovor($state.snapshot(odabir))}>Provjeri</button>
   </div>
+{/if}
 {/if}
 
 <style>

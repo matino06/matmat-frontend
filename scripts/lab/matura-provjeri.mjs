@@ -1,15 +1,15 @@
-// Ručno pisane interaktivne lekcije za Matematiku A (pilot): provjera validatorom i priprema za lab.
+// Ručno pisane interaktivne lekcije za Matematiku A: provjera validatorom i priprema za lab.
 //
 //   node scripts/lab/matura-provjeri.mjs [task_id …]
 //
-// Čita lab-out/matura/izvor-pilot.json (izvorni zadaci iz baze, samo čitanje) i lab-out/matura/lekcije/<task_id>.json
+// Čita lab-out/matura/izvor-sve.json (izvorni zadaci iz baze, samo čitanje) i lab-out/matura/lekcije/<task_id>.json
 // (lekcija), ispisuje greške i upozorenja i zapisuje lab-out/matura-lab/<task_id>.json za /lab/lekcija?mapa=matura-lab.
 import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { validateLesson } from "../../src/lib/lesson/validateLesson.js";
 
 const dir = join(process.cwd(), "lab-out/matura");
-const izvori = Object.fromEntries(JSON.parse(await readFile(join(dir, "izvor-pilot.json"), "utf8")).map((z) => [String(z.task_id), z]));
+const izvori = Object.fromEntries(JSON.parse(await readFile(join(dir, "izvor-sve.json"), "utf8")).map((z) => [String(z.task_id), z]));
 const trazeni = process.argv.slice(2);
 const datoteke = (await readdir(join(dir, "lekcije"))).filter((f) => f.endsWith(".json") && (!trazeni.length || trazeni.includes(f.replace(".json", ""))));
 await mkdir(join(process.cwd(), "lab-out/matura-lab"), { recursive: true });

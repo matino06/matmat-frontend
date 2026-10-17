@@ -14,6 +14,8 @@ const ZNAKOVI = [
   [/√\s*\(/g, " sqrt("],
   [/√\s*(\d+(?:[.,]\d+)?|[A-Za-z]+)/g, " sqrt($1)"],
   [/(\d),(\d)/g, "$1.$2"],
+  // stupnjevi su samo oznaka mjere: „70°“ je 70
+  [/°/g, ""],
 ];
 
 // Riječ bez razmaka („pix“, „sinx“, „2ab“) → poznati dijelovi (pi, x / sin, x / a, b), najduži prvi.
@@ -76,7 +78,7 @@ const NAREDBE = {
   pi: " pi ", infty: " inf ", cdot: "*", times: "*", ast: "*", div: "/", exponentialE: " e ",
   sin: " sin ", cos: " cos ", tan: " tan ", tg: " tan ", ln: " ln ", log: " log ", exp: " exp ",
   vert: "|", lvert: "|", rvert: "|", mid: "|",
-  ",": "", ";": "", ":": "", "!": "", " ": "", quad: "", qquad: "",
+  ",": "", ";": "", ":": "", "!": "", " ": "", quad: "", qquad: "", degree: "", "%": "/100",
 };
 const OGRADE = { "(": "(", ")": ")", "[": "(", "]": ")", "|": "|", ".": "", "\\{": "(", "\\}": ")", "\\vert": "|", "\\lvert": "|", "\\rvert": "|", "\\langle": "(", "\\rangle": ")" };
 
@@ -135,12 +137,19 @@ export function izLatexa(latex) {
       } else if (["left", "right", "mleft", "mright", "bigl", "bigr", "Bigl", "Bigr"].includes(n)) out += ograda();
       else if (["operatorname", "mathrm", "text", "mathit", "textrm"].includes(n)) out += ` ${grupa()} `;
       else if (n === "placeholder") throw new Error("dovrši izraz (ostalo je prazno mjesto)");
+      // \log_{b} x = log x / log b
+      else if (n === "log" && s[i] === "_") {
+        i++;
+        out += ` ((1)/(log(${izLatexa(grupa())})))*log `;
+      }
       else if (n in NAREDBE) out += NAREDBE[n];
       else throw new Error(`ne razumijem „\\${n}“`);
     } else if (c === "^") {
       i++;
-      out += `^(${izLatexa(grupa())})`;
-    } else if (c === "_") throw new Error("indeksi (npr. log s bazom) još nisu podržani");
+      const g = grupa();
+      // „70^{\circ}“: stupnjevi su samo oznaka mjere
+      if (g.trim() !== "\\circ") out += `^(${izLatexa(g)})`;
+    } else if (c === "_") throw new Error("indeks ovdje ne pripada (baza ide samo uz log)");
     else if (c === "{") out += `(${izLatexa(grupa())})`;
     else {
       out += c;

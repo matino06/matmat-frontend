@@ -10,11 +10,13 @@ Matematike A dijele zadatke s Matematikom B, pa lekcije vide i ti učenici.
 
 ## Tijek
 
-1. Izvor iz baze (samo čitanje) → `lab-out/matura/izvor-*.json` (task_id, tekst, objašnjenje; `results` je prazan,
-   točan odgovor je samo u objašnjenju).
+1. Izvor iz baze (samo čitanje) → `lab-out/matura/izvor-sve.json` (svi zadaci predmeta: task_id, cilj, tekst,
+   objašnjenje; `results` je prazan, točan odgovor je samo u objašnjenju).
 2. Lekcija → `lab-out/matura/lekcije/<task_id>.json` (format kao `lesson_ui`, `verzija: 1`).
 3. Provjera: `node scripts/lab/matura-provjeri.mjs [task_id …]` – validator mora javiti 0 grešaka; upozorenja
-   pregledaj. Skripta zapisuje i `lab-out/matura-lab/` za pregled na `/lab/lekcija?mapa=matura-lab` (dev).
+   pregledaj. Skripta zapisuje i `lab-out/matura-lab/` za pregled na `/lab/lekcija?mapa=matura-lab&z=<task_id>` (dev).
+   Crteže pogledaj kao slike: `node scripts/lab/crtez.mjs <task_id>` → `lab-out/matura/crtezi/*.png` (svaki graf i
+   geometrijski crtež lekcije, svijetla tema).
 4. Upis u bazu (`UPDATE task SET lesson_ui = … WHERE task_id = … AND lesson_ui IS NULL`) tek uz odobrenje.
 
 ## Pravila sadržaja
@@ -54,10 +56,19 @@ Puni opis polja je u `opis` svakog widgeta u `katalog/matematika.js`; primjeri s
   `graf` za graf iznad polja (graf_funkcije „prikaz“), `krivo: [{odgovor, poruka}]`. Približna decimalna vrijednost
   točnog izraza dobiva poruku da upiše točnu vrijednost (osim uz `priblizno: true`).
 - `interval` – „odaberi“: učenik na pravcu s točkama `tocke` bira dijelove i pune/prazne točke; `odgovor` u zapisu
-  `"<-inf, 1> U [3, inf>"`; „prikaz“ samo pokazuje skup.
+  `"<-inf, 1> U [3, inf>"` (i `R \ {-4}`, `{1; 2}`, ∩); „upisi“: učenik sam piše zapis skupa u matematičko polje
+  (tipkovnica se otvara na kartici ⟨ ⟩ [ ] ∪ ∞ ℝ; točan je svaki zapis istog skupa); „prikaz“ samo pokazuje skup.
+  Kad zadatak traži „zapiši rješenje kao interval“, zadnji korak neka bude „upisi“ (na maturi se zapis piše).
 - `podzadatak.graf` – graf uz cijelo objašnjenje (vidi pravila sadržaja).
 - `graf_funkcije` – „prikaz“ (s `crte`, `strelice`, `tocke`, `istakni: {znak: ">0"}`), „istrazi“ (klizači),
   „poklopi“ (učenik klizačima poklopi svoj graf s grafom iz zadatka; `cilj`). `zadatak.graf` je graf uz zadatak.
+  Isti crtež je i **geometrija**: `osi: false` (bez osi), `likovi`, `duzine`, `kruznice`, `kutovi` (luk ili pravi kut),
+  `vektori`, `tekstovi`, točke s `polozaj` i `prazna`, funkcija s `od`/`do` (dio grafa), `os_x`/`os_y` („Re“, „Im“).
+  Tijelo u prostoru: točke `[x, y, z]` (z visina, y dubina), crta se kosom projekcijom; skrivene bridove crtaj
+  `isprekidano`. Raspon x i y mora čuvati omjer (validator to provjerava). Svaka slika iz izvora (trokut, tijelo,
+  vektori, Gaussova ravnina, brojevna kružnica) postaje takav crtež.
+- `izraz` čita i `\log_{b}`, stupnjeve (`70^\circ` = 70) i `%` (kad je `iza: "%"`, učenik ga ne mora pisati). Za ±
+  ili više rješenja koristi više polja (`bilo_kojim_redom`).
 
 Predlošci: lekcije 108 (kvadratna nejednadžba) i 34 (parametri trigonometrijske funkcije s grafa) u
-`lab-out/matura/lekcije/`.
+`lab-out/matura/lekcije/`. Primjeri geometrije i upisa intervala su u lab katalogu (`?z=katalog`).
