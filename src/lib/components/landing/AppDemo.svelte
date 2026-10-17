@@ -385,12 +385,6 @@
           {:else}
             {#key taskIdx}
               <article class="card task-card pv-task" bind:this={taskEl}>
-                <div class="task-meta">
-                  <span class="badge mono">#{task.id}</span>
-                  <span class="badge">{level.id} razina</span>
-                  <span class="badge badge-dim">Matematika</span>
-                </div>
-
                 <div class="{prose} prose-sm lg:prose-lg !max-w-none pv-math" use:fitMath use:mathjaxTypeset={task.id}>
                   {@html renderTaskHtml(task.text, task.id)}
                 </div>
@@ -446,13 +440,11 @@
               </article>
             {/key}
 
-            <div class="task-bottom">
-              {#if rated}
-                <span>Ishod: {task.objective}</span>
-              {:else}
-                <span>Kategorija je skrivena dok ne procijeniš zadatak. Označi dio zadatka da pitaš AI baš za njega.</span>
-              {/if}
-            </div>
+            {#if !rated}
+              <div class="task-bottom">
+                <span>Označi dio zadatka da pitaš AI baš za njega.</span>
+              </div>
+            {/if}
           {/if}
         {:else if view === "exams"}
           <DemoExam level={level.id} onScrollTop={scrollTop} />
