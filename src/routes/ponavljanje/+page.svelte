@@ -351,10 +351,6 @@
       {/if}
       {/if}
     </article>
-
-    <div class="task-bottom">
-      <div style="color:var(--text-faint);font-size:12px">Kategorija je skrivena dok ne procijeniš zadatak.</div>
-    </div>
   {/if}
 </div>
 

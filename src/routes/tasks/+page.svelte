@@ -1,7 +1,6 @@
 <script>
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
-  import { findOwnCourse } from "$lib/store/ownCourses.svelte";
   import Sketch from "$lib/sketch/Sketch.svelte";
   import { onMount, onDestroy, tick } from "svelte";
   import { fetchReadiness } from "$lib/api/progress";
@@ -18,7 +17,6 @@
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
 
-  let currentCourse = $state(null);
   let task = $state(null);
   let selectedTempo = $state(null);
   let noMoreTasks = $state(false);
@@ -83,11 +81,6 @@
     }
     initialProgress = progress;
     readinessPct = progress ?? 0;
-  }
-
-  async function fetchCurrentCourse() {
-    const response = await apiClient("/account/current-course", { method: "GET" });
-    if (response.ok) currentCourse = await response.json();
   }
 
   // The session-expiry path already shows its own message and redirects, so
@@ -280,7 +273,7 @@
       loaded = true;
       (async () => {
         try {
-          await Promise.all([fetchCurrentCourse(), fetchUserGoal()]);
+          await fetchUserGoal();
           await fetchNewTask();
         } catch (err) {
           loaded = false;
@@ -431,16 +424,6 @@
 
   {:else if task}
     <article class="card task-card">
-      <div class="task-meta">
-        <span class="badge mono">#{task.id ?? '—'}</span>
-        {#if findOwnCourse(currentCourse?.courseId)}
-          <span class="badge badge-dim">{findOwnCourse(currentCourse.courseId).courseName}</span>
-        {:else}
-          <span class="badge">{currentCourse.courseId == 1 ? "A" : "B"} razina</span>
-          <span class="badge badge-dim">Matematika</span>
-        {/if}
-      </div>
-
       {#if lekcija}
         {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} />{/key}
         <div class="lesson-alt">
@@ -503,10 +486,6 @@
       {/if}
       {/if}
     </article>
-
-    <div class="task-bottom">
-      <div style="color:var(--text-faint);font-size:12px">Kategorija je skrivena dok ne procijeniš zadatak.</div>
-    </div>
   {/if}
 </div>
 
