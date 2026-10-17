@@ -1,6 +1,7 @@
 <script>
   import { apiClient } from "$lib/api/apiClient";
   import { userData, logout } from "$lib/store/user.svelte";
+  import { ownCourses } from "$lib/store/ownCourses.svelte";
 
   let learningReminders = $state(false);
   let featureAnnouncements = $state(false);
@@ -12,6 +13,37 @@
   let savingTempo = $state(false);
   let notifSavedTimer = $state(null);
   let notifJustSaved = $state(false);
+
+  // Brisanje računa (DELETE /account): sve se briše odmah i zauvijek, pa se korisnik odjavljuje.
+  let deletingAccount = $state(false);
+  let accountDeleteBusy = $state(false);
+  let accountDeleted = $state(false);
+  let accountDeleteError = $state("");
+
+  function openAccountDelete() {
+    accountDeleteError = "";
+    deletingAccount = true;
+  }
+
+  function closeAccountDelete() {
+    if (!accountDeleteBusy && !accountDeleted) deletingAccount = false;
+  }
+
+  async function confirmAccountDelete() {
+    if (accountDeleteBusy) return;
+    accountDeleteBusy = true;
+    accountDeleteError = "";
+    try {
+      const r = await apiClient("/account", { method: "DELETE" });
+      // 404: an earlier try already deleted it, but its answer was lost.
+      if (!r.ok && r.status !== 404) throw new Error(String(r.status));
+      accountDeleted = true;
+    } catch {
+      accountDeleteError = "Račun nije obrisan. Provjeri vezu i pokušaj ponovno.";
+    } finally {
+      accountDeleteBusy = false;
+    }
+  }
 
   const TEMPO_OPTIONS = [
     { value: 1, name: "Ubrzani", desc: "Brže otključavanje novih lekcija — više izazova" },
@@ -186,8 +218,49 @@
       </svg>
       Odjavi se
     </button>
+
+    <div class="danger-zone">
+      <div>
+        <div class="notif-title">Obriši račun</div>
+        <div class="notif-desc">Račun i svi podaci brišu se odmah i zauvijek.</div>
+      </div>
+      <button class="btn btn-quiet delete-account-btn" onclick={openAccountDelete}>Obriši račun</button>
+    </div>
   </div>
 </div>
+
+{#if deletingAccount}
+  <div class="modal-bg" role="presentation" onclick={closeAccountDelete}>
+    <div class="card modal" role="dialog" aria-modal="true" aria-labelledby="del-account-h" tabindex="-1" onclick={(e) => e.stopPropagation()} onkeydown={(e) => e.key === "Escape" && closeAccountDelete()}>
+      {#if accountDeleted}
+        <h2 id="del-account-h">Račun je obrisan</h2>
+        <p>Potvrda ti stiže e-mailom. Hvala što si učio/la s MatMatom.</p>
+        <div class="actions">
+          <button class="btn btn-primary" onclick={logout}>U redu</button>
+        </div>
+      {:else}
+        <h2 id="del-account-h">Obrisati račun zauvijek?</h2>
+        <p>Odmah i zauvijek se briše:</p>
+        <ul class="delete-list">
+          <li>napredak, riješeni zadaci i niz dana</li>
+          <li>razgovori s AI asistentom</li>
+          <li>probni ispiti i fotografije odgovora</li>
+          {#if ownCourses.isCreator}<li>vlastiti predmeti i učitani materijali</li>{/if}
+          <li>postavke i e-mail obavijesti</li>
+          <li>prijava preko Googlea ili Applea</li>
+        </ul>
+        <p>To se ne može poništiti. Potvrda stiže na {userData.user?.email ?? "adresu tvog računa"}.</p>
+        {#if accountDeleteError}<p class="delete-error" role="alert">{accountDeleteError}</p>{/if}
+        <div class="actions">
+          <button class="btn btn-ghost" disabled={accountDeleteBusy} onclick={closeAccountDelete}>Odustani</button>
+          <button class="btn btn-danger" disabled={accountDeleteBusy} onclick={confirmAccountDelete}>
+            {accountDeleteBusy ? "Brišem…" : "Obriši račun zauvijek"}
+          </button>
+        </div>
+      {/if}
+    </div>
+  </div>
+{/if}
 
 <style>
   .settings-head {
@@ -289,7 +362,27 @@
   }
   .logout-btn:hover { color: var(--danger, #ef4444); }
 
+  .danger-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .delete-account-btn { color: var(--danger, #ef4444); flex-shrink: 0; }
+
+  .modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; z-index: 1000; padding: 16px; }
+  .modal { padding: var(--pad-5); max-width: 440px; width: 100%; display: grid; gap: 14px; }
+  .modal h2 { margin: 0; font-size: 17px; font-weight: 600; }
+  .modal p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+  .delete-list { margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.7; color: var(--text); }
+  .delete-error { color: var(--danger, #ef4444) !important; }
+  .actions { display: flex; justify-content: flex-end; gap: 8px; }
+
   @media (max-width: 600px) {
     .tempo-grid { grid-template-columns: 1fr; }
+    .danger-zone { flex-direction: column; align-items: flex-start; }
   }
 </style>
