@@ -124,8 +124,16 @@ export function izLatexa(latex) {
   while (i < s.length) {
     const c = s[i];
     if (c === "\\") {
+      const pocetak = i;
       const n = naredba();
-      if (n === "frac" || n === "dfrac" || n === "tfrac") out += `((${izLatexa(grupa())})/(${izLatexa(grupa())}))`;
+      if (n === "frac" || n === "dfrac" || n === "tfrac") {
+        const [gore, dolje] = [grupa(), grupa()];
+        // mješoviti broj: „1\frac{1}{3}“ je 1 + 1/3, ne 1 · 1/3
+        const cijeli = /(?:^|[^\w.^_}\\])(\d+)\s*$/.exec(s.slice(0, pocetak));
+        if (cijeli && /^\s*\d+\s*$/.test(gore) && /^\s*\d+\s*$/.test(dolje)) {
+          out = out.replace(/\d+\s*$/, "") + `((${cijeli[1]})+(${gore})/(${dolje}))`;
+        } else out += `((${izLatexa(gore)})/(${izLatexa(dolje)}))`;
+      }
       else if (n === "sqrt") {
         let korijen = null;
         if (s[i] === "[") {
