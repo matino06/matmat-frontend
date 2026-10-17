@@ -39,7 +39,7 @@ export const funkcije = kartica("f(x)", "Funkcije", [
   [funkcija("sin"), funkcija("cos"), funkcija("tan"), k("^{\\circ}", "'")],
   [funkcija("log"), { latex: "\\log_{\\placeholder{}}", insert: "\\log_{#?}\\left(#0\\right)", tooltip: "Logaritam s bazom" }, funkcija("ln"), { latex: "e^{n}", insert: "e^{#?}" }],
   [{ latex: "\\sqrt[n]{\\placeholder{}}", insert: "\\sqrt[#?]{#0}" }, { latex: "|x|", insert: "\\left|#0\\right|", tooltip: "Apsolutna vrijednost" }, { latex: "x_1", insert: "#@_{#?}", tooltip: "Indeks" }, k("\\pm")],
-  [k("e"), k("\\pi"), k("\\%"), k("!")],
+  [k("e"), k("\\pi"), k("\\%"), { latex: "!", variants: ["!", { latex: "\\binom{n}{k}", insert: "\\binom{#0}{#?}" }], tooltip: "Faktorijel (dugo drži za binomni koeficijent)" }],
 ]);
 
 export const skupovi = kartica("∈ℝ", "Skupovi i intervali", [

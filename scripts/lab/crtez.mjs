@@ -33,7 +33,9 @@ function png(spec, ime) {
   const sam = svg
     .replace("<svg", `<svg xmlns="http://www.w3.org/2000/svg" width="${w * 2}" height="${h * 2}"`)
     .replace(/(<svg[^>]*>)/, `$1<style>${css}</style><rect width="100%" height="100%" fill="#fff"/>`)
-    .replace(/<!--[\s\S]*?-->/g, "");
+    .replace(/<!--[\s\S]*?-->/g, "")
+    // boje krivulja su u style="stroke: var(--gf-c1)", a rsvg-convert ne zna CSS varijable
+    .replace(/var\((--[a-z0-9-]+)\)/g, (m, v) => BOJE[v] ?? "#888");
   const put = join(izlaz, `${ime}.png`);
   execFileSync("rsvg-convert", ["-o", put], { input: sam });
   console.log(`  ${put}`);

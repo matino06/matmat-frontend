@@ -280,7 +280,8 @@ export function funkcijeGrafa(s, parametri = {}) {
 const KOSO = 0.5 * Math.SQRT1_2;
 export function tockaCrteza(t) {
   if (!Array.isArray(t) || (t.length !== 2 && t.length !== 3)) return null;
-  const v = t.map((x) => vrijednost(String(x)));
+  // broj ide izravno: String(1e-16) bi se pročitao kao 1·e − 16
+  const v = t.map((x) => (typeof x === "number" ? (Number.isFinite(x) ? x : null) : vrijednost(String(x))));
   if (v.some((x) => x == null)) return null;
   return t.length === 2 ? v : [v[0] + KOSO * v[1], v[2] + KOSO * v[1]];
 }
@@ -296,7 +297,10 @@ export function okvirCrteza(s) {
   return { ...rub, W: CRTEZ.W, H, jednako: Math.abs(H - zeljena) < 2 };
 }
 
-const ima = (s) => ["likovi", "duzine", "kruznice", "kutovi", "vektori", "tekstovi"].some((k) => (s[k] ?? []).length);
+// geometrija traži jednako mjerilo na osima (krug, kut); crtež bez funkcije smije biti i samo točke ili crte
+const ima = (s, polja = ["tijela", "likovi", "duzine", "kruznice", "kutovi"]) => polja.some((k) => (s[k] ?? []).length);
+const imaIstoMjerilo = (s) => ima(s);
+const imaSadrzaj = (s) => ima(s, ["tijela", "likovi", "duzine", "kruznice", "kutovi", "vektori", "tekstovi", "tocke", "crte", "strelice"]);
 
 export const pocetniParametri = (s) => Object.fromEntries((s.klizaci ?? []).map((k) => [k.id, vrijednost(String(k.pocetak))]));
 export const ciljniParametri = (s) => Object.fromEntries(Object.entries(s.cilj ?? {}).map(([id, v]) => [id, vrijednost(String(v))]));
@@ -333,8 +337,10 @@ Isti crtež crta i geometriju (točka je [x, y] ili [x, y, z] za tijelo u prosto
 smiju biti izrazi): osi?: false (bez osi i brojeva), mreza?: false (bez mreže), funkcije tada smiju biti 0, funkcija.od?/do? (graf samo na
 [od, do]), tocke[].z?, tocke[].polozaj? ("gore", "dolje", "lijevo", "desno", "gore-desno"…), tocke[].prazna? (prazan kružić),
 likovi?: [{tocke: [[x, y], …], ispuna?, isprekidano?}], duzine?: [{od, do, oznaka?, isprekidano?, istaknuto?, strana?: 1 | -1}],
-kruznice?: [{sredina: [x, y], r, isprekidano?, ispuna?}], kutovi?: [{vrh, od, do, oznaka?, pravi?}] (manji kut između krakova vrh→od i
-vrh→do), vektori?: [{od, do, oznaka?}], tekstovi?: [{x, y, z?, tekst}], os_x?, os_y? (imena osi, npr. "Re" i "Im"). Oznake na crtežu su kratak tekst (smije $\\alpha$, $\\sqrt{3}$,
+kruznice?: [{sredina: [x, y] ili [x, y, z], r, isprekidano?, ispuna?}] (sa [x, y, z] vodoravna kružnica u prostoru, npr. baza valjka:
+elipsa sa stražnjom polovicom isprekidano; ispuna: baza vidljiva odozgo, cijela puna), kutovi?: [{vrh, od, do, oznaka?, pravi?}] (manji kut između krakova vrh→od i
+vrh→do), tijela?: [{vrsta: "valjak" | "stozac", sredina: [x, y, z] (središte donje baze), r, h}] (obris, baze i skriveni dio
+isprekidano, točno izračunati za kosu projekciju; visinu, polumjer i oznake dodaj kao duzine/tocke), vektori?: [{od, do, oznaka?}], tekstovi?: [{x, y, z?, tekst}], os_x?, os_y? (imena osi, npr. "Re" i "Im"). Oznake na crtežu su kratak tekst (smije $\\alpha$, $\\sqrt{3}$,
 $x_1$, $\\vec{a}$, $90^\\circ$). Uz geometriju raspon x i y mora čuvati omjer (validator javi ako bi se krug izobličio).
 - "prikaz": samo graf (bez klizača); "istrazi": klizači mijenjaju graf (korak za gledanje);
 - "poklopi": učenik klizačima poklopi svoj graf s isprekidanim grafom iz zadatka: cilj: {id: vrijednost}; klizac.poruka? kad taj parametar ne valja.`,
@@ -372,8 +378,8 @@ $x_1$, $\\vec{a}$, $90^\\circ$). Uz geometriju raspon x i y mora čuvati omjer (
       }
     });
     need(new Set(ids).size === ids.length, "id-jevi klizača moraju biti različiti");
-    const geometrija = ima(s);
-    const najmanje = geometrija && s.nacin === "prikaz" ? 0 : 1;
+    const geometrija = imaIstoMjerilo(s);
+    const najmanje = imaSadrzaj(s) && s.nacin === "prikaz" ? 0 : 1;
     if (need(Array.isArray(s.funkcije ?? (najmanje ? null : [])) && (s.funkcije ?? []).length >= najmanje && (s.funkcije ?? []).length <= 3, `graf_funkcije treba ${najmanje}–3 funkcije`)) {
       (s.funkcije ?? []).forEach((fn, i) => {
         for (const k of ["od", "do"]) if (fn?.[k] != null) need(vrijednost(String(fn[k])) != null, `funkcije[${i}].${k} mora biti broj`);
@@ -403,6 +409,11 @@ $x_1$, $\\vec{a}$, $90^\\circ$). Uz geometriju raspon x i y mora čuvati omjer (
     for (const [i, k] of (s.kruznice ?? []).entries()) {
       tocka(k?.sredina, `kruznice[${i}].sredina`);
       need(vrijednost(String(k?.r)) > 0, `kruznice[${i}].r mora biti pozitivan broj`);
+    }
+    for (const [i, t] of (s.tijela ?? []).entries()) {
+      need(["valjak", "stozac"].includes(t?.vrsta), `tijela[${i}].vrsta je "valjak" ili "stozac"`);
+      need(Array.isArray(t?.sredina) && t.sredina.length === 3 && tockaCrteza(t.sredina) != null, `tijela[${i}].sredina je [x, y, z]`);
+      need(vrijednost(String(t?.r)) > 0 && vrijednost(String(t?.h)) > 0, `tijela[${i}] treba pozitivne r i h`);
     }
     for (const [i, k] of (s.kutovi ?? []).entries()) for (const z of ["vrh", "od", "do"]) tocka(k?.[z], `kutovi[${i}].${z}`);
     for (const [i, v] of (s.vektori ?? []).entries()) for (const z of ["od", "do"]) tocka(v?.[z], `vektori[${i}].${z}`);

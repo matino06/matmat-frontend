@@ -11,6 +11,13 @@ const FUNCS = {
   log: Math.log10,
   exp: Math.exp,
   round: Math.round,
+  // n! (samo za prirodne brojeve i 0)
+  fact: (n) => {
+    if (!Number.isInteger(n) || n < 0 || n > 170) return NaN;
+    let f = 1;
+    for (let k = 2; k <= n; k++) f *= k;
+    return f;
+  },
 };
 const CONSTS = { pi: Math.PI, e: Math.E };
 

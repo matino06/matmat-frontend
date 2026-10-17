@@ -16,6 +16,7 @@ const ZNAKOVI = [
   [/(\d),(\d)/g, "$1.$2"],
   // stupnjevi su samo oznaka mjere: „70°“ je 70
   [/°/g, ""],
+  [/(\d+)\s*!/g, " fact($1)"],
 ];
 
 // Riječ bez razmaka („pix“, „sinx“, „2ab“) → poznati dijelovi (pi, x / sin, x / a, b), najduži prvi.
@@ -137,6 +138,10 @@ export function izLatexa(latex) {
       } else if (["left", "right", "mleft", "mright", "bigl", "bigr", "Bigl", "Bigr"].includes(n)) out += ograda();
       else if (["operatorname", "mathrm", "text", "mathit", "textrm"].includes(n)) out += ` ${grupa()} `;
       else if (n === "placeholder") throw new Error("dovrši izraz (ostalo je prazno mjesto)");
+      else if (n === "binom" || n === "dbinom" || n === "tbinom") {
+        const [gore, dolje] = [izLatexa(grupa()), izLatexa(grupa())];
+        out += ` ((fact(${gore}))/((fact(${dolje}))*(fact((${gore})-(${dolje})))))`;
+      }
       // \log_{b} x = log x / log b
       else if (n === "log" && s[i] === "_") {
         i++;
@@ -149,6 +154,20 @@ export function izLatexa(latex) {
       const g = grupa();
       // „70^{\circ}“: stupnjevi su samo oznaka mjere
       if (g.trim() !== "\\circ") out += `^(${izLatexa(g)})`;
+    } else if (c === "!") {
+      // n! i (n-1)!: faktorijel uzima broj, slovo ili zagradu ispred sebe
+      i++;
+      const t = out.trimEnd();
+      let od = t.length;
+      if (t.endsWith(")")) {
+        let dub = 0;
+        for (od = t.length - 1; od >= 0; od--) {
+          if (t[od] === ")") dub++;
+          else if (t[od] === "(" && --dub === 0) break;
+        }
+      } else od = t.search(/[A-Za-z0-9.]+$/);
+      if (od < 0 || od >= t.length) throw new Error("ispred ! treba broj ili zagrada");
+      out = `${t.slice(0, od)} fact(${t.slice(od)})`;
     } else if (c === "_") throw new Error("indeks ovdje ne pripada (baza ide samo uz log)");
     else if (c === "{") out += `(${izLatexa(grupa())})`;
     else {
@@ -231,6 +250,7 @@ export function broj(n) {
 
 // Počinje li zapis slovom, funkcijom ili zagradom (pa se „2·x“ piše „2x“)?
 function pocinjeSlovom(n) {
+  if (n.fn === "fact") return razina(n.a) < 5 || pocinjeSlovom(n.a);
   if ("id" in n || n.fn) return true;
   if (n.op === "^") return pocinjeSlovom(n.a);
   if (n.op === "*") return pocinjeSlovom(n.a);
@@ -243,6 +263,7 @@ export function tex(n) {
   if (n.fn) {
     if (n.fn === "sqrt") return `\\sqrt{${tex(n.a)}}`;
     if (n.fn === "abs") return `\\left|${tex(n.a)}\\right|`;
+    if (n.fn === "fact") return `${razina(n.a) < 5 ? zagrade(tex(n.a)) : tex(n.a)}!`;
     return `${TEX_FN[n.fn] ?? `\\mathrm{${n.fn}}`}${zagrade(tex(n.a))}`;
   }
   switch (n.op) {

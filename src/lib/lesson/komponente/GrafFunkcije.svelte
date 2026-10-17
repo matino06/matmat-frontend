@@ -160,8 +160,9 @@
     return String(t ?? "")
       .replace(/\$/g, "")
       .replace(/\\(?:vec|overrightarrow)\{([^{}]*)\}/g, (_, a) => `${a}\u20d7`)
-      .replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g, "$1/$2")
-      .replace(/\\sqrt\{([^{}]*)\}/g, (_, a) => (a.length > 1 ? `√(${a})` : `√${a}`))
+      .replace(/\\(?:bar|overline)\{([^{}]*)\}/g, (_, a) => [...a].map((c) => `${c}\u0304`).join(""))
+      .replace(/\\sqrt\{([^{}]*)\}/g, (_, a) => (/^\w+$/.test(a) ? `√${a}` : `√(${a})`))
+      .replace(/\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}/g, (_, a, b) => `${/^[\w√.]+$/.test(a) ? a : `(${a})`}/${/^[\w√.]+$/.test(b) ? b : `(${b})`}`)
       .replace(/\^\{?\\circ\}?/g, "°")
       .replace(/\\(?:cdot|times)/g, "·")
       .replace(/\\(?:left|right)/g, "")
@@ -186,11 +187,21 @@
     return p ? [X(p[0]), Y(p[1])] : null;
   };
   const likovi = $derived((spec.likovi ?? []).map((l) => ({ ...l, pts: l.tocke.map(P) })).filter((l) => l.pts.every(Boolean)));
+  // Kružnica sa središtem [x, y, z] je vodoravna (baza valjka, stošca): u kosoj projekciji je elipsa, a stražnja
+  // polovica (dalje od gledatelja) crta se isprekidano.
   const kruznice = $derived(
     (spec.kruznice ?? []).map((k) => {
       const c = P(k.sredina);
       const r = vrijednost(String(k.r));
-      return { ...k, c, rx: (r * (W - L - R)) / (x1 - x0), ry: (r * (H - T - B)) / (y1 - y0) };
+      if (k.sredina?.length !== 3) return { ...k, c, rx: (r * (W - L - R)) / (x1 - x0), ry: (r * (H - T - B)) / (y1 - y0) };
+      const [sx, sy, sz] = k.sredina.map((v) => vrijednost(String(v)));
+      const luk = (od) =>
+        Array.from({ length: 49 }, (_, i) => {
+          const t = od + (Math.PI * i) / 48;
+          const p = P([sx + r * Math.cos(t), sy + r * Math.sin(t), sz]);
+          return `${r1(p[0])},${r1(p[1])}`;
+        }).join(" ");
+      return { ...k, c, prostor: true, prednja: luk(Math.PI), straznja: luk(0) };
     }),
   );
   // Središte crteža: oznake dužina i točaka idu od njega prema van (da ne padnu u lik).
@@ -214,6 +225,57 @@
         return { ...d, a, b, lx: mx + nx * 12, ly: my + ny * 12, sidro: Math.abs(nx) < 0.35 ? "middle" : nx > 0 ? "start" : "end" };
       })
       .filter(Boolean),
+  );
+  // Valjak i stožac: donja baza (skriveni dio isprekidano), obris kroz točke u kojima su bridovi tangente na elipsu
+  // baze, i gornja baza valjka. Sve u px nakon kose projekcije.
+  const tijela = $derived(
+    (spec.tijela ?? []).map((tl) => {
+      const [sx, sy, sz] = tl.sredina.map((v) => (typeof v === "number" ? v : vrijednost(String(v))));
+      const [r, h] = [vrijednost(String(tl.r)), vrijednost(String(tl.h))];
+      const E = (t, z = sz) => P([sx + r * Math.cos(t), sy + r * Math.sin(t), z]);
+      const luk = (a, b, z) => {
+        const n = Math.max(2, Math.ceil((Math.abs(b - a) / (2 * Math.PI)) * 96));
+        return Array.from({ length: n + 1 }, (_, i) => E(a + ((b - a) * i) / n, z)).map((p) => `${r1(p[0])},${r1(p[1])}`).join(" ");
+      };
+      let tangente;
+      if (tl.vrsta === "valjak") {
+        // obris valjka: točke elipse s najmanjim i najvećim x na crtežu
+        let [tMin, tMax] = [0, 0];
+        for (let i = 0; i < 720; i++) {
+          const t = (i * Math.PI) / 360;
+          if (E(t)[0] < E(tMin)[0]) tMin = t;
+          if (E(t)[0] > E(tMax)[0]) tMax = t;
+        }
+        tangente = [tMax, tMin];
+      } else {
+        // obris stošca: pravac iz vrha dodiruje elipsu baze (vektorski umnožak mijenja predznak)
+        const A = P([sx, sy, sz + h]);
+        const f = (t) => {
+          const [p, q] = [E(t), E(t + 1e-4)];
+          return (p[0] - A[0]) * (q[1] - p[1]) - (p[1] - A[1]) * (q[0] - p[0]);
+        };
+        tangente = [];
+        for (let i = 0; i < 720; i++) {
+          let [a, b] = [(i * Math.PI) / 360, ((i + 1) * Math.PI) / 360];
+          if (Math.sign(f(a)) === Math.sign(f(b))) continue;
+          for (let k = 0; k < 40; k++) {
+            const m = (a + b) / 2;
+            if (Math.sign(f(a)) === Math.sign(f(m))) a = m;
+            else b = m;
+          }
+          tangente.push((a + b) / 2);
+        }
+      }
+      if (tangente.length !== 2) return { iza: luk(0, 2 * Math.PI), ispred: "", crte: [], vrh: tl.vrsta === "stozac" ? P([sx, sy, sz + h]) : null, gornja: null };
+      // skriveni luk donje baze je onaj koji prolazi kroz najdalju točku (t = π/2, najveći y)
+      let [a, b] = [...tangente].sort((x, y) => x - y);
+      const straga = Math.PI / 2 > a && Math.PI / 2 < b;
+      const [izaOd, izaDo] = straga ? [a, b] : [b, a + 2 * Math.PI];
+      const [ispredOd, ispredDo] = straga ? [b, a + 2 * Math.PI] : [a, b];
+      const vrh = tl.vrsta === "stozac" ? P([sx, sy, sz + h]) : null;
+      const crte = tangente.map((t) => [E(t), vrh ?? E(t, sz + h)]);
+      return { iza: luk(izaOd, izaDo, sz), ispred: luk(ispredOd, ispredDo, sz), crte, vrh, gornja: tl.vrsta === "valjak" ? luk(0, 2 * Math.PI, sz + h) : null };
+    }),
   );
   const vektori = $derived((spec.vektori ?? []).map((v) => ({ ...v, a: P(v.od), b: P(v.do) })).filter((v) => v.a && v.b));
   const kutovi = $derived(
@@ -316,8 +378,18 @@
     {#each likovi as l, j (j)}
       <polygon class="gf-lik" class:ispuna={l.ispuna} class:isprekidano={l.isprekidano} points={l.pts.map((p) => `${r1(p[0])},${r1(p[1])}`).join(" ")} />
     {/each}
+    {#each tijela as tl, j (j)}
+      <polyline class="gf-lik isprekidano" points={tl.iza} />
+      {#if tl.ispred}<polyline class="gf-lik" points={tl.ispred} />{/if}
+      {#if tl.gornja}<polyline class="gf-lik ispuna" points={tl.gornja} />{/if}
+      {#each tl.crte as [p, q], m (m)}<line class="gf-duzina" x1={p[0]} y1={p[1]} x2={q[0]} y2={q[1]} />{/each}
+    {/each}
     {#each kruznice as k, j (j)}
-      {#if k.c}<ellipse class="gf-lik" class:ispuna={k.ispuna} class:isprekidano={k.isprekidano} cx={k.c[0]} cy={k.c[1]} rx={k.rx} ry={k.ry} />{/if}
+      {#if k.prostor}
+        {#if k.ispuna}<polygon class="gf-lik ispuna" style="stroke: none" points="{k.prednja} {k.straznja}" />{/if}
+        <polyline class="gf-lik" class:isprekidano={k.isprekidano || !k.ispuna} points={k.straznja} />
+        <polyline class="gf-lik" class:isprekidano={k.isprekidano} points={k.prednja} />
+      {:else if k.c}<ellipse class="gf-lik" class:ispuna={k.ispuna} class:isprekidano={k.isprekidano} cx={k.c[0]} cy={k.c[1]} rx={k.rx} ry={k.ry} />{/if}
     {/each}
 
     {#each crte as c, j (j)}
