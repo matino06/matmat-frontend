@@ -145,6 +145,7 @@ export function izLatexa(latex) {
         out += korijen ? `((${pod})^(1/(${izLatexa(korijen)})))` : ` sqrt(${pod})`;
       } else if (["left", "right", "mleft", "mright", "bigl", "bigr", "Bigl", "Bigr"].includes(n)) out += ograda();
       else if (["operatorname", "mathrm", "text", "mathit", "textrm"].includes(n)) out += ` ${grupa()} `;
+      else if (n === "pm" || n === "mp") throw new Error("umjesto ± upiši jedan predznak (+ ili −)");
       else if (n === "placeholder") throw new Error("dovrši izraz (ostalo je prazno mjesto)");
       else if (n === "binom" || n === "dbinom" || n === "tbinom") {
         const [gore, dolje] = [izLatexa(grupa()), izLatexa(grupa())];
