@@ -2847,3 +2847,38 @@ svg {
 .status-dot.bad {
   background: var(--danger);
 }
+
+/* Matematička tipkovnica (MathLive) u bojama aplikacije, kao u iOS aplikaciji: tipke na podlozi, razlomak u boji
+   aplikacije, upravljačke tipke (strelice, Izađi, ⌫) prigušene. Raspored je u src/lib/utils/maturaTipkovnica.js. */
+.ML__keyboard {
+  --keyboard-background: var(--bg-elev-2);
+  --keyboard-border: var(--border);
+  --keyboard-horizontal-rule: 1px solid var(--border);
+  --keyboard-toolbar-text: var(--text-dim);
+  --keyboard-toolbar-text-active: var(--primary);
+  --keyboard-toolbar-background-hover: var(--bg-hover);
+  --keyboard-toolbar-background-selected: transparent;
+  --keyboard-accent-color: var(--primary);
+  --keycap-background: var(--bg-elev);
+  --keycap-background-hover: var(--bg-hover);
+  --keycap-background-active: var(--primary);
+  --keycap-background-pressed: var(--bg-hover);
+  --keycap-text: var(--text);
+  --keycap-text-active: #fff;
+  --keycap-text-hover: var(--text);
+  --keycap-text-pressed: var(--text);
+  --keycap-border: var(--border);
+  --keycap-border-bottom: var(--border);
+  --keycap-primary-background: var(--primary);
+  --keycap-primary-background-hover: color-mix(in srgb, var(--primary) 88%, #fff);
+  --keycap-primary-text: #fff;
+  --keycap-secondary-background: var(--border);
+  --keycap-secondary-background-hover: var(--border-strong);
+  --keycap-secondary-text: var(--text);
+  --keycap-secondary-border: transparent;
+  --keycap-secondary-border-bottom: transparent;
+  --variant-panel-background: var(--bg-elev-2);
+  --variant-keycap-text: var(--text);
+  --variant-keycap-text-active: #fff;
+  --variant-keycap-background-active: var(--primary);
+}
