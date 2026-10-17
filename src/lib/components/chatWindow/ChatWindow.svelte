@@ -4,6 +4,8 @@
   import { currentTaskState } from "$lib/store/currentTask.svelte.js";
   import { aiQuoteState, clearAiQuote } from "$lib/store/aiQuote.svelte.js";
   import { apiClient } from "$lib/api/apiClient";
+  import { aiConsent, decideAiConsent, AI_CONSENT_TITLE } from "$lib/store/aiConsent.svelte";
+  import AiConsentDetails from "$lib/components/ai/AiConsentDetails.svelte";
   import { renderChatMd } from "$lib/utils/markdownRenderer";
   import { splitSketches, sketchSrc, nextShown, stableEnd } from "$lib/utils/aiSketch.js";
 
@@ -399,6 +401,12 @@
         // The conversation doesn't exist, belongs to another task or the exam
         // question isn't found — start a new one with the next question.
         if (response.status === 404) conversationId = null;
+        // No AI consent: the panel turns into the consent text with a switch to allow it.
+        if (response.status === 403) {
+          aiConsent.granted = false;
+          aiConsent.loaded = true;
+          throw new ChatError("AI asistent je isključen jer nije dana dozvola za AI.", { retryable: false });
+        }
         throw new ChatError(GENERIC_ERROR);
       }
 
@@ -574,6 +582,23 @@
     if (!len) return;
     setTimeout(scrollToBottom, 50);
   });
+
+  // Declined (or never decided) AI consent: the panel shows what is sent and lets the student allow it here.
+  let aiOff = $derived(aiConsent.loaded && aiConsent.granted !== true);
+  let allowing = $state(false);
+  let allowError = $state("");
+
+  async function allowAi() {
+    allowing = true;
+    allowError = "";
+    try {
+      await decideAiConsent(true);
+    } catch {
+      allowError = "Dozvola nije spremljena. Pokušaj ponovno.";
+    } finally {
+      allowing = false;
+    }
+  }
 </script>
 
 <div class="chat">
@@ -591,6 +616,17 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
   </header>
+
+  {#if aiOff}
+    <div class="chat-consent">
+      <p class="chat-consent-lead">AI asistent je isključen jer nije dana dozvola za AI. Prije uključivanja pročitaj što se šalje.</p>
+      <h3>{AI_CONSENT_TITLE}</h3>
+      <AiConsentDetails />
+      {#if allowError}<p class="chat-consent-error" role="alert">{allowError}</p>{/if}
+      <button class="btn btn-primary" disabled={allowing} onclick={allowAi}>{allowing ? "Spremam…" : "Slažem se, uključi AI"}</button>
+      <p class="chat-consent-note">Dozvolu možeš isključiti u Postavkama.</p>
+    </div>
+  {:else}
 
   <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
   <div bind:this={boardEl} class="chat-board" onclick={onBoardClick}
@@ -738,6 +774,7 @@
       <div class="chat-usage" class:empty={usage?.remaining === 0}>{usageNote}</div>
     {/if}
   </div>
+  {/if}
 </div>
 
 
@@ -751,6 +788,21 @@
   </div>
 {/if}
 <style>
+  .chat-consent {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px 16px;
+    display: grid;
+    align-content: start;
+    gap: 14px;
+  }
+  .chat-consent h3 { margin: 0; font-size: 15px; font-weight: 600; }
+  .chat-consent-lead { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+  .chat-consent-note { margin: 0; font-size: 12px; color: var(--text-faint); }
+  .chat-consent-error { margin: 0; font-size: 13px; color: var(--danger, #ef4444); }
+  .chat-consent .btn { justify-self: start; }
+
   .chat {
     flex: 1;
     min-height: 0;

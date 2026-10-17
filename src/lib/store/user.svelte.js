@@ -13,6 +13,9 @@ export const userData = $state({
   isAdmin: false,
   adminChecked: false,
   needsOnboarding: false,
+  // The backend has an account for the user (after login() or on a reload with a live session), so per-account
+  // settings like AI consent can be read.
+  accountReady: false,
 });
 
 export const turnstileData = $state({ isLoaded: false });
@@ -38,6 +41,7 @@ export const initAuth = async () => {
     if (await client.isAuthenticated()) {
       await client.getTokenSilently();
       userData.user = normalizeUser(await client.getUser());
+      userData.accountReady = true;
       // Not awaited: admin status gates UI (sidebar nav, course switcher) that
       // defaults to the non-admin view anyway, so it can settle a beat later
       // rather than delaying the whole app shell by another round-trip.
@@ -155,6 +159,8 @@ const login = async () => {
     userData.needsOnboarding = true;
   }
 
+  userData.accountReady = true;
+
   const adminRes = await apiClient("/account/is-admin", { method: "GET" });
   if (adminRes.ok) userData.isAdmin = await adminRes.json();
 };
@@ -170,6 +176,7 @@ export const clearSession = async () => {
   userData.isAdmin = false;
   userData.adminChecked = false;
   userData.needsOnboarding = false;
+  userData.accountReady = false;
   try {
     const client = await getAuth0Client();
     await client.logout({ openUrl: false });
