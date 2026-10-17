@@ -7,12 +7,13 @@
   import { userData, turnstileData, initAuth, validateSession } from "$lib/store/user.svelte";
   import { panelState, openAI, closeAI, closeFormule, closePomo } from "$lib/store/panels.svelte";
   import { uiState, toggleSidebar, closeSidebar, initSidebarCollapsed } from "$lib/store/ui.svelte";
-  import { courseState, loadCurrentCourse } from "$lib/store/course.svelte";
+  import { courseState, loadCurrentCourse, courseLabel as labelFor } from "$lib/store/course.svelte";
   import { ownCourses, loadOwnCourses, findOwnCourse, loadExamMaterials } from "$lib/store/ownCourses.svelte";
   import { getProgram } from "$lib/config/programs";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
   import Sidebar from "$lib/components/layout/Sidebar.svelte";
+  import CourseLabel from "$lib/components/layout/CourseLabel.svelte";
   import Panel from "$lib/components/panel/Panel.svelte";
   import ChatWindow from "$lib/components/chatWindow/ChatWindow.svelte";
   import Onboarding from "$lib/components/onboarding/Onboarding.svelte";
@@ -126,9 +127,7 @@
       loadExamMaterials(ownCourse.courseId);
     }
   });
-  // Falls back to maths while the course is still loading — that is what the
-  // shell showed unconditionally before, and it lasts one fetch.
-  let courseLabel = $derived(program?.short ?? findOwnCourse(courseState.courseId)?.courseName ?? "Matematika");
+  let courseLabel = $derived(labelFor(courseState.courseId) ?? "");
   let formulasPdfUrl = $derived(ownCourse ? examMaterials[examIndex]?.url : (program?.pdf ?? "/pdfs/MAT-FORMULE.pdf"));
   let formulasTitle = $derived(ownCourse ? "Materijal dostupan na ispitu" : "Maturalne tablice i formule");
 
@@ -186,19 +185,19 @@
             </svg>
           </button>
           {#if path === '/mapa'}
-            <span style="color:var(--text-faint)">{courseLabel}</span>
+            <span style="color:var(--text-faint)"><CourseLabel /></span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Mapa gradiva</b>
           {:else if path === '/tasks'}
-            <span style="color:var(--text-faint)">{courseLabel}</span>
+            <span style="color:var(--text-faint)"><CourseLabel /></span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Zadaci</b>
           {:else if path === '/ponavljanje'}
-            <span style="color:var(--text-faint)">{courseLabel}</span>
+            <span style="color:var(--text-faint)"><CourseLabel /></span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Ponavljanje</b>
           {:else if path === '/progress'}
-            <span style="color:var(--text-faint)">{courseLabel}</span>
+            <span style="color:var(--text-faint)"><CourseLabel /></span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Napredak</b>
           {:else if path.startsWith('/moji-predmeti')}
@@ -208,7 +207,7 @@
               <b>Novi predmet</b>
             {/if}
           {:else if path === '/goals'}
-            <span style="color:var(--text-faint)">{courseLabel}</span>
+            <span style="color:var(--text-faint)"><CourseLabel /></span>
             <span style="color:var(--text-faint); margin: 0 6px">/</span>
             <b>Ciljevi</b>
           {:else if path === '/settings'}

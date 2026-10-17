@@ -2,6 +2,7 @@
   import { userData } from "$lib/store/user.svelte";
   import { apiClient } from "$lib/api/apiClient";
   import Sketch from "$lib/sketch/Sketch.svelte";
+  import CourseLabel from "$lib/components/layout/CourseLabel.svelte";
   import { onMount, onDestroy, tick } from "svelte";
   import { fetchReadiness } from "$lib/api/progress";
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
@@ -381,7 +382,7 @@
     <div>
       <h1>Zadaci za danas</h1>
       <div class="sub">
-        Matematika · {dailyGoal} zadataka planirano · {completedToday} riješeno ·
+        <CourseLabel /> · {dailyGoal} zadataka planirano · {completedToday} riješeno ·
         <span class="mono">{remaining}</span> preostalo ·
         <span class="mono" style="color:var(--success)">{readinessPct}% spreman</span>
       </div>
