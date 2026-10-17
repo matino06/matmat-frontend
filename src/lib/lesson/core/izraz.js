@@ -14,8 +14,8 @@ const ZNAKOVI = [
   [/√\s*\(/g, " sqrt("],
   [/√\s*(\d+(?:[.,]\d+)?|[A-Za-z]+)/g, " sqrt($1)"],
   [/(\d),(\d)/g, "$1.$2"],
-  // stupnjevi su samo oznaka mjere: „70°“ je 70
-  [/°/g, ""],
+  // „70°“: oznaka mjere (70), a unutar sin/cos/tg kut u stupnjevima (vidi pripremi)
+  [/°/g, " ° "],
   [/(\d+)\s*!/g, " fact($1)"],
 ];
 
@@ -39,7 +39,13 @@ export function pripremi(unos, varijable = []) {
   for (const [re, z] of ZNAKOVI) s = s.replace(re, z);
   const poznato = [...FUNKCIJE, ...KONSTANTE, ...varijable, "inf"];
   const tokeni = [];
+  // ° je u izrazu sa sin/cos/tg kut u stupnjevima (sin 53° = sin(53π/180)), inače samo oznaka mjere (70° = 70)
+  const trig = /sin|cos|tan/.test(s);
   for (const m of s.matchAll(/\s*(?:(\d+(?:\.\d+)?)|([A-Za-z]+)|(\*\*|[-+*/^()]))|\s*(\S)/g)) {
+    if (m[4] === "°") {
+      tokeni.push({ t: "deg", v: trig ? "* (pi / 180)" : "" });
+      continue;
+    }
     if (m[4]) throw new Error(`ne razumijem znak „${m[4]}“`);
     if (m[1]) tokeni.push({ t: "num", v: m[1] });
     else if (m[2]) {
@@ -53,7 +59,7 @@ export function pripremi(unos, varijable = []) {
   for (let i = 0; i < tokeni.length; i++) {
     const tk = tokeni[i];
     const prev = out.at(-1);
-    const zavrsava = prev && (prev.t === "num" || prev.t === "id" || prev.v === ")");
+    const zavrsava = prev && (prev.t === "num" || prev.t === "id" || prev.t === "deg" || prev.v === ")");
     const pocinje = tk.t === "num" || tk.t === "id" || tk.t === "fn" || tk.v === "(";
     if (zavrsava && pocinje) out.push({ t: "op", v: "*" });
     out.push(tk);
@@ -90,6 +96,7 @@ export function pripremi(unos, varijable = []) {
             dio.push(tokeni[i + 1], ...pot);
             i += 1 + pot.length;
           }
+          if (tokeni[i + 1]?.t === "deg") dio.push(tokeni[++i]);
           arg.push(dio);
         }
       if (!arg.length) throw new Error(`iza „${tk.v}“ treba broj ili zagrada`);
@@ -112,7 +119,7 @@ const NAREDBE = {
   pi: " pi ", infty: " inf ", cdot: "*", times: "*", ast: "*", div: "/", exponentialE: " e ",
   sin: " sin ", cos: " cos ", tan: " tan ", tg: " tan ", ln: " ln ", log: " log ", exp: " exp ",
   vert: "|", lvert: "|", rvert: "|", mid: "|",
-  ",": "", ";": "", ":": "", "!": "", " ": "", quad: "", qquad: "", degree: "", "%": "/100",
+  ",": "", ";": "", ":": "", "!": "", " ": "", quad: "", qquad: "", degree: " ° ", "%": "/100",
 };
 const OGRADE = { "(": "(", ")": ")", "[": "(", "]": ")", "|": "|", ".": "", "\\{": "(", "\\}": ")", "\\vert": "|", "\\lvert": "|", "\\rvert": "|", "\\langle": "(", "\\rangle": ")" };
 
@@ -194,8 +201,8 @@ export function izLatexa(latex) {
     } else if (c === "^") {
       i++;
       const g = grupa();
-      // „70^{\circ}“: stupnjevi su samo oznaka mjere
-      if (g.trim() !== "\\circ") out += `^(${izLatexa(g)})`;
+      // „70^{\circ}“: stupnjevi (pripremi odlučuje jesu li samo oznaka mjere)
+      out += g.trim() === "\\circ" ? " ° " : `^(${izLatexa(g)})`;
     } else if (c === "!") {
       // n! i (n-1)!: faktorijel uzima broj, slovo ili zagradu ispred sebe
       i++;
