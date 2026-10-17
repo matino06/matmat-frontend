@@ -1,38 +1,44 @@
 <script>
-  // Matematički odgovor kao na papiru: polje za izraz s gumbima za π, √ i potenciju, a ispod svakog polja
-  // pregled kako je aplikacija pročitala unos (KaTeX), da učenik vidi je li „2pi/3“ ono što je mislio.
+  // Matematički odgovor u matematičkom polju (MathLive) s istom tipkovnicom kao na probnoj maturi: razlomak,
+  // korijen, π i potencija iscrtavaju se odmah u polju, kao na papiru. Polje daje LaTeX, a provjera ga čita
+  // (core/izraz.js: izLatexa) i uspoređuje vrijednosti.
+  import { onMount } from "svelte";
   import Md from "./Md.svelte";
   import GrafFunkcije from "./GrafFunkcije.svelte";
-  import { ucitaj } from "../core/izraz.js";
+  import { ucitajLatex } from "../core/izraz.js";
   import { tocanOdgovor } from "../katalog/index.js";
+  import { ucitajMatematickiUnos } from "$lib/utils/maturaTipkovnica.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
   // svelte-ignore state_referenced_locally (korak se za novi spec iscrtava iznova)
   let vrijednosti = $state(spec.polja.map(() => ""));
   let polja = $state([]);
-  let aktivno = $state(0);
+  let spremno = $state(false);
 
   const vars = $derived(spec.varijable ?? []);
-  const pregled = $derived(vrijednosti.map((v) => (String(v).trim() ? ucitaj(v, vars) : null)));
+  // greška čitanja (npr. prazno mjesto u razlomku) vidi se odmah, prije provjere
+  const greske = $derived(vrijednosti.map((v) => (String(v).trim() ? ucitajLatex(v, vars).greska : null)));
   const potpuno = $derived(vrijednosti.every((v) => String(v).trim()));
 
-  function predaj(e) {
-    e?.preventDefault();
+  onMount(async () => {
+    await ucitajMatematickiUnos();
+    spremno = true;
+  });
+
+  $effect(() => {
+    for (const mf of polja) if (mf) mf.readOnly = locked;
+  });
+
+  function predaj() {
     if (!locked && potpuno) onodgovor($state.snapshot(vrijednosti));
   }
 
-  // umetni znak na mjesto kursora u zadnjem aktivnom polju
-  function umetni(t) {
-    const el = polja[aktivno];
-    if (!el || locked) return;
-    const [a, b] = [el.selectionStart ?? el.value.length, el.selectionEnd ?? el.value.length];
-    vrijednosti[aktivno] = el.value.slice(0, a) + t + el.value.slice(b);
-    const kursor = a + t.length - (t.endsWith("()") ? 1 : 0);
-    requestAnimationFrame(() => {
-      el.focus();
-      el.setSelectionRange(kursor, kursor);
-    });
+  function tipka(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      predaj();
+    }
   }
 
   const losePolje = (i) => ishod && !ishod.tocno && !ishod.prazno && ishod.polje === i;
@@ -42,49 +48,33 @@
 <div class="lx-question"><Md text={spec.tekst} /></div>
 {#if spec.graf}<div class="iz-graf"><GrafFunkcije spec={{ ...spec.graf, nacin: "prikaz", tekst: "" }} bezTeksta /></div>{/if}
 
-<form class="iz" onsubmit={predaj}>
+<div class="iz">
   {#each spec.polja as p, i (i)}
     <div class="iz-red">
-      {#if p.oznaka}<label class="iz-oznaka" for="iz-{i}-{spec.tekst.length}"><Md text={p.oznaka} inline /></label>{/if}
+      {#if p.oznaka}<span class="iz-oznaka"><Md text={p.oznaka} inline /></span>{/if}
       <div class="iz-polje">
-        <input
-          id="iz-{i}-{spec.tekst.length}"
-          class="inp iz-inp"
-          class:ok={dobroPolje(i)}
-          class:bad={losePolje(i)}
-          autocomplete="off"
-          autocapitalize="off"
-          spellcheck="false"
-          placeholder="?"
-          disabled={locked}
-          bind:this={polja[i]}
-          bind:value={vrijednosti[i]}
-          onfocus={() => (aktivno = i)}
-        />
+        {#if spremno}
+          <math-field
+            class="iz-mf"
+            class:ok={dobroPolje(i)}
+            class:bad={losePolje(i)}
+            aria-label={p.oznaka ? p.oznaka.replace(/\$/g, "") : "Odgovor"}
+            bind:this={polja[i]}
+            oninput={(e) => (vrijednosti[i] = e.target.value)}
+            onkeydown={tipka}
+          ></math-field>
+        {:else}
+          <div class="iz-mf iz-ucitavanje">…</div>
+        {/if}
         {#if p.iza}<span class="iz-iza"><Md text={p.iza} inline /></span>{/if}
-        <div class="iz-pregled" aria-live="polite">
-          {#if pregled[i]?.greska}
-            <span class="iz-greska">{pregled[i].greska}</span>
-          {:else if pregled[i]}
-            <Md text={`$= ${pregled[i].tex}$`} inline />
-          {/if}
-        </div>
+        {#if greske[i]}<p class="iz-greska">{greske[i]}</p>{/if}
       </div>
     </div>
   {/each}
-  {#if !locked}
-    <div class="iz-tipke" aria-label="Posebni znakovi">
-      {#each [["π", "π"], ["√", "√()"], ["x²", "^2"], ["xⁿ", "^"], ["/", "/"]] as [oznaka, t] (oznaka)}
-        {#if oznaka !== "x²" || vars.length}
-          <button type="button" class="iz-tipka" onmousedown={(e) => e.preventDefault()} onclick={() => umetni(t)}>{oznaka}</button>
-        {/if}
-      {/each}
-    </div>
-  {/if}
   <div class="lx-actions">
-    <button class="btn btn-primary" type="submit" disabled={locked || !potpuno}>Provjeri</button>
+    <button class="btn btn-primary" type="button" disabled={locked || !potpuno} onclick={predaj}>Provjeri</button>
   </div>
-</form>
+</div>
 {#if pokazi}<p class="lx-solution">Točan odgovor: <Md text={tocanOdgovor(spec)} inline /></p>{/if}
 
 <style>
@@ -102,56 +92,53 @@
   }
   .iz-oznaka {
     min-width: 44px;
-    padding-top: 9px;
+    padding-top: 11px;
     text-align: right;
     white-space: nowrap;
   }
   .iz-polje {
     flex: 1;
-    max-width: 320px;
+    max-width: 340px;
     display: grid;
     grid-template-columns: 1fr auto;
     column-gap: 8px;
+    align-items: center;
   }
-  .iz-iza {
-    padding-top: 9px;
-    white-space: nowrap;
-  }
-  .iz-inp {
+  .iz-mf {
+    display: block;
     width: 100%;
-    height: var(--lx-control);
-    padding: 4px 10px;
-    font-family: var(--font-mono);
-    font-size: 16px;
-  }
-  .iz-pregled {
-    grid-column: 1 / -1;
-    min-height: 22px;
-    padding: 3px 2px 0;
-    font-size: 15px;
-    color: var(--text-dim);
-  }
-  .iz-greska {
-    font-size: 12.5px;
-    color: var(--text-faint);
-  }
-  .iz-tipke {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .iz-tipka {
-    min-width: 40px;
-    height: 34px;
-    padding: 0 10px;
+    min-height: 44px;
+    padding: 6px 10px;
     border: 1px solid var(--border);
     border-radius: var(--r-md);
     background: var(--bg-elev);
     color: var(--text);
-    font-size: 15px;
-    cursor: pointer;
+    font-size: 19px;
+    --keyboard-zindex: 1500;
+    --caret-color: var(--primary);
+    --selection-background-color: color-mix(in srgb, var(--primary) 25%, transparent);
+    --contains-highlight-background-color: transparent;
   }
-  .iz-tipka:hover {
+  .iz-mf:focus-within {
+    outline: none;
     border-color: var(--primary-border);
+  }
+  .iz-mf.ok {
+    border-color: var(--lx-ok);
+  }
+  .iz-mf.bad {
+    border-color: var(--lx-bad);
+  }
+  .iz-ucitavanje {
+    color: var(--text-faint);
+  }
+  .iz-iza {
+    white-space: nowrap;
+  }
+  .iz-greska {
+    grid-column: 1 / -1;
+    margin: 4px 2px 0;
+    font-size: 12.5px;
+    color: var(--text-faint);
   }
 </style>

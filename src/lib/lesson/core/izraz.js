@@ -70,6 +70,100 @@ export function pripremi(unos, varijable = []) {
   return out.map((t) => t.v).join(" ");
 }
 
+// ── LaTeX iz matematičkog polja (MathLive, kao na probnoj maturi) → zapis za pripremi() ──────────
+// „\frac{\pi}{6}“ → „((pi)/(6))“, „\sqrt[3]{x}“ → „((x)^(1/(3)))“, „x^{2}“ → „x^(2)“, „\left|x\right|“ → „abs(x)“.
+const NAREDBE = {
+  pi: " pi ", infty: " inf ", cdot: "*", times: "*", ast: "*", div: "/", exponentialE: " e ",
+  sin: " sin ", cos: " cos ", tan: " tan ", tg: " tan ", ln: " ln ", log: " log ", exp: " exp ",
+  vert: "|", lvert: "|", rvert: "|", mid: "|",
+  ",": "", ";": "", ":": "", "!": "", " ": "", quad: "", qquad: "",
+};
+const OGRADE = { "(": "(", ")": ")", "[": "(", "]": ")", "|": "|", ".": "", "\\{": "(", "\\}": ")", "\\vert": "|", "\\lvert": "|", "\\rvert": "|", "\\langle": "(", "\\rangle": ")" };
+
+export function izLatexa(latex) {
+  const s = String(latex ?? "").replace(/\{,\}/g, ".");
+  let i = 0;
+  const naredba = () => {
+    const m = /^\\([A-Za-z]+|.)/.exec(s.slice(i));
+    i += m[0].length;
+    return m[1];
+  };
+  const grupa = () => {
+    while (s[i] === " ") i++;
+    if (s[i] === "{") {
+      let dubina = 0;
+      const od = ++i;
+      for (; i < s.length; i++) {
+        if (s[i] === "{") dubina++;
+        else if (s[i] === "}" && dubina-- === 0) break;
+      }
+      if (i >= s.length) throw new Error("nedostaje }");
+      return s.slice(od, i++);
+    }
+    if (s[i] === "\\") {
+      const od = i;
+      naredba();
+      return s.slice(od, i);
+    }
+    return s[i++] ?? "";
+  };
+  const ograda = () => {
+    while (s[i] === " ") i++;
+    for (const k of Object.keys(OGRADE).sort((a, b) => b.length - a.length)) {
+      if (s.startsWith(k, i) && !(k.length > 1 && /[A-Za-z]/.test(s[i + k.length] ?? ""))) {
+        i += k.length;
+        return OGRADE[k];
+      }
+    }
+    throw new Error("ne razumijem zagradu");
+  };
+  let out = "";
+  while (i < s.length) {
+    const c = s[i];
+    if (c === "\\") {
+      const n = naredba();
+      if (n === "frac" || n === "dfrac" || n === "tfrac") out += `((${izLatexa(grupa())})/(${izLatexa(grupa())}))`;
+      else if (n === "sqrt") {
+        let korijen = null;
+        if (s[i] === "[") {
+          const kraj = s.indexOf("]", i);
+          korijen = s.slice(i + 1, kraj);
+          i = kraj + 1;
+        }
+        const pod = izLatexa(grupa());
+        out += korijen ? `((${pod})^(1/(${izLatexa(korijen)})))` : ` sqrt(${pod})`;
+      } else if (["left", "right", "mleft", "mright", "bigl", "bigr", "Bigl", "Bigr"].includes(n)) out += ograda();
+      else if (["operatorname", "mathrm", "text", "mathit", "textrm"].includes(n)) out += ` ${grupa()} `;
+      else if (n === "placeholder") throw new Error("dovrši izraz (ostalo je prazno mjesto)");
+      else if (n in NAREDBE) out += NAREDBE[n];
+      else throw new Error(`ne razumijem „\\${n}“`);
+    } else if (c === "^") {
+      i++;
+      out += `^(${izLatexa(grupa())})`;
+    } else if (c === "_") throw new Error("indeksi (npr. log s bazom) još nisu podržani");
+    else if (c === "{") out += `(${izLatexa(grupa())})`;
+    else {
+      out += c;
+      i++;
+    }
+  }
+  // |x| → abs(x): okomite crte idu u parovima (otvara, zatvara)
+  let otvoreno = false;
+  return out.replace(/\|/g, () => {
+    otvoreno = !otvoreno;
+    return otvoreno ? " abs(" : ")";
+  });
+}
+
+// Unos iz matematičkog polja (LaTeX) → isto kao ucitaj().
+export function ucitajLatex(latex, varijable = []) {
+  try {
+    return ucitaj(izLatexa(latex), varijable);
+  } catch (e) {
+    return { greska: e.message };
+  }
+}
+
 // Unos → { izraz, fn, vars, tex } ili { greska }. Varijable koje nisu dopuštene su greška za učenika.
 export function ucitaj(unos, varijable = []) {
   try {

@@ -40,7 +40,8 @@ Uz to, za maturu:
 
 Puni opis polja je u `opis` svakog widgeta u `katalog/matematika.js`; primjeri su u lab katalogu.
 
-- `izraz` – odgovor kao izraz (π, √, razlomak, x², implicitno množenje); točno je sve iste vrijednosti
+- `izraz` – odgovor u matematičkom polju (MathLive) s tipkovnicom probne mature (`src/lib/utils/maturaTipkovnica.js`):
+  razlomak, korijen, π i potencija iscrtavaju se odmah. Polje daje LaTeX, provjera ga čita (`izLatexa`); točno je sve iste vrijednosti
   (`varijable: ["x"]` za izraze s x). `bilo_kojim_redom` za nultočke, `iza` za tekst iza polja („$> 0$“),
   `graf` za graf iznad polja (graf_funkcije „prikaz“), `krivo: [{odgovor, poruka}]`. Približna decimalna vrijednost
   točnog izraza dobiva poruku da upiše točnu vrijednost (osim uz `priblizno: true`).

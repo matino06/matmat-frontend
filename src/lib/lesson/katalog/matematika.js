@@ -3,7 +3,7 @@
 // (prompt.js ih preskače), ali ih validator i aplikacija znaju provjeriti i nacrtati.
 import { compile } from "../core/expr.js";
 import { isNum } from "../core/number.js";
-import { ucitaj, jednako, vrijednost, texIzraza } from "../core/izraz.js";
+import { ucitaj, ucitajLatex, jednako, vrijednost, texIzraza } from "../core/izraz.js";
 import { parseSkup, jednakiSkupovi, sadrzi, texSkupa, sredi } from "../core/skup.js";
 import { POGLEDAJ, ODGOVOR, isText, problems, noAnswerFields } from "./zajednicko.js";
 
@@ -22,8 +22,9 @@ function poljeOdgovor(s, p) {
 function provjeriPolje(s, p, unos) {
   const vars = varijableIzraza(s);
   if (!String(unos ?? "").trim()) return { tocno: false, poruka: "Upiši odgovor.", prazno: true };
-  const u = ucitaj(unos, vars);
-  if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati „${unos}“: ${u.greska}.`, prazno: true };
+  // unos je LaTeX iz matematičkog polja (MathLive), kao na probnoj maturi
+  const u = ucitajLatex(unos, vars);
+  if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati izraz: ${u.greska}.`, prazno: true };
   const tocan = poljeOdgovor(s, p);
   if (jednako(u, tocan, vars)) return { tocno: true };
   for (const k of p.krivo ?? []) {
@@ -41,7 +42,8 @@ export const izraz = {
   tip: "izraz",
   samoRucno: true,
   uloga: () => ODGOVOR,
-  opis: `Matematički odgovor koji učenik upisuje kao na papiru (π, √, razlomak, x², implicitno množenje). Polja: tekst, polja: [{oznaka
+  opis: `Matematički odgovor koji učenik upisuje u matematičko polje s tipkovnicom probne mature (razlomak, korijen, π, potencija
+se odmah iscrtavaju). Polja: tekst, polja: [{oznaka
 (markdown ispred polja, npr. "$x_1 =$"), iza? (markdown iza polja, npr. "$> 0$"), odgovor (izraz, npr. "pi/6", "2-sqrt(3)", "x^2-4*x+3"), krivo?: [{odgovor, poruka}], savjet?}] (1–4),
 varijable?: ["x"] (ako je odgovor izraz s varijablom), bilo_kojim_redom?: true (npr. dvije nultočke), priblizno?: true (prihvati decimalni
 zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve što ima istu vrijednost.`,
