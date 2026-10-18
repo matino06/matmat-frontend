@@ -48,7 +48,10 @@
     } catch {
       return "—";
     }
-    return Number.isFinite(v) ? formatNumber(v, iz.decimale ?? 2) : "—";
+    // „decimale“ je najviše toliko decimala (formatNumber sam dodaje znamenke tek za vrlo male brojeve)
+    if (!Number.isFinite(v)) return "—";
+    const d = iz.decimale ?? 2;
+    return formatNumber(Math.abs(v) >= 10 ** -d ? Number(v.toFixed(d)) : v, d);
   }
 </script>
 

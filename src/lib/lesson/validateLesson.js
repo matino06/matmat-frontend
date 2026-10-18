@@ -131,7 +131,7 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
           !isti.length ||
             !isti.every((b) =>
               quantityAnswers(p.pitanje).some(
-                (a) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(a) * 0.005),
+                (a) => Math.abs(a - b) <= (a === 0 ? 1e-9 : Math.abs(a) * 0.005),
               ),
             ),
           `${at}.blizanac ima isti rezultat kao pitanje (${isti.map(formatNumber).join("; ")}), pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`,
@@ -166,7 +166,7 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
         if (isNum(a))
           warn(
             numbersIn(String(r)).some(
-              (n) => Math.abs(n - a) <= Math.max(1e-9, Math.abs(a) * 0.005),
+              (n) => Math.abs(n - a) <= (a === 0 ? 1e-9 : Math.abs(a) * 0.005),
             ),
             `${at}: točan odgovor ${a} ne pojavljuje se u rezultatima izvornog zadatka („${r}“); provjeri je li pitanje isto`,
           );
@@ -262,7 +262,7 @@ function sourceResults(pz, rezultati, err, warn) {
   const odgovori = pz.flatMap((p) => answerNumbers(p?.pitanje));
   const odgovoreno = (n) =>
     odgovori.some(
-      (a) => Math.abs(a - n) <= Math.max(1e-9, Math.abs(n) * 0.005),
+      (a) => Math.abs(a - n) <= (n === 0 ? 1e-9 : Math.abs(n) * 0.005),
     );
   for (const [id, r] of Object.entries(rezultati)) {
     if (typeof r !== "string" && typeof r !== "number") continue;
