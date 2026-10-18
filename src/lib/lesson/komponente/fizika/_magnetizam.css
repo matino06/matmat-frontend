@@ -1,0 +1,161 @@
+/* Magnetski widgeti (smjer_u_polju, indukcija, naboj_u_polju): iste boje kao na slikama u rješenjima zadataka
+   (polje zeleno, brzina narančasta, sila plava, struja crvena, inducirano ljubičasto), za svijetlu i tamnu temu.
+   Globalno jer se crtež slaže iz više malih komponenti; sve klase počinju s .mg- */
+
+.mg {
+  --mg-b: #4ade80;
+  --mg-v: #fb923c;
+  --mg-f: #60a5fa;
+  --mg-i: #f87171;
+  --mg-ind: #c084fc;
+  --mg-n: #ef4444;
+  --mg-s: #3b82f6;
+  --mg-zica: #d6a06a;
+  --mg-sel: var(--primary);
+}
+html[data-theme="light"] .mg {
+  --mg-b: #16a34a;
+  --mg-v: #ea580c;
+  --mg-f: #2563eb;
+  --mg-i: #dc2626;
+  --mg-ind: #9333ea;
+  --mg-n: #dc2626;
+  --mg-s: #2563eb;
+  --mg-zica: #a8662b;
+}
+
+.mg .c-b {
+  --c: var(--mg-b);
+}
+.mg .c-v {
+  --c: var(--mg-v);
+}
+.mg .c-f {
+  --c: var(--mg-f);
+}
+.mg .c-i {
+  --c: var(--mg-i);
+}
+.mg .c-ind {
+  --c: var(--mg-ind);
+}
+.mg .c-sel {
+  --c: var(--mg-sel);
+}
+.mg .c-ok {
+  --c: var(--success);
+}
+.mg .c-bad {
+  --c: var(--danger);
+}
+.mg .c-dim {
+  --c: var(--text-faint);
+}
+.mg .c-txt {
+  --c: var(--text);
+}
+
+.mg .mg-stroke {
+  stroke: var(--c, var(--text));
+  fill: none;
+}
+.mg .mg-fill {
+  fill: var(--c, var(--text));
+}
+.mg .mg-txt {
+  fill: var(--c, var(--text));
+  font: 600 14px var(--font-sans);
+}
+.mg .mg-txt.it {
+  font-style: italic;
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 18px;
+}
+.mg .mg-ind {
+  font-size: 0.68em;
+  font-style: normal;
+}
+.mg .mg-mali {
+  fill: var(--text-dim);
+  font: 500 11.5px var(--font-sans);
+}
+.mg .mg-dash {
+  stroke-dasharray: 5 4;
+}
+.mg .mg-zica {
+  stroke: var(--mg-zica);
+  fill: none;
+}
+
+.mg .mg-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mg-pop 0.6s ease-out;
+}
+@keyframes mg-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ploča za istraživanje: red s natpisom i segmentima */
+.mg-kontrole {
+  display: grid;
+  gap: 8px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+.mg-red {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+.mg-red > .mg-red-ime {
+  font-size: 13.5px;
+  color: var(--text-dim);
+}
+.mg .seg-item {
+  font-size: 14px;
+  min-width: 36px;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 0;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.mg .seg-item.active {
+  background: var(--primary-dim);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--primary-border);
+}
+.mg .seg {
+  flex-wrap: wrap;
+}
+
+.mg-ocitanje {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  margin: -4px 0 10px;
+  line-height: 1.6;
+}
+.mg-ocitanje b {
+  color: var(--text);
+  font-weight: 600;
+}
+.mg-hint {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--text-dim);
+}

@@ -1,40 +1,29 @@
 // Tip widgeta za fiziku (maturu) → Svelte komponenta. Logika je u katalog/fizika/.
-import Gibanje from "./Gibanje.svelte";
-import CrtajGraf from "./CrtajGraf.svelte";
-import SileTijelo from "./SileTijelo.svelte";
-import Vektori from "./Vektori.svelte";
-import Kruzenje from "./Kruzenje.svelte";
-import Sudar from "./Sudar.svelte";
-import EnergijaStupci from "./EnergijaStupci.svelte";
-import TlakDubina from "./TlakDubina.svelte";
-import Cijev from "./Cijev.svelte";
-import KrivuljaZagrijavanja from "./KrivuljaZagrijavanja.svelte";
-import PlinskiDijagram from "./PlinskiDijagram.svelte";
-import PlinPosuda from "./PlinPosuda.svelte";
-import NabojiPolje from "./NabojiPolje.svelte";
-import PlocePolje from "./PlocePolje.svelte";
-import StrujniKrug from "./StrujniKrug.svelte";
-import SmjerUPolju from "./SmjerUPolju.svelte";
-import Indukcija from "./Indukcija.svelte";
-import NabojUPolju from "./NabojUPolju.svelte";
+// Komponente se učitavaju tek kad ih lekcija treba (Lijeno.svelte), pa lekcije iz matematike ne preuzimaju kod
+// fizikalnih simulacija.
+import Lijeno from "./Lijeno.svelte";
 
-export const KOMPONENTE_FIZIKA = {
-  gibanje: Gibanje,
-  crtaj_graf: CrtajGraf,
-  sile_tijelo: SileTijelo,
-  vektori: Vektori,
-  kruzenje: Kruzenje,
-  sudar: Sudar,
-  energija_stupci: EnergijaStupci,
-  tlak_dubina: TlakDubina,
-  cijev: Cijev,
-  krivulja_zagrijavanja: KrivuljaZagrijavanja,
-  plinski_dijagram: PlinskiDijagram,
-  plin_posuda: PlinPosuda,
-  naboji_polje: NabojiPolje,
-  ploce_polje: PlocePolje,
-  strujni_krug: StrujniKrug,
-  smjer_u_polju: SmjerUPolju,
-  indukcija: Indukcija,
-  naboj_u_polju: NabojUPolju,
+export const UCITAJ_FIZIKA = {
+  gibanje: () => import("./Gibanje.svelte"),
+  crtaj_graf: () => import("./CrtajGraf.svelte"),
+  sile_tijelo: () => import("./SileTijelo.svelte"),
+  vektori: () => import("./Vektori.svelte"),
+  kruzenje: () => import("./Kruzenje.svelte"),
+  sudar: () => import("./Sudar.svelte"),
+  energija_stupci: () => import("./EnergijaStupci.svelte"),
+  tlak_dubina: () => import("./TlakDubina.svelte"),
+  cijev: () => import("./Cijev.svelte"),
+  krivulja_zagrijavanja: () => import("./KrivuljaZagrijavanja.svelte"),
+  plinski_dijagram: () => import("./PlinskiDijagram.svelte"),
+  plin_posuda: () => import("./PlinPosuda.svelte"),
+  naboji_polje: () => import("./NabojiPolje.svelte"),
+  ploce_polje: () => import("./PlocePolje.svelte"),
+  strujni_krug: () => import("./StrujniKrug.svelte"),
+  smjer_u_polju: () => import("./SmjerUPolju.svelte"),
+  indukcija: () => import("./Indukcija.svelte"),
+  naboj_u_polju: () => import("./NabojUPolju.svelte"),
 };
+
+export const KOMPONENTE_FIZIKA = Object.fromEntries(
+  Object.keys(UCITAJ_FIZIKA).map((tip) => [tip, Lijeno]),
+);

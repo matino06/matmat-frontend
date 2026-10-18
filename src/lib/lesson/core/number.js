@@ -67,16 +67,18 @@ function toNumber(s) {
 }
 
 // Dopušteno odstupanje: zadano u specu, inače pola posto vrijednosti (zaokruživanje na 2–3 znamenke prolazi).
+// Samo relativno: fizikalni iznosi znaju biti 10⁻¹⁹ (naboj elektrona), pa apsolutni prag kao 10⁻⁹ prihvaća sve.
 export function tolerance(value, given) {
   if (typeof given === "number" && given >= 0) return given;
-  return Math.max(1e-9, Math.abs(value) * 0.005);
+  return value === 0 ? 1e-9 : Math.abs(value) * 0.005;
 }
 
 export function near(a, b, tol) {
   return (
     typeof a === "number" &&
     typeof b === "number" &&
-    Math.abs(a - b) <= tol + 1e-12
+    // rezerva za greške zaokruživanja u računu, razmjerna veličini brojeva (ne apsolutna)
+    Math.abs(a - b) <= tol + 1e-12 * Math.max(Math.abs(a), Math.abs(b))
   );
 }
 
