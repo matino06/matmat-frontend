@@ -129,6 +129,12 @@ export const UNITS = {
     ["kHz", 1e3],
     ["Hz", 1],
   ],
+  protok: [
+    ["m³/s", 1],
+    ["m³/h", 1 / 3600],
+    ["L/s", 1e-3],
+    ["L/min", 1e-3 / 60],
+  ],
   molarna_masa: [
     ["kg/mol", 1],
     ["g/mol", 1e-3],
@@ -174,7 +180,7 @@ const ALIASES = {
   Ω: "Ω",
   kΩ: "kΩ",
   MΩ: "MΩ",
-  hz: "Hz",
+  hz: "Hz", "m3/s": "m³/s", "m3/h": "m³/h", "l/s": "L/s", "l/min": "L/min",
   khz: "kHz",
   mhz: "MHz",
 };

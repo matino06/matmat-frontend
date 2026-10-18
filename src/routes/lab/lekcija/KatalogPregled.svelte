@@ -33,7 +33,16 @@
 
   let ishodi = $state(svi.map(() => null));
   let pokazi = $state(svi.map(() => false));
-  const problemi = (s) => KATALOG[s.tip].validate(s, { text: JSON.stringify(s) });
+  const problemi = (s) => {
+    try {
+      return KATALOG[s.tip].validate(s, { text: JSON.stringify(s) });
+    } catch (e) {
+      return [`validate je bacio iznimku: ${e.message}`];
+    }
+  };
+  function odgovor(i, s, o) {
+    ishodi[i] = provjeri(s, o);
+  }
 </script>
 
 <p class="muted small">Primjeri iz opisa widgeta (isti idu modelu u prompt) i dodatni načini rada. Provjera odgovora je ista kao u lekciji.</p>
@@ -41,10 +50,14 @@
   {#each svi as s, i (i)}
     <div class="kat-item">
       <div class="kat-head mono">{s.tip}{s.nacin ? ` · ${s.nacin}` : ""}{s.instrument ? ` · ${s.instrument}` : ""}{#if problemi(s).length}<span class="kat-bad"> · {problemi(s).join("; ")}</span>{/if}</div>
-      <Korak spec={s} ishod={ishodi[i]} pokazi={pokazi[i]} locked={!!ishodi[i]?.tocno || pokazi[i]} onodgovor={(o) => (ishodi[i] = provjeri(s, o))}>
-        {#if ishodi[i]?.tocno}<p class="kat-ok">✓ Točno</p>{/if}
-        {#if !pokazi[i] && uloga(s) === ODGOVOR}<div class="lx-actions"><button class="btn btn-quiet" onclick={() => (pokazi[i] = true)}>Pokaži točan odgovor</button><button class="btn btn-quiet" onclick={() => ((ishodi[i] = null), (pokazi[i] = false))}>Ispočetka</button></div>{/if}
-      </Korak>
+      <!-- jedan neispravan widget ne smije srušiti cijeli katalog -->
+      <svelte:boundary>
+        <Korak spec={s} ishod={ishodi[i]} pokazi={pokazi[i]} locked={!!ishodi[i]?.tocno || pokazi[i]} onodgovor={(o) => odgovor(i, s, o)}>
+          {#if ishodi[i]?.tocno}<p class="kat-ok">✓ Točno</p>{/if}
+          {#if !pokazi[i] && uloga(s) === ODGOVOR}<div class="lx-actions"><button class="btn btn-quiet" onclick={() => (pokazi[i] = true)}>Pokaži točan odgovor</button><button class="btn btn-quiet" onclick={() => ((ishodi[i] = null), (pokazi[i] = false))}>Ispočetka</button></div>{/if}
+        </Korak>
+        {#snippet failed(error)}<p class="kat-bad">Widget je pao: {error?.message ?? error}</p>{/snippet}
+      </svelte:boundary>
     </div>
   {/each}
 </div>
