@@ -1,7 +1,7 @@
 <script>
   // Fizikalni widget koji se učitava tek kad je potreban: komponentu bira spec.tip, a svi ostali propsi (locked,
   // pokazi, ishod, onodgovor) prosljeđuju se nepromijenjeni.
-  import { UCITAJ_FIZIKA } from "./index.js";
+  import { UCITAJ_FIZIKA } from "./ucitaj.js";
 
   let props = $props();
   let ucitano = $derived(UCITAJ_FIZIKA[props.spec.tip]());
