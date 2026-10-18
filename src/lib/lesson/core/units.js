@@ -47,10 +47,96 @@ export const UNITS = {
     ["kg/dm³", 1000],
     ["kg/m³", 1],
   ],
+  // fizika (matura)
+  brzina: [
+    ["km/s", 1000],
+    ["m/s", 1],
+    ["km/h", 1 / 3.6],
+    ["cm/s", 0.01],
+  ],
+  sila: [
+    ["MN", 1e6],
+    ["kN", 1e3],
+    ["N", 1],
+    ["mN", 1e-3],
+  ],
+  tlak: [
+    ["MPa", 1e6],
+    ["bar", 1e5],
+    ["kPa", 1e3],
+    ["hPa", 100],
+    ["mbar", 100],
+    ["Pa", 1],
+  ],
+  energija: [
+    ["kWh", 3.6e6],
+    ["MJ", 1e6],
+    ["kJ", 1e3],
+    ["J", 1],
+    ["mJ", 1e-3],
+  ],
+  snaga: [
+    ["MW", 1e6],
+    ["kW", 1e3],
+    ["W", 1],
+    ["mW", 1e-3],
+  ],
+  naboj: [
+    ["C", 1],
+    ["mC", 1e-3],
+    ["µC", 1e-6],
+    ["nC", 1e-9],
+    ["pC", 1e-12],
+  ],
+  kapacitet: [
+    ["F", 1],
+    ["mF", 1e-3],
+    ["µF", 1e-6],
+    ["nF", 1e-9],
+    ["pF", 1e-12],
+  ],
+  struja: [
+    ["kA", 1e3],
+    ["A", 1],
+    ["mA", 1e-3],
+    ["µA", 1e-6],
+  ],
+  napon: [
+    ["MV", 1e6],
+    ["kV", 1e3],
+    ["V", 1],
+    ["mV", 1e-3],
+  ],
+  otpor: [
+    ["MΩ", 1e6],
+    ["kΩ", 1e3],
+    ["Ω", 1],
+    ["mΩ", 1e-3],
+  ],
+  magnetsko_polje: [
+    ["T", 1],
+    ["mT", 1e-3],
+    ["µT", 1e-6],
+  ],
+  magnetski_tok: [
+    ["Wb", 1],
+    ["mWb", 1e-3],
+    ["µWb", 1e-6],
+  ],
+  frekvencija: [
+    ["GHz", 1e9],
+    ["MHz", 1e6],
+    ["kHz", 1e3],
+    ["Hz", 1],
+  ],
+  molarna_masa: [
+    ["kg/mol", 1],
+    ["g/mol", 1e-3],
+  ],
 };
 
 // Pravopis jedinica koje učenik ili model pišu drukčije
-const ALIASES = { "m2": "m²", "cm2": "cm²", "mm2": "mm²", "dm2": "dm²", "km2": "km²", "m3": "m³", "cm3": "cm³", "dm3": "dm³", "mm3": "mm³", l: "L", ml: "mL", dl: "dL", cl: "cL", hl: "hL", "g/cm3": "g/cm³", "kg/m3": "kg/m³", "kg/dm3": "kg/dm³" };
+const ALIASES = { "m2": "m²", "cm2": "cm²", "mm2": "mm²", "dm2": "dm²", "km2": "km²", "m3": "m³", "cm3": "cm³", "dm3": "dm³", "mm3": "mm³", l: "L", ml: "mL", dl: "dL", cl: "cL", hl: "hL", "g/cm3": "g/cm³", "kg/m3": "kg/m³", "kg/dm3": "kg/dm³", "km/hr": "km/h", kmh: "km/h", "μC": "µC", uC: "µC", "μF": "µF", uF: "µF", "μA": "µA", uA: "µA", "μT": "µT", uT: "µT", "μWb": "µWb", ohm: "Ω", Ohm: "Ω", kohm: "kΩ", kOhm: "kΩ", Mohm: "MΩ", MOhm: "MΩ", "Ω": "Ω", "kΩ": "kΩ", "MΩ": "MΩ", hz: "Hz", khz: "kHz", mhz: "MHz" };
 
 export const normUnit = (u) => (typeof u === "string" ? (ALIASES[u.trim()] ?? u.trim()) : u);
 

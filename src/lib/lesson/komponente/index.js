@@ -27,6 +27,7 @@ import Uronjeno from "./Uronjeno.svelte";
 import Izraz from "./Izraz.svelte";
 import Interval from "./Interval.svelte";
 import GrafFunkcije from "./GrafFunkcije.svelte";
+import { KOMPONENTE_FIZIKA } from "./fizika/index.js";
 
 export const KOMPONENTE = {
   pojam: Pojam,
@@ -50,4 +51,5 @@ export const KOMPONENTE = {
   izraz: Izraz,
   interval: Interval,
   graf_funkcije: GrafFunkcije,
+  ...KOMPONENTE_FIZIKA,
 };

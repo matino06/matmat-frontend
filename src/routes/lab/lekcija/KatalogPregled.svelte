@@ -28,7 +28,8 @@
     { tip: "graf_funkcije", nacin: "prikaz", tekst: "Linearna funkcija samo za $x \\geq 0$.", x: [-1, 8], y: [-1, 6], funkcije: [{ izraz: "1+0.5*x", od: 0 }], tocke: [{ x: 0, y: 1, oznaka: "(0, 1)" }] },
     { tip: "izraz", tekst: "Kolika je amplituda funkcije na grafu?", polja: [{ oznaka: "$|A| =$", odgovor: "2" }], graf: { nacin: "prikaz", x: [-1, 9], y: [-3, 3], funkcije: [{ izraz: "2*sin(pi/4*x)" }] } },
   ];
-  const svi = [...Object.values(KATALOG).map((w) => w.primjer), ...VARIJANTE];
+  // widget može uz primjer imati i „primjeri“: dodatne načine rada (fizikalni widgeti)
+  const svi = [...Object.values(KATALOG).flatMap((w) => [w.primjer, ...(w.primjeri ?? [])]), ...VARIJANTE];
 
   let ishodi = $state(svi.map(() => null));
   let pokazi = $state(svi.map(() => false));

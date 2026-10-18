@@ -301,14 +301,18 @@ function drugeJedinice(velicina, tocno, cilj) {
   return UNITS[velicina].filter(([u]) => u !== cilj).map(([u]) => ({ vrijednost: fromBase(velicina, base, u), poruka: `To je isti iznos u ${u}, a ovdje ga treba zapisati u ${cilj}.` }));
 }
 
+// Prompt za automatsku izradu opisuje samo osnovne veličine; fizikalne (brzina, tlak, naboj…) koriste ručno pisane
+// lekcije za maturu iz fizike.
+const PROMPT_VELICINE = ["duljina", "povrsina", "volumen", "masa", "vrijeme", "gustoca"];
+
 export const pretvorba_jedinica = {
   tip: "pretvorba_jedinica",
   uloga: () => ODGOVOR,
-  opis: `Pretvorba jedinica: velicina (${Object.keys(UNITS).join(" | ")}), vrijednost, od, do (jedinice, npr. "mm²" → "cm²"), tekst?, stube? (true: prikaži stube
+  opis: `Pretvorba jedinica: velicina (${PROMPT_VELICINE.join(" | ")}), vrijednost, od, do (jedinice, npr. "mm²" → "cm²"), tekst?, stube? (true: prikaži stube
 jedinica s faktorima – za korak pomoći, ne za prvi pokušaj). Točan rezultat i tipične greške (faktor kao za duljinu, krivi smjer) računa aplikacija.
 Lanac: do je popis 2–4 jedinice ("8 m = … dm = … cm = … mm": vrijednost 8, od "m", do ["dm", "cm", "mm"]); učenik upisuje svaku.
 Mješoviti zapis: vrijednost i od su popisi iste duljine, od veće jedinice prema manjoj ("2 m 7 dm": vrijednost [2, 7], od ["m", "dm"]).
-Jedinice: ${Object.entries(UNITS).map(([k, v]) => `${k}: ${v.map(([u]) => u).join(", ")}`).join("; ")}.`,
+Jedinice: ${PROMPT_VELICINE.map((k) => `${k}: ${UNITS[k].map(([u]) => u).join(", ")}`).join("; ")}.`,
   primjer: { tip: "pretvorba_jedinica", velicina: "povrsina", vrijednost: 3600, od: "mm²", do: "cm²", tekst: "Pretvori površinu papira u cm²." },
   validate(s) {
     const { list, need } = problems();
