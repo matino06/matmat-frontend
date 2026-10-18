@@ -4,6 +4,7 @@
   import { aiConsent, decideAiConsent } from "$lib/store/aiConsent.svelte";
   import AiConsentDetails from "$lib/components/ai/AiConsentDetails.svelte";
   import { ownCourses } from "$lib/store/ownCourses.svelte";
+  import { feedbackSound, setFeedbackSound } from "$lib/sound.svelte.js";
 
   let learningReminders = $state(false);
   let featureAnnouncements = $state(false);
@@ -220,6 +221,17 @@
         {savingNotifs ? "Spremanje…" : "Spremi"}
       </button>
     {/if}
+  </div>
+
+  <!-- Sound card: device-only, kept in localStorage -->
+  <div class="card card-pad" style="margin-top: 16px">
+    <label class="notif-row">
+      <input type="checkbox" checked={feedbackSound.on} onchange={(e) => setFeedbackSound(e.currentTarget.checked)} />
+      <div>
+        <div class="notif-title">Zvuk točnog odgovora</div>
+        <div class="notif-desc">Tih zvuk za točan odgovor i svladanu lekciju.</div>
+      </div>
+    </label>
   </div>
 
   <!-- AI consent card -->
