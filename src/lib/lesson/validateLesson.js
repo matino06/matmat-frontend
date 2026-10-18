@@ -328,7 +328,9 @@ function answerParts(r) {
 }
 
 // Ženski i dvojni oblici obraćanja učeniku („provela si“, „sam/sama“, „prebrojio/la“); jedinice (g/cm³) nisu riječi.
-function genderForms(text) {
+function genderForms(tekst) {
+  // adrese slika („…/api/image/fizika/…“) nisu dvojni oblici
+  const text = tekst.replace(/https?:\/\/[^\s"')\]]+/g, " ");
   const oblici = [
     ...text.matchAll(/(?<![\p{L}\d])\p{Ll}{3,}\/\p{Ll}{2,}(?![\p{L}\d³²])/gu),
     ...text.matchAll(
