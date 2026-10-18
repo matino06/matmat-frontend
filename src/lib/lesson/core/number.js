@@ -10,7 +10,8 @@ export function parseNumber(input, unit = "") {
     .replace(/[−–]/g, "-")
     .replace(/\u00a0/g, " ");
   if (unit && s.endsWith(unit)) s = s.slice(0, -unit.length).trim();
-  s = s.replace(/\s+/g, "");
+  // „+4“ (predznak naboja) je isto što i 4
+  s = s.replace(/\s+/g, "").replace(/^\+(?=\d)/, "");
   if (!s) return null;
   const sci = parseSci(s);
   if (sci !== undefined) return sci;
@@ -50,7 +51,7 @@ function parseSci(s) {
     .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+$/, (m) => "^" + [...m].map((c) => SUP[c]).join(""))
     .replace(/\\cdot|\\times/g, "·");
   const m =
-    t.match(/^(-?)(?:(\d+(?:[.,]\d+)?)[·*x×⋅])?10\^\{?(-?\d+)\}?$/) ??
+    t.match(/^(-?)(?:(\d+(?:[.,]\d+)?)[·*x×⋅])?10\^[{(]?([+-]?\d+)[})]?$/) ??
     t.match(/^(-?)(\d+(?:[.,]\d+)?)[eE]([+-]?\d+)$/);
   if (!m) return undefined;
   const mant = m[2] == null ? 1 : toNumber(m[2]);
