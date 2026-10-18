@@ -5,7 +5,10 @@
 export function parseNumber(input, unit = "") {
   if (typeof input === "number") return Number.isFinite(input) ? input : null;
   if (typeof input !== "string") return null;
-  let s = input.trim().replace(/[−–]/g, "-").replace(/\u00a0/g, " ");
+  let s = input
+    .trim()
+    .replace(/[−–]/g, "-")
+    .replace(/\u00a0/g, " ");
   if (unit && s.endsWith(unit)) s = s.slice(0, -unit.length).trim();
   s = s.replace(/\s+/g, "");
   if (!s) return null;
@@ -29,10 +32,26 @@ export function parseNumber(input, unit = "") {
 
 // Znanstveni zapis (fizika): „1,2·10^24“, „1,2*10^-5“, „1,2x10^{-5}“, „1,2·10⁻⁵“, „10^-3“, „1,2e-5“.
 // Vraća broj, null (zapis s potencijom, ali neispravan) ili undefined (nije znanstveni zapis).
-const SUP = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9", "⁻": "-" };
+const SUP = {
+  "⁰": "0",
+  "¹": "1",
+  "²": "2",
+  "³": "3",
+  "⁴": "4",
+  "⁵": "5",
+  "⁶": "6",
+  "⁷": "7",
+  "⁸": "8",
+  "⁹": "9",
+  "⁻": "-",
+};
 function parseSci(s) {
-  const t = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+$/, (m) => "^" + [...m].map((c) => SUP[c]).join("")).replace(/\\cdot|\\times/g, "·");
-  const m = t.match(/^(-?)(?:(\d+(?:[.,]\d+)?)[·*x×⋅])?10\^\{?(-?\d+)\}?$/) ?? t.match(/^(-?)(\d+(?:[.,]\d+)?)[eE]([+-]?\d+)$/);
+  const t = s
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+$/, (m) => "^" + [...m].map((c) => SUP[c]).join(""))
+    .replace(/\\cdot|\\times/g, "·");
+  const m =
+    t.match(/^(-?)(?:(\d+(?:[.,]\d+)?)[·*x×⋅])?10\^\{?(-?\d+)\}?$/) ??
+    t.match(/^(-?)(\d+(?:[.,]\d+)?)[eE]([+-]?\d+)$/);
   if (!m) return undefined;
   const mant = m[2] == null ? 1 : toNumber(m[2]);
   if (mant == null) return null;
@@ -54,7 +73,11 @@ export function tolerance(value, given) {
 }
 
 export function near(a, b, tol) {
-  return typeof a === "number" && typeof b === "number" && Math.abs(a - b) <= tol + 1e-12;
+  return (
+    typeof a === "number" &&
+    typeof b === "number" &&
+    Math.abs(a - b) <= tol + 1e-12
+  );
 }
 
 // Hrvatski zapis broja: decimalni zarez, bez suvišnih nula. Najmanje `digits` decimala, a za male brojeve
@@ -62,8 +85,10 @@ export function near(a, b, tol) {
 export function formatNumber(n, digits = 3) {
   if (typeof n !== "number" || !Number.isFinite(n)) return "";
   // vrlo veliki i vrlo mali brojevi (naboj elektrona, Avogadrova konstanta) samo u znanstvenom zapisu
-  if (n !== 0 && (Math.abs(n) >= 1e9 || Math.abs(n) < 1e-6)) return formatSci(n);
-  const lead = n === 0 ? 0 : Math.max(0, -Math.floor(Math.log10(Math.abs(n))) - 1);
+  if (n !== 0 && (Math.abs(n) >= 1e9 || Math.abs(n) < 1e-6))
+    return formatSci(n);
+  const lead =
+    n === 0 ? 0 : Math.max(0, -Math.floor(Math.log10(Math.abs(n))) - 1);
   const d = Math.min(12, Math.max(digits, lead + 3));
   // bez toLocaleString: isti kod radi i u GraalJS-u na backendu, gdje Intl ne mora postojati
   let t = n.toFixed(d);
@@ -73,7 +98,19 @@ export function formatNumber(n, digits = 3) {
 }
 
 // Fizikalni zapis: tri značajne znamenke, a izvan [0,001, 1 000 000) znanstveni zapis „4,8·10⁻¹⁸“.
-const SUPERSKRIPT = { 0: "⁰", 1: "¹", 2: "²", 3: "³", 4: "⁴", 5: "⁵", 6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹", "-": "⁻" };
+const SUPERSKRIPT = {
+  0: "⁰",
+  1: "¹",
+  2: "²",
+  3: "³",
+  4: "⁴",
+  5: "⁵",
+  6: "⁶",
+  7: "⁷",
+  8: "⁸",
+  9: "⁹",
+  "-": "⁻",
+};
 export function formatSci(n, sig = 3) {
   if (typeof n !== "number" || !Number.isFinite(n)) return "";
   if (n === 0) return "0";
