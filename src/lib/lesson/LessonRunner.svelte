@@ -112,11 +112,27 @@
     zadatakOtvoren = true;
   }
 
-  // Prijedlog ocjene za ponavljanje (q 0–5) iz izvedbe: sve odmah → 5, uz pomoć → 3, pokazan odgovor → 1.
+  // Prijedlog ocjene za ponavljanje (SM-2, q 0–5). Pamćenje pokazuje samo prvi odgovor (pomoć i blizanac su
+  // učenje), pa se broje dijelovi riješeni odmah: svi → 5; jedan promašaj u lekciji od 4+ dijela → 4;
+  // barem pola → 3, zadnja ocjena koja prolazi; manje → 2 (vraća se sutra). Pokazan odgovor: najviše 2, ispod
+  // pola 1.
+  function ocjenaIz(r) {
+    const odmah = r.filter((x) => x === ODMAH).length;
+    const promaseno = r.length - odmah;
+    const pola = odmah * 2 >= r.length;
+    if (promaseno === 0) return 5;
+    if (r.includes(POKAZANO)) return pola ? 2 : 1;
+    if (promaseno === 1 && r.length >= 4) return 4;
+    return pola ? 3 : 2;
+  }
+
   function sazetak() {
     const r = stanja.map((s) => s.rezultat);
-    const q = r.includes(POKAZANO) ? 1 : r.includes(UZ_POMOC) ? 3 : 5;
-    return { rezultati: r, q };
+    const q = ocjenaIz(r);
+    // Najviše što učenik smije podići: ocjena da je još jedan dio riješio odmah (tipfeler "80" umjesto "800"),
+    // ali ne pala lekcija u savršenu. Spuštati smije uvijek.
+    const najvise = Math.max(q, ...r.map((x, i) => (x === ODMAH ? q : ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))))));
+    return { rezultati: r, q, najvise, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
   }
 
   // novi dio (pomoć, ponovni pokušaj, rezultat) pomakne se u vidno polje

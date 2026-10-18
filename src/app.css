@@ -775,6 +775,14 @@ svg {
 .rp-btn:active {
   transform: translateY(0);
 }
+/* above a finished lesson's limit */
+.rp-btn:disabled,
+.rp-btn:disabled:hover {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 .rp-btn.rp-selected {
   border-color: var(--rc);
   background: color-mix(in srgb, var(--rc) 22%, var(--bg-elev));

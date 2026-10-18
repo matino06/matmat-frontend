@@ -33,14 +33,30 @@
   // Interaktivna verzija zadatka, kao na /tasks: tko zna, gotov je s tri odgovora, što je za ponavljanje idealno.
   let tekstualno = $state(false);
   let lekcija = $derived(tekstualno ? null : interaktivnaLekcija(task));
+  // Kako je prošla interaktivna lekcija: prijedlog ocjene i najviše do čega se smije podići.
+  let lekcijaSazetak = $state(null);
   $effect(() => {
     task?.id;
     tekstualno = false;
+    lekcijaSazetak = null;
   });
 
   function lekcijaGotova(sazetak) {
     revealed = true;
+    lekcijaSazetak = sazetak;
     pendingRating = RATINGS.find((r) => r.k === sazetak.q) ?? null;
+  }
+
+  // "Iz prve si riješio 1 od 3 dijela, zato je predloženo 2. …"
+  function objasnjenjeOcjene(s) {
+    const n = s.dijelova;
+    const jedan = n % 10 === 1 && n % 100 !== 11;
+    const par = n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14);
+    let t = s.odmah === n
+      ? `Sve si riješio iz prve, zato je predloženo ${s.q}.`
+      : `Iz prve si riješio ${s.odmah} od ${n} ${jedan || par ? "dijela" : "dijelova"}, zato je predloženo ${s.q}.`;
+    if (s.najvise > s.q) t += ` Ako si negdje samo krivo upisao, ocjenu možeš podići do ${s.najvise}.`;
+    return t;
   }
 
   // Objective-practice mode: /ponavljanje?objectiveId=123&name=...
@@ -206,6 +222,9 @@
     {#if !answered}
       <div class="rating-row">
         <div class="rating-label">Kako ti je išlo?</div>
+        {#if lekcijaSazetak}
+          <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
+        {/if}
         {#if pendingRating}
           <div class="rating-confirm">
             <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
@@ -222,7 +241,7 @@
           </div>
         {:else}
           {#key ratingKey}
-            <RatingPicker taskId={task.id} onSelect={(r) => pendingRating = r} />
+            <RatingPicker taskId={task.id} najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => pendingRating = r} />
           {/key}
         {/if}
       </div>
@@ -435,4 +454,10 @@
   .task-body::after { content: ""; display: block; clear: both; }
   .task-sketch-side { float: right; width: 44%; max-width: 420px; margin: 0 0 12px 20px; }
   @media (max-width: 700px) { .task-sketch-side { float: none; width: 100%; max-width: none; margin: 0 0 12px; } }
+  .rating-note {
+    margin: 4px 0 10px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--text-dim);
+  }
 </style>
