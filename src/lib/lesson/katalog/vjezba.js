@@ -1,6 +1,7 @@
 // „Vježbaj još“ na kraju lekcije: model samo kaže koje jedinice lekcija vježba, a zadatke pretvorbe (i lance i
 // mješovite zapise, kao „Pretvori!“ stranice u materijalima) sastavlja kod. Vježba je neobavezna, ne ulazi u
-// ocjenu za ponavljanje i ne košta ništa, pa je učenik može ponavljati koliko hoće (nova vježba = novo sjeme).
+// ocjenu za ponavljanje i ne košta ništa, pa je učenik može ponavljati koliko hoće (nova vježba = novo sjeme;
+// početno sjeme je nasumično, pa i ista lekcija i varijacije s istim jedinicama daju nove brojeve).
 import { UNITS, normUnit, unitIndex, toBase, fromBase } from "../core/units.js";
 import { isNum } from "../core/number.js";
 import { pretvorba_jedinica } from "./istrazivanje.js";
