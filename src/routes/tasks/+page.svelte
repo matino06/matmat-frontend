@@ -339,10 +339,8 @@
 {#snippet ocjena()}
     {#if !answered}
       <div class="rating-row">
-        <div class="rating-label">Kako ti je išlo?</div>
-        {#if lekcijaSazetak}
-          <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
-        {/if}
+        <!-- after a lesson the suggestion only asks to be confirmed; "Promijeni" shows why and the ratings -->
+        <div class="rating-label">{lekcijaSazetak && pendingRating ? "Predložena ocjena. Slažeš li se?" : "Kako ti je išlo?"}</div>
         {#if pendingRating}
           <div class="rating-confirm">
             <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
@@ -358,6 +356,9 @@
             </div>
           </div>
         {:else}
+          {#if lekcijaSazetak}
+            <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
+          {/if}
           {#key ratingKey}
             <RatingPicker taskId={task.id} najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => pendingRating = r} />
           {/key}
