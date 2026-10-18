@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { playSound } from '$lib/sound.svelte.js';
   let { onDone, tasksCompleted = 0, streak = 0, readinessPct = 0 } = $props();
 
   const confetti = Array.from({ length: 48 }).map((_, i) => ({
@@ -18,6 +19,7 @@
   let readinessVal = $state(0);
 
   onMount(() => {
+    playSound('milestone');
     const animate = (target, setter, delay) => {
       setTimeout(() => {
         const steps = 40;

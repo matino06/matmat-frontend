@@ -5,12 +5,22 @@
   import { KOMPONENTE } from "./index.js";
   import { uloga, istrazuje, POGLEDAJ } from "../katalog/index.js";
   import Md from "./Md.svelte";
+  import { playSound } from "$lib/sound.svelte.js";
 
   let { spec, oznaka = null, locked = false, pokazi = false, ishod = null, onodgovor = () => {}, children } = $props();
 
   let look = $derived(uloga(spec) === POGLEDAJ);
   let explore = $derived(istrazuje(spec));
   let Comp = $derived(KOMPONENTE[spec.tip]);
+
+  // Every check in a lesson (first question, a help "Tvoj red" step, the twin, "Vježbaj još") passes through here,
+  // so this is the one place that plays the correct-answer sound. The parent grades synchronously, so the new
+  // result is already visible through the prop once onodgovor returns.
+  function odgovor(o) {
+    const prije = ishod;
+    onodgovor(o);
+    if (ishod !== prije && ishod?.tocno) playSound("correct");
+  }
 </script>
 
 <section class="lx-step" class:look class:turn={!look} class:locked={!look && locked}>
@@ -36,7 +46,7 @@
     {#if look}
       <Comp {spec} />
     {:else}
-      <Comp {spec} {locked} {pokazi} {ishod} {onodgovor} />
+      <Comp {spec} {locked} {pokazi} {ishod} onodgovor={odgovor} />
     {/if}
   {:else}
     <p class="lx-solution">Nepoznat widget „{spec.tip}“.</p>

@@ -71,6 +71,13 @@
 
   let cilj = $derived(p ? (p.blizanac ?? p.pitanje) : null);
 
+  // parts known at once in a row, ending with this one ("2 zaredom iz prve")
+  let zaredom = $derived.by(() => {
+    let k = 0;
+    for (let i = ekran; i >= 0 && stanja[i]?.rezultat === ODMAH; i--) k++;
+    return k;
+  });
+
   function ponovnoOdgovor(odgovor) {
     const r = provjeri(cilj, odgovor);
     st.ponovno.ishod = r;
@@ -119,6 +126,10 @@
 
   const korakGotov = (k) => uloga(p.pomoc[k]) !== ODGOVOR || st.pomoc[k].gotov;
 </script>
+
+{#snippet kvacica()}
+  <svg class="lx-done-ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" /><path d="M5.25 8.25l1.9 1.9 3.6-4" /></svg>
+{/snippet}
 
 <div class="lx lx-runner" bind:this={root}>
   <!-- put kroz lekciju: ista slova kao u naslovima podzadataka, pa kvačica za kraj -->
@@ -194,10 +205,13 @@
         {#if st.faza === "gotovo"}
           <div class="lx-done" class:solved={st.rezultat === POKAZANO} use:uvid>
             {#if st.rezultat === ODMAH}
-              <div class="lx-done-head">Točno!</div>
+              <div class="lx-done-head ok">
+                {@render kvacica()}Točno!
+                {#if zaredom >= 2}<span class="lx-streak">{zaredom} zaredom iz prve</span>{/if}
+              </div>
               <Md text={p.zasto} />
             {:else if st.rezultat === UZ_POMOC}
-              <div class="lx-done-head">Bravo, sad znaš!</div>
+              <div class="lx-done-head ok">{@render kvacica()}Bravo, sad znaš!</div>
               <Md text={p.zasto} />
             {:else}
               <div class="lx-done-head">Točan odgovor: <Md text={tocanOdgovor(cilj)} inline /></div>
@@ -420,6 +434,43 @@
   }
   .solved .lx-done-head {
     color: var(--text);
+  }
+  .lx-done-head.ok {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+  /* a short pop when the check appears; the reduced-motion rule in lesson.css turns it off */
+  .lx-done-ico {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: lx-pop 0.35s ease-out;
+  }
+  @keyframes lx-pop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.25);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .lx-streak {
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--success) 14%, transparent);
+    color: var(--success);
+    font-size: 12.5px;
+    font-weight: 600;
   }
   .lx-more {
     margin-top: 10px;

@@ -15,6 +15,8 @@
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import { interaktivnaLekcija } from "$lib/lesson/zadatak.js";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
+  import LessonMasteredToast from "$lib/components/lessonMastered/LessonMasteredToast.svelte";
+  import { createMasteryTracker } from "$lib/api/studyMap";
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
 
@@ -28,6 +30,9 @@
   let showToast = $state(false);
   let showCelebration = $state(false);
   let progressBump = $state(null);
+  // "Lekcija svladana" card after a rating that newly mastered the task's lesson
+  let masteredLesson = $state(null);
+  const mastery = createMasteryTracker();
   let readinessPct = $state(0);
   let dailyGoal = $state(8);
   let streak = $state(0);
@@ -170,6 +175,7 @@
   async function handleRate(rating) {
     if (!task) return;
     answered = true;
+    const objective = task.objective;
 
     const endTime = Date.now();
     const device = getDeviceType();
@@ -200,6 +206,7 @@
       return;
     }
 
+    const newlyMastered = mastery.rated(objective, rating.k);
     const oldCount = completedToday;
     await fetchUserGoal();
     const justReachedGoal = oldCount < dailyGoal && completedToday >= dailyGoal;
@@ -214,6 +221,10 @@
     }
 
     setTimeout(() => fetchNewTask().catch(reportTaskLoadError), 600);
+
+    // the goal celebration takes priority over the lesson card
+    const m = await newlyMastered;
+    if (m && !justReachedGoal && !showCelebration) masteredLesson = { ...m, key: Date.now() };
   }
 
   function setShowCelebration() {
@@ -274,7 +285,7 @@
       loaded = true;
       (async () => {
         try {
-          await fetchUserGoal();
+          await Promise.all([fetchUserGoal(), mastery.load()]);
           await fetchNewTask();
         } catch (err) {
           loaded = false;
@@ -354,6 +365,17 @@
     {streak}
     readinessPct={readinessPct}
   />
+{/if}
+
+{#if masteredLesson}
+  {#key masteredLesson.key}
+    <LessonMasteredToast
+      lessonName={masteredLesson.lessonName}
+      fieldName={masteredLesson.fieldName}
+      mastered={masteredLesson.mastered}
+      total={masteredLesson.total}
+      onclose={() => (masteredLesson = null)} />
+  {/key}
 {/if}
 
 {#if progressBump}

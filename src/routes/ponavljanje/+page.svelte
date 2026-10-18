@@ -14,6 +14,9 @@
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import { interaktivnaLekcija } from "$lib/lesson/zadatak.js";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
+  import LessonMasteredToast from "$lib/components/lessonMastered/LessonMasteredToast.svelte";
+  import { createMasteryTracker } from "$lib/api/studyMap";
+  import { playSound } from "$lib/sound.svelte.js";
 
   let task = $state(null);
   let selectedTempo = $state(null);
@@ -24,6 +27,9 @@
   let ratingKey = $state(0);
   let startTime = $state(null);
   let noTask = $state(false);
+  // "Lekcija svladana" card after a rating that newly mastered the task's lesson, while the review goes on
+  let masteredLesson = $state(null);
+  const mastery = createMasteryTracker();
   // Interaktivna verzija zadatka, kao na /tasks: tko zna, gotov je s tri odgovora, što je za ponavljanje idealno.
   let tekstualno = $state(false);
   let lekcija = $derived(tekstualno ? null : interaktivnaLekcija(task));
@@ -93,6 +99,7 @@
   async function handleRate(rating) {
     if (!task) return;
     answered = true;
+    const objective = task.objective ?? { objectiveId: Number(objectiveId), objectiveName };
 
     const endTime = Date.now();
     const device = getDeviceType();
@@ -123,6 +130,10 @@
       return;
     }
 
+    // A 5 on a single lesson ends the review and goes back to the map: that moment gets only the sound.
+    const endsReview = !fieldMode && rating.k === 5;
+    if (endsReview) playSound("milestone");
+
     if (fieldMode) {
       // Field način: uvijek sljedeći zadatak područja dok backend ne vrati 204
       setTimeout(fetchTask, 600);
@@ -132,6 +143,11 @@
     } else {
       // Objective: < 5 → novi zadatak istog objectiva
       setTimeout(fetchTask, 600);
+    }
+
+    if (!endsReview) {
+      const m = await mastery.rated(objective, rating.k);
+      if (m) masteredLesson = { ...m, key: Date.now() };
     }
   }
 
@@ -158,7 +174,7 @@
     if (userData.user && !loaded) {
       loaded = true;
       (async () => {
-        const tempoRes = await apiClient("/account/tempo", { method: "GET" });
+        const [tempoRes] = await Promise.all([apiClient("/account/tempo", { method: "GET" }), mastery.load()]);
         if (tempoRes.ok) selectedTempo = await tempoRes.json();
         await fetchTask();
       })();
@@ -223,6 +239,17 @@
 <svelte:window onkeydown={handleSpaceReveal}/>
 
 <AskAiSelection/>
+
+{#if masteredLesson}
+  {#key masteredLesson.key}
+    <LessonMasteredToast
+      lessonName={masteredLesson.lessonName}
+      fieldName={masteredLesson.fieldName}
+      mastered={masteredLesson.mastered}
+      total={masteredLesson.total}
+      onclose={() => (masteredLesson = null)} />
+  {/key}
+{/if}
 
 <div class="page">
   <div class="zadaci-head">
