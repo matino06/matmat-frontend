@@ -23,7 +23,8 @@
 
   // taskId: when set, "Ponovi za …" shows the backend's real SM-2 interval for
   // this user; without it (marketing demos) the static RATINGS values are shown.
-  let { onSelect, taskId = null } = $props();
+  // najvise: a finished interactive lesson's limit; higher ratings can't be chosen (lowering always can).
+  let { onSelect, taskId = null, najvise = 5 } = $props();
 
   // Days until the objective returns, indexed by rating; null until loaded.
   let intervals = $state(null);
@@ -64,6 +65,8 @@
         <button
           class="rp-btn {selected === r.k ? 'rp-selected' : ''}"
           style="--rc: {r.color}"
+          disabled={r.k > najvise}
+          title={r.k > najvise ? "Previsoko za ovako riješenu lekciju" : null}
           onmouseenter={() => hovered = r.k}
           onmouseleave={() => hovered = null}
           onclick={() => handleClick(r)}
