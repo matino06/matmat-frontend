@@ -29,6 +29,37 @@ html[data-theme="light"] .lx {
   margin: 0 0 10px;
   line-height: 1.6;
 }
+/* liste i tablice: osnovni stil aplikacije (Tailwind preflight) ih poravna i makne točkice */
+.lx-md ul,
+.lx-md ol {
+  margin: 0 0 10px;
+  padding-left: 1.4em;
+  line-height: 1.6;
+}
+.lx-md ul {
+  list-style: disc;
+}
+.lx-md ol {
+  list-style: decimal;
+}
+.lx-md li + li {
+  margin-top: 4px;
+}
+.lx-md table {
+  margin: 0 0 10px;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.lx-md th,
+.lx-md td {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.lx-md th {
+  background: var(--bg-elev-2);
+  font-weight: 600;
+}
 .lx-md .katex-display {
   margin: 10px 0;
   overflow-x: auto;
