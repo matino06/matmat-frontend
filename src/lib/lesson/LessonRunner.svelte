@@ -2,6 +2,8 @@
   // Interaktivna lekcija „zadatak prvo“: podzadaci jedan po jedan. Točan odgovor u prvom pokušaju → kratko „zašto“
   // i dalje; krivi odgovor ili „Ne znam“ → pomoć samo za taj podzadatak, pa blizanac. Duljina lekcije tako ovisi
   // o učeniku: tko zna, gotov je s tri odgovora (expertise reversal: puno objašnjenje smeta onome tko već zna).
+  // Lekcija s `cijeli` (jedan zadatak bez a, b, c) počinje cijelim zadatkom: tko ga riješi sam, gotov je; tko ne
+  // zna, dobiva podzadatke kao vođeni put, a na kraju sličan cijeli zadatak bez koraka (cijeli.blizanac).
   import "./lesson.css";
   import Korak from "./komponente/Korak.svelte";
   import Md from "./komponente/Md.svelte";
@@ -29,8 +31,14 @@
       rezultat: null, // ODMAH | UZ_POMOC | POKAZANO
     }));
 
+  const novoCijeli = () => ({ ishod: null, pokusaji: 0, rezultat: null, zavrsni: { ishod: null, pokusaji: 0, pokazi: false, rezultat: null } });
+
   let stanja = $state(novo());
   let ekran = $state(0); // 0..n-1 podzadaci, n = sažetak
+  // ekran prije podzadataka (cijeli zadatak) i poslije njih (sličan cijeli zadatak), samo uz lekcija.cijeli
+  let uvod = $state(!!lekcija.cijeli);
+  let zavrsni = $state(false);
+  let cijeli = $state(novoCijeli());
   let zadatakOtvoren = $state(true);
   let root;
 
@@ -97,17 +105,65 @@
     st.faza = "gotovo";
   }
 
+  function cijeliOdgovor(odgovor) {
+    const r = provjeri(lekcija.cijeli.pitanje, odgovor);
+    cijeli.ishod = r;
+    if (r.prazno) return;
+    if (r.tocno) cijeli.rezultat = cijeli.pokusaji ? UZ_POMOC : ODMAH;
+    else cijeli.pokusaji++;
+  }
+
+  // riješen sam: podzadaci se preskaču, ravno na sažetak
+  function cijeliGotov() {
+    uvod = false;
+    ekran = n;
+    onzavrsi(sazetak());
+    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function vodiMe() {
+    uvod = false;
+    zadatakOtvoren = true;
+    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function zavrsniOdgovor(odgovor) {
+    const z = cijeli.zavrsni;
+    const r = provjeri(lekcija.cijeli.blizanac, odgovor);
+    z.ishod = r;
+    if (r.prazno) return;
+    if (r.tocno) z.rezultat = z.pokusaji ? UZ_POMOC : ODMAH;
+    else if (++z.pokusaji >= MAX_PONOVNO) zavrsniPokazi();
+  }
+
+  function zavrsniPokazi() {
+    cijeli.zavrsni.pokazi = true;
+    cijeli.zavrsni.rezultat = POKAZANO;
+  }
+
+  function zavrsniDalje() {
+    zavrsni = false;
+    onzavrsi(sazetak());
+    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function dalje() {
     ekran++;
     // zadatak s grafom ostaje otvoren: sljedeći podzadaci očitavaju s istog grafa
     zadatakOtvoren = !!lekcija.zadatak.graf;
-    if (ekran === n) onzavrsi(sazetak());
+    if (ekran === n && lekcija.cijeli?.blizanac) {
+      zavrsni = true;
+      zadatakOtvoren = false;
+    } else if (ekran === n) onzavrsi(sazetak());
     // u aplikaciji se ne pomiče prozor nego glavni stupac, pa se na vrh dovodi sama lekcija
     root?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function ispocetka() {
     stanja = novo();
+    cijeli = novoCijeli();
+    uvod = !!lekcija.cijeli;
+    zavrsni = false;
     ekran = 0;
     zadatakOtvoren = true;
   }
@@ -127,8 +183,16 @@
   }
 
   function sazetak() {
+    // cijeli zadatak riješen sam: to je ono što se na maturi traži
+    if (lekcija.cijeli && cijeli.rezultat) {
+      const q = cijeli.rezultat === ODMAH ? 5 : 4;
+      return { rezultati: [cijeli.rezultat], q, najvise: 5, odmah: cijeli.rezultat === ODMAH ? 1 : 0, dijelova: 1 };
+    }
     const r = stanja.map((s) => s.rezultat);
-    const q = ocjenaIz(r);
+    let q = ocjenaIz(r);
+    // Nije riješio sam, pa ni uz sve korake iz prve nije „znao“ zadatak: najviše 4 ako je na kraju sam riješio
+    // sličan cijeli zadatak, inače 3.
+    if (lekcija.cijeli) q = Math.min(q, cijeli.zavrsni.rezultat === ODMAH ? 4 : 3);
     // Najviše što učenik smije podići: ocjena da je još jedan dio riješio odmah (tipfeler "80" umjesto "800"),
     // ali ne pala lekcija u savršenu. Spuštati smije uvijek.
     const najvise = Math.max(q, ...r.map((x, i) => (x === ODMAH ? q : ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))))));
@@ -150,12 +214,22 @@
 <div class="lx lx-runner" bind:this={root}>
   <!-- put kroz lekciju: ista slova kao u naslovima podzadataka, pa kvačica za kraj -->
   <ol class="lx-path" aria-label={`Dio ${Math.min(ekran + 1, n + 1)} od ${n + 1}`}>
+    {#if lekcija.cijeli}
+      <li class="lx-path-step" class:done={!!cijeli.rezultat} class:now={uvod} aria-current={uvod ? "step" : undefined}>
+        <span class="lx-path-dot" title="Cijeli zadatak sam">{#if cijeli.rezultat}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" /></svg>{:else}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5l3 3L6 13H3v-3l7.5-7.5Z" /></svg>{/if}<span class="sr-only">cijeli zadatak</span></span>
+      </li>
+    {/if}
     {#each lekcija.podzadaci as x, i (x.id)}
-      <li class="lx-path-step" class:done={stanja[i].faza === "gotovo"} class:now={i === ekran} aria-current={i === ekran ? "step" : undefined}>
+      <li class="lx-path-step" class:done={stanja[i].faza === "gotovo"} class:preskoceno={!!cijeli.rezultat} class:now={i === ekran && !uvod && !zavrsni} aria-current={i === ekran ? "step" : undefined}>
         <span class="lx-path-dot">{#if stanja[i].faza === "gotovo"}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" /></svg><span class="sr-only">{x.id}) gotovo</span>{:else}{x.id}{/if}</span>
       </li>
     {/each}
-    <li class="lx-path-step end" class:now={ekran === n} aria-current={ekran === n ? "step" : undefined}>
+    {#if lekcija.cijeli?.blizanac && !cijeli.rezultat}
+      <li class="lx-path-step" class:done={!!cijeli.zavrsni.rezultat} class:now={zavrsni} aria-current={zavrsni ? "step" : undefined}>
+        <span class="lx-path-dot" title="Sličan zadatak sam">{#if cijeli.zavrsni.rezultat}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" /></svg>{:else}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5l3 3L6 13H3v-3l7.5-7.5Z" /></svg>{/if}<span class="sr-only">sličan zadatak</span></span>
+      </li>
+    {/if}
+    <li class="lx-path-step end" class:now={ekran === n && !zavrsni} aria-current={ekran === n && !zavrsni ? "step" : undefined}>
       <span class="lx-path-dot"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11M4 3h7.5l-1.8 2.75L11.5 8.5H4" /></svg><span class="sr-only">kraj</span></span>
     </li>
   </ol>
@@ -174,9 +248,68 @@
     {/if}
   </section>
 
-  {#if ekran < n}
+  {#if uvod}
+    <div class="lx-sub">
+      <h2 class="lx-sub-title">Riješi sam</h2>
+      <Korak spec={lekcija.cijeli.pitanje} oznaka="Tvoj red: cijeli zadatak" locked={!!cijeli.rezultat} ishod={cijeli.ishod} onodgovor={cijeliOdgovor}>
+        {#if !cijeli.rezultat}
+          <div class="lx-actions">
+            {#if cijeli.pokusaji}
+              <button class="btn btn-primary" onclick={vodiMe}>Vodi me korak po korak</button>
+            {:else}
+              <button class="btn btn-quiet" onclick={vodiMe}>Ne znam, vodi me korak po korak</button>
+            {/if}
+          </div>
+        {/if}
+      </Korak>
+      {#if cijeli.pokusaji && !cijeli.rezultat}
+        <p class="lx-summary-note" use:uvid>Možeš ispraviti i probati ponovno, ili proći zadatak korak po korak.</p>
+      {/if}
+      {#if cijeli.rezultat}
+        <div class="lx-done" use:uvid>
+          <div class="lx-done-head ok">{@render kvacica()}Točno! Riješio si cijeli zadatak sam.</div>
+          <p class="lx-solution">Upravo tako izgleda zadatak na maturi: bez koraka i bez pomoći.</p>
+        </div>
+        <div class="lx-next">
+          <button class="btn btn-primary btn-lg" onclick={cijeliGotov}>Dalje</button>
+        </div>
+      {/if}
+    </div>
+  {:else if zavrsni}
+    {@const z = cijeli.zavrsni}
+    <div class="lx-sub">
+      <h2 class="lx-sub-title">Sad sam, bez koraka</h2>
+      <p class="lx-summary-note">Isti postupak, drugi brojevi. Pokušaj ga riješiti od početka do kraja.</p>
+      <Korak spec={lekcija.cijeli.blizanac} oznaka="Tvoj red: sličan zadatak" locked={!!z.rezultat} pokazi={z.pokazi} ishod={z.ishod} onodgovor={zavrsniOdgovor}>
+        {#if !z.rezultat && z.pokusaji > 0}
+          <div class="lx-actions"><button class="btn btn-quiet" onclick={zavrsniPokazi}>Pokaži točan odgovor</button></div>
+        {/if}
+      </Korak>
+      {#if z.rezultat}
+        <div class="lx-done" class:solved={z.rezultat === POKAZANO} use:uvid>
+          {#if z.rezultat === POKAZANO}
+            <div class="lx-done-head">Točan odgovor: <Md text={tocanOdgovor(lekcija.cijeli.blizanac)} inline /></div>
+          {:else}
+            <div class="lx-done-head ok">{@render kvacica()}{z.rezultat === ODMAH ? "Točno! Ovaj si riješio sam." : "Bravo, sad znaš!"}</div>
+          {/if}
+          {#if lekcija.cijeli.blizanacRjesenje}
+            <details class="lx-more" open={z.rezultat === POKAZANO}>
+              <summary>Rješenje</summary>
+              <Md text={lekcija.cijeli.blizanacRjesenje} />
+            </details>
+          {/if}
+        </div>
+        <div class="lx-next">
+          <button class="btn btn-primary btn-lg" onclick={zavrsniDalje}>Završi</button>
+        </div>
+      {/if}
+    </div>
+  {:else if ekran < n}
     {#key ekran}
       <div class="lx-sub">
+        {#if lekcija.cijeli && ekran === 0}
+          <p class="lx-summary-note">Riješit ćemo ga zajedno, u {n} koraka. Na kraju dobivaš sličan zadatak koji rješavaš sam.</p>
+        {/if}
         <h2 class="lx-sub-title"><span class="lx-sub-id" aria-hidden="true">{p.id}</span><span class="sr-only">{p.id})</span> {p.naslov}</h2>
 
         <Korak spec={p.pitanje} locked={st.faza !== "pokusaj"} ishod={st.prvi} onodgovor={pitanje} pokazi={st.rezultat === POKAZANO && !p.blizanac}>
@@ -240,7 +373,7 @@
             </details>
           </div>
           <div class="lx-next">
-            <button class="btn btn-primary btn-lg" onclick={dalje}>{ekran < n - 1 ? "Dalje" : "Završi"}</button>
+            <button class="btn btn-primary btn-lg" onclick={dalje}>{ekran < n - 1 || lekcija.cijeli?.blizanac ? "Dalje" : "Završi"}</button>
           </div>
         {/if}
       </div>
@@ -249,24 +382,41 @@
     <div class="lx-summary">
       <h2 class="lx-sub-title">Gotovo!</h2>
       <div class="lx-results">
+        {#if lekcija.cijeli}
+          <div class="lx-result" data-r={cijeli.rezultat ?? "pokazan_odgovor"}>
+            <span>Cijeli zadatak sam</span>
+            <span class="lx-result-tag">{cijeli.rezultat === ODMAH ? "riješeno iz prve" : cijeli.rezultat ? "riješeno iz više pokušaja" : "uz korake"}</span>
+          </div>
+        {/if}
         {#each lekcija.podzadaci as x, i (x.id)}
-          <div class="lx-result" data-r={stanja[i].rezultat}>
+          {#if !cijeli.rezultat}<div class="lx-result" data-r={stanja[i].rezultat}>
             <span>{x.id}) {x.naslov}</span>
             <span class="lx-result-tag">{{ [ODMAH]: "znao odmah", [UZ_POMOC]: "naučeno uz pomoć", [POKAZANO]: "treba vježbe" }[stanja[i].rezultat]}</span>
-          </div>
+          </div>{/if}
         {/each}
+        {#if lekcija.cijeli?.blizanac && !cijeli.rezultat}
+          <div class="lx-result" data-r={cijeli.zavrsni.rezultat}>
+            <span>Sličan zadatak sam</span>
+            <span class="lx-result-tag">{{ [ODMAH]: "riješeno iz prve", [UZ_POMOC]: "riješeno iz više pokušaja", [POKAZANO]: "treba vježbe" }[cijeli.zavrsni.rezultat]}</span>
+          </div>
+        {/if}
       </div>
       <p class="lx-summary-note">
-        {#if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio uz pomoć vratit će se ranije u ponavljanju.{/if}
+        {#if cijeli.rezultat === ODMAH}Riješio si ga sam iz prve. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else if lekcija.cijeli && cijeli.zavrsni.rezultat === ODMAH}Uz korake si shvatio postupak i sličan zadatak riješio sam. Vratit ćemo ti ga uskoro da provjerimo je li ostalo.{:else if lekcija.cijeli}Ovaj tip zadatka vratit ćemo ti uskoro, pa ćeš ga ponovno vježbati.{:else if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio uz pomoć vratit će se ranije u ponavljanju.{/if}
       </p>
       <!-- cijelo rješenje na jednom mjestu, kao u tekstualnom zadatku: i za učenika koji je sve znao odmah -->
       <details class="lx-more lx-rjesenje" open>
         <summary>Cijelo rješenje</summary>
-        {#each lekcija.podzadaci as x (x.id)}
-          <h3 class="lx-rjesenje-dio">{x.id}) {x.naslov}</h3>
-          <Md text={x.objasnjenje} />
-          {#if x.graf}<GrafFunkcije spec={x.graf} bezTeksta />{/if}
-        {/each}
+        {#if lekcija.cijeli?.rjesenje}
+          <!-- autorovo objašnjenje u komadu, kao u tekstualnom zadatku -->
+          <Md text={lekcija.cijeli.rjesenje} />
+        {:else}
+          {#each lekcija.podzadaci as x (x.id)}
+            <h3 class="lx-rjesenje-dio">{x.id}) {x.naslov}</h3>
+            <Md text={x.objasnjenje} />
+            {#if x.graf}<GrafFunkcije spec={x.graf} bezTeksta />{/if}
+          {/each}
+        {/if}
       </details>
       <section class="lx-zapamti-box">
         <div class="lx-zapamti-title">Zapamti</div>
@@ -346,6 +496,10 @@
     border-color: var(--primary);
     background: var(--primary);
     color: var(--on-primary);
+  }
+  .preskoceno .lx-path-dot {
+    border-style: dashed;
+    opacity: 0.5;
   }
   .done .lx-path-dot {
     border-color: transparent;
