@@ -217,6 +217,18 @@
       : null,
   );
   let cilj = $derived(pitanje ? energijaUkupno(spec) : null);
+  // Ukupna energija dolazi iz prvog nepitanog stanja. Kad je to jedan zadani stupac, crta i broj „ukupno“ samo ga
+  // ponavljaju. Kad je zbroj više stupaca (npr. W + Q_h u toplinskom stroju), taj zbroj je upravo ono što učenik
+  // treba izračunati (Q_t = W + Q_h), pa se do odgovora ne pokazuje: ni crta ni broj, a zbroj se ne boji po točnosti.
+  let otkriveno = $derived(pokazi || !!ishod?.tocno);
+  let ukupnoOdaje = $derived.by(() => {
+    if (!pitanje || otkriveno || cilj == null) return false;
+    const ref = stanja.find((_, k) => k !== pi)?.vrijednosti ?? {};
+    return Object.values(ref).filter((v) => Math.abs(v) > 1e-9).length > 1;
+  });
+  let refOznaka = $derived(
+    pitanje ? (stanja.find((_, k) => k !== pi)?.oznaka ?? "") : "",
+  );
   let eta = $derived(
     spec.korisnost && nacin !== "istrazi"
       ? energijaKorisnost(spec, pitanje ? ulaz : null)
@@ -421,7 +433,7 @@
           max={raspon.max}
           {korak}
           jedinica={J}
-          {ukupno}
+          ukupno={ukupnoOdaje ? null : ukupno}
           aktivno={pitanje && !locked}
           onpromjena={promjena}
         />
@@ -441,7 +453,10 @@
 
     {#if pitanje}
       <p class="lx-readout es-readout">
-        {#if cilj != null}
+        {#if cilj != null && ukupnoOdaje}
+          zbroj u stanju „{stanja[pi].oznaka}“: <b>{fmt(zbrojPitano)} {J}</b>
+          · mora biti jednak zbroju u stanju „{refOznaka}“
+        {:else if cilj != null}
           zbroj u stanju „{stanja[pi].oznaka}“:
           <b class:es-krivo={Math.abs(zbrojPitano - cilj) > korak / 2}
             >{fmt(zbrojPitano)} {J}</b

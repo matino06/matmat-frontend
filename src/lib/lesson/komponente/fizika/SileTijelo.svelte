@@ -23,6 +23,7 @@
     krajnjeKombinacije,
     klizaciOd,
     analizaCilja,
+    odajuCilj,
     zakljucajKut,
     kutVektora,
     opisVelicine,
@@ -128,6 +129,27 @@
     return [180, 120];
   }
 
+  // ── postavi: dok učenik ne provjeri, ne vidi ni cilj ni ono što ga odaje ──
+  const klizac = untrack(() => klizaciOd(spec)[0]);
+  let poslano = $state(null);
+  let neprom = $derived(poslano != null && klizac && poslano === p[klizac.id]);
+  let otkriveno = $derived(
+    !postavi || locked || pokazi || (neprom && ishod && !ishod.prazno),
+  );
+  // ciljana veličina i one koje se s njom mijenjaju linearno (F_rez uz a, N uz vagu); stalne jednake odgovoru
+  // (F_tr kad se traži sila guranja) crtaju se bez iznosa
+  const odaju = untrack(() =>
+    postavi && klizac
+      ? odajuCilj(spec, klizac, (q) => fizikaSila(spec, q).vel)
+      : { vezane: new Set(), jednake: new Set() },
+  );
+  // skriveno: ni iznos ni crtež; bezIznosa: crta se, ali se iznos ne piše
+  const skriveno = (k) => !otkriveno && odaju.vezane.has(k);
+  const bezIznosa = (k) =>
+    skriveno(k) || (!otkriveno && odaju.jednake.has(k));
+  // gibanje pokazuje akceleraciju (miruje li tijelo, ubrzava li), pa stoji dok se akceleracija ne smije vidjeti
+  let mirno = $derived(skriveno("a") || skriveno("F_rez"));
+
   // ── animacija (istrazi, postavi) ──
   let v = 0;
   let pauza = 0;
@@ -141,6 +163,11 @@
     const v0 = spec.v0 ?? 0;
     v = v0;
     okno = 0;
+    if (mirno) {
+      v = 0;
+      pom = 0;
+      return;
+    }
     if (scena === "kutija" || scena === "kolica") {
       const smjer = Math.sign(v0 || fiz.a);
       pom = smjer > 0 ? -80 : smjer < 0 ? 80 : 0;
@@ -150,6 +177,7 @@
   // promjena klizača: gibanje kreće ispočetka s novom akceleracijom
   $effect(() => {
     void p;
+    void mirno;
     untrack(pocetak);
   });
 
@@ -157,6 +185,7 @@
   function korak(now) {
     const dt = Math.min(0.05, (now - (zadnji || now)) / 1000);
     zadnji = now;
+    if (mirno) return;
     if (pauza > 0) {
       pauza -= dt;
       if (pauza <= 0) pocetak();
@@ -192,12 +221,6 @@
   });
 
   // ── postavi ──
-  const klizac = untrack(() => klizaciOd(spec)[0]);
-  let poslano = $state(null);
-  let neprom = $derived(poslano != null && klizac && poslano === p[klizac.id]);
-  let otkriveno = $derived(
-    !postavi || locked || pokazi || (neprom && ishod && !ishod.prazno),
-  );
   $effect(() => {
     if (!pokazi || !postavi) return;
     untrack(() => {
@@ -226,7 +249,7 @@
               k === "T" || fiz.sile.some((f) => f.id === k)
                 ? boja(k === "T" ? "T1" : k)
                 : null,
-            skriveno: ciljana && !otkriveno,
+            skriveno: bezIznosa(k),
             status:
               ciljana && otkriveno && neprom && ishod
                 ? ishod.tocno
@@ -412,10 +435,16 @@
   };
 
   // ── crtanje sila u istrazi/postavi ──
+  // u „postavi“ prije provjere ne crta se sila koja odaje cilj (N kad je cilj vaga; T1/T2 su veličina T)
+  let vidljiveSile = $derived(
+    fiz.sile.filter(
+      (f) => !skriveno(f.id) && !skriveno(f.id.replace(/\d$/, "")),
+    ),
+  );
   let sileCrtez = $derived(
     crtaj
       ? []
-      : fiz.sile.map((f) => {
+      : vidljiveSile.map((f) => {
           const c = centar(f.tijelo);
           const L = duljinaSile(f.iznos);
           return {
@@ -429,7 +458,8 @@
   );
   // rezultanta: crtkana, malo odmaknuta od tijela da se ne preklopi sa silama
   let rezultanta = $derived.by(() => {
-    if (crtaj || scena === "kolotura") return null;
+    // rezultanta je izvedena iz cilja (F_rez = m·a, a uz vagu i N − G), pa se u „postavi“ vidi tek nakon provjere
+    if (crtaj || scena === "kolotura" || !otkriveno) return null;
     const Fr = scena === "kosina" ? fiz.vel.m * fiz.vel.a : fiz.vel.F_rez;
     if (Math.abs(Fr) < FMAX * 0.01) return null;
     const L = duljinaSile(Math.abs(Fr)) * Math.sign(Fr);
@@ -459,7 +489,7 @@
     }[scena];
     if (crtaj)
       return `${ime}. Nacrtane sile: ${strelice.length ? strelice.map((s) => `${karta(s.id)?.izvor ?? s.id} ${s.kut == null ? "bez smjera" : smjerRijecima(s.kut)}`).join(", ") : "nijedna"}.`;
-    return `${ime}. Sile: ${fiz.sile.map((f) => `${f.izvor} ${iznosJed(f.iznos, "N")} ${smjerRijecima(f.kut)}`).join(", ")}.`;
+    return `${ime}. Sile: ${vidljiveSile.map((f) => `${f.izvor}${bezIznosa(f.id) ? "" : ` ${iznosJed(f.iznos, "N")}`} ${smjerRijecima(f.kut)}`).join(", ")}.`;
   });
 
   const kosinaPut = $derived(
@@ -498,9 +528,7 @@
   let vaga = $derived(
     opisVelicine(fiz.vel.vaga, meta.vaga ?? { jedinica: "N" }),
   );
-  let vagaSkrivena = $derived(
-    postavi && spec.cilj?.velicina === "vaga" && !otkriveno,
-  );
+  let vagaSkrivena = $derived(skriveno("vaga"));
 </script>
 
 {#if nacin === "istrazi"}
@@ -587,7 +615,7 @@
       <text class="st-lcd-t" x="218" y="52.5" text-anchor="middle"
         >{crtaj ? "vaga" : vagaSkrivena ? "?" : vaga}</text
       >
-      {#if !crtaj && Math.abs(fiz.vel.a) > 1e-9}
+      {#if !crtaj && !skriveno("a") && Math.abs(fiz.vel.a) > 1e-9}
         <Strelica
           x1={304}
           y1={140}

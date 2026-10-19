@@ -274,6 +274,54 @@ export function analizaCilja(s, k, velicine) {
   };
 }
 
+// Veličine scene koje u „postavi“ odaju odgovor dok učenik pomiče klizač.
+// vezane: ciljana veličina i svaka koja se s njom mijenja linearno (y = α·cilj + β, npr. F_rez = m·a ili N =
+//   očitanje vage); bez njih se ne smiju ni pisati ni crtati. Veličina razmjerna samom klizaču (y = c·klizač: sila
+//   koju učenik namješta, a dizala, ω = v/r) je ono što učenik postavlja, pa ostaje vidljiva.
+// jednake: stalne veličine jednake traženom položaju klizača (sila trenja kad se traži sila guranja za jednoliko
+//   klizanje); crtaju se, ali im se iznos ne piše.
+export function odajuCilj(s, k, velicine) {
+  const vezane = new Set(s.cilj?.velicina ? [s.cilj.velicina] : []);
+  const jednake = new Set();
+  const out = { vezane, jednake };
+  if (!k || !s.cilj) return out;
+  let a;
+  try {
+    a = analizaCilja(s, k, velicine);
+  } catch {
+    return out;
+  }
+  const vr = a.vrijednosti;
+  const p0 = pocetneVrijednosti(s);
+  const redovi = vr.map((v) => velicine({ ...p0, [k.id]: v }));
+  const x = vr.map((v) => a.razlika(v).d);
+  if (!x.every(isNum)) return out;
+  const i0 = x.indexOf(Math.min(...x));
+  const i1 = x.indexOf(Math.max(...x));
+  if (!(x[i1] - x[i0] > 1e-12 * Math.max(1, Math.abs(x[i1])))) return out;
+  const jk = vr.reduce((b, v, i) => (Math.abs(v) > Math.abs(vr[b]) ? i : b), 0);
+  // traženi položaj klizača u SI i pola koraka oko njega
+  const odgovor = iznos(s, k.id, { ...p0, [k.id]: a.best });
+  const polaKoraka = Math.abs(iznos(s, k.id, { ...p0, [k.id]: k.korak })) / 2;
+  for (const key of Object.keys(redovi[0])) {
+    const y = redovi.map((r) => r[key]);
+    if (!y.every(isNum)) continue;
+    const skala = Math.max(...y.map(Math.abs));
+    const tol = 1e-6 * skala;
+    if (Math.max(...y) - Math.min(...y) <= tol) {
+      if (Math.abs(y[0] - odgovor) <= polaKoraka + tol) jednake.add(key);
+      continue;
+    }
+    const c = vr[jk] !== 0 ? y[jk] / vr[jk] : 0;
+    if (y.every((q, i) => Math.abs(q - c * vr[i]) <= tol)) continue; // sam klizač
+    const al = (y[i1] - y[i0]) / (x[i1] - x[i0]);
+    const be = y[i0] - al * x[i0];
+    if (y.every((q, i) => Math.abs(q - (al * x[i] + be)) <= tol))
+      vezane.add(key);
+  }
+  return out;
+}
+
 export function validateCilj(s, need, k, velicine, meta) {
   const c = s.cilj;
   if (

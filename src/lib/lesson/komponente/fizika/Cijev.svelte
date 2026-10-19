@@ -251,6 +251,13 @@
   const cm2 = (S) => fm(S * 1e4, "cm²", 4);
   let Ls = $derived(st.Q * 1000);
   const skriveno = (k) => !otkriveno && pitaj === k;
+  // Prije odgovora ne smije se vidjeti ni ono iz čega traženo slijedi jednim korakom: uz pitanje Q redak
+  // „protok Q = S·v“ s površinama i brzinama daje Q množenjem (a površinu iz promjera učenik treba izračunati sam),
+  // a uz pitanje v₂ protok i površine daju v₂ = Q/S₂ (i omjer površina, umjesto tipične greške s omjerom promjera).
+  let skrijS = $derived(
+    !otkriveno && saD && (pitaj === "Q" || pitaj === "v2"),
+  );
+  let skrijQ = $derived(!otkriveno && (pitaj === "Q" || pitaj === "v2"));
 
   let opis = $derived(
     `Vodoravna cijev se sužava: ${saD ? `promjer ${formatNumber(st.d1)} cm pa ${formatNumber(st.d2)} cm` : `presjek ${cm2(st.S1)} pa ${cm2(st.S2)}`}. ` +
@@ -439,7 +446,9 @@
     </div>
   {/if}
   <div class="cj-red">
-    <span>presjek S</span><span>{cm2(st.S1)}</span><span>{cm2(st.S2)}</span>
+    <span>presjek S</span><span>{skrijS ? "?" : cm2(st.S1)}</span><span
+      >{skrijS ? "?" : cm2(st.S2)}</span
+    >
   </div>
   <div class="cj-red">
     <span>brzina v</span><span>{fm(st.v1, "m/s", 3)}</span><span
@@ -464,7 +473,7 @@
   {/if}
   <div class="cj-red cj-q">
     <span>protok Q = S·v</span><span class:ok={otkriveno && pitaj === "Q"}
-      >{skriveno("Q") ? "?" : `${fm(Ls, "L/s", 4)} (isti)`}</span
+      >{skrijQ ? "?" : `${fm(Ls, "L/s", 4)} (isti)`}</span
     >
   </div>
   {#if kanta && otkriveno && st.t_kanta}

@@ -40,6 +40,11 @@
   let istrazi = $derived(nacin === "istrazi");
   let jeKrug = $derived(krug(spec));
   let c = $derived(spec.objekt === "cestica" ? cesticaOf(spec) : null);
+  // izracunaj: dok učenik ne odgovori, crtež ne odaje traženu veličinu (ni „F = 0“, ni veličinom znaka sile, ni
+  // polumjer kroz traku mjerila)
+  let trazi = $derived(
+    nacin === "izracunaj" && !locked && !pokazi ? spec.pitaj?.velicina : null,
+  );
 
   // ── klizači (indeks na popisu vrijednosti) ──
   let klizaci = $derived(spec.klizaci ?? []);
@@ -265,9 +270,9 @@
       <svg
         viewBox="0 0 {W} 260"
         role="img"
-        aria-label="{c.ime} kruži u magnetskom polju po kružnici polumjera {formatSci(
-          x.r,
-        )} m"
+        aria-label={trazi === "r"
+          ? `${c.ime} kruži u magnetskom polju`
+          : `${c.ime} kruži u magnetskom polju po kružnici polumjera ${formatSci(x.r)} m`}
       >
         <Polje
           smjer={spec.smjer_B}
@@ -341,44 +346,46 @@
         <text x={p[0]} y={p[1] + 4.5} text-anchor="middle" class="mg-predznak"
           >{c.q < 0 ? "−" : "+"}</text
         >
-        <!-- traka mjerila -->
-        <g transform="translate({W - 14 - traka.px} 244)">
-          <rect
-            x="-6"
-            y="-16"
-            width={traka.px + 12}
-            height="24"
-            rx="5"
-            class="mg-leg"
-          />
-          <line
-            x1="0"
-            y1="0"
-            x2={traka.px}
-            y2="0"
-            class="lx-stroke"
-            stroke-width="2"
-          />
-          <line
-            x1="0"
-            y1="-4"
-            x2="0"
-            y2="4"
-            class="lx-stroke"
-            stroke-width="2"
-          />
-          <line
-            x1={traka.px}
-            y1="-4"
-            x2={traka.px}
-            y2="4"
-            class="lx-stroke"
-            stroke-width="2"
-          />
-          <text x={traka.px / 2} y="-5" text-anchor="middle" class="mg-mali"
-            >{traka.txt}</text
-          >
-        </g>
+        <!-- traka mjerila (kad se traži r, odala bi ga) -->
+        {#if trazi !== "r"}
+          <g transform="translate({W - 14 - traka.px} 244)">
+            <rect
+              x="-6"
+              y="-16"
+              width={traka.px + 12}
+              height="24"
+              rx="5"
+              class="mg-leg"
+            />
+            <line
+              x1="0"
+              y1="0"
+              x2={traka.px}
+              y2="0"
+              class="lx-stroke"
+              stroke-width="2"
+            />
+            <line
+              x1="0"
+              y1="-4"
+              x2="0"
+              y2="4"
+              class="lx-stroke"
+              stroke-width="2"
+            />
+            <line
+              x1={traka.px}
+              y1="-4"
+              x2={traka.px}
+              y2="4"
+              class="lx-stroke"
+              stroke-width="2"
+            />
+            <text x={traka.px / 2} y="-5" text-anchor="middle" class="mg-mali"
+              >{traka.txt}</text
+            >
+          </g>
+        {/if}
       </svg>
     </figure>
     {#if istrazi}
@@ -564,11 +571,13 @@
         role="img"
         aria-label="{c.ime}, brzina pod kutom {formatNumber(
           x.kut,
-        )}° prema silnicama; sila {F === 'nula'
-          ? 'nula'
-          : F === 'u_papir'
-            ? 'u papir'
-            : 'iz papira'}"
+        )}° prema silnicama; sila {trazi === 'F'
+          ? 'se traži'
+          : F === 'nula'
+            ? 'nula'
+            : F === 'u_papir'
+              ? 'u papir'
+              : 'iz papira'}"
       >
         <Polje
           smjer="desno"
@@ -615,7 +624,16 @@
         <text x={C[0]} y={C[1] + 5} text-anchor="middle" class="mg-predznak"
           >{c.q < 0 ? "−" : "+"}</text
         >
-        {#if F === "u_papir" || F === "iz_papira"}
+        {#if trazi === "F"}
+          <g class="c-f"
+            ><text
+              class="mg-txt it"
+              x={C[0] - 52}
+              y={C[1] + 50}
+              text-anchor="middle">F = ?</text
+            ></g
+          >
+        {:else if F === "u_papir" || F === "iz_papira"}
           <Okomito
             x={C[0] - 52}
             y={C[1] + 44}
@@ -672,11 +690,13 @@
         role="img"
         aria-label="Vodič pod kutom {formatNumber(
           x.kut,
-        )}° prema silnicama; sila {F === 'nula'
-          ? 'nula'
-          : F === 'u_papir'
-            ? 'u papir'
-            : 'iz papira'}"
+        )}° prema silnicama; sila {trazi === 'F'
+          ? 'se traži'
+          : F === 'nula'
+            ? 'nula'
+            : F === 'u_papir'
+              ? 'u papir'
+              : 'iz papira'}"
       >
         <Polje
           smjer="desno"
@@ -724,7 +744,16 @@
             ></g
           >
         {/if}
-        {#if F === "u_papir" || F === "iz_papira"}
+        {#if trazi === "F"}
+          <g class="c-f"
+            ><text
+              class="mg-txt it"
+              x={C[0] - 70}
+              y={C[1] + 76}
+              text-anchor="middle">F = ?</text
+            ></g
+          >
+        {:else if F === "u_papir" || F === "iz_papira"}
           <Okomito
             x={C[0] - 60 * Math.sin(a) * 0 - 70}
             y={C[1] + 70}

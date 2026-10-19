@@ -523,6 +523,13 @@
       : null,
   );
   let popunjeno = $derived(Object.values(izbor).every((x) => x != null));
+  // prije odgovora vide se samo zadani iznosi (U, i C ako je zadan); izračunati (Q = CU, W, E) bi odali ono što
+  // lekcija traži (npr. odspojen: Q' = Q), pa se pokažu tek nakon provjere
+  let tajno = $derived(
+    nacin === "predvidi" && !locked && !pokazi && !otkrij
+      ? (k) => k !== "U" && !(k === "C" && spec.C != null)
+      : () => false,
+  );
 
   function provjeri() {
     if (locked) return;
@@ -609,7 +616,10 @@
   let opis = $derived(
     cestica
       ? `Dvije vodoravne ploče, gornja pozitivna, donja negativna, razmak ${formatNumber(v.d)} mm${spec.L ? `, duljina ${formatNumber(spec.L)} cm` : ""}; ${nazivCestice} ${vodoravno ? "ulijeće vodoravno sredinom" : "kreće iz mirovanja"}.`
-      : `Pločasti kondenzator${imaIzvor ? `, izvor ${spojen ? "spojen" : "odspojen"}` : ""}; ${velicineKond.map((k) => `${k} = ${fmtVel[k](kond.sad[k])}`).join(", ")}.`,
+      : `Pločasti kondenzator${imaIzvor ? `, izvor ${spojen ? "spojen" : "odspojen"}` : ""}; ${velicineKond
+          .filter((k) => !tajno(k))
+          .map((k) => `${k} = ${fmtVel[k](kond.sad[k])}`)
+          .join(", ")}.`,
   );
 </script>
 
@@ -1043,7 +1053,9 @@
               >{faza > 0
                 ? `${fmtVel[k](promjena.prije[k])} → ${fmtVel[k](kond.sad[k])}`
                 : imaD || k !== "E"
-                  ? fmtVel[k](promjena.prije[k])
+                  ? tajno(k)
+                    ? "?"
+                    : fmtVel[k](promjena.prije[k])
                   : ""}{faza >= 1
                 ? ` (${faktor(promjena.prije[k], promjena.poslije[k])})`
                 : ""}</span

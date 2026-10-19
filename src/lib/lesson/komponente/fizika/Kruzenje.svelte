@@ -22,6 +22,7 @@
     krajnjeKombinacije,
     klizaciOd,
     analizaCilja,
+    odajuCilj,
     zakljucajKut,
     kutVektora,
     opisVelicine,
@@ -173,6 +174,17 @@
 
   // ── postavi ──
   const klizac = untrack(() => klizaciOd(spec)[0]);
+  // dok učenik ne provjeri, ne vidi cilj ni ono što ga odaje: ciljanu veličinu, veličine koje se s njom mijenjaju
+  // linearno (F_cp i a_cp) ni strelice tih veličina
+  const odaju = untrack(() =>
+    postavi && klizac
+      ? odajuCilj(spec, klizac, (q) => fizikaKruzenja(spec, q).vel)
+      : { vezane: new Set(), jednake: new Set() },
+  );
+  // skriveno: ni iznos ni crtež; bezIznosa: crta se, ali se iznos ne piše
+  const skriveno = (k) => !otkriveno && odaju.vezane.has(k);
+  const bezIznosa = (k) =>
+    skriveno(k) || (!otkriveno && odaju.jednake.has(k));
   $effect(() => {
     if (!pokazi || !postavi) return;
     untrack(
@@ -268,15 +280,19 @@
         const T = i === 0 ? "A" : "B";
         const o = pol(RK * k, th);
         const L = (vel[`v_${T}`] / najv("v_A")) * 78;
-        out.push({
-          x1: o[0],
-          y1: o[1],
-          x2: o[0] + Math.cos(tangKut(th)) * L,
-          y2: o[1] - Math.sin(tangKut(th)) * L,
-          boja: "var(--primary)",
-          oznaka: `v_${T}`,
-        });
-        if (prikaziKruzenja(spec).includes(`a_${T}`)) {
+        if (!skriveno(`v_${T}`))
+          out.push({
+            x1: o[0],
+            y1: o[1],
+            x2: o[0] + Math.cos(tangKut(th)) * L,
+            y2: o[1] - Math.sin(tangKut(th)) * L,
+            boja: "var(--primary)",
+            oznaka: `v_${T}`,
+          });
+        if (
+          prikaziKruzenja(spec).includes(`a_${T}`) &&
+          !skriveno(`a_${T}`)
+        ) {
           const La = (vel[`a_${T}`] / najv("a_A")) * 60;
           out.push({
             x1: o[0],
@@ -291,14 +307,15 @@
       return out;
     }
     if (scena === "zavoj") {
-      if (vidiV)
+      if (vidiV && !skriveno("v"))
         smjerStr(
           tangKut(th),
           smjer ? 62 : (vel.v / najv("v")) * 74,
           "var(--primary)",
           "v",
         );
-      if (!smjer) {
+      // trenje daje potrebnu silu do granice F_max: duljina strelice odaje F_cp
+      if (!smjer && !skriveno("F_cp") && !skriveno("a_cp")) {
         const Fm = Math.max(najv("F_cp"), najv("F_max"));
         smjerStr(
           th + Math.PI,
@@ -310,14 +327,14 @@
       return out;
     }
     if (scena === "orbita") {
-      if (vidiV)
+      if (vidiV && !skriveno("v"))
         smjerStr(
           tangKut(th),
           smjer ? 58 : (vel.v / najv("v")) * 62,
           "var(--primary)",
           "v",
         );
-      if (!smjer && !bezGravitacije)
+      if (!smjer && !bezGravitacije && !skriveno("a") && !skriveno("F"))
         smjerStr(
           th + Math.PI,
           (vel.a / najv("a")) * 58,
@@ -349,7 +366,7 @@
             oznaka: m.oznaka,
             naziv: m.naziv,
             tekst,
-            skriveno: ciljana && !otkriveno,
+            skriveno: bezIznosa(k),
             status:
               ciljana && otkriveno && neprom && ishod
                 ? ishod.tocno
@@ -370,7 +387,7 @@
       cp: Math.min(1, vel.F_cp / Fm),
       max: vel.F_max / Fm,
       prolazi: fiz.prolazi,
-      skriven: postavi && spec.cilj?.velicina === "F_cp" && !otkriveno,
+      skriven: skriveno("F_cp"),
     };
   });
 

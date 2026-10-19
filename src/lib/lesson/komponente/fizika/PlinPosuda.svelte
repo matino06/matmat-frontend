@@ -402,11 +402,21 @@
   }
 
   // ── očitanja ──
+  // U načinu odaberi izvedena veličina za koju se pita (Ēk, v_ef, p) ne smije biti među očitanjima prije odgovora:
+  // usporedba dvaju brojeva odala bi točnu posudu. T, n i V su zadani podaci (njih učenik i treba usporediti).
+  const IZVEDENE = ["Ek", "vef", "p"];
+  const skrivenaOdaberi = $derived(
+    nacin === "odaberi" && !gotovo && IZVEDENE.includes(spec.pitanje)
+      ? spec.pitanje
+      : null,
+  );
   const prikazi = $derived(
-    spec.prikazi ??
+    (
+      spec.prikazi ??
       (nacin === "odaberi"
         ? ["T"]
-        : ["p", "V", "T", ...(spec.promjena?.n != null ? ["n"] : [])]),
+        : ["p", "V", "T", ...(spec.promjena?.n != null ? ["n"] : [])])
+    ).filter((q) => q !== skrivenaOdaberi),
   );
   const SIMB = {
     p: "p",
@@ -543,7 +553,7 @@
     stanja
       .map(
         (s, k) =>
-          `${posude[k].oznaka}: ${PRAZNO_KLIP[posude[k].klip]}${posude[k].toplina ? `, ${posude[k].toplina}` : ""}; p = ${iznos(s.p, jed.p)}, V = ${iznos(s.V, jed.V)}, T = ${iznos(s.T, "K")}`,
+          `${posude[k].oznaka}: ${PRAZNO_KLIP[posude[k].klip]}${posude[k].toplina ? `, ${posude[k].toplina}` : ""}; ${skrivenaOdaberi === "p" ? "" : `p = ${iznos(s.p, jed.p)}, `}V = ${iznos(s.V, jed.V)}, T = ${iznos(s.T, "K")}`,
       )
       .join(". "),
   );
