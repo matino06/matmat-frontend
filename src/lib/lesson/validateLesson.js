@@ -303,6 +303,8 @@ function prepisivo(spec, tekst) {
     for (const f of formule) {
       // samo formule bez znaka jednakosti (izraz, ne jednadžba) i ne sam rezultat napisan u tekstu
       if (/[=<>]|\\[lg]eq?\b/.test(f)) continue;
+      // sam broj iz teksta („4 kotača“) nije postupak koji bi se prepisao, nego slučajno isti broj
+      if (/^-?\d+(?:[.,{}]\d+)*$/.test(f.replace(/\s+/g, ""))) continue;
       const u = ucitajLatex(f, vars);
       if (u.greska || !jednako(u, tocan, vars)) continue;
       out.push(`polja[${i}]: izraz $${f}$ iz teksta ima istu vrijednost kao točan odgovor, pa bi ga učenik mogao samo prepisati; traži rezultat po dijelovima (npr. brojnik i nazivnik) ili u obliku koji se mora izračunati`);

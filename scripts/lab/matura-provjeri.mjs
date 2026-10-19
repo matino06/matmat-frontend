@@ -8,6 +8,7 @@
 import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { validateLesson } from "../../src/lib/lesson/validateLesson.js";
+import { tocanOdgovor } from "../../src/lib/lesson/katalog/index.js";
 
 const argv = process.argv.slice(2);
 const mi = argv.indexOf("--mapa");
@@ -32,6 +33,12 @@ for (const f of datoteke.sort()) {
     continue;
   }
   const { greske, upozorenja } = validateLesson(lekcija, {});
+  // konačni odgovor cijelog zadatka obično je i odgovor zadnjeg koraka: razlika je za pregled, ne greška
+  if (lekcija.cijeli?.pitanje && Array.isArray(lekcija.podzadaci)) {
+    const cijeli = odgovorZaUsporedbu(lekcija.cijeli.pitanje);
+    const zadnji = odgovorZaUsporedbu(lekcija.podzadaci.at(-1)?.pitanje);
+    if (cijeli && zadnji && cijeli !== zadnji) upozorenja.push(`pregled: konačni odgovor (${cijeli}) nije isti kao u zadnjem koraku (${zadnji})`);
+  }
   if (greske.length) losih++;
   console.log(`${greske.length ? "✗" : "✓"} ${id}${greske.length ? `: ${greske.length} grešaka` : ""}${upozorenja.length ? ` · ${upozorenja.length} upozorenja` : ""}`);
   for (const g of greske) console.log(`    greška: ${g}`);
@@ -41,3 +48,11 @@ for (const f of datoteke.sort()) {
 }
 console.log(`\n${datoteke.length - losih}/${datoteke.length} prolazi`);
 process.exitCode = losih ? 1 : 0;
+
+function odgovorZaUsporedbu(spec) {
+  try {
+    return String(tocanOdgovor(spec) ?? "").replace(/\s+/g, "").replace(/\$/g, "");
+  } catch {
+    return "";
+  }
+}
