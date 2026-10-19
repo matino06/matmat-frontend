@@ -24,7 +24,8 @@
   let aktivno = $state(spec.praznine.findIndex((p) => !p.opcije));
 
   function uredi(fn) {
-    const el = box?.querySelectorAll(".lx-slot-inp")[aktivno];
+    // po broju praznine, ne po redoslijedu u tekstu ([[2]] smije stajati prije [[1]])
+    const el = box?.querySelector(`.lx-slot[data-slot="${aktivno}"] .lx-slot-inp`);
     if (!el || el.tagName !== "INPUT" || locked) return;
     el.value = fn(el.value.trim());
     values[aktivno] = el.value;
