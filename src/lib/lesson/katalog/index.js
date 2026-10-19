@@ -4,10 +4,11 @@ import { pojam, postupak, skica } from "./tekst.js";
 import { broj, izbor, vise_tocnih, tocno_netocno, praznina, parovi, redoslijed, razvrstaj } from "./pitanja.js";
 import { klizac, mjerilo, mreza, ocitaj_graf, pretvorba_jedinica, cestice, uronjeno } from "./istrazivanje.js";
 import { izraz, interval, graf_funkcije } from "./matematika.js";
+import { FIZIKA } from "./fizika/index.js";
 import { POGLEDAJ, ODGOVOR } from "./zajednicko.js";
 
 export const KATALOG = Object.fromEntries(
-  [pojam, postupak, skica, klizac, broj, izbor, vise_tocnih, tocno_netocno, praznina, parovi, redoslijed, razvrstaj, mjerilo, mreza, ocitaj_graf, pretvorba_jedinica, cestice, uronjeno, izraz, interval, graf_funkcije].map((w) => [w.tip, w]),
+  [pojam, postupak, skica, klizac, broj, izbor, vise_tocnih, tocno_netocno, praznina, parovi, redoslijed, razvrstaj, mjerilo, mreza, ocitaj_graf, pretvorba_jedinica, cestice, uronjeno, izraz, interval, graf_funkcije, ...FIZIKA].map((w) => [w.tip, w]),
 );
 
 // Widgeti koje automatska izrada (prompt) ne smije koristiti: lekcije s njima pišu se ručno (matematika za maturu).

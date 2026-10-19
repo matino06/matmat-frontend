@@ -2,6 +2,7 @@
   // Svi widgeti kataloga s primjerom iz opisa: za ručnu provjeru izgleda i provjere odgovora, i u varijantama
   // načina rada koje generirane lekcije (još) ne koriste.
   import "$lib/lesson/lesson.css";
+  import { page } from "$app/state";
   import Korak from "$lib/lesson/komponente/Korak.svelte";
   import { KATALOG, provjeri, uloga, ODGOVOR } from "$lib/lesson/katalog/index.js";
 
@@ -28,11 +29,23 @@
     { tip: "graf_funkcije", nacin: "prikaz", tekst: "Linearna funkcija samo za $x \\geq 0$.", x: [-1, 8], y: [-1, 6], funkcije: [{ izraz: "1+0.5*x", od: 0 }], tocke: [{ x: 0, y: 1, oznaka: "(0, 1)" }] },
     { tip: "izraz", tekst: "Kolika je amplituda funkcije na grafu?", polja: [{ oznaka: "$|A| =$", odgovor: "2" }], graf: { nacin: "prikaz", x: [-1, 9], y: [-3, 3], funkcije: [{ izraz: "2*sin(pi/4*x)" }] } },
   ];
-  const svi = [...Object.values(KATALOG).map((w) => w.primjer), ...VARIJANTE];
+  // widget može uz primjer imati i „primjeri“: dodatne načine rada (fizikalni widgeti)
+  // ?tip=sudar,strujni_krug prikazuje samo te widgete (stranica sa svim animiranim primjerima je teška)
+  const tipovi = page.url.searchParams.get("tip")?.split(",") ?? null;
+  const svi = [...Object.values(KATALOG).flatMap((w) => [w.primjer, ...(w.primjeri ?? [])]), ...VARIJANTE].filter((s) => !tipovi || tipovi.includes(s.tip));
 
   let ishodi = $state(svi.map(() => null));
   let pokazi = $state(svi.map(() => false));
-  const problemi = (s) => KATALOG[s.tip].validate(s, { text: JSON.stringify(s) });
+  const problemi = (s) => {
+    try {
+      return KATALOG[s.tip].validate(s, { text: JSON.stringify(s) });
+    } catch (e) {
+      return [`validate je bacio iznimku: ${e.message}`];
+    }
+  };
+  function odgovor(i, s, o) {
+    ishodi[i] = provjeri(s, o);
+  }
 </script>
 
 <p class="muted small">Primjeri iz opisa widgeta (isti idu modelu u prompt) i dodatni načini rada. Provjera odgovora je ista kao u lekciji.</p>
@@ -40,10 +53,14 @@
   {#each svi as s, i (i)}
     <div class="kat-item">
       <div class="kat-head mono">{s.tip}{s.nacin ? ` · ${s.nacin}` : ""}{s.instrument ? ` · ${s.instrument}` : ""}{#if problemi(s).length}<span class="kat-bad"> · {problemi(s).join("; ")}</span>{/if}</div>
-      <Korak spec={s} ishod={ishodi[i]} pokazi={pokazi[i]} locked={!!ishodi[i]?.tocno || pokazi[i]} onodgovor={(o) => (ishodi[i] = provjeri(s, o))}>
-        {#if ishodi[i]?.tocno}<p class="kat-ok">✓ Točno</p>{/if}
-        {#if !pokazi[i] && uloga(s) === ODGOVOR}<div class="lx-actions"><button class="btn btn-quiet" onclick={() => (pokazi[i] = true)}>Pokaži točan odgovor</button><button class="btn btn-quiet" onclick={() => ((ishodi[i] = null), (pokazi[i] = false))}>Ispočetka</button></div>{/if}
-      </Korak>
+      <!-- jedan neispravan widget ne smije srušiti cijeli katalog -->
+      <svelte:boundary>
+        <Korak spec={s} ishod={ishodi[i]} pokazi={pokazi[i]} locked={!!ishodi[i]?.tocno || pokazi[i]} onodgovor={(o) => odgovor(i, s, o)}>
+          {#if ishodi[i]?.tocno}<p class="kat-ok">✓ Točno</p>{/if}
+          {#if !pokazi[i] && uloga(s) === ODGOVOR}<div class="lx-actions"><button class="btn btn-quiet" onclick={() => (pokazi[i] = true)}>Pokaži točan odgovor</button><button class="btn btn-quiet" onclick={() => ((ishodi[i] = null), (pokazi[i] = false))}>Ispočetka</button></div>{/if}
+        </Korak>
+        {#snippet failed(error)}<p class="kat-bad">Widget je pao: {error?.message ?? error}</p>{/snippet}
+      </svelte:boundary>
     </div>
   {/each}
 </div>

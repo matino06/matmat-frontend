@@ -8,5 +8,5 @@
 </script>
 
 <div class="lx-question"><Md text={spec.tekst} /></div>
-<BrojUnos jedinica={spec.jedinica} {locked} {ishod} {onodgovor} />
+<BrojUnos jedinica={spec.jedinica} odgovor={spec.odgovor} {locked} {ishod} {onodgovor} />
 {#if pokazi}<p class="lx-solution">Točan odgovor: <Md text={tocanOdgovor(spec)} inline /></p>{/if}
