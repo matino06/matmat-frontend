@@ -14,6 +14,7 @@
   import RatingPicker, { RATINGS } from "$lib/components/ratingPicker/RatingPicker.svelte";
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import { interaktivnaLekcija } from "$lib/lesson/zadatak.js";
+  import { objasnjenjeOcjene } from "$lib/lesson/ocjena.js";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
   import LessonMasteredToast from "$lib/components/lessonMastered/LessonMasteredToast.svelte";
   import { createMasteryTracker } from "$lib/api/studyMap";
@@ -62,18 +63,6 @@
     revealed = true;
     lekcijaSazetak = sazetak;
     pendingRating = RATINGS.find((r) => r.k === sazetak.q) ?? null;
-  }
-
-  // "Iz prve si riješio 1 od 3 dijela, zato je predloženo 2. …"
-  function objasnjenjeOcjene(s) {
-    const n = s.dijelova;
-    const jedan = n % 10 === 1 && n % 100 !== 11;
-    const par = n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14);
-    let t = s.odmah === n
-      ? `Sve si riješio iz prve, zato je predloženo ${s.q}.`
-      : `Iz prve si riješio ${s.odmah} od ${n} ${jedan || par ? "dijela" : "dijelova"}, zato je predloženo ${s.q}.`;
-    if (s.najvise > s.q) t += ` Ako si negdje samo krivo upisao, ocjenu možeš podići do ${s.najvise}.`;
-    return t;
   }
 
   async function fetchUserGoal() {
@@ -336,6 +325,12 @@
   }
 </script>
 
+<!-- autorovo objašnjenje tekstualnog zadatka, kao „Cijelo rješenje“ na kraju lekcije koja počinje cijelim zadatkom -->
+{#snippet rjesenje()}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -- markdown iz vlastitog renderera, kao kod tekstualnog rješenja -->
+  <div class="lx-md" use:fitMath use:mathjaxTypeset={task.id}>{@html renderSolution(task.explanation ?? "")}</div>
+{/snippet}
+
 {#snippet ocjena()}
     {#if !answered}
       <div class="rating-row">
@@ -468,7 +463,7 @@
   {:else if task}
     <article class="card task-card">
       {#if lekcija}
-        {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} />{/key}
+        {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} {rjesenje} />{/key}
         <div class="lesson-alt">
           <button class="btn btn-quiet" onclick={() => (tekstualno = true)}>Prikaži kao tekst</button>
         </div>
