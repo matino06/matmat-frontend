@@ -3,6 +3,8 @@
 // kao taskSketch.js: što ovdje prođe, aplikacija sigurno prikaže i može provjeriti.
 //
 // validateLesson(lekcija, { rezultati, skica }) → { greske: [...], upozorenja: [...] }
+// Lekcija smije imati i `cijeli` (zadatak koji nije podijeljen na a, b, c): { pitanje, blizanac, blizanacRjesenje }.
+// Učenik ga tada najprije rješava cijelog, a podzadaci su vođeni put za onoga tko ne zna (LessonRunner).
 // rezultati i skica su od izvornog (tekstualnog) zadatka; oba smiju nedostajati.
 // Greške znače da se lekcija ne smije spremiti (model je popravlja); upozorenja su za pregled.
 import { KATALOG, ZA_PROMPT, widget, uloga, istrazuje, tocanOdgovor, POGLEDAJ, ODGOVOR } from "./katalog/index.js";
@@ -11,6 +13,7 @@ import { validateVjezba } from "./katalog/vjezba.js";
 import { pretvorbaRezultati } from "./katalog/istrazivanje.js";
 import { isText } from "./katalog/zajednicko.js";
 import { parseNumber, isNum } from "./core/number.js";
+import { ucitaj, ucitajLatex, jednako } from "./core/izraz.js";
 
 export const VERZIJA = 1;
 const MAX_POMOC = 4;
@@ -59,18 +62,7 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
       step(p?.pitanje, `${at}.pitanje`, ODGOVOR);
       err(!p?.pitanje?.stube, `${at}.pitanje: stube jedinica otkrivaju postupak; smiju samo u koraku pomoći`);
       if (p?.blizanac != null) {
-        step(p.blizanac, `${at}.blizanac`, ODGOVOR);
-        err(JSON.stringify(p.blizanac) !== JSON.stringify(p.pitanje), `${at}.blizanac je isti kao pitanje; treba nove brojeve ili novu situaciju`);
-        warn(p.blizanac?.tip === p.pitanje?.tip, `${at}.blizanac je drugog tipa nego pitanje; blizanac provjerava istu vještinu`);
-        const kljuc = widget(p.blizanac)?.kljucOdgovora;
-        if (kljuc && p.blizanac.tip === p.pitanje?.tip) {
-          err(kljuc(p.blizanac) == null || kljuc(p.blizanac) !== kljuc(p.pitanje), `${at}.blizanac ima isti odgovor kao pitanje, pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`);
-        }
-        const isti = quantityAnswers(p.blizanac);
-        err(
-          !isti.length || !isti.every((b) => quantityAnswers(p.pitanje).some((a) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(a) * 0.005))),
-          `${at}.blizanac ima isti rezultat kao pitanje (${isti.map(formatNumber).join("; ")}), pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`,
-        );
+        blizanac(p.blizanac, p.pitanje, at);
       } else {
         warn(false, `${at} nema blizanca: nakon pomoći učenik ponovno rješava isto pitanje`);
       }
@@ -87,6 +79,24 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
     });
   }
 
+  const c = lekcija.cijeli;
+  if (c != null && err(typeof c === "object", "cijeli mora biti objekt { pitanje, blizanac, blizanacRjesenje }")) {
+    step(c.pitanje, "cijeli.pitanje", ODGOVOR);
+    err(!c.pitanje?.stube, "cijeli.pitanje: stube jedinica otkrivaju postupak; cijeli zadatak učenik rješava sam");
+    if (err(c.blizanac != null, "cijeli treba „blizanac“: sličan cijeli zadatak koji učenik na kraju rješava sam, bez koraka")) {
+      blizanac(c.blizanac, c.pitanje, "cijeli");
+      err(isText(c.blizanacRjesenje), "cijeli treba „blizanacRjesenje“: kratko rješenje sličnog zadatka, za učenika koji ga ne riješi");
+    }
+    err(Array.isArray(pz) && pz.length >= 2, "lekcija s „cijeli“ treba barem 2 podzadatka: oni su koraci za učenika koji ne zna riješiti cijeli zadatak");
+    for (const u of prepisivo(c.pitanje, z?.tekst)) warn(false, `cijeli.pitanje: ${u}`);
+    for (const u of prepisivo(c.blizanac, c.blizanac?.tekst)) warn(false, `cijeli.blizanac: ${u}`);
+    const rez = rezultati && typeof rezultati === "object" ? Object.values(rezultati).flatMap((r) => (typeof r === "string" || typeof r === "number" ? numbersIn(String(r)) : [])) : [];
+    const odg = answerNumbers(c.pitanje);
+    if (rez.length && odg.length) {
+      warn(odg.some((a) => rez.some((n) => Math.abs(n - a) <= Math.max(1e-9, Math.abs(a) * 0.005))), `cijeli.pitanje: točan odgovor (${odg.map(formatNumber).join("; ")}) ne pojavljuje se u rezultatima izvornog zadatka; provjeri je li to konačni odgovor`);
+    }
+  }
+
   for (const oblik of genderForms(text)) err(false, `„${oblik}“: učeniku se obraćamo u muškom rodu („zbrojio si“), bez ženskih i dvojnih oblika`);
 
   if (Array.isArray(pz)) {
@@ -98,6 +108,22 @@ export function validateLesson(lekcija, { rezultati, skica } = {}) {
 
   if (err(Array.isArray(lekcija.zapamti) && lekcija.zapamti.length >= 1 && lekcija.zapamti.length <= 4, "zapamti treba 1–4 kratke natuknice")) {
     lekcija.zapamti.forEach((t, i) => err(isText(t), `zapamti[${i}] mora biti tekst`));
+  }
+
+  // blizanac provjerava istu vještinu s drugim brojevima: isti odgovor učenik bi samo prepisao
+  function blizanac(b, pitanje, at) {
+    step(b, `${at}.blizanac`, ODGOVOR);
+    err(JSON.stringify(b) !== JSON.stringify(pitanje), `${at}.blizanac je isti kao pitanje; treba nove brojeve ili novu situaciju`);
+    warn(b?.tip === pitanje?.tip, `${at}.blizanac je drugog tipa nego pitanje; blizanac provjerava istu vještinu`);
+    const kljuc = widget(b)?.kljucOdgovora;
+    if (kljuc && b.tip === pitanje?.tip) {
+      err(kljuc(b) == null || kljuc(b) !== kljuc(pitanje), `${at}.blizanac ima isti odgovor kao pitanje, pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`);
+    }
+    const isti = quantityAnswers(b);
+    err(
+      !isti.length || !isti.every((x) => quantityAnswers(pitanje).some((a) => Math.abs(a - x) <= Math.max(1e-9, Math.abs(a) * 0.005))),
+      `${at}.blizanac ima isti rezultat kao pitanje (${isti.map(formatNumber).join("; ")}), pa bi ga učenik samo prepisao; odaberi brojeve s kojima i rezultat bude drukčiji`,
+    );
   }
 
   function step(spec, at, mora) {
@@ -146,6 +172,29 @@ function sourceResults(pz, rezultati, err, warn) {
       else warn(false, `${poruka}; učenik ga vidi samo u objašnjenju`);
     }
   }
+}
+
+// Polje za izraz prihvaća sve što ima istu vrijednost, pa i izraz prepisan iz zadatka: „pojednostavni
+// (12x + (3x − 1)²)/(9x² − 1)“ bio bi točan s nepojednostavljenim izrazom. Upozorava kad je točan odgovor nekog
+// polja jednak formuli iz teksta; tada neka se rezultat upisuje po dijelovima (brojnik i nazivnik) ili u drugom obliku.
+function prepisivo(spec, tekst) {
+  if (spec?.tip !== "izraz" || !Array.isArray(spec.polja) || typeof tekst !== "string") return [];
+  const vars = spec.varijable ?? [];
+  const formule = [...tekst.matchAll(/\$\$([\s\S]+?)\$\$|\$([^$]+)\$/g)].map((m) => (m[1] ?? m[2]).trim());
+  const out = [];
+  spec.polja.forEach((p, i) => {
+    const tocan = ucitaj(String(p?.odgovor ?? ""), vars);
+    if (tocan.greska) return;
+    for (const f of formule) {
+      // samo formule bez znaka jednakosti (izraz, ne jednadžba) i ne sam rezultat napisan u tekstu
+      if (/[=<>]|\\[lg]eq?\b/.test(f)) continue;
+      const u = ucitajLatex(f, vars);
+      if (u.greska || !jednako(u, tocan, vars)) continue;
+      out.push(`polja[${i}]: izraz $${f}$ iz teksta ima istu vrijednost kao točan odgovor, pa bi ga učenik mogao samo prepisati; traži rezultat po dijelovima (npr. brojnik i nazivnik) ili u obliku koji se mora izračunati`);
+      break;
+    }
+  });
+  return out;
 }
 
 // Brojevi koje učenik upisuje ili bira kao točan odgovor na pitanje.

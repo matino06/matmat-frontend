@@ -4,6 +4,7 @@
   // o učeniku: tko zna, gotov je s tri odgovora (expertise reversal: puno objašnjenje smeta onome tko već zna).
   // Lekcija s `cijeli` (jedan zadatak bez a, b, c) počinje cijelim zadatkom: tko ga riješi sam, gotov je; tko ne
   // zna, dobiva podzadatke kao vođeni put, a na kraju sličan cijeli zadatak bez koraka (cijeli.blizanac).
+  // `rjesenje` (snippet stranice) je autorovo objašnjenje tekstualnog zadatka; uz `cijeli` ono je „Cijelo rješenje“.
   import "./lesson.css";
   import Korak from "./komponente/Korak.svelte";
   import Md from "./komponente/Md.svelte";
@@ -12,7 +13,7 @@
   import GrafFunkcije from "./komponente/GrafFunkcije.svelte";
   import { provjeri, tocanOdgovor, uloga, ODGOVOR } from "./katalog/index.js";
 
-  let { lekcija, onzavrsi = () => {} } = $props();
+  let { lekcija, onzavrsi = () => {}, rjesenje = null } = $props();
 
   const MAX_PONOVNO = 2; // nakon toliko krivih ponovnih pokušaja prikazuje se točan odgovor
   // ishod podzadatka; o njemu ovisi prijedlog ocjene za ponavljanje
@@ -183,20 +184,33 @@
   }
 
   function sazetak() {
-    // cijeli zadatak riješen sam: to je ono što se na maturi traži
-    if (lekcija.cijeli && cijeli.rezultat) {
-      const q = cijeli.rezultat === ODMAH ? 5 : 4;
-      return { rezultati: [cijeli.rezultat], q, najvise: 5, odmah: cijeli.rezultat === ODMAH ? 1 : 0, dijelova: 1 };
-    }
     const r = stanja.map((s) => s.rezultat);
-    let q = ocjenaIz(r);
-    // Nije riješio sam, pa ni uz sve korake iz prve nije „znao“ zadatak: najviše 4 ako je na kraju sam riješio
-    // sličan cijeli zadatak, inače 3.
-    if (lekcija.cijeli) q = Math.min(q, cijeli.zavrsni.rezultat === ODMAH ? 4 : 3);
+    if (lekcija.cijeli) return sazetakCijelog(r);
+    const q = ocjenaIz(r);
     // Najviše što učenik smije podići: ocjena da je još jedan dio riješio odmah (tipfeler "80" umjesto "800"),
     // ali ne pala lekcija u savršenu. Spuštati smije uvijek.
     const najvise = Math.max(q, ...r.map((x, i) => (x === ODMAH ? q : ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))))));
     return { rezultati: r, q, najvise, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
+  }
+
+  // Lekcija s `cijeli`: na maturi se traži cijeli zadatak, pa ocjena ovisi o njemu. Sam iz prve → 5, sam iz više
+  // pokušaja → 4. Uz korake nije „znao“ zadatak ni kad je svaki korak riješio odmah: najviše 4 ako je na kraju sam
+  // riješio sličan zadatak iz prve, inače 3 (a manje ako su i koraci išli teško).
+  // Podizanje do `najvise` vrijedi kao i inače za jedan tipfeler: krivo upisan cijeli zadatak (ako ga je pokušao,
+  // a ne odmah tražio korake) bio bi 5, krivo upisan sličan zadatak granica 4, krivo upisan korak ocjena korak više.
+  function sazetakCijelog(r) {
+    const sam = cijeli.rezultat;
+    const slican = cijeli.zavrsni.rezultat;
+    if (sam) return { nacin: "cijeli", q: sam === ODMAH ? 5 : 4, najvise: 5, rezultati: [sam], odmah: sam === ODMAH ? 1 : 0, dijelova: 1 };
+    const granica = slican === ODMAH ? 4 : 3;
+    const q = Math.min(ocjenaIz(r), granica);
+    const najvise = Math.max(
+      q,
+      cijeli.pokusaji ? 5 : 0,
+      slican === ODMAH ? 0 : Math.min(ocjenaIz(r), 4),
+      ...r.map((x, i) => (x === ODMAH ? 0 : Math.min(ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))), granica))),
+    );
+    return { nacin: "koraci", slican, q, najvise, rezultati: r, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
   }
 
   // novi dio (pomoć, ponovni pokušaj, rezultat) pomakne se u vidno polje
@@ -407,9 +421,9 @@
       <!-- cijelo rješenje na jednom mjestu, kao u tekstualnom zadatku: i za učenika koji je sve znao odmah -->
       <details class="lx-more lx-rjesenje" open>
         <summary>Cijelo rješenje</summary>
-        {#if lekcija.cijeli?.rjesenje}
+        {#if lekcija.cijeli && rjesenje}
           <!-- autorovo objašnjenje u komadu, kao u tekstualnom zadatku -->
-          <Md text={lekcija.cijeli.rjesenje} />
+          {@render rjesenje()}
         {:else}
           {#each lekcija.podzadaci as x (x.id)}
             <h3 class="lx-rjesenje-dio">{x.id}) {x.naslov}</h3>

@@ -3,6 +3,7 @@
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import KatalogPregled from "./KatalogPregled.svelte";
   import { renderMd } from "$lib/utils/markdownRenderer.js";
+  import { objasnjenjeOcjene } from "$lib/lesson/ocjena.js";
   import { page } from "$app/state";
 
   let { data } = $props();
@@ -20,6 +21,12 @@
   let ocjena = $state(null);
   const usd = (x) => `$${(x ?? 0).toFixed(3)}`;
 </script>
+
+<!-- objašnjenje izvornog zadatka, kao na /tasks: „Cijelo rješenje“ lekcije koja počinje cijelim zadatkom -->
+{#snippet labRjesenje()}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -- markdown iz vlastitog renderera, kao kod zadataka -->
+  <div class="lx-md">{@html renderMd(z.izvor.explanation)}</div>
+{/snippet}
 
 <svelte:head><title>Lab · interaktivne lekcije</title></svelte:head>
 
@@ -72,9 +79,9 @@
                   <span class="badge mono">#{z.izvor.task_id ?? "—"}</span>
                   <span class="badge badge-dim">{z.izvor.course_name ?? "Lab"}</span>
                 </div>
-                {#key odabrana}<LessonRunner lekcija={z.lekcija} onzavrsi={(s) => (ocjena = s)} />{/key}
+                {#key odabrana}<LessonRunner lekcija={z.lekcija} onzavrsi={(s) => (ocjena = s)} rjesenje={z.izvor.explanation ? labRjesenje : null} />{/key}
               </article>
-              {#if ocjena}<p class="muted small">Prijedlog ocjene za ponavljanje: q = {ocjena.q}</p>{/if}
+              {#if ocjena}<p class="muted small">Prijedlog ocjene za ponavljanje: q = {ocjena.q} (najviše {ocjena.najvise}). {objasnjenjeOcjene(ocjena)}</p>{/if}
             {:else}
               <p class="muted">Lekcija nije prošla provjeru, pa se ne prikazuje. Pogledaj karticu Provjera.</p>
             {/if}
