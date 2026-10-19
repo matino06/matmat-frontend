@@ -119,13 +119,13 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
           continue;
         }
         const r = slobodna.map((j) => provjeriPolje(s, polja[j], vals[i])).find((x) => x.poruka && !x.prazno && x.poruka !== (s.savjet || "Nije točno.")) ?? provjeriPolje(s, polja[slobodna[0]], vals[i]);
-        return { ...r, polje: i, poruka: `${polja.length > 1 ? `${i + 1}. odgovor: ` : ""}${r.poruka}` };
+        return { ...r, polje: i, poruka: `${polja.length > 1 ? `U ${i + 1}. polju: ` : ""}${r.poruka}` };
       }
       return { tocno: true };
     }
     for (let i = 0; i < polja.length; i++) {
       const r = provjeriPolje(s, polja[i], vals[i]);
-      if (!r.tocno) return { ...r, polje: i, poruka: polja.length > 1 ? `${i + 1}. odgovor: ${r.poruka}` : r.poruka };
+      if (!r.tocno) return { ...r, polje: i, poruka: polja.length > 1 ? `U ${i + 1}. polju: ${r.poruka}` : r.poruka };
     }
     return { tocno: true };
   },
