@@ -8,7 +8,9 @@
   let { vjezba } = $props();
 
   const MAX_POKUSAJA = 2;
-  let sjeme = $state(1);
+  // nasumično početno sjeme: inače svako otvaranje lekcije, i svaka lekcija s istim jedinicama (varijacije),
+  // počinje istim zadacima
+  let sjeme = $state(1 + Math.floor(Math.random() * 1e9));
   let zadaci = $derived(generirajVjezbu(vjezba, sjeme));
   let i = $state(0);
   let ishod = $state(null);

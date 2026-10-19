@@ -89,6 +89,27 @@ Pokušaj → (krivo ili „Ne znam“) → pomoć, korak po korak → blizanac. 
 sam otvoriti točan odgovor; nakon drugog se prikaže sam. Ishod podzadatka (odmah / uz pomoć / pokazan odgovor) daje
 prijedlog ocjene za ponavljanje: 5 / 3 / 1.
 
+### Cijeli zadatak prvo (`cijeli`)
+
+Zadatak koji u izvoru nije podijeljen na a), b), c) (gotovo sva matura) ne smije odmah postati tri podzadatka: tada
+lekcija otkrije plan rješavanja („nazivnik je razlika kvadrata“) i učenik nikad ne riješi zadatak sam. Takva lekcija
+ima i `cijeli`:
+
+```jsonc
+"cijeli": {
+  "pitanje": { "tip": "izraz", "tekst": "Upiši rezultat, skraćen do kraja.", "polja": [ /* brojnik, nazivnik */ ] },
+  "blizanac": { /* sličan cijeli zadatak, isti postupak, drugi brojevi */ },
+  "blizanacRjesenje": "kratko rješenje sličnog zadatka"
+}
+```
+
+Tok: cijeli zadatak → točno: gotovo (ocjena 5, iz više pokušaja 4) → krivo ili „Ne znam“: podzadaci kao vođeni put →
+sličan cijeli zadatak bez koraka. Uz korake ocjena je najviše 4 ako je sličan zadatak riješen iz prve, inače 3.
+„Cijelo rješenje“ na kraju je autorovo objašnjenje tekstualnog zadatka (stranica ga daje kao snippet `rjesenje`).
+
+Polje za izraz prihvaća sve što ima istu vrijednost, pa i nepojednostavljen izraz prepisan iz zadatka. Zato se
+rezultat traži po dijelovima (brojnik i nazivnik), a validator upozorava kad je točan odgovor jednak formuli iz teksta.
+
 ## Widgeti verzije 1 (pokrivaju Fiziku 7)
 
 | Widget | Uloga | Točan odgovor računa |
