@@ -93,11 +93,16 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
       if (!need(!t.greska && p?.odgovor != null, `polja[${i}].odgovor nije ispravan izraz: ${t.greska ?? "nedostaje"}`)) return;
       if (!vars.length) need(Number.isFinite(t.fn({})), `polja[${i}].odgovor nema vrijednost`);
       tocni.push(t);
+      const krivi = [];
       for (const [j, k] of (p.krivo ?? []).entries()) {
         const kr = ucitaj(String(k?.odgovor ?? ""), vars);
         if (!need(!kr.greska, `polja[${i}].krivo[${j}].odgovor nije ispravan izraz`)) continue;
         need(isText(k.poruka), `polja[${i}].krivo[${j}] treba „poruka“`);
         need(!jednako(kr, t, vars), `polja[${i}].krivo[${j}] jednak je točnom odgovoru`);
+        // provjera uzima prvu „krivo“ iste vrijednosti, pa poruka kasnije nikad ne dođe do učenika
+        const isti = krivi.findIndex((x) => jednako(kr, x, vars));
+        need(isti < 0, `polja[${i}].krivo[${j}] ima istu vrijednost kao krivo[${isti}], pa se njegova poruka nikad ne pokaže; spoji ih u jednu poruku`);
+        krivi.push(kr);
       }
     });
     const uzorak = Object.fromEntries(vars.map((n, i) => [n, 0.731 + 0.639 * i]));
