@@ -268,9 +268,10 @@
   // task, the way the app looks mid-session. Narrower, it would cover the task.
   onMount(() => {
     if (window.matchMedia("(min-width: 1081px)").matches) panel = "ai";
-    Promise.all([import("$lib/lesson/LessonRunner.svelte"), import("$lib/lesson/zadatak.js")]).then(
-      ([runner, zadatak]) => (lessonKit = { LessonRunner: runner.default, interaktivnaLekcija: zadatak.interaktivnaLekcija }),
-    );
+    Promise.all([import("$lib/lesson/LessonRunner.svelte"), import("$lib/lesson/zadatak.js")])
+      .then(([runner, zadatak]) => (lessonKit = { LessonRunner: runner.default, interaktivnaLekcija: zadatak.interaktivnaLekcija }))
+      // chunk didn't load (network): the tasks show as text rather than loading forever
+      .catch(() => (lessonKit = { LessonRunner: null, interaktivnaLekcija: () => null }));
     document.addEventListener("selectionchange", onSelectionChange);
     return () => document.removeEventListener("selectionchange", onSelectionChange);
   });
