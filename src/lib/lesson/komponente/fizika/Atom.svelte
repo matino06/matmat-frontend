@@ -364,7 +364,11 @@
     if (y == null) return;
     e.preventDefault();
     vuce = true;
-    e.currentTarget.setPointerCapture(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      /* sintetički događaj bez aktivnog pokazivača */
+    }
     yPtr = ogranici(y);
   }
   function move(e) {
@@ -434,7 +438,7 @@
       return { ...cr.skok, vrsta: "zadano" };
     if (prijelazIzbor && izbor.od != null && izbor.do != null)
       return { ...izbor, vrsta: "izbor" };
-    if (zadnjiSkok && !radi)
+    if (zadnjiSkok && !radi && !(ionStrelica && zadnjiSkok.do === "ionizacija"))
       return {
         ...zadnjiSkok,
         vrsta: nacin === "istrazi" || nacin === "prikaz" ? "zadnji" : "izbor",
@@ -447,9 +451,8 @@
       const n = pitaj.find((q) => q.velicina === "E_ion").n;
       return {
         n,
-        tekst: sk.energije
-          ? "E_ion = ?"
-          : `treba dovesti ${eV(-En(n, S.Z ?? 1))}`,
+        skriven: sk.energije,
+        tekst: `treba dovesti ${eV(-En(n, S.Z ?? 1))}`,
       };
     }
     if (nacin === "prikaz" && S.do === "ionizacija")
@@ -554,7 +557,7 @@
 
       <!-- slobodan elektron iznad ruba -->
       <rect class="at-slobodno" x="0" y="0" width={G.sir} height={G.y0} />
-      <text class="at-slobodno-t" x={G.zid[0] + 6} y="13"
+      <text class="at-slobodno-t" x={G.sir - 6} y="14" text-anchor="end"
         >slobodan elektron, E > 0</text
       >
       <!-- bunar -->
@@ -628,12 +631,15 @@
             rx="9"
             class="at-cip-r"
           />
-          <text x={G.cip.x + 8} y={r.yOz + 4} class="at-cip-t"
-            ><tspan class="at-cip-n">n = {r.n}</tspan>{#if !sk.energije}<tspan
-                x={G.cip.x + G.cip.w - 7}
-                text-anchor="end">{broj(r.E)} eV</tspan
-              >{/if}</text
-          >
+          <text x={G.cip.x + 8} y={r.yOz + 4} class="at-cip-n">n = {r.n}</text>
+          {#if !sk.energije}
+            <text
+              x={G.cip.x + G.cip.w - 7}
+              y={r.yOz + 4}
+              class="at-cip-t"
+              text-anchor="end">{broj(r.E)} eV</text
+            >
+          {/if}
         </g>
       {/each}
       {#if nacin === "istrazi"}
@@ -698,7 +704,9 @@
         <text
           class="at-ion-t"
           x={G.xe + 36}
-          y={Math.max(G.y0 + 16, (ya + G.y0) / 2 + 4)}>{ionStrelica.tekst}</text
+          y={Math.max(G.y0 + 16, (ya + G.y0) / 2 + 4)}
+          >{#if ionStrelica.skriven}E<tspan class="at-sub" dy="3">ion</tspan
+            ><tspan dy="-3"> = ?</tspan>{:else}{ionStrelica.tekst}{/if}</text
         >
       {/if}
 
@@ -887,7 +895,7 @@
 </figure>
 
 <!-- očitanje fotona / događaja -->
-{#if poruka && (gledanje || otkriveno)}
+{#if poruka && (gledanje || otkriveno) && nacin !== "apsorpcija"}
   <p class="lx-readout at-ocitanje" aria-live="polite">
     {#if porukaRgb}<span class="at-boja" style="background: {rgbCss(porukaRgb)}"
       ></span>{/if}{poruka}
@@ -1189,11 +1197,11 @@
   }
   .at-cip-t {
     fill: var(--text-dim);
-    font: 500 10.5px var(--font-mono);
+    font: 500 10px var(--font-mono);
   }
   .at-cip-n {
     fill: var(--text);
-    font-weight: 700;
+    font: 700 10.5px var(--font-sans);
   }
   .at-cip.at-aktivan {
     cursor: pointer;
@@ -1255,6 +1263,9 @@
     paint-order: stroke;
     stroke: var(--bg-elev);
     stroke-width: 3px;
+  }
+  .at-sub {
+    font-size: 8.5px;
   }
   .at-foton {
     fill: none;
@@ -1346,6 +1357,8 @@
   .at-ocitanje {
     margin-top: 0;
     line-height: 1.5;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
   }
   .at-boja {
     display: inline-block;
@@ -1387,8 +1400,8 @@
   }
   .at-top-ocit {
     margin: 4px 0 0;
-    font-size: 13px;
-    font-family: var(--font-mono);
+    font-size: 13.5px;
+    font-family: var(--font-sans);
     color: var(--text-dim);
     text-align: center;
   }

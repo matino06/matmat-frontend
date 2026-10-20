@@ -69,7 +69,8 @@ const zOd = (s) => (isNum(s?.Z) ? s.Z : 1);
 export const nMax = (s) => (Number.isInteger(s?.n_max) ? s.n_max : 6);
 export const scenaOd = (s) => (s?.scena === "staze" ? "staze" : "razine");
 export const broj = (x, z = 3) => formatNumber(Number(x.toPrecision(z)));
-export const eV = (x) => `${broj(x)}\u00a0eV`;
+// 3 značajne znamenke, a od 10 eV naviše 4 (12,09 i 12,75 eV kao u zadacima, a ne 12,1 i 12,8)
+export const eV = (x) => `${broj(x, Math.abs(x) >= 9.995 ? 4 : 3)}\u00a0eV`;
 // zadana energija (iz speca) točno kako je napisana, npr. 12,09 eV
 export const eVz = (x) => `${formatNumber(x)}\u00a0eV`;
 
@@ -166,7 +167,7 @@ export const G = {
   dubina: 290, // |E₁| u px
   zid: [122, 262], // lijevi i desni zid bunara
   xe: 192, // elektron
-  cip: { x: 6, w: 92, h: 19, razmak: 21 }, // oznake razina (ljestve)
+  cip: { x: 4, w: 106, h: 19, razmak: 21 }, // oznake razina (ljestve)
   slobodanY: 20, // slobodan elektron iznad ruba
   spektar: { x: 22, w: 316, h: 14 },
 };
@@ -757,7 +758,7 @@ export function opisCilja(s) {
   const c = s.cilj ?? {};
   if (isNum(c.E_f)) return `foton od ${eV(c.E_f)}`;
   if (isNum(c.lambda)) return `foton valne duljine ${broj(c.lambda)} nm`;
-  return `${c.boja} foton`;
+  return `${c.boja.replace(/a$/, "i")} foton`;
 }
 function opisDobivenog(s, k) {
   const c = s.cilj ?? {};
