@@ -7,6 +7,13 @@ const FUNCS = {
   sin: Math.sin,
   cos: Math.cos,
   tan: Math.tan,
+  // kutovi u stupnjevima (optika: Snellov zakon, granični i Brewsterov kut)
+  sind: (x) => Math.sin((x * Math.PI) / 180),
+  cosd: (x) => Math.cos((x * Math.PI) / 180),
+  tand: (x) => Math.tan((x * Math.PI) / 180),
+  asind: (x) => (Math.asin(x) * 180) / Math.PI,
+  acosd: (x) => (Math.acos(x) * 180) / Math.PI,
+  atand: (x) => (Math.atan(x) * 180) / Math.PI,
   ln: Math.log,
   log: Math.log10,
   exp: Math.exp,
@@ -149,4 +156,6 @@ export function compile(src) {
 }
 
 export const FUNKCIJE = Object.keys(FUNCS);
+// Funkcije u stupnjevima su samo za izraze iz speca; učenikov unos „sind“ i dalje znači sin(d) (core/izraz.js).
+export const FUNKCIJE_STUPNJEVI = ["sind", "cosd", "tand", "asind", "acosd", "atand"];
 export const KONSTANTE = Object.keys(CONSTS);

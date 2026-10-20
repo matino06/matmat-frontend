@@ -18,5 +18,42 @@ import { strujni_krug } from "./strujni_krug.js";
 import { smjer_u_polju } from "./smjer_u_polju.js";
 import { indukcija } from "./indukcija.js";
 import { naboj_u_polju } from "./naboj_u_polju.js";
+import { titranje } from "./titranje.js";
+import { val_uze } from "./val_uze.js";
+import { valne_fronte } from "./valne_fronte.js";
+import { razina_zvuka } from "./razina_zvuka.js";
+import { zrake } from "./zrake.js";
+import { leca } from "./leca.js";
+import { interferencija } from "./interferencija.js";
+import { em_val } from "./em_val.js";
+import { polarizacija } from "./polarizacija.js";
 
-export const FIZIKA = [gibanje, crtaj_graf, sile_tijelo, vektori, kruzenje, sudar, energija_stupci, tlak_dubina, cijev, krivulja_zagrijavanja, plinski_dijagram, plin_posuda, naboji_polje, ploce_polje, strujni_krug, smjer_u_polju, indukcija, naboj_u_polju];
+export const FIZIKA = [
+  gibanje,
+  crtaj_graf,
+  sile_tijelo,
+  vektori,
+  kruzenje,
+  sudar,
+  energija_stupci,
+  tlak_dubina,
+  cijev,
+  krivulja_zagrijavanja,
+  plinski_dijagram,
+  plin_posuda,
+  naboji_polje,
+  ploce_polje,
+  strujni_krug,
+  smjer_u_polju,
+  indukcija,
+  naboj_u_polju,
+  titranje,
+  val_uze,
+  valne_fronte,
+  razina_zvuka,
+  zrake,
+  leca,
+  interferencija,
+  em_val,
+  polarizacija,
+];
