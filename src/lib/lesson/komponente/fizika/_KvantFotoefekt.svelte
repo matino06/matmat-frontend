@@ -62,15 +62,11 @@
     rx="2"
     class="kvp-kolektor"
   />
-  <text
-    x={Kt.x + Kt.w / 2}
-    y={T.y + T.h + 13}
-    class="lx-label kvp-mali kvp-sred">{f.metal}</text
+  <text x={Kt.x + Kt.w / 2} y={T.y - 6} class="lx-label kvp-mali kvp-sred"
+    >{f.metal}</text
   >
-  <text
-    x={Ko.x + Ko.w / 2}
-    y={T.y + T.h + 13}
-    class="lx-label kvp-mali kvp-sred">kolektor</text
+  <text x={Ko.x + Ko.w / 2} y={T.y - 6} class="lx-label kvp-mali kvp-sred"
+    >kolektor</text
   >
 
   <!-- krug: katoda → izvor (+ prema katodi) → ampermetar → kolektor -->
@@ -217,8 +213,8 @@
         >premalo</text
       >
     {/if}
-    <text x={S.x + S.w + 2} y={S.y1 - 8} class="lx-label kvp-mali kvp-sred"
-      >energija (eV)</text
+    <text x={S.x + S.w + 2} y={S.y0 + 25} class="lx-label kvp-mali kvp-sred"
+      >u eV</text
     >
   {:else}
     <rect

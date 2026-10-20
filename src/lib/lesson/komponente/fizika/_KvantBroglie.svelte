@@ -11,7 +11,7 @@
   );
 </script>
 
-<svg viewBox="0 0 360 240" role="img" aria-label={opis}>
+<svg viewBox="0 46 360 194" role="img" aria-label={opis}>
   <!-- top -->
   <rect x={T.x} y={T.y} width={T.w} height={T.h} rx="6" class="kvb-tijelo" />
   <rect

@@ -726,7 +726,8 @@ export function vidljivo(s, otkriveno = false, provjereno = false) {
             ? otkriveno
             : n === "predvidi"
               ? true
-              : !skriveno,
+              : // postavi: stupci bi pokazali E_k (= U_z) ili W_i (iz kojeg je λ₀), pa tek nakon točnog
+                s.skrij === "nista" || otkriveno,
       brojke: n === "istrazi" ? pr.has("brojke") : true,
       izvorPoznat: !(n === "izracunaj" && trazi.has("U_z")) || otkriveno,
     };
@@ -776,7 +777,11 @@ export function ocitanja(
     oc("svjetlost", `λ = ${fmt(f.lambdaNm)} nm`);
     if (n === "izracunaj") {
       if (isNum(s.U_z)) oc("zaustavni napon", `U_z = ${fmt(s.U_z)} V`);
-      if (s.metal) oc(`izlazni rad (${f.metal})`, `W_i = ${fmt(f.W)} eV`);
+      if (s.metal)
+        oc(
+          f.metal === "metal" ? "izlazni rad" : `izlazni rad (${f.metal})`,
+          `W_i = ${fmt(f.W)} eV`,
+        );
       for (const q of pitanja(s)) {
         const r = izracun(s, q);
         oc(
@@ -787,13 +792,23 @@ export function ocitanja(
       return out;
     }
     // postavi: ishod (E_f, E_k, struja) samo za provjereni položaj ili nakon točnog
-    const ishodVidljiv = n !== "postavi" || vid.elektroni;
+    // zaustavni: E_k (= U_z) i E_f se ne pišu do točnog; granicna: W_i (iz njega λ₀) samo uz zadan metal ili nakon točnog
+    const ishodVidljiv =
+      n !== "postavi" ||
+      (s.cilj === "zaustavni" && s.skrij !== "nista"
+        ? otkriveno
+        : vid.elektroni);
+    const wVidljiv =
+      n !== "postavi" || s.skrij === "nista" || otkriveno || !!s.metal;
     if (ishodVidljiv) oc("foton", `E_f = ${fmt(f.Ef)} eV`);
-    if (s.metal || s.metali || n === "predvidi" || ishodVidljiv)
-      oc(`izlazni rad (${f.metal})`, `W_i = ${fmt(f.W)} eV`);
+    if (s.metal || s.metali || n === "predvidi" || (ishodVidljiv && wVidljiv))
+      oc(
+        f.metal === "metal" ? "izlazni rad" : `izlazni rad (${f.metal})`,
+        `W_i = ${fmt(f.W)} eV`,
+      );
     if (ishodVidljiv)
       oc(
-        "najveća E_k",
+        "najbrži elektroni",
         f.izlazi ? `E_k = ${fmt(f.Ek)} eV` : "nijedan elektron ne izlazi",
         n === "postavi" && s.cilj !== "zaustavni" ? ishodSt : null,
       );
@@ -1022,7 +1037,7 @@ const PRIMJERI = [
     promjena: "jakost_gore",
     pitaj: ["Ek", "broj_elektrona", "U_z"],
     tekst:
-      "Pločicu obasjava zračenje od 220 nm (U_z = 1,2 V). Što se dogodi kad svjetlost postane jača?",
+      "Pločicu obasjava zračenje od 220 nm, a zaustavni napon je $U_z$ = 1,2 V. Što se dogodi kad svjetlost postane jača?",
   },
   {
     tip: TIP,

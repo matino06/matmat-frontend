@@ -217,8 +217,8 @@ export const FOTON = {
   x0: 82,
   x1: 316,
   detektor: { x: 318, y: 84, w: 28, h: 54 },
-  brzina: 110,
-  RMAX: 6,
+  brzina: 120,
+  RMAX: 3.5,
 };
 const LETI_F = (FOTON.x1 - FOTON.x0) / FOTON.brzina;
 // od: trenutak od kojeg detektor broji fotone (kad se promijeni svjetlost, brojač kreće od nule)
@@ -227,7 +227,7 @@ export function kadarFoton(s, st, t, vid, od = 0) {
   const seed = sjeme(s);
   const j = Math.max(0, Math.min(100, f.jakost)) / 100;
   const lamPx = lamPxFotona(f.lambdaNm);
-  const L = Math.max(18, Math.min(44, 2.6 * lamPx));
+  const L = Math.max(16, Math.min(34, 2.2 * lamPx));
   const r = vid.energija ? Math.max(2.5, Math.min(9, 1.5 * f.EeV)) : 4;
   const fotoni = [];
   const kMax = Math.floor(t * FOTON.RMAX);
@@ -240,7 +240,7 @@ export function kadarFoton(s, st, t, vid, od = 0) {
     const tau = t - k / FOTON.RMAX;
     const x = FOTON.x0 + FOTON.brzina * tau;
     if (x > FOTON.x1) continue;
-    const y = FOTON.y + (rnd(seed, k, 1) - 0.5) * 16;
+    const y = FOTON.y + (rnd(seed, k, 1) - 0.5) * 8;
     fotoni.push({
       k,
       x: r1(x),
@@ -340,7 +340,7 @@ export function kadarFotoefekt(s, st, t, vid) {
   const fotoni = [];
   const elektroni = [];
   const lamPx = lamPxFotona(f.lambdaNm) * 0.8;
-  const izvor = [FE.lampa.x + 9, FE.lampa.y + 9];
+  const izvor = [FE.lampa.x + 15, FE.lampa.y + 15];
   const ZIVOT = 4.5;
   const kMax = Math.floor((t + FE.LETI) * FE.RMAX);
   const kMin = Math.max(0, Math.ceil((t - ZIVOT) * FE.RMAX));
@@ -427,8 +427,10 @@ export function kadarDeBroglie(s, st, t, vid) {
   const crta = vid.val && lamPx >= 4 && lamPx <= 400;
   const P = 3.2;
   const tau = t % P;
-  const x = DB.x0 + 20 + (DB.x1 - DB.x0 - 20) * (tau / P);
   const L = Math.max(70, Math.min(170, 3 * lamPx));
+  // paket (ili kuglica) putuje od topa do ruba crteža i ne izlazi iz njega
+  const pola = crta ? L / 2 : 10;
+  const x = DB.x0 + pola + (DB.x1 - DB.x0 - 2 * pola) * (tau / P);
   const atomi = [];
   for (let xx = DB.atomi.x0; xx <= 344; xx += DB.atomi.razmak) {
     atomi.push({ x: xx, y: DB.atomi.y });
@@ -442,7 +444,7 @@ export function kadarDeBroglie(s, st, t, vid) {
     razmak: {
       x0: DB.atomi.x0,
       x1: DB.atomi.x0 + DB.atomi.razmak,
-      y: DB.atomi.y + 14,
+      y: DB.atomi.y2 + 16,
     },
   };
   if (crta) {
