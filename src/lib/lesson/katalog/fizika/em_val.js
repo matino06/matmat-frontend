@@ -733,7 +733,7 @@ const BOJE = [
   { ime: "ljubičasta", korijen: "ljubičast", do: 450 },
   { ime: "plava", korijen: "plav", do: 495 },
   { ime: "zelena", korijen: "zelen", do: 570 },
-  { ime: "žuta", korijen: "žut", do: 590 },
+  { ime: "žuta", korijen: "žut", do: 595 },
   { ime: "narančasta", korijen: "narančast", do: 620 },
   { ime: "crvena", korijen: "crven", do: Infinity },
 ];
@@ -1140,7 +1140,7 @@ Scene i načini („istrazi“ = učenik se igra, „prikaz“ = samo animacija,
   - "prikaz": f ili lambda; oznaka stoji, istaknuto je područje i susjedi.
   - "smjesti": f ili lambda; učenik vuče oznaku na valnu duljinu (oznaka skače po „lijepim“ vrijednostima, fino strelicama). Točno unutar ±12 % (0,05 dekade). Os f je skrivena kad je zadana f. Poruke za f/c i pogrešnu potenciju (cm, mm, µm, nm) dodaju se same; ${KRIVO_OPIS} (vrijednost je λ u m). Nakon točnog zasvijetle područje i susjedi.
   - "odaberi_podrucje": f ili lambda; učenik dodirne područje. Poruke za f/c, jedinicu i susjedno područje dodaju se same.
-- "sredstvo": svjetlost iz zraka ulazi u sredstvo (ili izlazi iz njega): lambda (valna duljina u ZRAKU, nm, 380–750), sredstvo: {naziv, n (1,1–3)}, smjer? "u_sredstvo" (zadano) | "iz_sredstva", boja? (ime boje; mora odgovarati λ: ljubičasta < 450, plava < 495, zelena < 570, žuta < 590, narančasta < 620, crvena). Brjegovi se u sredstvu zbiju (λ/n) i idu sporije (c/n), boja ostaje; na dvije točke bljeskaju brjegovi koji prolaze (jednako često). Tablica f, λ, v, boja s obje strane.
+- "sredstvo": svjetlost iz zraka ulazi u sredstvo (ili izlazi iz njega): lambda (valna duljina u ZRAKU, nm, 380–750), sredstvo: {naziv, n (1,1–3)}, smjer? "u_sredstvo" (zadano) | "iz_sredstva", boja? (ime boje; mora odgovarati λ: ljubičasta < 450, plava < 495, zelena < 570, žuta < 595, narančasta < 620, crvena). Brjegovi se u sredstvu zbiju (λ/n) i idu sporije (c/n), boja ostaje; na dvije točke bljeskaju brjegovi koji prolaze (jednako često). Tablica f, λ, v, boja s obje strane.
   - "istrazi": klizači n (s gumbima voda, led, staklo, plastika, dijamant) i λ.
   - "prikaz": samo animacija i tablica.
   - "predvidi": pitaj: popis od "f", "lambda", "v", "T", "boja"; učenik za svaku bira raste / pada / isto (boja: ista / druga). Val u drugom sredstvu i njegove vrijednosti vide se tek nakon točnog odgovora. Poruke se računaju same.

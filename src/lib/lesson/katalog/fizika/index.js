@@ -27,6 +27,11 @@ import { leca } from "./leca.js";
 import { interferencija } from "./interferencija.js";
 import { em_val } from "./em_val.js";
 import { polarizacija } from "./polarizacija.js";
+import { kvant } from "./kvant.js";
+import { atom } from "./atom.js";
+import { jezgra } from "./jezgra.js";
+import { poluraspad } from "./poluraspad.js";
+import { relativnost } from "./relativnost.js";
 
 export const FIZIKA = [
   gibanje,
@@ -56,4 +61,9 @@ export const FIZIKA = [
   interferencija,
   em_val,
   polarizacija,
+  kvant,
+  atom,
+  jezgra,
+  poluraspad,
+  relativnost,
 ];

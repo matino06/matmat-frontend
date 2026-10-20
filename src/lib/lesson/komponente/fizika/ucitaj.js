@@ -28,4 +28,9 @@ export const UCITAJ_FIZIKA = {
   interferencija: () => import("./Interferencija.svelte"),
   em_val: () => import("./EmVal.svelte"),
   polarizacija: () => import("./Polarizacija.svelte"),
+  kvant: () => import("./Kvant.svelte"),
+  atom: () => import("./Atom.svelte"),
+  jezgra: () => import("./Jezgra.svelte"),
+  poluraspad: () => import("./Poluraspad.svelte"),
+  relativnost: () => import("./Relativnost.svelte"),
 };
