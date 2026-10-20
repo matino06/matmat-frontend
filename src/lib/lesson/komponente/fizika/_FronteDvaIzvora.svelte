@@ -59,7 +59,7 @@
   let u = $derived(uTocki(spec, p, P, rs));
 
   // ── što se vidi ──
-  let otkriveno = $derived(istrazi || pokazi || locked || !!ishod?.tocno);
+  let otkriveno = $derived(istrazi || pokazi || !!ishod?.tocno);
   let vid = $derived(vidljivoDvaIzvora(spec, otkriveno));
   let sve = $derived(vid.fronte === "sve");
 

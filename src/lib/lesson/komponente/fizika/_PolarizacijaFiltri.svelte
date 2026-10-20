@@ -47,7 +47,6 @@
   let aktivno = $derived(!postavi || (!locked && !pokazi));
   let otkriveno = $derived(
     !postavi ||
-      locked ||
       pokazi ||
       (poslano != null &&
         poslano === ruke[spec.mijenja] &&
@@ -359,7 +358,10 @@
 
 {#if N === 2 || postavi}
   <p class="lx-readout">
-    {#if N === 2}kut između osi filtara: <b>{razlika}°</b>{/if}
+    <!-- u „postavi“ kut između osi je upravo ono što učenik treba izračunati: vidi se tek nakon provjere -->
+    {#if N === 2 && (!postavi || otkriveno)}kut između osi filtara: <b
+        >{razlika}°</b
+      >{/if}
     {#if postavi && otkriveno && zadnji && !zadnji.skriven}
       · iza filtra: <b>{zadnji.intenzitet === 0 ? "mrak" : "svjetlo"}</b>
     {/if}

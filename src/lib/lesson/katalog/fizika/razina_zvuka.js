@@ -565,11 +565,10 @@ const OZNAKE_PREDVIDI = {
 export const pitajPredvidi = (s) =>
   Array.isArray(s.pitaj) ? s.pitaj : ["I", "dL"];
 export function poljaPredvidi(s) {
-  const o = odgovoriPredvidi(s);
   return pitajPredvidi(s).map((v) => ({
     kljuc: v,
     ...OZNAKE_PREDVIDI[v],
-    predznak: v === "dL" && o.dL < 0,
+    predznak: v === "dL", // uvijek: ± samo kad razina pada odao bi „tiše“
     znanstveni: false,
   }));
 }

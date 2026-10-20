@@ -732,10 +732,15 @@ function checkPostavi(s, odgovor) {
   }
   if (c.vrsta === "granicni") {
     const g = r;
+    // što se stvarno dogodi pri učenikovu kutu (90° − α_g je ispod graničnog kad je α_g > 45°)
+    const ishodKuta =
+      kut < g && f.beta != null
+        ? `zraka još izlazi u ${sredstvo2(s).naziv} (kut loma ${kutTekst(f.beta)})`
+        : "sve se odbilo";
     if (isti(90 - g))
       return {
         tocno: false,
-        poruka: `To je granični kut mjeren od **površine**. Od normale je ${kt} već iznad graničnog: sve se odbilo.`,
+        poruka: `To je granični kut mjeren od **površine**. Upadni kut mjeri se od normale: pri ${kt} od normale ${ishodKuta}.`,
       };
     if (isti(atanD(f.n2 / f.n1)))
       return {
@@ -746,8 +751,7 @@ function checkPostavi(s, odgovor) {
     if (isti(atanD(f.n1 / f.n2)))
       return {
         tocno: false,
-        poruka:
-          "To je kut iz tg α = n (Brewsterov kut), a ne granični. Granični kut: sin α_g = n₂/n₁. Ovdje se sve već odbilo.",
+        poruka: `To je kut iz tg α = n (Brewsterov kut), a ne granični. Granični kut: sin α_g = n₂/n₁. Pri ${kt} ${ishodKuta}.`,
       };
     if (kut < g)
       return {
@@ -1824,7 +1828,9 @@ export function opisCrteza(s, st, opt = {}) {
   if (s.scena === "ploca")
     return `Zraka pada${kut} na planparalelnu ploču (n = ${nTekst(f.n2)}, debljina ${duljinaTekst(st.debljina, "cm")}).${sk.izlaz ? "" : ` Izlazi pod ${kutTekst(f.gamma)}, paralelno s upadnom.`}`;
   const j = jedinicaDuljine(s);
-  return `Predmet stoji ${duljinaTekst(f.a, j)} ispred okomitog ravnog zrcala.${sk.izlaz ? "" : ` Slika je ${duljinaTekst(f.a, j)} iza zrcala.`}`;
+  // isti uvjet kao crtež (geometrijaSlike): u „postavi“ slika se otkriva tek uz točan odgovor ili „pokaži“
+  const vidiSliku = s.nacin === "postavi" ? !!opt.otkriveno : !sk.izlaz;
+  return `Predmet stoji ${duljinaTekst(f.a, j)} ispred okomitog ravnog zrcala.${vidiSliku ? ` Slika je ${duljinaTekst(f.a, j)} iza zrcala.` : ""}`;
 }
 
 // ── opis i primjeri ─────────────────────────────────────────────────────────────────────────────────

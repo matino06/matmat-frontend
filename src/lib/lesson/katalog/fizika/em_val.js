@@ -441,6 +441,15 @@ export function zaokruziLambda(lambda) {
   );
   return izNiza(indeksNiza(l));
 }
+// smjesti: oznaka od početka stoji na traci (pa se može micati i gumbima ◀ ▶ i tipkovnicom), na sredini skale
+// (10 µm); ako je odgovor blizu sredine, malo dalje, da početni položaj nikad ne bude točan
+export function pocetakSmjesti(s) {
+  const t = zadanaLambda(s);
+  const sredina = 1e-5;
+  if (!isNum(t) || Math.abs(lg(sredina / t)) > 0.6)
+    return zaokruziLambda(sredina);
+  return zaokruziLambda(t > sredina ? 1e-7 : 1e-3);
+}
 export function korakLambda(lambda, d) {
   const v = izNiza(indeksNiza(lambda) + d);
   return v > 10 ** LG_MAX_OZNAKE || v < 10 ** LG_MIN_OZNAKE
@@ -1082,30 +1091,19 @@ function checkPredvidi(s, odg) {
   const tocno = promjene(s);
   const krive = pitaj.filter((k) => odg[k] !== tocno[k]);
   if (!krive.length) return { tocno: true };
-  const fz = fizikaSredstva(s);
   const k = krive[0];
-  const u = fz.uSredstvo;
+  // načelo bez smjera promjene (inače bi poruka odala odgovor koji vrijedi i za blizanca)
   const PORUKE = {
-    f: "Koliko brjegova u sekundi **uđe** u granicu, toliko ih mora i **izaći**: ne mogu se nigdje nagomilati ni izgubiti. Zato frekvencija ostaje ista.",
-    T: "Period je $T = \\dfrac{1}{f}$. Frekvencija se ne mijenja, pa ni period.",
-    lambda: u
-      ? "U sredstvu je val sporiji, a brjegovi dolaze jednako često, pa se zbiju: $\\lambda_s = \\dfrac{\\lambda}{n}$, **manja**."
-      : "U zraku je val brži, a brjegovi dolaze jednako često, pa se razmaknu: valna duljina u zraku je n puta **veća**.",
-    v: u
-      ? "Iz $n = \\dfrac{c}{v}$ slijedi $v = \\dfrac{c}{n}$. Indeks loma je veći od 1, pa je svjetlost u sredstvu **sporija**."
-      : "U sredstvu je svjetlost bila n puta sporija ($v = \\dfrac{c}{n}$), a u zraku opet ide brzinom c, pa brzina **raste**.",
-    boja: `Boju određuje **frekvencija**, a ne valna duljina. Frekvencija se ne mijenja, pa je svjetlost i dalje ${fz.boja}.`,
+    f: "Koliko brjegova u sekundi **uđe** u granicu, toliko ih mora i **izaći**: ne mogu se nigdje nagomilati ni izgubiti. Što to znači za frekvenciju?",
+    T: "Period je $T = \\dfrac{1}{f}$: mijenja se samo ako se mijenja frekvencija. Prvo odluči što je s frekvencijom.",
+    lambda:
+      "Valna duljina je $\\lambda = \\dfrac{v}{f}$. Usporedi brzinu i frekvenciju s obje strane granice.",
+    v: "Brzina svjetlosti u sredstvu indeksa loma n je $v = \\dfrac{c}{n}$, a u zraku (n ≈ 1) gotovo c. Usporedi n s jedne i s druge strane granice.",
+    boja: "Boju određuje **frekvencija**, a ne valna duljina. Što se na granici događa s frekvencijom?",
   };
-  const ostale =
-    krive.length > 1
-      ? ` (Netočno je još: ${krive
-          .slice(1)
-          .map((x) => NAZIV_VELICINE[x])
-          .join(", ")}.)`
-      : "";
   return {
     tocno: false,
-    poruka: `**${NAZIV_VELICINE[k][0].toUpperCase()}${NAZIV_VELICINE[k].slice(1)}:** ${PORUKE[k]}${ostale}`,
+    poruka: `Nije sve točno. **${NAZIV_VELICINE[k][0].toUpperCase()}${NAZIV_VELICINE[k].slice(1)}:** ${PORUKE[k]}`,
     krive,
   };
 }

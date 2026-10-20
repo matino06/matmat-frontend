@@ -103,13 +103,13 @@
   let otkriveno = $derived(
     !postavi ||
       spec.uzivo === true ||
-      locked ||
       pokazi ||
+      !!ishod?.tocno ||
       (poslano != null && klizac && poslano === p[klizac.id] && !!ishod),
   );
   const skrivena = untrack(() => skrivenaSlika(spec));
   let mirno = $derived(
-    (postavi && !otkriveno) || (skrivena && !locked && !pokazi),
+    (postavi && !otkriveno) || (skrivena && !pokazi && !ishod?.tocno),
   );
 
   // ── animacija ──
@@ -430,7 +430,10 @@
   const izbori = untrack(() => izboriPredvidi(spec));
   let odabir = $state(untrack(() => (spec.pitanja ?? []).map(() => null)));
   let poslanOdabir = $state(null);
-  let otkrivenoPred = $derived(nacin === "predvidi" && (locked || pokazi));
+  // zaključana kopija pitanja (nakon krivog odgovora) ne smije otkriti odgovor
+  let otkrivenoPred = $derived(
+    nacin === "predvidi" && (pokazi || !!ishod?.tocno),
+  );
   $effect(() => {
     if (!pokazi || nacin !== "predvidi") return;
     untrack(() => (odabir = rjesenje(spec)));
@@ -659,17 +662,15 @@
 {/if}
 
 {#if nacin === "predvidi"}
-  <!-- dva (ili jedno) užeta, za svaki kraj izbor vraćenog pulsa -->
+  <!-- dva (ili jedno) užeta, za svaki kraj izbor vraćenog pulsa; nakon krivog odgovora ne označavamo pojedino
+       uže (suzilo bi izbor), samo poruka da nije točno -->
   {#each pitanja as q, i (i)}
     {@const st = uze(sp, P, tRedaka, nKug, { kraj: q.kraj })}
     {@const pol = polozajPulsa(P, tRedaka)}
     {@const status =
-      pokazi ||
-      (ishod?.polja?.[i] === true && poslanOdabir === JSON.stringify(odabir))
+      pokazi || (ishod?.tocno && poslanOdabir === JSON.stringify(odabir))
         ? "ok"
-        : ishod?.polja?.[i] === false && poslanOdabir === JSON.stringify(odabir)
-          ? "bad"
-          : null}
+        : null}
     <div class="vu-red">
       <div class="vu-red-ime">{IME_KRAJA[q.kraj]}</div>
       <figure class="lx-figure vu-fig">

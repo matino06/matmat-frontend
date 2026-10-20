@@ -52,7 +52,7 @@
   let p = $state(untrack(() => pocetneVrijednosti(spec)));
   let fz = $derived(fizikaDopplera(spec, p));
 
-  let otkriveno = $derived(istrazi || pokazi || locked || !!ishod?.tocno);
+  let otkriveno = $derived(istrazi || pokazi || !!ishod?.tocno);
   let vid = $derived(vidljivoDopplera(spec, otkriveno));
 
   // ── vrijeme (stvarne sekunde; prikaz usporen) ──
@@ -205,10 +205,8 @@
   const stanjeProcjene = (i, id) => {
     if (procjene[i] !== id) return "";
     if (pokazi) return "ok";
-    if (neprom && ishod && !ishod.prazno)
-      return ishod.tocno || id === tocnaProcjena(spec.pitanja[i].faza)
-        ? "ok"
-        : "bad";
+    // nakon krivog odgovora ne označavamo pojedina pitanja (to bi suzilo izbor): samo poruka da nije točno
+    if (neprom && ishod?.tocno) return "ok";
     return "sel";
   };
   function provjeriProcjene() {

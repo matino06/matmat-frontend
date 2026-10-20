@@ -55,7 +55,7 @@
 
   let p = $state(untrack(() => pocetneVrijednosti(spec)));
   let f = $derived(fizika(spec, p));
-  let otkriveno = $derived(locked || pokazi || !!ishod?.tocno);
+  let otkriveno = $derived(pokazi || !!ishod?.tocno);
   let vid = $derived(vidljivo(spec, otkriveno));
   let boja = $derived(vid.boja ? lambdaRGB(f.lambdaNm) : NEUTRALNA);
   const Y = untrack(() => (young ? rasponYoung(spec) : 0));

@@ -183,9 +183,11 @@
       if (x == null) return;
       if (postaviP) {
         const k = spec.klizaci.find((q) => q.id === spec.P);
+        // na mrežu klizača (od k.min, unutar raspona), bez šuma s pomičnim zarezom
+        const v = k.min + Math.round((x - k.min) / k.korak) * k.korak;
         kl = {
           ...kl,
-          [spec.P]: Math.round(x / k.korak) * k.korak,
+          [spec.P]: Number(Math.min(k.max, Math.max(k.min, v)).toFixed(10)),
         };
       } else {
         const j = mijenjaPrijamnik(spec);
@@ -217,6 +219,8 @@
     if (pokazi) return null;
     if (!ishod || !neprom || ishod.prazno) return null;
     if (ishod.tocno) return "ok";
+    // predvidi: nakon krivog odgovora bez zelenog/crvenog po polju (suzilo bi izbor, npr. jača/tiša); samo poruka
+    if (predvidi) return null;
     return ishod.polje === i ? "bad" : ishod.polje > i ? "ok" : null;
   };
   let elPolja = $state([]);

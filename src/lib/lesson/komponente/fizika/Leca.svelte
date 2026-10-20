@@ -26,6 +26,7 @@
     zrakeSpeca,
     nagibRuke,
     parametriZrake,
+    pocetnaRuka,
     visinaPredmeta,
     aZaCilj,
     rjesenjeIzracuna,
@@ -96,7 +97,7 @@
 
   // otkriveno: učenik je točno odgovorio, „pokaži“, ili (postavi) provjerio baš ovaj položaj
   let otkriveno = $derived.by(() => {
-    if (pokazi || locked) return true;
+    if (pokazi) return true;
     if (nacin === "postavi")
       return poslano != null && poslano === a && !!ishod && !ishod.prazno;
     return !!ishod?.tocno;
@@ -161,12 +162,16 @@
   function down(e, vrsta, i = 0) {
     if (!smijeVuci(vrsta)) return;
     e.preventDefault();
-    vuce = { vrsta, i };
+    // ručka zrake se ne pomiče na sam dodir: zraka postoji tek kad je učenik stvarno povuče
+    vuce = { vrsta, i, id: e.pointerId, x0: e.clientX, y0: e.clientY };
     e.currentTarget.setPointerCapture(e.pointerId);
-    if (vrsta === "ruka") pomakni(e);
   }
   function pomakni(e) {
-    if (!vuce) return;
+    if (!vuce || e.pointerId !== vuce.id) return;
+    if (vuce.vrsta === "ruka" && !vuce.pomaknuto) {
+      if (Math.hypot(e.clientX - vuce.x0, e.clientY - vuce.y0) < 6) return;
+      vuce.pomaknuto = true;
+    }
     const t = tockaPokazivaca(e);
     if (!t) return;
     if (vuce.vrsta === "predmet") a = naMrezuA(spec, Math.max(0, -t[0]));
@@ -185,7 +190,9 @@
       privucene[vuce.i] = p.privuceno;
     }
   }
-  const pusti = () => (vuce = null);
+  const pusti = (e) => {
+    if (vuce && e?.pointerId === vuce.id) vuce = null;
+  };
 
   function tipka(e, vrsta, i = 0) {
     if (!smijeVuci(vrsta)) return;
@@ -201,7 +208,7 @@
     else if (vrsta === "zastor") fino(d * (e.shiftKey ? 1 : 0.1));
     else if (vrsta === "ruka") {
       const z = parametriZrake(imena[i], spec.f, spec.a, visinaPredmeta(spec));
-      const t = ruke[i] ?? [pg.xR * 0.32, z.h];
+      const t = ruke[i] ?? pocetnaRuka(spec, imena[i], pg);
       const dx = t[0] * pg.sx;
       const dy = (t[1] - z.h) * pg.sy;
       const L = Math.hypot(dx, dy);
@@ -405,6 +412,7 @@
     onpointermove={pomakni}
     onpointerup={pusti}
     onpointercancel={pusti}
+    onlostpointercapture={pusti}
   >
     <defs>
       <clipPath id="lc-clip-{uid}">
@@ -940,7 +948,7 @@
               <tr
                 class:lc-red-akt={i === red && !locked}
                 class:lc-red-ok={poljaZastora?.[i] === true ||
-                  (locked && zapisi[i] != null)}
+                  (!!ishod?.tocno && zapisi[i] != null)}
                 class:lc-red-bad={poljaZastora?.[i] === false}
                 onclick={() => !locked && !pokazi && (red = i)}
               >

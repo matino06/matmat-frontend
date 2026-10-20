@@ -12,6 +12,7 @@
     zadanaLambda,
     zaokruziLambda,
     korakLambda,
+    pocetakSmjesti,
     xLambda,
     xInset,
     podrucje,
@@ -41,9 +42,13 @@
         ? zaokruziLambda(zadana ?? 5e-7)
         : nacin === "prikaz"
           ? zadana
-          : null,
+          : smjesti
+            ? pocetakSmjesti(spec)
+            : null,
     ),
   );
+  // smjesti: Provjeri tek kad je učenik oznaku stvarno pomaknuo s početnog mjesta
+  let pomaknuto = $state(false);
   let odabrano = $state(null);
   let poslano = $state(null);
   const trenutno = () => (smjesti ? lam : odabrano);
@@ -69,7 +74,7 @@
   function provjeri() {
     if (locked) return;
     const v = trenutno();
-    if (v == null) return;
+    if (v == null || (smjesti && !pomaknuto)) return;
     poslano = v;
     onodgovor(v);
   }
@@ -98,7 +103,7 @@
   // ── unos ──
   const { yF, yL, inset } = SPEKTAR;
   let svgEl = $state();
-  let vuce = null; // "traka" | "inset"
+  let vuce = null; // {zona: "traka" | "inset", id: pointerId}
   const tockaSvg = (e) => {
     const m = svgEl?.getScreenCTM();
     if (!m) return null;
@@ -117,6 +122,7 @@
   }
   function postavi(q, z) {
     lam = zaokruziLambda(z === "inset" ? xInset(q.x) : xLambda(q.x));
+    pomaknuto = true;
   }
   function down(e) {
     if (!aktivno || !(vid.vuci || odaberiP)) return;
@@ -129,7 +135,7 @@
       return;
     }
     e.preventDefault();
-    vuce = z;
+    vuce = { zona: z, id: e.pointerId };
     postavi(q, z);
     try {
       svgEl.setPointerCapture(e.pointerId);
@@ -138,14 +144,17 @@
     }
   }
   function move(e) {
-    if (!vuce) return;
+    if (!vuce || e.pointerId !== vuce.id) return;
     const q = tockaSvg(e);
-    if (q) postavi(q, vuce);
+    if (q) postavi(q, vuce.zona);
   }
-  const up = () => (vuce = null);
+  const up = (e) => {
+    if (vuce && e.pointerId === vuce.id) vuce = null;
+  };
   function korak(d) {
     if (!aktivno) return;
     lam = lam == null ? zaokruziLambda(5e-7) : korakLambda(lam, d);
+    pomaknuto = true;
   }
   function tipka(e, id) {
     if (!aktivno || (e.key !== "Enter" && e.key !== " ")) return;
@@ -178,6 +187,7 @@
     onpointermove={move}
     onpointerup={up}
     onpointercancel={up}
+    onlostpointercapture={up}
   >
     <defs>
       <linearGradient id="ev-duga-{uid}" x1="0" x2="1" y1="0" y2="0">
@@ -423,11 +433,13 @@
       >
     {/if}
   </div>
-{:else if smjesti}
+{/if}
+{#if smjesti && aktivno && !pomaknuto}
   <p class="ev-uputa">
-    Dodirni traku ili povuci po njoj; fino namjesti strelicama.
+    Dodirni traku ili povuci po njoj; fino namjesti gumbima ◀ ▶.
   </p>
-{:else if odaberiP && !otkriveno}
+{/if}
+{#if odaberiP && !otkriveno}
   <p class="ev-uputa">
     Dodirni područje na traci{odabrano
       ? ""
@@ -464,7 +476,10 @@
       type="button"
       class="btn btn-primary"
       onclick={provjeri}
-      disabled={locked || pokazi || trenutno() == null}>Provjeri</button
+      disabled={locked ||
+        pokazi ||
+        trenutno() == null ||
+        (smjesti && !pomaknuto)}>Provjeri</button
     >
   </div>
 {/if}

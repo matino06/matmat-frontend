@@ -109,7 +109,8 @@
     scenaTitranja(S, M, st, {
       ref,
       vrste: sk.strelice ? [] : vrsteStrelica,
-      mete: nacin === "odaberi_polozaj" && !otkriveno,
+      // „pokaži“: mete ostaju, s označenim točnim položajima
+      mete: nacin === "odaberi_polozaj" && (!otkriveno || pokazi),
     }),
   );
   // u „odaberi“ prije odgovora očitanja nemaju smisla (sve bi bilo „?“)
@@ -251,10 +252,14 @@
   const imaEpx = prikazi.includes("Ep-x");
   const imaStupce = prikazi.includes("stupci");
   let energija = $derived(
-    imaEpx && !sk.energija ? grafEnergije(S, M, st.y, { ref }) : null,
+    imaEpx && !sk.energija
+      ? grafEnergije(S, M, st.y, { ref, skrijStanje: sk.energijaStanje })
+      : null,
   );
   let stupci = $derived(
-    imaStupce && !sk.energija ? stupciEnergije(M, st, { ref }) : null,
+    imaStupce && !sk.energija
+      ? stupciEnergije(M, st, { ref, skrijStanje: sk.energijaStanje })
+      : null,
   );
   const imaStopericu =
     prikazi.includes("stoperica") || prikazi.includes("brojac_titraja");
@@ -388,7 +393,11 @@
         const o = otkrivenoStanje(S);
         if (o.t != null && o.t > 0) pustiDo(o.t);
         else if (x == null && !prefersReducedMotion.current) pokreni();
-      } else if (nacin === "odaberi_polozaj" && !prefersReducedMotion.current)
+      } else if (
+        nacin === "odaberi_polozaj" &&
+        !pokazi &&
+        !prefersReducedMotion.current
+      )
         pokreni();
     });
   });
@@ -420,7 +429,7 @@
     <div class="lx-question"><Md text={S.tekst} /></div>
   {/if}
 
-  {#if nacin === "odaberi_polozaj" && pitanja.length > 1 && !otkriveno}
+  {#if nacin === "odaberi_polozaj" && pitanja.length > 1 && (!otkriveno || pokazi)}
     <div class="tt-pitanja" role="radiogroup" aria-label="Pitanje">
       {#each pitanja as q, i (q.trazi)}
         <button
@@ -431,7 +440,7 @@
           role="radio"
           aria-checked={aktivno === i}
           onclick={() => (aktivno = i)}
-          disabled={zakljucano}
+          disabled={zakljucano && !pokazi}
         >
           <span class="tt-pit-br">{i + 1}</span>
           <span>{gdjeTrazeno(S, q.trazi)}</span>
@@ -439,7 +448,7 @@
         </button>
       {/each}
     </div>
-  {:else if nacin === "odaberi_polozaj" && !otkriveno}
+  {:else if nacin === "odaberi_polozaj" && (!otkriveno || pokazi)}
     <p class="tt-uputa">{veliko(gdjeTrazeno(S, pitanja[0].trazi))}?</p>
   {/if}
 
@@ -569,7 +578,8 @@
           <!-- tijelo -->
           <g
             class="tt-tijelo"
-            class:blijedo={nacin === "odaberi_polozaj" && !otkriveno}
+            class:blijedo={nacin === "odaberi_polozaj" &&
+              (!otkriveno || pokazi)}
           >
             {#if sc.tijelo.oblik === "tocka"}
               <circle
@@ -838,14 +848,16 @@
                   y2={e.E.y}
                 />
                 <polyline class="tt-parabola" points={e.parabola} />
-                <line
-                  class="tt-Ek"
-                  x1={e.tocka.x}
-                  y1={e.tocka.y}
-                  x2={e.tocka.x}
-                  y2={e.E.y}
-                />
-                <circle class="tt-ep-t" cx={e.tocka.x} cy={e.tocka.y} r="5" />
+                {#if e.tocka}
+                  <line
+                    class="tt-Ek"
+                    x1={e.tocka.x}
+                    y1={e.tocka.y}
+                    x2={e.tocka.x}
+                    y2={e.E.y}
+                  />
+                  <circle class="tt-ep-t" cx={e.tocka.x} cy={e.tocka.y} r="5" />
+                {/if}
                 <text
                   class="tt-leg"
                   x={e.E.x2 + 4}
@@ -879,7 +891,14 @@
                     fill={BOJA[b.kljuc]}
                     class="tt-stupac"
                   />
-                  {#if !sk.energijaBrojevi}
+                  {#if b.skriven}
+                    <text
+                      class="tt-st-v"
+                      x={b.x + b.w / 2}
+                      y={b.dno - 6}
+                      text-anchor="middle">?</text
+                    >
+                  {:else if !sk.energijaBrojevi}
                     <text
                       class="tt-st-v"
                       x={b.x + b.w / 2}

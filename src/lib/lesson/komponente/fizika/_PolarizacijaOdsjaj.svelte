@@ -56,7 +56,6 @@
   let otkriveno = $derived(
     nacin === "istrazi" ||
       nacin === "prikaz" ||
-      locked ||
       pokazi ||
       (nacin === "postavi"
         ? poslano != null && poslano === vrijednost && !!ishod && !ishod.prazno
@@ -200,9 +199,18 @@
   const ZRAKE = ["upadna", "odbijena", "lomljena"];
   let istaknuta = $derived(nacin === "odaberi" ? izbor : null);
   const povrsina = untrack(() => spec.povrsina ?? "sredstvo");
+  // u izracunaj i odaberi upadni kut je Brewsterov (traženi): opis ga ne smije reći (kao ni očitanje ispod crteža)
+  let kutPoznat = $derived(
+    otkriveno || (nacin !== "izracunaj" && nacin !== "odaberi"),
+  );
   let opis = $derived.by(() => {
-    let t = `Sunčeva zraka pada na površinu (${povrsina}, n = ${formatNumber(n)}) pod upadnim kutom ${kutTekst(alfa)}.`;
-    if (st) t += ` Lomni kut ${kutTekst(st.beta)}; odsjaj je ${st.stanje}.`;
+    let t = kutPoznat
+      ? `Sunčeva zraka pada na površinu (${povrsina}, n = ${formatNumber(n)}) pod upadnim kutom ${kutTekst(alfa)}.`
+      : `Sunčeva zraka pada na površinu (${povrsina}, n = ${formatNumber(n)}) pod upadnim kutom α.`;
+    if (st)
+      t += kutPoznat
+        ? ` Lomni kut ${kutTekst(st.beta)}; odsjaj je ${st.stanje}.`
+        : ` Odsjaj je ${st.stanje}.`;
     if (imaNaocale) t += ` Os naočala: ${opisOsi(naocale)}.`;
     return t;
   });

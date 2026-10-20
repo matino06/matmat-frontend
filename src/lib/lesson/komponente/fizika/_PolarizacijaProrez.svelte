@@ -32,7 +32,7 @@
   let ruka = $state(untrack(() => spec.prorez ?? 0));
   let izbor = $state(null);
   // u „odaberi“ ishod se vidi tek kad je odgovor točan ili pokazan (inače bi drugi pokušaj bio pogađanje s rješenjem)
-  let otkriveno = $derived(!odaberi || locked || pokazi || !!ishod?.tocno);
+  let otkriveno = $derived(!odaberi || pokazi || !!ishod?.tocno);
   let scena = $derived(scenaProrez(spec, normOs(ruka), !otkriveno));
 
   let faza = $state(0);

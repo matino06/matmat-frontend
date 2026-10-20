@@ -319,10 +319,30 @@ export function tocneRuke(s, pg = pogledLece(s)) {
     return [x, z.h + z.sIzlaz * x];
   });
 }
-// početni položaj ručke: malo desno od izlazne točke, bez crte (učenik mora zraku okrenuti)
+// početni položaj ručke: malo desno od izlazne točke, bez crte (učenik mora zraku okrenuti). Ručka stoji pod kutom
+// koji je daleko od svih smjerova na koje se zraka privlači (vodoravno je npr. točan smjer zrake kroz F), pa jedan
+// dodir ili jedna strelica ne mogu „slučajno“ dati točnu zraku.
+const KUTOVI_RUKE = [24, -24, 38, -38, 14, -14, 52, -52];
 export function pocetnaRuka(s, ime, pg = pogledLece(s)) {
   const z = parametriZrake(ime, s.f, s.a, visinaPredmeta(s));
-  return [pg.xR * 0.32, z.h];
+  const L = pg.xR * 0.32 * pg.sx;
+  const kandidati = [0, z.sUlaz, ...tockeOsi(s.f).map((xp) => -z.h / xp)].map(
+    (c) => kutPogleda(pg, c),
+  );
+  const lim = pg.yMax * 1.05;
+  const tocka = (kut) => {
+    const r = (kut * Math.PI) / 180;
+    return [(L * Math.cos(r)) / pg.sx, z.h + (L * Math.sin(r)) / pg.sy];
+  };
+  let best = null;
+  for (const kut of KUTOVI_RUKE) {
+    const t = tocka(kut);
+    if (Math.abs(t[1]) > lim) continue;
+    const d = Math.min(...kandidati.map((k) => Math.abs(k - kut)));
+    if (d >= 8) return t;
+    if (!best || d > best.d) best = { d, t };
+  }
+  return best ? best.t : tocka(24);
 }
 
 // ── pogled (mjerilo crteža) ─────────────────────────────────────────────────────────────────────────
@@ -365,12 +385,32 @@ export function pogledLece(s) {
     const b = Number.isFinite(sl.b) ? sl.b : 0;
     const yS = Number.isFinite(sl.y) ? Math.abs(sl.y) : y;
     yMax = 1.28 * Math.max(y, yS);
+    const F = Math.abs(f);
     if (n === "izracunaj") {
-      const X = 1.12 * Math.max(a, Math.abs(b), 2 * Math.abs(f));
+      // širina crteža ovisi samo o zadanim veličinama (inače bi se iz ruba dalo izmjeriti traženo); slika
+      // koja ne stane prikazuje se nakon otkrivanja strelicom na rubu
+      const pitaF = pitano(s, "f") || pitano(s, "j");
+      const X =
+        1.12 *
+        (pitano(s, "a")
+          ? Math.max(Math.abs(b), 2 * F)
+          : pitaF
+            ? Math.max(a, Math.abs(b))
+            : Math.max(a, 2 * F));
       xL = -X;
       xR = X;
       // visina crteža ne smije odati koliko je velika slika: ovisi samo o predmetu (veća slika se odreže)
-      if (!pitano(s, "f") && !pitano(s, "j")) yMax = 2.6 * y;
+      if (!pitaF) yMax = 2.6 * y;
+    } else if (n === "nacrtaj") {
+      // samo iz a i f (slika je skrivena dok učenik ne provjeri); desno ima mjesta za sliku do b ≈ 4f
+      const lo = a < F ? -Math.max(a, 2.5 * F) : -Math.max(a, 1.3 * F);
+      const hi =
+        a < F ? Math.max(2.2 * F, 0.5 * a) : Math.max(3.7 * F, 0.5 * a);
+      const m = 0.12 * (hi - lo);
+      xL = lo - m;
+      xR = hi + m;
+      // ni visina ne smije odati koliko je velika slika (veća slika se nakon provjere pokaže strelicom na rubu)
+      yMax = 2.6 * y;
     } else {
       const lo = Math.min(-a, b, -Math.abs(f));
       const hi = Math.max(b, 1.3 * Math.abs(f), 0.5 * a);

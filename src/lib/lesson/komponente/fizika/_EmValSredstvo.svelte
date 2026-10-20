@@ -45,11 +45,6 @@
   let tocno = $derived(
     pokazi || (!!ishod?.tocno && (izracunaj || poslano === kljuc())),
   );
-  let krive = $derived(
-    predvidi && ishod && !ishod.tocno && !ishod.prazno && poslano === kljuc()
-      ? (ishod.krive ?? [])
-      : [],
-  );
   let otkriveno = $derived((!predvidi && !izracunaj) || tocno);
   let aktivno = $derived(!locked && !pokazi);
   $effect(() => {
@@ -343,7 +338,8 @@
         .desno.naziv}?
     </p>
     {#each pitaj as k (k)}
-      <div class="ev-pr-red" class:ev-pr-bad={krive.includes(k)}>
+      <!-- nakon krivog odgovora redovi se ne označavaju pojedinačno (suzilo bi izbor) -->
+      <div class="ev-pr-red">
         <span class="ev-pr-naziv">{NAZIV[k]}</span>
         <div class="ev-seg">
           {#each OPCIJE_PREDVIDI[k] as o (o)}
@@ -558,17 +554,11 @@
     font-size: 14px;
     font-weight: 500;
   }
-  .ev-pr-bad .ev-pr-naziv {
-    color: var(--danger);
-  }
   .ev-seg {
     display: inline-flex;
     border: 1px solid var(--border);
     border-radius: var(--r-md);
     overflow: hidden;
-  }
-  .ev-pr-bad .ev-seg {
-    border-color: var(--danger);
   }
   .ev-seg-gumb {
     min-height: 38px;

@@ -850,8 +850,10 @@ export function grafEnergije(
   s,
   M,
   y,
-  { ref = mjerilaTitranja(s), visina = 132 } = {},
+  { ref = mjerilaTitranja(s), visina = 132, skrijStanje = false } = {},
 ) {
+  // skrijStanje: traži se E_p ili E_k u zadanom položaju, pa ni točka na paraboli ni crta E_k (ni oznaka E/2,
+  // s kojom bi se vrijednost očitala) ne smiju se vidjeti do odgovora
   const yTop = 18;
   const yBot = visina - 26;
   const X = (q) => VOD.X0 + (VOD.PX * q) / ref.A;
@@ -869,22 +871,26 @@ export function grafEnergije(
     os: { x0: 40, x1: SIR - 8, y: yBot, yTop: yTop - 6, xOs: 40 },
     parabola: tocke.map(([a, b]) => `${a},${b}`).join(" "),
     E: { x1: r1(X(-M.A)), x2: r1(X(M.A)), y: r1(Y(M.E)) },
-    tocka: { x: r1(X(y)), y: r1(Y(Ep)) },
+    tocka: skrijStanje ? null : { x: r1(X(y)), y: r1(Y(Ep)) },
     xTicks: [-M.A, 0, M.A].map((q) => ({
       x: r1(X(q)),
       tekst: q === 0 ? "0" : fmtA(q),
     })),
     yTicks: [
       { y: r1(Y(0)), tekst: "0" },
-      { y: r1(Y(M.E / 2)), tekst: broj(M.E / 2) },
+      ...(skrijStanje ? [] : [{ y: r1(Y(M.E / 2)), tekst: broj(M.E / 2) }]),
       { y: r1(Y(M.E)), tekst: broj(M.E) },
     ],
     oznakaX: `${vodoravno(s) ? "x" : "y"} (${M.jedA})`,
   };
 }
 
-// stupci E_p, E_k i E (zbroj je stalan)
-export function stupciEnergije(M, st, { ref = { E: M.E }, visina = 132 } = {}) {
+// stupci E_p, E_k i E (zbroj je stalan); skrijStanje: stupci E_p i E_k su „?“ dok se traže
+export function stupciEnergije(
+  M,
+  st,
+  { ref = { E: M.E }, visina = 132, skrijStanje = false } = {},
+) {
   const vrh = 14;
   const dno = visina - 30;
   const Emax = Math.max(ref.E, 1e-12);
@@ -893,7 +899,8 @@ export function stupciEnergije(M, st, { ref = { E: M.E }, visina = 132 } = {}) {
     ["Ek", "E_k", st.Ek],
     ["E", "E", M.E],
   ].map(([kljuc, oznaka, E], i) => {
-    const h = ((dno - vrh) * Math.max(0, E)) / Emax;
+    const skriven = skrijStanje && kljuc !== "E";
+    const h = skriven ? 0 : ((dno - vrh) * Math.max(0, E)) / Emax;
     return {
       kljuc,
       oznaka,
@@ -902,7 +909,8 @@ export function stupciEnergije(M, st, { ref = { E: M.E }, visina = 132 } = {}) {
       y: r1(dno - h),
       h: r1(h),
       dno,
-      tekst: iznosJed(E, "J"),
+      skriven,
+      tekst: skriven ? "?" : iznosJed(E, "J"),
     };
   });
 }
@@ -918,6 +926,7 @@ export function skrivenoTitranja(s, otkriveno) {
     strelice: false,
     energija: false,
     energijaBrojevi: false,
+    energijaStanje: false,
     animacija: true,
     stoperica: false,
   };
@@ -944,6 +953,8 @@ export function skrivenoTitranja(s, otkriveno) {
       energijaBrojevi: trazi.some((v) => ["E", "Ep", "Ek", "k"].includes(v)),
       // u izracunaj E_p(x) se čita s grafa (1090 a), ali točka ne smije pokazati stanje u traženom trenutku
       energija: false,
+      // traži se E_p / E_k u zadanom položaju (1090–1094 c): bez točke, crte E_k i stupaca E_p, E_k
+      energijaStanje: trazi.some((v) => v === "Ep" || v === "Ek"),
       animacija: false,
     };
   }
