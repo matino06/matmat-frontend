@@ -48,7 +48,8 @@
   // Interaktivna verzija zadatka (vlastiti predmet s oblikom lekcija „interaktivno“). Bez nje, s nepoznatom
   // verzijom formata ili kad učenik odabere „Prikaži kao tekst“, zadatak se prikazuje kao i dosad.
   let tekstualno = $state(false);
-  let lekcija = $derived(tekstualno ? null : interaktivnaLekcija(task));
+  let interaktivna = $derived(interaktivnaLekcija(task));
+  let lekcija = $derived(tekstualno ? null : interaktivna);
   // Kako je prošla interaktivna lekcija: prijedlog ocjene i najviše do čega se smije podići.
   let lekcijaSazetak = $state(null);
   $effect(() => {
@@ -520,6 +521,11 @@
           </div>
 
           {@render ocjena()}
+        </div>
+      {/if}
+      {#if interaktivna}
+        <div class="lesson-alt">
+          <button class="btn btn-quiet" onclick={() => (tekstualno = false)}>Prikaži interaktivno</button>
         </div>
       {/if}
       {/if}
