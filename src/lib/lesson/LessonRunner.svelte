@@ -13,7 +13,9 @@
   import GrafFunkcije from "./komponente/GrafFunkcije.svelte";
   import { provjeri, tocanOdgovor, uloga, ODGOVOR } from "./katalog/index.js";
 
-  let { lekcija, onzavrsi = () => {}, rjesenje = null } = $props();
+  // `navrh` zamjenjuje dovođenje lekcije na vrh: demo na landing stranici ima vlastiti stupac sa scrollom, a
+  // scrollIntoView bi pomaknuo cijelu stranicu.
+  let { lekcija, onzavrsi = () => {}, rjesenje = null, navrh = null } = $props();
 
   const MAX_PONOVNO = 2; // nakon toliko krivih ponovnih pokušaja prikazuje se točan odgovor
   // ishod podzadatka; o njemu ovisi prijedlog ocjene za ponavljanje
@@ -119,13 +121,18 @@
     uvod = false;
     ekran = n;
     onzavrsi(sazetak());
-    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+    naVrh();
+  }
+
+  function naVrh() {
+    if (navrh) navrh();
+    else root?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function vodiMe() {
     uvod = false;
     zadatakOtvoren = true;
-    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+    naVrh();
   }
 
   function zavrsniOdgovor(odgovor) {
@@ -145,7 +152,7 @@
   function zavrsniDalje() {
     zavrsni = false;
     onzavrsi(sazetak());
-    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+    naVrh();
   }
 
   function dalje() {
@@ -156,7 +163,7 @@
       zadatakOtvoren = false;
     } else if (ekran === n) onzavrsi(sazetak());
     // u aplikaciji se ne pomiče prozor nego glavni stupac, pa se na vrh dovodi sama lekcija
-    root?.scrollIntoView({ behavior: "smooth", block: "start" });
+    naVrh();
   }
 
   function ispocetka() {
@@ -449,6 +456,13 @@
     gap: 18px;
     max-width: 720px;
     margin: 0 auto;
+  }
+  /* stavka grida inače ne ide uža od sadržaja, pa bi široka formula (.katex-display ima vlastiti scroll) raširila
+     cijelu lekciju izvan kartice na uskom ekranu */
+  .lx-runner > :global(*),
+  .lx-sub > :global(*),
+  .lx-help > :global(*) {
+    min-width: 0;
   }
 
   /* put kroz lekciju */
