@@ -109,6 +109,10 @@ export const VELICINE = {
     v: { naziv: "brzina čestice", oznaka: "v", jed: ["m/s"] },
   },
 };
+// gumb ·10ⁿ uz polje: odlučuje jedinica (veličine koje su po prirodi jako velike ili male), nikad iznos odgovora
+export const JEDINICE_S_POTENCIJOM = ["J", "Hz", "m", "kg m/s", "m/s"];
+export const trebaPotenciju = (jedinica) =>
+  JEDINICE_S_POTENCIJOM.includes(jedinica);
 export const pitanja = (s) => (Array.isArray(s.pitaj) ? s.pitaj : []);
 export const jedinicaPolja = (s, q) =>
   q.jedinica ?? VELICINE[s.scena][q.velicina].jed[0];
@@ -653,24 +657,14 @@ export function ishodPredvidi(s) {
   }
   return { tocno: out, opis, prije, poslije, stanje };
 }
-function porukaPredvidi(s, k, tocan, odg) {
-  const p = s.promjena;
-  const jakost = p.startsWith("jakost");
-  if (tocan === "nema")
-    return "Usporedi energiju fotona nakon promjene s izlaznim radom metala. Je li foton i dalje dovoljno jak da izbije elektron? Jakost tu ne pomaže: jedan foton predaje energiju jednom elektronu.";
-  if (odg === "nema")
-    return "Elektroni i dalje izlaze: foton i nakon promjene nosi više energije od izlaznog rada.";
-  if (k === "broj_elektrona")
-    return jakost
-      ? "Jakost svjetlosti je broj fotona u sekundi. Jedan foton izbije jedan elektron, pa broj elektrona (i struja) prati broj fotona."
-      : "Broj izbijenih elektrona ovisi o broju fotona u sekundi, a to je jakost svjetlosti.";
-  const uz =
-    k === "U_z" ? " Zaustavni napon prati najveću E_k (e·U_z = E_k)." : "";
-  if (jakost)
-    return `Jače ili slabije svjetlo mijenja broj fotona, ali svaki foton i dalje nosi istu energiju hc/λ, pa svaki elektron dobije jednako.${uz}`;
-  if (p.startsWith("lambda"))
-    return `Što je valna duljina kraća, to svaki foton nosi više energije (E = hc/λ). Izlazni rad metala je isti, pa elektronu ostane E_k = E_f − W_i.${uz}`;
-  return `Foton nosi istu energiju, a izlazni rad se promijenio: elektronu ostane E_k = E_f − W_i.${uz}`;
+// jedna neutralna poruka s načelima: ne kaže koja je stavka kriva ni koji je odgovor točan (isti zadatak se
+// ponovi nakon krivog odgovora, pa bi imenovanje stavke ili ishoda pretvorilo ponovni pokušaj u pogađanje)
+function porukaPredvidi(s) {
+  const pit = pitanja(s);
+  const uz = pit.includes("U_z")
+    ? " Zaustavni napon prati najveću kinetičku energiju: e·U_z = E_k."
+    : "";
+  return `${pit.length > 1 ? "Barem jedan odgovor nije točan." : "Odgovor nije točan."} Provjeri redom: izlaze li elektroni uopće (usporedi energiju **jednog** fotona E_f = hc/λ s izlaznim radom W_i; jakost tu ne pomaže), o čemu ovisi **broj** izbijenih elektrona u sekundi (koliko fotona u sekundi padne na pločicu), a o čemu njihova najveća **kinetička energija** (E_k = E_f − W_i: samo o energiji jednog fotona i o metalu).${uz}`;
 }
 function checkPredvidi(s, odgovor) {
   const pit = pitanja(s);
@@ -685,12 +679,8 @@ function checkPredvidi(s, odgovor) {
           : "Odaberi odgovor.",
       prazno: true,
     };
-  for (const k of pit)
-    if (odg[k] !== tocno[k])
-      return {
-        tocno: false,
-        poruka: `${pit.length > 1 ? `${NAZIV_PREDVIDI[k]}: ` : ""}${porukaPredvidi(s, k, tocno[k], odg[k])}`,
-      };
+  if (pit.some((k) => odg[k] !== tocno[k]))
+    return { tocno: false, poruka: porukaPredvidi(s) };
   return { tocno: true };
 }
 
@@ -1430,6 +1420,14 @@ function validate(s) {
           isNum(s.v) !== isNum(s.lambda),
           "de_broglie treba točno jedno od: v (m/s) ili lambda (nm, kad se pita v)",
         );
+    }
+    // zadan λ (pita se v): brzina koja iz njega slijedi mora biti u istom rasponu kao zadana v
+    if (isNum(s.lambda) && s.v == null && !list.length) {
+      const v = fizika(s).v;
+      need(
+        isNum(v) && v >= 1e3 && v <= 3e7,
+        `iz lambda = ${formatNumber(s.lambda)} nm slijedi v = ${isNum(v) ? iznos(v, "m/s") : "?"}; mora biti od 10³ do 3·10⁷ m/s (do 0,1c: nerelativistički)`,
+      );
     }
     if (nac === "istrazi")
       need(

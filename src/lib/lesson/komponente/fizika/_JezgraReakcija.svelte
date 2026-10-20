@@ -46,8 +46,9 @@
   // odabir učenika za X: {cestica} ili {A, Z}
   let odabir = $state(null);
   let gradi = $state(false); // otvoren unos jezgre (A, Z)
-  let jA = $state(4);
-  let jZ = $state(2);
+  // unos jezgre kreće prazan: X se šalje tek kad su upisani i A i Z (početna vrijednost ne smije biti odgovor)
+  let jA = $state(null);
+  let jZ = $state(null);
   let otkriveno = $derived(!dovrsi || pokazi || !!ishod?.tocno);
   const tocanOdabir = untrack(() => {
     if (!imaX) return null;
@@ -96,17 +97,17 @@
   function otvoriJezgru() {
     if (!aktivno) return;
     gradi = true;
-    odabir = { A: jA, Z: jZ };
+    odabir = jA != null && jZ != null ? { A: jA, Z: jZ } : null;
   }
   function postaviJezgru(k, v) {
     if (!aktivno) return;
-    const n = Math.max(
-      0,
-      Math.min(k === "Z" ? Z_MAX : 300, Math.round(Number(v) || 0)),
-    );
+    const prazno = String(v ?? "").trim() === "" || !Number.isFinite(Number(v));
+    const n = prazno
+      ? null
+      : Math.max(0, Math.min(k === "Z" ? Z_MAX : 300, Math.round(Number(v))));
     if (k === "A") jA = n;
     else jZ = n;
-    odabir = { A: jA, Z: jZ };
+    odabir = jA != null && jZ != null ? { A: jA, Z: jZ } : null;
   }
   function provjeri() {
     if (locked) return;
@@ -248,6 +249,7 @@
               y={YJ}
               skala={p.skala}
               opacity={p.opacity}
+              bezZ={skrijZ}
             />
           {:else}
             <text class="jzr-x" x={e.x} y={YJ + 8} text-anchor="middle">X</text>
@@ -268,6 +270,7 @@
               y={YJ + (j % 2 ? 7 : -5)}
               skala={p.skala}
               opacity={p.opacity}
+              bezZ={skrijZ}
             />
           {/each}
         {:else}
@@ -278,6 +281,7 @@
             y={YJ}
             skala={p.skala}
             opacity={p.opacity}
+            bezZ={skrijZ}
           />
         {/if}
         {#if !kadar}
@@ -385,7 +389,7 @@
           inputmode="numeric"
           min="0"
           max="300"
-          value={jA}
+          value={jA ?? ""}
           disabled={!aktivno}
           onchange={(e) => postaviJezgru("A", e.currentTarget.value)}
         /></label
@@ -397,7 +401,7 @@
           inputmode="numeric"
           min="0"
           max={Z_MAX}
-          value={jZ}
+          value={jZ ?? ""}
           disabled={!aktivno}
           onchange={(e) => postaviJezgru("Z", e.currentTarget.value)}
         /></label

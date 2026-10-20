@@ -151,7 +151,7 @@
       if (p !== prozor) prozor = p;
     });
   });
-  let g = $derived(geometrijaKarte(prozor, 360, 250));
+  let g = $derived(geometrijaKarte(prozor, 360));
 
   // ── odgovor „raspad“: odabrana polja ──
   let odabir = $state(untrack(() => fiksniNiz.map(() => null)));

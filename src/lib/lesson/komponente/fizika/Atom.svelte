@@ -255,6 +255,12 @@
     else if (n === izbor.od) izbor = { od: null, do: null };
     else izbor = { ...izbor, do: n };
   }
+  // povlačenje, dodir elektrona i strelice mijenjaju samo konačnu razinu (početna ostaje); ispočetka se kreće
+  // samo dodirom oznake razine
+  function birajDo(n) {
+    if (zakljucano || n === "ionizacija" || izbor.od == null) return;
+    izbor = { od: izbor.od, do: n === izbor.od ? null : n };
+  }
   function provjeriPrijelaz() {
     if (zakljucano) return;
     onodgovor({ od: izbor.od, do: izbor.do });
@@ -263,7 +269,8 @@
   // ── izracunaj ──
   const pitaj = S.pitaj ?? [];
   let unosi = $state(pitaj.map(() => ""));
-  const predznak = (it) => it.velicina === "E_n";
+  // ± stoji uz svako polje za energiju (E_n, E_ion, E_f), da njegova prisutnost ne oda predznak odgovora
+  const predznak = (it) => ["E_n", "E_ion", "E_f"].includes(it.velicina);
   function promijeniPredznak(i) {
     const v = unosi[i].trim();
     unosi[i] = /^[-−]/.test(v) ? v.replace(/^[-−]\s*/, "") : `−${v}`;
@@ -386,7 +393,12 @@
     yPtr = null;
     if (n == null) return;
     if (nacin === "istrazi") skoci(n);
-    else if (prijelazIzbor) biraj(n);
+    else if (prijelazIzbor) birajDo(n);
+  }
+  // prekinuto povlačenje (sustav preuzme dodir): samo se odustane, razina se ne bira
+  function odustani() {
+    vuce = false;
+    yPtr = null;
   }
   // tipkovnica na elektronu: gore/dolje za jednu razinu
   function key(e) {
@@ -408,7 +420,7 @@
       return;
     }
     if (nacin === "istrazi") skoci(n);
-    else biraj(n);
+    else birajDo(n);
   }
   function dodirRazine(n) {
     if (nacin === "istrazi") skoci(n);
@@ -519,7 +531,7 @@
       aria-label={opis}
       onpointermove={move}
       onpointerup={up}
-      onpointercancel={up}
+      onpointercancel={odustani}
     >
       <defs>
         <linearGradient id="at-bunar-{uid}" x1="0" y1="0" x2="0" y2="1">

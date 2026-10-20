@@ -301,6 +301,8 @@ export function kuglice(tipovi, R1 = 9) {
   });
   return out.reverse();
 }
+// Kad je Z skriven (reakcija bez_z), protoni i neutroni se crtaju istom bojom („nukleon“), da se Z ne prebroji.
+export const jednobojno = (k) => k.map((b) => ({ ...b, vrsta: "nukleon" }));
 
 // Elektroni u omotaču, shematski: ljuske s najviše 2, 8, 18, 32 elektrona; preko 60 elektrona samo „oblak“.
 export const LJUSKE = [2, 8, 18, 32];

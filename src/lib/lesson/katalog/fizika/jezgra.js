@@ -241,7 +241,7 @@ function checkSlozi(s, odg) {
         };
       return {
         tocno: false,
-        poruka: `${pre}s ${o.n} neutrona ovo bi bio ${imeIzotopa(t.p, t.p + o.n)}, a treba ${imeIzotopa(t.p, c.A)}. Neutrona je N = A − Z.`,
+        poruka: `${pre}s ${o.n} neutrona ovo bi bio ${imeIzotopa(t.p, t.p + o.n)}, a ne traženi izotop. Neutrona je N = A − Z.`,
       };
     }
     if (o.e !== t.e) {
@@ -632,16 +632,12 @@ function checkDovrsi(s, odg) {
     strana === "lijevo" ? { l: L.A + x.A, r: R.A } : { l: L.A, r: R.A + x.A };
   const sZ =
     strana === "lijevo" ? { l: L.Z + x.Z, r: R.Z } : { l: L.Z, r: R.Z + x.Z };
-  if (x.A === r.A && x.Z === -r.Z && r.Z !== 0)
-    return {
-      tocno: false,
-      poruka: `Maseni broj je dobar, ali naboj je obrnut: ${nazivAZ(x.A, x.Z)?.ime ?? "ta čestica"} ima Z = ${zn(x.Z).replace(/[()]/g, "")}. Treba čestica istog A, ali suprotnog naboja.`,
-    };
+  // poruke navode samo pravilo očuvanja i zbrojeve s učenikovim X, a ne koja čestica treba
   const ime = nazivAZ(x.A, x.Z)?.ime ?? "ta čestica";
   if (x.A === r.A)
     return {
       tocno: false,
-      poruka: `Maseni brojevi se slažu (${sA.l} = ${sA.r}), ali redni ne: s tom česticom (${ime}, Z = ${zn(x.Z).replace(/[()]/g, "")}) lijevo je zbroj Z = ${sZ.l}, a desno ${sZ.r}. Treba čestica s istim A i drugim Z.`,
+      poruka: `Maseni brojevi se slažu (${sA.l} = ${sA.r}), ali redni ne: s tom česticom (${ime}, Z = ${zn(x.Z).replace(/[()]/g, "")}) lijevo je zbroj Z = ${sZ.l}, a desno ${sZ.r}. Naboj se čuva: zbroj donjih brojeva mora biti isti s obje strane.`,
     };
   if (x.Z === r.Z)
     return {
@@ -845,15 +841,35 @@ export function prozorOko(j, stari) {
   const nMin = Math.max(0, j.N - 4);
   return { zMin, zMax: zMin + 5, nMin, nMax: nMin + 6 };
 }
+// Prozor za „raspad“: ovisi samo o početnoj jezgri i broju raspada k, nikad o samom nizu (inače bi položaj
+// prozora odao smjer i duljinu puta). Jedan raspad pomakne jezgru za ΔZ, ΔN ∈ {−2, −1, 0, +1}, pa k raspada
+// dosegne ΔZ, ΔN ∈ [−2k, +k]: veličina n = min(10, 3k + 3) polja, a početna jezgra stoji tako da su 2/3 prozora
+// ispod nje (Z i N). Do k = 3 prozor obuhvaća svaki mogući niz; dulji niz mora stati (validate).
+export const KARTA_MAX_RASPAD = 10;
+export function prozorRaspada(pocetak, k) {
+  const j = jezgraIz(pocetak);
+  if (!j) return null;
+  const n = Math.min(KARTA_MAX_RASPAD, 3 * k + 3);
+  const ispod = Math.round(((n - 1) * 2) / 3);
+  const zMin = Math.max(1, j.Z - ispod);
+  const nMin = Math.max(0, j.N - ispod);
+  return { zMin, zMax: zMin + n - 1, nMin, nMax: nMin + n - 1 };
+}
+export const uProzoru = (p, j) =>
+  !!p && j.Z >= p.zMin && j.Z <= p.zMax && j.N >= p.nMin && j.N <= p.nMax;
 export function prozorKarte(s) {
   if (s.nacin === "koji_raspad")
     return prozorPuta([jezgraIz(s.pocetak), jezgraIz(s.kraj)]);
-  if (s.nacin === "raspad") return prozorPuta(putRaspada(s.pocetak, s.niz));
+  if (s.nacin === "raspad")
+    return prozorRaspada(s.pocetak, Array.isArray(s.niz) ? s.niz.length : 1);
   return prozorOko(jezgraIz(s.pocetak));
 }
 
 // Geometrija karte u okviru W × H: stupci (N) vodoravno, redovi (Z) okomito (veći Z gore).
-export function geometrijaKarte(p, W = 360, H = 250) {
+// visina okvira: veći prozor (raspad s više koraka) dobije višu kartu, da polja ostanu dovoljno velika za dodir
+export const visinaKarte = (p) =>
+  Math.max(250, 26 + (p.zMax - p.zMin + 1) * 30);
+export function geometrijaKarte(p, W = 360, H = visinaKarte(p)) {
   const lijevo = 50;
   const dolje = 22;
   const gore = 4;
@@ -1163,11 +1179,13 @@ function validateKarta(s, need) {
       put.every((j) => j.Z >= 1 && j.N >= 0 && j.Z <= Z_MAX),
       "niz izlazi iz karte (Z < 1 ili N < 0)",
     );
-    if (s.nacin === "raspad")
+    if (s.nacin === "raspad") {
+      const p = prozorRaspada(s.pocetak, s.niz.length);
       need(
-        prozorPuta(put) != null,
-        `niz je preširok za kartu (najviše ${KARTA_MAX} × ${KARTA_MAX} polja); skrati ga`,
+        put.every((j) => uProzoru(p, j)),
+        `niz izlazi iz prozora karte (Z ${p?.zMin}–${p?.zMax}, N ${p?.nMin}–${p?.nMax}; prozor ovisi samo o početnoj jezgri i broju raspada); skrati niz`,
       );
+    }
     need(s.kraj == null, `${s.nacin} nema kraj (to je za koji_raspad)`);
   } else if (s.nacin === "koji_raspad") {
     if (validateJezgra(s.kraj, need, "kraj") && ok) {
@@ -1417,7 +1435,11 @@ export function krivoVezanja(s, velicina) {
 export function citajVrijednost(unos, velicina) {
   const jed = VELICINE_VEZANJA[velicina].jedinica;
   if (typeof unos !== "string") return parseNumber(unos);
-  const t = unos.trim();
+  // energija po nukleonu: „7,09 MeV/nukleon“, „7,09 MeV po nukleonu“ – ukloni „po nukleonu“ i čitaj kao energiju
+  const t =
+    velicina === "E_A"
+      ? unos.trim().replace(/\s*(\/\s*nukleon[a-zu]*|po\s+nukleonu)\s*$/i, "")
+      : unos.trim();
   if (jed !== "u" && jed !== "kg") {
     for (const [j, f] of Object.entries(ENERGIJA_J).sort(
       (a, b) => b[0].length - a[0].length,

@@ -25,6 +25,8 @@
     ishodPostavi,
     ostvarujeCilj,
     brojF,
+    trebaPotenciju,
+    BETA_MAX_POSTAVI,
   } from "$lib/lesson/katalog/fizika/relativnost.js";
   import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
 
@@ -83,7 +85,7 @@
     untrack(() => (beta = tocnaBeta(spec)));
   });
   const zaokruzi = (b) =>
-    Math.min(0.999, Math.max(0, Math.round(b / korak) * korak));
+    Math.min(BETA_MAX_POSTAVI, Math.max(0, Math.round(b / korak) * korak));
   function pomakni(d) {
     if (locked || pokazi) return;
     beta = Math.round(zaokruzi(beta + d) * 1e6) / 1e6;
@@ -216,7 +218,7 @@
     <Brod
       {spec}
       {beta}
-      skratiti={otkriveno}
+      skratiti={otkriveno || vidi.has("L")}
       {vidi}
       animiraj={otkrivenoSve}
       status={statusPostavi}
@@ -404,7 +406,7 @@
         id="rl-b-{uid}"
         type="range"
         min="0"
-        max="0.999"
+        max={BETA_MAX_POSTAVI}
         step={korak}
         bind:value={beta}
         disabled={locked || pokazi}
@@ -458,7 +460,7 @@
             bind:value={unosi[i]}
           />
           {#if r.jedinica}<span class="lx-unit">{r.jedinica}</span>{/if}
-          {#if !locked && (Math.abs(r.vrijednost) < 1e-3 || Math.abs(r.vrijednost) >= 1e6)}
+          {#if !locked && trebaPotenciju(spec, q)}
             <button
               type="button"
               class="btn btn-quiet rl-pot"

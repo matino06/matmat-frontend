@@ -20,6 +20,7 @@
     analizaCilja,
     klizacT,
     uzorciOd,
+    TUzorka,
     poljaIzracunaj,
     zapisVremena,
     jedinicaT,
@@ -198,7 +199,9 @@
         akum = 0;
         return v + korakSim;
       };
-      const Tmin = Math.min(...uzorciOd(spec).map((u) => u.T ?? 1));
+      const Tmin = Math.min(
+        ...uzorciOd(spec).map((_, i) => TUzorka(spec, i, stanjeT)),
+      );
       if (slobodno && igra) {
         t = Math.min(tMax, korak(t, brzina, Tmin / 2));
         if (t >= tMax) igra = false;
@@ -358,7 +361,9 @@
   };
   // kazaljka: jedan krug = jedan T najkraćeg uzorka
   let kut = $derived(
-    (tPrikaz / Math.min(...uzorciOd(spec).map((u) => u.T ?? 1))) * 360,
+    (tPrikaz /
+      Math.min(...uzorciOd(spec).map((_, i) => TUzorka(spec, i, stanjeT)))) *
+      360,
   );
   const ciljX = untrack(() =>
     izracunaj ? graf.x0 + (tCiljaIzracun / tMax) * (graf.x1 - graf.x0) : null,
@@ -379,6 +384,7 @@
     role="img"
     aria-label={p.aria}
     class:vuce
+    class:pr-vucljiv={dirljivo && !locked && !pokazi}
     onpointerdown={down}
     onpointermove={move}
     onpointerup={up}
@@ -728,9 +734,12 @@
     margin-bottom: 6px;
   }
   .pr svg {
-    touch-action: none;
     user-select: none;
     -webkit-user-select: none;
+  }
+  /* kursor se vuče vodoravno: okomito pomicanje stranice ostaje, a samo kad se ima što vući */
+  .pr svg.pr-vucljiv {
+    touch-action: pan-y;
   }
   .pr-napomena {
     text-align: right;

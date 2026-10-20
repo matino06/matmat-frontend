@@ -274,6 +274,7 @@ export function analizaCilja(s) {
 }
 export const TOL_POSTAVI = 0.02; // udio T
 export const TOL_ZAUSTAVI = 0.08; // udio T (reakcija prstom)
+export const ZAUSTAVI_T = 8; // zaustavi: sat ide do 8 efektivnih T, neovisno o cilju
 
 // vremenski raspon grafa i sata
 export function tMaxUzoraka(s) {
@@ -281,8 +282,10 @@ export function tMaxUzoraka(s) {
   if (isNum(s.t_max)) return s.t_max;
   if (s.nacin === "postavi") return klizacT(s)?.max ?? 5 * Tmax;
   if (s.nacin === "zaustavi") {
+    // kraj sata ne smije ovisiti o cilju (inače bi duljina grafa odala odgovor): uvijek ZAUSTAVI_T efektivnih
+    // T, ali najviše 12 poluraspada najkraćeg T (kao i za ostale načine)
     const a = analizaCilja(s);
-    return a ? Math.ceil(a.t / a.Teff + 2 - 1e-9) * a.Teff : 5 * Tmax;
+    return a ? Math.min(ZAUSTAVI_T * a.Teff, 12 * Tmin(s)) : 5 * Tmax;
   }
   if (isNum(s.t) && s.t > 0) return s.t;
   const kl = klizaciOd(s).filter((k) => k.id.startsWith("T_"));
@@ -774,12 +777,13 @@ export function jezgreBocice(s, udioOstalo) {
   return r.map((k) => k + 0.5 < g - 1e-9);
 }
 
-// što se vidi u aktivnosti: istrazi/prikaz sve, izracunaj tražene veličine tek nakon otkrivanja
+// što se vidi u aktivnosti: istrazi/prikaz sve; izracunaj prije otkrivanja samo veličine ZADANE specom
+// (T u svojoj jedinici, A₀ ili N₀), a izvedene (λ, N₀ iz A₀, A₀ iz N₀) su „?“ – i kad se ne traže, jer bi
+// izvedena kućica otkrila međukorak ili, preko A = λN, traženu veličinu
 export function prikazAktivnosti(s, t, otkriveno, stanje = {}) {
   const f = fizikaAktivnosti(s, t, stanje);
   const slobodno = s.nacin !== "izracunaj";
-  const pitano = new Set((s.pitaj ?? []).map((p) => p.velicina));
-  const vidi = (v) => slobodno || otkriveno || !pitano.has(v);
+  const izvedeno = slobodno || otkriveno;
   const jA = jedinicaA(s);
   const A_zadan = !isNum(s.N0);
   // prije otkrivanja sat u izracunaj stoji na 0, pa je t > 0 samo kad je sve otkriveno
@@ -787,15 +791,15 @@ export function prikazAktivnosti(s, t, otkriveno, stanje = {}) {
   const A = pocetak
     ? A_zadan
       ? zapisA(f.A0_Bq, jA)
-      : vidi("A")
+      : izvedeno
         ? zapisA(f.A0_Bq, jA)
         : "?"
     : zapisA(f.A_Bq, jA);
   const kucice = {
     A,
-    lambda: vidi("lambda") ? `${formatSci(f.lambda)}\u00a0s⁻¹` : "?",
+    lambda: izvedeno ? `${formatSci(f.lambda)}\u00a0s⁻¹` : "?",
     N: pocetak
-      ? !A_zadan || vidi("N0")
+      ? !A_zadan || izvedeno
         ? formatSci(f.N0)
         : "?"
       : formatSci(f.N),
@@ -1028,20 +1032,20 @@ export function izracunPitanjaAktivnost(s, p) {
 }
 
 // ── polja za unos (komponenta) ──────────────────────────────────────────────────────────────────────
+export const VELICINE_ZNANSTVENE = ["T_s", "A0_Bq", "lambda", "N0", "A", "N"];
 export function poljaIzracunaj(s) {
   return (s.pitaj ?? []).map((p) => {
     const r =
       s.scena === "aktivnost"
         ? izracunPitanjaAktivnost(s, p)
         : izracunPitanjaUzorci(s, p);
-    const v = r.vrijednost;
     return {
       oznaka: r.oznaka,
       opis: r.opis,
       jedinica: r.jedinica,
       razlomak: !!r.razlomak,
-      znanstveni:
-        !r.razlomak && v !== 0 && (Math.abs(v) < 1e-3 || Math.abs(v) >= 1e6),
+      // gumb ·10ⁿ odlučuje veličina (broj jezgara, aktivnost, λ, T u s), nikad iznos odgovora
+      znanstveni: !r.razlomak && VELICINE_ZNANSTVENE.includes(p.velicina),
       primjer: r.razlomak ? "npr. 1/8 ili 1 : 8" : "",
     };
   });
@@ -1152,7 +1156,7 @@ function checkVrijeme(s, t, tolUdio) {
     const r = f.omjer;
     return {
       tocno: false,
-      poruka: `Na tvom satu (${zapisVremena(t, j)}) ostalo bi ${zapisUdjela(uz[0].udio)} jezgara ${uz[0].oznaka} i ${zapisUdjela(uz[1].udio)} jezgara ${uz[1].oznaka}, pa je omjer ${zapisOmjera(r)}. Traži se ${zapisOmjera(a.vrijednost)}.`,
+      poruka: `Na tvom satu (${zapisVremena(t, j)}) od ${uz[0].oznaka} ostao bi udio ${zapisUdjela(uz[0].udio)} početnih jezgara, a od ${uz[1].oznaka} udio ${zapisUdjela(uz[1].udio)}, pa je omjer ${zapisOmjera(r)}. Traži se ${zapisOmjera(a.vrijednost)}.`,
     };
   }
   const u = uz[a.uzorak];
@@ -1186,7 +1190,7 @@ function checkVrijeme(s, t, tolUdio) {
     poruka:
       s.nacin === "zaustavi"
         ? `Zaustavio si na ${zapisSata(t, j)}, to je ${formatNumber(zaokr(n, 1))} T: ostalo bi oko ${Math.round(u.udio * 100)} % jezgara, a traži se ${cilj}. Probaj opet.`
-        : `Na tvom satu prošlo je $n = t/T = ${nT.replace(",", "{,}")}$ poluraspada, pa bi ostalo ${zapisUdjela(u.udio)} jezgara ${u.oznaka}. Traži se ${cilj}.`,
+        : `Na tvom satu prošlo je $n = t/T = ${nT.replace(",", "{,}")}$ poluraspada, pa bi od uzorka ${u.oznaka} ostao udio ${zapisUdjela(u.udio)} početnih jezgara. Traži se ${cilj}.`,
   };
 }
 
@@ -1754,7 +1758,7 @@ function validateUzorci(s, need, list) {
     } else {
       need(
         tMaxUzoraka(s) >= a.t + a.Teff * 0.5,
-        "t_max mora biti barem pola T iza cilja (da se može zakasniti)",
+        `cilj (t = ${formatNumber(zaokr(a.t, 3))}) mora biti barem pola T prije kraja sata (${formatNumber(zaokr(tMaxUzoraka(s), 3))}); zadaj t_max ili bliži cilj`,
       );
     }
     return;

@@ -4,18 +4,29 @@
   import {
     tipoviJezgre,
     kuglice,
+    jednobojno,
     zIzSimbola,
   } from "$lib/lesson/katalog/fizika/jezgra.js";
 
-  // clan: {simbol, A} | {cestica} | {A, Z} (odabrana jezgra iz palete)
-  let { clan, x = 0, y = 0, skala = 1, opacity = 1, R1 = 4 } = $props();
+  // clan: {simbol, A} | {cestica} | {A, Z} (odabrana jezgra iz palete); bezZ: Z je skriven, pa su svi
+  // nukleoni jezgre iste boje
+  let {
+    clan,
+    x = 0,
+    y = 0,
+    skala = 1,
+    opacity = 1,
+    R1 = 4,
+    bezZ = false,
+  } = $props();
   const r1 = (n) => Math.round(n * 10) / 10;
   let jezgra = $derived.by(() => {
     if (!clan || clan.cestica) return null;
     const Z = clan.simbol ? zIzSimbola(clan.simbol) : clan.Z;
     const A = clan.A;
     if (!(Z >= 0) || !(A >= Z)) return null;
-    return kuglice(tipoviJezgre(Z, A - Z, 11), R1);
+    const k = kuglice(tipoviJezgre(Z, A - Z, 11), R1);
+    return bezZ ? jednobojno(k) : k;
   });
   const ALFA = kuglice(["p", "n", "n", "p"], 4);
 </script>

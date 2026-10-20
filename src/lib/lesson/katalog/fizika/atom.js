@@ -831,22 +831,12 @@ function checkApsorpcija(s, odg) {
   const pogresni = isti.filter((x, i) => (iz[i] === "upije") !== x.upije);
   if (!pogresni.length) return { tocno: true };
   if (s.savjet) return { tocno: false, poruka: s.savjet };
-  // poruka govori o vrsti greške, a ne o tome koji je foton krivo označen (to bi otkrilo odgovor)
+  // jedna neutralna poruka s pravilom: ne govori koji je foton krivo označen ni u kojem smjeru (ni vrstom
+  // greške), da ponovni pokušaj istog zadatka ne postane pogađanje
   const Ep = Math.abs(En(pocetnaOd(s), zOd(s)));
-  if (pogresni.some((x) => !x.upije))
-    return {
-      tocno: false,
-      poruka: `Atom ne uzima „dio“ fotona i ne upija foton samo zato što je „dovoljno jak“. Foton se upije samo ako podigne elektron **točno** na neku razinu: $E_{poč} + E_f$ mora biti baš energija jedne razine (ili barem 0 eV, pa elektron izleti). Elektron je na ${broj(-Ep)} eV.`,
-    };
-  if (pogresni.some((x) => x.vrsta === "ionizacija"))
-    return {
-      tocno: false,
-      poruka: `Foton jači od energije ionizacije (${eV(Ep)}) atom **upije**: elektron izleti iz atoma, a višak energije odnese kao kinetičku energiju.`,
-    };
   return {
     tocno: false,
-    poruka:
-      "Foton čija je energija **točno** jednaka razlici dviju razina atom upije, a elektron skoči gore. Izračunaj koliko treba za skokove s početne razine na više razine.",
+    poruka: `Barem jedan foton nije dobro označen. Atom ne uzima „dio“ fotona: foton se upije samo ako elektronu s ${broj(-Ep)} eV da energiju koja ga dovede **točno** na neku razinu ($E_{poč} + E_f$ = energija razine) ili ga izbaci iz atoma ($E_{poč} + E_f \\geq 0$ eV, višak odnese kao kinetičku energiju). Inače foton prođe. Provjeri svaki foton po tom pravilu.`,
   };
 }
 

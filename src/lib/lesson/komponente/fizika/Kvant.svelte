@@ -24,6 +24,7 @@
     ishodPredvidi,
     IZBORI,
     NAZIV_PREDVIDI,
+    trebaPotenciju,
   } from "$lib/lesson/katalog/fizika/kvant.js";
   import {
     fizika,
@@ -414,7 +415,7 @@
             bind:value={unosi[i]}
           />
           <span class="lx-unit">{r.jedinica}</span>
-          {#if !locked && (Math.abs(r.vrijednost) < 1e-3 || Math.abs(r.vrijednost) >= 1e5)}
+          {#if !locked && trebaPotenciju(r.jedinica)}
             <button
               type="button"
               class="btn btn-quiet kv-pot"

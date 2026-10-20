@@ -23,6 +23,7 @@
       class="jzk-b"
       class:p={b.vrsta === "p"}
       class:n={b.vrsta === "n"}
+      class:nk={b.vrsta === "nukleon"}
       cx={b.x}
       cy={b.y}
       r={b.r}
@@ -67,6 +68,11 @@
   .jzk-b.n {
     fill: color-mix(in srgb, var(--text-dim) 70%, var(--bg-elev));
     stroke: color-mix(in srgb, var(--text-dim) 60%, #000);
+  }
+  /* nukleon bez oznake (skriveni Z): ni crven ni siv */
+  .jzk-b.nk {
+    fill: color-mix(in srgb, #c98a3a 75%, var(--bg-elev));
+    stroke: color-mix(in srgb, #c98a3a 60%, #000);
   }
   .jzk-odsjaj {
     fill: #fff;
