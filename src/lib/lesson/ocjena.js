@@ -7,6 +7,7 @@ export function objasnjenjeOcjene(s) {
   } else if (s.nacin === "koraci") {
     const slican = { odmah: "riješio sam iz prve", uz_pomoc: "riješio tek iz više pokušaja" }[s.slican] ?? "nisi riješio";
     t = `Zadatak si riješio uz korake, a sličan zadatak ${slican}, zato je predloženo ${s.q}.`;
+    if (s.ponavljanje) t += " Na ponavljanju koraci znače da si ga zaboravio, pa se vraća sutra.";
   } else {
     const n = s.dijelova;
     const jedan = n % 10 === 1 && n % 100 !== 11;

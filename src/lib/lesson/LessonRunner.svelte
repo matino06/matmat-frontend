@@ -15,7 +15,8 @@
 
   // `navrh` zamjenjuje dovođenje lekcije na vrh: demo na landing stranici ima vlastiti stupac sa scrollom, a
   // scrollIntoView bi pomaknuo cijelu stranicu.
-  let { lekcija, onzavrsi = () => {}, rjesenje = null, navrh = null } = $props();
+  // `ponavljanje`: učenik je ovu lekciju već ocijenio, pa koraci na cijelom zadatku znače da ju je zaboravio.
+  let { lekcija, onzavrsi = () => {}, rjesenje = null, navrh = null, ponavljanje = false } = $props();
 
   const MAX_PONOVNO = 2; // nakon toliko krivih ponovnih pokušaja prikazuje se točan odgovor
   // ishod podzadatka; o njemu ovisi prijedlog ocjene za ponavljanje
@@ -199,24 +200,27 @@
     return { rezultati: r, q, najvise, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
   }
 
-  // Lekcija s `cijeli`: na maturi se traži cijeli zadatak, pa ocjena ovisi o njemu. Sam iz prve → 5, sam iz više
-  // pokušaja → 4. Uz korake nije „znao“ zadatak ni kad je svaki korak riješio odmah: najviše 4 ako je na kraju sam
-  // riješio sličan zadatak iz prve, inače 3 (a manje ako su i koraci išli teško).
+  // Lekcija s `cijeli`: na maturi se cijeli zadatak rješava iz prve, pa ocjena ovisi o njemu. Sam iz prve → 5. Sam iz
+  // više pokušaja → 3: na ispitu bi izgubio bodove, a ovdje nakon svakog odgovora vidi je li točan.
+  // Uz korake zadatak nije znao (SM-2: 2 = krivo, a uz rješenje se čini lako), a sličan zadatak riješen odmah nakon
+  // koraka pokazuje izvedbu, ne pamćenje. Prvi put su koraci dio učenja: najviše 3 ako je na kraju sam riješio sličan
+  // zadatak iz prve, inače 2. Na ponavljanju su znak zaborava: najviše 2, inače 1, pa se lekcija vraća sutra.
   // Podizanje do `najvise` vrijedi kao i inače za jedan tipfeler: krivo upisan cijeli zadatak (ako ga je pokušao,
-  // a ne odmah tražio korake) bio bi 5, krivo upisan sličan zadatak granica 4, krivo upisan korak ocjena korak više.
+  // a ne odmah tražio korake) bio bi 5, krivo upisan sličan zadatak njegova granica, krivo upisan korak ocjena korak više.
   function sazetakCijelog(r) {
     const sam = cijeli.rezultat;
     const slican = cijeli.zavrsni.rezultat;
-    if (sam) return { nacin: "cijeli", q: sam === ODMAH ? 5 : 4, najvise: 5, rezultati: [sam], odmah: sam === ODMAH ? 1 : 0, dijelova: 1 };
-    const granica = slican === ODMAH ? 4 : 3;
+    if (sam) return { nacin: "cijeli", q: sam === ODMAH ? 5 : 3, najvise: 5, rezultati: [sam], odmah: sam === ODMAH ? 1 : 0, dijelova: 1 };
+    const granicaUz = (s) => (s === ODMAH ? 3 : 2) - (ponavljanje ? 1 : 0);
+    const granica = granicaUz(slican);
     const q = Math.min(ocjenaIz(r), granica);
     const najvise = Math.max(
       q,
       cijeli.pokusaji ? 5 : 0,
-      slican === ODMAH ? 0 : Math.min(ocjenaIz(r), 4),
+      slican === ODMAH ? 0 : Math.min(ocjenaIz(r), granicaUz(ODMAH)),
       ...r.map((x, i) => (x === ODMAH ? 0 : Math.min(ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))), granica))),
     );
-    return { nacin: "koraci", slican, q, najvise, rezultati: r, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
+    return { nacin: "koraci", slican, ponavljanje, q, najvise, rezultati: r, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
   }
 
   // novi dio (pomoć, ponovni pokušaj, rezultat) pomakne se u vidno polje
