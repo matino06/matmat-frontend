@@ -1,0 +1,1597 @@
+{
+  "223": {
+    "verzija": 1,
+    "zadatak": {
+      "tekst": "Za kompleksni broj\n\n$$z = \\frac{4 i \\left(\\sqrt{3} + i\\right)}{i^{2025}}$$\n\nprikaži $z$ u Gaussovoj ravnini, odredi njegov modul i konjugirani kompleksni broj te zapiši njegov trigonometrijski zapis."
+    },
+    "podzadaci": [
+      {
+        "id": "a",
+        "naslov": "Oblik x + yi i Gaussova ravnina",
+        "pitanje": {
+          "tip": "izraz",
+          "tekst": "Svedi $z$ na oblik $z = x + yi$. Koliki su realni dio $x$ i imaginarni dio $y$? (To su ujedno koordinate točke $z$ u Gaussovoj ravnini.)",
+          "polja": [
+            {
+              "oznaka": "$\\text{Re}(z) =$",
+              "odgovor": "4*sqrt(3)",
+              "krivo": [
+                {
+                  "odgovor": "-4*sqrt(3)",
+                  "poruka": "Predznak nije dobar. $2025 = 4 \\cdot 506 + 1$, pa je $i^{2025} = i$ i on se skrati s $i$ u brojniku: $z = 4(\\sqrt{3} + i)$."
+                },
+                {
+                  "odgovor": "sqrt(3)",
+                  "poruka": "Pomnoži cijelu zagradu s 4: $4 \\cdot \\sqrt{3} = 4\\sqrt{3}$."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\text{Im}(z) =$",
+              "odgovor": "4",
+              "krivo": [
+                {
+                  "odgovor": "-4",
+                  "poruka": "Imaginarni dio ima krivi predznak. $i^{2025} = i$ skrati se s $i$ u brojniku, pa ostaje $4(\\sqrt{3} + i) = 4\\sqrt{3} + 4i$."
+                },
+                {
+                  "odgovor": "1",
+                  "poruka": "Pomnoži cijelu zagradu s 4: $4 \\cdot i = 4i$, pa je imaginarni dio 4."
+                }
+              ]
+            }
+          ]
+        },
+        "zasto": "$i^{2025} = i$ (jer je $2025 = 4 \\cdot 506 + 1$), pa je $z = \\frac{4i(\\sqrt{3} + i)}{i} = 4(\\sqrt{3} + i) = 4\\sqrt{3} + 4i$. Realni dio je $4\\sqrt{3}$, imaginarni $4$, a u Gaussovoj ravnini to je točka $(4\\sqrt{3}, 4)$.",
+        "objasnjenje": "Prvo $z$ svedemo na oblik $z = x + yi$, gdje je $x$ **realni dio**, a $y$ **imaginarni dio** kompleksnog broja.\n\n**Kalkulatorom (najbrže).** Prebaci kalkulator u način za kompleksne brojeve: na CASIO fx-991EX pritisni **MENU** i odaberi **2: Complex**, a na fx-991ES pritisni **MODE** i odaberi **2: Complex**. Upiši izraz kao razlomak (imaginarnu jedinicu $i$ dobiješ tipkom **ENG**) i pritisni **=**. Kalkulator ispiše $4\\sqrt{3} + 4i$.\n\n**Bez kalkulatora.** Potencije od $i$ ponavljaju se u krugu od četiri:\n\n$$i^1 = i, \\quad i^2 = -1, \\quad i^3 = -i, \\quad i^4 = 1$$\n\npa opet ispočetka ($i^5 = i$, $i^6 = -1$…). Zato je za $i^{n}$ važan samo **ostatak** pri dijeljenju eksponenta $n$ s 4. Ovdje je $2025 = 4 \\cdot 506 + 1$, pa je\n\n$$i^{2025} = i^{4 \\cdot 506 + 1} = \\left(i^4\\right)^{506} \\cdot i = 1 \\cdot i = i$$\n\nUvrstimo to u $z$:\n\n$$z = \\frac{4i(\\sqrt{3} + i)}{i}$$\n\nIsti faktor $i$ je u brojniku i u nazivniku, pa se skrati:\n\n$$z = 4(\\sqrt{3} + i) = 4\\sqrt{3} + 4i$$\n\nDakle $\\text{Re}(z) = 4\\sqrt{3}$ i $\\text{Im}(z) = 4$.\n\n**Gaussova ravnina.** Realni dio je $x$-koordinata (vodoravna os Re), a imaginarni dio $y$-koordinata (okomita os Im). Broj $z = 4\\sqrt{3} + 4i$ zato je točka $(4\\sqrt{3}, 4)$: od ishodišta $4\\sqrt{3} \\approx 6{,}93$ udesno i 4 gore (slika).",
+        "graf": {
+          "tip": "graf_funkcije",
+          "nacin": "prikaz",
+          "tekst": "Broj $z = 4\\sqrt{3} + 4i$ u Gaussovoj ravnini: točka $(4\\sqrt{3}, 4)$.",
+          "os_x": "Re",
+          "os_y": "Im",
+          "x": [-2, 10],
+          "y": [-1.5, 5.5],
+          "duzine": [
+            {
+              "od": [6.928203230275509, 0],
+              "do": [6.928203230275509, 4],
+              "isprekidano": true
+            },
+            {
+              "od": [0, 4],
+              "do": [6.928203230275509, 4],
+              "isprekidano": true
+            }
+          ],
+          "tocke": [
+            {
+              "x": 6.928203230275509,
+              "y": 4,
+              "oznaka": "$z = 4\\sqrt{3} + 4i$",
+              "polozaj": "gore"
+            }
+          ],
+          "tekstovi": [
+            {
+              "x": 6.928203230275509,
+              "y": -0.95,
+              "tekst": "$4\\sqrt{3}$"
+            }
+          ]
+        },
+        "pomoc": [
+          {
+            "tip": "pojam",
+            "tekst": "Potencije od $i$ ponavljaju se u krugu od četiri:\n\n$$i^1 = i, \\quad i^2 = -1, \\quad i^3 = -i, \\quad i^4 = 1$$\n\npa opet ispočetka ($i^5 = i$, $i^6 = -1$…). Zato je za $i^{n}$ važan samo **ostatak** pri dijeljenju eksponenta $n$ s 4. Npr. $i^{10} = i^{4 \\cdot 2 + 2} = i^2 = -1$, jer $i^4 = 1$ ne mijenja umnožak."
+          },
+          {
+            "tip": "izbor",
+            "tekst": "Koliko je $i^{2025}$? (Koliki je ostatak kad 2025 podijeliš s 4?)",
+            "opcije": [
+              {
+                "tekst": "$i$",
+                "tocno": true
+              },
+              {
+                "tekst": "$-1$",
+                "poruka": "$-1 = i^2$ bio bi uz ostatak 2. Ovdje je $2025 = 4 \\cdot 506 + 1$."
+              },
+              {
+                "tekst": "$-i$",
+                "poruka": "$-i = i^3$ bio bi uz ostatak 3. Ovdje je $2025 = 4 \\cdot 506 + 1$."
+              },
+              {
+                "tekst": "$1$",
+                "poruka": "$1 = i^4$ bio bi uz ostatak 0, tj. kad bi 2025 bio djeljiv s 4. Ovdje je $2025 = 4 \\cdot 506 + 1$."
+              }
+            ]
+          },
+          {
+            "tip": "postupak",
+            "uvod": "Sad $i^{2025} = i$ uvrstimo u $z$:",
+            "koraci": [
+              {
+                "racun": "z = \\frac{4i(\\sqrt{3} + i)}{i}"
+              },
+              {
+                "racun": "z = 4(\\sqrt{3} + i)",
+                "napomena": "isti faktor $i$ u brojniku i nazivniku se skrati"
+              },
+              {
+                "racun": "z = 4\\sqrt{3} + 4i",
+                "napomena": "realni dio je $4\\sqrt{3}$, imaginarni 4"
+              }
+            ]
+          }
+        ],
+        "blizanac": {
+          "tip": "izraz",
+          "tekst": "Svedi $w = \\frac{2i(1 + \\sqrt{3}\\,i)}{i^{2029}}$ na oblik $x + yi$. Koliki su realni i imaginarni dio?",
+          "polja": [
+            {
+              "oznaka": "$\\text{Re}(w) =$",
+              "odgovor": "2",
+              "krivo": [
+                {
+                  "odgovor": "-2",
+                  "poruka": "$2029 = 4 \\cdot 507 + 1$, pa je $i^{2029} = i$ i skrati se s $i$ u brojniku: $w = 2(1 + \\sqrt{3}\\,i)$."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\text{Im}(w) =$",
+              "odgovor": "2*sqrt(3)",
+              "krivo": [
+                {
+                  "odgovor": "-2*sqrt(3)",
+                  "poruka": "$w = 2(1 + \\sqrt{3}\\,i) = 2 + 2\\sqrt{3}\\,i$: imaginarni dio je pozitivan."
+                },
+                {
+                  "odgovor": "sqrt(3)",
+                  "poruka": "Pomnoži cijelu zagradu s 2: imaginarni dio je $2\\sqrt{3}$."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "b",
+        "naslov": "Modul i konjugirani broj",
+        "pitanje": {
+          "tip": "izraz",
+          "tekst": "Na slici je $z = 4\\sqrt{3} + 4i$ u Gaussovoj ravnini. **Modul** $|z|$ je udaljenost točke $z$ od ishodišta. Koliki je $|z|$? Zapiši i konjugirani broj $\\bar{z}$ (realni i imaginarni dio).",
+          "graf": {
+            "tip": "graf_funkcije",
+            "nacin": "prikaz",
+            "tekst": "Pravokutni trokut s vrhovima u ishodištu i u točki $z$.",
+            "os_x": "Re",
+            "os_y": "Im",
+            "x": [-2, 10],
+            "y": [-1.5, 5.5],
+            "duzine": [
+              {
+                "od": [0, 0],
+                "do": [6.928203230275509, 0],
+                "oznaka": "$4\\sqrt{3}$",
+                "strana": -1
+              },
+              {
+                "od": [6.928203230275509, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$4$"
+              },
+              {
+                "od": [0, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$|z|$",
+                "istaknuto": true
+              }
+            ],
+            "tocke": [
+              {
+                "x": 6.928203230275509,
+                "y": 4,
+                "oznaka": "$z$",
+                "polozaj": "gore"
+              }
+            ]
+          },
+          "polja": [
+            {
+              "oznaka": "$|z| =$",
+              "odgovor": "8",
+              "krivo": [
+                {
+                  "odgovor": "2*sqrt(7)",
+                  "poruka": "$\\left(4\\sqrt{3}\\right)^2 = 16 \\cdot 3 = 48$, a ne $12$: kvadrira se i 4 i $\\sqrt{3}$."
+                },
+                {
+                  "odgovor": "64",
+                  "poruka": "$48 + 16 = 64$ je kvadrat modula. Još izvadi korijen."
+                },
+                {
+                  "odgovor": "4*sqrt(3)+4",
+                  "poruka": "To je zbroj kateta. Modul je hipotenuza: $|z| = \\sqrt{x^2 + y^2}$."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\text{Re}(\\bar{z}) =$",
+              "odgovor": "4*sqrt(3)",
+              "krivo": [
+                {
+                  "odgovor": "-4*sqrt(3)",
+                  "poruka": "Realni dio konjugiranog broja ostaje isti, mijenja se samo predznak imaginarnog dijela."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\text{Im}(\\bar{z}) =$",
+              "odgovor": "-4",
+              "krivo": [
+                {
+                  "odgovor": "4",
+                  "poruka": "To je imaginarni dio od $z$. Kod $\\bar{z}$ imaginarni dio mijenja predznak: $\\bar{z} = 4\\sqrt{3} - 4i$."
+                }
+              ]
+            }
+          ],
+          "priblizno": true
+        },
+        "zasto": "$|z| = \\sqrt{\\left(4\\sqrt{3}\\right)^2 + 4^2} = \\sqrt{48 + 16} = \\sqrt{64} = 8$. Konjugirani broj ima suprotan imaginarni dio: $\\bar{z} = 4\\sqrt{3} - 4i$.",
+        "objasnjenje": "**Modul.** Modul $|z|$ je udaljenost točke $z$ u Gaussovoj ravnini od ishodišta $(0, 0)$. Na slici vidimo da ta udaljenost zatvara pravokutni trokut: jedna kateta je duga koliko realni dio (bez predznaka), druga koliko imaginarni dio, a modul je hipotenuza. Zato modul računamo Pitagorinim poučkom:\n\n$$|z| = \\sqrt{x^2 + y^2}$$\n\nUvrstimo $x = 4\\sqrt{3}$ i $y = 4$:\n\n$$|z| = \\sqrt{\\left(4\\sqrt{3}\\right)^2 + 4^2} = \\sqrt{16 \\cdot 3 + 16} = \\sqrt{48 + 16} = \\sqrt{64} = 8$$\n\nPazi: $\\left(4\\sqrt{3}\\right)^2 = 4^2 \\cdot \\left(\\sqrt{3}\\right)^2 = 16 \\cdot 3 = 48$. Kvadrira se i broj 4 i korijen.\n\n**Konjugirani broj.** Konjugirani kompleksni broj $\\bar{z}$ ima **isti realni dio**, a imaginarnom dijelu mijenja se **predznak**:\n\n$$z = 4\\sqrt{3} + 4i \\quad\\Rightarrow\\quad \\bar{z} = 4\\sqrt{3} - 4i$$\n\nU Gaussovoj ravnini $\\bar{z}$ je zrcalna slika točke $z$ preko osi Re (slika). Modul mu je isti: $|\\bar{z}| = |z| = 8$.",
+        "graf": {
+          "tip": "graf_funkcije",
+          "nacin": "prikaz",
+          "tekst": "Modul je hipotenuza trokuta, a $\\bar{z}$ je zrcalna slika od $z$ preko osi Re.",
+          "os_x": "Re",
+          "os_y": "Im",
+          "x": [-2, 10],
+          "y": [-5.5, 5.5],
+          "duzine": [
+            {
+              "od": [0, 0],
+              "do": [6.928203230275509, 0],
+              "oznaka": "$4\\sqrt{3}$",
+              "strana": -1
+            },
+            {
+              "od": [6.928203230275509, 0],
+              "do": [6.928203230275509, 4],
+              "oznaka": "$4$"
+            },
+            {
+              "od": [0, 0],
+              "do": [6.928203230275509, 4],
+              "oznaka": "$|z| = 8$",
+              "istaknuto": true
+            }
+          ],
+          "tocke": [
+            {
+              "x": 6.928203230275509,
+              "y": 4,
+              "oznaka": "$z = 4\\sqrt{3} + 4i$",
+              "polozaj": "gore"
+            },
+            {
+              "x": 6.928203230275509,
+              "y": -4,
+              "oznaka": "$\\bar{z} = 4\\sqrt{3} - 4i$",
+              "polozaj": "dolje"
+            }
+          ]
+        },
+        "pomoc": [
+          {
+            "tip": "graf_funkcije",
+            "nacin": "prikaz",
+            "tekst": "Modul je duljina istaknute dužine od ishodišta do $z$. Ona je hipotenuza pravokutnog trokuta čije su katete duge $4\\sqrt{3}$ (realni dio) i $4$ (imaginarni dio). Po Pitagorinu poučku: $|z| = \\sqrt{x^2 + y^2}$.",
+            "os_x": "Re",
+            "os_y": "Im",
+            "x": [-2, 10],
+            "y": [-1.5, 5.5],
+            "duzine": [
+              {
+                "od": [0, 0],
+                "do": [6.928203230275509, 0],
+                "oznaka": "$4\\sqrt{3}$",
+                "strana": -1
+              },
+              {
+                "od": [6.928203230275509, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$4$"
+              },
+              {
+                "od": [0, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$|z|$",
+                "istaknuto": true
+              }
+            ],
+            "tocke": [
+              {
+                "x": 6.928203230275509,
+                "y": 4,
+                "oznaka": "$z$",
+                "polozaj": "gore"
+              }
+            ]
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Prvo izračunaj kvadrat dulje katete: $\\left(4\\sqrt{3}\\right)^2$.",
+            "polja": [
+              {
+                "odgovor": "48",
+                "krivo": [
+                  {
+                    "odgovor": "12",
+                    "poruka": "Kvadrira se i broj 4: $\\left(4\\sqrt{3}\\right)^2 = 4^2 \\cdot 3 = 16 \\cdot 3$."
+                  },
+                  {
+                    "odgovor": "24",
+                    "poruka": "$4^2 = 16$, a ne 8: $\\left(4\\sqrt{3}\\right)^2 = 16 \\cdot 3$."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tip": "pojam",
+            "tekst": "Zato je $|z| = \\sqrt{48 + 16} = \\sqrt{64} = 8$.\n\n**Konjugirani broj** $\\bar{z}$ dobiješ tako da realni dio ostaviš, a imaginarnom dijelu promijeniš predznak. Npr. za $u = 2 + 5i$ je $\\bar{u} = 2 - 5i$, a za $v = -1 - 4i$ je $\\bar{v} = -1 + 4i$."
+          }
+        ],
+        "blizanac": {
+          "tip": "izraz",
+          "tekst": "Za $w = 5 - 12i$ odredi modul $|w|$ i konjugirani broj $\\bar{w}$.",
+          "polja": [
+            {
+              "oznaka": "$|w| =$",
+              "odgovor": "13",
+              "krivo": [
+                {
+                  "odgovor": "169",
+                  "poruka": "$25 + 144 = 169$ je kvadrat modula; izvadi korijen."
+                },
+                {
+                  "odgovor": "-7",
+                  "poruka": "Modul je udaljenost, nikad negativan: $\\sqrt{5^2 + (-12)^2}$."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\text{Re}(\\bar{w}) =$",
+              "odgovor": "5",
+              "krivo": [
+                {
+                  "odgovor": "-5",
+                  "poruka": "Realni dio ostaje isti."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\text{Im}(\\bar{w}) =$",
+              "odgovor": "12",
+              "krivo": [
+                {
+                  "odgovor": "-12",
+                  "poruka": "Imaginarni dio mijenja predznak: $-12 \\to 12$."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "c",
+        "naslov": "Trigonometrijski zapis",
+        "pitanje": {
+          "tip": "izraz",
+          "tekst": "Zapiši $z = 4\\sqrt{3} + 4i$ u trigonometrijskom obliku $z = r\\left(\\cos\\varphi + i\\sin\\varphi\\right)$, uz $\\varphi \\in \\left[0, 2\\pi\\right\\rangle$. Koliki su $r$ i $\\varphi$? Kut upiši u radijanima (s $\\pi$).",
+          "polja": [
+            {
+              "oznaka": "$r =$",
+              "odgovor": "8",
+              "krivo": [
+                {
+                  "odgovor": "4*sqrt(3)+4",
+                  "poruka": "$r$ je modul $|z| = 8$ iz dijela b), a ne zbroj kateta."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\varphi =$",
+              "odgovor": "pi/6",
+              "krivo": [
+                {
+                  "odgovor": "30",
+                  "poruka": "Kut je dobar, ali u stupnjevima. Traži se u radijanima: $30^\\circ = \\frac{\\pi}{6}$."
+                },
+                {
+                  "odgovor": "pi/3",
+                  "poruka": "Zamijenio si katete. $\\operatorname{tg}\\varphi = \\frac{\\text{Im}}{\\text{Re}} = \\frac{4}{4\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$, a to je tangens od $\\frac{\\pi}{6}$."
+                },
+                {
+                  "odgovor": "sqrt(3)/3",
+                  "poruka": "To je vrijednost $\\operatorname{tg}\\varphi$, a ne sam kut."
+                }
+              ]
+            }
+          ]
+        },
+        "zasto": "$r = |z| = 8$, a $z$ je u 1. kvadrantu s $\\operatorname{tg}\\varphi = \\frac{4}{4\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$, pa je $\\varphi = \\frac{\\pi}{6}$: $z = 8\\left(\\cos\\frac{\\pi}{6} + i\\sin\\frac{\\pi}{6}\\right)$.",
+        "objasnjenje": "Formula za trigonometrijski zapis kompleksnog broja nalazi se u knjižici formula (str. 2):\n\n$$z = r\\left(\\cos\\varphi + i\\sin\\varphi\\right), \\quad \\varphi \\in \\left[0, 2\\pi\\right\\rangle$$\n\nTrebamo $r$ i $\\varphi$.\n\n- $r$ je udaljenost točke $z$ od ishodišta, dakle upravo modul: $r = |z| = 8$.\n- $\\varphi$ je kut od **pozitivnog dijela osi Re** do dužine prema $z$, mjeren suprotno od kazaljke na satu (slika).\n\nTočka $z = 4\\sqrt{3} + 4i$ je u **1. kvadrantu** (oba dijela pozitivna). U pravokutnom trokutu iz dijela b) tangens kuta $\\varphi$ je nasuprotna kateta kroz priležeću:\n\n$$\\operatorname{tg}\\varphi = \\frac{\\text{Im}(z)}{\\text{Re}(z)} = \\frac{4}{4\\sqrt{3}} = \\frac{1}{\\sqrt{3}} = \\frac{\\sqrt{3}}{3} \\quad\\Rightarrow\\quad \\varphi = \\frac{\\pi}{6}$$\n\nProvjera: $\\cos\\frac{\\pi}{6} = \\frac{\\sqrt{3}}{2}$ i $\\sin\\frac{\\pi}{6} = \\frac{1}{2}$, pa je $8\\left(\\frac{\\sqrt{3}}{2} + \\frac{1}{2}i\\right) = 4\\sqrt{3} + 4i$. ✓\n\n**Kalkulatorom.** Kalkulator mora biti u radijanima (**RAD**, ne DEG): na fx-991EX **SHIFT** + **MENU** → **2: Angle Unit** → **2: Radian**, a na fx-991ES **SHIFT** + **MODE** → **4: Rad**. Zatim u načinu **Complex** upiši $z$ ($i$ je na tipki **ENG**), pritisni **SHIFT** + **MENU** (na fx-991ES **SHIFT** + **MODE**), jednom strelicu **↓**, odaberi **Complex** (na fx-991EX **2: Complex**, na fx-991ES **3: CMPLX**), pa **2: $r\\angle\\theta$** i pritisni **=**. Kalkulator ispiše rezultat u obliku $r\\angle\\theta$: prvi broj je $r$, a drugi kut $\\varphi$. Kad završiš, istim putem vrati **1: $a + bi$**, inače će i svi sljedeći rezultati biti u trigonometrijskom obliku. Za ovaj $z$ kalkulator pokaže $8\\angle\\frac{\\pi}{6}$, dakle $r = 8$ i $\\varphi = \\frac{\\pi}{6}$. (Primijeti da su $r$ i $|z|$ jednaki.)\n\nSada samo uvrstimo $r$ i $\\varphi$ u formulu:\n\n$$z = 8\\left(\\cos\\frac{\\pi}{6} + i\\sin\\frac{\\pi}{6}\\right)$$",
+        "graf": {
+          "tip": "graf_funkcije",
+          "nacin": "prikaz",
+          "tekst": "$r = 8$ je udaljenost od ishodišta do $z$, a $\\varphi = \\frac{\\pi}{6}$ kut od pozitivne osi Re do te dužine.",
+          "os_x": "Re",
+          "os_y": "Im",
+          "x": [-2, 10],
+          "y": [-1.5, 5.5],
+          "duzine": [
+            {
+              "od": [0, 0],
+              "do": [6.928203230275509, 4],
+              "oznaka": "$r = 8$",
+              "istaknuto": true
+            }
+          ],
+          "kutovi": [
+            {
+              "vrh": [0, 0],
+              "od": [1, 0],
+              "do": [6.928203230275509, 4],
+              "oznaka": "$\\varphi$"
+            }
+          ],
+          "tocke": [
+            {
+              "x": 6.928203230275509,
+              "y": 4,
+              "oznaka": "$z$",
+              "polozaj": "gore"
+            }
+          ]
+        },
+        "pomoc": [
+          {
+            "tip": "graf_funkcije",
+            "nacin": "prikaz",
+            "tekst": "$r$ je istaknuta dužina, dakle modul $|z| = 8$. Kut $\\varphi$ mjeri se od **pozitivnog** dijela osi Re do te dužine, suprotno od kazaljke na satu. U trokutu vrijedi $\\operatorname{tg}\\varphi = \\frac{\\text{nasuprotna kateta}}{\\text{priležeća kateta}} = \\frac{\\text{Im}(z)}{\\text{Re}(z)}$.",
+            "os_x": "Re",
+            "os_y": "Im",
+            "x": [-2, 10],
+            "y": [-1.5, 5.5],
+            "duzine": [
+              {
+                "od": [0, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$r$",
+                "istaknuto": true
+              },
+              {
+                "od": [6.928203230275509, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$4$",
+                "isprekidano": true
+              }
+            ],
+            "kutovi": [
+              {
+                "vrh": [0, 0],
+                "od": [1, 0],
+                "do": [6.928203230275509, 4],
+                "oznaka": "$\\varphi$"
+              }
+            ],
+            "tocke": [
+              {
+                "x": 6.928203230275509,
+                "y": 4,
+                "oznaka": "$z$",
+                "polozaj": "gore"
+              }
+            ]
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Ovdje je $\\operatorname{tg}\\varphi = \\frac{4}{4\\sqrt{3}} = \\frac{\\sqrt{3}}{3}$, a $z$ je u 1. kvadrantu. Koliki je $\\varphi$ u radijanima?",
+            "polja": [
+              {
+                "oznaka": "$\\varphi =$",
+                "odgovor": "pi/6",
+                "krivo": [
+                  {
+                    "odgovor": "30",
+                    "poruka": "To je u stupnjevima. U radijanima: $30^\\circ = \\frac{\\pi}{6}$."
+                  },
+                  {
+                    "odgovor": "pi/3",
+                    "poruka": "$\\operatorname{tg}\\frac{\\pi}{3} = \\sqrt{3}$, a ovdje je tangens $\\frac{\\sqrt{3}}{3}$."
+                  }
+                ]
+              }
+            ],
+            "priblizno": true
+          }
+        ],
+        "blizanac": {
+          "tip": "izraz",
+          "tekst": "Zapiši $w = -2 + 2\\sqrt{3}\\,i$ u trigonometrijskom obliku, uz $\\varphi \\in \\left[0, 2\\pi\\right\\rangle$. Koliki su $r$ i $\\varphi$?",
+          "polja": [
+            {
+              "oznaka": "$r =$",
+              "odgovor": "4",
+              "krivo": [
+                {
+                  "odgovor": "16",
+                  "poruka": "$4 + 12 = 16$ je $r^2$; izvadi korijen."
+                },
+                {
+                  "odgovor": "2*sqrt(2)",
+                  "poruka": "$\\left(2\\sqrt{3}\\right)^2 = 4 \\cdot 3 = 12$, pa je $r = \\sqrt{4 + 12}$."
+                }
+              ]
+            },
+            {
+              "oznaka": "$\\varphi =$",
+              "odgovor": "2*pi/3",
+              "krivo": [
+                {
+                  "odgovor": "-pi/3",
+                  "poruka": "$w$ je u 2. kvadrantu (realni dio negativan, imaginarni pozitivan), pa je $\\varphi = \\pi - \\frac{\\pi}{3}$."
+                },
+                {
+                  "odgovor": "pi/3",
+                  "poruka": "$\\frac{\\pi}{3}$ je kut u trokutu, ali $w$ je u 2. kvadrantu: $\\varphi = \\pi - \\frac{\\pi}{3}$."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "zapamti": [
+      "$i^n$: podijeli $n$ s 4 i gledaj ostatak ($i^1 = i$, $i^2 = -1$, $i^3 = -i$, $i^4 = 1$).",
+      "$z = x + yi$ je točka $(x, y)$ u Gaussovoj ravnini; modul je udaljenost od ishodišta: $|z| = \\sqrt{x^2 + y^2}$.",
+      "Konjugirani broj: isti realni dio, suprotan imaginarni ($\\overline{x + yi} = x - yi$).",
+      "Trigonometrijski zapis $z = r(\\cos\\varphi + i\\sin\\varphi)$: $r = |z|$, a $\\varphi \\in [0, 2\\pi\\rangle$ mjeri se od pozitivne osi Re; pazi u kojem je kvadrantu $z$."
+    ]
+  },
+  "72": {
+    "verzija": 1,
+    "zadatak": {
+      "tekst": "Izrazi $b$ iz jednakosti\n\n$$\\log_{2} b = \\log_{8} a^9 + \\log_{2} a$$\n\ni rješenje zapiši bez logaritma."
+    },
+    "cijeli": {
+      "pitanje": {
+        "tip": "izraz",
+        "tekst": "Rješenje zapiši u obliku $b = a^{n}$ i upiši $n$.",
+        "savjet": "Nije točno. Provjeri postupak ili prođi zadatak korak po korak.",
+        "polja": [
+          {
+            "oznaka": "$n =$",
+            "odgovor": "4",
+            "krivo": [
+              {
+                "odgovor": "10",
+                "poruka": "Baza prvog logaritma je 8, a ne 2: logaritme s različitim bazama ne smiješ odmah zbrojiti. Najprije zapiši $8$ kao potenciju broja $2$."
+              },
+              {
+                "odgovor": "28",
+                "poruka": "Eksponent baze ($8 = 2^{3}$) daje faktor $\\frac{1}{3}$: dijeliš s 3, a ne množiš."
+              },
+              {
+                "odgovor": "3",
+                "poruka": "Zaboravio si drugi pribrojnik $\\log_{2} a$."
+              },
+              {
+                "odgovor": "4/3",
+                "poruka": "Zaboravio si eksponent 9 iz $a^{9}$: on ide ispred logaritma."
+              }
+            ]
+          }
+        ]
+      },
+      "blizanac": {
+        "tip": "izraz",
+        "tekst": "Izrazi $b$ iz jednakosti $\\log_{3} b = \\log_{27} a^{6} + \\log_{3} a$ i rješenje zapiši bez logaritma, u obliku $b = a^{n}$. Upiši $n$.",
+        "savjet": "Nije točno. Provjeri postupak ili prođi zadatak korak po korak.",
+        "polja": [
+          {
+            "oznaka": "$n =$",
+            "odgovor": "3",
+            "krivo": [
+              {
+                "odgovor": "7",
+                "poruka": "Baza prvog logaritma je 27, a ne 3: logaritme s različitim bazama ne smiješ odmah zbrojiti. Najprije zapiši $27$ kao potenciju broja $3$."
+              },
+              {
+                "odgovor": "19",
+                "poruka": "Eksponent baze ($27 = 3^{3}$) daje faktor $\\frac{1}{3}$: dijeliš s 3, a ne množiš."
+              },
+              {
+                "odgovor": "2",
+                "poruka": "Zaboravio si drugi pribrojnik $\\log_{3} a$."
+              }
+            ]
+          }
+        ]
+      },
+      "blizanacRjesenje": "Kako je $27 = 3^{3}$, vrijedi $\\log_{27} a^{6} = 6\\log_{3^{3}} a = 6 \\cdot \\frac{1}{3}\\log_{3} a = 2\\log_{3} a$.\n\n$\\log_{3} b = 2\\log_{3} a + \\log_{3} a = 3\\log_{3} a = \\log_{3} a^{3}$.\n\nZato je $b = 3^{\\log_{3} a^{3}} = a^{3}$, pa je $n = 3$."
+    },
+    "podzadaci": [
+      {
+        "id": "a",
+        "naslov": "Baza 8 u bazu 2",
+        "pitanje": {
+          "tip": "izraz",
+          "tekst": "Prvi pribrojnik ima potenciju $a^9$ i drugu bazu (8). Zapiši ga pomoću $\\log_{2} a$.",
+          "polja": [
+            {
+              "oznaka": "$\\log_{8} a^9 =$",
+              "iza": "$\\cdot\\, \\log_{2} a$",
+              "odgovor": "3",
+              "krivo": [
+                {
+                  "odgovor": "9",
+                  "poruka": "Eksponent 9 je dobro prešao ispred logaritma, ali baza je još 8. Kako je $8 = 2^3$, još dijeliš s 3."
+                },
+                {
+                  "odgovor": "27",
+                  "poruka": "Baza $8 = 2^3$ daje faktor $\\frac{1}{3}$, a ne 3: $9 \\cdot \\frac{1}{3} = 3$."
+                },
+                {
+                  "odgovor": "1/3",
+                  "poruka": "Zaboravio si eksponent 9 iz $a^9$: on ide ispred logaritma, pa je $9 \\cdot \\frac{1}{3}$."
+                }
+              ]
+            }
+          ]
+        },
+        "zasto": "Eksponent ide ispred logaritma, a kako je $8 = 2^3$, baza daje faktor $\\frac{1}{3}$: $\\log_{8} a^9 = 9\\log_{2^3} a = 9 \\cdot \\frac{1}{3}\\log_{2} a = 3\\log_{2} a$.",
+        "objasnjenje": "U jednakosti $\\log_{2} b = \\log_{8} a^9 + \\log_{2} a$ smeta nam prvi pribrojnik: ima potenciju $a^9$ i drugu bazu (8). Sredit ćemo ga u dva koraka.\n\n**1. Eksponent ispred logaritma.** Koristimo pravilo\n\n$$\\log_b x^y = y\\log_b x \\qquad \\text{(knjižica formula, str. 2)}$$\n\ni primijenimo ga na $\\log_{8} a^9$:\n\n$$\\log_{8} a^9 = 9\\log_{8} a$$\n\nSada zamijenimo to u jednakosti:\n\n$$\\log_{2} b = 9\\log_{8} a + \\log_{2} a$$\n\n**2. Baza 8 u bazu 2.** Znamo da je $8 = 2^3$, pa se $9\\log_{8} a$ može zapisati kao $9\\log_{2^3} a$. Za bazu koja je potencija vrijedi pravilo\n\n$$\\log_{b^y} x = \\frac{1}{y}\\log_b x$$\n\n(Ono slijedi iz formule za promjenu baze: $\\log_{2^3} a = \\dfrac{\\log_{2} a}{\\log_{2} 2^3} = \\dfrac{\\log_{2} a}{3}$.) Primijenimo ga na $9\\log_{2^3} a$:\n\n$$9\\log_{2^3} a = 9 \\cdot \\frac{1}{3}\\log_{2} a = 3\\log_{2} a$$\n\nDakle $\\log_{8} a^9 = 3\\log_{2} a$, pa jednakost glasi\n\n$$\\log_{2} b = 3\\log_{2} a + \\log_{2} a$$\n\nSad su svi logaritmi s istom bazom 2, a to je bilo potrebno da ih možemo zbrojiti.",
+        "pomoc": [
+          {
+            "tip": "pojam",
+            "tekst": "Dva pravila za logaritam:\n\n- eksponent **argumenta** ide ispred logaritma: $\\log_b x^y = y\\log_b x$ (knjižica formula, str. 2);\n- eksponent **baze** ide ispred kao razlomak: $\\log_{b^y} x = \\frac{1}{y}\\log_b x$.\n\nZato najprije bazu 8 zapiši kao potenciju broja 2."
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Koja je potencija broja 2 jednaka 8?",
+            "polja": [
+              {
+                "oznaka": "$8 = 2^{n}$, $\\;n =$",
+                "odgovor": "3",
+                "krivo": [
+                  {
+                    "odgovor": "4",
+                    "poruka": "$2 \\cdot 4 = 8$, ali potencija je uzastopno množenje: $2^3 = 2 \\cdot 2 \\cdot 2 = 8$."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Sad oba pravila zajedno: $\\log_{8} a^9 = 9\\log_{2^3} a = 9 \\cdot \\frac{1}{3}\\log_{2} a$. Koliko je to?",
+            "polja": [
+              {
+                "oznaka": "$\\log_{8} a^9 =$",
+                "iza": "$\\cdot\\, \\log_{2} a$",
+                "odgovor": "3",
+                "krivo": [
+                  {
+                    "odgovor": "27",
+                    "poruka": "Eksponent baze daje faktor $\\frac{1}{3}$, pa dijeliš s 3: $\\frac{9}{3}$."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "blizanac": {
+          "tip": "izraz",
+          "tekst": "Zapiši $\\log_{4} a^{10}$ pomoću $\\log_{2} a$.",
+          "polja": [
+            {
+              "oznaka": "$\\log_{4} a^{10} =$",
+              "iza": "$\\cdot\\, \\log_{2} a$",
+              "odgovor": "5",
+              "krivo": [
+                {
+                  "odgovor": "10",
+                  "poruka": "Eksponent je dobro prešao ispred, ali baza je još 4 $= 2^2$. Još dijeli s 2."
+                },
+                {
+                  "odgovor": "20",
+                  "poruka": "Baza $2^2$ daje faktor $\\frac{1}{2}$: dijeliš s 2, a ne množiš."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "b",
+        "naslov": "Definicija logaritma",
+        "pitanje": {
+          "tip": "izbor",
+          "tekst": "Sad je $\\log_{2} b = 3\\log_{2} a + \\log_{2} a$. Zbroji desnu stranu i iskoristi definiciju logaritma: $\\log_b a = x \\iff a = b^x$. Koja jednakost vrijedi?",
+          "opcije": [
+            {
+              "tekst": "$b = 2^{4\\log_{2} a}$",
+              "tocno": true
+            },
+            {
+              "tekst": "$b = 2^{3\\log_{2} a}$",
+              "poruka": "Zaboravio si drugi pribrojnik. $\\log_{2} a$ je $1 \\cdot \\log_{2} a$, pa je $3\\log_{2} a + \\log_{2} a = 4\\log_{2} a$."
+            },
+            {
+              "tekst": "$2 = b^{4\\log_{2} a}$",
+              "poruka": "Baza logaritma (2) postaje baza potencije, a argument ($b$) je ono što potencija daje: $b = 2^{\\dots}$."
+            },
+            {
+              "tekst": "$b = (4\\log_{2} a)^{2}$",
+              "poruka": "Vrijednost logaritma ide u eksponent, a baza 2 ostaje dolje: $b = 2^{4\\log_{2} a}$."
+            }
+          ]
+        },
+        "zasto": "$3\\log_{2} a + \\log_{2} a = 4\\log_{2} a$, pa je $\\log_{2} b = 4\\log_{2} a$. Po definiciji (baza 2, vrijednost logaritma $4\\log_{2} a$): $b = 2^{4\\log_{2} a}$.",
+        "objasnjenje": "Najprije zbrojimo slične članove na desnoj strani. $\\log_{2} a$ je isto što i $1 \\cdot \\log_{2} a$, pa je\n\n$$\\log_{2} b = 3\\log_{2} a + \\log_{2} a = 4\\log_{2} a$$\n\nSad primijenimo definiciju logaritma (knjižica formula, str. 2):\n\n$$\\log_b a = x \\iff a = b^x$$\n\nLogaritam je eksponent: $\\log_b a = x$ znači „$b$ na $x$ daje $a$“. U našoj jednakosti $\\log_{2} b = 4\\log_{2} a$ je:\n\n- baza logaritma: $2$ (u pravilu $b$),\n- argument: $b$ (u pravilu $a$),\n- vrijednost logaritma: $4\\log_{2} a$ (u pravilu $x$).\n\nPazi da se ne zbuniš: slova u pravilu i u zadatku se ne poklapaju (u zadatku je $b$ argument, a ne baza). Zapišemo u obliku $a = b^x$:\n\n$$b = 2^{4\\log_{2} a}$$\n\nTime smo izrazili $b$, ali u eksponentu je još logaritam, a zadatak traži rješenje bez logaritma.",
+        "pomoc": [
+          {
+            "tip": "pojam",
+            "tekst": "**Logaritam je eksponent.** $\\log_b a = x$ znači da $b$ treba dići na $x$ da dobiješ $a$: $a = b^x$. Na primjer, $\\log_2 8 = 3$ jer je $2^3 = 8$.\n\nBaza logaritma postaje baza potencije, vrijednost logaritma postaje eksponent, a argument je ono što potencija daje."
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Prvo zbroji desnu stranu: koliko je $3\\log_{2} a + \\log_{2} a$?",
+            "polja": [
+              {
+                "iza": "$\\cdot\\, \\log_{2} a$",
+                "odgovor": "4",
+                "krivo": [
+                  {
+                    "odgovor": "3",
+                    "poruka": "$\\log_{2} a$ je $1 \\cdot \\log_{2} a$, pa se zbraja: $3 + 1$."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "blizanac": {
+          "tip": "izbor",
+          "tekst": "Iz $\\log_{6} b = 5\\log_{6} a + \\log_{6} a$ izrazi $b$ po definiciji logaritma. Koja jednakost vrijedi?",
+          "opcije": [
+            {
+              "tekst": "$b = 6^{6\\log_{6} a}$",
+              "tocno": true
+            },
+            {
+              "tekst": "$b = 6^{5\\log_{6} a}$",
+              "poruka": "Zaboravio si drugi pribrojnik: $5\\log_{6} a + \\log_{6} a = 6\\log_{6} a$."
+            },
+            {
+              "tekst": "$6 = b^{6\\log_{6} a}$",
+              "poruka": "Baza logaritma (6) postaje baza potencije: $b = 6^{\\dots}$."
+            },
+            {
+              "tekst": "$b = (6\\log_{6} a)^{6}$",
+              "poruka": "Vrijednost logaritma ide u eksponent, a baza 6 ostaje dolje."
+            }
+          ]
+        }
+      },
+      {
+        "id": "c",
+        "naslov": "Bez logaritma",
+        "pitanje": {
+          "tip": "izraz",
+          "tekst": "Riješi se logaritma u eksponentu: $b = 2^{4\\log_{2} a}$. Zapiši $b$ bez logaritma.",
+          "varijable": ["a"],
+          "savjet": "Nije točno. Broj ispred logaritma vrati u eksponent ($4\\log_{2} a = \\log_{2} a^{4}$), pa iskoristi $2^{\\log_{2} x} = x$. U rješenju ne smije ostati logaritam.",
+          "polja": [
+            {
+              "oznaka": "$b =$",
+              "odgovor": "a^4",
+              "krivo": [
+                {
+                  "odgovor": "a^2",
+                  "poruka": "2 je baza i ona „nestaje“: $2^{\\log_{2} x} = x$. U eksponent od $a$ ide broj 4 ispred logaritma."
+                },
+                {
+                  "odgovor": "a^8",
+                  "poruka": "Ne množi 4 i 2. Baza 2 nestaje ($2^{\\log_{2} x} = x$), a 4 ide u eksponent: $4\\log_{2} a = \\log_{2} a^{4}$."
+                },
+                {
+                  "odgovor": "a^3",
+                  "poruka": "Zaboravio si drugi pribrojnik: $3\\log_{2} a + \\log_{2} a = 4\\log_{2} a$."
+                },
+                {
+                  "odgovor": "4*a",
+                  "poruka": "Broj 4 ispred logaritma ne množi $a$, nego postaje eksponent: $4\\log_{2} a = \\log_{2} a^{4}$, pa je $b = a^{4}$."
+                },
+                {
+                  "odgovor": "2*a^4",
+                  "poruka": "Baza 2 ne ostaje kao faktor: $2^{\\log_{2} a^{4}}$ je upravo $a^{4}$, bez broja 2 ispred."
+                }
+              ]
+            }
+          ]
+        },
+        "zasto": "$4\\log_{2} a = \\log_{2} a^4$, pa je $b = 2^{\\log_{2} a^4} = a^4$, jer je $2^{\\log_{2} x} = x$. Rješenje: $b = a^4$.",
+        "objasnjenje": "Izrazili smo $b = 2^{4\\log_{2} a}$, a sad nam je ostalo da se riješimo logaritma u eksponentu.\n\nOpet koristimo pravilo\n\n$$\\log_b x^y = y\\log_b x \\qquad \\text{(knjižica formula, str. 2)}$$\n\nali zdesna nalijevo: broj ispred logaritma vraćamo u eksponent argumenta.\n\n$$4\\log_{2} a = \\log_{2} a^4$$\n\nSada imamo\n\n$$b = 2^{4\\log_{2} a} = 2^{\\log_{2} a^4}$$\n\npa na izraz $2^{\\log_{2} a^4}$ možemo primijeniti pravilo (knjižica formula, str. 2)\n\n$$b^{\\log_b x} = x$$\n\nPotencija i logaritam s istom bazom međusobno se poništavaju: $\\log_b x$ je upravo eksponent na koji treba dići $b$ da dobiješ $x$. Kod nas je baza 2, a $x = a^4$:\n\n$$2^{\\log_{2} a^4} = a^4$$\n\nKonačno:\n\n$$b = a^4$$\n\nKraći put do istog: čim imaš $\\log_{2} b = \\log_{2} a^4$ (isti logaritam s obje strane), argumenti moraju biti jednaki, pa je $b = a^4$. Logaritmi postoje samo za pozitivne brojeve, pa ovdje vrijedi $a > 0$.\n\nProvjera brojevima: za $a = 2$ desna strana zadane jednakosti je $\\log_{8} 2^9 + \\log_{2} 2 = 3 + 1 = 4$, a $\\log_{2} b = \\log_{2} 2^4 = 4$ ✓.",
+        "pomoc": [
+          {
+            "tip": "pojam",
+            "tekst": "Dva pravila (knjižica formula, str. 2):\n\n- broj ispred logaritma smije se vratiti u eksponent argumenta: $y\\log_b x = \\log_b x^y$;\n- potencija i logaritam s istom bazom se poništavaju: $b^{\\log_b x} = x$.\n\nNa primjer, $2^{3\\log_2 5} = 2^{\\log_2 5^3} = 5^3$."
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Koliko je $2^{\\log_{2} 5}$?",
+            "polja": [
+              {
+                "odgovor": "5",
+                "krivo": [
+                  {
+                    "odgovor": "2",
+                    "poruka": "2 je baza i ona „nestaje“: $2^{\\log_{2} x} = x$, a ovdje je $x = 5$."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "blizanac": {
+          "tip": "izraz",
+          "tekst": "Zapiši $b = 3^{2\\log_{3} a}$ bez logaritma.",
+          "varijable": ["a"],
+          "polja": [
+            {
+              "oznaka": "$b =$",
+              "odgovor": "a^2",
+              "krivo": [
+                {
+                  "odgovor": "a^3",
+                  "poruka": "3 je baza i nestaje: $3^{\\log_{3} x} = x$. Broj 2 ispred logaritma ide u eksponent od $a$."
+                },
+                {
+                  "odgovor": "2*a",
+                  "poruka": "Broj 2 ispred logaritma postaje eksponent: $2\\log_{3} a = \\log_{3} a^{2}$."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "zapamti": [
+      "Eksponent argumenta ide ispred logaritma: $\\log_b x^y = y\\log_b x$, a eksponent baze kao razlomak: $\\log_{b^y} x = \\frac{1}{y}\\log_b x$.",
+      "Logaritme zbrajaš kao slične članove tek kad imaju istu bazu: $3\\log_{2} a + \\log_{2} a = 4\\log_{2} a$.",
+      "Definicija: $\\log_b a = x \\iff a = b^x$.",
+      "$b^{\\log_b x} = x$: potencija i logaritam s istom bazom se poništavaju."
+    ]
+  },
+  "103": {
+    "verzija": 1,
+    "zadatak": {
+      "tekst": "Objasni što je funkcija i što je graf funkcije. Koja je veza između $x$-a i $y$-a u funkciji? Kako se ta veza prikazuje grafički?"
+    },
+    "podzadaci": [
+      {
+        "id": "a",
+        "naslov": "Svakom x točno jedan y",
+        "pitanje": {
+          "tip": "razvrstaj",
+          "tekst": "**Funkcija** je pravilo koje **svakom** broju $x$ pridruži **točno jedan** broj $y$. Strelica $x \\to y$ znači: broju $x$ pridružen je broj $y$.\n\nRazvrstaj pridruživanja: koje je funkcija, a koje nije?",
+          "kategorije": ["Funkcija", "Nije funkcija"],
+          "stavke": [
+            {
+              "tekst": "$1 \\to 3, \\ \\ 2 \\to 5, \\ \\ 3 \\to 7$",
+              "kategorija": 0,
+              "poruka": "Svakom $x$ pridružen je točno jedan $y$, pa to jest funkcija."
+            },
+            {
+              "tekst": "$1 \\to 3, \\ \\ 1 \\to 4, \\ \\ 2 \\to 5$",
+              "kategorija": 1,
+              "poruka": "Broju $1$ pridružena su dva broja ($3$ i $4$), a funkcija svakom $x$ daje točno jedan $y$."
+            },
+            {
+              "tekst": "$1 \\to 6, \\ \\ 2 \\to 6, \\ \\ 3 \\to 6$",
+              "kategorija": 0,
+              "poruka": "Svaki $x$ ima točno jedan $y$. To što je $y$ svima isti je dopušteno; zabranjeno je samo da jedan $x$ ima dva $y$."
+            },
+            {
+              "tekst": "svakom učeniku razreda pridružimo njegovu visinu u cm",
+              "kategorija": 0,
+              "poruka": "Svaki učenik ima točno jednu visinu, pa to jest funkcija (dva učenika smiju biti jednako visoka)."
+            },
+            {
+              "tekst": "svakom broju $x$ pridružimo broj čiji je kvadrat $x$ (npr. $9 \\to 3$ i $9 \\to -3$)",
+              "kategorija": 1,
+              "poruka": "Broju $9$ pridružena su dva broja, $3$ i $-3$, pa to nije funkcija."
+            }
+          ]
+        },
+        "zasto": "Funkcija svakom $x$ pridruži **točno jedan** $y$. Zato nisu funkcije pridruživanja u kojima jedan $x$ ima dva $y$ ($1 \\to 3$ i $1 \\to 4$; $9 \\to 3$ i $9 \\to -3$). Da više različitih $x$ ima isti $y$ ($1, 2, 3 \\to 6$) je dopušteno.",
+        "objasnjenje": "Funkcija je kao poseban **stroj** koji uzme jedan broj (zovemo ga $x$) i po svom pravilu ga pretvori u drugi broj (zovemo ga $y$). Kad $x$ ubacimo u funkciju, kao rezultat dobijemo $y$.\n\nNajvažnije svojstvo tog stroja: **svakom** dopuštenom $x$ funkcija pridruži **točno jedan** $y$. Isti ulaz uvijek daje isti izlaz; stroj ne smije za isti $x$ jednom dati jedan, a drugi put drugi broj. (Skup svih dopuštenih $x$ zove se **domena** funkcije.)\n\nKako to provjeriš: gledaj svaki $x$ posebno i pitaj koliko mu je brojeva $y$ pridruženo.\n\n- $1 \\to 3, \\ 2 \\to 5, \\ 3 \\to 7$: svaki $x$ ima točno jedan $y$ → **funkcija**.\n- $1 \\to 3, \\ 1 \\to 4, \\ 2 \\to 5$: broj $1$ ima dva $y$ → **nije funkcija**.\n- $1 \\to 6, \\ 2 \\to 6, \\ 3 \\to 6$: svaki $x$ ima točno jedan $y$, samo je taj $y$ svima isti → **funkcija**. Više različitih $x$ smije dati isti $y$.\n- učenik → njegova visina: svaki učenik ima jednu visinu → **funkcija**.\n- $x \\to$ broj čiji je kvadrat $x$: $9 \\to 3$ i $9 \\to -3$, dva $y$ → **nije funkcija**.\n\nDakle, **veza između $x$ i $y$** u funkciji je: $y$ ovisi o $x$, i to tako da je za zadani $x$ broj $y$ potpuno (jednoznačno) određen.",
+        "pomoc": [
+          {
+            "tip": "pojam",
+            "tekst": "Gledaj svaki $x$ posebno i prebroji koliko mu je brojeva $y$ pridruženo:\n\n- točno jedan → u redu;\n- dva ili više → to **nije** funkcija.\n\nObrnuto smije: više različitih $x$ smije dobiti isti $y$, npr. $1 \\to 6$ i $2 \\to 6$."
+          },
+          {
+            "tip": "tocno_netocno",
+            "tekst": "Pridruživanje $2 \\to 3, \\ \\ 2 \\to 8, \\ \\ 4 \\to 9$ je funkcija.",
+            "tocno": false,
+            "poruka": "Broju $2$ pridružena su dva broja ($3$ i $8$), pa to nije funkcija."
+          }
+        ],
+        "blizanac": {
+          "tip": "razvrstaj",
+          "tekst": "Razvrstaj pridruživanja: koje je funkcija, a koje nije?",
+          "kategorije": ["Funkcija", "Nije funkcija"],
+          "stavke": [
+            {
+              "tekst": "$0 \\to 1, \\ \\ 1 \\to 2, \\ \\ 2 \\to 5$",
+              "kategorija": 0,
+              "poruka": "Svaki $x$ ima točno jedan $y$."
+            },
+            {
+              "tekst": "$5 \\to 0, \\ \\ 5 \\to 1, \\ \\ 6 \\to 2$",
+              "kategorija": 1,
+              "poruka": "Broju $5$ pridružena su dva broja ($0$ i $1$)."
+            },
+            {
+              "tekst": "$2 \\to 1, \\ \\ 3 \\to 1, \\ \\ 4 \\to 1$",
+              "kategorija": 0,
+              "poruka": "Svaki $x$ ima točno jedan $y$; isti $y$ za različite $x$ je dopušten."
+            },
+            {
+              "tekst": "svakom danu u godini pridružimo najvišu temperaturu izmjerenu tog dana",
+              "kategorija": 0,
+              "poruka": "Svaki dan ima točno jednu najvišu temperaturu, pa to jest funkcija."
+            },
+            {
+              "tekst": "svakom broju $x$ pridružimo brojeve koji su od njega udaljeni za $1$ (npr. $5 \\to 4$ i $5 \\to 6$)",
+              "kategorija": 1,
+              "poruka": "Broju $5$ pridružena su dva broja, $4$ i $6$."
+            }
+          ]
+        }
+      },
+      {
+        "id": "b",
+        "naslov": "Veza y = f(x)",
+        "pitanje": {
+          "tip": "izraz",
+          "tekst": "U funkciji pišemo $y = f(x)$: broj $x$ (**ulaz**, argument) biraš sam, a $y$ (**izlaz**, vrijednost funkcije) dobiješ tako da $x$ uvrstiš u pravilo funkcije. Zato je $x$ **nezavisna**, a $y$ **zavisna** varijabla.\n\nZadana je funkcija $f(x) = 2x + 1$. Koji $y$ dobiješ za $x = 3$? Za koji $x$ dobiješ $y = 1$?",
+          "polja": [
+            {
+              "oznaka": "za $x = 3$: $\\ y =$",
+              "odgovor": "7",
+              "krivo": [
+                {
+                  "odgovor": "6",
+                  "poruka": "$2 \\cdot 3 = 6$, ali pravilo kaže i $+1$: $y = 6 + 1$."
+                },
+                {
+                  "odgovor": "8",
+                  "poruka": "Prvo množiš, pa zbrajaš: $2 \\cdot 3 + 1 = 6 + 1$, a ne $2 \\cdot (3 + 1)$."
+                },
+                {
+                  "odgovor": "33",
+                  "poruka": "$2x$ znači $2 \\cdot x$. Umjesto $x$ uvrsti $3$: $2 \\cdot 3 + 1$."
+                }
+              ]
+            },
+            {
+              "oznaka": "za $y = 1$: $\\ x =$",
+              "odgovor": "0",
+              "krivo": [
+                {
+                  "odgovor": "3",
+                  "poruka": "To je $f(1)$: uvrstio si $1$ umjesto $x$. Ovdje je $1$ **izlaz** $y$, a tražiš ulaz $x$ za koji je $2x + 1 = 1$."
+                },
+                {
+                  "odgovor": "1",
+                  "poruka": "Za $x = 1$ dobiješ $y = 2 \\cdot 1 + 1 = 3$, a ne $1$. Riješi $2x + 1 = 1$."
+                }
+              ]
+            }
+          ]
+        },
+        "zasto": "Za $x = 3$: $y = f(3) = 2 \\cdot 3 + 1 = 7$. Za $y = 1$ tražimo ulaz: $2x + 1 = 1 \\Rightarrow 2x = 0 \\Rightarrow x = 0$, i doista $f(0) = 1$. Ulaz $x$ biramo, a izlaz $y$ ovisi o njemu.",
+        "objasnjenje": "Kad $x$ ubacimo u funkciju, kao rezultat dobijemo $y$. To zapisujemo kao\n\n$$y = f(x)$$\n\ngdje je:\n\n- $f$ ime funkcije,\n- $x$ ulaz funkcije (**argument**); biramo ga sami, pa ga zovemo **nezavisna varijabla**,\n- $y$ izlaz funkcije (**vrijednost funkcije**); ovisi o odabranom $x$, pa ga zovemo **zavisna varijabla**.\n\nNa primjer, za funkciju $f(x) = 2x + 1$ umjesto $x$ uvrstimo broj i izračunamo (prvo množenje, pa zbrajanje):\n\n$$\\text{za } x = 3: \\quad y = f(3) = 2 \\cdot 3 + 1 = 7$$\n\n$$\\text{za } x = 0: \\quad y = f(0) = 2 \\cdot 0 + 1 = 1$$\n\nMožemo pitati i obrnuto: za koji $x$ je $y = 1$? Tada je izlaz zadan, pa rješavamo jednadžbu $2x + 1 = 1$, tj. $2x = 0$ i $x = 0$. Pazi da ne zamijeniš uloge: $f(1) = 3$ je izlaz za ulaz $1$, a to je drugo pitanje.\n\nVažno:\n\n- $f(x)$ znači da računamo vrijednost $y$ iz $x$ pomoću funkcije $f$;\n- funkcija se ne mora uvijek zvati $f$; često se koriste i nazivi $g(x)$ i $h(x)$.\n\nSvaki par „ulaz – izlaz“ možemo zapisati kao točku $(x, y)$: ovdje $(3, 7)$ i $(0, 1)$. Na slici su te točke na grafu funkcije $f(x) = 2x + 1$.",
+        "graf": {
+          "tip": "graf_funkcije",
+          "nacin": "prikaz",
+          "tekst": "Točke $(0, 1)$ i $(3, 7)$ leže na grafu funkcije $f(x) = 2x + 1$.",
+          "x": [-2, 5],
+          "y": [-2, 9],
+          "funkcije": [
+            {
+              "izraz": "2*x + 1",
+              "oznaka": "f"
+            }
+          ],
+          "tocke": [
+            {
+              "x": 0,
+              "y": 1,
+              "oznaka": "(0, 1)",
+              "polozaj": "desno"
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "oznaka": "(3, 7)",
+              "polozaj": "desno"
+            }
+          ]
+        },
+        "pomoc": [
+          {
+            "tip": "pojam",
+            "tekst": "Ulaz $\\to$ pravilo $\\to$ izlaz. Za $x = 3$ uvrstiš $3$ umjesto $x$: $2 \\cdot 3 + 1 = 7$, pa je $y = 7$.\n\nAko je zadan **izlaz** $y$, tražiš ulaz: postaviš jednadžbu $2x + 1 = y$ i riješiš je po $x$."
+          },
+          {
+            "tip": "izbor",
+            "tekst": "U zapisu $y = f(x)$ koju varijablu biraš sam (nezavisna varijabla)?",
+            "opcije": [
+              {
+                "tekst": "$x$, ulaz (argument)",
+                "tocno": true
+              },
+              {
+                "tekst": "$y$, izlaz (vrijednost funkcije)",
+                "poruka": "$y$ se izračuna iz $x$, pa ovisi o njemu: on je zavisna varijabla."
+              },
+              {
+                "tekst": "$f$, ime funkcije",
+                "poruka": "$f$ je ime pravila, a ne broj koji biraš. Biraš ulaz $x$."
+              }
+            ]
+          },
+          {
+            "tip": "izraz",
+            "tekst": "Koji $y$ daje funkcija $f(x) = 2x + 1$ za $x = 5$?",
+            "polja": [
+              {
+                "oznaka": "$f(5) =$",
+                "odgovor": "11",
+                "krivo": [
+                  {
+                    "odgovor": "10",
+                    "poruka": "$2 \\cdot 5 = 10$, pa još $+1$."
+                  },
+                  {
+                    "odgovor": "12",
+                    "poruka": "Prvo množiš: $2 \\cdot 5 = 10$, pa dodaš $1$."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "blizanac": {
+          "tip": "izraz",
+          "tekst": "Zadana je funkcija $g(x) = 3x - 2$. Koji $y$ dobiješ za $x = 2$? Za koji $x$ dobiješ $y = 7$?",
+          "polja": [
+            {
+              "oznaka": "za $x = 2$: $\\ y =$",
+              "odgovor": "4",
+              "krivo": [
+                {
+                  "odgovor": "6",
+                  "poruka": "$3 \\cdot 2 = 6$, pa još $-2$."
+                },
+                {
+                  "odgovor": "0",
+                  "poruka": "Prvo množiš: $3 \\cdot 2 - 2 = 6 - 2$, a ne $3 \\cdot (2 - 2)$."
+                }
+              ]
+            },
+            {
+              "oznaka": "za $y = 7$: $\\ x =$",
+              "odgovor": "3",
+              "krivo": [
+                {
+                  "odgovor": "19",
+                  "poruka": "To je $g(7)$: uvrstio si $7$ umjesto $x$. Ovdje je $7$ izlaz $y$, pa rješavaš $3x - 2 = 7$."
+                },
+                {
+                  "odgovor": "5/3",
+                  "poruka": "Kad $-2$ prebaciš na drugu stranu, mijenja predznak: $3x = 7 + 2 = 9$."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "c",
+        "naslov": "Graf je skup točaka",
+        "pitanje": {
+          "tip": "vise_tocnih",
+          "tekst": "Svaki par ulaz–izlaz možeš nacrtati kao točku $(x, y)$ u koordinatnom sustavu: $x$ na vodoravnoj, a $y$ na okomitoj osi. **Graf funkcije** je skup **svih** takvih točaka $(x, f(x))$. Točka leži na grafu ako je njezina druga koordinata baš $f$ od prve.\n\nKoje od ovih točaka leže na grafu funkcije $f(x) = x^2 - 1$? Označi sve.",
+          "opcije": [
+            {
+              "tekst": "$(2, 3)$",
+              "tocno": true
+            },
+            {
+              "tekst": "$(-2, 3)$",
+              "tocno": true
+            },
+            {
+              "tekst": "$(3, 9)$",
+              "tocno": false,
+              "poruka": "$f(3) = 9 - 1 = 8$, a ne $9$: točka $(3, 9)$ je iznad grafa."
+            },
+            {
+              "tekst": "$(1, 0)$",
+              "tocno": true
+            },
+            {
+              "tekst": "$(0, 1)$",
+              "tocno": false,
+              "poruka": "$f(0) = 0 - 1 = -1$, pa na grafu leži $(0, -1)$, a ne $(0, 1)$."
+            },
+            {
+              "tekst": "$(0{,}5;\\ -0{,}75)$",
+              "tocno": true
+            }
+          ]
+        },
+        "zasto": "Točka $(a, b)$ je na grafu kad je $f(a) = b$: $f(2) = f(-2) = 3$, $f(1) = 0$ i $f(0{,}5) = 0{,}25 - 1 = -0{,}75$. Za $(3, 9)$ i $(0, 1)$ to ne vrijedi.",
+        "objasnjenje": "Odaberimo nekoliko vrijednosti za $x$ i ubacimo ih u funkciju $y = f(x)$. Za svaki odabrani $x$ dobijemo točno određeni $y$, pa tako dobivamo **točke $(x, y)$** koje možemo nacrtati u koordinatnom sustavu: $x$ je vodoravna koordinata, a $y$ okomita.\n\nPrimjer za funkciju $f(x) = x^2 - 1$:\n\n| $x$ | $y = f(x)$ | točka $(x, y)$ |\n|---|---|---|\n| $-3$ | $(-3)^2 - 1 = 8$ | $(-3, 8)$ |\n| $-2$ | $(-2)^2 - 1 = 3$ | $(-2, 3)$ |\n| $-1$ | $(-1)^2 - 1 = 0$ | $(-1, 0)$ |\n| $0$ | $0^2 - 1 = -1$ | $(0, -1)$ |\n| $1$ | $1^2 - 1 = 0$ | $(1, 0)$ |\n| $2$ | $2^2 - 1 = 3$ | $(2, 3)$ |\n| $3$ | $3^2 - 1 = 8$ | $(3, 8)$ |\n\nPazi na negativne brojeve: $(-2)^2 = (-2) \\cdot (-2) = 4$. Primijeti da $x$ i $-x$ daju isti $y$ (npr. $f(2) = f(-2) = 3$): različiti $x$ smiju imati isti $y$.\n\nAko uzmemo **još više vrijednosti za $x$** (i one između cijelih brojeva), dobivamo još više točaka. Na primjer, s korakom $0{,}5$:\n\n| $x$ | $-1$ | $-0{,}5$ | $0$ | $0{,}5$ | $1$ |\n|---|---|---|---|---|---|\n| $y = x^2 - 1$ | $0$ | $-0{,}75$ | $-1$ | $-0{,}75$ | $0$ |\n\nKako povećavamo broj točaka, one se sve gušće slažu i graf sve više nalikuje pravom obliku funkcije (na slici su točke uzete s korakom $0{,}25$). Kad bismo uzeli **sve** realne brojeve $x$, točke bi se spojile u neprekinutu krivulju: to je **graf funkcije** (krivulja na slici).\n\nZato zaključujemo: graf funkcije $f$ je **skup svih točaka $(x, y)$** za koje je $y = f(x)$. Točka $(a, b)$ leži na grafu točno onda kad je $f(a) = b$. Npr. $(2, 3)$ leži na grafu jer je $f(2) = 4 - 1 = 3$, a $(3, 9)$ ne leži jer je $f(3) = 8 \\neq 9$.\n\nBudući da svakom $x$ pripada točno jedan $y$, iznad (ili ispod) svakog $x$ na grafu funkcije leži **najviše jedna** točka: svaki okomiti pravac siječe graf funkcije najviše jednom. Zato npr. kružnica nije graf funkcije.\n\n**Odgovor na pitanja iz zadatka.**\n\n- **Funkcija** je pravilo koje svakom dopuštenom broju $x$ pridruži **točno jedan** broj $y$.\n- **Veza između $x$ i $y$:** $y = f(x)$, tj. $y$ dobijemo tako da $x$ uvrstimo u pravilo funkcije ($x$ je ulaz, argument, nezavisna varijabla; $y$ je izlaz, vrijednost funkcije, zavisna varijabla).\n- **Grafički:** svaki par $(x, f(x))$ je točka u koordinatnom sustavu; $x$ čitamo na vodoravnoj, a $y$ na okomitoj osi. Skup svih takvih točaka je **graf funkcije**.",
+        "graf": {
+          "tip": "graf_funkcije",
+          "nacin": "prikaz",
+          "tekst": "Točke $(x, x^2 - 1)$ uzete s korakom $0{,}25$ gusto se slažu, a kad uzmemo **sve** $x$, spoje se u neprekinutu krivulju: to je graf funkcije $f(x) = x^2 - 1$.",
+          "x": [-4, 4],
+          "y": [-2, 10],
+          "funkcije": [
+            {
+              "izraz": "x^2 - 1",
+              "oznaka": "f"
+            }
+          ],
+          "tocke": [
+            {
+              "x": -3,
+              "y": 8
+            },
+            {
+              "x": -2.75,
+              "y": 6.5625
+            },
+            {
+              "x": -2.5,
+              "y": 5.25
+            },
+            {
+              "x": -2.25,
+              "y": 4.0625
+            },
+            {
+              "x": -2,
+              "y": 3
+            },
+            {
+              "x": -1.75,
+              "y": 2.0625
+            },
+            {
+              "x": -1.5,
+              "y": 1.25
+            },
+            {
+              "x": -1.25,
+              "y": 0.5625
+            },
+            {
+              "x": -1,
+              "y": 0
+            },
+            {
+              "x": -0.75,
+              "y": -0.4375
+            },
+            {
+              "x": -0.5,
+              "y": -0.75
+            },
+            {
+              "x": -0.25,
+              "y": -0.9375
+            },
+            {
+              "x": 0,
+              "y": -1
+            },
+            {
+              "x": 0.25,
+              "y": -0.9375
+            },
+            {
+              "x": 0.5,
+              "y": -0.75
+            },
+            {
+              "x": 0.75,
+              "y": -0.4375
+            },
+            {
+              "x": 1,
+              "y": 0
+            },
+            {
+              "x": 1.25,
+              "y": 0.5625
+            },
+            {
+              "x": 1.5,
+              "y": 1.25
+            },
+            {
+              "x": 1.75,
+              "y": 2.0625
+            },
+            {
+              "x": 2,
+              "y": 3
+            },
+            {
+              "x": 2.25,
+              "y": 4.0625
+            },
+            {
+              "x": 2.5,
+              "y": 5.25
+            },
+            {
+              "x": 2.75,
+              "y": 6.5625
+            },
+            {
+              "x": 3,
+              "y": 8
+            }
+          ],
+          "tekstovi": [
+            {
+              "x": -1.6,
+              "y": 9,
+              "tekst": "f(x) = x² − 1"
+            }
+          ]
+        },
+        "pomoc": [
+          {
+            "tip": "graf_funkcije",
+            "nacin": "prikaz",
+            "tekst": "Ovdje je izračunato puno točaka $(x, x^2 - 1)$, s korakom $0{,}1$. Što ih je više, to se gušće slažu u krivulju. Točka leži na grafu ako joj je druga koordinata baš $f$ od prve: $y = f(x)$.",
+            "x": [-6, 6],
+            "y": [-2, 9],
+            "korak_x": 1,
+            "korak_y": 1,
+            "tocke": [
+              {
+                "x": -3.1,
+                "y": 8.61
+              },
+              {
+                "x": -3,
+                "y": 8
+              },
+              {
+                "x": -2.9,
+                "y": 7.41
+              },
+              {
+                "x": -2.8,
+                "y": 6.84
+              },
+              {
+                "x": -2.7,
+                "y": 6.29
+              },
+              {
+                "x": -2.6,
+                "y": 5.76
+              },
+              {
+                "x": -2.5,
+                "y": 5.25
+              },
+              {
+                "x": -2.4,
+                "y": 4.76
+              },
+              {
+                "x": -2.3,
+                "y": 4.29
+              },
+              {
+                "x": -2.2,
+                "y": 3.84
+              },
+              {
+                "x": -2.1,
+                "y": 3.41
+              },
+              {
+                "x": -2,
+                "y": 3
+              },
+              {
+                "x": -1.9,
+                "y": 2.61
+              },
+              {
+                "x": -1.8,
+                "y": 2.24
+              },
+              {
+                "x": -1.7,
+                "y": 1.89
+              },
+              {
+                "x": -1.6,
+                "y": 1.56
+              },
+              {
+                "x": -1.5,
+                "y": 1.25
+              },
+              {
+                "x": -1.4,
+                "y": 0.96
+              },
+              {
+                "x": -1.3,
+                "y": 0.69
+              },
+              {
+                "x": -1.2,
+                "y": 0.44
+              },
+              {
+                "x": -1.1,
+                "y": 0.21
+              },
+              {
+                "x": -1,
+                "y": 0
+              },
+              {
+                "x": -0.9,
+                "y": -0.19
+              },
+              {
+                "x": -0.8,
+                "y": -0.36
+              },
+              {
+                "x": -0.7,
+                "y": -0.51
+              },
+              {
+                "x": -0.6,
+                "y": -0.64
+              },
+              {
+                "x": -0.5,
+                "y": -0.75
+              },
+              {
+                "x": -0.4,
+                "y": -0.84
+              },
+              {
+                "x": -0.3,
+                "y": -0.91
+              },
+              {
+                "x": -0.2,
+                "y": -0.96
+              },
+              {
+                "x": -0.1,
+                "y": -0.99
+              },
+              {
+                "x": 0,
+                "y": -1
+              },
+              {
+                "x": 0.1,
+                "y": -0.99
+              },
+              {
+                "x": 0.2,
+                "y": -0.96
+              },
+              {
+                "x": 0.3,
+                "y": -0.91
+              },
+              {
+                "x": 0.4,
+                "y": -0.84
+              },
+              {
+                "x": 0.5,
+                "y": -0.75
+              },
+              {
+                "x": 0.6,
+                "y": -0.64
+              },
+              {
+                "x": 0.7,
+                "y": -0.51
+              },
+              {
+                "x": 0.8,
+                "y": -0.36
+              },
+              {
+                "x": 0.9,
+                "y": -0.19
+              },
+              {
+                "x": 1,
+                "y": 0
+              },
+              {
+                "x": 1.1,
+                "y": 0.21
+              },
+              {
+                "x": 1.2,
+                "y": 0.44
+              },
+              {
+                "x": 1.3,
+                "y": 0.69
+              },
+              {
+                "x": 1.4,
+                "y": 0.96
+              },
+              {
+                "x": 1.5,
+                "y": 1.25
+              },
+              {
+                "x": 1.6,
+                "y": 1.56
+              },
+              {
+                "x": 1.7,
+                "y": 1.89
+              },
+              {
+                "x": 1.8,
+                "y": 2.24
+              },
+              {
+                "x": 1.9,
+                "y": 2.61
+              },
+              {
+                "x": 2,
+                "y": 3
+              },
+              {
+                "x": 2.1,
+                "y": 3.41
+              },
+              {
+                "x": 2.2,
+                "y": 3.84
+              },
+              {
+                "x": 2.3,
+                "y": 4.29
+              },
+              {
+                "x": 2.4,
+                "y": 4.76
+              },
+              {
+                "x": 2.5,
+                "y": 5.25
+              },
+              {
+                "x": 2.6,
+                "y": 5.76
+              },
+              {
+                "x": 2.7,
+                "y": 6.29
+              },
+              {
+                "x": 2.8,
+                "y": 6.84
+              },
+              {
+                "x": 2.9,
+                "y": 7.41
+              },
+              {
+                "x": 3,
+                "y": 8
+              },
+              {
+                "x": 3.1,
+                "y": 8.61
+              }
+            ],
+            "tekstovi": [
+              {
+                "x": -4.3,
+                "y": 6.3,
+                "tekst": "f(x) = x² − 1"
+              }
+            ]
+          },
+          {
+            "tip": "tocno_netocno",
+            "tekst": "Točka $(4, 15)$ leži na grafu funkcije $f(x) = x^2 - 1$.",
+            "tocno": true,
+            "poruka": "$f(4) = 4^2 - 1 = 16 - 1 = 15$, pa točka $(4, 15)$ jest na grafu."
+          }
+        ],
+        "blizanac": {
+          "tip": "vise_tocnih",
+          "tekst": "Koje točke leže na grafu funkcije $g(x) = 2x - 3$?",
+          "opcije": [
+            {
+              "tekst": "$(2, 1)$",
+              "tocno": true
+            },
+            {
+              "tekst": "$(0, -3)$",
+              "tocno": true
+            },
+            {
+              "tekst": "$(1, 1)$",
+              "tocno": false,
+              "poruka": "$g(1) = 2 - 3 = -1$, a ne $1$."
+            },
+            {
+              "tekst": "$(-1, -5)$",
+              "tocno": true
+            },
+            {
+              "tekst": "$(3, 6)$",
+              "tocno": false,
+              "poruka": "$g(3) = 6 - 3 = 3$, a ne $6$."
+            },
+            {
+              "tekst": "$(4, 5)$",
+              "tocno": true
+            }
+          ]
+        }
+      }
+    ],
+    "zapamti": [
+      "Funkcija svakom dopuštenom $x$ pridruži **točno jedan** $y$. Jedan $x$ s dva $y$ → nije funkcija; više $x$ s istim $y$ → smije.",
+      "$y = f(x)$: $x$ je ulaz (argument, nezavisna varijabla), $y$ izlaz (vrijednost funkcije, zavisna varijabla). Npr. za $f(x) = 2x + 1$ je $f(3) = 7$.",
+      "Graf funkcije je skup svih točaka $(x, f(x))$; točka $(a, b)$ je na grafu točno kad je $f(a) = b$.",
+      "Na grafu funkcije iznad svakog $x$ leži najviše jedna točka (okomiti pravac siječe graf najviše jednom)."
+    ]
+  }
+}

@@ -1,15 +1,20 @@
 // Content for the logged-in app preview on the landing page. The three tasks are
 // real ones from the database (ids 223, 72 and 103), text and explanation exactly
 // as stored, so they render through the same MathJax path as on /tasks (old tasks,
-// id <= 335). Their AI replies (hint, why, explain — one per "## N." step of the
+// id <= 335). Like on /tasks they open as their interactive lesson (task.lesson_ui,
+// copied to demoLessons.json), with "Prikaži kao tekst" for the text version.
+// Their AI replies (hint, why, explain — one per "## N." step of the
 // explanation) are written for the demo. Everything else is made up but shaped
 // like the real pages: the fields and their weights match the A level exam
 // catalogue (course_field_weight in the backend), the review intervals match the
 // RatingPicker.
+import LESSONS from "./demoLessons.json";
 
 export const DEMO_TASKS = [
   {
     id: 223,
+    // the same string the API sends as task.lessonUi
+    lessonUi: JSON.stringify(LESSONS[223]),
     objective: "Kompleksni brojevi",
     text: String.raw`Za kompleksni broj:
 $$z = \frac{4 i \left(\sqrt{3} + i\right)}{i^{2025}}$$
@@ -58,6 +63,8 @@ Formula za trigonometrijski zapis kompleksnog broja (**nalazi se u knjižici s f
   },
   {
     id: 72,
+    // the same string the API sends as task.lessonUi
+    lessonUi: JSON.stringify(LESSONS[72]),
     objective: "Logaritmi",
     text: String.raw`Izrazite \(b\) iz jednakosti \(\log_{2}{b} = \log_{8}{a^9} + \log_{2}{a}\) i rješenje zapišite bez logaritma.`,
     explanation: String.raw`## 1.
@@ -140,6 +147,8 @@ b &= a^4
   },
   {
     id: 103,
+    // the same string the API sends as task.lessonUi
+    lessonUi: JSON.stringify(LESSONS[103]),
     objective: "Funkcije i graf funkcije",
     text: String.raw`Objasni što je funkcija i graf funkcije. Koja je veza između \(x\)-a i \(y\)-a u funkciji? Kako se ta veza prikazuje grafički?`,
     explanation: String.raw`## 1.

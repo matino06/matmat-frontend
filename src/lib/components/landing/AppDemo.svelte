@@ -5,7 +5,8 @@
   import { mathjaxTypeset } from "$lib/utils/mathjax";
   import { serializeRange } from "$lib/utils/selectionToLatex.js";
   import { handleLogIn } from "$lib/store/user.svelte";
-  import RatingPicker from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import RatingPicker, { RATINGS } from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import { objasnjenjeOcjene } from "$lib/lesson/ocjena.js";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
   import DemoChat from "./DemoChat.svelte";
@@ -15,9 +16,9 @@
 
   // The logged-in app as it looks after sign-in, playable on the landing page. It
   // follows the real pages step by step — rate, confirm, toast, next task, the
-  // goal celebration, Space for the solution, "Pitaj AI" on highlighted text —
-  // using the real components where they don't talk to the backend. Nothing is
-  // sent anywhere.
+  // goal celebration, the interactive lesson (or Space for the text solution),
+  // "Pitaj AI" on highlighted text — using the real components where they don't
+  // talk to the backend. Nothing is sent anywhere.
 
   const GOAL = 10;
   const START_SOLVED = GOAL - DEMO_TASKS.length;
@@ -44,6 +45,14 @@
   let solved = $state(START_SOLVED);
   let readiness = $state(60);
   let doneForToday = $state(false);
+  // As on /tasks: the interactive lesson unless the visitor picks "Prikaži kao
+  // tekst"; at its end the rating is suggested from how it went.
+  let tekstualno = $state(false);
+  let lekcijaSazetak = $state(null);
+  // The lesson player with all its widgets would more than double the landing
+  // page's JavaScript, so it loads after the page (onMount); until then the
+  // task card shows "Učitavanje zadatka…".
+  let lessonKit = $state(null); // { LessonRunner, interaktivnaLekcija }
 
   let toast = $state(false);
   let bump = $state(null);
@@ -60,6 +69,8 @@
   let timers = [];
 
   let task = $derived(DEMO_TASKS[taskIdx]);
+  let interaktivna = $derived(lessonKit?.interaktivnaLekcija(task) ?? null);
+  let lekcija = $derived(tekstualno ? null : interaktivna);
   // The explanation's "## N." sections, kept apart so a highlighted passage can be
   // traced back to its step for the AI reply (data-step).
   let sections = $derived(task.explanation.split(/^(?=## \d+\.)/m).filter((p) => p.trim()));
@@ -85,16 +96,33 @@
     }
   }
 
+  // Scrolls the preview's own column, not the page, so `el` sits near its top.
+  function scrollToEl(el) {
+    if (!el || !scrollEl) return;
+    const top = el.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop - 24;
+    scrollEl.scrollTo({ top, behavior: reduceMotion() ? "auto" : "smooth" });
+  }
+
   // ── Task flow, as on /tasks ──
   async function reveal(on = true) {
     revealed = on;
     if (!on) return;
     await tick();
-    const sol = taskEl?.querySelector(".solution");
-    if (sol && scrollEl) {
-      const top = sol.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop - 24;
-      scrollEl.scrollTo({ top, behavior: reduceMotion() ? "auto" : "smooth" });
+    scrollToEl(taskEl?.querySelector(".solution"));
+  }
+
+  // A lesson's next part starts from the top of the task card.
+  function lessonTop() {
+    scrollToEl(taskEl);
+    if (rootEl && rootEl.getBoundingClientRect().top < 0) {
+      rootEl.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
     }
+  }
+
+  function lekcijaGotova(sazetak) {
+    revealed = true;
+    lekcijaSazetak = sazetak;
+    pending = RATINGS.find((r) => r.k === sazetak.q) ?? null;
   }
 
   function confirmRating() {
@@ -129,6 +157,8 @@
       taskIdx += 1;
       revealed = false;
       rated = null;
+      tekstualno = false;
+      lekcijaSazetak = null;
       quote = null;
       scrollTop();
     }, 450);
@@ -140,6 +170,9 @@
     readiness = 60;
     revealed = false;
     rated = null;
+    pending = null;
+    tekstualno = false;
+    lekcijaSazetak = null;
     doneForToday = false;
     quote = null;
     scrollTop();
@@ -148,7 +181,7 @@
   // Space opens and closes the solution, like on /tasks — but only while the
   // visitor is in the preview, so it never steals the page's own scrolling.
   function onKey(e) {
-    if (e.code !== "Space" || view !== "tasks" || loading || rated || doneForToday) return;
+    if (e.code !== "Space" || view !== "tasks" || lekcija || loading || rated || doneForToday) return;
     if (!hovered && !rootEl?.contains(document.activeElement)) return;
     const tag = e.target.tagName;
     if (tag === "TEXTAREA" || tag === "INPUT" || tag === "BUTTON") return;
@@ -186,7 +219,7 @@
       below,
       quote: {
         text,
-        source: el.closest(".solution") ? "solution" : "task",
+        source: el.closest(".solution, .lx-rjesenje") ? "solution" : "task",
         step: stepEl ? Number(stepEl.dataset.step) : null,
       },
     };
@@ -235,6 +268,10 @@
   // task, the way the app looks mid-session. Narrower, it would cover the task.
   onMount(() => {
     if (window.matchMedia("(min-width: 1081px)").matches) panel = "ai";
+    Promise.all([import("$lib/lesson/LessonRunner.svelte"), import("$lib/lesson/zadatak.js")])
+      .then(([runner, zadatak]) => (lessonKit = { LessonRunner: runner.default, interaktivnaLekcija: zadatak.interaktivnaLekcija }))
+      // chunk didn't load (network): the tasks show as text rather than loading forever
+      .catch(() => (lessonKit = { LessonRunner: null, interaktivnaLekcija: () => null }));
     document.addEventListener("selectionchange", onSelectionChange);
     return () => document.removeEventListener("selectionchange", onSelectionChange);
   });
@@ -262,6 +299,49 @@
 
 {#snippet ico(paths)}
   <svg class="pv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{@html paths}</svg>
+{/snippet}
+
+<!-- The explanation's steps, each traceable for "Pitaj AI" (data-step). -->
+{#snippet koraci()}
+  {#each sections as sec, i (i)}
+    <section data-step={i}>{@html renderTaskHtml(sec, task.id)}</section>
+  {/each}
+{/snippet}
+
+<!-- The author's explanation as "Cijelo rješenje" at the end of a lesson that starts with the whole task, as on /tasks. -->
+{#snippet rjesenje()}
+  <div class="lx-md pv-explanation" use:fitMath use:mathjaxTypeset={task.id}>{@render koraci()}</div>
+{/snippet}
+
+{#snippet ocjena()}
+  {#if !rated}
+    <div class="rating-row">
+      <!-- after a lesson the suggestion only asks to be confirmed; "Promijeni" shows why and the ratings -->
+      <div class="rating-label">{lekcijaSazetak && pending ? "Predložena ocjena. Slažeš li se?" : "Kako ti je išlo?"}</div>
+      {#if pending}
+        <div class="pv-confirm">
+          <span class="pv-confirm-chosen" style="color:{pending.color}">{pending.k} — {pending.t}</span>
+          <span class="pv-confirm-when">Vraća se {pending.sub}</span>
+          <div class="pv-confirm-btns">
+            <button class="btn btn-primary" onclick={confirmRating}>Potvrdi i nastavi</button>
+            <button class="btn btn-ghost" onclick={() => { pending = null; ratingKey++; }}>Promijeni</button>
+          </div>
+        </div>
+      {:else}
+        {#if lekcijaSazetak}
+          <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
+        {/if}
+        {#key ratingKey}
+          <RatingPicker najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => (pending = r)} />
+        {/key}
+      {/if}
+    </div>
+  {:else}
+    <div class="pv-rated">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+      Zabilježeno. <span>{task.objective} se vraća {rated.sub}.</span>
+    </div>
+  {/if}
 {/snippet}
 
 <div
@@ -377,7 +457,7 @@
                 <button class="btn btn-ghost btn-lg" onclick={restart}>Kreni ispočetka</button>
               </div>
             </div>
-          {:else if loading}
+          {:else if loading || (task.lessonUi && !lessonKit)}
             <div class="card card-pad pv-loading">
               <div class="pv-spinner"></div>
               Učitavanje zadatka…
@@ -385,57 +465,45 @@
           {:else}
             {#key taskIdx}
               <article class="card task-card pv-task" bind:this={taskEl}>
-                <div class="{prose} prose-sm lg:prose-lg !max-w-none pv-math" use:fitMath use:mathjaxTypeset={task.id}>
-                  {@html renderTaskHtml(task.text, task.id)}
-                </div>
-
-                {#if !revealed}
-                  <div class="pv-reveal">
-                    <button class="btn btn-primary btn-lg" onclick={() => reveal()}>Pokaži rješenje</button>
-                    <span>Pokušaj sam · <span class="kbd-chip">Space</span> za rješenje</span>
+                {#if lekcija}
+                  <lessonKit.LessonRunner {lekcija} onzavrsi={lekcijaGotova} {rjesenje} navrh={lessonTop} />
+                  <div class="pv-alt">
+                    <button class="btn btn-quiet" onclick={() => (tekstualno = true)}>Prikaži kao tekst</button>
                   </div>
+                  {#if revealed}<div class="solution">{@render ocjena()}</div>{/if}
                 {:else}
-                  <div class="solution">
-                    <div class="solution-header">
-                      <h3>Rješenje</h3>
-                      {#if !rated}
-                        <button class="btn btn-ghost pv-hide" onclick={() => reveal(false)} title="Sakrij rješenje">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-                          Sakrij
-                        </button>
-                      {/if}
-                    </div>
-                    <div class="{prose} prose-sm lg:prose-base !max-w-none pv-math pv-explanation" use:fitMath use:mathjaxTypeset={task.id}>
-                      {#each sections as sec, i (i)}
-                        <section data-step={i}>{@html renderTaskHtml(sec, task.id)}</section>
-                      {/each}
-                    </div>
+                  <div class="{prose} prose-sm lg:prose-lg !max-w-none pv-math" use:fitMath use:mathjaxTypeset={task.id}>
+                    {@html renderTaskHtml(task.text, task.id)}
+                  </div>
 
-                    {#if !rated}
-                      <div class="rating-row">
-                        <div class="rating-label">Kako ti je išlo?</div>
-                        {#if pending}
-                          <div class="pv-confirm">
-                            <span class="pv-confirm-chosen" style="color:{pending.color}">{pending.k} — {pending.t}</span>
-                            <span class="pv-confirm-when">Vraća se {pending.sub}</span>
-                            <div class="pv-confirm-btns">
-                              <button class="btn btn-primary" onclick={confirmRating}>Potvrdi i nastavi</button>
-                              <button class="btn btn-ghost" onclick={() => { pending = null; ratingKey++; }}>Promijeni</button>
-                            </div>
-                          </div>
-                        {:else}
-                          {#key ratingKey}
-                            <RatingPicker onSelect={(r) => (pending = r)} />
-                          {/key}
+                  {#if !revealed}
+                    <div class="pv-reveal">
+                      <button class="btn btn-primary btn-lg" onclick={() => reveal()}>Pokaži rješenje</button>
+                      <span>Pokušaj sam · <span class="kbd-chip">Space</span> za rješenje</span>
+                    </div>
+                  {:else}
+                    <div class="solution">
+                      <div class="solution-header">
+                        <h3>Rješenje</h3>
+                        {#if !rated}
+                          <button class="btn btn-ghost pv-hide" onclick={() => reveal(false)} title="Sakrij rješenje">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                            Sakrij
+                          </button>
                         {/if}
                       </div>
-                    {:else}
-                      <div class="pv-rated">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
-                        Zabilježeno. <span>{task.objective} se vraća {rated.sub}.</span>
+                      <div class="{prose} prose-sm lg:prose-base !max-w-none pv-math pv-explanation" use:fitMath use:mathjaxTypeset={task.id}>
+                        {@render koraci()}
                       </div>
-                    {/if}
-                  </div>
+
+                      {@render ocjena()}
+                    </div>
+                  {/if}
+                  {#if interaktivna}
+                    <div class="pv-alt">
+                      <button class="btn btn-quiet" onclick={() => (tekstualno = false)}>Prikaži interaktivno</button>
+                    </div>
+                  {/if}
                 {/if}
               </article>
             {/key}
@@ -710,6 +778,7 @@
   }
   .solution-header { justify-content: space-between; }
   .pv-hide { padding: 6px 10px; font-size: 12px; }
+  .pv-alt { display: flex; justify-content: center; margin-top: 10px; }
   .pv-explanation :global(h2) { margin-top: 1.4em; }
   .pv-explanation :global(section:first-child h2) { margin-top: 0; }
   /* \textcolor{green|red|blue} in the explanations are made for white paper;
@@ -718,6 +787,7 @@
   .pv:not(.light) :global(:is(.katex, mjx-container) :is([style^="color:green"], [style^="color: green"], [style*=";color:green"])) { color: var(--success) !important; }
   .pv:not(.light) :global(:is(.katex, mjx-container) :is([style^="color:red"], [style^="color: red"], [style*=";color:red"])) { color: var(--danger) !important; }
   .pv:not(.light) :global(:is(.katex, mjx-container) :is([style^="color:blue"], [style^="color: blue"], [style*=";color:blue"])) { color: #60a5fa !important; }
+  .rating-note { margin: 4px 0 10px; font-size: 14px; line-height: 1.45; color: var(--text-dim); }
   .pv-confirm { display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; }
   .pv-confirm-chosen { font-size: 15px; font-weight: 600; }
   .pv-confirm-when { font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); }
