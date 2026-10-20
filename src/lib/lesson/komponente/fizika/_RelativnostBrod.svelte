@@ -218,7 +218,12 @@
           >?</text
         >
       {/if}
-      <circle class="rb-os" cx={s.cx} cy={BROD.satY} r="3" />
+      {#if vidi.has(s.k)}<circle
+          class="rb-os"
+          cx={s.cx}
+          cy={BROD.satY}
+          r="3"
+        />{/if}
       <text
         class="rb-dig"
         x={s.cx}

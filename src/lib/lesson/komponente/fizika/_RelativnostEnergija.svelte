@@ -101,7 +101,7 @@
   <!-- stupac energije -->
   {#if kreni}
     {@const s = st.stupac}
-    <text class="re-t re-jako" x={s.x + s.w / 2} y="66" text-anchor="middle"
+    <text class="re-t re-jako" x={s.x + s.w / 2} y="78" text-anchor="middle"
       >E = {brojF(g)} E₀</text
     >
     <rect
@@ -141,7 +141,7 @@
         class="re-st-t"
         x={s.x + s.w / 2}
         y={(s.vrhE + s.vrhE0) / 2 + 4}
-        text-anchor="middle">E_k</text
+        text-anchor="middle">Eₖ</text
       >
     {/if}
     {#each s.oznake as o (o.tekst)}
@@ -214,7 +214,7 @@
     <text
       class="re-t"
       x={ENERGIJA.stupac.x + ENERGIJA.stupac.w / 2}
-      y="66"
+      y="78"
       text-anchor="middle">E = ?</text
     >
     <text class="re-t" x="240" y="180" text-anchor="middle"

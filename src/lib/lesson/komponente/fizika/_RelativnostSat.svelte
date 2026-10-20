@@ -7,6 +7,7 @@
     satStanje,
     SAT,
     gama,
+    brojF,
   } from "$lib/lesson/katalog/fizika/relativnost.js";
   import { formatNumber } from "$lib/lesson/core/number.js";
 
@@ -143,7 +144,7 @@
         >jedan tik: {formatNumber(st.tik.zemlja)} s</text
       >
       <text class="rs-t rs-mali" x="236" y={z.y + 58}
-        >jedan tik: {formatNumber(st.tik.brod, 2)} s</text
+        >jedan tik: {brojF(st.tik.brod)} s</text
       >
     </g>
   {:else}
@@ -168,10 +169,8 @@
   {/if}
   {#if pogled === "zemlja" && beta > 0.05}
     <text class="rs-t rs-mali" x="180" y="14" text-anchor="middle"
-      >isti foton, ista brzina c, ali dulji (kosi) put: tik u brodu traje γ = {formatNumber(
-        gama(beta),
-        2,
-      )} puta dulje</text
+      >ista brzina c, dulji kosi put: tik u brodu traje γ = {brojF(gama(beta))} puta
+      dulje</text
     >
   {/if}
 </svg>

@@ -46,7 +46,8 @@
     const a = (kut(us) * Math.PI) / 180;
     return { x2: cx + Math.sin(a) * r, y2: cy - Math.cos(a) * r };
   };
-  const mus = (us) => `${formatNumber(us, us < 10 ? 2 : 1)} µs`;
+  const mus = (us) =>
+    `${us < 10 ? formatNumber(Math.round(us * 100) / 100) : brojF(us)} µs`;
   let opis = $derived(
     !kreni
       ? `Mion nastaje na visini ${formatNumber(visinaMiona(spec))} km i giba se prema tlu brzinom ${fmtBeta(beta)}c. Mionov sat izmjerit će ${formatNumber(T0)} µs.`
@@ -68,6 +69,22 @@
       <stop offset="1" class="rm-n1" />
     </linearGradient>
   </defs>
+  {#if pogled === "mion" && kreni}
+    <rect
+      class="rm-obris"
+      x={MION.lijevo}
+      y={MION.vrh}
+      width={MION.desno - MION.lijevo}
+      height={MION.tlo - MION.vrh}
+      rx="4"
+    />
+    <text
+      class="rm-t rm-obris-t"
+      x={(MION.lijevo + MION.desno) / 2}
+      y={MION.tlo - 8}
+      text-anchor="middle">atmosfera kako je mjeri Zemlja</text
+    >
+  {/if}
   <!-- atmosfera -->
   <rect
     x={MION.lijevo}
@@ -145,8 +162,11 @@
     />
     {#if st.duh.raspadnut}
       <path class="rm-duh-iskra" d={iskra(st.duh.x, st.duh.y)} />
-      <text class="rm-t rm-duh-t" x={st.duh.x + 13} y={st.duh.y + 4}
-        >klasično</text
+      <text
+        class="rm-t rm-duh-t"
+        x={st.duh.x}
+        y={st.duh.y + 22}
+        text-anchor="middle">klasično</text
       >
     {:else}
       <circle class="rm-duh" cx={st.duh.x} cy={st.duh.y} r="6" />
@@ -191,7 +211,7 @@
   {/if}
 
   <!-- satovi: jedan krug kazaljke = T₀ -->
-  {#each [{ cy: 82, ime: "mionov sat", ozn: "T₀", us: st.satovi.mion, vidi: true }, { cy: 228, ime: "sat na Zemlji", ozn: "T", us: st.satovi.zemlja, vidi: kreni && pogled === "zemlja" }] as s (s.ime)}
+  {#each [{ cy: 82, ime: "mionov sat", ozn: "T₀", us: st.satovi.mion, vidi: true }, { cy: 228, ime: "sat na Zemlji", ozn: "T", us: st.satovi.zemlja, vidi: kreni }].filter((s) => s.ozn === "T₀" || pogled === "zemlja") as s (s.ime)}
     <g class="rm-sat">
       <text class="rm-t" x={MION.satX} y={s.cy - 52} text-anchor="middle"
         >{s.ime} ({s.ozn})</text
@@ -219,7 +239,7 @@
           >?</text
         >
       {/if}
-      <circle class="rm-os" cx={MION.satX} cy={s.cy} r="3" />
+      {#if s.vidi}<circle class="rm-os" cx={MION.satX} cy={s.cy} r="3" />{/if}
       <text class="rm-dig" x={MION.satX} y={s.cy + 58} text-anchor="middle">
         {#if s.vidi}{s.ozn === "T₀" && !kreni
             ? mus(T0)
@@ -241,6 +261,15 @@
   }
   .rm-n1 {
     stop-color: color-mix(in srgb, #38bdf8 45%, var(--bg-elev));
+  }
+  .rm-obris {
+    fill: none;
+    stroke: var(--text-faint);
+    stroke-dasharray: 5 4;
+  }
+  .rm-obris-t {
+    fill: var(--text-faint);
+    font-style: italic;
   }
   .rm-tlo {
     fill: color-mix(in srgb, var(--success) 45%, var(--bg-elev));

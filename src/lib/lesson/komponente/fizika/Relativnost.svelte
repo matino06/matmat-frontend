@@ -18,6 +18,7 @@
     VELICINE,
     fmtBeta,
     korijen,
+    betaBroda,
     gama,
     tocnaBeta,
     korakPostavi,
@@ -47,7 +48,9 @@
       ? (spec.beta ?? 0.6)
       : scena === "energija"
         ? (spec.beta ?? 0)
-        : (spec.beta ?? 0.6),
+        : scena === "brod"
+          ? (betaBroda(spec) ?? 0.3)
+          : (spec.beta ?? 0.6),
   );
   let beta = $state(POC_BETA);
   let smjer = $state(untrack(() => spec.smjer ?? "prema"));
@@ -249,7 +252,7 @@
       {:else if scena === "mion"}
         <span>T₀/T = √(1 − v²/c²)</span>
       {:else}
-        <span>tik sata na Zemlji / tik sata u brodu = √(1 − v²/c²)</span>
+        <span>tik na Zemlji / tik u brodu = √(1 − v²/c²)</span>
       {/if}
       <b>{formatNumber(faktor)}</b>
     </div>

@@ -259,10 +259,10 @@
   }
   .rp-duh {
     fill: none;
-    stroke: #94a3b8;
-    stroke-width: 2;
-    stroke-dasharray: 3 3;
-    opacity: 0.8;
+    stroke: #cbd5e1;
+    stroke-width: 2.4;
+    stroke-dasharray: 5 3;
+    opacity: 0.85;
   }
   .rp-duh-t {
     fill: #94a3b8;

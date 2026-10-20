@@ -549,10 +549,10 @@ export function satoviBroda(s, beta, p) {
 
 // ── energija ────────────────────────────────────────────────────────────────────────────────────────
 export const ENERGIJA = {
-  cijev: { x1: 14, x2: 346, y: 30 },
-  stupac: { x: 30, w: 52, vrh: 82, dno: 282 },
-  mjerac: { x1: 132, x2: 340, y: 86 },
-  graf: { x1: 150, x2: 340, y1: 126, y2: 266 },
+  cijev: { x1: 14, x2: 346, y: 24 },
+  stupac: { x: 30, w: 52, vrh: 90, dno: 284 },
+  mjerac: { x1: 140, x2: 340, y: 98 },
+  graf: { x1: 158, x2: 340, y1: 146, y2: 268 },
 };
 const lijepiVrh = (g) => {
   for (const m of [
@@ -1112,8 +1112,8 @@ export function ocitanja(s, stanje = {}) {
     st("T0", "T₀", `${iznos(f.T0, "µs")} (mionov sat)`);
     st("gama", "γ", brojF(f.gama));
     st("T", "T", `${iznos(f.T, "µs")} (sat na Zemlji)`);
-    st("s", "s", iznos(f.s, "m"));
-    st("s0", "v·T₀", `${iznos(f.s0, "m")} (klasično)`);
+    st("s", "s", iznos(f.s, "m", 4));
+    st("s0", "v·T₀", `${iznos(f.s0, "m", f.s0 >= 1000 ? 4 : 3)} (klasično)`);
   }
   if (sc === "brod") {
     const f = fizika(s, b);
