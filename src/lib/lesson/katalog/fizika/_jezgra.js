@@ -193,6 +193,16 @@ export const tekstJezgre = (Z, A, pob = false) =>
 export const kratkiZapis = (Z, A) =>
   `${[...String(A)].map((c) => GORE[c]).join("")}${simbolZ(Z)}`;
 
+// Isto za markdown s KaTeX-om (poruke, točan odgovor, očitanja): \({}^{131}_{53}\text{I}\)
+const texSimbol = (s) =>
+  s === "γ"
+    ? "\\gamma"
+    : `\\text{${s.replace("*", "")}}${s.endsWith("*") ? "^*" : ""}`;
+export const mdZapisa = (z) =>
+  `\\({}^{${z.gore}}_{${z.dolje.replace("−", "-")}}${texSimbol(z.simbol)}\\)`;
+export const mdJezgre = (Z, A, pob = false) => mdZapisa(zapisJezgre(Z, A, pob));
+export const mdKratko = (Z, A) => `\\({}^{${A}}\\text{${simbolZ(Z)}}\\)`;
+
 // ── sjeme slučajnosti: isti spec = isti crtež na webu i na iOS-u ──
 export function rng(seed) {
   let a = seed >>> 0 || 1;

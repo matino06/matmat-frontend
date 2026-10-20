@@ -18,7 +18,7 @@
     polumjerJezgre,
     elektroniPolozaji,
     zIzSimbola,
-    kratkiZapis,
+    mdKratko,
     Z_MAX,
   } from "$lib/lesson/katalog/fizika/jezgra.js";
 
@@ -153,7 +153,7 @@
   let ciljTekst = $derived(
     cilj
       ? (cilj.tekst ??
-          `${(cilj.naboj ?? 0) === 0 ? "Neutralni atom" : "Ion"} ${kratkiZapis(zIzSimbola(cilj.simbol), cilj.A)}${cilj.naboj ? (cilj.naboj > 0 ? ` (naboj +${cilj.naboj})` : ` (naboj −${-cilj.naboj})`) : ""}`)
+          `${(cilj.naboj ?? 0) === 0 ? "Neutralni atom" : "Ion"} ${mdKratko(zIzSimbola(cilj.simbol), cilj.A)}${cilj.naboj ? (cilj.naboj > 0 ? ` (naboj +${cilj.naboj})` : ` (naboj −${-cilj.naboj})`) : ""}`)
       : "",
   );
 </script>
@@ -174,7 +174,10 @@
         class:sel={aktivni === i}
         aria-selected={aktivni === i}
         onclick={() => (aktivni = i)}
-        >{i + 1}. {kratkiZapis(zIzSimbola(c.simbol), c.A)}</button
+        >{i + 1}. <Md
+          inline
+          text={mdKratko(zIzSimbola(c.simbol), c.A)}
+        /></button
       >
     {/each}
   </div>
@@ -248,7 +251,7 @@
   </div>
 {/if}
 {#if !slozi && poruka}
-  <p class="jz-poruka" role="status">{poruka}</p>
+  <p class="jz-poruka" role="status"><Md inline text={poruka} /></p>
 {/if}
 
 {#if nacin !== "prikaz"}
@@ -316,7 +319,8 @@
         type="button"
         class="jz-iz"
         class:sel={cur.p === z.p && cur.n === z.n}
-        onclick={() => izotop(o)}>{kratkiZapis(z.p, o.A)}</button
+        onclick={() => izotop(o)}
+        ><Md inline text={mdKratko(z.p, o.A)} /></button
       >
     {/each}
   </div>
@@ -335,10 +339,13 @@
         type="button"
         class="btn btn-ghost"
         onclick={() => (aktivni = aktivni + 1)}
-        >Dalje: {kratkiZapis(
-          zIzSimbola(ciljevi[aktivni + 1].simbol),
-          ciljevi[aktivni + 1].A,
-        )}</button
+        >Dalje: <Md
+          inline
+          text={mdKratko(
+            zIzSimbola(ciljevi[aktivni + 1].simbol),
+            ciljevi[aktivni + 1].A,
+          )}
+        /></button
       >
     {/if}
   </div>

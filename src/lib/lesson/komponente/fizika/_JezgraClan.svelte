@@ -41,11 +41,7 @@
       >{clan.cestica === "e-" ? "−" : "+"}</text
     >
   {:else if clan?.cestica === "gama"}
-    <path
-      class="jzc-g"
-      d="M-14,0 q3.5,-7 7,0 t7,0 t7,0 t7,0"
-      fill="none"
-    />
+    <path class="jzc-g" d="M-14,0 q3.5,-7 7,0 t7,0 t7,0 t7,0" fill="none" />
   {/if}
 </g>
 

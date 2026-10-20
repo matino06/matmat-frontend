@@ -29,9 +29,9 @@ import {
   CESTICE_IDS,
   zapisJezgre,
   zapisCestice,
-  tekstJezgre,
-  tekstZapisa,
-  kratkiZapis,
+  mdJezgre,
+  mdZapisa,
+  mdKratko,
   KONST,
   KRIVULJA_EA,
   Z_MAX,
@@ -54,7 +54,6 @@ export const NACINI = {
 };
 const GLEDANJE = ["istrazi", "prikaz"];
 export const jeOdgovor = (s) => !GLEDANJE.includes(s.nacin);
-const sv = (n) => formatNumber(n);
 
 // Jezgra iz speca {simbol, A} → {Z, N, A}
 export function jezgraIz(o) {
@@ -160,7 +159,7 @@ export function promjenaSastava(a, b) {
   if (a.p !== b.p && b.p > 0 && a.p > 0)
     return `${element(a.p)?.ime ?? "?"} → ${element(b.p)?.ime ?? "?"}: drugi broj protona je drugi element`;
   if (a.p === b.p && a.n !== b.n && b.p > 0)
-    return `i dalje ${element(b.p).ime}, samo drugi izotop (${kratkiZapis(b.p, b.p + b.n)})`;
+    return `i dalje ${element(b.p).ime}, samo drugi izotop (${mdKratko(b.p, b.p + b.n)})`;
   if (a.p === b.p && a.n === b.n && a.e !== b.e && b.p > 0)
     return b.e === b.p
       ? "neutralan atom"
@@ -179,7 +178,7 @@ function checkSlozi(s, odg) {
     const c = s.ciljevi[i];
     const o = odg[i] ?? {};
     const t = sastavCilja(c);
-    const pre = s.ciljevi.length > 1 ? `${kratkiZapis(t.p, c.A)}: ` : "";
+    const pre = s.ciljevi.length > 1 ? `${mdKratko(t.p, c.A)}: ` : "";
     if (![o.p, o.n, o.e].every((v) => Number.isInteger(v) && v >= 0))
       return {
         tocno: false,
@@ -233,7 +232,7 @@ function checkSlozi(s, odg) {
       if (d)
         return {
           tocno: false,
-          poruka: `${pre}to je broj neutrona u ${kratkiZapis(t.p, d.A)}. Ovaj izotop ima maseni broj ${c.A}.`,
+          poruka: `${pre}to je broj neutrona u ${mdKratko(t.p, d.A)}. Ovaj izotop ima maseni broj ${c.A}.`,
         };
       if (o.n === t.p)
         return {
@@ -470,8 +469,8 @@ export function vageReakcije(s, odabir, ukljuciX) {
       };
     return {
       ...z,
-      izrazA: [z.izrazA, "A_X"].filter(Boolean).join(" + "),
-      izrazZ: [z.izrazZ, "Z_X"].filter(Boolean).join(" + "),
+      izrazA: [z.izrazA, "Aₓ"].filter(Boolean).join(" + "),
+      izrazZ: [z.izrazZ, "Zₓ"].filter(Boolean).join(" + "),
       nepoznato: true,
     };
   };
@@ -493,14 +492,18 @@ export function vageReakcije(s, odabir, ukljuciX) {
 
 // Nagib grede vage u stupnjevima (pozitivno: lijeva strana teža, spušta se); 0 kad X još nije uračunat
 export const nagibVage = (strana) =>
-  strana.lijevo.nepoznato || strana.desno.nepoznato ? 0 : Math.sign(strana.lijevoV - strana.desnoV) * Math.min(9, 3 + Math.abs(strana.lijevoV - strana.desnoV));
+  strana.lijevo.nepoznato || strana.desno.nepoznato
+    ? 0
+    : Math.sign(strana.lijevoV - strana.desnoV) *
+      Math.min(9, 3 + Math.abs(strana.lijevoV - strana.desnoV));
 // Vage spremne za crtanje: [{oznaka, lijevo (izraz = zbroj), desno, nagib, jednako}]
 export function vageZaCrtanje(s, odabir, ukljuciX, skrijZ = false) {
   const v = vageReakcije(s, odabir, ukljuciX);
   return ["A", "Z"].map((k) => {
     const l = v[k].lijevo;
     const d = v[k].desno;
-    const izraz = (x) => (x.nepoznato ? x[`izraz${k}`] : `${x[`izraz${k}`]} = ${x[k]}`);
+    const izraz = (x) =>
+      x.nepoznato ? x[`izraz${k}`] : `${x[`izraz${k}`]} = ${x[k]}`;
     const skriveno = k === "Z" && skrijZ;
     const o = { lijevo: l, desno: d, lijevoV: l[k], desnoV: d[k] };
     return {
@@ -616,7 +619,7 @@ function checkDovrsi(s, odg) {
     };
     const ime = c.cestica
       ? MN[c.cestica]
-      : `jezgre ${kratkiZapis(zIzSimbola(c.simbol), c.A)}`;
+      : `jezgre ${mdKratko(zIzSimbola(c.simbol), c.A)}`;
     return {
       tocno: false,
       poruka: `Pazi na koeficijent: u reakciji su **${brojClana(c)}** ${ime}, pa taj član u zbroj ulazi ${brojClana(c)} puta (${brojClana(c)} · ${clanAZ(c).A} za A).`,
@@ -1062,7 +1065,7 @@ function checkRaspad(s, odg) {
       if (isto(-4, 0) || isto(-4, -4))
         return {
           tocno: false,
-          poruka: `${pre}α-čestica je ⁴₂He: odnosi 2 protona i 2 neutrona (A − 4, Z − 2).`,
+          poruka: `${pre}α-čestica je \\({}^{4}_{2}\\text{He}\\): odnosi 2 protona i 2 neutrona (A − 4, Z − 2).`,
         };
     }
     if (v === "beta-") {
@@ -1110,16 +1113,16 @@ function checkKojiRaspad(s, odg) {
   if (odg === "gama")
     return {
       tocno: false,
-      poruka: `γ-raspadom jezgra ostaje ista (${tekstJezgre(a.Z, a.A)}), a ovdje se promijenila u ${tekstJezgre(b.Z, b.A)}.`,
+      poruka: `γ-raspadom jezgra ostaje ista (${mdJezgre(a.Z, a.A)}), a ovdje se promijenila u ${mdJezgre(b.Z, b.A)}.`,
     };
   if (tocan === "gama")
     return {
       tocno: false,
-      poruka: `${RASPAD_IME[odg]} bi promijenio jezgru u ${tekstJezgre(bi.Z, bi.A)}, a ovdje su A i Z ostali isti. Jezgra je samo izgubila energiju.`,
+      poruka: `${RASPAD_IME[odg]} bi promijenio jezgru u ${mdJezgre(bi.Z, bi.A)}, a ovdje su A i Z ostali isti. Jezgra je samo izgubila energiju.`,
     };
   return {
     tocno: false,
-    poruka: `${RASPAD_IME[odg]} bi dao ${tekstJezgre(bi.Z, bi.A)}, a nastala je ${tekstJezgre(b.Z, b.A)}. Usporedi kako su se promijenili A i Z.`,
+    poruka: `${RASPAD_IME[odg]} bi dao ${mdJezgre(bi.Z, bi.A)}, a nastala je ${mdJezgre(b.Z, b.A)}. Usporedi kako su se promijenili A i Z.`,
   };
 }
 
@@ -1172,7 +1175,7 @@ function validateKarta(s, need) {
       const b = jezgraIz(s.kraj);
       need(
         vrstaRaspada(a, b) != null,
-        `iz ${tekstJezgre(a.Z, a.A)} u ${tekstJezgre(b.Z, b.A)} ne vodi nijedan raspad (α, β⁻, β⁺, ili γ uz pocetak.pobudjena)`,
+        `iz ${mdJezgre(a.Z, a.A)} u ${mdJezgre(b.Z, b.A)} ne vodi nijedan raspad (α, β⁻, β⁺, ili γ uz pocetak.pobudjena)`,
       );
       need(!b.pob, "kraj ne može biti pobuđen");
     }
@@ -1238,13 +1241,44 @@ export function lanacVezanja(s, j = s.jezgra) {
         kljuc === "E_A" ? "MeV/nukleon" : VELICINE_VEZANJA[kljuc].jedinica,
       vrijednost: r[kljuc],
       tekst: zapisVrijednosti(kljuc, r[kljuc]),
+      tex: texBroja(zapisVrijednosti(kljuc, r[kljuc])),
     })),
     operacije: ["· 1,66·10⁻²⁷", "· c²", ": 1,6·10⁻¹⁹", ": 10⁶", `: A (${r.A})`],
-    izrazSlobodno: `${r.Z} · ${sv(r.k.m_p)} + ${r.N} · ${sv(r.k.m_n)} = ${formatNumber(r.slobodno, 5)} u`,
+    operacijeTex: [
+      "\\cdot 1{,}66\\cdot 10^{-27}",
+      "\\cdot c^2",
+      ": 1{,}6\\cdot 10^{-19}",
+      ": 10^{6}",
+      `: A\\ (${r.A})`,
+    ],
+    izrazSlobodno: `${r.Z} · ${formatNumber(r.k.m_p, 5)} + ${r.N} · ${formatNumber(r.k.m_n, 5)} = ${formatNumber(r.slobodno, 5)} u`,
     izrazDm: `${formatNumber(r.slobodno, 5)} − ${formatNumber(r.m, 5)} = ${formatNumber(r.dm, 5)} u`,
     r,
   };
 }
+// Broj u fizikalnom zapisu („4,54·10⁻¹²“) → KaTeX („4{,}54 \\cdot 10^{-12}“), jer font aplikacije razmiče
+// unicode eksponente
+const SUP_NATRAG = {
+  "⁰": "0",
+  "¹": "1",
+  "²": "2",
+  "³": "3",
+  "⁴": "4",
+  "⁵": "5",
+  "⁶": "6",
+  "⁷": "7",
+  "⁸": "8",
+  "⁹": "9",
+  "⁻": "-",
+};
+export const texBroja = (t) =>
+  t
+    .replace(
+      /·10([⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+)/,
+      (_, e) => ` \\cdot 10^{${[...e].map((c) => SUP_NATRAG[c]).join("")}}`,
+    )
+    .replace(/,/g, "{,}")
+    .replace("−", "-");
 export function zapisVrijednosti(kljuc, v) {
   if (kljuc === "dm") return formatNumber(v, 5);
   if (kljuc === "E" || kljuc === "E_A") return formatSci(v);
@@ -1559,7 +1593,7 @@ export function najblizaTocka(g, x, y) {
 }
 export const VRH_KRIVULJE = KRIVULJA_EA.reduce((a, b) => (b.EA > a.EA ? b : a));
 export const opisTockeKrivulje = (t, sIme = true) =>
-  `${sIme ? `${kratkiZapis(t.Z, t.A)} (${imeIzotopa(t.Z, t.A)}): ` : `A = ${t.A}: `}E/A = ${formatNumber(t.EA, 2)} MeV`;
+  `${sIme ? `${mdKratko(t.Z, t.A)} (${imeIzotopa(t.Z, t.A)}): ` : `A = ${t.A}: `}E/A = ${formatNumber(Math.round(t.EA * 100) / 100)} MeV`;
 // Strelice fuzije i fisije (indeksi točaka): lake → ⁴He, ²³⁵U → srednje jezgre
 export function streliceKrivulje(g) {
   const nadji = (s, A) => g.tocke.find((t) => t.simbol === s && t.A === A);
@@ -1631,7 +1665,7 @@ function checkOdaberi(s, odg) {
   if (t.A === c.A && t.simbol === c.simbol) return { tocno: true };
   return {
     tocno: false,
-    poruka: `To je ${kratkiZapis(t.Z, t.A)}. Traži jezgru s masenim brojem ${c.A} na vodoravnoj osi.`,
+    poruka: `To je ${mdKratko(t.Z, t.A)}. Traži jezgru s masenim brojem ${c.A} na vodoravnoj osi.`,
   };
 }
 
@@ -1646,7 +1680,7 @@ function validateKrivulja(s, need) {
     else
       need(
         c && KRIVULJA_EA.some((t) => t.simbol === c.simbol && t.A === c.A),
-        `cilj {simbol, A} mora biti jezgra s krivulje: ${KRIVULJA_EA.map((t) => kratkiZapis(t.Z, t.A)).join(", ")}`,
+        `cilj {simbol, A} mora biti jezgra s krivulje: ${KRIVULJA_EA.map((t) => mdKratko(t.Z, t.A)).join(", ")}`,
       );
   }
   if (s.nacin === "prikaz" && s.oznaci != null) {
@@ -1957,20 +1991,20 @@ export const jezgra = {
         .map((c, i) => {
           const t = sastavCilja(c);
           const sve = `${t.p} protona, ${t.n} neutrona, ${t.e} elektrona`;
-          if (i === 0) return `${tekstJezgre(t.p, c.A)}: ${sve}`;
+          if (i === 0) return `${mdJezgre(t.p, c.A)}: ${sve}`;
           const m = mijenjaCilj(c, i);
-          return `${tekstJezgre(t.p, c.A)}: ${m.length === 1 && m[0] === "n" ? `${t.n} neutrona` : sve}`;
+          return `${mdJezgre(t.p, c.A)}: ${m.length === 1 && m[0] === "n" ? `${t.n} neutrona` : sve}`;
         })
         .join("; ");
     if (s.nacin === "dovrsi") {
       const r = rjesenjeReakcije(s);
       const x = nazivAZ(r.A, r.Z);
-      return `X = ${tekstZapisa(x.zapis)} (${x.ime})`;
+      return `X = ${mdZapisa(x.zapis)} (${x.ime})`;
     }
     if (s.nacin === "raspad")
       return putRaspada(s.pocetak, s.niz)
         .slice(1)
-        .map((j, i) => `${i + 1}. ${tekstJezgre(j.Z, j.A, j.pob)}`)
+        .map((j, i) => `${i + 1}. ${mdJezgre(j.Z, j.A, j.pob)}`)
         .join(", ");
     if (s.nacin === "koji_raspad")
       return RASPAD_IME[vrstaRaspada(jezgraIz(s.pocetak), jezgraIz(s.kraj))];
@@ -1985,12 +2019,12 @@ export const jezgra = {
     }
     if (s.nacin === "odaberi") {
       if (s.cilj === "najstabilnija")
-        return `${kratkiZapis(VRH_KRIVULJE.Z, VRH_KRIVULJE.A)} (vrh krivulje)`;
+        return `${mdKratko(VRH_KRIVULJE.Z, VRH_KRIVULJE.A)} (vrh krivulje)`;
       if (s.cilj === "fuzija")
         return "bilo koja laka jezgra (lijevi dio krivulje, A ≤ 40)";
       if (s.cilj === "fisija")
         return "bilo koja teška jezgra (desni dio krivulje, A ≥ 100)";
-      return kratkiZapis(zIzSimbola(s.cilj.simbol), s.cilj.A);
+      return mdKratko(zIzSimbola(s.cilj.simbol), s.cilj.A);
     }
     return "";
   },
