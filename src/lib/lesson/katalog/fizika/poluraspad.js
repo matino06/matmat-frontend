@@ -86,6 +86,10 @@ export function rijecJedinice(j, v) {
 export const zapisVremena = (v, j) =>
   `${formatNumber(zaokr(v, 3))}\u00a0${rijecJedinice(j, zaokr(v, 3))}`;
 
+// sat: jedna ili dvije decimale (bez „57,855 min“ dok se vrti)
+export const zapisSata = (t, j) =>
+  zapisVremena(Number(t.toFixed(Math.abs(t) >= 10 ? 1 : 2)), j);
+
 // cijeli broj s razmacima između tisućica (230 400)
 export function razmak(n) {
   if (!Number.isInteger(n) || Math.abs(n) >= 1e9) return formatSci(n);
@@ -330,7 +334,7 @@ export function geometrijaUzoraka(s) {
     brojkaY: yG + G + 18,
   }));
   const satY = yG + G + 50;
-  const graf = { x0: 46, x1: 344, y0: satY + 32, y1: satY + 32 + 120 };
+  const graf = { x0: 46, x1: 344, y0: satY + 42, y1: satY + 42 + 120 };
   return {
     W,
     H: graf.y1 + 34,
@@ -431,16 +435,23 @@ export function grafUzoraka(s, vidljivo, stanje = {}) {
           y: Y(2 ** -k),
           tekst: k === 1 ? "T" : `${k}T`,
           natpis: k <= 3 && (k * T) / tm < 0.93,
+          // natpis drugog uzorka ispod točke, da se ne preklapa s prvim
+          dx: 4,
+          dy: i === 0 ? -6 : 15,
         });
     });
   }
   const oznakeT = [];
   if (vidljivo.oznakeT != null) {
     const i = vidljivo.oznakeT;
-    const a = analizaCilja(s);
-    const T = a?.vrsta === "omjer" ? a.Teff : TUzorka(s, i, stanje);
-    for (let k = 1; k * T <= tm + 1e-9 && k <= 12; k++)
-      oznakeT.push({ x: X(k * T), tekst: k === 1 ? "T" : `${k}T` });
+    const T = TUzorka(s, i, stanje);
+    const broj = Math.floor(tm / T + 1e-9);
+    for (let k = 1; k <= broj && k <= 12; k++)
+      oznakeT.push({
+        x: X(k * T),
+        tekst: k === 1 ? "T" : `${k}T`,
+        natpis: broj <= 8 || k % 2 === 0 || k === 1,
+      });
   }
   return {
     ...g,
@@ -474,9 +485,12 @@ export function vidljivoUzoraka(s, otkriveno) {
     brojke: slobodno || otkriveno || nacin === "izracunaj",
     nT: slobodno || otkriveno,
     omjer: slobodno || otkriveno,
+    // oznake T, 2T… uzorka iz cilja (kod omjera nema jednog T, pa ih nema)
     oznakeT:
-      (nacin === "postavi" || nacin === "zaustavi") && !otkriveno
-        ? (a?.uzorak ?? 0)
+      (nacin === "postavi" || nacin === "zaustavi") &&
+      !otkriveno &&
+      a?.vrsta === "udio"
+        ? a.uzorak
         : null,
   };
 }
@@ -490,7 +504,7 @@ export function prikazUzoraka(s, t, otkriveno, stanje = {}) {
     oznaka: u.oznaka,
     naslov: `T = ${zapisVremena(u.T, j)}`,
     brojka: v.brojke
-      ? `${u.N_prikaz} od ${N0} · ostalo ${zapisUdjela(u.udio)}`
+      ? `${u.N_prikaz} ${u.N_prikaz % 10 >= 2 && u.N_prikaz % 10 <= 4 && (u.N_prikaz % 100 < 12 || u.N_prikaz % 100 > 14) ? "jezgre" : u.N_prikaz % 10 === 1 && u.N_prikaz % 100 !== 11 ? "jezgra" : "jezgara"} · ${u.udio >= 1 - 1e-9 ? "sve" : zapisUdjela(u.udio)}`
       : null,
     poklopljen: !v.kockice,
   }));
@@ -508,7 +522,7 @@ export function prikazUzoraka(s, t, otkriveno, stanje = {}) {
       ? `${uz[0].oznaka} : ${uz[1].oznaka} = ${zapisOmjera(f.omjer)}`
       : null;
   const aria = [
-    `Sat: t = ${zapisVremena(t, j)}.`,
+    `Sat: t = ${zapisSata(t, j)}.`,
     ...uz.map(
       (u) =>
         `Uzorak ${u.oznaka}, ${u.naslov}: ${u.poklopljen ? "u olovnoj kutiji, ne vidi se" : u.brojka ? `${u.brojka} jezgara` : `${N0} jezgara`}.`,
@@ -518,7 +532,7 @@ export function prikazUzoraka(s, t, otkriveno, stanje = {}) {
     .filter(Boolean)
     .join(" ");
   return {
-    sat: `t = ${zapisVremena(t, j)}`,
+    sat: `t = ${zapisSata(t, j)}`,
     nT,
     uzorci: uz,
     omjer,
@@ -795,7 +809,7 @@ export function prikazAktivnosti(s, t, otkriveno, stanje = {}) {
       ? `Bočica s izotopom ${iz.ime ?? ""} ${iz.simbol}-${iz.A}.`
       : "Bočica s radioaktivnim uzorkom.",
     `Vrijeme poluraspada T = ${zapisVremena(f.T, jT)}.`,
-    `Sat: t = ${zapisVremena(t, jedinicaTt(s))}.`,
+    `Sat: t = ${zapisSata(t, jedinicaTt(s))}.`,
     `Geigerov brojač: ${zaslon}.`,
     `A = λ·N: A = ${kucice.A}, λ = ${kucice.lambda}, N = ${kucice.N}.`,
   ].join(" ");
@@ -803,7 +817,7 @@ export function prikazAktivnosti(s, t, otkriveno, stanje = {}) {
     izotop: zapisIzotopa(iz),
     ime: iz?.ime ?? "",
     T: `T = ${zapisVremena(f.T, jT)}`,
-    sat: `t = ${zapisVremena(t, jedinicaTt(s))}`,
+    sat: `t = ${zapisSata(t, jedinicaTt(s))}`,
     zaslon,
     kucice,
     stopa,
@@ -1171,7 +1185,7 @@ function checkVrijeme(s, t, tolUdio) {
     tocno: false,
     poruka:
       s.nacin === "zaustavi"
-        ? `Zaustavio si na ${zapisVremena(t, j)}, to je ${nT} T: ostalo bi ${zapisUdjela(Number(u.udio.toPrecision(2)))} jezgara, a ne ${cilj}. Probaj opet.`
+        ? `Zaustavio si na ${zapisSata(t, j)}, to je ${formatNumber(zaokr(n, 1))} T: ostalo bi oko ${Math.round(u.udio * 100)} % jezgara, a traži se ${cilj}. Probaj opet.`
         : `Na tvom satu prošlo je $n = t/T = ${nT.replace(",", "{,}")}$ poluraspada, pa bi ostalo ${zapisUdjela(u.udio)} jezgara ${u.oznaka}. Traži se ${cilj}.`,
   };
 }

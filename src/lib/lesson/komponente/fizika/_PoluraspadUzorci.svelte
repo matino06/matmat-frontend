@@ -23,6 +23,7 @@
     poljaIzracunaj,
     zapisVremena,
     jedinicaT,
+    rijecJedinice,
     opisCilja,
   } from "$lib/lesson/katalog/fizika/poluraspad.js";
 
@@ -59,10 +60,16 @@
       ),
     ),
   );
+  const sJedinicom = (k) => ({
+    ...k,
+    jedinica: k.jedinica ?? rijecJedinice(jedinicaT(spec), 5),
+  });
   const klizaciT = untrack(() =>
-    (spec.klizaci ?? []).filter((k) => k.id.startsWith("T_")),
+    (spec.klizaci ?? []).filter((k) => k.id.startsWith("T_")).map(sJedinicom),
   );
-  const klizacSata = untrack(() => klizacT(spec));
+  const klizacSata = untrack(() =>
+    klizacT(spec) ? sJedinicom(klizacT(spec)) : null,
+  );
   let t = $state(0); // sat (istrazi, prikaz, zaustavi dok teče)
   let igra = $state(false);
   let faza = $state("spreman"); // zaustavi: spreman | tece | stao
@@ -221,7 +228,7 @@
             igra = true;
           }
         },
-        { threshold: 0.5 },
+        { threshold: 0.3 },
       );
       ob.observe(figura);
     }
@@ -245,7 +252,7 @@
     if (locked || pokazi) return;
     if (faza === "tece") {
       faza = "stao";
-      tStop = Number(t.toFixed(6));
+      tStop = Number(t.toPrecision(3));
     } else {
       t = 0;
       tStop = null;
@@ -535,8 +542,11 @@
           y2={o.y}
           class={o.crtkano ? "pr-razina" : "pr-razina-1"}
         />
-        <text x={graf.x0 - 6} y={o.y + 4} text-anchor="end" class="pr-os"
-          >{o.tekst}</text
+        <text
+          x={graf.x0 - 6}
+          y={o.y + 4}
+          text-anchor="end"
+          class="pr-os pr-os-y">{o.tekst}</text
         >
       {/each}
       <text x={graf.x0 - 6} y={graf.y0 - 8} text-anchor="end" class="pr-os-ime"
@@ -582,7 +592,9 @@
         <g style:--boja="var(--{q.boja})">
           <circle cx={q.x} cy={q.y} r="3.2" class="pr-tockaT" />
           {#if q.natpis}
-            <text x={q.x + 4} y={q.y - 6} class="pr-tockaT-t">{q.tekst}</text>
+            <text x={q.x + q.dx} y={q.y + q.dy} class="pr-tockaT-t"
+              >{q.tekst}</text
+            >
           {/if}
         </g>
       {/each}
@@ -870,6 +882,10 @@
     font-size: 11px;
     fill: var(--text-dim);
     font-family: var(--font-mono);
+  }
+  .pr-os-y {
+    font-family: inherit;
+    font-size: 13px;
   }
   .pr-os-ime {
     font-size: 11px;

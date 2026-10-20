@@ -42,7 +42,12 @@
       ),
     ),
   );
-  const klizaci = untrack(() => spec.klizaci ?? []);
+  const klizaci = untrack(() =>
+    (spec.klizaci ?? []).map((k) => ({
+      ...k,
+      jedinica: k.jedinica ?? spec.jedinica_T,
+    })),
+  );
   let t = $state(0);
   let igra = $state(false);
   let tOtkr = $state(0);
@@ -169,7 +174,7 @@
             igra = true;
           }
         },
-        { threshold: 0.5 },
+        { threshold: 0.3 },
       );
       ob.observe(figura);
     }
@@ -266,7 +271,10 @@
       y={b.y + b.h + 16}
       text-anchor="middle"
       class="pa-izotop"
-      >{p.izotop}{#if p.ime}<tspan class="pa-dim" dx="5">{p.ime}</tspan
+      >{#if spec.izotop}<tspan class="pa-A" dy="-6">{spec.izotop.A}</tspan
+        ><tspan dy="6">{spec.izotop.simbol}</tspan>{/if}{#if p.ime}<tspan
+          class="pa-dim"
+          dx="5">{p.ime}</tspan
         >{/if}</text
     >
 
@@ -468,6 +476,9 @@
     font-weight: 700;
     fill: var(--text);
   }
+  .pa-A {
+    font-size: 10px;
+  }
   .pa-dim {
     fill: var(--text-dim);
     font-weight: 400;
@@ -497,7 +508,7 @@
     stroke: var(--border-strong);
   }
   .pa-zaslon-t {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 15px;
     font-weight: 700;
     fill: #6ee7b7;
@@ -529,7 +540,7 @@
     fill: var(--text-dim);
   }
   .pa-kucica-v {
-    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 12px;
     font-weight: 700;
     fill: var(--text);
