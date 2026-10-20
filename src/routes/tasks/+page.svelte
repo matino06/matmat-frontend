@@ -15,6 +15,7 @@
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import { interaktivnaLekcija } from "$lib/lesson/zadatak.js";
   import { objasnjenjeOcjene } from "$lib/lesson/ocjena.js";
+  import { fetchIsReview } from "$lib/api/reviewState";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
   import LessonMasteredToast from "$lib/components/lessonMastered/LessonMasteredToast.svelte";
   import { createMasteryTracker } from "$lib/api/studyMap";
@@ -56,6 +57,16 @@
     task?.id;
     tekstualno = false;
     lekcijaSazetak = null;
+  });
+  // Lekcija na ponavljanju (već ocijenjena) predlaže strožu ocjenu kad su učeniku trebali koraci.
+  let ponavljanje = $state(false);
+  $effect(() => {
+    const id = task?.id;
+    ponavljanje = false;
+    if (id == null) return;
+    let otkazano = false;
+    fetchIsReview(id).then((r) => { if (!otkazano) ponavljanje = r; });
+    return () => (otkazano = true);
   });
 
   // Kraj interaktivne lekcije: ocjena se predlaže iz izvedbe (LessonRunner broji dijelove riješene odmah),
@@ -464,7 +475,7 @@
   {:else if task}
     <article class="card task-card">
       {#if lekcija}
-        {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} {rjesenje} />{/key}
+        {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} {rjesenje} {ponavljanje} />{/key}
         <div class="lesson-alt">
           <button class="btn btn-quiet" onclick={() => (tekstualno = true)}>Prikaži kao tekst</button>
         </div>
