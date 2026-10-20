@@ -150,8 +150,7 @@
 
   function dalje() {
     ekran++;
-    // zadatak s grafom ostaje otvoren: sljedeći podzadaci očitavaju s istog grafa
-    zadatakOtvoren = !!lekcija.zadatak.graf;
+    // zadatak ostaje kako ga je učenik ostavio: zatvara se samo na njegov klik
     if (ekran === n && lekcija.cijeli?.blizanac) {
       zavrsni = true;
       zadatakOtvoren = false;
