@@ -29,7 +29,8 @@
       await saveCurrentCourse(start.id);
       clearRememberedLevel();
       userData.needsOnboarding = false;
-      goto("/tasks");
+      // The walkthrough shows how repetition is planned; it ends on /tasks.
+      goto("/uvod");
     } catch {
       showErrorAlert("Odabir nije spremljen. Provjeri vezu i pokušaj ponovno.");
     } finally {

@@ -8,6 +8,10 @@
   import { courseState } from "$lib/store/course.svelte";
   import { openSubjects } from "$lib/store/ui.svelte";
   import { getProgram } from "$lib/config/programs";
+  import { resetirajSavjete } from "$lib/store/savjeti.svelte";
+
+  // "Ponovno prikaži savjete": the one-time tips (AI asistent, Formule…) show again where they apply.
+  let savjetiVraceni = $state(false);
 
   // Before the student ever chose (older accounts), the current course stands in.
   let myPrograms = $derived(
@@ -257,6 +261,22 @@
     {/if}
   </div>
 
+  <!-- Help card -->
+  <div class="card card-pad" style="margin-top: 16px">
+    <div class="settings-head" style="margin-bottom: 0">
+      <div>
+        <h2 class="settings-title">Kako MatMat radi</h2>
+        <p class="settings-desc">Dvije minute na probnom predmetu: kako ocjena određuje kad se lekcija vraća. Savjeti za AI asistenta i formule pojave se jednom, kad ti zatrebaju.</p>
+      </div>
+      <div class="help-btns">
+        <a class="btn btn-ghost" href="/uvod">Pokreni uvod</a>
+        <button class="btn btn-quiet" onclick={() => { resetirajSavjete(); savjetiVraceni = true; }} disabled={savjetiVraceni}>
+          {savjetiVraceni ? "Savjeti vraćeni" : "Ponovno prikaži savjete"}
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Sound card: device-only, kept in localStorage -->
   <div class="card card-pad" style="margin-top: 16px">
     <label class="notif-row">
@@ -362,6 +382,12 @@
 {/if}
 
 <style>
+  .help-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
   .settings-head {
     display: flex;
     justify-content: space-between;

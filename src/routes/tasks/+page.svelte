@@ -3,7 +3,7 @@
   import { apiClient } from "$lib/api/apiClient";
   import Sketch from "$lib/sketch/Sketch.svelte";
   import CourseLabel from "$lib/components/layout/CourseLabel.svelte";
-  import { onMount, onDestroy, tick } from "svelte";
+  import { onMount, onDestroy, tick, untrack } from "svelte";
   import { fetchReadiness } from "$lib/api/progress";
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
@@ -21,6 +21,9 @@
   import { createMasteryTracker } from "$lib/api/studyMap";
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
+  import { uvod, uvodDogadaj, ocijeniUvod } from "$lib/store/uvod.svelte";
+  import { ponudiSavjet } from "$lib/store/savjeti.svelte";
+  import { DANA_DO_ISPITA, ZADACI, lekcijeNakon, kada } from "$lib/uvod/scenarij";
 
   let task = $state(null);
   let selectedTempo = $state(null);
@@ -55,7 +58,7 @@
   let lekcijaSazetak = $state(null);
   $effect(() => {
     task?.id;
-    tekstualno = false;
+    tekstualno = !!task?.uvodLekcija?.kaoTekst;
     lekcijaSazetak = null;
   });
   // Lekcija na ponavljanju (već ocijenjena) predlaže strožu ocjenu kad su učeniku trebali koraci.
@@ -65,6 +68,7 @@
     ponavljanje = false;
     if (id == null) return;
     let otkazano = false;
+    if (uvod.active) return;
     fetchIsReview(id).then((r) => { if (!otkazano) ponavljanje = r; });
     return () => (otkazano = true);
   });
@@ -137,6 +141,7 @@
 
       task = JSON.parse(text);
       setCurrentTask(task);
+      ponudiSavjet("formule");
       startTime = Date.now();
       checkVariation(task);
     } finally {
@@ -189,8 +194,49 @@
     }
   }
 
+  // The walkthrough: its two made-up tasks, rated without the backend.
+  function uvodSpremnost() {
+    const lekcije = lekcijeNakon(uvod.ocjene);
+    return Math.round((lekcije.filter((l) => l.za > DANA_DO_ISPITA).length / lekcije.length) * 100);
+  }
+
+  function uvodZadatak() {
+    const lekcija = ZADACI.find((z) => !(z.id in uvod.ocjene));
+    revealed = false;
+    answered = false;
+    pendingRating = null;
+    ratingKey++;
+    noMoreTasks = !lekcija;
+    task = lekcija
+      ? {
+          id: `uvod-${lekcija.id}`,
+          objective: lekcija.naziv,
+          taskText: lekcija.zadatak,
+          explanation: lekcija.rjesenje,
+          lessonUi: JSON.stringify(lekcija.lekcija),
+          uvodLekcija: lekcija,
+        }
+      : null;
+  }
+
+  async function rateUvod(rating) {
+    answered = true;
+    const from = readinessPct;
+    ocijeniUvod(task.uvodLekcija.id, rating.k);
+    uvodDogadaj("ocijenjeno");
+    completedToday += 1;
+    readinessPct = uvodSpremnost();
+    if (readinessPct > from) progressBump = { from, to: readinessPct, key: Date.now() };
+    showToast = false;
+    await tick();
+    showToast = true;
+    setTimeout(() => showToast = false, 2200);
+    setTimeout(uvodZadatak, 600);
+  }
+
   async function handleRate(rating) {
     if (!task) return;
+    if (uvod.active) return rateUvod(rating);
     answered = true;
     const objective = task.objective;
 
@@ -288,6 +334,7 @@
   }
 
   onMount(async () => {
+    if (uvod.active) return;
     const response = await apiClient("/account/tempo", { method: "GET" });
     if (response.ok) {
       selectedTempo = await response.json();
@@ -298,8 +345,19 @@
   // onAuthStateChanged listener, so we react to the store instead).
   let loaded = false;
   $effect(() => {
+    if (uvod.active) {
+      untrack(() => {
+        loaded = false;
+        dailyGoal = ZADACI.length;
+        completedToday = Object.keys(uvod.ocjene).length;
+        readinessPct = uvodSpremnost();
+        uvodZadatak();
+      });
+      return;
+    }
     if (userData.user && !loaded) {
       loaded = true;
+      noMoreTasks = false;
       (async () => {
         try {
           await Promise.all([fetchUserGoal(), mastery.load()]);
@@ -315,6 +373,10 @@
   // The AI panel answers with hints until the solution is open.
   $effect(() => {
     setSolutionRevealed(revealed);
+  });
+
+  $effect(() => {
+    if (revealed) untrack(() => (uvod.active ? uvodDogadaj("otkriveno") : ponudiSavjet("ai")));
   });
 
   onDestroy(() => {
@@ -345,7 +407,7 @@
 
 {#snippet ocjena()}
     {#if !answered}
-      <div class="rating-row">
+      <div class="rating-row" data-tour="ocjena">
         <!-- after a lesson the suggestion only asks to be confirmed; "Promijeni" shows why and the ratings -->
         <div class="rating-label">{lekcijaSazetak && pendingRating ? "Predložena ocjena. Slažeš li se?" : "Kako ti je išlo?"}</div>
         {#if pendingRating}
@@ -353,6 +415,9 @@
             <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
               {pendingRating.k} — {pendingRating.t}
             </span>
+            {#if task.uvodLekcija}
+              <span class="rating-confirm-kada">vraća se {kada(task.uvodLekcija.dani[pendingRating.k])}</span>
+            {/if}
             <div class="rating-confirm-btns">
               <button class="btn btn-primary" onclick={() => { handleRate(pendingRating); pendingRating = null; }}>
                 Potvrdi i nastavi
@@ -367,7 +432,7 @@
             <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
           {/if}
           {#key ratingKey}
-            <RatingPicker taskId={task.id} najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => pendingRating = r} />
+            <RatingPicker taskId={task.uvodLekcija ? null : task.id} days={task.uvodLekcija?.dani ?? null} najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => pendingRating = r} />
           {/key}
         {/if}
       </div>
@@ -473,7 +538,7 @@
     </div>
 
   {:else if task}
-    <article class="card task-card">
+    <article class="card task-card" data-tour="zadatak">
       {#if lekcija}
         {#key task.id}<LessonRunner {lekcija} onzavrsi={lekcijaGotova} {rjesenje} {ponavljanje} />{/key}
         <div class="lesson-alt">
@@ -640,6 +705,10 @@
   .rating-confirm-chosen {
     font-size: 15px;
     font-weight: 600;
+  }
+  .rating-confirm-kada {
+    font-size: 14px;
+    color: var(--text-dim);
   }
   .rating-confirm-btns {
     display: flex;
