@@ -8,11 +8,9 @@
   import Zapis from "./_JezgraZapis.svelte";
   import {
     lanacVezanja,
-    hrpaNukleona,
+    vagaVezanja,
     kuglice,
-    tipoviJezgre,
     polumjerJezgre,
-    zapisJezgre,
     zIzSimbola,
     imeIzotopa,
     mdKratko,
@@ -81,9 +79,11 @@
   // ── vaga ──
   const r1 = (n) => Math.round(n * 10) / 10;
   const NAGIB = 6; // ° (shematski: lijeva strana je teža)
-  let hrpa = $derived(hrpaNukleona(r.Z, r.N, 104));
+  // izracunaj: Z i N (brojke, boje kuglica, redni broj, opis) skriveni do točnog odgovora ili pokazi
+  let V = $derived(vagaVezanja(r, izracunaj && !otkriveno, 104));
+  let hrpa = $derived(V.hrpa);
   let R1 = $derived(Math.min(9, 36 / Math.cbrt(r.A)));
-  let kJ = $derived(kuglice(tipoviJezgre(r.Z, r.N, 4), R1));
+  let kJ = $derived(kuglice(V.tipoviJezgre, R1));
   let RJ = $derived(polumjerJezgre(r.A, R1));
   const C = [180, 34];
   const KRAK = 100;
@@ -96,9 +96,7 @@
   $effect(() => {
     if (otkriveno && izracunaj) untrack(() => bljesak++);
   });
-  let opis = $derived(
-    `Vaga: lijevo ${r.Z} protona i ${r.N} neutrona, desno jezgra ${imeIzotopa(r.Z, r.A)} mase ${formatNumber(r.m, 5)} u. Jezgra je lakša.`,
-  );
+  let opis = $derived(V.opis);
   const ozn = (q) => VELICINE_VEZANJA[q.velicina];
 </script>
 
@@ -170,7 +168,7 @@
       class="jzv-t"
       x={r1(lijevo.x)}
       y={r1(lijevo.y + VIS + 26)}
-      text-anchor="middle">{r.Z} p + {r.N} n</text
+      text-anchor="middle">{V.lijevo}</text
     >
     <text
       class="jzv-t"
@@ -178,12 +176,7 @@
       y={r1(desno.y + VIS + 26)}
       text-anchor="middle">jezgra: {formatNumber(r.m, 5)} u</text
     >
-    <Zapis
-      zapis={zapisJezgre(r.Z, r.A)}
-      x={desno.x}
-      y={desno.y + VIS + 46}
-      vel={16}
-    />
+    <Zapis zapis={V.zapis} x={desno.x} y={desno.y + VIS + 46} vel={16} />
     {#if vidiKorak(0)}
       <text
         class="jzv-t jzv-m"
@@ -264,7 +257,7 @@
   <p class="lx-hint">
     <Md
       inline
-      text={"\\(1\\ \\text{u} = 1{,}66\\cdot 10^{-27}\\ \\text{kg}\\), \\(c = 3\\cdot 10^{8}\\ \\text{m/s}\\), \\(1\\ \\text{eV} = 1{,}6\\cdot 10^{-19}\\ \\text{J}\\). Potencije piši npr. 4,54·10^-12."}
+      text={"\\(1\\ \\text{u} = 1{,}66\\cdot 10^{-27}\\ \\text{kg}\\), \\(c = 3\\cdot 10^{8}\\ \\text{m/s}\\), \\(1\\ \\text{eV} = 1{,}6\\cdot 10^{-19}\\ \\text{J}\\). Potenciju broja 10 piši kao a·10^n."}
     />
   </p>
   <div class="lx-actions">

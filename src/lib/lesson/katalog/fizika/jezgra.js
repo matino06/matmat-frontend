@@ -1555,6 +1555,28 @@ function validateVezanje(s, need) {
   }
 }
 
+// Vaga u „vezanje“: natpis lijeve zdjelice, opis za čitače zaslona i kuglice obiju zdjelica (r iz racunVezanja).
+// skrij (izracunaj prije točnog odgovora ili pokazi): broj protona i neutrona ne vidi se ni u brojkama ni u
+// bojama kuglica ni u rednom broju zapisa, jer ga pomoć može tražiti; A se vidi (zadan je u zapisu jezgre).
+export function vagaVezanja(r, skrij = false, sirinaHrpe = 104) {
+  const neutralno = (k) =>
+    skrij ? k.map((b) => ({ ...b, vrsta: "nukleon" })) : k;
+  const masa = `${imeIzotopa(r.Z, r.A)} mase ${formatNumber(r.m, 5)} u`;
+  return {
+    lijevo: skrij ? "? p + ? n" : `${r.Z} p + ${r.N} n`,
+    // zapis ispod jezgre: bez rednog broja dok je skriveno (kao ¹²C u tekstu zadatka)
+    zapis: skrij
+      ? { ...zapisJezgre(r.Z, r.A), dolje: "" }
+      : zapisJezgre(r.Z, r.A),
+    opis: skrij
+      ? `Vaga: lijevo ${r.A} slobodnih nukleona (protona i neutrona), desno jezgra ${masa}. Jezgra je lakša.`
+      : `Vaga: lijevo ${r.Z} protona i ${r.N} neutrona, desno jezgra ${masa}. Jezgra je lakša.`,
+    hrpa: neutralno(hrpaNukleona(r.Z, r.N, sirinaHrpe)),
+    tipoviJezgre: skrij
+      ? Array(r.A).fill("nukleon")
+      : tipoviJezgre(r.Z, r.N, 4),
+  };
+}
 // Vaga: slobodni nukleoni na lijevoj zdjelici (hrpa), jezgra na desnoj. Koordinate oko dna zdjelice (0, 0).
 export function hrpaNukleona(Z, N, sirina = 110) {
   const A = Z + N;
