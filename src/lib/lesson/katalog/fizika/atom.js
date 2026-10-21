@@ -717,7 +717,12 @@ function checkIzracunaj(s, odgovor) {
   }
   return { tocno: true };
 }
-export const formatOdgovora = (v) => formatSci(v, 3);
+// prikazani točan odgovor: energije u eV od 10 eV naviše na 4 značajne znamenke (12,09 i 12,75 eV,
+// kako lekcije traže „na dvije decimale“), sve ostalo na 3 značajne znamenke
+export const formatOdgovora = (v, jed) =>
+  jed === "eV" && Math.abs(v) >= 9.995 ? broj(v, 4) : formatSci(v, 3);
+export const odgovorStavke = (s, it) =>
+  formatOdgovora(tocnoStavke(s, it), jedinicaStavke(it));
 // elektron i skok koji crtež pokazuje u izracunaj (zadani podaci, ne odgovor)
 export function crtezIzracunaj(s) {
   const it = (s.pitaj ?? []).find((q) => isNum(q?.od) && isNum(q?.do));
@@ -1270,7 +1275,7 @@ export const atom = {
       return s.pitaj
         .map(
           (it) =>
-            `${opisStavke(it)}: ${formatOdgovora(tocnoStavke(s, it))} ${jedinicaStavke(it)}`,
+            `${opisStavke(it)}: ${odgovorStavke(s, it)} ${jedinicaStavke(it)}`,
         )
         .join("; ");
     if (s.nacin === "prijelaz") {

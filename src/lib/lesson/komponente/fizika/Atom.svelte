@@ -31,8 +31,7 @@
     crtezIzracunaj,
     jedinicaStavke,
     oznakaStavke,
-    tocnoStavke,
-    formatOdgovora,
+    odgovorStavke,
     tocanPrijelaz,
     ishodiApsorpcije,
     nizApsorpcije,
@@ -314,7 +313,7 @@
     if (!pokazi) return;
     untrack(() => {
       if (nacin === "izracunaj")
-        unosi = pitaj.map((it) => formatOdgovora(tocnoStavke(S, it)));
+        unosi = pitaj.map((it) => odgovorStavke(S, it));
       else if (nacin === "prijelaz") {
         const t = tocanPrijelaz(S);
         if (t) izbor = { ...t };
