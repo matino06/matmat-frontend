@@ -40,6 +40,13 @@ Uz to, za maturu:
   podzadatka je cijelo rješenje tog koraka: svaki korak, pravilo i napomena iz izvornog objašnjenja (metoda, knjižica
   formula i stranica, kalkulator, „skica ne mora biti precizna“…), napisano jasnije. Zadnji podzadatak završava
   konačnim rezultatom.
+- **Kalkulator kao u izvoru.** Kad izvor korak rješava kalkulatorom (*upišemo u kalkulator*, *upotrijebimo
+  kalkulator*, *obavezno prebaci kalkulator u stupnjeve*, slika s uputama), taj korak i u lekciji ide kalkulatorom:
+  pitanje to kaže, prvi korak pomoći je `pojam` s vlasnikovom slikom kalkulatora (`<img src=…>` iz izvora; gdje izvor
+  ima samo „u stupnjeve“, slika `kalkulator_deg.png`) i tipkama za fx-991EX i fx-991ES, a ručni put ostaje samo kao
+  drugi način u `objasnjenje`. Kad izvor kalkulator navodi samo kao drugu mogućnost (*ili pomoću kalkulatora*,
+  *mogla se riješiti pomoću kalkulatora*), ručni put ostaje, a lekcija u tom koraku napomene da se može i
+  kalkulatorom (uz sliku ako je izvor ima). Kalkulator nikad ne smije biti samo u `krivo`.
 - Svaka slika iz izvornog objašnjenja postaje `graf` podzadatka (graf_funkcije „prikaz“ s istim oznakama: nultočke,
   istaknuti dio, crte, strelice). Prikazuje se uz „Pokaži cijelo objašnjenje“ i u „Cijelo rješenje“ na kraju, pa
   graf vidi i učenik koji je sve znao odmah (pomoć vidi samo onaj koji griješi).
