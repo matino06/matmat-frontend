@@ -59,7 +59,7 @@
   <meta name="description" content="Koje podatke MatMat prikuplja, zašto, s kim ih dijeli, koliko ih čuva i kako ih možeš obrisati." />
 </svelte:head>
 
-<LegalPage title="Pravila privatnosti" lead="Vrijede za web matmat.online i iOS aplikaciju MatMat. Zadnja izmjena: 17. listopada 2026.">
+<LegalPage title="Pravila privatnosti" lead="Vrijede za web matmat.online i iOS aplikaciju MatMat. Zadnja izmjena: 21. listopada 2026.">
   <h2>Ukratko</h2>
   <ul>
     <li>Prikupljamo samo ono što treba za učenje: tvoj račun, napredak i ono što sam pošalješ.</li>
@@ -144,7 +144,7 @@
   <p>Ako misliš da tvoje podatke obrađujemo protivno propisima, možeš se obratiti <a href="https://azop.hr" target="_blank" rel="noopener noreferrer">Agenciji za zaštitu osobnih podataka</a> (AZOP).</p>
 
   <h2>Učenici</h2>
-  <p>MatMat je namijenjen učenicima od 13 godina naviše. Ako si mlađi/a od 16 godina, preporučujemo da roditelj ili skrbnik zna da koristiš MatMat.</p>
+  <p>MatMat je za učenike osnovne i srednje škole. Ako si mlađi/a od 16 godina, koristi MatMat uz znanje roditelja ili skrbnika, a dozvolu za AI daj samo ako se roditelj ili skrbnik s tim slaže.</p>
 
   <h2>Sigurnost</h2>
   <p>Sva komunikacija ide preko šifrirane veze (HTTPS). Fotografije i materijali nisu javni: otvaraju se samo kratkotrajnim linkom, i to samo tebi. Pristup podacima ima samo autor MatMata, i to samo kad treba riješiti problem ili pregledati prijavljeni AI odgovor.</p>
