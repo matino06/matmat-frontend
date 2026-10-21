@@ -8,6 +8,8 @@
   import { PROGRAMS, isSelectableProgram } from '$lib/config/programs';
   import { ownCourses, findOwnCourse, courseBadge, courseHue } from '$lib/store/ownCourses.svelte';
   import { apiClient } from '$lib/api/apiClient';
+  import { uvod } from '$lib/store/uvod.svelte';
+  import { PREDMET } from '$lib/uvod/scenarij';
 
   let { open = false } = $props();
 
@@ -80,6 +82,7 @@
   let ownPrograms = $derived(ownCourses.courses.map(ownProg));
 
   let activeProg = $derived(
+    uvod.active ? { id: null, ...PREDMET } :
     PROGRAMS.find(p => p.id === courseState.courseId)
       ?? (findOwnCourse(courseState.courseId) && ownProg(findOwnCourse(courseState.courseId)))
       ?? visiblePrograms[0]
@@ -188,7 +191,7 @@
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/tasks' ? 'active' : ''}" onclick={() => nav('/tasks')} title={tip('Zadaci')}>
+  <div class="nav-item {path === '/tasks' ? 'active' : ''}" data-tour="nav-tasks" onclick={() => nav('/tasks')} title={tip('Zadaci')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
     </svg>
@@ -196,7 +199,7 @@
   </div>
 
   <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="nav-item {path === '/progress' ? 'active' : ''}" onclick={() => nav('/progress')} title={tip('Napredak')}>
+  <div class="nav-item {path === '/progress' ? 'active' : ''}" data-tour="nav-progress" onclick={() => nav('/progress')} title={tip('Napredak')}>
     <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
     </svg>

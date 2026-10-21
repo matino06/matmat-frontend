@@ -1,7 +1,9 @@
 <script>
   import { courseState, courseLabel } from "$lib/store/course.svelte";
+  import { uvod } from "$lib/store/uvod.svelte";
+  import { PREDMET } from "$lib/uvod/scenarij";
 
-  let label = $derived(courseLabel(courseState.courseId));
+  let label = $derived(uvod.active ? PREDMET.label : courseLabel(courseState.courseId));
 </script>
 
 <!-- Dok se predmet učitava: zamagljen naziv umjesto nagađanja „Matematika“. -->

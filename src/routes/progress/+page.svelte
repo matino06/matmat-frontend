@@ -3,6 +3,8 @@
   import { fetchObjectivesWithStatus } from "$lib/api/objectives";
   import { fetchReadiness } from "$lib/api/progress";
   import { apiClient } from "$lib/api/apiClient";
+  import { uvod } from "$lib/store/uvod.svelte";
+  import { DANA_DO_ISPITA, PREDMET, lekcijeNakon } from "$lib/uvod/scenarij";
 
   let objectives = $state([]);
   let todayTasks = $state([]);
@@ -32,7 +34,32 @@
     }
   }
 
-  $effect(() => { if (userData.user) loadAll(); });
+  // The walkthrough shows its made-up course instead, and the ratings given in it.
+  function loadUvod() {
+    const lekcije = lekcijeNakon(uvod.ocjene);
+    const iso = (dana) => {
+      const d = new Date(Date.now() + dana * 86400000);
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    };
+    objectives = lekcije.map((l) => ({
+      objectiveId: l.id,
+      objectiveName: l.naziv,
+      fieldName: l.podrucje,
+      unlocked: true,
+      // remembered until the exam
+      isMastered: l.za > DANA_DO_ISPITA,
+      uvodZadatak: !!l.zadatak,
+    }));
+    todayTasks = lekcije.map((l) => ({ title: l.naziv, dueDate: iso(l.za), lastQ: l.lastQ }));
+    upcomingTasks = [];
+    examProgress = Math.round((lekcije.filter((l) => l.za > DANA_DO_ISPITA).length / lekcije.length) * 100);
+    loading = false;
+  }
+
+  $effect(() => {
+    if (uvod.active) loadUvod();
+    else if (userData.user) loadAll();
+  });
 
   // Locked objectives (not yet unlocked) are hidden from the list,
   // since they have no due date / nothing to display per row.
@@ -136,7 +163,9 @@
   <div class="zadaci-head" style="margin-bottom: 18px">
     <div>
       <h1>Napredak</h1>
-      <div class="sub">Tvoja priprema za maturu · Matematika</div>
+      <div class="sub">
+        {#if uvod.active}{PREDMET.label} · ispit za {DANA_DO_ISPITA} dana{:else}Tvoja priprema za maturu · Matematika{/if}
+      </div>
     </div>
   </div>
 
@@ -146,7 +175,7 @@
     </div>
   {:else}
     <!-- Ring card -->
-    <div class="card ring-card">
+    <div class="card ring-card" data-tour="spremnost">
       <div class="ring-wrap">
         <svg width={SIZE} height={SIZE} style="transform:rotate(-90deg)">
           <circle cx={SIZE/2} cy={SIZE/2} r={R} fill="none" stroke="var(--bg-elev-2)" stroke-width={STROKE}/>
@@ -163,7 +192,7 @@
         </div>
       </div>
       <div class="ring-meta">
-        <h2>Spremnost za maturu</h2>
+        <h2>Spremnost za {uvod.active ? "ispit" : "maturu"}</h2>
         <div class="field-list">
           {#each fieldProgress as f (f.name)}
             <div class="field-row">
@@ -195,12 +224,12 @@
     </div>
 
     <!-- Ishod list -->
-    <div class="ishod-list">
+    <div class="ishod-list" class:s-datumom={uvod.active} data-tour="ishodi">
       {#each shownObjectives as obj (obj.objectiveId)}
         {@const status = getStatus(obj)}
         {@const prog = lastQMap.has(obj.objectiveName) ? (lastQMap.get(obj.objectiveName) ?? 0) : getProgress(obj)}
         {@const when = dueDateMap.get(obj.objectiveName)}
-        <div class="ishod-row">
+        <div class="ishod-row" data-tour={obj.uvodZadatak ? "ponavljanje" : undefined}>
           <div class="ishod-status {status}"></div>
           <div class="ishod-title">
             {obj.objectiveName}
@@ -351,5 +380,8 @@
     .field-list { text-align: left; }
     .ishod-row { grid-template-columns: 20px 1fr auto; }
     .ishod-when { display: none; }
+    /* the walkthrough is about these dates, so they stay in place of the dots */
+    .s-datumom .ishod-mini { display: none; }
+    .s-datumom .ishod-when { display: block; min-width: 0; }
   }
 </style>

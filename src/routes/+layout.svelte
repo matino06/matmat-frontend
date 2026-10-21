@@ -20,6 +20,8 @@
   import SubjectsDialog from "$lib/components/subjects/SubjectsDialog.svelte";
   import AiConsentPrompt from "$lib/components/ai/AiConsentPrompt.svelte";
   import { aiConsent, loadAiConsent, resetAiConsent } from "$lib/store/aiConsent.svelte";
+  import { uvod } from "$lib/store/uvod.svelte";
+  import UvodVodic from "$lib/components/uvod/UvodVodic.svelte";
 
   const GA_ID = "G-E6F6X4X2XG";
 
@@ -94,11 +96,11 @@
 
   let path = $derived(page.url.pathname);
   // Public pages: no sign-in needed (the privacy policy and support are linked from the App Store and the app).
-  // /uvod, the walkthrough after onboarding, runs on made-up data, so it works signed out too.
+  // /uvod starts the walkthrough, which runs on made-up data, so it works signed out too.
   const MARKETING_PATHS = ["/", "/kako-radi", "/privatnost", "/podrska", "/uvod"];
   // /lab (interaktivne lekcije) postoji samo u dev načinu i radi bez prijave, kao marketinške stranice
   let isLanding = $derived(MARKETING_PATHS.includes(path) || (dev && (path === "/lab" || path.startsWith("/lab/"))));
-  let showSidebar = $derived(!isLanding && !!userData.user);
+  let showSidebar = $derived(!isLanding && (!!userData.user || uvod.active));
 
   $effect(() => {
     if (typeof document === "undefined") return;
@@ -106,7 +108,7 @@
   });
 
   $effect(() => {
-    if (!userData.loading && !userData.user && !isLanding) {
+    if (!userData.loading && !userData.user && !isLanding && !uvod.active) {
       goto("/");
     }
   });
@@ -196,7 +198,7 @@
       <!-- Topbar -->
       <div class="topbar">
         <div class="topbar-title">
-          <button class="btn btn-quiet topbar-hamburger" onclick={toggleSidebar} aria-label="Otvori navigaciju" style="padding:6px 8px;margin-right:6px">
+          <button class="btn btn-quiet topbar-hamburger" data-tour="izbornik" onclick={toggleSidebar} aria-label="Otvori navigaciju" style="padding:6px 8px;margin-right:6px">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
               <line x1="4" y1="6"  x2="20" y2="6"/>
               <line x1="4" y1="12" x2="20" y2="12"/>
@@ -268,6 +270,8 @@
 
       {@render children?.()}
     </main>
+
+    {#if uvod.active}<UvodVodic/>{/if}
 
     <!-- Panels live inside .app so that on wide screens the open one becomes a
          grid column next to the page (see the split view in app.css); below that
