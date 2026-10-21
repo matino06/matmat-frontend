@@ -40,9 +40,13 @@ export const UNITS = {
     ["mg", 1e-6],
   ],
   vrijeme: [
+    ["dan", 86400],
     ["h", 3600],
     ["min", 60],
     ["s", 1],
+    ["ms", 1e-3],
+    ["µs", 1e-6],
+    ["ns", 1e-9],
   ],
   gustoca: [
     ["g/cm³", 1000],
@@ -76,6 +80,13 @@ export const UNITS = {
     ["kJ", 1e3],
     ["J", 1],
     ["mJ", 1e-3],
+  ],
+  // energija čestica i fotona (1 eV = 1,6·10⁻¹⁹ J, kao u knjižici formula)
+  energija_cestice: [
+    ["J", 1],
+    ["MeV", 1.6e-13],
+    ["keV", 1.6e-16],
+    ["eV", 1.6e-19],
   ],
   snaga: [
     ["MW", 1e6],
@@ -137,6 +148,12 @@ export const UNITS = {
     ["L/s", 1e-3],
     ["L/min", 1e-3 / 60],
   ],
+  aktivnost: [
+    ["GBq", 1e9],
+    ["MBq", 1e6],
+    ["kBq", 1e3],
+    ["Bq", 1],
+  ],
   molarna_masa: [
     ["kg/mol", 1],
     ["g/mol", 1e-3],
@@ -164,6 +181,10 @@ const ALIASES = {
   "kg/dm3": "kg/dm³",
   "km/hr": "km/h",
   kmh: "km/h",
+  μs: "µs",
+  us: "µs",
+  dana: "dan",
+  d: "dan",
   μm: "µm",
   um: "µm",
   μC: "µC",

@@ -123,7 +123,7 @@ export function bojaIme(nm) {
   if (nm < 450) return "ljubičasta";
   if (nm < 495) return "plava";
   if (nm < 570) return "zelena";
-  if (nm < 590) return "žuta";
+  if (nm < 595) return "žuta"; // natrijeva žuta (589–590 nm) je žuta
   if (nm < 620) return "narančasta";
   return "crvena";
 }
