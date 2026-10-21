@@ -102,7 +102,7 @@
     </div>
 
     <div class="onboard-foot">
-      <button class="btn btn-quiet" onclick={() => step = 0} style:visibility={step === 1 ? 'visible' : 'hidden'}>← Nazad</button>
+      <button class="btn btn-quiet" onclick={() => step = 0} disabled={saving} style:visibility={step === 1 ? 'visible' : 'hidden'}>← Nazad</button>
       <div class="foot-meta">
         {#if programs.length}
           {#each programs as p, i (p.id)}{i ? ", " : ""}<b>{shortName(p)}</b>{/each}

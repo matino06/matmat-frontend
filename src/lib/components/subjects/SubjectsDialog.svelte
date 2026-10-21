@@ -102,6 +102,7 @@
   .modal {
     padding: var(--pad-5);
     max-width: 480px; width: 100%;
+    margin: auto;
     display: grid; gap: 18px;
   }
   .modal:focus { outline: none; }

@@ -3,7 +3,7 @@
 // and panel subtitles, `pdf` the formula sheet served for that course.
 // Programs sharing a `subject` are its levels: a student picks one of them
 // (`level` + `hint` describe it in the subject picker).
-// `adminOnly` programs are hidden from regular users; `comingSoon` ones are
+// `adminOnly` programs are hidden from regular users; `comingSoon` ones (none at the moment) are
 // shown in the subject picker as "Uskoro" and only admins can pick them.
 export const PROGRAMS = [
   {
@@ -39,7 +39,6 @@ export const PROGRAMS = [
     color: "280",
     sub: "Državna matura",
     pdf: "/pdfs/FIZ-FORMULE.pdf",
-    comingSoon: true,
   },
   {
     id: 3,
