@@ -40,6 +40,10 @@ Uz to, za maturu:
   podzadatka je cijelo rješenje tog koraka: svaki korak, pravilo i napomena iz izvornog objašnjenja (metoda, knjižica
   formula i stranica, kalkulator, „skica ne mora biti precizna“…), napisano jasnije. Zadnji podzadatak završava
   konačnim rezultatom.
+- **Pitanje ne daje formulu.** Pitanje i blizanac kažu samo što se traži (podaci, veličina, jedinica, oblik
+  odgovora). Formula, zakon, pravilo, uputa na knjižicu formula i stranicu te odlomak koji uči pojam idu u prvi `pojam`
+  korak pomoći, jer učenik prvo sam pokuša. Iznimke: formula iz teksta izvornog zadatka i korak kojemu je zadatak baš
+  izabrati formulu.
 - **Kalkulator kao u izvoru.** Kad izvor korak rješava kalkulatorom (*upišemo u kalkulator*, *upotrijebimo
   kalkulator*, *obavezno prebaci kalkulator u stupnjeve*, slika s uputama), taj korak i u lekciji ide kalkulatorom:
   pitanje to kaže, prvi korak pomoći je `pojam` s vlasnikovom slikom kalkulatora (`<img src=…>` iz izvora; gdje izvor
