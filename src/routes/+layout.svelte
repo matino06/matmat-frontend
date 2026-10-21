@@ -22,6 +22,8 @@
   import { aiConsent, loadAiConsent, resetAiConsent } from "$lib/store/aiConsent.svelte";
   import { uvod } from "$lib/store/uvod.svelte";
   import UvodVodic from "$lib/components/uvod/UvodVodic.svelte";
+  import Savjet from "$lib/components/uvod/Savjet.svelte";
+  import { savjeti, ponudiSavjet } from "$lib/store/savjeti.svelte";
 
   const GA_ID = "G-E6F6X4X2XG";
 
@@ -130,6 +132,11 @@
     else if (userData.accountReady && !userData.needsOnboarding && !aiConsent.loaded) loadAiConsent();
   });
   let askAiConsent = $derived(!isLanding && !!userData.user && !userData.needsOnboarding && aiConsent.loaded && aiConsent.granted === null);
+
+  // A creator who hasn't made a course yet hears once where to start one.
+  $effect(() => {
+    if (showSidebar && !uvod.active && ownCourses.loaded && ownCourses.isCreator && ownCourses.courses.length === 0) ponudiSavjet("kreator");
+  });
 
   let program = $derived(getProgram(courseState.courseId));
   // Vlastiti predmet: panel Formule prikazuje materijal označen „dostupan na ispitu“ (ako ga nema, panela nema).
@@ -259,7 +266,7 @@
               <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
             </svg>
           </button>
-          <button class="btn btn-ghost" onclick={openAI}>
+          <button class="btn btn-ghost" data-tour="ai" onclick={openAI}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/><path d="M20 19.5v-.5a7 7 0 0 0-14 0v.5"/>
             </svg>
@@ -271,7 +278,7 @@
       {@render children?.()}
     </main>
 
-    {#if uvod.active}<UvodVodic/>{/if}
+    {#if uvod.active}<UvodVodic/>{:else if savjeti.aktivan}<Savjet/>{/if}
 
     <!-- Panels live inside .app so that on wide screens the open one becomes a
          grid column next to the page (see the split view in app.css); below that

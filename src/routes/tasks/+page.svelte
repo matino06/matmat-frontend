@@ -22,6 +22,7 @@
   import PomoWidget from "$lib/components/pomodoro/PomoWidget.svelte";
   import AskAiSelection from "$lib/components/ai/AskAiSelection.svelte";
   import { uvod, uvodDogadaj, ocijeniUvod } from "$lib/store/uvod.svelte";
+  import { ponudiSavjet } from "$lib/store/savjeti.svelte";
   import { DANA_DO_ISPITA, ZADACI, lekcijeNakon, kada } from "$lib/uvod/scenarij";
 
   let task = $state(null);
@@ -57,7 +58,7 @@
   let lekcijaSazetak = $state(null);
   $effect(() => {
     task?.id;
-    tekstualno = false;
+    tekstualno = !!task?.uvodLekcija?.kaoTekst;
     lekcijaSazetak = null;
   });
   // Lekcija na ponavljanju (već ocijenjena) predlaže strožu ocjenu kad su učeniku trebali koraci.
@@ -140,6 +141,7 @@
 
       task = JSON.parse(text);
       setCurrentTask(task);
+      ponudiSavjet("formule");
       startTime = Date.now();
       checkVariation(task);
     } finally {
@@ -206,7 +208,14 @@
     ratingKey++;
     noMoreTasks = !lekcija;
     task = lekcija
-      ? { id: `uvod-${lekcija.id}`, objective: lekcija.naziv, taskText: lekcija.zadatak, explanation: lekcija.rjesenje, uvodLekcija: lekcija }
+      ? {
+          id: `uvod-${lekcija.id}`,
+          objective: lekcija.naziv,
+          taskText: lekcija.zadatak,
+          explanation: lekcija.rjesenje,
+          lessonUi: JSON.stringify(lekcija.lekcija),
+          uvodLekcija: lekcija,
+        }
       : null;
   }
 
@@ -367,7 +376,7 @@
   });
 
   $effect(() => {
-    if (revealed) untrack(() => uvodDogadaj("otkriveno"));
+    if (revealed) untrack(() => (uvod.active ? uvodDogadaj("otkriveno") : ponudiSavjet("ai")));
   });
 
   onDestroy(() => {

@@ -81,9 +81,27 @@
     const ispod = rect.bottom + GAP;
     const iznad = rect.top - GAP - h;
     const redom = korak.strana === "iznad" ? [iznad, ispod] : [ispod, iznad];
-    const top = redom.find(stane) ?? vh - h - 12;
-    return { top, left, w };
+    const top = redom.find(stane);
+    // No room beside a tall element (an interactive lesson on a phone): over its bottom edge.
+    return top == null ? { top: vh - h - 12, left, w, prekriva: true } : { top, left, w };
   });
+
+  // A bubble over the element it points at steps aside once the student starts on it
+  // (the lesson grows under it); "Uputa" brings it back.
+  let zapoceo = $state(false);
+  let vracen = $state(false);
+  $effect(() => {
+    uvod.korak;
+    zapoceo = vracen = false;
+  });
+  let sklonjen = $derived(zapoceo && !vracen && !!poz?.prekriva);
+  function onPointerDown(e) {
+    if (!korak?.ceka || e.target.closest(".uv-oblak, .uv-uputa")) return;
+    if ([...document.querySelectorAll(selektor)].some((el) => el.contains(e.target))) {
+      zapoceo = true;
+      vracen = false;
+    }
+  }
 
   function preskoci() {
     zavrsiUvod(true);
@@ -100,7 +118,7 @@
   }
 </script>
 
-<svelte:window bind:innerWidth={vw} bind:innerHeight={vh} />
+<svelte:window bind:innerWidth={vw} bind:innerHeight={vh} onpointerdowncapture={onPointerDown} />
 
 {#if korak}
   {#if rect}
@@ -120,7 +138,9 @@
     <div class="uv-blok uv-tamno"></div>
   {/if}
 
-  {#if poz}
+  {#if poz && sklonjen}
+    <button class="btn btn-ghost uv-uputa" onclick={() => (vracen = true)}>Uputa</button>
+  {:else if poz}
     {#key uvod.korak}
       <div
         class="uv-oblak"
@@ -130,7 +150,9 @@
         bind:offsetHeight={visina}
       >
         <div class="uv-top">
-          <span class="uv-br">{uvod.korak + 1} / {KORACI.length}</span>
+          <span class="uv-tocke" aria-label="Korak {uvod.korak + 1} od {KORACI.length}">
+            {#each KORACI as _, i (i)}<span class:gotov={i <= uvod.korak}></span>{/each}
+          </span>
           {#if !korak.zadnji}<button class="uv-preskoci" onclick={preskoci}>Preskoči uvod</button>{/if}
         </div>
         <h3>{korak.naslov}</h3>
@@ -171,6 +193,14 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
   }
+  .uv-uputa {
+    position: fixed;
+    z-index: 1102;
+    right: 12px;
+    bottom: 12px;
+    background: var(--bg-elev);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
   .uv-oblak {
     position: fixed;
     z-index: 1102;
@@ -194,11 +224,17 @@
     align-items: center;
     margin-bottom: 6px;
   }
-  .uv-br {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-faint);
+  .uv-tocke {
+    display: flex;
+    gap: 4px;
   }
+  .uv-tocke span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+  .uv-tocke span.gotov { background: var(--primary); }
   .uv-preskoci {
     font-size: 12px;
     color: var(--text-faint);
