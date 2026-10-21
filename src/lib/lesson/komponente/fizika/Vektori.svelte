@@ -298,7 +298,8 @@
         oznaka: "zbroj",
         naziv: "iznos zbroja",
         tekst: iznosJed(duljina([vrh[0] - P0[0], vrh[1] - P0[1]]), jed),
-        status: "ok",
+        // zelena tek uz točan odgovor: u zaključanoj kopiji nakon krivog odgovora (locked) to je iznos krive strelice
+        status: pokazi || ishod?.tocno ? "ok" : null,
       });
     if (nacin === "rastavi") {
       out.push({
@@ -324,7 +325,8 @@
         oznaka: "Δv",
         naziv: "iznos promjene brzine",
         tekst: iznosJed(duljina([vrh[0] - repDv[0], vrh[1] - repDv[1]]), jed),
-        status: "ok",
+        // zelena tek uz točan odgovor: u zaključanoj kopiji nakon krivog odgovora (locked) to je iznos krive strelice
+        status: pokazi || ishod?.tocno ? "ok" : null,
       });
     return out;
   });

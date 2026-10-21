@@ -273,20 +273,15 @@
     ton <= 0
       ? "transparent"
       : `color-mix(in srgb, var(--lx-water) ${Math.round(10 + ton * 30)}%, transparent)`;
+  // kriva zraka se ne boji crveno: zaključana kopija pitanja nakon krivog odgovora ostaje samo s odabirom
   let statusOdabira = (id) =>
     otkriveno
       ? id === tocnaPonuda(spec)
         ? "ok"
         : "blijedo"
-      : ishod &&
-          !ishod.tocno &&
-          !ishod.prazno &&
-          poslanoOdabir === id &&
-          odabrano === id
-        ? "krivo"
-        : odabrano === id
-          ? "odabrano"
-          : null;
+      : odabrano === id
+        ? "odabrano"
+        : null;
   let kandidatiPoSlovu = $derived(
     [...geo.kandidati].sort((a, b) => a.slovo.localeCompare(b.slovo)),
   );
@@ -838,10 +833,6 @@
             id="zr-{uid}-p{i}"
             class="inp lx-broj-inp"
             class:ok={ishod?.tocno || pokazi}
-            class:bad={ishod &&
-              !ishod.tocno &&
-              !ishod.prazno &&
-              ishod.polje === i}
             inputmode="decimal"
             autocomplete="off"
             placeholder="?"
@@ -882,7 +873,6 @@
         class="zr-slovo"
         class:sel={s === "odabrano"}
         class:ok={s === "ok"}
-        class:bad={s === "krivo"}
         disabled={!aktivno}
         onclick={() => odaberiZraku(k.id)}>{k.slovo}</button
       >
@@ -1212,10 +1202,6 @@
     stroke-width: 2.5;
     fill: var(--primary-dim, var(--bg-elev));
   }
-  .zr-kand-krivo .zr-kand-c {
-    stroke: var(--danger);
-    stroke-width: 2.5;
-  }
   .zr-kand-ok .zr-kand-l {
     opacity: 1;
     stroke-dasharray: none;
@@ -1358,9 +1344,6 @@
   .zr-slovo.ok {
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 12%, transparent);
-  }
-  .zr-slovo.bad {
-    border-color: var(--danger);
   }
   .zr-slovo:disabled {
     cursor: default;

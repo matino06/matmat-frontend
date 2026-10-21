@@ -50,7 +50,6 @@
     oznakaStavke,
     kadStavke,
     tocnoStavke,
-    provjeriStavku,
     velicineTitranja,
   } from "$lib/lesson/katalog/fizika/titranje.js";
 
@@ -97,7 +96,6 @@
   let igra = $state(false);
   let sporo = $state(false);
   let tStop = $state(null);
-  let poslano = $state(null);
 
   let otkriveno = $derived(!!(istrazi || pokazi || ishod?.tocno));
   let sk = $derived(skrivenoTitranja(S, otkriveno));
@@ -336,16 +334,9 @@
     const v = unosi[i].trim();
     unosi[i] = /^[-−]/.test(v) ? v.replace(/^[-−]\s*/, "") : `−${v}`;
   }
-  let neprom = $derived(
-    poslano != null &&
-      JSON.stringify(poslano) === JSON.stringify(trenutniOdgovor()),
-  );
-  function statusPolja(i) {
-    if (pokazi) return "ok";
-    if (!ishod || ishod.prazno || !neprom) return null;
-    const r = provjeriStavku(S, i, unosi[i]);
-    return r.prazno ? null : r.tocno ? "ok" : "bad";
-  }
+  // polja se označe tek kad je cijeli odgovor točan ili otkriven: zaključana kopija pitanja nakon krivog
+  // odgovora ne smije pokazati koje je polje bilo dobro (suzilo bi ponovni pokušaj)
+  const poljaOk = $derived(pokazi || !!ishod?.tocno);
 
   // ── provjera ──
   function trenutniOdgovor() {
@@ -358,9 +349,7 @@
   function provjeri() {
     if (zakljucano) return;
     igra = false;
-    const o = trenutniOdgovor();
-    poslano = o;
-    onodgovor(o);
+    onodgovor(trenutniOdgovor());
   }
 
   // ── pokaži točan odgovor u samom widgetu ──
@@ -1225,7 +1214,6 @@
           Stanje {kadZajedno}:
         </p>{/if}
       {#each pitaj as it, i (i)}
-        {@const status = statusPolja(i)}
         <div class="tt-polje">
           <label class="tt-polje-ozn" for="tt-{uid}-{i}">
             <Md text={oznakaStavke(S, it)} inline /> =
@@ -1233,8 +1221,7 @@
           <input
             id="tt-{uid}-{i}"
             class="inp tt-inp"
-            class:ok={status === "ok"}
-            class:bad={status === "bad"}
+            class:ok={poljaOk}
             inputmode="decimal"
             autocomplete="off"
             placeholder="?"
@@ -1843,9 +1830,6 @@
   }
   .tt-inp.ok {
     border-color: var(--success);
-  }
-  .tt-inp.bad {
-    border-color: var(--danger);
   }
   .tt-pm {
     min-width: 36px;

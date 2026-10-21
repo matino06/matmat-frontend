@@ -5,7 +5,7 @@
   import { untrack } from "svelte";
   import Md from "../Md.svelte";
   import { formatNumber, formatSci } from "../../core/number.js";
-  import { crtaj_graf, osi, vrstaGrafa, vrijednostGrafa, povrsinaDo, povrsineDionica, pravacTocaka, pocetneVrijednosti, pocetniPravac, krivi } from "../../katalog/fizika/crtaj_graf.js";
+  import { crtaj_graf, osi, vrstaGrafa, vrijednostGrafa, povrsinaDo, povrsineDionica, pravacTocaka, pocetneVrijednosti, pocetniPravac } from "../../katalog/fizika/crtaj_graf.js";
   import { crtice } from "../../katalog/fizika/_kinematika.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
@@ -85,20 +85,16 @@
   });
 
   // ── provjera ──
-  let poslano = $state(null);
   function provjeri() {
     if (zakljucano) return;
     if (nacin === "pravac") {
       const odg = dirano ? { ...pravac } : null;
-      poslano = JSON.stringify(rucke);
       onodgovor(odg);
     } else {
-      poslano = JSON.stringify(ys);
       onodgovor([...ys]);
     }
   }
-  const neprom = $derived(poslano != null && poslano === JSON.stringify(nacin === "pravac" ? rucke : ys));
-  const losi = $derived(ishod && !ishod.tocno && !ishod.prazno && neprom && nacin !== "pravac" ? new Set(krivi(spec, ys)) : new Set());
+  // krive točke ili dionice ne bojimo: zaključana kopija pitanja nakon krivog odgovora otkrila bi koje su bile dobre
   const dobro = $derived(!!ishod?.tocno || pokazi);
 
   // ── povlačenje ──
@@ -356,7 +352,7 @@
         {#each spojevi(cx, ys, Y) as d, j (j)}<path class="cg-spoj" {d} />{/each}
       {/if}
       {#each linijaGrafa(vrsta, cx, ys, Y) as l (l.i)}
-        <path class="cg-crta" class:los={vrsta === "stepenice" && losi.has(l.i)} d={l.d} />
+        <path class="cg-crta" d={l.d} />
       {/each}
 
       {#if nacin === "istrazi"}
@@ -390,7 +386,6 @@
             <g
               class="cg-rucka"
               class:lx-handle={!zakljucano}
-              class:los={losi.has(i)}
               role="slider"
               tabindex={zakljucano ? -1 : 0}
               aria-label={vrsta === "stepenice" ? `Razina na dionici ${formatNumber(cx[i])}–${formatNumber(cx[i + 1])} ${o.x.jedinica}` : `Točka u ${o.x.ime} = ${formatNumber(cx[i])} ${o.x.jedinica}`}
@@ -484,9 +479,6 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .cg-crta.los {
-    stroke: var(--danger);
-  }
   .cg-ref-boja {
     stroke: var(--warn);
   }
@@ -522,9 +514,6 @@
   .cg-rucka:hover .cg-cvor {
     stroke-width: 4;
     fill: var(--primary-dim);
-  }
-  .cg-rucka.los .cg-cvor {
-    stroke: var(--danger);
   }
   .dobro .cg-cvor {
     stroke: var(--success);

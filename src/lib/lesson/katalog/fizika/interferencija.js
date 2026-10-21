@@ -99,6 +99,10 @@ const JED_DOPUSTENE = {
 };
 export const jedinicaPolja = (s, q) =>
   normJed(q.jedinica) ?? VELICINE[s.vrsta][q.velicina].jed;
+// gumb ·10ⁿ: ovisi samo o traženoj veličini i jedinici (mikroskopske duljine λ, d, s u metrima), nikad o
+// iznosu odgovora, jer bi inače odao red veličine rezultata
+export const znanstvenoPolje = (s, q) =>
+  jedinicaPolja(s, q) === "m" && q.velicina !== "a";
 const SUB = "₀₁₂₃₄₅₆₇₈₉";
 export const indeksTekst = (n) =>
   String(n)

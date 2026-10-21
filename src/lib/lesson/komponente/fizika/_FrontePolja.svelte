@@ -1,6 +1,7 @@
 <script>
   // Brojčana polja za „izracunaj“ (valne_fronte): oznaka, polje, jedinica; jedan gumb Provjeri za sva polja.
-  // Polje koje je palo provjeru je crveno, ona prije njega zelena (provjera ide redom).
+  // Polja se označe (zeleno) tek nakon točnog odgovora; nakon krivog nijedno polje ne dobiva zeleno/crveno jer bi
+  // odalo koje je polje krivo (zaključana kopija pitanja ostaje vidljiva iznad koraka pomoći), samo poruka.
   import Md from "../Md.svelte";
 
   let {
@@ -25,11 +26,7 @@
     poslano = [...unosi];
     onodgovor([...unosi]);
   }
-  const lose = (i) =>
-    neprom && ishod && !ishod.tocno && !ishod.prazno && ishod.polje === i;
-  const dobro = (i) =>
-    (neprom && !!ishod?.tocno) ||
-    (neprom && ishod && !ishod.prazno && ishod.polje > i);
+  let dobro = $derived(neprom && !!ishod?.tocno);
 </script>
 
 <form class="fp" onsubmit={predaj}>
@@ -41,8 +38,7 @@
       <input
         id="fp-{uid}-{i}"
         class="inp lx-broj-inp"
-        class:ok={dobro(i)}
-        class:bad={lose(i)}
+        class:ok={dobro}
         inputmode="decimal"
         autocomplete="off"
         placeholder="?"

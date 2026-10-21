@@ -2,11 +2,13 @@
   // Polje za broj s jedinicom i gumbom Provjeri; dijele ga svi widgeti s brojčanim odgovorom.
   // Decimalna tipkovnica na iPhoneu nema minus ni potenciju, pa uz odgovor koji ih treba (negativan, ili tako velik ili
   // malen da se piše znanstvenim zapisom) polje dobiva gumbe „±“ i „·10ⁿ“. `odgovor` služi samo da se to odluči.
-  let { jedinica = "", locked = false, ishod = null, vrijednost = $bindable(""), onodgovor, oznaka = "Odgovor", odgovor = null } = $props();
+  // Widgeti fizike umjesto toga zadaju `gumbPredznak` / `gumbPotencija` prema traženoj veličini, da gumbi ne odaju
+  // predznak ni red veličine odgovora.
+  let { jedinica = "", locked = false, ishod = null, vrijednost = $bindable(""), onodgovor, oznaka = "Odgovor", odgovor = null, gumbPredznak = null, gumbPotencija = null } = $props();
 
   let polje;
-  let predznak = $derived(typeof odgovor === "number" && odgovor < 0);
-  let znanstveni = $derived(typeof odgovor === "number" && odgovor !== 0 && (Math.abs(odgovor) >= 1e6 || Math.abs(odgovor) < 1e-3));
+  let predznak = $derived(gumbPredznak ?? (typeof odgovor === "number" && odgovor < 0));
+  let znanstveni = $derived(gumbPotencija ?? (typeof odgovor === "number" && odgovor !== 0 && (Math.abs(odgovor) >= 1e6 || Math.abs(odgovor) < 1e-3)));
 
   function submit(e) {
     e.preventDefault();

@@ -23,6 +23,7 @@
     jedKlizaca,
     doskok,
     pogodiTol,
+    znanstvenoPolje,
   } from "$lib/lesson/katalog/fizika/naboj_u_polju.js";
   import { formatSci, formatNumber } from "$lib/lesson/core/number.js";
 
@@ -406,6 +407,8 @@
         {ishod}
         bind:vrijednost={unos}
         oznaka={spec.pitaj.velicina}
+        gumbPredznak={false}
+        gumbPotencija={znanstvenoPolje(spec)}
         {onodgovor}
       />
     {/if}

@@ -196,20 +196,21 @@
 {#if odaberi}
   <div class="lx-options pp-opcije">
     {#each OPCIJE_PROREZ as o (o.kljuc)}
+      <!-- krivi odabir dobije ✕ tek uz „pokaži“; do tada je samo odabran (zaključana kopija ne smije suziti izbor) -->
       {@const ok =
         (izbor === o.kljuc && ishod?.tocno) ||
         (pokazi && o.kljuc === tocnaOpcijaProrez(spec))}
+      {@const kriv = pokazi && izbor === o.kljuc && !ok}
       <button
         type="button"
         class="lx-option"
         class:ok
-        class:bad={izbor === o.kljuc && ishod && !ishod.tocno}
+        class:bad={kriv}
+        class:sel={izbor === o.kljuc && !ok && !kriv}
         disabled={locked}
         onclick={() => odaberiOpciju(o.kljuc)}
       >
-        <span class="lx-mark"
-          >{ok ? "✓" : izbor === o.kljuc && ishod ? "✕" : ""}</span
-        >
+        <span class="lx-mark">{ok ? "✓" : kriv ? "✕" : ""}</span>
         {o.tekst}
       </button>
     {/each}

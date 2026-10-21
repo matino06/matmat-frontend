@@ -504,13 +504,6 @@
     poslaniZnakovi != null &&
       poslaniZnakovi.every((z, i) => vel.every((v) => z[v] === znakovi[i][v])),
   );
-  const prvaKriva = $derived(
-    ishod && !ishod.tocno && !ishod.prazno && dioniceNeprom
-      ? tocniZnakovi.findIndex((d, i) =>
-          vel.some((v) => znakovi[i][v] !== d[v]),
-        )
-      : -1,
-  );
   const sviZnakovi = $derived(
     znakovi.every((z) => vel.every((v) => ZNAKOVI.includes(z[v]))),
   );
@@ -876,7 +869,6 @@
         class="pd-proces"
         class:nacrt={d.nacrt}
         class:aktivna={nacin === "dionice" && aktivna === i}
-        class:kriva={nacin === "dionice" && prvaKriva === i}
         points={pts(d.u)}
       />
       {#if s}<polygon
@@ -1034,7 +1026,6 @@
       <div
         class="pd-red"
         class:ok={ok || pokazi}
-        class:bad={prvaKriva === i}
         role="group"
         aria-label="Dionica {pr.od} → {pr.do}"
         onpointerenter={() => (aktivna = i)}
@@ -1194,10 +1185,6 @@
     stroke: var(--primary);
     stroke-width: 3.5;
   }
-  .pd-proces.kriva {
-    stroke: var(--danger);
-    stroke-width: 3.5;
-  }
   .pd-prijedeno {
     fill: none;
     stroke: var(--primary);
@@ -1347,10 +1334,6 @@
   .pd-red.ok {
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 8%, transparent);
-  }
-  .pd-red.bad {
-    border-color: var(--danger);
-    background: color-mix(in srgb, var(--danger) 8%, transparent);
   }
   .pd-red-ime {
     display: flex;

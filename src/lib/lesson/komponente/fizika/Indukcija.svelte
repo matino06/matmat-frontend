@@ -57,12 +57,9 @@
       nacin === "smjer" ? odabir : nacin === "oznaci" ? dionica : unos,
     );
   let neprom = $derived(poslano != null && poslano === kljuc());
+  // prije točnog odgovora (ili „pokaži“) ne označavamo pojedinu fazu ni dionicu kao krivu: zaključana kopija
+  // pitanja bi otkrila koji je dio bio dobar
   let tocno = $derived(pokazi || (!!ishod?.tocno && neprom));
-  let kriv = $derived(
-    ishod && !ishod.tocno && !ishod.prazno && neprom
-      ? (ishod.kriv ?? (nacin === "oznaci" ? dionica : -1))
-      : -1,
-  );
   function posalji(o) {
     if (locked) return;
     poslano = kljuc();
@@ -392,12 +389,7 @@
   </p>
   <div class="mg-faze">
     {#each fazeOf(spec) as f, i (i)}
-      <div
-        class="mg-faza"
-        class:aktivna={aktivna === i}
-        class:ok={tocno}
-        class:bad={kriv === i}
-      >
+      <div class="mg-faza" class:aktivna={aktivna === i} class:ok={tocno}>
         <button
           type="button"
           class="mg-faza-ime"
@@ -417,7 +409,7 @@
           nema
           bind:vrijednost={odabir[i]}
           disabled={locked}
-          status={tocno ? "ok" : kriv === i ? "bad" : ""}
+          status={tocno ? "ok" : ""}
           oznaka={oznakaFaze(spec, f, i)}
           onodabir={() => (aktivna = i)}
         />
@@ -465,7 +457,6 @@
               class="mg-dionica"
               class:sel
               class:ok={sel && tocno}
-              class:bad={sel && kriv === i}
             />
           {/if}
           {#if nacin === "izracunaj" && spec.dionica === i + 1}
@@ -1022,13 +1013,7 @@
           {#if istrazi || tocno || pokazi}
             {@render kruzenje(0, 0, 29, struja ?? "nema", "c-i")}
           {:else}
-            {@render kruzenje(
-              0,
-              0,
-              29,
-              odabir[aktivna],
-              kriv === aktivna ? "c-bad" : "c-sel",
-            )}
+            {@render kruzenje(0, 0, 29, odabir[aktivna], "c-sel")}
           {/if}
         </g>
         {#if istrazi}
@@ -1187,13 +1172,7 @@
           sirina={2.4}
         />
         {#if nacin === "smjer" && !(tocno || pokazi)}
-          {@render kruzenje(
-            lx,
-            PP.cy,
-            18,
-            odabir[aktivna],
-            kriv === aktivna ? "c-bad" : "c-sel",
-          )}
+          {@render kruzenje(lx, PP.cy, 18, odabir[aktivna], "c-sel")}
         {:else if nacin !== "izracunaj"}
           {@render kruzenje(lx, PP.cy, 18, ppStruja, "c-i")}
           {#if ppStruja === "kazaljka" || ppStruja === "suprotno"}
@@ -1463,9 +1442,6 @@
   }
   .mg-faza.ok {
     border-color: var(--success);
-  }
-  .mg-faza.bad {
-    border-color: var(--danger);
   }
   .mg-faza-ime {
     display: inline-flex;

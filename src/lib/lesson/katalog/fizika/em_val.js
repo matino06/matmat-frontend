@@ -830,13 +830,14 @@ export const OPCIJE_PREDVIDI = {
   boja: ["ista", "druga"],
 };
 
-// Odgovor koji se traži u „izracunaj“: vrijednost u jedinici polja
+// Odgovor koji se traži u „izracunaj“: vrijednost u jedinici polja; znanstveni = gumb ·10ⁿ (po veličini, ne po iznosu)
 export function trazenaVrijednost(s) {
   const fz = fizikaSredstva(s);
   if (s.pitaj === "lambda_s")
     return {
       vrijednost: fz.desno.lambda,
       jedinica: "nm",
+      znanstveni: false,
       oznaka: "λ_s",
       naziv: `valna duljina u sredstvu (${fz.desno.naziv})`,
     };
@@ -844,12 +845,14 @@ export function trazenaVrijednost(s) {
     return {
       vrijednost: fz.desno.v,
       jedinica: "m/s",
+      znanstveni: true,
       oznaka: "v",
       naziv: `brzina svjetlosti u sredstvu (${fz.desno.naziv})`,
     };
   return {
     vrijednost: fz.f,
     jedinica: "Hz",
+    znanstveni: true,
     oznaka: "f",
     naziv: "frekvencija svjetlosti",
   };
