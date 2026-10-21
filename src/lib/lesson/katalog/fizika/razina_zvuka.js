@@ -947,13 +947,12 @@ export function izracunPitanja(s, p) {
 export function poljaIzracunaj(s) {
   return (s.pitaj ?? []).map((p) => {
     const o = oznakaPitanja(s, p);
-    const r = izracunPitanja(s, p);
     return {
       ...o,
       predznak: false,
-      znanstveni:
-        r.vrijednost !== 0 &&
-        (Math.abs(r.vrijednost) < 1e-3 || Math.abs(r.vrijednost) >= 1e6),
+      // gumb ·10ⁿ ovisi samo o traženoj veličini (intenzitet u W/m² uvijek), nikad o iznosu odgovora:
+      // inače bi njegova prisutnost odala red veličine rezultata
+      znanstveni: p.velicina === "I",
     };
   });
 }

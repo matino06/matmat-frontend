@@ -1,28 +1,37 @@
 <script>
-  import { apiClient } from "$lib/api/apiClient";
   import { userData } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
   import { readRememberedLevel, clearRememberedLevel } from "$lib/utils/levelChoice";
+  import { getProgram, PROGRAMS, isSelectableProgram, shortName } from "$lib/config/programs";
+  import { saveChosenCourses, saveCurrentCourse } from "$lib/store/course.svelte";
+  import { showErrorAlert } from "$lib/store/errorAlert.svelte";
+  import SubjectPicker from "$lib/components/subjects/SubjectPicker.svelte";
 
-  // A level picked on the landing page skips straight to the confirmation;
-  // "Nazad" still lets the student change it.
-  const chosen = readRememberedLevel();
-  let step = $state(chosen ? 1 : 0);
-  let level = $state(chosen ?? "A");
+  // A level picked on the landing page preselects that maths level. If maths is
+  // all there is to pick, the subject step has nothing left to ask and is
+  // skipped; "Nazad" still lets the student change it.
+  const remembered = readRememberedLevel();
+  const onlyMaths = PROGRAMS.filter((p) => isSelectableProgram(p, userData.isAdmin)).every((p) => p.subject === "matematika");
+  let picked = $state([remembered === "B" ? 2 : 1]);
+  let step = $state(remembered && onlyMaths ? 1 : 0);
+  let startId = $state(null);
   let saving = $state(false);
+
+  let programs = $derived(picked.map(getProgram));
+  let start = $derived(programs.find((p) => p.id === startId) ?? programs[0]);
 
   async function finish() {
     saving = true;
-    const courseId = level === "A" ? 1 : 2;
     try {
-      await apiClient("/account/current-course", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courseId }),
-      });
+      // The list only shapes the switcher, so a backend without it doesn't
+      // block the start; the course to study is what has to be saved.
+      await saveChosenCourses(picked).catch(() => {});
+      await saveCurrentCourse(start.id);
       clearRememberedLevel();
       userData.needsOnboarding = false;
       goto("/tasks");
+    } catch {
+      showErrorAlert("Odabir nije spremljen. Provjeri vezu i pokušaj ponovno.");
     } finally {
       saving = false;
     }
@@ -42,36 +51,49 @@
 
     <div class="onboard-body">
       {#if step === 0}
-        <div style="text-align:center">
-          <h2>Koju razinu polažeš?</h2>
-          <p class="lead">A razina je zahtjevnija i potrebna za studije gdje matematika igra veću ulogu. Možeš promijeniti kasnije.</p>
+        <div class="intro">
+          <h2>Što polažeš na maturi?</h2>
+          <p class="lead">Odaberi sve predmete koje želiš vježbati. Kasnije ih možeš dodati ili maknuti.</p>
         </div>
-        <div class="grade-row">
-          {#each ["A", "B"] as lv (lv)}
-            <button class="grade-card {level === lv ? 'active' : ''}" onclick={() => level = lv}>
-              <div class="n">{lv}</div>
-              <div class="l">razina</div>
-              <div class="hint">
-                {lv === "A" ? "Zahtjevnija, STEM studiji" : "Osnovna, ostali studiji"}
-              </div>
+        <div class="picker">
+          <SubjectPicker bind:value={picked} isAdmin={userData.isAdmin} />
+          <p class="own-note">Ne vidiš svoj predmet? Uskoro ćeš moći složiti vlastiti iz svojih materijala.</p>
+        </div>
+      {:else if programs.length > 1}
+        <div class="intro">
+          <h2>Čime počinješ?</h2>
+          <p class="lead">Između predmeta se prebacuješ u izborniku na vrhu bočne trake.</p>
+        </div>
+        <div class="start-list" role="radiogroup" aria-label="Predmet s kojim počinješ">
+          {#each programs as p (p.id)}
+            <button
+              type="button"
+              role="radio"
+              aria-checked={start === p}
+              class="start-card {start === p ? 'active' : ''}"
+              onclick={() => startId = p.id}
+            >
+              <span class="badge-sq" style:background="hsl({p.color} 75% 55%)">{p.badge}</span>
+              <span>
+                <span class="confirm-name">{p.label}</span>
+                <span class="confirm-kind">{p.sub}</span>
+              </span>
+              <span class="radio" aria-hidden="true"></span>
             </button>
           {/each}
         </div>
       {:else}
-        <div style="text-align:center">
+        <div class="intro">
           <div class="emoji">🎯</div>
           <h2>Sve je postavljeno!</h2>
-          <p class="lead">
-            Matura iz matematike · {level} razina<br/>
-            Svaki dan ćeš dobiti prilagođene zadatke. Počni s prvim danas.
-          </p>
+          <p class="lead">Svaki dan ćeš dobiti prilagođene zadatke. Počni s prvim danas.</p>
         </div>
         <div class="confirm-card">
           <div class="confirm-top">
-            <div class="badge-sq">M{level}</div>
+            <div class="badge-sq" style:background="hsl({start.color} 75% 55%)">{start.badge}</div>
             <div>
-              <div class="confirm-name">Matura iz matematike</div>
-              <div class="confirm-kind">Državna matura · {level} razina</div>
+              <div class="confirm-name">{start.label}</div>
+              <div class="confirm-kind">{start.sub}</div>
             </div>
           </div>
           <div class="confirm-desc">Algoritam pamti što si naučio i planira ponavljanje. Svaki dan točno onoliko zadataka koliko trebaš.</div>
@@ -80,12 +102,16 @@
     </div>
 
     <div class="onboard-foot">
-      <button class="btn btn-quiet" onclick={() => step = 0} style:visibility={step === 1 ? 'visible' : 'hidden'}>← Nazad</button>
+      <button class="btn btn-quiet" onclick={() => step = 0} disabled={saving} style:visibility={step === 1 ? 'visible' : 'hidden'}>← Nazad</button>
       <div class="foot-meta">
-        Matura iz matematike · <b>{level} razina</b>
+        {#if programs.length}
+          {#each programs as p, i (p.id)}{i ? ", " : ""}<b>{shortName(p)}</b>{/each}
+        {:else}
+          Odaberi barem jedan predmet
+        {/if}
       </div>
       {#if step === 0}
-        <button class="btn btn-primary btn-lg" onclick={() => step = 1}>Dalje →</button>
+        <button class="btn btn-primary btn-lg" onclick={() => step = 1} disabled={!programs.length}>Dalje →</button>
       {:else}
         <button class="btn btn-primary btn-lg" onclick={finish} disabled={saving}>
           {saving ? "Spremam…" : "Započni učenje →"}
@@ -152,39 +178,41 @@
     line-height: 1.6; max-width: 460px; margin: 0 auto;
   }
 
-  .grade-row {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 14px; max-width: 420px; margin: 0 auto;
+  .intro { text-align: center; }
+  .picker { width: 100%; max-width: 480px; margin: 0 auto; }
+  .own-note {
+    margin: 14px 0 0; text-align: center;
+    font-size: 12px; color: var(--text-faint); line-height: 1.5;
   }
-  .grade-card {
-    padding: 26px 18px;
+
+  .start-list {
+    width: 100%; max-width: 420px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .start-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 18px;
     border-radius: var(--r-lg);
     border: 1px solid var(--border);
     background: var(--bg-elev);
     color: var(--text); cursor: pointer;
-    text-align: center;
-    font-family: inherit;
+    text-align: left; font: inherit;
     transition: border-color .15s, background .15s;
   }
-  .grade-card:hover { border-color: var(--border-strong); }
-  .grade-card.active {
+  .start-card > span:nth-child(2) { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .start-card:hover { border-color: var(--border-strong); }
+  .start-card.active {
     border-color: var(--primary);
     background: color-mix(in srgb, var(--primary) 10%, transparent);
   }
-  .grade-card .n {
-    font-size: 38px; font-weight: 900; letter-spacing: -0.04em;
-    color: var(--text); line-height: 1;
-    font-family: var(--font-mono);
+  .start-card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .radio {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0;
+    transition: border-color .15s, border-width .15s;
   }
-  .grade-card.active .n { color: var(--primary); }
-  .grade-card .l {
-    font-size: 12px; color: var(--text-dim);
-    margin-top: 4px;
-  }
-  .grade-card .hint {
-    font-size: 11px; color: var(--text-faint);
-    margin-top: 8px;
-  }
+  .start-card.active .radio { border: 5px solid var(--primary); }
 
   .emoji { font-size: 48px; margin-bottom: 14px; }
 
@@ -201,8 +229,7 @@
   }
   .badge-sq {
     width: 36px; height: 36px; border-radius: var(--r-sm);
-    background: hsl(239 75% 55%);
-    display: grid; place-items: center;
+    display: grid; place-items: center; flex-shrink: 0;
     color: #fff; font-weight: 800; font-size: 12px;
     font-family: var(--font-mono); letter-spacing: -0.02em;
   }
@@ -217,6 +244,7 @@
     gap: 12px;
   }
   .foot-meta { font-size: 12px; color: var(--text-faint); }
+  .foot-meta { text-align: center; }
   .foot-meta b { color: var(--text); font-weight: 600; }
 
   @media (max-width: 600px) {

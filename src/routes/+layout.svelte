@@ -17,6 +17,7 @@
   import Panel from "$lib/components/panel/Panel.svelte";
   import ChatWindow from "$lib/components/chatWindow/ChatWindow.svelte";
   import Onboarding from "$lib/components/onboarding/Onboarding.svelte";
+  import SubjectsDialog from "$lib/components/subjects/SubjectsDialog.svelte";
   import AiConsentPrompt from "$lib/components/ai/AiConsentPrompt.svelte";
   import { aiConsent, loadAiConsent, resetAiConsent } from "$lib/store/aiConsent.svelte";
 
@@ -174,6 +175,10 @@
 {/if}
 
 <ErrorAlert/>
+
+{#if uiState.subjectsOpen && showSidebar}
+  <SubjectsDialog/>
+{/if}
 
 {#if userData.needsOnboarding && userData.user}
   <Onboarding/>

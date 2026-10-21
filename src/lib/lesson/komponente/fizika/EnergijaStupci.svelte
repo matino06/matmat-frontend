@@ -140,10 +140,9 @@
   let neprom = $derived(
     poslano != null && vuku.every((id) => poslano[id] === ulaz[id]),
   );
+  // stupci se označe tek uz točan odgovor (ili „pokaži“); krive stupce ne ističemo jer bi zaključana kopija
+  // pitanja otkrila koji su stupci bili dobri
   let ok = $derived(pokazi || (ishod?.tocno && neprom));
-  // nakon krive provjere istaknu se krivi stupci (svaki unutar pola koraka je dobar)
-  const dobar = (id) =>
-    Math.abs(ulaz[id] - stanja[pi].vrijednosti[id]) <= korak / 2 + 1e-9;
   function promjena(gi, id, v) {
     if (locked || gi !== pi) return;
     ulaz[id] = v;
@@ -164,15 +163,7 @@
           pitano: true,
           stupci: ids.map((id) => {
             const vuci = !zad.includes(id);
-            const status = !vuci
-              ? ""
-              : ok
-                ? "ok"
-                : ishod && !ishod.tocno && !ishod.prazno && neprom
-                  ? dobar(id)
-                    ? ""
-                    : "bad"
-                  : "";
+            const status = vuci && ok ? "ok" : "";
             return {
               id,
               v: vuci ? ulaz[id] : st.vrijednosti[id],

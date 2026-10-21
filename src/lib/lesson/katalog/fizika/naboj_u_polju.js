@@ -137,6 +137,10 @@ const JED_ODG = {
   F: { N: 1, mN: 1e-3 },
   T: { s: 1, ms: 1e-3, µs: 1e-6, ns: 1e-9 },
 };
+// gumb ·10ⁿ u izracunaj: po traženoj veličini i jedinici (odgovor u osnovnoj SI jedinici m, N ili s, kod čestica
+// redovito traži znanstveni zapis), nikad po iznosu odgovora
+export const znanstvenoPolje = (s) =>
+  s.pitaj?.jedinica == null || ["m", "N", "s"].includes(s.pitaj.jedinica);
 export function izracun(s) {
   const vel = s.pitaj.velicina;
   const jed = s.pitaj.jedinica ?? { r: "m", F: "N", T: "s" }[vel];

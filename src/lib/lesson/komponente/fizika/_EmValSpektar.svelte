@@ -55,13 +55,6 @@
   let tocno = $derived(
     pokazi || (!!ishod?.tocno && poslano != null && poslano === trenutno()),
   );
-  let krivo = $derived(
-    !!ishod &&
-      !ishod.tocno &&
-      !ishod.prazno &&
-      poslano != null &&
-      poslano === trenutno(),
-  );
   let otkriveno = $derived(!odgovor || tocno);
   let aktivno = $derived(!locked && !pokazi);
   $effect(() => {
@@ -95,8 +88,8 @@
       const p = podrucje(lam);
       if (p) st[p.id] = "aktivno";
     }
-    if (odaberiP && odabrano && !st[odabrano])
-      st[odabrano] = krivo ? "bad" : "sel";
+    // krivo područje se ne boji crveno (zaključana kopija pitanja ne smije suziti izbor), ostaje samo odabrano
+    if (odaberiP && odabrano && !st[odabrano]) st[odabrano] = "sel";
     return st;
   });
 
@@ -535,10 +528,6 @@
   }
   .ev-sp-okvir.ev-sel {
     stroke: var(--primary);
-    stroke-width: 3.5;
-  }
-  .ev-sp-okvir.ev-bad {
-    stroke: var(--danger);
     stroke-width: 3.5;
   }
   .ev-sp-okvir.ev-aktivno {

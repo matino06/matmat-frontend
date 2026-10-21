@@ -1217,6 +1217,7 @@
       >
     </div>
   {:else if nacin === "izracunaj"}
+    <!-- polja se označe tek kad je cijeli odgovor točan ili otkriven (ne pojedinačno nakon krivog odgovora) -->
     <form class="vu-unos" onsubmit={provjeriIzracun}>
       {#each pitaj as q, i (i)}
         <div class="vu-unos-red">
@@ -1226,8 +1227,7 @@
             <input
               id="vu-{uid}-{i}"
               class="inp lx-broj-inp"
-              class:ok={pokazi || ishod?.polja?.[i] === true}
-              class:bad={ishod && !ishod.prazno && ishod.polja?.[i] === false}
+              class:ok={pokazi || !!ishod?.tocno}
               inputmode="decimal"
               autocomplete="off"
               placeholder="?"
