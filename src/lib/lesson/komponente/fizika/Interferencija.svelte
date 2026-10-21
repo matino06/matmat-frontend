@@ -24,6 +24,7 @@
     oznakeIzracuna,
     skupinaPruga,
     pocetniKaliperi,
+    znanstvenoPolje,
     VELICINE,
   } from "$lib/lesson/katalog/fizika/interferencija.js";
   import {
@@ -156,7 +157,6 @@
         })),
     );
   });
-  const odgovorIzr = pit.map((q) => izracun(spec, q).vrijednost);
   function provjeriIzracun(e) {
     e?.preventDefault();
     if (locked) return;
@@ -398,7 +398,7 @@
           />
           {#if jedPolja(q)}<span class="lx-unit">{jedPolja(q)}</span>{/if}
           {#if m.iza}<span class="lx-unit">{m.iza}</span>{/if}
-          {#if !locked && (Math.abs(odgovorIzr[i]) < 1e-3 || Math.abs(odgovorIzr[i]) >= 1e5)}
+          {#if !locked && znanstvenoPolje(spec, q)}
             <button
               type="button"
               class="btn btn-quiet if-pot"
