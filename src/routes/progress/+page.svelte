@@ -224,12 +224,12 @@
     </div>
 
     <!-- Ishod list -->
-    <div class="ishod-list" class:s-datumom={uvod.active} data-tour="ishodi">
+    <div class="ishod-list" class:s-datumom={uvod.active}>
       {#each shownObjectives as obj (obj.objectiveId)}
         {@const status = getStatus(obj)}
         {@const prog = lastQMap.has(obj.objectiveName) ? (lastQMap.get(obj.objectiveName) ?? 0) : getProgress(obj)}
         {@const when = dueDateMap.get(obj.objectiveName)}
-        <div class="ishod-row" data-tour={obj.uvodZadatak ? "ponavljanje" : undefined}>
+        <div class="ishod-row" data-tour={uvod.active ? (obj.uvodZadatak ? "ponavljanje" : "savladano") : undefined}>
           <div class="ishod-status {status}"></div>
           <div class="ishod-title">
             {obj.objectiveName}
