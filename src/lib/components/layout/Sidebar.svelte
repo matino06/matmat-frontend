@@ -3,9 +3,9 @@
   import { goto } from '$app/navigation';
   import { userData } from '$lib/store/user.svelte';
   import { panelState, openAI, openFormule, showPomoWidget } from '$lib/store/panels.svelte';
-  import { uiState, closeSidebar, setSidebarCollapsed, toggleSidebarCollapsed } from '$lib/store/ui.svelte';
+  import { uiState, closeSidebar, setSidebarCollapsed, toggleSidebarCollapsed, openSubjects } from '$lib/store/ui.svelte';
   import { courseState, setCurrentCourse } from '$lib/store/course.svelte';
-  import { PROGRAMS } from '$lib/config/programs';
+  import { PROGRAMS, isSelectableProgram } from '$lib/config/programs';
   import { ownCourses, findOwnCourse, courseBadge, courseHue } from '$lib/store/ownCourses.svelte';
   import { apiClient } from '$lib/api/apiClient';
 
@@ -56,10 +56,21 @@
     psOpen = false;
   }
 
-  // Non-admins only get the two Matura math programs; the rest are internal.
+  // The subjects the student chose (plus the current course, in case it was set
+  // elsewhere, e.g. in the app). Without a saved choice: everything they can pick.
   let visiblePrograms = $derived(
-    PROGRAMS.filter(p => !p.adminOnly || userData.isAdmin)
+    PROGRAMS.filter(p =>
+      courseState.chosen
+        ? courseState.chosen.includes(p.id) || p.id === courseState.courseId
+        : isSelectableProgram(p, userData.isAdmin)
+    )
   );
+
+  function editSubjects() {
+    psOpen = false;
+    closeSidebar();
+    openSubjects();
+  }
 
   // Looked up in the full list, not the visible one: a user sitting on an
   // admin-only course still gets its real name in the header instead of being
@@ -136,6 +147,13 @@
             {prog.label}
           </div>
         {/each}
+        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+        <div class="ps-option ps-edit" onclick={editSubjects}>
+          <div class="badge-sq badge-sq-sm ps-new-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          Dodaj ili makni predmet
+        </div>
         {#if ownCourses.isCreator}
           <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
           <div class="ps-group" onclick={() => { psOpen = false; nav('/moji-predmeti'); }}>Moji predmeti</div>
@@ -289,7 +307,7 @@
     {/if}
     <div class="avatar-meta">
       <div class="name">{userData.user?.displayName ?? 'Korisnik'}</div>
-      <div class="sub">Matura · {activeProg.badge} razina</div>
+      <div class="sub">{activeProg.label}</div>
     </div>
     <button
       class="btn btn-quiet settings-btn"
@@ -338,7 +356,7 @@
   .prog-switcher:hover { background: var(--bg-hover); }
   .ps-group { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); padding: 8px 10px 4px; margin-top: 4px; border-top: 1px solid var(--border); cursor: pointer; }
   .ps-group:hover { color: var(--text); }
-  .ps-new { color: var(--text-dim); }
+  .ps-new, .ps-edit { color: var(--text-dim); }
   .ps-new-badge { background: var(--bg-elev-2); color: var(--text-dim); border: 1px dashed var(--border-strong); }
   .ps-meta { flex: 1; min-width: 0; }
   .ps-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

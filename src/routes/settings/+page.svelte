@@ -5,6 +5,14 @@
   import AiConsentDetails from "$lib/components/ai/AiConsentDetails.svelte";
   import { ownCourses } from "$lib/store/ownCourses.svelte";
   import { feedbackSound, setFeedbackSound } from "$lib/sound.svelte.js";
+  import { courseState } from "$lib/store/course.svelte";
+  import { openSubjects } from "$lib/store/ui.svelte";
+  import { getProgram } from "$lib/config/programs";
+
+  // Before the student ever chose (older accounts), the current course stands in.
+  let myPrograms = $derived(
+    (courseState.chosen ?? [courseState.courseId]).map(getProgram).filter(Boolean)
+  );
 
   let learningReminders = $state(false);
   let featureAnnouncements = $state(false);
@@ -142,8 +150,34 @@
   <div class="zadaci-head" style="margin-bottom: 20px">
     <div>
       <h1>Postavke</h1>
-      <div class="sub">Tempo učenja i obavijesti</div>
+      <div class="sub">Predmeti, tempo učenja i obavijesti</div>
     </div>
+  </div>
+
+  <!-- Subjects card -->
+  <div class="card card-pad" style="margin-bottom: 16px">
+    <div class="settings-head">
+      <div>
+        <h2 class="settings-title">Predmeti</h2>
+        <p class="settings-desc">Predmeti koje vježbaš. Između njih se prebacuješ u izborniku na vrhu bočne trake.</p>
+      </div>
+    </div>
+
+    {#if !courseState.loaded}
+      <div class="settings-loading"><div class="spinner"></div> Učitavanje…</div>
+    {:else}
+      <div class="subject-row">
+        <ul class="subject-chips">
+          {#each myPrograms as p (p.id)}
+            <li class="subject-chip">
+              <span class="chip-badge" style:background="hsl({p.color} 75% 55%)">{p.badge}</span>
+              {p.label}
+            </li>
+          {/each}
+        </ul>
+        <button class="btn btn-ghost" onclick={openSubjects}>Dodaj ili makni predmet</button>
+      </div>
+    {/if}
   </div>
 
   <!-- Tempo card -->
@@ -380,6 +414,45 @@
     color: #fff;
     display: grid; place-items: center;
     flex-shrink: 0;
+  }
+
+  .subject-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .subject-chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .subject-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px 5px 5px;
+    border-radius: var(--r-md);
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    font-size: 13px;
+    color: var(--text);
+  }
+  .chip-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--r-sm);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   .notif-list {

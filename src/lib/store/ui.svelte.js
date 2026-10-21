@@ -1,4 +1,8 @@
-export const uiState = $state({ sidebarOpen: false, sidebarCollapsed: false });
+export const uiState = $state({ sidebarOpen: false, sidebarCollapsed: false, subjectsOpen: false });
+
+// "Uredi predmete": opened from the course switcher and Postavke, rendered by the root layout.
+export function openSubjects() { uiState.subjectsOpen = true; }
+export function closeSubjects() { uiState.subjectsOpen = false; }
 
 export function openSidebar() { uiState.sidebarOpen = true; }
 export function closeSidebar() { uiState.sidebarOpen = false; }

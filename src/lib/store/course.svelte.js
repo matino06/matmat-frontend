@@ -6,14 +6,46 @@ import { ownCourses, findOwnCourse } from "$lib/store/ownCourses.svelte";
 // needs it (formula sheet PDF, breadcrumb labels) while the Sidebar owns the
 // switcher — see the currentTask store for the same page-writes/panel-reads
 // pattern.
-export const courseState = $state({ courseId: null, loaded: false });
+// `chosen` lists the official courses the student picked to study (the switcher
+// shows only those); null while unknown, e.g. on a backend without the list.
+export const courseState = $state({ courseId: null, loaded: false, chosen: null });
 
 export const loadCurrentCourse = async () => {
-  try {
+  const current = async () => {
     const res = await apiClient("/account/current-course", { method: "GET" });
     if (res.ok) courseState.courseId = (await res.json())?.courseId ?? null;
-  } catch {}
+  };
+  await Promise.allSettled([current(), loadChosenCourses()]);
   courseState.loaded = true;
+};
+
+const loadChosenCourses = async () => {
+  const res = await apiClient("/account/courses", { method: "GET" });
+  const ids = res.ok ? await res.json() : null;
+  courseState.chosen = Array.isArray(ids) && ids.length ? ids : null;
+};
+
+// Throws when the list isn't saved, so the caller can say so.
+export const saveChosenCourses = async (courseIds) => {
+  const res = await apiClient("/account/courses", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ courseIds }),
+  });
+  if (!res.ok) throw new Error(String(res.status));
+  courseState.chosen = courseIds;
+};
+
+// Throws like saveChosenCourses; callers reload afterwards, since every page
+// fetches its course-specific content on mount.
+export const saveCurrentCourse = async (courseId) => {
+  const res = await apiClient("/account/current-course", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ courseId }),
+  });
+  if (!res.ok) throw new Error(String(res.status));
+  courseState.courseId = courseId;
 };
 
 export const setCurrentCourse = (courseId) => {
