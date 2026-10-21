@@ -68,9 +68,6 @@
     poslano != null && poslano.every((p, i) => p === odabir[i]),
   );
   let tocno = $derived(pokazi || (!!ishod?.tocno && neprom));
-  let kriv = $derived(
-    ishod && !ishod.tocno && !ishod.prazno && neprom ? (ishod.kriv ?? -1) : -1,
-  );
 
   $effect(() => {
     if (pokazi) untrack(() => (odabir = [...rjesenja]));
@@ -81,9 +78,10 @@
     poslano = [...odabir];
     onodgovor(pitanja.length === 1 ? odabir[0] : [...odabir]);
   }
-  // boja nepoznate veličine: odabrano (još neprovjereno), točno, krivo
-  const bojaOdg = (i) => (tocno ? "c-ok" : kriv === i ? "c-bad" : "c-sel");
-  const statusOdg = (i) => (tocno ? "ok" : kriv === i ? "bad" : "");
+  // boja nepoznate veličine: odabrano ili točno. Krivi odabir ne bojimo crveno: u zaključanoj kopiji pitanja
+  // (nakon krivog odgovora) to bi otkrilo koji je dio bio dobar; dovoljna je poruka ispod.
+  const bojaOdg = () => (tocno ? "c-ok" : "c-sel");
+  const statusOdg = () => (tocno ? "ok" : "");
 
   // ── istrazi: zadane veličine koje učenik mijenja ──
   let st = $state(untrack(() => ({ ...(pitanjaOf(spec)[0] ?? {}) })));

@@ -216,7 +216,6 @@
 
   // ── zaustavi ──
   let zabiljezeno = $state([]);
-  let poslano = $state(null);
   const korijeni = $derived(nacin === "zaustavi" ? trenuciCilja(spec) : []);
   function zabiljezi() {
     if (locked) return;
@@ -225,7 +224,6 @@
     if (!zabiljezeno.some((x) => Math.abs(x - tt) < 1e-9)) zabiljezeno = [...zabiljezeno, tt].sort((a, b) => a - b);
   }
   const ukloni = (x) => (zabiljezeno = zabiljezeno.filter((y) => y !== x));
-  const neprom = $derived(poslano != null && JSON.stringify(poslano) === JSON.stringify(zabiljezeno));
   const pogodak = (x) => korijeni.some((r) => Math.abs(r - x) <= tolerancijaTrenutka(spec, r));
 
   // ── postavi ──
@@ -234,13 +232,8 @@
   function provjeri() {
     if (locked) return;
     igra = false;
-    if (nacin === "zaustavi") {
-      poslano = [...zabiljezeno];
-      onodgovor([...zabiljezeno]);
-    } else {
-      poslano = { ...parametri };
-      onodgovor({ ...parametri });
-    }
+    if (nacin === "zaustavi") onodgovor([...zabiljezeno]);
+    else onodgovor({ ...parametri });
   }
 
   // prikaz točnog odgovora u samom widgetu
@@ -656,12 +649,13 @@
 {/each}
 
 {#if nacin === "zaustavi"}
+  <!-- zabilježeni trenuci označe se tek uz točan odgovor (ili „pokaži“): crveni trenutak bi otkrio koji su ostali dobri -->
   <div class="gb-biljeske">
     <button type="button" class="btn btn-ghost" onclick={zabiljezi} disabled={zakljucano}>
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" /></svg>Zabilježi trenutak
     </button>
     {#each zabiljezeno as zt (zt)}
-      <span class="gb-chip mono" class:ok={(ishod?.tocno || pokazi) && pogodak(zt)} class:bad={ishod && !ishod.tocno && !ishod.prazno && neprom && !pogodak(zt)}>
+      <span class="gb-chip mono" class:ok={(ishod?.tocno || pokazi) && pogodak(zt)}>
         t = {fmt(zt, 2)} s
         {#if !zakljucano}<button type="button" class="gb-chip-x" onclick={() => ukloni(zt)} aria-label="Ukloni t = {fmt(zt, 2)} s">×</button>{/if}
       </span>
@@ -1035,10 +1029,6 @@
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 12%, transparent);
     padding-right: 10px;
-  }
-  .gb-chip.bad {
-    border-color: var(--danger);
-    background: color-mix(in srgb, var(--danger) 10%, transparent);
   }
   .gb-chip-x {
     width: 26px;
