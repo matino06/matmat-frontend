@@ -24,7 +24,8 @@
   // taskId: when set, "Ponovi za …" shows the backend's real SM-2 interval for
   // this user; without it (marketing demos) the static RATINGS values are shown.
   // najvise: a finished interactive lesson's limit; higher ratings can't be chosen (lowering always can).
-  let { onSelect, taskId = null, najvise = 5 } = $props();
+  // days: intervals to show instead, indexed by rating (the /uvod walkthrough, which has no backend).
+  let { onSelect, taskId = null, najvise = 5, days = null } = $props();
 
   // Days until the objective returns, indexed by rating; null until loaded.
   let intervals = $state(null);
@@ -41,6 +42,7 @@
   });
 
   function subFor(r) {
+    if (days) return formatDays(days[r.k]);
     if (taskId == null) return r.sub;
     return intervals ? formatDays(intervals[r.k]) : null;
   }

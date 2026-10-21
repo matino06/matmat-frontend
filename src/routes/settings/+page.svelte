@@ -257,6 +257,17 @@
     {/if}
   </div>
 
+  <!-- Help card -->
+  <div class="card card-pad" style="margin-top: 16px">
+    <div class="settings-head" style="margin-bottom: 0">
+      <div>
+        <h2 class="settings-title">Kako MatMat radi</h2>
+        <p class="settings-desc">Dvije minute na probnom predmetu: kako ocjena određuje kad se lekcija vraća.</p>
+      </div>
+      <a class="btn btn-ghost" href="/uvod">Pokreni uvod</a>
+    </div>
+  </div>
+
   <!-- Sound card: device-only, kept in localStorage -->
   <div class="card card-pad" style="margin-top: 16px">
     <label class="notif-row">
