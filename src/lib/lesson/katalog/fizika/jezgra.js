@@ -1038,7 +1038,8 @@ function checkRaspad(s, odg) {
     const dZ = o.Z - P.Z;
     const dN = o.N - P.N;
     const isto = (a, b) => dZ === a && dN === b;
-    const iz0 = i > 0 ? primijeniRaspad(put[0], v) : null;
+    // γ ne mijenja jezgru, pa bi „primijenio na početnu“ samo značilo „ostala je početna“: γ-poruka je bolja
+    const iz0 = i > 0 && v !== "gama" ? primijeniRaspad(put[0], v) : null;
     if (iz0 && o.Z === iz0.Z && o.N === iz0.N)
       return {
         tocno: false,
