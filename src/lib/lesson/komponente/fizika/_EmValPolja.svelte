@@ -49,9 +49,6 @@
   let odabrano = $state(null);
   let poslano = $state(null);
   let tocno = $derived(pokazi || (!!ishod?.tocno && poslano === odabrano));
-  let krivo = $derived(
-    !!ishod && !ishod.tocno && !ishod.prazno && poslano === odabrano,
-  );
   let otkriveno = $derived(!odaberi || tocno);
   let aktivno = $derived(odaberi && !locked && !pokazi);
   $effect(() => {
@@ -143,14 +140,13 @@
     })),
   );
   const pts = (a) => a.map((p) => p.join(",")).join(" ");
+  // kriva os se ne boji crveno: zaključana kopija pitanja nakon krivog odgovora ostaje samo s odabirom
   const stanjeOsi = (os) =>
     tocno && os === tocnaOs(spec)
       ? "ok"
-      : krivo && os === odabrano
-        ? "bad"
-        : odaberi && os === odabrano
-          ? "sel"
-          : null;
+      : odaberi && os === odabrano
+        ? "sel"
+        : null;
   const uid = Math.random().toString(36).slice(2, 8);
   const NASLOV = {
     B: "Po kojoj osi titra magnetsko polje B?",
@@ -343,7 +339,6 @@
         class="ev-os-gumb"
         class:sel={st === "sel"}
         class:ok={st === "ok"}
-        class:bad={st === "bad"}
         aria-pressed={odabrano === os}
         disabled={!aktivno}
         onclick={() => (odabrano = os)}>{os}</button
@@ -398,9 +393,6 @@
   .ev-os-halo.ev-ok {
     stroke: var(--success);
     opacity: 0.45;
-  }
-  .ev-os-halo.ev-bad {
-    stroke: var(--danger);
   }
   .ev-kraj {
     fill: var(--text-dim);
@@ -511,10 +503,6 @@
   .ev-os-gumb.ok {
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 12%, transparent);
-  }
-  .ev-os-gumb.bad {
-    border-color: var(--danger);
-    background: color-mix(in srgb, var(--danger) 10%, transparent);
   }
   .ev-os-gumb:disabled {
     cursor: default;
