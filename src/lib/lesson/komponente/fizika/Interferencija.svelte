@@ -13,7 +13,6 @@
   import {
     vidljivo,
     pitanja,
-    checkPolje,
     izracun,
     tocnaPozicija,
     jedinicaIzmjeri,
@@ -130,21 +129,12 @@
   // ── izracunaj ──
   const pit = untrack(() => pitanja(spec));
   let unosi = $state(pit.map(() => ""));
-  let poslano = $state(null);
   let oznake = $derived(
     nacin === "izracunaj" ? oznakeIzracuna(spec, otkriveno) : null,
   );
-  let stanjaPolja = $derived(
-    poslano && ishod && !ishod.prazno
-      ? pit.map((_, i) =>
-          poslano[i] === unosi[i]
-            ? checkPolje(spec, i, poslano[i]).tocno
-              ? "ok"
-              : "bad"
-            : null,
-        )
-      : pit.map(() => (pokazi ? "ok" : null)),
-  );
+  // polja se označe tek kad je odgovor točan ili otkriven: nakon krivog odgovora pojedino polje ne smije
+  // odati je li baš ono krivo (zaključana kopija pitanja ostaje vidljiva iznad koraka pomoći)
+  let stanjaPolja = $derived(pit.map(() => (otkriveno ? "ok" : null)));
   $effect(() => {
     if (!pokazi || nacin !== "izracunaj") return;
     untrack(
@@ -160,7 +150,6 @@
   function provjeriIzracun(e) {
     e?.preventDefault();
     if (locked) return;
-    poslano = [...unosi];
     onodgovor([...unosi]);
   }
   function potencija(i) {

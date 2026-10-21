@@ -218,10 +218,9 @@
   const stanjePolja = (i) => {
     if (pokazi) return null;
     if (!ishod || !neprom || ishod.prazno) return null;
-    if (ishod.tocno) return "ok";
-    // predvidi: nakon krivog odgovora bez zelenog/crvenog po polju (suzilo bi izbor, npr. jača/tiša); samo poruka
-    if (predvidi) return null;
-    return ishod.polje === i ? "bad" : ishod.polje > i ? "ok" : null;
+    // nakon krivog odgovora bez zelenog/crvenog po polju (suzilo bi izbor: koje je polje krivo, jača/tiša);
+    // samo poruka
+    return ishod.tocno ? "ok" : null;
   };
   let elPolja = $state([]);
   function predznak(i) {
@@ -654,7 +653,6 @@
             bind:this={elPolja[i]}
             class="inp lx-broj-inp"
             class:ok={stanje === "ok"}
-            class:bad={stanje === "bad"}
             inputmode="decimal"
             autocomplete="off"
             placeholder="?"

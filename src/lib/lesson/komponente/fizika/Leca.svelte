@@ -75,12 +75,10 @@
     untrack(() => (nacin === "zastor" ? pocetakZastora(spec) : 0)),
   );
   let zapisi = $state(untrack(() => A.map(() => null)));
-  let poslaniZapisi = $state(null);
   // nacrtaj
   const imena = untrack(() => zrakeSpeca(spec));
   let ruke = $state(untrack(() => imena.map(() => null)));
   let privucene = $state(untrack(() => imena.map(() => false)));
-  let poslaneRuke = $state(null);
   // izracunaj
   const pitaj = untrack(() => spec.pitaj ?? []);
   let unosi = $state(
@@ -232,7 +230,6 @@
   function zabiljezi(v) {
     if (locked || pokazi) return;
     if (!visestruko) {
-      poslaniZapisi = JSON.stringify([v]);
       zapisi = [v];
       onodgovor([v]);
       return;
@@ -242,7 +239,6 @@
   }
   function provjeriZastor() {
     if (locked) return;
-    poslaniZapisi = JSON.stringify(zapisi);
     onodgovor($state.snapshot(zapisi));
   }
   let zastorStanje = $derived(
@@ -251,23 +247,11 @@
   const insetS = untrack(() =>
     nacin === "zastor" ? 38 / najvecaSlikaZastora(spec) : 1,
   );
-  let poljaZastora = $derived(
-    nacin === "zastor" &&
-      ishod?.polja &&
-      poslaniZapisi === JSON.stringify(zapisi)
-      ? ishod.polja
-      : null,
-  );
+  // zastor s više mjerenja: redovi tablice se označe tek kad su sva mjerenja točna (ne pojedinačno nakon krivog)
 
   // ── nacrtaj ──
-  let poljaZraka = $derived(
-    nacin === "nacrtaj" && ishod?.polja && poslaneRuke === JSON.stringify(ruke)
-      ? ishod.polja
-      : null,
-  );
   function provjeriZrake() {
     if (locked) return;
-    poslaneRuke = JSON.stringify(ruke);
     onodgovor($state.snapshot(ruke));
   }
   let postavljeno = $derived(ruke.filter(Boolean).length);
@@ -322,9 +306,9 @@
   let lecaPola = $derived(r1(sc.leca.pola * pg.sy));
   let vidiLegendu = $derived(sc.zrake.length > 0 || nacin === "nacrtaj");
   let natpis = $derived(sc.natpis);
-  // u nacrtaj: oznaka na kraju svake zrake nakon provjere
-  const statusRuke = (i) =>
-    poljaZraka ? (poljaZraka[i] ? "ok" : "bad") : null;
+  // u nacrtaj: kvačica na kraju zraka tek kad je crtež točan; nakon krivog odgovora ne označavamo pojedinu
+  // zraku (zaključana kopija pitanja suzila bi ponovni pokušaj), samo poruka da nije točno
+  let zrakeOk = $derived(nacin === "nacrtaj" && !!ishod?.tocno);
   const kutRuke = (i) => {
     const t = ruke[i];
     if (!t) return null;
@@ -562,13 +546,11 @@
       {/each}
 
       <!-- zrake -->
-      {#each sc.zrake as z, zi (z.ime)}
+      {#each sc.zrake as z (z.ime)}
         {#each z.segmenti as g, i (i)}
           <path
             class="lc-zraka lc-c-{z.ime} {KLASA_SEG[g.vrsta]}"
             class:lc-ucenik={g.vrsta === "ucenik"}
-            class:lc-zraka-bad={g.vrsta === "ucenik" &&
-              statusRuke(zi) === "bad"}
             d={put(g)}
             marker-mid={(g.vrsta === "upadna" ||
               g.vrsta === "izlazna" ||
@@ -803,7 +785,6 @@
     {#if sc.ruke}
       {#each sc.ruke as r, i (r.ime)}
         {@const [hx, hy] = uPx(pg, r.tocka)}
-        {@const st = statusRuke(i)}
         <g
           class="lx-handle lc-ruc"
           role="slider"
@@ -821,19 +802,17 @@
             class="lc-rucka lc-rucka-z lc-c-{r.ime}"
             class:lc-ceka={!r.postavljena}
             class:lc-privuceno={privucene[i] && vuce?.i === i}
-            class:lc-r-ok={st === "ok"}
-            class:lc-r-bad={st === "bad"}
+            class:lc-r-ok={zrakeOk}
             cx={r1(hx)}
             cy={r1(hy)}
             r="9"
           />
-          {#if st}
+          {#if zrakeOk}
             <text
-              class="lc-r-znak"
-              class:lc-r-ok-t={st === "ok"}
+              class="lc-r-znak lc-r-ok-t"
               x={r1(hx)}
               y={r1(hy + 4)}
-              text-anchor="middle">{st === "ok" ? "✓" : "✗"}</text
+              text-anchor="middle">✓</text
             >
           {/if}
         </g>
@@ -947,9 +926,7 @@
             {#each A as ai, i (i)}
               <tr
                 class:lc-red-akt={i === red && !locked}
-                class:lc-red-ok={poljaZastora?.[i] === true ||
-                  (!!ishod?.tocno && zapisi[i] != null)}
-                class:lc-red-bad={poljaZastora?.[i] === false}
+                class:lc-red-ok={!!ishod?.tocno && zapisi[i] != null}
                 onclick={() => !locked && !pokazi && (red = i)}
               >
                 <td>
@@ -1065,13 +1042,7 @@
           <span class="lc-lab"
             ><Md text={q.oznaka ?? OZNAKA.vrsta} inline /></span
           >
-          <div
-            class="lc-svojstva"
-            class:lc-sv-ok={pokazi || ishod?.polja?.[i] === true}
-            class:lc-sv-bad={ishod &&
-              !ishod.prazno &&
-              ishod.polja?.[i] === false}
-          >
+          <div class="lc-svojstva" class:lc-sv-ok={pokazi || !!ishod?.tocno}>
             {#each SVOJSTVA as p (p.kljuc)}
               <div
                 class="lc-prekidac"
@@ -1102,8 +1073,7 @@
             <input
               id="lc-{uid}-p{i}"
               class="inp lx-broj-inp"
-              class:ok={pokazi || ishod?.polja?.[i] === true}
-              class:bad={ishod && !ishod.prazno && ishod.polja?.[i] === false}
+              class:ok={pokazi || !!ishod?.tocno}
               inputmode="decimal"
               autocomplete="off"
               placeholder="?"
@@ -1217,9 +1187,6 @@
     stroke-dasharray: 1.5 4;
     stroke-width: 1.5;
     opacity: 0.7;
-  }
-  .lc-zraka.lc-zraka-bad {
-    stroke-dasharray: 7 4;
   }
   .lc-c-paralelna {
     stroke: var(--warn);
@@ -1385,11 +1352,7 @@
   .lc-rucka.lc-r-ok {
     stroke: var(--success);
   }
-  .lc-rucka.lc-r-bad {
-    stroke: var(--danger);
-  }
   .lc-r-znak {
-    fill: var(--danger);
     font: 700 11px var(--font-sans);
     pointer-events: none;
   }
@@ -1583,9 +1546,6 @@
   .lc-tablica tr.lc-red-ok td {
     background: color-mix(in srgb, var(--success) 12%, transparent);
   }
-  .lc-tablica tr.lc-red-bad td {
-    background: color-mix(in srgb, var(--danger) 12%, transparent);
-  }
   .lc-red-gumb {
     font: inherit;
     color: inherit;
@@ -1652,9 +1612,6 @@
   }
   .lc-svojstva.lc-sv-ok {
     border-color: var(--lx-ok);
-  }
-  .lc-svojstva.lc-sv-bad {
-    border-color: var(--lx-bad);
   }
   .lc-prekidac {
     display: inline-flex;

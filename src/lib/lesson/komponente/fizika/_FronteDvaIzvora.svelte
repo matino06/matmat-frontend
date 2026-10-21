@@ -268,8 +268,8 @@
   }
   let stanjeOpcije = (id) => {
     if (pokazi) return id === zadatakDvaIzvora(spec).vrsta ? "ok" : "";
-    if (ishod && poslanOdabir === odabir && odabir === id)
-      return ishod.tocno ? "ok" : ishod.prazno ? "sel" : "bad";
+    // krivi odabir ostaje samo označen (bez ✗): uz dvije mogućnosti ✗ bi otkrio drugu
+    if (ishod?.tocno && poslanOdabir === odabir && odabir === id) return "ok";
     return odabir === id ? "sel" : "";
   };
   let pTocan = $derived(
@@ -498,13 +498,10 @@
         class="lx-option vf-opcija"
         class:sel={st === "sel"}
         class:ok={st === "ok"}
-        class:bad={st === "bad"}
         disabled={locked || pokazi}
         onclick={() => (odabir = op.id)}
       >
-        <span class="lx-mark"
-          >{st === "ok" ? "✓" : st === "bad" ? "✗" : ""}</span
-        >
+        <span class="lx-mark">{st === "ok" ? "✓" : ""}</span>
         <span><b>{op.tekst}</b><span class="vf-opis">{op.opis}</span></span>
       </button>
     {/each}
