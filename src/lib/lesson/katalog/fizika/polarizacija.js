@@ -203,7 +203,8 @@ const blizuRjesenja = (s, k, rj = rjesenjaFiltri(s)) =>
 export const FILTRI_SIRINA = 360;
 export const FILTRI_VISINA = 230;
 // Geometrija: izvor lijevo, filtri jednako razmaknuti, zastor desno; iznad svakog dijela zrake krug
-// „gledano uzduž zrake“. skrivenoOd: indeks filtra iza kojeg se ishod ne smije vidjeti (postavi prije provjere).
+// „gledano uzduž zrake“. skrivenoOd: indeks filtra iza kojeg se ishod ne smije vidjeti (postavi prije provjere);
+// iznos njegove osi tada se ne piše.
 export function scenaFiltri(s, kutovi = kutoviFiltara(s), skrivenoOd = null) {
   const N = kutovi.length;
   const Y = 138;
@@ -253,6 +254,8 @@ export function scenaFiltri(s, kutovi = kutoviFiltara(s), skrivenoOd = null) {
       y: Y,
       r: R,
       kut: normOs(k),
+      // os filtra koji učenik okreće (postavi prije provjere): uz os drugog filtra odala bi kut između osi
+      osSkrivena: skrivenoOd != null && i === skrivenoOd,
       ...disk([xs[i], Y], R, k),
     })),
     segmenti,

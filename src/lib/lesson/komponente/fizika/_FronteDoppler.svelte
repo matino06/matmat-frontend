@@ -28,6 +28,7 @@
   import {
     pocetneVrijednosti,
     klizaciOd,
+    iznosJed,
   } from "$lib/lesson/katalog/fizika/_sile.js";
 
   let {
@@ -237,7 +238,7 @@
   );
 
   let opis = $derived(
-    `Cesta odozgo: ${zvucnik ? "zvučnik" : "vozilo sa sirenom"} ${vid.voznja ? `vozi slijeva nadesno brzinom ${fz.vi} m/s` : "stoji"} i prolazi kraj tebe. ${vid.fronte === "voznja" && fz.vi > 0 ? "Ispred njega su fronte zgusnute, iza razrijeđene." : ""}`,
+    `Cesta odozgo: ${zvucnik ? "zvučnik" : "vozilo sa sirenom"} ${vid.voznja ? `vozi slijeva nadesno brzinom ${iznosJed(fz.vi, "m/s")}` : "stoji"} i prolazi kraj tebe. ${vid.fronte === "voznja" && fz.vi > 0 ? "Ispred njega su fronte zgusnute, iza razrijeđene." : ""}`,
   );
 </script>
 

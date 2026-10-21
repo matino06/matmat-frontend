@@ -17,7 +17,6 @@
     boja,
     t = 0,
     animacija = true,
-    redKuta = 1,
     oznake = null,
     cilj = null,
     opis = "",
@@ -34,6 +33,7 @@
       : "",
   );
   let redovi = $derived(redoviResetke(f, vid.redoviVidljivi));
+  let redKuta = $derived(vid.redKuta ?? 1);
   let kutR = $derived(kutReda(f, redKuta));
   let lukA = $derived(kutR != null ? lukKuta(kutR) : null);
   let faza = $derived(animacija ? (t * 0.6) % 1 : 0.3);

@@ -1013,9 +1013,10 @@ export function sredstvoCrtez(
     for (let x = g; x <= front; x += 1.5) putD.push([r1(x), yy(x)]);
     putD.push([r1(front), yy(front)]);
   }
-  // brjegovi: faza(x) − w = π/2 + 2πm
+  // brjegovi: faza(x) − w = π/2 + 2πm; m prati fazu w (fiksni raspon bi nakon ~40 perioda ostao bez brjegova)
   const brjegovi = [];
-  for (let m = -40; m < 80; m++) {
+  const m0 = Math.floor(-w / (2 * Math.PI)) - 1;
+  for (let m = m0; m < m0 + 120; m++) {
     const fi = Math.PI / 2 + 2 * Math.PI * m + w;
     let x = (fi * l1) / (2 * Math.PI);
     if (x > g) x = g + ((fi - (2 * Math.PI * g) / l1) * l2) / (2 * Math.PI);

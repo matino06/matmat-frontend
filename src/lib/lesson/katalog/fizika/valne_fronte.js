@@ -1684,7 +1684,7 @@ export const valne_fronte = {
           lambda: "λ",
           ds: "Δs",
           omjer: "Δs/λ",
-          A_P: "A_P",
+          A_P: "$A_P$",
           A_jednaki: "A (jednaki putovi)",
         };
         return s.pitaj
@@ -1717,7 +1717,7 @@ export const valne_fronte = {
     }
     if (s.nacin === "postavi") {
       const k = klizaciOd(s)[0];
-      return `v_i = ${iznosJed(tocanPolozajKlizaca(s), k.jedinica ?? "m/s")}`;
+      return `$v_i$ = ${iznosJed(tocanPolozajKlizaca(s), k.jedinica ?? "m/s")}`;
     }
     return "";
   },
