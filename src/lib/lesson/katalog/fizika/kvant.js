@@ -875,7 +875,7 @@ export function uputa(s) {
   if (s.nacin === "predvidi")
     return "Za svaku veličinu odaberi što se dogodi nakon promjene, pa klikni Provjeri.";
   if (s.nacin === "izracunaj")
-    return "Izračunaj i upiši rezultat (znanstveni zapis: 3,06·10^-19).";
+    return "Izračunaj i upiši rezultat (potenciju upiši gumbom ·10ⁿ ili ovako: 1,2·10^5)."; // primjer ne smije biti nečiji odgovor
   return "";
 }
 
