@@ -1046,7 +1046,8 @@ export function poljaIzracunaj(s) {
       razlomak: !!r.razlomak,
       // gumb ·10ⁿ odlučuje veličina (broj jezgara, aktivnost, λ, T u s), nikad iznos odgovora
       znanstveni: !r.razlomak && VELICINE_ZNANSTVENE.includes(p.velicina),
-      primjer: r.razlomak ? "npr. 1/8 ili 1 : 8" : "",
+      // primjer zapisa ne smije biti nečiji odgovor (1/8, 1/64… jesu), zato 1/3
+      primjer: r.razlomak ? "npr. 1/3 ili 1 : 3" : "",
     };
   });
 }
@@ -1095,7 +1096,7 @@ function provjeriBroj(n, r, savjet) {
   if (n == null)
     return {
       tocno: false,
-      poruka: "Upiši broj ili razlomak (npr. 1/8, 1 : 8 ili 0,125).",
+      poruka: "Upiši broj ili razlomak (npr. 1/3, 1 : 3 ili 0,3).",
       prazno: true,
     };
   if (near(n, r.vrijednost, r.tol)) return { tocno: true };

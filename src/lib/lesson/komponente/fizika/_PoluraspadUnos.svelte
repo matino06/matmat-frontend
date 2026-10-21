@@ -39,7 +39,7 @@
           class:ok={tocno}
           inputmode={p.razlomak ? "text" : "decimal"}
           autocomplete="off"
-          placeholder={p.razlomak ? "npr. 1/8" : "?"}
+          placeholder={p.razlomak ? "npr. 1/3" : "?"}
           disabled={locked}
           bind:value={unosi[i]}
         />
@@ -57,7 +57,7 @@
   {/each}
   {#if !locked && polja.some((p) => p.razlomak)}
     <p class="pr-napomena">
-      Udio i omjer upiši kao razlomak (1/8), omjer (1 : 8) ili decimalni broj.
+      Udio i omjer upiši kao razlomak (1/3), omjer (1 : 3) ili decimalni broj.
     </p>
   {/if}
   {#if !locked && polja.some((p) => p.znanstveni)}
