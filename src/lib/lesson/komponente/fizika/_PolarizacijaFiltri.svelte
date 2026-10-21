@@ -131,7 +131,8 @@
   let z = $derived(scena.zastor);
   let opis = $derived.by(() => {
     const dijelovi = scena.filtri.map(
-      (f) => `${f.indeks + 1}. filtar: os ${opisOsi(f.kut)}`,
+      (f) =>
+        `${f.indeks + 1}. filtar: ${f.osSkrivena ? "os se vidi nakon provjere" : `os ${opisOsi(f.kut)}`}`,
     );
     const iza =
       scena.zastor.svjetlina == null
@@ -322,9 +323,11 @@
       <text class="pf-oznaka" x={f.x} y={f.y + f.r + 30} text-anchor="middle"
         >{f.indeks + 1}. filtar</text
       >
-      <text class="pf-kut" x={f.x} y={f.y + f.r + 44} text-anchor="middle"
-        >os {Math.round(f.kut)}°</text
-      >
+      {#if !f.osSkrivena}
+        <text class="pf-kut" x={f.x} y={f.y + f.r + 44} text-anchor="middle"
+          >os {Math.round(f.kut)}°</text
+        >
+      {/if}
       {#if mice}
         <g
           class="lx-handle pf-ruc"
@@ -334,8 +337,10 @@
             1}. filtra: povuci ručku ili okreći strelicama"
           aria-valuemin="0"
           aria-valuemax="180"
-          aria-valuenow={Math.round(f.kut)}
-          aria-valuetext={opisOsi(f.kut)}
+          aria-valuenow={f.osSkrivena ? undefined : Math.round(f.kut)}
+          aria-valuetext={f.osSkrivena
+            ? "os se vidi nakon provjere"
+            : opisOsi(f.kut)}
           onpointerdown={(e) => down(e, f.indeks)}
           onpointermove={move}
           onpointerup={up}

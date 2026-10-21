@@ -604,6 +604,14 @@ export function vidljivo(s, otkriveno = false) {
     trazi.has("alpha") || trazi.has("kmax") || trazi.has("broj_maksimuma");
   // izracunaj: dok se ne odgovori, vidi se samo nulti red i red čiji je kut zadan (ili iz kojeg se računa λ)
   const zadani = s.kut != null || trazi.has("lambda") ? [0, s.red ?? 1] : [0];
+  // luk kuta: red cilja (postavi), nakon odgovora traženi kut (izracunaj), inače zadani red
+  const trazeniKut = pitanja(s).find((q) => q.velicina === "alpha");
+  const redKuta =
+    n === "postavi"
+      ? (s.cilj?.red ?? 1)
+      : n === "izracunaj" && otkriveno && trazeniKut
+        ? (trazeniKut.red ?? 1)
+        : (s.red ?? 1);
   return {
     boja: !(n === "izracunaj" && trazi.has("lambda") && !otkriveno),
     // krivulja pokazuje sve maksimume, pa bi u izračunu odala kutove i najviši red
@@ -613,6 +621,7 @@ export function vidljivo(s, otkriveno = false) {
     kutovi: ist ? pr.has("kutovi") : otkriveno,
     stupnjevi: ist || otkriveno || (n === "izracunaj" && !kutTrazen),
     zadaniKut: n === "izracunaj" && !otkriveno,
+    redKuta,
     oznakeIzracuna: n === "izracunaj",
   };
 }

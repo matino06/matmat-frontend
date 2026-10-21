@@ -259,9 +259,6 @@
       ? `cilj: ${oznakaCilja(spec)} = ${fmt(spec.cilj.vrijednost)}°`
       : null,
   );
-  const redKuta = untrack(() =>
-    nacin === "postavi" ? (spec.cilj?.red ?? 1) : (spec.red ?? 1),
-  );
 </script>
 
 {#if istrazi}
@@ -297,7 +294,6 @@
       {boja}
       {t}
       {animacija}
-      {redKuta}
       {oznake}
       cilj={ciljTekst}
       {opis}

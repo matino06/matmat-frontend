@@ -1235,10 +1235,12 @@ export function geometrija(s, st = pocetnoStanje(s), opt = {}) {
   const dB = [sinD(b), cosD(b)];
   const E = plus(O, dB, tpx / cosD(b));
   const dOut = [sinD(f.gamma), cosD(f.gamma)];
-  g.normale.push({
-    od: T([E[0], Y1 - 8]),
-    do: T([E[0], Math.min(g.h - 4, Y2 + 64)]),
-  });
+  // normala u izlaznoj točki odaje gdje zraka izlazi (β, γ, pomak): u izračunu tek nakon odgovora
+  if (!["beta", "gamma", "pomak"].some((v) => pitano.has(v)))
+    g.normale.push({
+      od: T([E[0], Y1 - 8]),
+      do: T([E[0], Math.min(g.h - 4, Y2 + 64)]),
+    });
   const brojevi = !sk.brojevi;
   const vidiPomak = GLEDANJE.includes(s.nacin)
     ? ima("pomak")
