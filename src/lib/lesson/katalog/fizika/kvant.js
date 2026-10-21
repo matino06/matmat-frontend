@@ -489,7 +489,7 @@ export function mjeraPostavi(s, st) {
 }
 export const pogadja = (s, st) => {
   const m = mjeraPostavi(s, st);
-  return isNum(m.q) && Math.abs(m.q - m.cilj) <= m.tol + 1e-12;
+  return isNum(m.q) && Math.abs(m.q - m.cilj) <= m.tol * (1 + 1e-9); // relativni dodatak: cilj u J je reda 10⁻¹⁹
 };
 export function najboljaVrijednost(s) {
   const k = klizaciOd(s)[0];
