@@ -874,8 +874,18 @@ export function uputa(s) {
   }
   if (s.nacin === "predvidi")
     return "Za svaku veličinu odaberi što se dogodi nakon promjene, pa klikni Provjeri.";
-  if (s.nacin === "izracunaj")
-    return "Izračunaj i upiši rezultat (potenciju upiši gumbom ·10ⁿ ili ovako: 1,2·10^5)."; // primjer ne smije biti nečiji odgovor
+  if (s.nacin === "izracunaj") {
+    // isto pravilo kao gumb ·10ⁿ uz polje (po jedinici, ne po iznosu); bez primjera s brojem (mogao bi biti nečiji odgovor)
+    const p = pitanja(s);
+    const sPot = p.filter((q) =>
+      trebaPotenciju(q.jedinica ?? VELICINE[s.scena]?.[q.velicina]?.jed[0]),
+    ).length;
+    const rez = p.length > 1 ? "rezultate" : "rezultat";
+    if (!sPot) return `Izračunaj i upiši ${rez} (decimalni zarez je u redu).`;
+    if (sPot === p.length)
+      return `Izračunaj i upiši ${rez} (potenciju broja 10 dodaj gumbom ·10ⁿ ili je upiši kao a·10^n).`;
+    return `Izračunaj i upiši ${rez} (gdje je uz polje gumb ·10ⁿ, potenciju broja 10 dodaj njime ili je upiši kao a·10^n).`;
+  }
   return "";
 }
 
