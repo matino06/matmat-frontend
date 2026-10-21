@@ -372,7 +372,8 @@
     <span class="ev-izr-oznaka">{IZR_OZNAKA[spec.pitaj]}</span>
     <BrojUnos
       jedinica={trazena.jedinica}
-      odgovor={trazena.vrijednost}
+      gumbPredznak={false}
+      gumbPotencija={trazena.znanstveni}
       oznaka={trazena.naziv}
       {locked}
       {ishod}
