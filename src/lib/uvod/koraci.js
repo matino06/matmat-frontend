@@ -10,10 +10,16 @@ const zaboravit = (c) => c.lekcije.filter((l) => l.za <= DANA_DO_ISPITA - 1 && l
 
 export const KORACI = [
   {
-    meta: "ishodi",
+    meta: "savladano",
     naslov: "Ovo je Napredak",
     tekst: (c) =>
-      `Probni predmet s jako laganim lekcijama, ispit je za dva dana (${c.datum}). Desno piše kad koju lekciju ponavljaš. Četiri pamtiš do ispita, a ${ZADACI[0].naziv} i ${ZADACI[1].naziv} bi do tada zaboravio, zato su danas na redu.`,
+      `Za probu: predmet s jako laganim lekcijama, ispit je za dva dana (${c.datum}). Desno piše kad koju lekciju ponavljaš. Ove četiri dolaze tek nakon ispita: savladao si ih i pamtiš ih do ispita.`,
+  },
+  {
+    meta: "ponavljanje",
+    naslov: "Ove dvije su danas",
+    tekst: () =>
+      `${ZADACI[0].naziv} i ${ZADACI[1].naziv} isto znaš, ali bez ponavljanja bi ih do ispita zaboravio. Zato su danas na redu.`,
   },
   {
     meta: "nav-tasks",
