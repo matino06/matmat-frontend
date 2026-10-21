@@ -482,24 +482,8 @@
   const neprom = $derived(
     poslano != null && JSON.stringify(poslano) === JSON.stringify(odabir),
   );
-  const krivaVelicina = $derived.by(() => {
-    if (
-      !ishod ||
-      ishod.tocno ||
-      ishod.prazno ||
-      !neprom ||
-      nacin !== "predvidi"
-    )
-      return null;
-    return (
-      spec.pitaj.find((q) => odabir[q].smjer !== smjerOd(tocniFaktori[q])) ??
-      spec.pitaj.find((q) => fpolja.includes(q))
-    );
-  });
-
   // ── odaberi ──
   let izbor = $state(null);
-  let poslanIzbor = $state(null);
   const tocna = $derived(nacin === "odaberi" ? tocnaPosuda(spec) : null);
 
   function provjeri() {
@@ -508,7 +492,6 @@
       poslano = JSON.parse(JSON.stringify(odabir));
       onodgovor(JSON.parse(JSON.stringify(odabir)));
     } else if (nacin === "odaberi") {
-      poslanIzbor = izbor;
       onodgovor(izbor);
     }
   }
@@ -830,7 +813,6 @@
           <rect
             class="pp-okvir"
             class:ok={gotovo && tocna === k}
-            class:bad={!gotovo && ishod && !ishod.tocno && poslanIzbor === k}
             x={u.l - 14}
             y="2"
             width={u.r - u.l + 28}
@@ -906,7 +888,7 @@
   <div class="pp-redovi">
     {#each spec.pitaj as q (q)}
       {@const ok = gotovo && (pokazi || neprom)}
-      <div class="pp-red" class:ok class:bad={krivaVelicina === q}>
+      <div class="pp-red" class:ok>
         <span class="pp-red-ime">{IME_PITAJ[q]}</span>
         <div class="pp-red-desno">
           <div class="seg pp-seg" role="group" aria-label={IME_PITAJ[q]}>
@@ -1135,9 +1117,6 @@
   .pp-okvir.ok {
     stroke: var(--success);
   }
-  .pp-okvir.bad {
-    stroke: var(--danger);
-  }
   .pp-ocitanja {
     display: grid;
     gap: 8px;
@@ -1239,10 +1218,6 @@
   .pp-red.ok {
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 8%, transparent);
-  }
-  .pp-red.bad {
-    border-color: var(--danger);
-    background: color-mix(in srgb, var(--danger) 8%, transparent);
   }
   .pp-red-ime {
     font-size: 14px;

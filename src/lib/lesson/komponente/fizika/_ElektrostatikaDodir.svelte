@@ -150,19 +150,10 @@
 
   // ── odgovor ──
   let unos = $state(["", ""]);
-  let poslano = $state(null);
   let tocno = untrack(() => nakonDodira(spec.kugle));
   let otkrij = $derived(!istrazi && (pokazi || !!ishod?.tocno));
-  let neprom = $derived(
-    poslano != null && poslano[0] === unos[0] && poslano[1] === unos[1],
-  );
-  let stanje = $derived(
-    otkrij
-      ? "ok"
-      : ishod && !ishod.tocno && !ishod.prazno && neprom
-        ? "bad"
-        : "",
-  );
+  // polja se označe tek uz točan odgovor (ili „pokaži“); krivi odgovor javlja samo poruka ispod
+  let stanje = $derived(otkrij ? "ok" : "");
   let gotovo = $state(false);
 
   $effect(() => {
@@ -178,7 +169,6 @@
 
   function provjeri() {
     if (locked) return;
-    poslano = [...unos];
     onodgovor([...unos]);
   }
   let popunjeno = $derived(
@@ -387,7 +377,6 @@
         <input
           class="inp lx-broj-inp dz-inp"
           class:ok={stanje === "ok"}
-          class:bad={stanje === "bad"}
           inputmode="decimal"
           autocomplete="off"
           placeholder="?"

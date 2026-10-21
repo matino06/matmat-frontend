@@ -517,11 +517,6 @@
     { k: "dolje", t: "pada", z: "↓" },
     { k: "isto", t: "isto", z: "=" },
   ];
-  let prvaKriva = $derived(
-    ishod && !ishod.tocno && !ishod.prazno && !promijenjeno
-      ? ishod.velicina
-      : null,
-  );
   let popunjeno = $derived(Object.values(izbor).every((x) => x != null));
   // prije odgovora vide se samo zadani iznosi (U, i C ako je zadan); izračunati (Q = CU, W, E) bi odali ono što
   // lekcija traži (npr. odspojen: Q' = Q), pa se pokažu tek nakon provjere
@@ -1045,8 +1040,9 @@
   {:else}
     <div class="pp-predvidi">
       {#each spec.pitaj as k (k)}
-        {@const ok = otkrij}
-        <div class="pp-pred-red" class:ok class:bad={prvaKriva === k}>
+        <!-- red se označi tek uz točan odgovor (ili „pokaži“): crveni red bi u zaključanoj kopiji otkrio koji
+             su ostali bili dobri -->
+        <div class="pp-pred-red" class:ok={otkrij}>
           <div class="pp-pred-ime">
             <span>{NAZIV_VELICINE[k]}</span>
             <span class="pp-sivo"
@@ -1376,10 +1372,6 @@
   .pp-pred-red.ok {
     border-color: var(--success);
     background: color-mix(in srgb, var(--success) 10%, transparent);
-  }
-  .pp-pred-red.bad {
-    border-color: var(--danger);
-    background: color-mix(in srgb, var(--danger) 10%, transparent);
   }
   .pp-pred-ime {
     display: flex;

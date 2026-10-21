@@ -1,7 +1,9 @@
 // Matematički unos učenika kao na papiru („2π/3“, „√3 − 1“, „2x+1“, „x²“, „sin x“) → izraz za siguran kalkulator
 // (core/expr.js), zapis u LaTeX-u i usporedba s točnim odgovorom. Uspoređuju se vrijednosti, a ne zapis, pa
 // „1+2x“ i „2x+1“ ili „π/6“ i „pi/6“ vrijede jednako. Isti kod radi i u validatoru, pa ovdje nema preglednika.
-import { compile, FUNKCIJE, KONSTANTE } from "./expr.js";
+import { compile, FUNKCIJE as SVE_FUNKCIJE, FUNKCIJE_STUPNJEVI, KONSTANTE } from "./expr.js";
+
+const FUNKCIJE = SVE_FUNKCIJE.filter((f) => !FUNKCIJE_STUPNJEVI.includes(f));
 
 const ZNAKOVI = [
   [/[−–—]/g, "-"],

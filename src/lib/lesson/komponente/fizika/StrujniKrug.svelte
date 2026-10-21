@@ -437,8 +437,7 @@
           <input
             id="sk-{uid}-p{i}"
             class="inp lx-broj-inp"
-            class:ok={pokazi || ishod?.polja?.[i] === true}
-            class:bad={ishod && !ishod.prazno && ishod.polja?.[i] === false}
+            class:ok={pokazi || ishod?.tocno}
             inputmode="decimal"
             autocomplete="off"
             placeholder="?"

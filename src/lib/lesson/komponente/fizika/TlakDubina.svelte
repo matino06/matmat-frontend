@@ -239,12 +239,9 @@
     if (locked || nacin !== "usporedi") return;
     izbor = i;
   }
+  // krivi odabir ostaje samo označen (bez crvenog): zaključana kopija pitanja ne smije suziti izbor
   let stanjeIzbora = $derived(
-    ishod && !ishod.prazno && poslanIzbor === izbor
-      ? ishod.tocno
-        ? "ok"
-        : "bad"
-      : "",
+    ishod?.tocno && poslanIzbor === izbor ? "ok" : "",
   );
   function provjeri() {
     if (locked) return;
@@ -405,7 +402,6 @@
         class="td-posuda"
         class:td-odabrana={odabrana}
         class:ok={odabrana && stanjeIzbora === "ok"}
-        class:bad={odabrana && stanjeIzbora === "bad"}
       >
         <path class="td-tek" style:--td-boja={boje[i]} d={tekucina(i)} />
         <line
@@ -698,7 +694,7 @@
             (e.key === "Enter" || e.key === " ") &&
             (e.preventDefault(), odaberi(i))}
         />
-        {#if pokaziRjesenje || (ishod && !ishod.prazno)}
+        {#if pokaziRjesenje}
           <text
             class="td-dno-t"
             class:ok={pokaziRjesenje &&
@@ -807,7 +803,6 @@
       class="btn btn-ghost td-jednako"
       class:sel={izbor === "jednako"}
       class:ok={izbor === "jednako" && stanjeIzbora === "ok"}
-      class:bad={izbor === "jednako" && stanjeIzbora === "bad"}
       aria-pressed={izbor === "jednako"}
       disabled={locked}
       onclick={() => odaberi("jednako")}>Jednako u svima</button
@@ -859,9 +854,6 @@
   }
   .td-posuda.ok .td-zid {
     stroke: var(--success);
-  }
-  .td-posuda.bad .td-zid {
-    stroke: var(--danger);
   }
   .td-hit {
     fill: transparent;
@@ -1054,9 +1046,6 @@
   }
   .td-jednako.ok {
     border-color: var(--success);
-  }
-  .td-jednako.bad {
-    border-color: var(--danger);
   }
   .lx-readout b.ok {
     color: var(--success);

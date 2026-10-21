@@ -19,4 +19,13 @@ export const UCITAJ_FIZIKA = {
   smjer_u_polju: () => import("./SmjerUPolju.svelte"),
   indukcija: () => import("./Indukcija.svelte"),
   naboj_u_polju: () => import("./NabojUPolju.svelte"),
+  titranje: () => import("./Titranje.svelte"),
+  val_uze: () => import("./ValUze.svelte"),
+  valne_fronte: () => import("./ValneFronte.svelte"),
+  razina_zvuka: () => import("./RazinaZvuka.svelte"),
+  zrake: () => import("./Zrake.svelte"),
+  leca: () => import("./Leca.svelte"),
+  interferencija: () => import("./Interferencija.svelte"),
+  em_val: () => import("./EmVal.svelte"),
+  polarizacija: () => import("./Polarizacija.svelte"),
 };

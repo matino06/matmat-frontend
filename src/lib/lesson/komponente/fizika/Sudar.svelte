@@ -170,13 +170,8 @@
     onodgovor(unos);
   }
   let neprom = $derived(poslano != null && poslano === unos);
-  let status = $derived(
-    pokazi || (ishod?.tocno && neprom)
-      ? "ok"
-      : ishod && !ishod.tocno && !ishod.prazno && neprom
-        ? "bad"
-        : "",
-  );
+  // polje se označi tek uz točan odgovor (ili „pokaži“); krivi odgovor javlja samo poruka
+  let status = $derived(pokazi || (ishod?.tocno && neprom) ? "ok" : "");
   let kome = $derived.by(() => {
     if (!pitanje) return "";
     if (zid) return "";
@@ -942,7 +937,6 @@
           id="sd-{uid}-unos"
           class="inp lx-broj-inp"
           class:ok={status === "ok"}
-          class:bad={status === "bad"}
           inputmode="decimal"
           autocomplete="off"
           placeholder="?"

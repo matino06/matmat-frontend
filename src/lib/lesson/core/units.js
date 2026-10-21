@@ -9,6 +9,8 @@ export const UNITS = {
     ["dm", 0.1],
     ["cm", 0.01],
     ["mm", 0.001],
+    ["µm", 1e-6],
+    ["nm", 1e-9],
   ],
   povrsina: [
     ["km²", 1e6],
@@ -162,6 +164,8 @@ const ALIASES = {
   "kg/dm3": "kg/dm³",
   "km/hr": "km/h",
   kmh: "km/h",
+  μm: "µm",
+  um: "µm",
   μC: "µC",
   uC: "µC",
   μF: "µF",

@@ -14,7 +14,7 @@
   const trazena = page.url.searchParams.get("z");
   // svelte-ignore state_referenced_locally (popis se učita jednom)
   let odabrana = $state(
-    trazena === "katalog" ? "katalog" : (data.lekcije.find((z) => String(kljuc(z)) === trazena) ? Number(trazena) : null) ?? kljuc(data.lekcije.find((z) => z.lekcija && !z.provjera?.greske?.length) ?? data.lekcije[0] ?? { izvor: {} }),
+    trazena === "katalog" ? "katalog" : (kljuc(data.lekcije.find((z) => String(kljuc(z)) === trazena) ?? { izvor: {} }) ?? null) ?? kljuc(data.lekcije.find((z) => z.lekcija && !z.provjera?.greske?.length) ?? data.lekcije[0] ?? { izvor: {} }),
   );
   let pogled = $state("lekcija");
   let z = $derived(data.lekcije.find((x) => kljuc(x) === odabrana));

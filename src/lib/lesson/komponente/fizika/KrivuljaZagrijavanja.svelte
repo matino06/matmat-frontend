@@ -269,8 +269,9 @@
   function stanjeDijela(br) {
     if (nacin !== "odaberi") return "";
     if (pokazi) return tocni.includes(br) ? "ok" : "";
-    if (ishod && !ishod.prazno && neprom && oznaceni.includes(br))
-      return ishod.tocno || tocni.includes(br) ? "ok" : "bad";
+    // nakon krivog odgovora odabrani dijelovi ostaju samo označeni: zeleno/crveno po dijelu odalo bi koji je
+    // dio krivo odabran (zaključana kopija pitanja ostaje vidljiva iznad koraka pomoći)
+    if (ishod?.tocno && neprom && oznaceni.includes(br)) return "ok";
     return oznaceni.includes(br) ? "sel" : "";
   }
   function provjeri() {
