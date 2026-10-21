@@ -1003,14 +1003,21 @@ export function ciljaniFaktor(s) {
   if (c.velicina === "T") return s.T0 / c.vrijednost;
   return null;
 }
+// točna brzina (bez zaokruživanja) i najbliži položaj klizača
+export const betaCilja = (s) => betaIzKorijena(ciljaniFaktor(s));
 export const tocnaBeta = (s) => {
-  const b = betaIzKorijena(ciljaniFaktor(s));
   const kk = korakPostavi(s);
-  return Math.round(b / kk) * kk;
+  return Math.round(betaCilja(s) / kk) * kk;
 };
-export const ostvarujeCilj = (s, b) =>
-  Math.abs(korijen(b) - ciljaniFaktor(s)) <=
-  TOL_FAKTORA * ciljaniFaktor(s) + 1e-12;
+// Točno: omjer unutar ±0,5 % ciljanog ILI brzina najviše jedan korak klizača od točne. Za brze ciljeve
+// (omjer < ~0,5) ±0,5 % omjera bude uže od jednog koraka, pa bi točno izračunata β zaokružena na korak
+// (npr. na 3 decimale) mogla pasti. Oba susjedna položaja točne β su prihvaćena; ostvarivost cilja
+// (tocnaBeta ≤ BETA_MAX_POSTAVI) i dalje provjerava validate.
+export const ostvarujeCilj = (s, b) => {
+  const kz = ciljaniFaktor(s);
+  if (Math.abs(korijen(b) - kz) <= TOL_FAKTORA * kz + 1e-12) return true;
+  return Math.abs(b - betaCilja(s)) <= korakPostavi(s) * (1 + 1e-9);
+};
 // što bi promatrač izmjerio uz brzinu b (za poruke i za otkrivanje nakon provjere)
 export function ishodPostavi(s, b) {
   const f = fizika(s, b);
@@ -1174,7 +1181,7 @@ Scene:
 - "postulat": brod leti brzinom beta, smjer: "prema" | "od" Zemlje, signal?: "laser" (zadano) | "radio" | "farovi"; brod pošalje signal prema Zemlji: stvarni puls putuje brzinom c, a crtkani „duh“ brzinom c ± v (da se brzine zbrajaju); detektor na Zemlji uvijek izmjeri c. Načini: istrazi (klizač brzine, prekidač smjera, gumb „Pošalji“), prikaz, predvidi (učenik bira (1 − β)c / c / (1 + β)c; utrka se pokaže tek nakon odgovora; poruke za zbrajanje/oduzimanje brzina dodaju se same).
 - "svjetlosni_sat": dva zrcala i foton u brodu; pogled?: "zemlja" (zadano: cik-cak, uz mirni sat na Zemlji, brojači tikova i faktor √(1 − v²/c²)) | "brod" (foton okomito). beta (zadano 0,6). Načini: istrazi (klizač i prekidač pogleda), prikaz.
 - "mion": mion nastane na visina? km (zadano 15) i juri prema tlu; T0 (µs, zadano 2,2). Dva sata (mionov T₀ i zemaljski T) kucaju uživo, crtkani „duh“ raspadne se nakon v·T₀. Načini: istrazi (klizač brzine i prekidač „pogled iz miona“: atmosfera skraćena γ puta), prikaz, izracunaj (pitaj: [{velicina: "T" (µs | ns | ms | s) | "s" (m | km) | "gama" | "s0" (klasični put v·T₀), jedinica?, tolerancija?, krivo?, savjet?}], 1–3 polja; T, s, γ i ishod skriveni do točnog odgovora).
-- "brod": brod duljine L0 (m) leti pokraj ravnala na Zemlji; skraćuje se samo u smjeru gibanja (crtkani obris mirnog broda), sat u brodu i usklađeni satovi na Zemlji mjere trajanje ručka. beta ili L (izmjerena duljina, L < L0) za brzinu; T (trajanje na Zemlji) ili T0 (u brodu), jedinica_T? (zadano "min"). Načini: istrazi (klizač brzine), prikaz, postavi (cilj: {velicina: "L" | "T0" | "T", vrijednost}; beta = početna brzina (ne smije ostvarivati cilj), korak? zadano 0,001; brod se do provjere crta u vlastitoj duljini i ništa se ne očitava; točno kad je √(1 − β²) unutar ±0,5 % ciljanog omjera; cilj mora biti ostvariv do v = 0,999c; poruke za β = L/L₀, zaboravljen korijen i krivi izvod dodaju se same; krivo?: [{vrijednost (β), poruka}]), izracunaj (pitaj: [{velicina: "beta" (u c; prihvaća i m/s) | "L" | "T0" | "T" | "gama", jedinica?, tolerancija?, krivo?, savjet?}]; zadane veličine se vide, ostale su skrivene).
+- "brod": brod duljine L0 (m) leti pokraj ravnala na Zemlji; skraćuje se samo u smjeru gibanja (crtkani obris mirnog broda), sat u brodu i usklađeni satovi na Zemlji mjere trajanje ručka. beta ili L (izmjerena duljina, L < L0) za brzinu; T (trajanje na Zemlji) ili T0 (u brodu), jedinica_T? (zadano "min"). Načini: istrazi (klizač brzine), prikaz, postavi (cilj: {velicina: "L" | "T0" | "T", vrijednost}; beta = početna brzina (ne smije ostvarivati cilj), korak? zadano 0,001; brod se do provjere crta u vlastitoj duljini i ništa se ne očitava; točno kad je √(1 − β²) unutar ±0,5 % ciljanog omjera ili je β najviše jedan korak klizača od točne; cilj mora biti ostvariv do v = 0,999c; poruke za β = L/L₀, zaboravljen korijen i krivi izvod dodaju se same; krivo?: [{vrijednost (β), poruka}]), izracunaj (pitaj: [{velicina: "beta" (u c; prihvaća i m/s) | "L" | "T0" | "T" | "gama", jedinica?, tolerancija?, krivo?, savjet?}]; zadane veličine se vide, ostale su skrivene).
 - "energija": cestica: "elektron" | "proton" | {ime, gen?, m (kg)} u cijevi akceleratora; stupac E = E₀ + E_k, brzinomjer v/c s crtom c i graf E/E₀ (v/c) s asimptotom. Načini: istrazi (gumbi „Dodaj energiju“ po obrok? · E₀, zadano 0,5; v/c se približava c i nikad je ne dosegne; beta? početna brzina), prikaz (beta), izracunaj (pitaj: [{velicina: "E0" | "E" | "Ek" (J | MeV | keV | eV) | "gama", …}]; beta potrebna za E, Ek i gama).
 Tipične greške u izracunaj računa aplikacija (γ obrnuto, zaboravljen korijen, v umjesto v², ½mv², m·c, c u km/s, µs nepretvoren, put s vlastitim vremenom, druga čestica, krive jedinice); u pitaj[i].krivo smiju se dodati vlastite (${KRIVO_OPIS}).`;
 
