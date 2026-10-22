@@ -239,10 +239,31 @@ function graph(s, text) {
       body += label([end[0] - 6, y], fn.oznaka, `lbl c${i + 1}-t`, "end");
     }
   });
+  const curvePts = [];
+  fns.forEach((fn) => {
+    for (let k = 0; k <= 240; k++) {
+      const x = s.x[0] + ((s.x[1] - s.x[0]) * k) / 240;
+      const y = fn.f(x);
+      if (isFinite(y) && y >= s.y[0] && y <= s.y[1]) curvePts.push(T([x, y]));
+    }
+  });
   for (const p of s.tocke ?? []) {
     const q = T([p.x, p.y]);
     body += dot(q, "pt acc-f");
-    if (p.oznaka) body += label([q[0] + 8, q[1] + (q[1] < 40 ? 12 : -12)], p.oznaka, "lbl small", "start");
+    if (!p.oznaka) continue;
+    // od četiri mjesta oko točke ono kroz koje prolazi najmanje krivulje (prednost: desno gore)
+    const w = [...p.oznaka].length * 7.2;
+    const spots = [[8, -12, "start"], [8, 14, "start"], [-8, -12, "end"], [-8, 14, "end"]];
+    let best = spots[0];
+    let fewest = Infinity;
+    for (const sp of spots) {
+      const x0 = sp[2] === "start" ? q[0] + sp[0] : q[0] + sp[0] - w;
+      const [y0, y1] = [q[1] + sp[1] - 8, q[1] + sp[1] + 8];
+      const out = x0 < 4 || x0 + w > W - 4 || y0 < 4 || y1 > H - 4 ? 1000 : 0;
+      const hits = out + curvePts.filter((c) => c[0] >= x0 && c[0] <= x0 + w && c[1] >= y0 && c[1] <= y1).length;
+      if (hits < fewest) [best, fewest] = [sp, hits];
+    }
+    body += label([q[0] + best[0], q[1] + best[1]], p.oznaka, "lbl small", best[2]);
   }
   return { svg: svg(body), checks };
 }
@@ -614,7 +635,7 @@ function energyDiagram(s, text) {
   const left = 46;
   const right = far.length ? 124 : 16;
   const top = 46;
-  const bottom = 238;
+  const bottom = 232;
   const vals = [...levels.map((l) => l.vrijednost), ...peaks.map((p) => p.vrijednost)];
   let lo = Math.min(...vals);
   let hi = Math.max(...vals);
@@ -664,10 +685,26 @@ function energyDiagram(s, text) {
       body += label([W - 27, y], p.oznaka, `lbl small c${(i % 4) + 1}-t`, "end");
     }
   });
+  // okomite strelice (x, od y, do y), da oznake razina ne leže preko njih
+  const shafts = steps
+    .filter((t) => t.vrh == null && isLevel(t.do))
+    .map((t) => {
+      const x = Math.abs(t.do - t.od) === 1 ? left + colW * Math.max(t.od, t.do) : W - right + 22 + 30 * far.indexOf(t);
+      return [x, Y(levels[t.od].vrijednost), Y(levels[t.do].vrijednost)];
+    });
+  const crosses = (x0, x1, y0, y1) =>
+    shafts.some(([x, a, b]) => x >= x0 - 3 && x <= x1 + 3 && Math.max(a, b) > y0 + 2 && Math.min(a, b) < y1 - 2);
   levels.forEach((l, i) => {
     const [a, b] = ends(i);
-    body += line([a, Y(l.vrijednost)], [b, Y(l.vrijednost)], "ln thick");
-    if (l.oznaka) body += multiLabel(cx(i), Y(l.vrijednost) - 11, fitLevel(l.oznaka), "lbl small");
+    const y = Y(l.vrijednost);
+    body += line([a, y], [b, y], "ln thick");
+    if (!l.oznaka) return;
+    const t = fitLevel(l.oznaka);
+    const n = lines(t).length;
+    const w = Math.max(...lines(t).map((x) => [...x].length * 7.6)) + 8;
+    const [x0, x1] = [cx(i) - w / 2, cx(i) + w / 2];
+    const above = crosses(x0, x1, y - 11 - 14 * n, y) && !crosses(x0, x1, y, y + 8 + 14 * n);
+    body += above ? multiLabel(cx(i), y + 15 + 14 * (n - 1), t, "lbl small") : multiLabel(cx(i), y - 11, t, "lbl small");
   });
   const eaSteps = steps.filter((t) => t.vrh != null);
   const extended = new Set();
@@ -706,7 +743,7 @@ function energyDiagram(s, text) {
       body += multiLabel(x + 6, (y0 + y1) / 2 + 4, t.oznaka, "lbl small c2-t", "start");
     }
   });
-  return { svg: svg(body, 262), checks };
+  return { svg: svg(body, 276), checks };
 }
 
 // Strukturna (i Lewisova) formula: atomi s koordinatama u duljinama veze (y prema gore), veze s redom.
