@@ -221,6 +221,9 @@
 .task-sketch .k4 {
   fill: var(--danger);
 }
+.task-sketch .k2.light {
+  fill: color-mix(in srgb, var(--warn) 55%, transparent);
+}
 .task-sketch .k5 {
   fill: var(--text-dim);
 }

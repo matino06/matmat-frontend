@@ -1151,15 +1151,21 @@ function particles(s, text) {
     const placed = [];
     for (const c of b.cestice ?? []) {
       const atomsList = byAtoms ? Object.entries(species.get(c.vrsta)).flatMap(([e, k]) => Array(k).fill(e)) : [c.vrsta];
-      // rijetki element u sredini (Cu–S–Cu ne, nego Cu, S, Cu → S u sredini kad ga ima manje)
-      if (atomsList.length === 3) {
-        const counts = atomsList.reduce((m, e) => ((m[e] = (m[e] ?? 0) + 1), m), {});
-        const lone = atomsList.find((e) => counts[e] === 1);
-        if (lone && Object.keys(counts).length === 2) atomsList.splice(0, 3, atomsList.find((e) => e !== lone), lone, atomsList.find((e) => e !== lone));
+      // tri i više atoma: središnji atom (onaj kojeg ima jedan, uz najbrojniji element, npr. N u KNO₃, S u Cu₂S),
+      // ostali jednoliko oko njega
+      if (atomsList.length >= 3) {
+        const els = Object.keys(species.get(c.vrsta) ?? {});
+        const cnt = species.get(c.vrsta) ?? {};
+        const most = els.reduce((a, b) => (cnt[b] > cnt[a] ? b : a), els[0]);
+        const i = els.indexOf(most);
+        const center = [els[i - 1], els[i + 1]].find((e) => e && cnt[e] === 1) ?? els.find((e) => cnt[e] === 1);
+        if (center) atomsList.splice(atomsList.indexOf(center), 1), atomsList.unshift(center);
       }
       const m = atomsList.length;
-      const offs = m === 1 ? [[0, 0]] : m === 4 ? [[-0.8, -0.8], [0.8, -0.8], [-0.8, 0.8], [0.8, 0.8]] : atomsList.map((_, k) => [(k - (m - 1) / 2) * 1.55, 0]);
-      const R = r * (m === 1 ? 1 : m === 4 ? 2.2 : 0.78 * m + 0.4);
+      const offs =
+        m === 1 ? [[0, 0]] : m === 2 ? [[-0.78, 0], [0.78, 0]]
+          : [[0, 0], ...atomsList.slice(1).map((_, k) => [1.7 * Math.cos((2 * Math.PI * k) / (m - 1)), 1.7 * Math.sin((2 * Math.PI * k) / (m - 1))])];
+      const R = r * (m === 1 ? 1 : m === 2 ? 1.8 : 2.7);
       for (let n = 0; n < c.broj; n++) {
         let pos = null;
         for (let tries = 0; tries < 600 && !pos; tries++) {
@@ -1169,7 +1175,9 @@ function particles(s, text) {
         if (!pos) return checks.push(fail(`čestice u posudi „${b.oznaka ?? ""}“ ne stanu; smanji broj čestica`));
         placed.push([pos, R]);
         const turn = rnd() * Math.PI;
-        atomsList.forEach((e, k) => {
+        // središnji atom zadnji, da ga susjedi ne prekriju
+        [...atomsList.keys()].reverse().forEach((k) => {
+          const e = atomsList[k];
           const [dx, dy] = offs[k];
           const q = [pos[0] + r * (dx * Math.cos(turn) - dy * Math.sin(turn)), pos[1] + r * (dx * Math.sin(turn) + dy * Math.cos(turn))];
           body += `<circle class="atom ${kindOf(e)}" cx="${f(q[0])}" cy="${f(q[1])}" r="${r}"/>`;
@@ -1189,7 +1197,7 @@ function particles(s, text) {
 
 // Kromatogram: traka (kreda ili papir) u čaši s otapalom, startna linija, fronta otapala i mrlje na
 // udaljenostima od startne linije; kote prikazuju te udaljenosti.
-const SPOT = { "žuta": "k2", "narančasta": "k2", zelena: "k3", plava: "k1", crvena: "k4", "ljubičasta": "k1", siva: "k5" };
+const SPOT = { "žuta": "k2 light", "narančasta": "k2", zelena: "k3", plava: "k1", crvena: "k4", "ljubičasta": "k1", siva: "k5" };
 
 function chromatogram(s, text) {
   const spots = s.mrlje ?? [];
@@ -1228,8 +1236,13 @@ function chromatogram(s, text) {
     });
     body += line([sx1 + 4, ys], [244 + 15 * marks.length, ys], "ln thin dash");
     const lx = 244 + 15 * marks.length;
+    // oznake odozgo prema dolje, svaka barem 14 px ispod prethodne
+    const order = marks.map((m, i) => i).sort((a, b) => Y(marks[a].d) - Y(marks[b].d));
+    const ly = [];
+    let last = -Infinity;
+    for (const i of order) last = ly[i] = Math.max(Y(marks[i].d), last + 14);
     marks.forEach((m, i) => {
-      body += label([lx, Y(m.d)], `${m.t} = ${fmt(m.d)}${unit}`, i === marks.length - 1 ? "lbl small acc-t" : "lbl small c2-t", "start");
+      body += label([lx, ly[i]], `${m.t} = ${fmt(m.d)}${unit}`, i === marks.length - 1 ? "lbl small acc-t" : "lbl small c2-t", "start");
     });
   }
   return { svg: svg(body, 252), checks };
