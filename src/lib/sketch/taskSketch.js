@@ -945,7 +945,7 @@ function structure(s, text) {
 }
 
 // Galvanski članak (dvije čaše i elektrolitni most) ili elektroliza (U-cijev ili jedna čaša s izvorom).
-const TINT = { crvena: "t-danger", "ružičasta": "t-pink", "ljubičasta": "t-violet", "žuta": "t-warn", "narančasta": "t-warn", zelena: "t-success", plava: "t-primary", bezbojna: "t-none" };
+const TINT = { crvena: "t-danger", "ružičasta": "t-pink",  "žuta": "t-warn", "narančasta": "t-warn", zelena: "t-success", plava: "t-primary", bezbojna: "t-none" };
 
 function cell(s, text) {
   const L = s.lijevo ?? {};
@@ -973,6 +973,12 @@ function cell(s, text) {
   if (checks.some((x) => !x.ok)) return { checks };
 
   const tint = (e) => (e.boja && TINT[e.boja] ? ` ${TINT[e.boja]}` : "");
+  // otopina u pravokutniku; ljubičasta je plavi i crveni sloj jedan na drugom (u paleti nema ljubičaste)
+  const fill = (e, x, y, w, h) => {
+    const at = `x="${x}" y="${y}" width="${w}" height="${h}"`;
+    if (e.boja === "ljubičasta") return `<rect class="liquid t-primary" ${at}/><rect class="liquid t-pink" ${at}/>`;
+    return `<rect class="liquid${tint(e)}" ${at}/>`;
+  };
   const electrode = (x, y0, y1) => `<rect class="electrode" x="${x - 6}" y="${y0}" width="12" height="${y1 - y0}" rx="2"/>`;
   const bubbles = (x, y) =>
     [[-12, 0], [11, -9], [-10, -20], [12, -30], [-11, -42]]
@@ -1013,7 +1019,7 @@ function cell(s, text) {
 
   if (vessel === "dvije_case") {
     for (const [x, e] of [[xs[0], L], [xs[1], R]]) {
-      body += `<rect class="liquid${tint(e)}" x="${x - 58}" y="150" width="116" height="88"/>`;
+      body += fill(e, x - 58, 150, 116, 88);
       body += `<path class="ln" d="M${x - 60},118 V240 H${x + 60} V118"/>`;
       body += electrode(x, wireY + 30, 222);
       if (e.otopina) body += label([x, 256], e.otopina, "lbl small");
@@ -1024,10 +1030,9 @@ function cell(s, text) {
     return { svg: svg(body, 266), checks };
   }
   if (vessel === "u_cijev") {
-    body += `<path class="liquid" d="M100,110 V170 A90,90 0 0 0 280,170 V110 H230 V170 A40,40 0 0 1 150,170 V110 Z"/>`;
-    // boja otopine uz elektrodu samo kad je zadana (inače bi se tekućina u kraku nacrtala dvaput, tamnije)
-    if (tint(L)) body += `<rect class="liquid${tint(L)}" x="100" y="110" width="50" height="60"/>`;
-    if (tint(R)) body += `<rect class="liquid${tint(R)}" x="230" y="110" width="50" height="60"/>`;
+    // dno cijevi, pa svaki krak svojom bojom (bez zadane boje kao dno)
+    body += `<path class="liquid" d="M100,170 A90,90 0 0 0 280,170 H230 A40,40 0 0 1 150,170 Z"/>`;
+    body += fill(L, 100, 110, 50, 60) + fill(R, 230, 110, 50, 60);
     body += `<path class="ln" d="M100,82 V170 A90,90 0 0 0 280,170 V82 M150,82 V170 A40,40 0 0 0 230,170 V82"/>`;
     for (const [x, e] of [[xs[0], L], [xs[1], R]]) {
       body += electrode(x, wireY + 30, 172);
@@ -1039,7 +1044,7 @@ function cell(s, text) {
     if (s.otopina) body += label([190, 236], s.otopina, "lbl small");
     return { svg: svg(body, 266), checks };
   }
-  body += `<rect class="liquid${tint(s)}" x="82" y="130" width="216" height="108"/>`;
+  body += fill(s, 82, 130, 216, 108);
   body += `<path class="ln" d="M80,100 V240 H300 V100"/>`;
   for (const [x, e] of [[xs[0], L], [xs[1], R]]) {
     body += electrode(x, wireY + 30, 222);

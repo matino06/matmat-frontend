@@ -193,9 +193,6 @@
 .task-sketch .liquid.t-pink {
   fill: color-mix(in srgb, var(--danger) 13%, transparent);
 }
-.task-sketch .liquid.t-violet {
-  fill: color-mix(in srgb, var(--primary) 42%, transparent);
-}
 .task-sketch .liquid.t-warn {
   fill: color-mix(in srgb, var(--warn) 30%, transparent);
 }
