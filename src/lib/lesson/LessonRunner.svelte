@@ -176,47 +176,50 @@
     zadatakOtvoren = true;
   }
 
-  // Prijedlog ocjene za ponavljanje (SM-2, q 0–5). Pamćenje pokazuje samo prvi odgovor (pomoć i blizanac su
-  // učenje), pa se broje dijelovi riješeni odmah: svi → 5; jedan promašaj u lekciji od 4+ dijela → 4;
-  // barem pola → 3, zadnja ocjena koja prolazi; manje → 2 (vraća se sutra). Pokazan odgovor: najviše 2, ispod
-  // pola 1.
+  // Prijedlog ocjene za ponavljanje (FSRS, 1 nisam riješio, 2 s mukom, 3 dobro, 4 lako). Pamćenje pokazuje samo prvi
+  // odgovor (pomoć i blizanac su učenje), pa se broje dijelovi riješeni odmah: svi → 3; jedan promašaj u lekciji od
+  // 4+ dijela → 3; barem pola → 2; manje → 1. Pokazan odgovor → 1. „Lako“ samo predlaže učenik, i to kad je sve
+  // riješio odmah: MatMat ne zna je li mu bilo lako ili je razmišljao.
   function ocjenaIz(r) {
     const odmah = r.filter((x) => x === ODMAH).length;
     const promaseno = r.length - odmah;
-    const pola = odmah * 2 >= r.length;
-    if (promaseno === 0) return 5;
-    if (r.includes(POKAZANO)) return pola ? 2 : 1;
-    if (promaseno === 1 && r.length >= 4) return 4;
-    return pola ? 3 : 2;
+    if (promaseno === 0) return 3;
+    if (r.includes(POKAZANO)) return 1;
+    if (promaseno === 1 && r.length >= 4) return 3;
+    return odmah * 2 >= r.length ? 2 : 1;
   }
+
+  // Najviša ocjena koju učenik smije odabrati za ove rezultate: „lako“ ako je sve riješio odmah.
+  const gornjaIz = (r) => (r.every((x) => x === ODMAH) ? 4 : ocjenaIz(r));
 
   function sazetak() {
     const r = stanja.map((s) => s.rezultat);
     if (lekcija.cijeli) return sazetakCijelog(r);
     const q = ocjenaIz(r);
     // Najviše što učenik smije podići: ocjena da je još jedan dio riješio odmah (tipfeler "80" umjesto "800"),
-    // ali ne pala lekcija u savršenu. Spuštati smije uvijek.
-    const najvise = Math.max(q, ...r.map((x, i) => (x === ODMAH ? q : ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))))));
+    // ali ne pala lekcija u laku. Spuštati smije uvijek.
+    const najvise = Math.max(gornjaIz(r), ...r.map((x, i) => (x === ODMAH ? 0 : gornjaIz(r.map((y, j) => (j === i ? ODMAH : y))))));
     return { rezultati: r, q, najvise, odmah: r.filter((x) => x === ODMAH).length, dijelova: r.length };
   }
 
-  // Lekcija s `cijeli`: na maturi se cijeli zadatak rješava iz prve, pa ocjena ovisi o njemu. Sam iz prve → 5. Sam iz
-  // više pokušaja → 3: na ispitu bi izgubio bodove, a ovdje nakon svakog odgovora vidi je li točan.
-  // Uz korake zadatak nije znao (SM-2: 2 = krivo, a uz rješenje se čini lako), a sličan zadatak riješen odmah nakon
-  // koraka pokazuje izvedbu, ne pamćenje. Prvi put su koraci dio učenja: najviše 3 ako je na kraju sam riješio sličan
-  // zadatak iz prve, inače 2. Na ponavljanju su znak zaborava: najviše 2, inače 1, pa se lekcija vraća sutra.
+  // Lekcija s `cijeli`: na maturi se cijeli zadatak rješava iz prve, pa ocjena ovisi o njemu. Sam iz prve → 3 (dobro).
+  // Sam iz više pokušaja → 2: na ispitu bi izgubio bodove, a ovdje nakon svakog odgovora vidi je li točan.
+  // Uz korake zadatak nije znao, a sličan zadatak riješen odmah nakon koraka pokazuje izvedbu, ne pamćenje. Prvi put
+  // su koraci dio učenja: najviše 2 ako je na kraju sam riješio sličan zadatak iz prve, inače 1. Na ponavljanju su
+  // znak zaborava: 1, pa se lekcija uskoro vraća.
   // Podizanje do `najvise` vrijedi kao i inače za jedan tipfeler: krivo upisan cijeli zadatak (ako ga je pokušao,
-  // a ne odmah tražio korake) bio bi 5, krivo upisan sličan zadatak njegova granica, krivo upisan korak ocjena korak više.
+  // a ne odmah tražio korake) bio bi riješen iz prve, pa do 4; krivo upisan sličan zadatak njegova granica, krivo
+  // upisan korak ocjena korak više.
   function sazetakCijelog(r) {
     const sam = cijeli.rezultat;
     const slican = cijeli.zavrsni.rezultat;
-    if (sam) return { nacin: "cijeli", q: sam === ODMAH ? 5 : 3, najvise: 5, rezultati: [sam], odmah: sam === ODMAH ? 1 : 0, dijelova: 1 };
-    const granicaUz = (s) => (s === ODMAH ? 3 : 2) - (ponavljanje ? 1 : 0);
+    if (sam) return { nacin: "cijeli", q: sam === ODMAH ? 3 : 2, najvise: 4, rezultati: [sam], odmah: sam === ODMAH ? 1 : 0, dijelova: 1 };
+    const granicaUz = (s) => (ponavljanje ? 1 : s === ODMAH ? 2 : 1);
     const granica = granicaUz(slican);
     const q = Math.min(ocjenaIz(r), granica);
     const najvise = Math.max(
       q,
-      cijeli.pokusaji ? 5 : 0,
+      cijeli.pokusaji ? 4 : 0,
       slican === ODMAH ? 0 : Math.min(ocjenaIz(r), granicaUz(ODMAH)),
       ...r.map((x, i) => (x === ODMAH ? 0 : Math.min(ocjenaIz(r.map((y, j) => (j === i ? ODMAH : y))), granica))),
     );

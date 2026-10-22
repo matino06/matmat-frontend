@@ -3,6 +3,7 @@
   import { userData } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
   import { fetchReadiness } from "$lib/api/progress";
+  import { ocjena } from "$lib/components/ratingPicker/RatingPicker.svelte";
 
   let loading = $state(true);
   let error = $state(false);
@@ -371,15 +372,16 @@
 
                 {#if hoveredId === item.o.objectiveId}
                   <div class="node-hovercard">
-                    {#if item.o.lastQ == null}
+                    {#if item.o.lastGrade == null}
                       <div class="hc-empty">Još nije rješavano</div>
                     {:else}
-                      <div class="hc-stars" aria-label="Zadnja ocjena {item.o.lastQ} od 5">
-                        {#each [1, 2, 3, 4, 5] as s (s)}
-                          <svg class="hc-star" class:hc-star-on={s <= item.o.lastQ} width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                      <div class="hc-stars" aria-label="Zadnja ocjena: {ocjena(item.o.lastGrade).t}">
+                        {#each [1, 2, 3, 4] as s (s)}
+                          <svg class="hc-star" class:hc-star-on={s <= item.o.lastGrade} width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
                             <polygon points="12 2 15 9 22 9.3 16.5 13.9 18.3 21 12 17 5.7 21 7.5 13.9 2 9.3 9 9"/>
                           </svg>
                         {/each}
+                        <span class="hc-grade" style="color: {ocjena(item.o.lastGrade).color}" aria-hidden="true">{ocjena(item.o.lastGrade).t}</span>
                       </div>
                     {/if}
                     <button
@@ -1065,7 +1067,14 @@
   }
   .hc-stars {
     display: flex;
+    align-items: center;
     gap: 3px;
+  }
+  .hc-grade {
+    margin-left: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
   }
   .hc-star {
     color: var(--border-strong);

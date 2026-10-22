@@ -131,7 +131,7 @@
     rated = r;
     const before = solved;
     solved += 1;
-    if (r.k >= 3) {
+    if (r.k >= 2) {
       bump = { from: readiness, to: readiness + 1, key: Date.now() };
       readiness += 1;
       later(() => (bump = null), 2000);
@@ -332,7 +332,7 @@
           <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
         {/if}
         {#key ratingKey}
-          <RatingPicker najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => (pending = r)} />
+          <RatingPicker najvise={lekcijaSazetak?.najvise ?? 4} onSelect={(r) => (pending = r)} />
         {/key}
       {/if}
     </div>

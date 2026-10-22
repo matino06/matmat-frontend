@@ -728,23 +728,6 @@ svg {
   flex-direction: column;
   gap: 10px;
 }
-.rp-bar-wrap {
-  position: relative;
-}
-.rp-gradient {
-  height: 5px;
-  border-radius: 99px;
-  margin-bottom: 10px;
-  background: linear-gradient(
-    to right,
-    #ef4444,
-    #f97316,
-    #eab308,
-    #84cc16,
-    #22c55e,
-    #16a34a
-  );
-}
 .rp-btns {
   display: flex;
   gap: 8px;
@@ -788,24 +771,18 @@ svg {
   background: color-mix(in srgb, var(--rc) 22%, var(--bg-elev));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--rc) 25%, transparent);
 }
-.rp-num {
-  font-size: 20px;
-  font-weight: 800;
-  font-family: var(--font-mono);
+.rp-name {
+  font-size: 14px;
+  font-weight: 700;
   color: var(--rc);
+  text-align: center;
 }
-.rp-ends {
-  display: flex;
-  justify-content: space-between;
+.rp-when {
+  margin-top: 2px;
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-.rp-end-fail {
-  color: #ef4444;
-}
-.rp-end-pass {
-  color: #16a34a;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  white-space: nowrap;
 }
 .rp-desc {
   min-height: 52px;
@@ -833,13 +810,6 @@ svg {
   color: var(--text-dim);
   flex: 1;
 }
-.rp-desc-sub {
-  font-size: 11px;
-  color: var(--text-faint);
-  font-family: var(--font-mono);
-  white-space: nowrap;
-}
-
 .rating-row {
   margin-top: var(--pad-5);
   padding: var(--pad-4);
@@ -2765,7 +2735,7 @@ svg {
     flex-wrap: wrap;
   }
   .rp-btn {
-    flex: 1 1 calc(33.333% - 8px);
+    flex: 1 1 calc(50% - 8px);
     min-width: 0;
     padding: 10px 4px;
   }

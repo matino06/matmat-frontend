@@ -1,38 +1,29 @@
 <script>
   import { RATINGS } from "$lib/components/ratingPicker/RatingPicker.svelte";
+  import { next, interval } from "$lib/fsrs.js";
 
-  // /kako-radi: rate one outcome four times and watch when it comes back. A
-  // simplified SM-2 (what the backend uses): below 3 the outcome starts over
-  // tomorrow; otherwise the first return is tomorrow (6 days after a perfect
-  // first try, as in RATINGS), the second 6 days on, then each gap is the last
-  // one times the outcome's ease, which every rating nudges up or down.
+  // /kako-radi: rate one outcome four times and watch when it comes back. The same
+  // FSRS-6 as the backend: each rating updates how long the outcome is remembered
+  // (its stability), and it comes back when the chance of still knowing it falls
+  // to 90 %. Every review here happens on its day.
 
   const STEPS = 4;
   const PRESETS = [
-    { label: "Ide ti dobro", ratings: [4, 4, 4, 4] },
-    { label: "Znaš savršeno", ratings: [5, 5, 5, 5] },
-    { label: "Jednom zapneš", ratings: [4, 4, 2, 4] },
+    { label: "Ide ti dobro", ratings: [3, 3, 3, 3] },
+    { label: "Ide s mukom", ratings: [2, 2, 2, 2] },
+    { label: "Jednom zapneš", ratings: [3, 3, 1, 3] },
   ];
 
-  let ratings = $state([4, 4, 4, 4]);
+  let ratings = $state([3, 3, 3, 3]);
 
-  function schedule(qs) {
-    let n = 0;
-    let ease = 2.5;
+  function schedule(grades) {
+    let state = null;
     let gap = 0;
     let day = 0;
-    return qs.map((q) => {
+    return grades.map((q) => {
       const at = day;
-      if (q < 3) {
-        n = 0;
-        gap = 1;
-      } else {
-        n += 1;
-        if (n === 1) gap = q === 5 ? 6 : 1;
-        else if (n === 2 && gap === 1) gap = 6;
-        else gap = Math.round(gap * ease);
-      }
-      ease = Math.max(1.3, ease + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
+      state = next(state, q, gap);
+      gap = interval(state.s);
       day += gap;
       return { q, at, gap, next: day };
     });
@@ -82,17 +73,13 @@
               style="--rc:{r.color}"
               role="radio"
               aria-checked={ratings[i] === r.k}
-              title="{r.k} — {r.t}"
+              title={r.desc}
               onclick={() => (ratings[i] = r.k)}
-            >{r.k}</button>
+            >{r.t}</button>
           {/each}
         </div>
-        <div class="ss-result" class:reset={s.q < 3}>
-          {#if s.q < 3}
-            ispočetka, vraća se sutra
-          {:else}
-            vraća se za <b>{days(s.gap)}</b>
-          {/if}
+        <div class="ss-result" class:reset={s.q === 1}>
+          vraća se za <b>{days(s.gap)}</b>
         </div>
       </li>
     {/each}
@@ -109,7 +96,7 @@
   <p class="ss-sum">
     Četiri rješavanja, a sljedeće ponavljanje tek na dan <b>{plan[STEPS - 1].next}</b>.
   </p>
-  <p class="ss-note">Pojednostavljeni SM-2, algoritam koji MatMat koristi. U aplikaciji se razmak računa za svaki tvoj ishod posebno, pa može malo odstupati.</p>
+  <p class="ss-note">FSRS, algoritam koji MatMat koristi, ovdje uz ponavljanje točno na dan. U aplikaciji se razmak računa za svaki tvoj ishod posebno, a pred ispit se sažima tako da sve stigne prije njega.</p>
 </div>
 
 <style>
@@ -146,17 +133,17 @@
   .ss-day { font-size: 12px; font-family: var(--font-mono); color: var(--text-faint); }
   .ss-rates { display: flex; gap: 4px; }
   .ss-rate {
-    width: 30px;
     height: 30px;
+    padding: 0 9px;
     display: grid;
     place-items: center;
+    white-space: nowrap;
     border-radius: var(--r-sm);
     border: 1px solid color-mix(in srgb, var(--rc) 25%, var(--border));
     background: color-mix(in srgb, var(--rc) 6%, var(--bg-elev));
     color: var(--rc);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     transition: background 0.12s, border-color 0.12s;
   }
   .ss-rate:hover { border-color: color-mix(in srgb, var(--rc) 60%, transparent); }
@@ -196,7 +183,7 @@
   @media (max-width: 640px) {
     .ss-step { grid-template-columns: minmax(0, 1fr) auto; gap: 10px 12px; padding: 12px 14px; }
     .ss-rates { grid-column: 1 / -1; grid-row: 2; }
-    .ss-rate { flex: 1; width: auto; height: 34px; }
+    .ss-rate { flex: 1; height: 34px; padding: 0 4px; }
     .ss-result { grid-column: 2; grid-row: 1; }
   }
   @media (prefers-reduced-motion: reduce) {

@@ -1,14 +1,14 @@
 <script>
   // Illustration for /kako-radi: how much of a topic you still know over 30 days,
-  // once without reviewing and once with reviews spaced like MatMat's SM-2 for an
-  // outcome rated well each time (1, 6 and 15 days after the previous one).
+  // once without reviewing and once with reviews spaced like MatMat's FSRS for an
+  // outcome rated "Dobro" each time (2 and 11 days after the previous one).
   // Exponential forgetting where each review brings it back to 100% and makes the
   // next drop slower. Not measured data.
 
   const DAYS = 30;
-  const REVIEWS = [1, 7, 22];
+  const REVIEWS = [2, 13];
   // How slowly it fades (days) before the first review and after each one.
-  const STABILITY = [3, 10, 25, 60];
+  const STABILITY = [3, 10, 30];
 
   function withReviews(t) {
     let i = 0;
@@ -72,7 +72,7 @@
       bind:this={svgEl}
       viewBox="0 0 {W} {H}"
       role="img"
-      aria-label="Koliko gradiva pamtiš kroz 30 dana: bez ponavljanja pada gotovo na nulu u desetak dana, s ponavljanjima u danima 1, 7 i 22 ostaje iznad pola."
+      aria-label="Koliko gradiva pamtiš kroz 30 dana: bez ponavljanja pada gotovo na nulu u desetak dana, s ponavljanjima u danima 2 i 13 ostaje iznad pola."
       onpointermove={onMove}
       onpointerleave={() => (hover = null)}
     >

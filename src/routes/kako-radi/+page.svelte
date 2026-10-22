@@ -79,7 +79,7 @@
     <div class="kr-split-text">
       <h2 id="kr-forget-h">Zaboravljanje je normalno. Bubanje ga samo odgodi.</h2>
       <p class="kr-p">Nakon učenja gradivo brzo blijedi, a učenje noć prije ispita drži ga taman do ispita. Svako ponavljanje u pravom trenutku vraća znanje i usporava sljedeći pad.</p>
-      <p class="kr-p">Zato razmak između ponavljanja smije rasti: prvo sutra, pa za nekoliko dana, pa za nekoliko tjedana.</p>
+      <p class="kr-p">Zato razmak između ponavljanja smije rasti: prvo za par dana, pa za tjedan-dva, pa za nekoliko tjedana.</p>
     </div>
     <div class="kr-split-part">
       <ForgettingCurve />
@@ -89,7 +89,7 @@
   <section class="kr-split hm-wrap" aria-labelledby="kr-scale-h">
     <div class="kr-split-text">
       <h2 id="kr-scale-h">Tvoja ocjena određuje razmak</h2>
-      <p class="kr-p">Nakon svakog zadatka kažeš kako ti je išlo, od 0 do 5. Ocjena 0, 1 ili 2 vraća ishod već sutra i kreće ispočetka. Dobra ocjena razmak produljuje: prvo sutra, onda za 6 dana, pa sve dulje, ovisno o tome koliko ti ide.</p>
+      <p class="kr-p">Nakon svakog zadatka kažeš kako ti je išlo: Nisam riješio, S mukom, Dobro ili Lako. Ako ga nisi riješio, ishod se vraća već sutra. Inače se razmak produljuje, i to više što ti je bolje išlo: uz Dobro prvo za 2 dana, onda za 11, pa za 46.</p>
       <p class="kr-p">Probaj: ocijeni isti ishod četiri puta i vidi kad ti se vraća.</p>
     </div>
     <div class="kr-split-part">

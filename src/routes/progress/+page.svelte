@@ -50,7 +50,7 @@
       isMastered: l.za > DANA_DO_ISPITA,
       uvodZadatak: !!l.zadatak,
     }));
-    todayTasks = lekcije.map((l) => ({ title: l.naziv, dueDate: iso(l.za), lastQ: l.lastQ }));
+    todayTasks = lekcije.map((l) => ({ title: l.naziv, dueDate: iso(l.za), lastGrade: l.lastGrade }));
     upcomingTasks = [];
     examProgress = Math.round((lekcije.filter((l) => l.za > DANA_DO_ISPITA).length / lekcije.length) * 100);
     loading = false;
@@ -93,12 +93,12 @@
     )
   );
 
-  // Build a map objectiveName → lastQ (last solved question index, 0-4) from today/upcoming lists.
-  let lastQMap = $derived(
+  // Build a map objectiveName → lastGrade (the last rating, 1–4) from today/upcoming lists.
+  let lastGradeMap = $derived(
     new Map(
       [...todayTasks, ...upcomingTasks]
         .filter(t => t.title)
-        .map(t => [t.title, t.lastQ])
+        .map(t => [t.title, t.lastGrade])
     )
   );
 
@@ -133,10 +133,10 @@
     return "new";
   }
 
-  // 5-dot mastery scale
+  // 4-dot scale, like the last rating
   function getProgress(o) {
-    if (o.isMastered) return 5;
-    if (o.unlocked && !o.isWeak) return 3;
+    if (o.isMastered) return 4;
+    if (o.unlocked && !o.isWeak) return 2;
     if (o.unlocked && o.isWeak) return 1;
     return 0;
   }
@@ -227,7 +227,7 @@
     <div class="ishod-list" class:s-datumom={uvod.active}>
       {#each shownObjectives as obj (obj.objectiveId)}
         {@const status = getStatus(obj)}
-        {@const prog = lastQMap.has(obj.objectiveName) ? (lastQMap.get(obj.objectiveName) ?? 0) : getProgress(obj)}
+        {@const prog = lastGradeMap.has(obj.objectiveName) ? (lastGradeMap.get(obj.objectiveName) ?? 0) : getProgress(obj)}
         {@const when = dueDateMap.get(obj.objectiveName)}
         <div class="ishod-row" data-tour={uvod.active ? (obj.uvodZadatak ? "ponavljanje" : "savladano") : undefined}>
           <div class="ishod-status {status}"></div>
@@ -236,7 +236,7 @@
             {obj.objectiveName}
           </div>
           <div class="ishod-mini">
-            {#each [0,1,2,3,4] as j (j)}
+            {#each [0,1,2,3] as j (j)}
               <div class="dot {j < prog ? 'filled' : ''}"></div>
             {/each}
           </div>
