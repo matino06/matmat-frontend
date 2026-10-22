@@ -945,7 +945,7 @@ function structure(s, text) {
 }
 
 // Galvanski članak (dvije čaše i elektrolitni most) ili elektroliza (U-cijev ili jedna čaša s izvorom).
-const TINT = { crvena: "t-danger", "ružičasta": "t-danger", "žuta": "t-warn", "narančasta": "t-warn", zelena: "t-success", plava: "t-primary", bezbojna: "t-none" };
+const TINT = { crvena: "t-danger", "ružičasta": "t-pink", "ljubičasta": "t-violet", "žuta": "t-warn", "narančasta": "t-warn", zelena: "t-success", plava: "t-primary", bezbojna: "t-none" };
 
 function cell(s, text) {
   const L = s.lijevo ?? {};
@@ -996,7 +996,7 @@ function cell(s, text) {
     body += line([xs[0], wireY], [xl, wireY]) + line([xr, wireY], [xs[1], wireY]);
     body += line([xl, wireY - (plusLeft ? 14 : 8)], [xl, wireY + (plusLeft ? 14 : 8)], plusLeft ? "ln" : "ln thick");
     body += line([xr, wireY - (plusLeft ? 8 : 14)], [xr, wireY + (plusLeft ? 8 : 14)], plusLeft ? "ln thick" : "ln");
-    body += label([xl - 8, wireY - 14], plusLeft ? "+" : "−", "lbl small", "end") + label([xr + 8, wireY - 14], plusLeft ? "−" : "+", "lbl small", "start");
+    body += label([xl - 7, wireY + 18], plusLeft ? "+" : "−", "lbl small", "end") + label([xr + 7, wireY + 18], plusLeft ? "−" : "+", "lbl small", "start");
   } else {
     body += line([xs[0], wireY], [176, wireY]) + line([204, wireY], [xs[1], wireY]);
     body += `<circle class="meter" cx="190" cy="${wireY}" r="14"/>` + label([190, wireY + 1], dev === "žarulja" ? "×" : dev, "lbl small");
@@ -1025,7 +1025,9 @@ function cell(s, text) {
   }
   if (vessel === "u_cijev") {
     body += `<path class="liquid" d="M100,110 V170 A90,90 0 0 0 280,170 V110 H230 V170 A40,40 0 0 1 150,170 V110 Z"/>`;
-    body += `<rect class="liquid${tint(L)}" x="100" y="110" width="50" height="60"/><rect class="liquid${tint(R)}" x="230" y="110" width="50" height="60"/>`;
+    // boja otopine uz elektrodu samo kad je zadana (inače bi se tekućina u kraku nacrtala dvaput, tamnije)
+    if (tint(L)) body += `<rect class="liquid${tint(L)}" x="100" y="110" width="50" height="60"/>`;
+    if (tint(R)) body += `<rect class="liquid${tint(R)}" x="230" y="110" width="50" height="60"/>`;
     body += `<path class="ln" d="M100,82 V170 A90,90 0 0 0 280,170 V82 M150,82 V170 A40,40 0 0 0 230,170 V82"/>`;
     for (const [x, e] of [[xs[0], L], [xs[1], R]]) {
       body += electrode(x, wireY + 30, 172);
