@@ -2,18 +2,37 @@
 //   - ceka: what moves it on (see uvodDogadaj); without it the step has a "Dalje" button.
 //   - tekst(c): c is { datum, lekcije (after the ratings so far) }.
 //   - strana: where the bubble prefers to sit ("iznad" keeps the rating's hint below visible).
-// Kept short on purpose: most steps are something the student does, not something to read.
-import { DANA_DO_ISPITA, ZADACI, kada } from "./scenarij";
+// One idea per step: the made-up course, its exam date, what the days mean, then today's lessons.
+import { DANA_DO_ISPITA, LEKCIJE, ZADACI, kada } from "./scenarij";
 
+const savladane = LEKCIJE.filter((l) => !l.zadatak);
 const ponovljene = (c) => c.lekcije.filter((l) => l.zadatak);
 const zaboravit = (c) => c.lekcije.filter((l) => l.za <= DANA_DO_ISPITA - 1 && l.za > 0);
 
 export const KORACI = [
   {
-    meta: "savladano",
-    naslov: "Ovo je Napredak",
+    meta: "ispit",
+    naslov: "Probni predmet",
+    tekst: () =>
+      "Prije tvog predmeta, kratka proba na izmišljenom predmetu. Lekcije su jako lagane, poput zbrajanja i množenja, da se možeš usredotočiti na to kako MatMat radi.",
+  },
+  {
+    meta: "ispit",
+    naslov: "Ispit je za dva dana",
     tekst: (c) =>
-      `Za probu: predmet s jako laganim lekcijama, ispit je za dva dana (${c.datum}). Desno piše kad koju lekciju ponavljaš. Ove četiri dolaze tek nakon ispita: savladao si ih i pamtiš ih do ispita.`,
+      `Zamisli da ti je ispit iz ovog predmeta za dva dana (${c.datum}). Za tvoj pravi predmet MatMat zna datum ispita, npr. dan mature, i sve planira prema njemu.`,
+  },
+  {
+    meta: "dani",
+    naslov: "Ponavljanje u razmacima",
+    tekst: () =>
+      `MatMat koristi ponavljanje u razmacima (spaced repetition): lekciju koju riješiš vraća ti nakon nekoliko dana, baš kad bi je počeo zaboravljati. Broj desno kaže kad: ${LEKCIJE[0].naziv} se vraća ${kada(LEKCIJE[0].za)}. Što ti je bolje išlo, to je razmak dulji.`,
+  },
+  {
+    meta: "savladano",
+    naslov: "Ove četiri pamtiš do ispita",
+    tekst: () =>
+      `Ove četiri znaš dovoljno dobro da ih do ispita nećeš zaboraviti. Zato ih MatMat vraća tek nakon ispita (desno piše za ${Math.min(...savladane.map((l) => l.za))} i više dana, a ispit je za ${DANA_DO_ISPITA}), pa ih do tada ne moraš ponavljati.`,
   },
   {
     meta: "ponavljanje",

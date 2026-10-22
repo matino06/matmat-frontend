@@ -4,7 +4,7 @@
   import { fetchReadiness } from "$lib/api/progress";
   import { apiClient } from "$lib/api/apiClient";
   import { uvod } from "$lib/store/uvod.svelte";
-  import { DANA_DO_ISPITA, PREDMET, lekcijeNakon } from "$lib/uvod/scenarij";
+  import { DANA_DO_ISPITA, LEKCIJE, PREDMET, lekcijeNakon } from "$lib/uvod/scenarij";
 
   let objectives = $state([]);
   let todayTasks = $state([]);
@@ -161,7 +161,7 @@
 
 <div class="page">
   <div class="zadaci-head" style="margin-bottom: 18px">
-    <div>
+    <div data-tour={uvod.active ? "ispit" : undefined}>
       <h1>Napredak</h1>
       <div class="sub">
         {#if uvod.active}{PREDMET.label} · ispit za {DANA_DO_ISPITA} dana{:else}Tvoja priprema za maturu · Matematika{/if}
@@ -231,7 +231,8 @@
         {@const when = dueDateMap.get(obj.objectiveName)}
         <div class="ishod-row" data-tour={uvod.active ? (obj.uvodZadatak ? "ponavljanje" : "savladano") : undefined}>
           <div class="ishod-status {status}"></div>
-          <div class="ishod-title">
+          <!-- the walkthrough's example of when a lesson comes back: its name and its day -->
+          <div class="ishod-title" data-tour={uvod.active && obj.objectiveId === LEKCIJE[0].id ? "dani" : undefined}>
             {obj.objectiveName}
           </div>
           <div class="ishod-mini">
@@ -239,7 +240,7 @@
               <div class="dot {j < prog ? 'filled' : ''}"></div>
             {/each}
           </div>
-          <div class="ishod-when">{diffLabel(when)}</div>
+          <div class="ishod-when" data-tour={uvod.active && obj.objectiveId === LEKCIJE[0].id ? "dani" : undefined}>{diffLabel(when)}</div>
         </div>
       {/each}
     </div>
