@@ -81,7 +81,7 @@
                 </div>
                 {#key odabrana}<LessonRunner lekcija={z.lekcija} onzavrsi={(s) => (ocjena = s)} rjesenje={z.izvor.explanation ? labRjesenje : null} />{/key}
               </article>
-              {#if ocjena}<p class="muted small">Prijedlog ocjene za ponavljanje: q = {ocjena.q} (najviše {ocjena.najvise}). {objasnjenjeOcjene(ocjena)}</p>{/if}
+              {#if ocjena}<p class="muted small">Prijedlog ocjene za ponavljanje (1–4): {ocjena.q} (najviše {ocjena.najvise}). {objasnjenjeOcjene(ocjena)}</p>{/if}
             {:else}
               <p class="muted">Lekcija nije prošla provjeru, pa se ne prikazuje. Pogledaj karticu Provjera.</p>
             {/if}

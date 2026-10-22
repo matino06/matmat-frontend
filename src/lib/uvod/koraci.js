@@ -50,7 +50,7 @@ export const KORACI = [
     meta: "zadatak",
     ceka: "otkriveno",
     naslov: ZADACI[0].naziv,
-    tekst: () => "Ovu si riješio jednom, jučer. Upiši odgovor. Ako zapneš, lekcija te vodi korak po korak.",
+    tekst: () => "Ovu si jučer riješio s mukom. Upiši odgovor. Ako zapneš, lekcija te vodi korak po korak.",
   },
   {
     meta: "ocjena",
@@ -58,7 +58,7 @@ export const KORACI = [
     strana: "iznad",
     naslov: "Ocjena određuje kad se vraća",
     tekst: () =>
-      `Ocjenu ti predlaže MatMat, prema tome kako je išlo. Uz 4 ili 5 lekcija se vraća tek ${kada(ZADACI[0].dani[4])}, nakon ispita, a uz 3 ili manje sutra. Potvrdi je ili klikni Promijeni.`,
+      `Ocjenu ti predlaže MatMat, prema tome kako je išlo. Uz „Nisam riješio“ lekcija se vraća sutra, dan prije ispita, a uz ostale ocjene tek nakon ispita (uz „Dobro“ ${kada(ZADACI[0].dani[2])}). Potvrdi je ili klikni Promijeni.`,
   },
   {
     meta: "zadatak",
@@ -73,7 +73,7 @@ export const KORACI = [
     strana: "iznad",
     naslov: "Ista ocjena, dulji razmak",
     tekst: () =>
-      `Ovu si već dvaput točno riješio, pa se uz 4 ili 5 vraća tek ${kada(ZADACI[1].dani[4])}. Prijeđi preko ocjena ili ih dodirni pa ocijeni.`,
+      `Ovu si već dvaput dobro riješio, pa se uz „Dobro“ vraća tek ${kada(ZADACI[1].dani[2])}. Prijeđi preko ocjena ili ih dodirni pa ocijeni.`,
   },
   {
     meta: "nav-progress",

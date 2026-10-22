@@ -3,31 +3,32 @@
 // tasks. The real Napredak and Zadaci pages show it while the walkthrough runs, and
 // nothing is sent to the backend.
 //
-// `dani[q]` is the interval (in days) the backend gives after rating q, worked out
-// with AccountObjectiveService.nextInterval and capToExam for this history
-// (ef 2.5, exam in 2 days). Update it with the backend's algorithm (e.g. FSRS):
-//   - Tablica množenja, solved once yesterday (n=1, i=1): 4–5 → 6 days.
-//   - Pola i četvrtina, solved twice, last 6 days ago (n=2, i=6): 4–5 → round(6 · 2.5) = 15.
-//   - 0–2 → 1 day; 3 → past the exam, so it is pulled to the day before it (1 day).
+// `dani[grade - 1]` is the interval (in days) the backend gives after rating grade 1–4,
+// worked out with FSRS-6 (Fsrs, default parameters) and capToExam for this history
+// (exam in 2 days; a review after the exam stays only if the lesson is known with
+// 90 % on the exam day):
+//   - Tablica množenja, rated hard once yesterday (S 1.29): 1, 3, 5, 7.
+//   - Pola i četvrtina, rated good twice (2, then 11 days apart; S 10.96): 1, 32, 46, 77.
+//   - Nisam riješio → 1 day, the day before the exam.
 export const DANA_DO_ISPITA = 2;
 
 export const PREDMET = { label: "Probni predmet", badge: "PP", color: 160, sub: "Ispit za 2 dana" };
 
-// `za`: days until the next review; `lastQ`: the last rating (the dots on Napredak).
+// `za`: days until the next review; `lastGrade`: the last rating 1–4 (the dots on Napredak).
 export const LEKCIJE = [
-  { id: 1, naziv: "Zbrajanje", podrucje: "Računanje", za: 9, lastQ: 4 },
-  { id: 2, naziv: "Oduzimanje", podrucje: "Računanje", za: 12, lastQ: 4 },
-  { id: 3, naziv: "Množenje", podrucje: "Računanje", za: 20, lastQ: 5 },
-  { id: 4, naziv: "Dijeljenje", podrucje: "Računanje", za: 5, lastQ: 4 },
+  { id: 1, naziv: "Zbrajanje", podrucje: "Računanje", za: 9, lastGrade: 3 },
+  { id: 2, naziv: "Oduzimanje", podrucje: "Računanje", za: 12, lastGrade: 3 },
+  { id: 3, naziv: "Množenje", podrucje: "Računanje", za: 20, lastGrade: 4 },
+  { id: 4, naziv: "Dijeljenje", podrucje: "Računanje", za: 5, lastGrade: 3 },
   {
     id: 5,
     naziv: "Tablica množenja",
     podrucje: "Računanje",
     za: 0,
-    lastQ: 4,
+    lastGrade: 2,
     zadatak: "Koliko je $7 \\cdot 8$?",
     rjesenje: "$7 \\cdot 8 = 56$",
-    dani: [1, 1, 1, 1, 6, 6],
+    dani: [1, 3, 5, 7],
     // the walkthrough solves this one as an interactive lesson
     lekcija: {
       verzija: 1,
@@ -80,10 +81,10 @@ export const LEKCIJE = [
     naziv: "Pola i četvrtina",
     podrucje: "Razlomci",
     za: 0,
-    lastQ: 4,
+    lastGrade: 3,
     zadatak: "Koliko je četvrtina od $20$?",
     rjesenje: "Četvrtina je jedan od četiri jednaka dijela: $20 : 4 = 5$.",
-    dani: [1, 1, 1, 1, 15, 15],
+    dani: [1, 32, 46, 77],
     // shown as text, to point out the switch between the two forms
     kaoTekst: true,
     lekcija: {
@@ -133,9 +134,9 @@ export const LEKCIJE = [
 
 export const ZADACI = LEKCIJE.filter((l) => l.zadatak);
 
-// The lessons as they stand after the ratings given so far ({ lessonId: q }).
+// The lessons as they stand after the ratings given so far ({ lessonId: grade }).
 export function lekcijeNakon(ocjene) {
-  return LEKCIJE.map((l) => (l.id in ocjene ? { ...l, za: l.dani[ocjene[l.id]], lastQ: ocjene[l.id] } : l));
+  return LEKCIJE.map((l) => (l.id in ocjene ? { ...l, za: l.dani[ocjene[l.id] - 1], lastGrade: ocjene[l.id] } : l));
 }
 
 export function kada(dana) {

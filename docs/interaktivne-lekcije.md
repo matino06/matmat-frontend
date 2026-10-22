@@ -86,8 +86,9 @@ Lekcija nastaje iz provjerenog teksta, pa validator dobiva i njegove rezultate i
 ### Tok podzadatka
 
 Pokušaj → (krivo ili „Ne znam“) → pomoć, korak po korak → blizanac. Nakon prvog krivog ponovnog pokušaja učenik može
-sam otvoriti točan odgovor; nakon drugog se prikaže sam. Ishod podzadatka (odmah / uz pomoć / pokazan odgovor) daje
-prijedlog ocjene za ponavljanje: 5 / 3 / 1.
+sam otvoriti točan odgovor; nakon drugog se prikaže sam. Ishodi podzadataka (odmah / uz pomoć / pokazan odgovor) daju
+prijedlog ocjene za ponavljanje (1 Nisam riješio, 2 S mukom, 3 Dobro, 4 Lako): sve odmah → Dobro, barem pola → S mukom,
+manje ili pokazan odgovor → Nisam riješio. „Lako“ bira sam učenik, kad je sve riješio odmah.
 
 ### Cijeli zadatak prvo (`cijeli`)
 
@@ -103,8 +104,9 @@ ima i `cijeli`:
 }
 ```
 
-Tok: cijeli zadatak → točno: gotovo (ocjena 5, iz više pokušaja 4) → krivo ili „Ne znam“: podzadaci kao vođeni put →
-sličan cijeli zadatak bez koraka. Uz korake ocjena je najviše 4 ako je sličan zadatak riješen iz prve, inače 3.
+Tok: cijeli zadatak → točno: gotovo (Dobro, iz više pokušaja S mukom) → krivo ili „Ne znam“: podzadaci kao vođeni put →
+sličan cijeli zadatak bez koraka. Uz korake ocjena je najviše S mukom ako je sličan zadatak riješen iz prve, inače
+Nisam riješio; na ponavljanju uvijek Nisam riješio.
 „Cijelo rješenje“ na kraju je autorovo objašnjenje tekstualnog zadatka (stranica ga daje kao snippet `rjesenje`).
 
 Polje za izraz prihvaća sve što ima istu vrijednost, pa i nepojednostavljen izraz prepisan iz zadatka. Zato se

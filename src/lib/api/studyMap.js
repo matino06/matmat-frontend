@@ -11,8 +11,8 @@ export async function fetchStudyMap() {
   return response.json();
 }
 
-// Tells whether a rating just mastered its lesson. Backend rule: a lesson is mastered iff its last rating q > 3,
-// so the map loaded once is kept up to date locally after each rating, and refetched only for a new mastery
+// Tells whether a rating just mastered its lesson. Backend rule: a lesson is mastered iff its last grade is 3 or 4 (Dobro,
+// Lako), so the map loaded once is kept up to date locally after each rating, and refetched only for a new mastery
 // (for the field's fresh count). Without a map (load failed) nothing is reported.
 export function createMasteryTracker() {
   let map = null;
@@ -40,12 +40,12 @@ export function createMasteryTracker() {
     },
 
     // After a saved rating: { lessonName, fieldName, mastered, total } when it newly mastered the lesson, else null.
-    async rated(objective, q) {
+    async rated(objective, grade) {
       const hit = find(objective?.objectiveId);
       if (!hit) return null;
       const wasMastered = hit.lesson.isMastered;
-      hit.lesson.isMastered = q > 3;
-      if (wasMastered || q <= 3) return null;
+      hit.lesson.isMastered = grade >= 3;
+      if (wasMastered || grade < 3) return null;
 
       // the local update above already counts this lesson, so a failed refetch falls back to old count + 1
       let field = hit.field;

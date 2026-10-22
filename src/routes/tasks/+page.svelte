@@ -250,7 +250,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           taskId: task.id,
-          q: rating.k,
+          grade: rating.k,
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
           device,
@@ -413,10 +413,10 @@
         {#if pendingRating}
           <div class="rating-confirm">
             <span class="rating-confirm-chosen" style="color:{pendingRating.color}">
-              {pendingRating.k} — {pendingRating.t}
+              {pendingRating.t}
             </span>
             {#if task.uvodLekcija}
-              <span class="rating-confirm-kada">vraća se {kada(task.uvodLekcija.dani[pendingRating.k])}</span>
+              <span class="rating-confirm-kada">vraća se {kada(task.uvodLekcija.dani[pendingRating.k - 1])}</span>
             {/if}
             <div class="rating-confirm-btns">
               <button class="btn btn-primary" onclick={() => { handleRate(pendingRating); pendingRating = null; }}>
@@ -432,7 +432,7 @@
             <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
           {/if}
           {#key ratingKey}
-            <RatingPicker taskId={task.uvodLekcija ? null : task.id} days={task.uvodLekcija?.dani ?? null} najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => pendingRating = r} />
+            <RatingPicker taskId={task.uvodLekcija ? null : task.id} days={task.uvodLekcija?.dani ?? null} najvise={lekcijaSazetak?.najvise ?? 4} onSelect={(r) => pendingRating = r} />
           {/key}
         {/if}
       </div>

@@ -6,8 +6,8 @@
 // Their AI replies (hint, why, explain — one per "## N." step of the
 // explanation) are written for the demo. Everything else is made up but shaped
 // like the real pages: the fields and their weights match the A level exam
-// catalogue (course_field_weight in the backend), the review intervals match the
-// RatingPicker.
+// catalogue (course_field_weight in the backend), the review intervals are FSRS ones
+// (as in the RatingPicker and on /kako-radi).
 import LESSONS from "./demoLessons.json";
 
 export const DEMO_TASKS = [
@@ -259,14 +259,14 @@ export const DEMO_FIELDS = [
   { name: "Podatci, statistika i vjerojatnost", weight: 5, pct: 30 },
 ];
 
-// status: mastered | learning | scheduled, dots: last rating out of 5.
+// status: mastered | learning | scheduled, dots: the last rating 1–4.
 export const DEMO_OBJECTIVES = [
   { name: "Kompleksni brojevi", status: "learning", dots: 2, when: "danas" },
-  { name: "Logaritmi", status: "scheduled", dots: 3, when: "sutra" },
-  { name: "Funkcije i graf funkcije", status: "scheduled", dots: 4, when: "za 6 dana" },
+  { name: "Logaritmi", status: "scheduled", dots: 1, when: "sutra" },
+  { name: "Funkcije i graf funkcije", status: "scheduled", dots: 3, when: "za 11 dana" },
   { name: "Trigonometrijske jednadžbe", status: "learning", dots: 1, when: "danas" },
-  { name: "Kvadratna funkcija", status: "mastered", dots: 5, when: "za 32 dana" },
-  { name: "Volumen i oplošje tijela", status: "scheduled", dots: 3, when: "za 3 dana" },
+  { name: "Kvadratna funkcija", status: "mastered", dots: 4, when: "za 46 dana" },
+  { name: "Volumen i oplošje tijela", status: "scheduled", dots: 2, when: "za 3 dana" },
 ];
 
 // The demo exam: three multiple-choice questions, one point each.

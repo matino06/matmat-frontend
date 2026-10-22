@@ -1,18 +1,17 @@
 <script module>
-  // Also read by /kako-radi, which lists what each rating means.
-  // `sub` is the backend's SM-2 interval for the first rating of a new objective
-  // (AccountObjectiveService.nextInterval). With a taskId the picker shows the
-  // user's real interval instead.
+  // The FSRS grade 1–4 the backend takes. Also read by /kako-radi, which lists what each rating means.
+  // `sub` is the backend's FSRS interval for the first rating of a new objective (Fsrs.first, desired
+  // retention 0.9). With a taskId the picker shows the user's real interval instead.
   export const RATINGS = [
-    { k: 0, t: "Zaborav",      desc: "Ni rješenje mi nije jasno",                 sub: "za 1 dan",  color: "#ef4444", gain: 0 },
-    { k: 1, t: "Netočno",      desc: "Netočno riješeno, rješenje shvaćeno",        sub: "za 1 dan",  color: "#f97316", gain: 0 },
-    { k: 2, t: "Lako netočno", desc: "Netočno, ali rješenje izgleda jednostavno",  sub: "za 1 dan",  color: "#eab308", gain: 0 },
-    { k: 3, t: "Napor",        desc: "Točno, ali s velikim naporom",               sub: "za 1 dan",  color: "#84cc16", gain: 2 },
-    { k: 4, t: "Lako točno",   desc: "Točno nakon malo razmišljanja",              sub: "za 1 dan",  color: "#22c55e", gain: 4 },
-    { k: 5, t: "Savršeno",     desc: "Riješio samostalno bez problema",            sub: "za 6 dana", color: "#16a34a", gain: 6 },
+    { k: 1, t: "Nisam riješio", desc: "Nisam znao ili sam pogriješio",                 sub: "za 1 dan",  color: "#ef4444" },
+    { k: 2, t: "S mukom",       desc: "Riješio sam, ali uz krive pokušaje ili pomoć",  sub: "za 1 dan",  color: "#f59e0b" },
+    { k: 3, t: "Dobro",         desc: "Riješio sam uz malo razmišljanja",              sub: "za 2 dana", color: "#22c55e" },
+    { k: 4, t: "Lako",          desc: "Riješio sam odmah, bez razmišljanja",           sub: "za 8 dana", color: "#16a34a" },
   ];
 
-  function formatDays(n) {
+  export const ocjena = (k) => RATINGS[k - 1];
+
+  export function formatDays(n) {
     const unit = n % 10 === 1 && n % 100 !== 11 ? "dan" : "dana";
     return `za ${n} ${unit}`;
   }
@@ -21,13 +20,13 @@
 <script>
   import { apiClient } from "$lib/api/apiClient";
 
-  // taskId: when set, "Ponovi za …" shows the backend's real SM-2 interval for
-  // this user; without it (marketing demos) the static RATINGS values are shown.
+  // taskId: when set, each button shows the backend's real FSRS interval for this
+  // user; without it (marketing demos) the static RATINGS values are shown.
   // najvise: a finished interactive lesson's limit; higher ratings can't be chosen (lowering always can).
-  // days: intervals to show instead, indexed by rating (the /uvod walkthrough, which has no backend).
-  let { onSelect, taskId = null, najvise = 5, days = null } = $props();
+  // days: intervals to show instead, indexed by grade - 1 (the walkthrough, which has no backend).
+  let { onSelect, taskId = null, najvise = 4, days = null } = $props();
 
-  // Days until the objective returns, indexed by rating; null until loaded.
+  // Days until the objective returns, indexed by grade - 1; null until loaded.
   let intervals = $state(null);
 
   $effect(() => {
@@ -42,16 +41,15 @@
   });
 
   function subFor(r) {
-    if (days) return formatDays(days[r.k]);
+    if (days) return formatDays(days[r.k - 1]);
     if (taskId == null) return r.sub;
-    return intervals ? formatDays(intervals[r.k]) : null;
+    return intervals ? formatDays(intervals[r.k - 1]) : null;
   }
 
   let hovered = $state(null);
   let selected = $state(null);
-  $derived: void 0;
   let active = $derived(hovered !== null ? hovered : selected);
-  let activeR = $derived(active !== null ? RATINGS[active] : null);
+  let activeR = $derived(active !== null ? ocjena(active) : null);
 
   function handleClick(r) {
     selected = r.k;
@@ -60,43 +58,29 @@
 </script>
 
 <div class="rp-wrap">
-  <div class="rp-bar-wrap">
-    <div class="rp-gradient"></div>
-    <div class="rp-btns">
-      {#each RATINGS as r (r.k)}
-        <button
-          class="rp-btn {selected === r.k ? 'rp-selected' : ''}"
-          style="--rc: {r.color}"
-          disabled={r.k > najvise}
-          title={r.k > najvise ? "Previsoko za ovako riješenu lekciju" : null}
-          onmouseenter={() => hovered = r.k}
-          onmouseleave={() => hovered = null}
-          onclick={() => handleClick(r)}
-        >
-          <span class="rp-num">{r.k}</span>
-        </button>
-      {/each}
-    </div>
-  </div>
-
-  <div class="rp-ends">
-    <span class="rp-end-fail">✗ Nisam uspio</span>
-    <span class="rp-end-pass">✓ Uspio sam</span>
+  <div class="rp-btns">
+    {#each RATINGS as r (r.k)}
+      <button
+        class="rp-btn {selected === r.k ? 'rp-selected' : ''}"
+        style="--rc: {r.color}"
+        disabled={r.k > najvise}
+        title={r.k > najvise ? "Previsoko za ovako riješenu lekciju" : null}
+        onmouseenter={() => hovered = r.k}
+        onmouseleave={() => hovered = null}
+        onclick={() => handleClick(r)}
+      >
+        <span class="rp-name">{r.t}</span>
+        <span class="rp-when">{subFor(r) ?? " "}</span>
+      </button>
+    {/each}
   </div>
 
   <div class="rp-desc rp-desc-visible">
     {#if activeR}
-      <span class="rp-desc-name" style="color: {activeR.color}">{activeR.k} — {activeR.t}</span>
+      <span class="rp-desc-name" style="color: {activeR.color}">{activeR.t}</span>
       <span class="rp-desc-text">{activeR.desc}</span>
-      {#if subFor(activeR)}
-        <span class="rp-desc-sub">Ponovi {subFor(activeR)}</span>
-      {/if}
     {:else}
-      <span class="rp-desc-name" style="color: var(--text-faint)">0–2</span>
-      <span class="rp-desc-text">Nisam riješio · zadatak se vraća uskoro</span>
-      <span class="rp-desc-divider">·</span>
-      <span class="rp-desc-name" style="color: var(--success)">3–5</span>
-      <span class="rp-desc-text">Riješio · razmak između ponavljanja se povećava</span>
+      <span class="rp-desc-text">Što ti je bolje išlo, to se zadatak vraća kasnije.</span>
     {/if}
   </div>
 </div>

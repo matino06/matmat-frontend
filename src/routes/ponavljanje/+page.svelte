@@ -128,7 +128,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           taskId: task.id,
-          q: rating.k,
+          grade: rating.k,
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
           device,
@@ -147,18 +147,18 @@
       return;
     }
 
-    // A 5 on a single lesson ends the review and goes back to the map: that moment gets only the sound.
-    const endsReview = !fieldMode && rating.k === 5;
+    // Dobro or Lako on a single lesson ends the review and goes back to the map: that moment gets only the sound.
+    const endsReview = !fieldMode && rating.k >= 3;
     if (endsReview) playSound("milestone");
 
     if (fieldMode) {
       // Field način: uvijek sljedeći zadatak područja dok backend ne vrati 204
       setTimeout(fetchTask, 600);
-    } else if (rating.k === 5) {
-      // Objective: savršeno → natrag na mapu (na isti node gdje je korisnik bio)
+    } else if (endsReview) {
+      // Objective: dobro ili lako → natrag na mapu (na isti node gdje je korisnik bio)
       setTimeout(() => goto("/mapa"), 600);
     } else {
-      // Objective: < 5 → novi zadatak istog objectiva
+      // Objective: nije riješio ili s mukom → novi zadatak istog objectiva
       setTimeout(fetchTask, 600);
     }
 
@@ -249,7 +249,7 @@
             <p class="rating-note">{objasnjenjeOcjene(lekcijaSazetak)}</p>
           {/if}
           {#key ratingKey}
-            <RatingPicker taskId={task.id} najvise={lekcijaSazetak?.najvise ?? 5} onSelect={(r) => pendingRating = r} />
+            <RatingPicker taskId={task.id} najvise={lekcijaSazetak?.najvise ?? 4} onSelect={(r) => pendingRating = r} />
           {/key}
         {/if}
       </div>
@@ -294,7 +294,7 @@
       {:else}
         <h1>Ponavljanje{objectiveName ? `: ${objectiveName}` : ""}</h1>
         <div class="sub">
-          Rješavaj dok ne ocijeniš zadatak sa <span class="mono">5</span> (Savršeno) — tada se vraćaš na mapu.
+          Rješavaj dok zadatak ne ocijeniš s „Dobro” ili „Lako” — tada se vraćaš na mapu.
         </div>
       {/if}
     </div>

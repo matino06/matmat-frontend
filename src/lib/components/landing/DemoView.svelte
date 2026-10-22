@@ -1,5 +1,6 @@
 <script>
   import { DEMO_FIELDS, DEMO_OBJECTIVES, DEMO_EXAMS, DEMO_ACTIVITY } from "./demoData";
+  import { ocjena } from "$lib/components/ratingPicker/RatingPicker.svelte";
 
   // Static pages of the landing page preview, drawn like their real counterparts
   // (/progress, /goals, /mock-exam). The app preview shows them whole with a page
@@ -64,8 +65,8 @@
       <div class="dv-ishod">
         <span class="dv-status {o.status}"></span>
         <span class="dv-ishod-name">{o.name}</span>
-        <span class="dv-dots" aria-label="Zadnja ocjena {o.dots} od 5">
-          {#each [0, 1, 2, 3, 4] as j (j)}<span class:filled={j < o.dots}></span>{/each}
+        <span class="dv-dots" aria-label="Zadnja ocjena: {ocjena(o.dots).t}">
+          {#each [0, 1, 2, 3] as j (j)}<span class:filled={j < o.dots}></span>{/each}
         </span>
         <span class="dv-when">{o.when}</span>
       </div>

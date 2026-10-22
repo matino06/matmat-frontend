@@ -30,8 +30,8 @@ export function uvodDogadaj(ime) {
   if (uvod.active && KORACI[uvod.korak]?.ceka === ime) uvod.korak += 1;
 }
 
-export function ocijeniUvod(lessonId, q) {
-  uvod.ocjene = { ...uvod.ocjene, [lessonId]: q };
+export function ocijeniUvod(lessonId, grade) {
+  uvod.ocjene = { ...uvod.ocjene, [lessonId]: grade };
 }
 
 export function zavrsiUvod(preskocen) {
