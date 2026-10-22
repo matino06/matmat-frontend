@@ -155,6 +155,84 @@
 .task-sketch .c4-t {
   fill: var(--danger);
 }
+/* kemija */
+.task-sketch .curve.dash {
+  stroke-dasharray: 6 4;
+}
+.task-sketch .ln.dot {
+  stroke-dasharray: 2 4;
+}
+.task-sketch .wedge {
+  fill: var(--text);
+  stroke: var(--text);
+  stroke-width: 1;
+}
+.task-sketch .nucleus {
+  fill: color-mix(in srgb, var(--danger) 18%, transparent);
+  stroke: var(--danger);
+  stroke-width: 1.5;
+}
+.task-sketch .electrode {
+  fill: color-mix(in srgb, var(--text) 35%, transparent);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+.task-sketch .bridge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--warn) 45%, transparent);
+  stroke-width: 12;
+}
+.task-sketch .bubble {
+  fill: none;
+  stroke: var(--text-dim);
+  stroke-width: 1.2;
+}
+.task-sketch .liquid.t-danger {
+  fill: color-mix(in srgb, var(--danger) 26%, transparent);
+}
+.task-sketch .liquid.t-warn {
+  fill: color-mix(in srgb, var(--warn) 30%, transparent);
+}
+.task-sketch .liquid.t-success {
+  fill: color-mix(in srgb, var(--success) 26%, transparent);
+}
+.task-sketch .liquid.t-primary {
+  fill: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.task-sketch .liquid.t-none {
+  fill: color-mix(in srgb, var(--text) 5%, transparent);
+}
+.task-sketch .atom {
+  stroke: var(--bg-elev);
+  stroke-width: 1;
+}
+.task-sketch .spot {
+  stroke: none;
+}
+.task-sketch .k1 {
+  fill: var(--primary);
+}
+.task-sketch .k2 {
+  fill: var(--warn);
+}
+.task-sketch .k3 {
+  fill: var(--success);
+}
+.task-sketch .k4 {
+  fill: var(--danger);
+}
+.task-sketch .k5 {
+  fill: var(--text-dim);
+}
+.task-sketch .band {
+  fill: color-mix(in srgb, var(--warn) 16%, transparent);
+  stroke: none;
+}
+.task-sketch .strip {
+  fill: color-mix(in srgb, var(--text) 5%, transparent);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
 /* skica unutar objašnjenja: manja, na sredini */
 .task-sketch.in-explanation {
   max-width: 380px;
