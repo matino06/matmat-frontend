@@ -221,7 +221,23 @@ function graph(s, text) {
     if (pts.length < 2) return;
     body += `<polyline class="curve c${i + 1}" points="${pts.map((p) => p.map(f).join(",")).join(" ")}"/>`;
     const end = pts[pts.length - 1];
-    if (fn.oznaka) body += label([end[0] - 6, end[1] + (end[1] < 30 ? 14 : -10)], fn.oznaka, `lbl c${i + 1}-t`, "end");
+    if (fn.oznaka) {
+      // naziv iznad krivulje na cijeloj svojoj širini (i iznad istaknutih točaka), inače ispod nje
+      const w = [...fn.oznaka].length * 8.4;
+      // zapreke: točke krivulje, istaknute točke i njihove oznake (oznaka točke stoji desno iznad nje)
+      const marks = (s.tocke ?? []).flatMap((p) => {
+        const q = T([p.x, p.y]);
+        if (!p.oznaka) return [q];
+        const lw = [...p.oznaka].length * 7.2;
+        const ly = q[1] + (q[1] < 40 ? 12 : -12);
+        return [q, [q[0] + 8, ly - 8], [q[0] + 8 + lw, ly - 8], [q[0] + 8, ly + 8], [q[0] + 8 + lw, ly + 8]];
+      });
+      const under = [...pts, ...marks].filter((p) => p[0] >= end[0] - 6 - w - 4 && p[0] <= end[0] + 2);
+      const top = Math.min(...under.map((p) => p[1]));
+      const bottom = Math.max(...under.map((p) => p[1]));
+      const y = top - 12 > 26 ? top - 12 : bottom + 16;
+      body += label([end[0] - 6, y], fn.oznaka, `lbl c${i + 1}-t`, "end");
+    }
   });
   for (const p of s.tocke ?? []) {
     const q = T([p.x, p.y]);
