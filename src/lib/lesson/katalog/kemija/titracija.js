@@ -436,7 +436,7 @@ tekst, nacin:
     {
       tip: "titracija",
       nacin: "ekvivalencija",
-      tekst: "U tikvici je 20,0 mL octene kiseline nepoznate koncentracije i nekoliko kapi fenolftaleina. Dodaji natrijevu lužinu, c(NaOH) = 0,100 mol/dm³, i zaustavi se čim otopina ostane ružičasta.",
+      tekst: "U tikvici je 20,0 mL octene kiseline nepoznate koncentracije i nekoliko kapi fenolftaleina. Dodaji natrijevu lužinu, c(NaOH) = 0,100 mol/dm³, i zaustavi se čim otopina ostane (svijetlo)ljubičasta.",
       analit: { formula: "CH₃COOH", c: 0.0875, V: 20, zapis_V: "20,0" },
       titrant: { formula: "NaOH", c: 0.1, zapis: "0,100" },
       indikator: "fenolftalein",

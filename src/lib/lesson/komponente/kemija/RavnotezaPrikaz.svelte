@@ -83,13 +83,13 @@
 
     {#if pokaziKQ}
       <div class="rv-kq" aria-live="polite">
-        <div class="rv-kq-red"><span class="rv-k">{K_}</span> = <Formula f={`${zapisBroja(K)}${jedK ? ` ${jedK}` : ""}`} />{#if kPromijenjen}<span class="rv-napomena">promijenio se s temperaturom</span>{/if}</div>
+        <div class="rv-kq-red"><span class="rv-k">K<sub>{K_.slice(1)}</sub></span> = <Formula f={`${zapisBroja(K)}${jedK ? ` ${jedK}` : ""}`} />{#if kPromijenjen}<span class="rv-napomena">promijenio se s temperaturom</span>{/if}</div>
         <div class="rv-kq-red"><span class="rv-k">Q</span> = <Formula f={`${zapisBroja(Q)}${jedK ? ` ${jedK}` : ""}`} /></div>
         <p class="rv-status" class:pomak={!uRavnotezi}>
           {#if uRavnotezi}
-            Q = {K_}: smjesa je u ravnoteži.
+            Q = K<sub>{K_.slice(1)}</sub>: smjesa je u ravnoteži.
           {:else}
-            Q {znak} {K_}: ravnoteža se pomiče <b>{zapisSmjera(smjer ?? (omjer < 1 ? "udesno" : "ulijevo"))}</b> <span class="rv-str" aria-hidden="true">{omjer < 1 ? "→" : "←"}</span>
+            Q {znak} K<sub>{K_.slice(1)}</sub>: ravnoteža se pomiče <b>{zapisSmjera(smjer ?? (omjer < 1 ? "udesno" : "ulijevo"))}</b> <span class="rv-str" aria-hidden="true">{omjer < 1 ? "→" : "←"}</span>
           {/if}
         </p>
         {#if zamisljeno}<p class="rv-napomena">Koncentracije su zamišljene, samo za istraživanje.</p>{/if}
@@ -252,6 +252,10 @@
   .rv-k {
     font-style: italic;
     font-weight: 600;
+  }
+  .rv-k sub {
+    font-style: normal;
+    font-size: 0.7em;
   }
   .rv-status {
     margin: 3px 0 0;

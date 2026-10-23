@@ -231,7 +231,7 @@
 
 {#snippet razlomak(br, naz, simbol = K_)}
   <span class="rv-izraz">
-    <span class="rv-k">{simbol}</span><span class="rv-jednako">=</span>
+    <span class="rv-k">{simbol[0]}{#if simbol.length > 1}<sub>{simbol.slice(1)}</sub>{/if}</span><span class="rv-jednako">=</span>
     {#if naz.length}
       <span class="rv-razlomak">
         <span class="rv-brojnik">{#if br.length}{@render clanovi(br)}{:else}1{/if}</span>
@@ -398,12 +398,12 @@
       </tbody>
     </table>
   </div>
-  {#if Kzad}<p class="rv-kzad"><span class="rv-k">{K_}</span> = <Formula f={`${zapisZadanog(Kzad)}${jedK ? ` ${jedK}` : ""}`} /></p>{/if}
+  {#if Kzad}<p class="rv-kzad"><span class="rv-k">K<sub>{K_.slice(1)}</sub></span> = <Formula f={`${zapisZadanog(Kzad)}${jedK ? ` ${jedK}` : ""}`} /></p>{/if}
   {#if spec.pokazi_izraz}<div class="rv-pregled">{@render razlomak(izrazTocan.brojnik, izrazTocan.nazivnik)}</div>{/if}
   <form class="rv-koraci" onsubmit={predajRacun}>
     {#each tr as t, i (t)}
       <div class="rv-korak" class:ok={okKorak(i)} class:bad={badKorak(i)}>
-        <label class="rv-korak-oz" for="rv-{uid}-{i}">{#if t === "K"}<span class="rv-k">{K_}</span>{:else}{sl}(<Formula f={t} />){/if} =</label>
+        <label class="rv-korak-oz" for="rv-{uid}-{i}">{#if t === "K"}<span class="rv-k">K<sub>{K_.slice(1)}</sub></span>{:else}{sl}(<Formula f={t} />){/if} =</label>
         <input id="rv-{uid}-{i}" class="inp rv-inp" class:ok={okKorak(i)} class:bad={badKorak(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
         {#if jedinicaKoraka(spec, t)}<span class="lx-unit"><Formula f={jedinicaKoraka(spec, t)} /></span>{/if}
         {#if aktivno}<button type="button" class="btn btn-quiet rv-pot" onclick={() => potencija(i)} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>{/if}
@@ -637,6 +637,10 @@
   .rv-k {
     font-style: italic;
     font-weight: 600;
+  }
+  .rv-k sub {
+    font-style: normal;
+    font-size: 0.7em;
   }
   .rv-razlomak {
     display: inline-flex;

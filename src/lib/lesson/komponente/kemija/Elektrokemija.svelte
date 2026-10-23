@@ -180,7 +180,7 @@
   let elIndeks = $state(untrack(() => Math.max(0, (spec.izbor ?? []).findIndex((x) => x.elektrolit === spec.elektrolit && x.stanje === spec.stanje))));
   let specEl = $derived(jeElektroliza && istrazi && izborEl ? { ...spec, ...{ anoda: undefined, katoda: undefined }, ...izborEl[elIndeks] } : spec);
   let cel = $derived(jeElektroliza ? celije(specEl).map((x) => ({ c: x, e: elektroliza(x) })) : []);
-  let vidiProdukte = $derived(istrazi || nacin === "faraday" || otkriveno);
+  let vidiProdukte = $derived(istrazi || (nacin === "faraday" && !!spec.polureakcije) || otkriveno);
 
   // istraživanje: klizači
   const rasponI = untrack(() => spec.raspon_I ?? [0.1, 5]);
@@ -218,7 +218,7 @@
     if (!pokazi || nacin !== "produkti" || !cel[0]?.e || cel[0].e.greska) return;
     untrack(() => (produkt = { katoda: cel[0].e.katoda.produkt, anoda: cel[0].e.anoda.produkt }));
   });
-  const vidiStranu = (strana) => vidiProdukte || (nacin === "produkti" && !pitajProdukte.includes(strana));
+  const vidiStranu = (strana) => vidiProdukte || nacin === "faraday" || (nacin === "produkti" && !pitajProdukte.includes(strana));
 
   // geometrija elektrolize: jedan članak ili dva serijski
   function geometrija(n) {
@@ -331,7 +331,7 @@
           <span>{i === 0 ? "Lijeva čaša" : "Desna čaša"}</span>
           <select class="inp" bind:value={odabrano[i]} aria-label={i === 0 ? "Elektroda u lijevoj čaši" : "Elektroda u desnoj čaši"}>
             {#each izborParova as p (p.kljuc)}
-              <option value={p.kljuc} disabled={p.kljuc === odabrano[1 - i]}>{p.kljuc} ({zapisE(p.E)} V)</option>
+              <option value={p.kljuc} disabled={p.kljuc === odabrano[1 - i]}>{p.kljuc}</option>
             {/each}
           </select>
         </label>
@@ -414,7 +414,7 @@
     {#each c.parovi as p, i (i)}
       <div class="ek-casa-opis" class:anoda={vidiUloge && i === c.anoda} class:katoda={vidiUloge && i !== c.anoda}>
         <div class="ek-casa-naslov"><b><Formula f={nazivElektrode(p)} /></b> u {#if otopinaCase(i)}<Formula f={`${otopinaCase(i)}(aq)`} />{:else}<Formula f={`${p.ion}(aq)`} />{/if}</div>
-        {#if pokaziE}<div class="ek-e0">E°(<Formula f={p.kljuc} />) = {zapisEV(p.E)}</div>{/if}
+        {#if pokaziE}<div class="ek-e0">E°(<Formula f={p.kljuc} />) = <span class="ek-nw">{zapisEV(p.E)}</span></div>{/if}
         {#if vidiUloge}
           <div class="ek-uloga">{i === c.anoda ? "anoda (−) · oksidacija" : "katoda (+) · redukcija"}</div>
         {:else if nacin === "polovi"}
@@ -536,7 +536,7 @@
       {/if}
     </svg>
   </div>
-  <p class="ek-dodaje"><Formula f={spec.metal} /> ({ist.pm.naziv}) uronjen u otopinu <Formula f={`${spec.otopina}(aq)`} />{#if pokaziE}<span class="ek-e0"> · E°(<Formula f={ist.pm.kljuc} />) = {zapisEV(ist.pm.E)}, E°(<Formula f={ist.pk.kljuc} />) = {zapisEV(ist.pk.E)}</span>{/if}</p>
+  <p class="ek-dodaje"><Formula f={spec.metal} /> ({ist.pm.naziv}) uronjen u otopinu <Formula f={`${spec.otopina}(aq)`} />{#if pokaziE}<span class="ek-e0">. <span class="ek-nw">E°(<Formula f={ist.pm.kljuc} />) = {zapisEV(ist.pm.E)}</span>, <span class="ek-nw">E°(<Formula f={ist.pk.kljuc} />) = {zapisEV(ist.pk.E)}</span></span>{/if}</p>
 
   <div class="lx-options ek-opcije">
     {#each [true, false] as v (v)}
@@ -639,7 +639,7 @@
       {@const e = x.e}
       <div class="ek-celija">
         <div class="ek-casa-naslov">{#if cel.length > 1}<b>{i + 1}.</b> {/if}<Formula f={naslovCelije(x)} /> <span class="ek-chip-n">{e.talina ? "talina" : "vodena otopina"}{e.anodaMat !== "grafit" || e.katodaMat !== "grafit" ? ` · anoda ${NAZIV_ELEKTRODE[e.anodaMat] ?? e.anodaMat}, katoda ${NAZIV_ELEKTRODE[e.katodaMat] ?? e.katodaMat}` : " · grafitne elektrode"}</span></div>
-        {#each [["anoda", e.anoda], ["katoda", e.katoda]] as [strana, st] (strana)}
+        {#each nacin === "faraday" && !vidiProdukte ? [] : [["anoda", e.anoda], ["katoda", e.katoda]] as [strana, st] (strana)}
           <div class="ek-strana">
             <span class="ek-info-nasl">{strana} ({strana === "anoda" ? "+" : "−"}):</span>
             {#if nacin === "produkti" && pitajProdukte.includes(strana) && !otkriveno}
@@ -695,7 +695,7 @@
         {#if iz}<div class="ek-kartica zadano"><span class="ek-sym">{iz.q}(<Formula f={iz.f} />)</span><span class="ek-ime">{iz.q === "m" ? "masa" : "volumen"} izlučene tvari</span><b>{iz.zapis ?? formatNumber(iz.zadano)} {iz.jedinica}</b></div>{/if}
         {#if spec.plin}<div class="ek-chip-n ek-uvjeti">plin: {uvjetiZapis(spec)}</div>{/if}
         {#each trazeni as t, i (i)}
-          <div class="ek-strelica-l" aria-hidden="true">↓ <span class="ek-op">{@render tekst(formulaKoraka(spec, i))}</span></div>
+          <div class="ek-strelica-l" aria-hidden="true">↓{#if spec.operacije || otkriveno} <span class="ek-op">{@render tekst(formulaKoraka(spec, i))}</span>{/if}</div>
           <div class="ek-kartica" class:ok={okK(i)} class:bad={badK(i)}>
             <div><span class="ek-sym">{#if t.velicina === "ne"}n(e<sup>−</sup>){:else if t.tvar}{t.velicina}(<Formula f={t.tvar} />){:else}{t.velicina}{/if}</span><span class="ek-ime">{IME[t.velicina]}{t.velicina === "ne" ? "" : ""}</span></div>
             <div class="ek-unos">

@@ -21,7 +21,7 @@ export const VRSTE = ["clanak", "elektroliza"];
 export const NACINI = { clanak: ["istrazi", "polovi", "napon", "istiskivanje"], elektroliza: ["istrazi", "produkti", "faraday"] };
 export const PITANJA_POLOVA = ["uloge", "polovi", "elektroni", "most"];
 const POLJA = [
-  "tip", "vrsta", "nacin", "tekst", "elektrode", "otopine", "most", "izbor", "pitaj", "pokazi_E", "metal", "otopina", "jednadzba",
+  "tip", "vrsta", "nacin", "tekst", "elektrode", "otopine", "most", "izbor", "pitaj", "pokazi_E", "metal", "otopina", "jednadzba", "operacije", "polureakcije",
   "elektrolit", "stanje", "anoda", "katoda", "serijski", "struja", "vrijeme", "izluceno", "plin", "trazi", "raspon_I", "raspon_t",
   "tolerancija_posto", "krivo",
 ];
@@ -852,6 +852,7 @@ function validateElektroliza(s, need, list) {
     return;
   }
   need(s.izbor == null && s.raspon_I == null && s.raspon_t == null, "izbor, raspon_I i raspon_t idu samo uz istrazi");
+  if (s.nacin !== "faraday") for (const f of ["operacije", "polureakcije"]) need(!(f in s), `${f} ide samo uz faraday`);
   if (s.nacin === "produkti") {
     for (const f of ["struja", "vrijeme", "izluceno", "plin", "trazi", "krivo", "tolerancija_posto"]) need(!(f in s), `produkti ne koristi „${f}“`);
     if (s.pitaj != null && need(Array.isArray(s.pitaj) && s.pitaj.length >= 1, 'pitaj je ["katoda"], ["anoda"] ili oba'))
@@ -860,6 +861,7 @@ function validateElektroliza(s, need, list) {
   }
   // faraday
   need(s.pitaj == null, "pitaj ide uz produkti");
+  for (const b of ["operacije", "polureakcije"]) if (s[b] != null) need(typeof s[b] === "boolean", `${b} je true ili false`);
   const iz = izlucenoOf(s);
   if (s.izluceno != null) {
     const z = s.izluceno;
@@ -926,7 +928,7 @@ Elektroliza: elektrolit (formula: "CuSO₄", "NaCl", "Na₂SO₄", "H₂SO₄", 
 serijski?: {elektrolit, stanje, anoda?, katoda?} – drugi članak spojen serijski (isti naboj); plin?: {uvjeti: "normirani"} ili {p, jedinica ("kPa"…), t (°C) ili T (K)} za volumen plina.
 - "istrazi" (nije zadatak): klizači struje i vremena (raspon_I? [od, do] u A, raspon_t? u min), mjehurići i izlučeni metal, Q, n(e⁻) i m ili V svake tvari uživo; izbor?: [{elektrolit, stanje}] za izbor elektrolita; struja?/vrijeme? su početne vrijednosti;
 - "produkti": učenik bira što nastaje na katodi i na anodi (pitaj?: ["katoda"] / ["anoda"], zadano oba); poruke po pravilima gore;
-- "faraday": lanac kao mol_racun. Zadano: struja {I, zapis?} (A) i vrijeme {h?, min?, s?, zapis?} ili izluceno {tvar, m (g) | V (L), jedinica?, zapis?} (uz najviše jedno od struja/vrijeme); trazi: 1–4 koraka [{velicina: "Q" (C) | "ne" (n(e⁻), mol) | "n" | "m" | "V" (uz tvar s elektrode, npr. "Cu", "H₂", "O₂", "Cl₂") | "t" | "I", jedinica?}], npr. Q → ne → n(H₂) → V(H₂) u mL. Poruke za minute umjesto sekundi, Q = I : t, Q · F, F zamijenjen s N_A ili e, zaboravljen ili pomnožen z, z po atomu za O₂ i Cl₂, M atoma umjesto molekule, 22,4 L/mol uz nenormirane uvjete, °C, kPa, m³ – dodaje kod; tolerancija_posto? (zadano 1); krivo?: [{korak?, vrijednost, poruka}].`,
+- "faraday": lanac kao mol_racun. Zadano: struja {I, zapis?} (A) i vrijeme {h?, min?, s?, zapis?} ili izluceno {tvar, m (g) | V (L), jedinica?, zapis?} (uz najviše jedno od struja/vrijeme); trazi: 1–4 koraka [{velicina: "Q" (C) | "ne" (n(e⁻), mol) | "n" | "m" | "V" (uz tvar s elektrode, npr. "Cu", "H₂", "O₂", "Cl₂") | "t" | "I", jedinica?}], npr. Q → ne → n(H₂) → V(H₂) u mL. operacije?: formule na strelicama (Q = I · t, n(e⁻) = Q : F …; zadano ne – pitanje ne daje formulu); polureakcije?: polureakcije na elektrodama vidljive prije provjere (zadano ne, jer odaju broj elektrona z; nakon provjere se vide). Poruke za minute umjesto sekundi, Q = I : t, Q · F, F zamijenjen s N_A ili e, zaboravljen ili pomnožen z, z po atomu za O₂ i Cl₂, M atoma umjesto molekule, 22,4 L/mol uz nenormirane uvjete, °C, kPa, m³ – dodaje kod; tolerancija_posto? (zadano 1); krivo?: [{korak?, vrijednost, poruka}].`,
   primjer: {
     tip: "elektrokemija",
     vrsta: "clanak",
