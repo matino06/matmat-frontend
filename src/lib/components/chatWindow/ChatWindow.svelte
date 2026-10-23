@@ -6,6 +6,7 @@
   import { apiClient } from "$lib/api/apiClient";
   import { aiConsent, decideAiConsent, AI_CONSENT_TITLE } from "$lib/store/aiConsent.svelte";
   import AiConsentDetails from "$lib/components/ai/AiConsentDetails.svelte";
+  import AiAgeConfirmation from "$lib/components/ai/AiAgeConfirmation.svelte";
   import { renderChatMd } from "$lib/utils/markdownRenderer";
   import { splitSketches, sketchSrc, nextShown, stableEnd } from "$lib/utils/aiSketch.js";
 
@@ -587,6 +588,7 @@
   let aiOff = $derived(aiConsent.loaded && aiConsent.granted !== true);
   let allowing = $state(false);
   let allowError = $state("");
+  let ageConfirmed = $state(false);
 
   async function allowAi() {
     allowing = true;
@@ -623,7 +625,8 @@
       <h3>{AI_CONSENT_TITLE}</h3>
       <AiConsentDetails />
       {#if allowError}<p class="chat-consent-error" role="alert">{allowError}</p>{/if}
-      <button class="btn btn-primary" disabled={allowing} onclick={allowAi}>{allowing ? "Spremam…" : "Slažem se, uključi AI"}</button>
+      <AiAgeConfirmation bind:confirmed={ageConfirmed} />
+      <button class="btn btn-primary" disabled={allowing || !ageConfirmed} onclick={allowAi}>{allowing ? "Spremam…" : "Slažem se, uključi AI"}</button>
       <p class="chat-consent-note">Dozvolu možeš isključiti u Postavkama.</p>
     </div>
   {:else}

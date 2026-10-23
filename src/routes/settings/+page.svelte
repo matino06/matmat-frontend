@@ -1,7 +1,7 @@
 <script>
   import { apiClient } from "$lib/api/apiClient";
   import { userData, logout } from "$lib/store/user.svelte";
-  import { aiConsent, decideAiConsent } from "$lib/store/aiConsent.svelte";
+  import { aiConsent, decideAiConsent, AI_CONSENT_AGE } from "$lib/store/aiConsent.svelte";
   import AiConsentDetails from "$lib/components/ai/AiConsentDetails.svelte";
   import { ownCourses } from "$lib/store/ownCourses.svelte";
   import { feedbackSound, setFeedbackSound } from "$lib/sound.svelte.js";
@@ -65,6 +65,11 @@
   let aiConsentError = $state("");
 
   async function setAiConsent(granted, checkbox) {
+    // Turning it on asks for the age, as the consent screen does.
+    if (granted && !window.confirm(AI_CONSENT_AGE)) {
+      checkbox.checked = false;
+      return;
+    }
     savingAiConsent = true;
     aiConsentError = "";
     try {
