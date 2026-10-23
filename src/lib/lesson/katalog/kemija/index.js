@@ -9,6 +9,7 @@ import { ph_skala } from "./ph_skala.js";
 import { titracija } from "./titracija.js";
 import { pokus } from "./pokus.js";
 import { ravnoteza } from "./ravnoteza.js";
+import { elektrokemija } from "./elektrokemija.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -19,4 +20,5 @@ export const KEMIJA = [
   titracija,
   pokus,
   ravnoteza,
+  elektrokemija,
 ];

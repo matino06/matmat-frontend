@@ -8,4 +8,5 @@ export const UCITAJ_KEMIJA = {
   titracija: () => import("./Titracija.svelte"),
   pokus: () => import("./Pokus.svelte"),
   ravnoteza: () => import("./Ravnoteza.svelte"),
+  elektrokemija: () => import("./Elektrokemija.svelte"),
 };
