@@ -3,8 +3,10 @@
 // Brojeve uzimaju iz _tablice.js (Kemija – tablice s ispita), pa se slažu s maturom.
 import { jednadzba } from "./jednadzba.js";
 import { mol_racun } from "./mol_racun.js";
+import { periodni_sustav } from "./periodni_sustav.js";
 
 export const KEMIJA = [
   jednadzba,
   mol_racun,
+  periodni_sustav,
 ];
