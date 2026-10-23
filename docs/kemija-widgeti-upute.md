@@ -67,3 +67,14 @@ Koristi alat Edit (jedan redak), nikad Write na tim datotekama.
 
 Na kraju javi: polja speca i načine rada, što kod računa sam, rezultat provjera, i što bi koordinator trebao
 pogledati u pregledniku (`/lab/lekcija?z=katalog&tip=<tip>`; stranica čita `lab-out/`, pa koordinator gleda na svom dev serveru).
+
+## Naučeno iz pregleda prvih 9 widgeta
+- Pitanje ne daje formulu. U „Tvoj red“ lancu ne pokazuj formule na strelicama („Q = I · t“, „n = m : M“) ni
+  polureakcije/međukorake koji odaju rješenje prije provjere; neka ih autor uključi neobaveznim poljem
+  (`operacije?: true`), a nakon provjere ili „Pokaži odgovor“ smiju se vidjeti.
+- Konstante s indeksom: K<sub>c</sub>, K<sub>p</sub>, K<sub>a</sub>, V<sub>m</sub>, N<sub>A</sub>, Δ<sub>r</sub>H — ne „Kc“.
+- Broj i jedinicu drži u jednom retku (`white-space: nowrap` na „−0,762 V“), da jedinica ne ostane sama u novom retku.
+- `<select>` ne može prikazati `<sub>`: tekst opcija neka bude kratak (bez dugih vrijednosti u zagradi), da se ne reže na 360 px.
+- Boje koje se spominju u tekstu primjera neka se zovu isto kao u widgetu (npr. fenolftalein „ljubičast“, ne jednom „ružičast“).
+- Pregled u pregledniku: `npx vite dev --config vite.pregled.config.mjs --port <tvoj port>` u worktreeju (config je
+  lokalan, ne commitaj ga; `lab-out` je link). Ne koristi portove 5173 i 5181.
