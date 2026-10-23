@@ -28,6 +28,7 @@ import Izraz from "./Izraz.svelte";
 import Interval from "./Interval.svelte";
 import GrafFunkcije from "./GrafFunkcije.svelte";
 import { KOMPONENTE_FIZIKA } from "./fizika/index.js";
+import { KOMPONENTE_KEMIJA } from "./kemija/index.js";
 
 export const KOMPONENTE = {
   pojam: Pojam,
@@ -52,4 +53,5 @@ export const KOMPONENTE = {
   interval: Interval,
   graf_funkcije: GrafFunkcije,
   ...KOMPONENTE_FIZIKA,
+  ...KOMPONENTE_KEMIJA,
 };
