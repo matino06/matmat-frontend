@@ -8,6 +8,7 @@ import { molekula } from "./molekula.js";
 import { ph_skala } from "./ph_skala.js";
 import { titracija } from "./titracija.js";
 import { pokus } from "./pokus.js";
+import { ravnoteza } from "./ravnoteza.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -17,4 +18,5 @@ export const KEMIJA = [
   ph_skala,
   titracija,
   pokus,
+  ravnoteza,
 ];

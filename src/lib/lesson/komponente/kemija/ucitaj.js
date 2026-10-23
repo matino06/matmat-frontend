@@ -7,4 +7,5 @@ export const UCITAJ_KEMIJA = {
   ph_skala: () => import("./PhSkala.svelte"),
   titracija: () => import("./Titracija.svelte"),
   pokus: () => import("./Pokus.svelte"),
+  ravnoteza: () => import("./Ravnoteza.svelte"),
 };

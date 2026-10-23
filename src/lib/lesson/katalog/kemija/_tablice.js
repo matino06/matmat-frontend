@@ -187,9 +187,12 @@ export function atomiOd(formula) {
   }
   return Object.keys(ukupno).length ? ukupno : null;
 }
+// Uglate zagrade kompleksa („[Cu(H₂O)₄]²⁺“, „[Fe(SCN)(H₂O)₅]²⁺“) čitaju se kao obične; zagrada se mora zatvoriti
+// istom vrstom.
 function atomiDijela(s) {
   const stog = [{}];
-  const re = /([A-Z][a-z]?)(\d*)|(\()|(\))(\d*)/g;
+  const otvorene = [];
+  const re = /([A-Z][a-z]?)(\d*)|([([])|([)\]])(\d*)/g;
   let m;
   let pos = 0;
   while ((m = re.exec(s))) {
@@ -199,9 +202,11 @@ function atomiDijela(s) {
     if (m[1]) {
       if (!PO_SIMBOLU[m[1]]) return null;
       vrh[m[1]] = (vrh[m[1]] ?? 0) + (m[2] ? Number(m[2]) : 1);
-    } else if (m[3]) stog.push({});
-    else if (m[4]) {
-      if (stog.length < 2) return null;
+    } else if (m[3]) {
+      stog.push({});
+      otvorene.push(m[3]);
+    } else if (m[4]) {
+      if (stog.length < 2 || otvorene.pop() !== (m[4] === "]" ? "[" : "(")) return null;
       const g = stog.pop();
       const u = stog[stog.length - 1];
       for (const [e, n] of Object.entries(g)) u[e] = (u[e] ?? 0) + n * (m[5] ? Number(m[5]) : 1);
