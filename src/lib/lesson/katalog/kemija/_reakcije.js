@@ -48,33 +48,12 @@ const aku = (z) => z.replace(/a$/, "u"); // „plava“ → „plavu“
 const velikoSlovo = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // ── formule u tekstu ── Poruke i savjeti formule nose kao oznaku ⟦SO₄²⁻⟧: komponenta ih crta kroz Formula.svelte
-// (dijelovi(tekst)), a za markdown (poruka provjere, točan odgovor) uMd() ih pretvara u $\mathrm{SO_{4}^{2-}}$.
+// (dijelovi(tekst)), a za markdown (poruka provjere, točan odgovor) uMd() ostavlja samo formulu (SO₄²⁻).
 export const tex = (f) => `⟦${f}⟧`;
 export const dijelovi = (t) => String(t ?? "").split(/⟦([^⟧]*)⟧/).map((z, i) => ({ formula: i % 2 === 1, z })).filter((d) => d.z);
-export const uMd = (t) => String(t ?? "").replace(/⟦([^⟧]*)⟧/g, (_, f) => texMath(f));
+// Unicode, ne KaTeX: \mathrm se crta serifnim fontom usred sans teksta, a tekst zadataka formule piše Unicodeom.
+export const uMd = (t) => String(t ?? "").replace(/⟦([^⟧]*)⟧/g, (_, f) => f);
 const SUB_U = "₀₁₂₃₄₅₆₇₈₉";
-const SUP_U = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9", "⁺": "+", "⁻": "-" };
-function texMath(f) {
-  let out = "";
-  let i = 0;
-  const z = [...String(f)];
-  while (i < z.length) {
-    const c = z[i];
-    if (SUB_U.includes(c)) {
-      let n = "";
-      while (i < z.length && SUB_U.includes(z[i])) n += SUB_U.indexOf(z[i++]);
-      out += `_{${n}}`;
-    } else if (c in SUP_U) {
-      let n = "";
-      while (i < z.length && z[i] in SUP_U) n += SUP_U[z[i++]];
-      out += `^{${n}}`;
-    } else {
-      out += c === " " ? "\\ " : /[{}\\$%#&_^~]/.test(c) ? `\\${c}` : c;
-      i++;
-    }
-  }
-  return `$\\mathrm{${out}}$`;
-}
 const E = (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${formatNumber(Math.abs(v), 3)} V`;
 
 // ── tvari ──

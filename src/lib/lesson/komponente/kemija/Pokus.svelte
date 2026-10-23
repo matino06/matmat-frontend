@@ -222,7 +222,7 @@
               {#each z.cestice as p, k (k)}
                 <circle class="pk-anim pk-slegni" style="--d:{p.d}s;--t:1.2s;--dy:{z.dno + 2 - p.y}px" cx={p.x} cy={p.y} r="1.6" fill={tb} />
               {/each}
-              <ellipse class="pk-anim pk-rast pk-talog" style="--d:{z.D + 0.5}s;--t:1.1s" cx="45" cy={z.komad ? 183 : 186} rx="16" ry={z.komad ? 7 : 12} fill={tb} />
+              <ellipse class="pk-anim pk-rast pk-talog" style="--d:{z.D + 0.5}s;--t:1.1s" cx="45" cy={z.komad ? 183 : 181} rx="16" ry={z.komad ? 7 : 16} fill={tb} />
             {/if}
             {#if z.o.zamucenje}
               <rect class="pk-anim pk-in pk-mutno" style="--d:{z.D}s;--t:1.6s" x="30" y={lv} width="30" height={200 - lv} fill={BOJE[z.o.zamucenje.boja].hex} />
@@ -636,7 +636,7 @@
     animation-timing-function: ease-in;
   }
   .pk-oblak {
-    opacity: 0;
+    opacity: 0.16;
     animation-name: pk-oblak;
   }
   .pk-slegni {
@@ -719,8 +719,9 @@
     30% {
       opacity: 0.55;
     }
+    /* iznad taloga otopina ostaje malo mutna, pa se i bijeli talog vidi na svijetloj podlozi */
     100% {
-      opacity: 0;
+      opacity: 0.16;
     }
   }
   @keyframes pk-slegni {
