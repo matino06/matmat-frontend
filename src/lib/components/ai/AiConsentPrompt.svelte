@@ -2,8 +2,10 @@
   // Asked once: after the level choice for a new account, and on the next visit for an account that hasn't decided.
   import { AI_CONSENT_TITLE, decideAiConsent } from "$lib/store/aiConsent.svelte";
   import AiConsentDetails from "./AiConsentDetails.svelte";
+  import AiAgeConfirmation from "./AiAgeConfirmation.svelte";
 
   let saving = $state(null);
+  let ageConfirmed = $state(false);
   let error = $state("");
 
   async function decide(granted) {
@@ -30,11 +32,12 @@
     <AiConsentDetails />
     <p class="consent-note">Odluku možeš promijeniti u Postavkama.</p>
     {#if error}<p class="consent-error" role="alert">{error}</p>{/if}
+    <AiAgeConfirmation bind:confirmed={ageConfirmed} />
     <div class="consent-actions">
       <button class="btn btn-quiet" disabled={saving !== null} onclick={() => decide(false)}>
         {saving === false ? "Spremam…" : "Ne sada"}
       </button>
-      <button class="btn btn-primary btn-lg" disabled={saving !== null} onclick={() => decide(true)}>
+      <button class="btn btn-primary btn-lg" disabled={saving !== null || !ageConfirmed} onclick={() => decide(true)}>
         {saving === true ? "Spremam…" : "Slažem se"}
       </button>
     </div>
