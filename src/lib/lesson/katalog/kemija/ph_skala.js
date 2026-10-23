@@ -791,7 +791,7 @@ Poruke za tipične greške (zaboravljen minus u pH = −log c, ln umjesto log, p
       tip: "ph_skala",
       nacin: "poredaj",
       tekst: "Otopine imaju jednaku množinsku koncentraciju, 0,10 mol/dm³. Poredaj ih od najnižeg do najvišeg pH.",
-      otopine: [{ formula: "NaCl", c: 0.1 }, { formula: "CH₃COOH", c: 0.1 }, { formula: "NaOH", c: 0.1 }, { formula: "HCl", c: 0.1 }, { formula: "NH₃", c: 0.1 }],
+      otopine: [{ formula: "NaCl", c: 0.1, zapis: "0,10" }, { formula: "CH₃COOH", c: 0.1, zapis: "0,10" }, { formula: "NaOH", c: 0.1, zapis: "0,10" }, { formula: "HCl", c: 0.1, zapis: "0,10" }, { formula: "NH₃", c: 0.1, zapis: "0,10" }],
     },
     {
       tip: "ph_skala",

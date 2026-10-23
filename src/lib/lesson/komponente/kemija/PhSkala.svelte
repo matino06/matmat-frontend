@@ -334,7 +334,7 @@
             </div>
           {/if}
           <div class="ps-kartica" class:ok={okKorak(i)} class:bad={badKorak(i)}>
-            <div class="ps-glava"><span class="ps-sym">{@render oznaka(q)}</span><span class="ps-ime">{IME[q]}</span></div>
+            <div class="ps-glava"><span class="ps-sym">{@render oznaka(q)}</span>{#if !JE_P(q)}<span class="ps-ime">{IME[q]}</span>{/if}</div>
             <div class="ps-unos">
               <input
                 id="ps-{uid}-{i}"
@@ -387,7 +387,7 @@
                 onclick={() => (izbor[ind] = b.id)}
               >
                 <span class="ps-tocka" class:bezbojna={!b.boja} style={b.boja ? `background: ${b.boja}` : ""}></span>
-                <span>{b.naziv}{#if b.i}<span class="ps-boja-i"> ({b.i})</span>{/if}</span>
+                <span>{b.naziv}{#if b.i}<span class="ps-boja-i">({b.i})</span>{/if}</span>
               </button>
             {/each}
           </div>
@@ -889,6 +889,7 @@
     background: var(--primary-dim);
   }
   .ps-boja-i {
+    margin-left: 4px;
     color: var(--text-faint);
     font-size: 12px;
   }
