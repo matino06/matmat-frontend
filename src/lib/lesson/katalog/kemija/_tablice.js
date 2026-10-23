@@ -64,9 +64,10 @@ function polozaj(z) {
   if (perioda === 1) return { perioda, skupina: z === 1 ? 1 : 18 };
   if (perioda <= 3) return { perioda, skupina: k <= 2 ? k : k + 10 };
   if (perioda <= 5) return { perioda, skupina: k };
-  // 6. i 7. perioda: 2 + 14 (f) + 16
+  // 6. i 7. perioda: kao na listu mature, lantanoidi La–Lu i aktinoidi Ac–Lr (15 elemenata) su u zasebnim
+  // redovima, a u 3. skupini piše samo „57–71“ / „89–103“; od Hf/Rf dalje skupine 4–18
   if (k <= 2) return { perioda, skupina: k };
-  if (k <= 16) return { perioda, skupina: k === 3 ? 3 : null, f: true };
+  if (k <= 17) return { perioda, skupina: null, f: true };
   return { perioda, skupina: k - 14 };
 }
 
