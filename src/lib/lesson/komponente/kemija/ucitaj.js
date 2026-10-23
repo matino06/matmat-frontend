@@ -5,5 +5,6 @@ export const UCITAJ_KEMIJA = {
   periodni_sustav: () => import("./PeriodniSustav.svelte"),
   molekula: () => import("./Molekula.svelte"),
   ph_skala: () => import("./PhSkala.svelte"),
+  titracija: () => import("./Titracija.svelte"),
   pokus: () => import("./Pokus.svelte"),
 };
