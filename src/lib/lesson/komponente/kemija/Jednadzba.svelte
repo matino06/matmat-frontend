@@ -5,6 +5,7 @@
   // (atomi, naboj, točni koeficijenti) je u katalog/kemija/jednadzba.js.
   import { untrack } from "svelte";
   import Md from "../Md.svelte";
+  import Formula from "./Formula.svelte";
   import { tocanOdgovor } from "../../katalog/index.js";
   import { tvari, tocniKoef, stanjaOd, brojac, nzd, trazeKoef, trazeStanja, zapisNaboja, STANJA, NAJVISE } from "$lib/lesson/katalog/kemija/jednadzba.js";
 
@@ -52,20 +53,6 @@
     onodgovor({ koeficijenti: [...koef], stanja: [...stanja] });
   }
 
-  // formula → dijelovi s indeksima i nabojem: „SO₄²⁻“ → S, O, sub 4, sup 2−
-  const SUB = "₀₁₂₃₄₅₆₇₈₉";
-  const SUP = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9", "⁺": "+", "⁻": "−" };
-  function dijelovi(f) {
-    const out = [];
-    for (const ch of String(f)) {
-      const v = SUB.includes(ch) ? "sub" : ch in SUP ? "sup" : "t";
-      const z = v === "sub" ? String(SUB.indexOf(ch)) : v === "sup" ? SUP[ch] : ch;
-      const zadnji = out[out.length - 1];
-      if (zadnji?.v === v) zadnji.z += z;
-      else out.push({ v, z });
-    }
-    return out;
-  }
   const stanjeZapis = (s) => `(${s})`;
 
   const iznad = untrack(() => spec.iznad ?? "");
@@ -76,9 +63,7 @@
   );
 </script>
 
-{#snippet formula(f)}
-  {#each dijelovi(f) as d, k (k)}{#if d.v === "sub"}<sub>{d.z}</sub>{:else if d.v === "sup"}<sup>{d.z}</sup>{:else}{d.z}{/if}{/each}
-{/snippet}
+{#snippet formula(f)}<Formula {f} />{/snippet}
 
 {#snippet clan(c)}
   <span class="jd-clan">
@@ -134,11 +119,11 @@
 <div class="jd-eq" role="group" aria-label={istrazi ? opis : "Jednadžba reakcije"}>
   <div class="jd-strana">
     {#each lijevo as c, k (c.i)}
-      {#if k}<span class="jd-plus">+</span>{/if}
-      {@render clan(c)}
+      <span class="jd-par">{#if k}<span class="jd-plus">+</span>{/if}{@render clan(c)}</span>
     {/each}
   </div>
   <div class="jd-strana">
+    <span class="jd-par">
     <span class="jd-str" aria-label={dvosmjerna ? "ravnoteža" : "daje"}>
       {#if iznad}<span class="jd-iznad">{@render formula(iznad)}</span>{/if}
       <svg width={W} height="14" viewBox="0 0 {W} 14" aria-hidden="true">
@@ -151,9 +136,10 @@
         {/if}
       </svg>
     </span>
-    {#each desno as c, k (c.i)}
-      {#if k}<span class="jd-plus">+</span>{/if}
-      {@render clan(c)}
+    {#if desno.length}{@render clan(desno[0])}{/if}
+    </span>
+    {#each desno.slice(1) as c (c.i)}
+      <span class="jd-par"><span class="jd-plus">+</span>{@render clan(c)}</span>
     {/each}
   </div>
 </div>
@@ -229,6 +215,13 @@
     justify-content: center;
     gap: 8px;
   }
+  /* „+“ i strelica idu u isti red s pojmom iza sebe, da na mobitelu ne ostanu sami na kraju retka */
+  .jd-par {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
   .jd-clan {
     display: inline-flex;
     align-items: center;
@@ -237,18 +230,6 @@
   }
   .jd-f {
     font-weight: 500;
-  }
-  .jd-f sub,
-  .jd-iznad sub {
-    font-size: 0.68em;
-    vertical-align: -0.3em;
-    line-height: 0;
-  }
-  .jd-f sup,
-  .jd-iznad sup {
-    font-size: 0.68em;
-    vertical-align: 0.55em;
-    line-height: 0;
   }
   .jd-st {
     font-size: 0.8em;

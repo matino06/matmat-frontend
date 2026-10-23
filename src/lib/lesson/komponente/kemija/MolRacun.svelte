@@ -6,6 +6,7 @@
   import { untrack } from "svelte";
   import Md from "../Md.svelte";
   import BrojUnos from "../BrojUnos.svelte";
+  import Formula from "./Formula.svelte";
   import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
   import { KONSTANTE } from "$lib/lesson/katalog/kemija/_tablice.js";
   import {
@@ -89,8 +90,8 @@
   const sub = (t) => esc(t).replace(/([A-Za-z])_([A-Za-z]+)/g, "$1<sub>$2</sub>");
 
   const tocno = $derived(pokazi ? mol_racun.tocanOdgovor(spec) : "");
-  const zapisZadano = (z, i) => (istrazi && i === 0 ? formatSci(Number(klizac)) : formatNumber(z.vrijednost));
-  const oznakaM = (k) => (k.velicina === "M" && formula && k.pravilo?.iz.length === 0 ? `M(${formula})` : k.velicina);
+  const zapisZadano = (z, i) => (istrazi && i === 0 ? formatSci(Number(klizac)) : (z.zapis ?? formatNumber(z.vrijednost)));
+  const jeMTvari = (k) => k.velicina === "M" && formula && k.pravilo?.iz.length === 0;
   // vodoravno samo kad svaka kartica dobije barem ~150 px (s formulom na strelici); inače okomito
   let sirina = $state(0);
   const vodoravno = $derived(sirina >= 200 * (zadani.length + trazeni.length));
@@ -102,7 +103,7 @@
 <div class="mr" bind:clientWidth={sirina}>
   {#if formula || spec.naziv || pokaziM || uvjeti || otopina}
     <div class="mr-tvar">
-      {#if formula}<span class="mr-formula">{formula}</span>{/if}
+      {#if formula}<span class="mr-formula"><Formula f={formula} /></span>{/if}
       {#if spec.naziv}<span class="mr-naziv">{spec.naziv}</span>{/if}
       {#if pokaziM}<span class="mr-chip">M = {zapisM(M)}</span>{/if}
       {#if uvjeti}<span class="mr-chip">plin: {uvjeti}</span>{/if}
@@ -119,7 +120,7 @@
 
   {#if masa}
     <div class="mr-masa">
-      <span class="mr-masa-oznaka">M({formula}) =</span>
+      <span class="mr-masa-oznaka">M(<Formula f={formula} />) =</span>
       <BrojUnos jedinica="g/mol" {locked} {ishod} bind:vrijednost={unosM} {onodgovor} oznaka="Molarna masa {formula} u g/mol" />
     </div>
   {:else}
@@ -129,7 +130,7 @@
         {#if i > 0}<div class="mr-i" aria-hidden="true">i</div>{/if}
         <div class="mr-kartica zadano">
           <div class="mr-glava"><span class="mr-sym">{z.velicina}</span><span class="mr-ime">{IME[z.velicina]}</span></div>
-          <div class="mr-vrijednost">{zapisZadano(z, i)}{z.jedinica ? ` ${z.jedinica}` : ""}</div>
+          <div class="mr-vrijednost"><Formula f={`${zapisZadano(z, i)}${z.jedinica ? ` ${z.jedinica}` : ""}`} /></div>
           {#if istrazi && i === 0}
             <input
               class="mr-klizac"
@@ -150,9 +151,9 @@
           {#if operacije && koraci[i]?.pravilo}<span class="mr-op mono">{@html sub(koraci[i].pravilo.formula)}</span>{/if}
         </div>
         <div class="mr-kartica" class:ok={!istrazi && ok(i)} class:bad={!istrazi && bad(i)}>
-          <div class="mr-glava"><span class="mr-sym">{oznakaM(koraci[i] ?? t)}</span><span class="mr-ime">{IME[t.velicina]}</span></div>
+          <div class="mr-glava"><span class="mr-sym">{#if jeMTvari(koraci[i] ?? t)}M(<Formula f={formula} />){:else}{t.velicina}{/if}</span><span class="mr-ime">{IME[t.velicina]}</span></div>
           {#if istrazi}
-            <div class="mr-vrijednost uzivo" aria-live="polite">{uzivo[i] ? zapisVrijednosti(uzivo[i].vrijednost, t.jedinica) : "—"}</div>
+            <div class="mr-vrijednost uzivo" aria-live="polite"><Formula f={uzivo[i] ? zapisVrijednosti(uzivo[i].vrijednost, t.jedinica) : "—"} /></div>
           {:else}
             <div class="mr-unos">
               <input
@@ -211,7 +212,7 @@
     gap: 6px 10px;
   }
   .mr-formula {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 20px;
     font-weight: 700;
     color: var(--text);
@@ -250,7 +251,7 @@
     gap: 8px;
   }
   .mr-masa-oznaka {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 16px;
     white-space: nowrap;
   }

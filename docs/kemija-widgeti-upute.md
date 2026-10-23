@@ -42,7 +42,13 @@ export const <tip> = {
   „Pogledaj“ dobiva samo `spec`.
 - Mora raditi na mobitelu (širina 360 px) i u svijetloj i tamnoj temi (samo CSS varijable teme, bez fiksnih boja
   osim ako je boja sama kemijski podatak, npr. boja taloga).
-- Kemijske formule s pravim indeksima (Unicode ₂ ili `<sub>`), naboji kao ⁺ ⁻ ²⁻.
+- Kemijske formule uvijek kroz zajedničku komponentu `komponente/kemija/Formula.svelte` (`<Formula f="SO₄²⁻" />`):
+  pretvara Unicode indekse i naboje u `<sub>`/`<sup>`. Ne ispisuj Unicode indekse izravno, posebno ne u monospace fontu
+  (loše se vide). Isto vrijedi za potencije u vrijednostima („3,01·10²³“) i jedinice („mol/dm³“).
+- Formule u sans fontu (`var(--font-sans)`), ne u monospace fontu.
+- Na mobitelu se ništa ne smije prelamati tako da „+“ ili strelica ostanu sami na kraju retka (spoji ih s pojmom iza).
+- Zadane brojeve prikazuj onako kako ih piše tekst zadatka (značajne znamenke, „2,10 g“, ne „2,1 g“). Ako widget
+  prikazuje zadanu vrijednost, podrži neobavezno polje `zapis` („2,10“) i u `validate` provjeri da je isti broj.
 
 ## Registracija (samo dodaj svoj redak, ne prepisuj datoteke; i drugi agenti ih istodobno mijenjaju)
 - `src/lib/lesson/katalog/kemija/index.js`: `import { <tip> } from "./<tip>.js";` i `<tip>,` u popis `KEMIJA`.

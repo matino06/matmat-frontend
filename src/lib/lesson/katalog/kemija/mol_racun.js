@@ -167,6 +167,7 @@ export const zadaniOf = (s) =>
     .map((z) => ({
       velicina: z?.velicina,
       vrijednost: z?.vrijednost,
+      zapis: z?.zapis,
       jedinica: normJedinica(z?.velicina, z?.jedinica),
     }));
 export const traziOf = (s) =>
@@ -206,7 +207,7 @@ const otopinaOf = (s) => {
 };
 export const otopinaZapis = (s) =>
   s?.otopina
-    ? `V(otopine) = ${formatNumber(s.otopina.V)} ${normJedinica("V", s.otopina.jedinica ?? "L")}`
+    ? `V(otopine) = ${s.otopina.zapis ?? formatNumber(s.otopina.V)} ${normJedinica("V", s.otopina.jedinica ?? "L")}`
     : "";
 
 // M zadan u specu ili iz formule (Ar s lista); null ako se ne zna.
@@ -518,10 +519,10 @@ export const mol_racun = {
   istrazi: (s) => s.nacin === "istrazi",
   opis: `Lanac računa s množinom: m ↔ n ↔ N ↔ V(plina) ↔ c(otopine), uz molarnu masu iz Ar s lista mature (kod je računa iz formule).
 Polja: tekst, tvar ("NaCl", "CuSO₄·5H₂O", "CO₂"; ASCII "H2O" također), naziv?, M? (g/mol; samo ako nema formule, a s formulom se mora slagati),
-zadano: {velicina: ${ZADANE.join(" | ")}, vrijednost, jedinica} ili popis od dvije (npr. V i m za M = m : n),
+zadano: {velicina: ${ZADANE.join(" | ")}, vrijednost, jedinica, zapis?} ili popis od dvije (npr. V i m za M = m : n); zapis? je isti broj kako ga piše tekst kad su važne nule na kraju („2,10“),
 jedinice: ${ZADANE.map((q) => `${q}: ${Object.keys(JEDINICE[q]).filter(Boolean).join(", ") || "bez jedinice"}`).join("; ")}; M: g/mol,
 plin?: {uvjeti: "normirani"} (V_m = 22,4 L/mol) ili {p, jedinica: "kPa" (Pa | hPa | kPa | MPa | bar), T (K) ili t (°C)} za pV = nRT – treba uz svaki V,
-otopina?: {V, jedinica: "L" | "dm³" | "mL" | "cm³"} – volumen otopine, treba uz svaki c,
+otopina?: {V, jedinica: "L" | "dm³" | "mL" | "cm³", zapis?} – volumen otopine, treba uz svaki c,
 trazi: popis 1–3 koraka [{velicina: ${TRAZENE.join(" | ")}, jedinica?}] redom kojim se računaju; svaki ide preko n (m → n → N, n → V, c → n → m),
 M kao korak: iz formule (prije n) ili M = m : n kad su m i n poznati.
 operacije? (strelice s „: M“, „· N_A“…; zadano samo u istrazi), pokazi_M? (zadano samo u istrazi), pokazi_ar? (Ar elemenata s lista; zadano samo u molarna_masa),
@@ -538,8 +539,8 @@ kPa umjesto Pa, L umjesto m³, mmol/mol, mg/g, mL/dm³ kod c, potencija N_A) ra�
       "U 1,00 L fiziološke otopine otopljeno je 9,0 g natrijeva klorida. Izračunaj množinu NaCl i množinsku koncentraciju otopine.",
     tvar: "NaCl",
     naziv: "natrijev klorid",
-    zadano: { velicina: "m", vrijednost: 9.0, jedinica: "g" },
-    otopina: { V: 1.0, jedinica: "L" },
+    zadano: { velicina: "m", vrijednost: 9.0, jedinica: "g", zapis: "9,0" },
+    otopina: { V: 1.0, jedinica: "L", zapis: "1,00" },
     trazi: [
       { velicina: "n", jedinica: "mol" },
       { velicina: "c", jedinica: "mol/dm³" },
@@ -553,7 +554,7 @@ kPa umjesto Pa, L umjesto m³, mmol/mol, mg/g, mL/dm³ kod c, potencija N_A) ra�
         "Pomiči klizač mase vode i gledaj kako se mijenjaju množina i broj molekula.",
       tvar: "H₂O",
       naziv: "voda",
-      zadano: { velicina: "m", vrijednost: 9.0, jedinica: "g" },
+      zadano: { velicina: "m", vrijednost: 9.0, jedinica: "g", zapis: "9,0" },
       raspon: [1, 36],
       trazi: [
         { velicina: "n", jedinica: "mol" },
@@ -585,7 +586,7 @@ kPa umjesto Pa, L umjesto m³, mmol/mol, mg/g, mL/dm³ kod c, potencija N_A) ra�
       naziv: "plinoviti ugljikovodik",
       zadano: [
         { velicina: "V", vrijednost: 1.24, jedinica: "L" },
-        { velicina: "m", vrijednost: 2.1, jedinica: "g" },
+        { velicina: "m", vrijednost: 2.1, jedinica: "g", zapis: "2,10" },
       ],
       plin: { p: 100, jedinica: "kPa", t: 25 },
       trazi: [
@@ -701,6 +702,11 @@ kPa umjesto Pa, L umjesto m³, mmol/mol, mg/g, mL/dm³ kod c, potencija N_A) ra�
         isNum(z.vrijednost) && z.vrijednost > 0,
         `${at}.vrijednost mora biti pozitivan broj`,
       );
+      if (z.zapis != null)
+        need(
+          isText(z.zapis) && Number(z.zapis.replace(",", ".")) === z.vrijednost,
+          `${at}.zapis („${z.zapis}“) mora biti isti broj kao vrijednost (${z.vrijednost}), samo s decimalnim zarezom`,
+        );
       need(
         faktor(z.velicina, z.jedinica) != null,
         `${at}.jedinica za ${z.velicina} mora biti jedna od: ${Object.keys(
@@ -794,6 +800,11 @@ kPa umjesto Pa, L umjesto m³, mmol/mol, mg/g, mL/dm³ kod c, potencija N_A) ra�
         isNum(s.otopina?.V) && s.otopina.V > 0,
         "otopina.V mora biti pozitivan broj",
       );
+      if (s.otopina?.zapis != null)
+        need(
+          isText(s.otopina.zapis) && Number(s.otopina.zapis.replace(",", ".")) === s.otopina.V,
+          `otopina.zapis („${s.otopina.zapis}“) mora biti isti broj kao otopina.V`,
+        );
       need(
         faktor("V", normJedinica("V", s.otopina?.jedinica ?? "L")) != null,
         `otopina.jedinica mora biti jedna od: ${Object.keys(JEDINICE.V).join(", ")}`,

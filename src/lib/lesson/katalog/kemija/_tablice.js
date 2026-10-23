@@ -46,13 +46,15 @@ const EN = {
   Ni: 1.91, Cu: 1.9, Zn: 1.65, Ga: 1.81, Ge: 2.01, As: 2.18, Se: 2.55, Br: 2.96, Kr: 3.0, Rb: 0.82, Sr: 0.95, Y: 1.22,
   Zr: 1.33, Nb: 1.6, Mo: 2.16, Ru: 2.2, Rh: 2.28, Pd: 2.2, Ag: 1.93, Cd: 1.69, In: 1.78, Sn: 1.96, Sb: 2.05, Te: 2.1,
   I: 2.66, Xe: 2.6, Cs: 0.79, Ba: 0.89, Pt: 2.28, Au: 2.54, Hg: 2.0, Pb: 2.33, Bi: 2.02,
+  Tc: 1.9, Hf: 1.3, Ta: 1.5, W: 2.36, Re: 1.9, Os: 2.2, Ir: 2.2, Tl: 1.62, Po: 2.0, At: 2.2, Fr: 0.7, Ra: 0.9,
 };
 const IE1 = {
   H: 1312, He: 2372, Li: 520, Be: 900, B: 801, C: 1086, N: 1402, O: 1314, F: 1681, Ne: 2081, Na: 496, Mg: 738,
   Al: 578, Si: 787, P: 1012, S: 1000, Cl: 1251, Ar: 1521, K: 419, Ca: 590, Sc: 633, Ti: 659, V: 651, Cr: 653,
   Mn: 717, Fe: 763, Co: 760, Ni: 737, Cu: 746, Zn: 906, Ga: 579, Ge: 762, As: 947, Se: 941, Br: 1140, Kr: 1351,
   Rb: 403, Sr: 550, Ag: 731, Cd: 868, In: 558, Sn: 709, Sb: 834, Te: 869, I: 1008, Xe: 1170, Cs: 376, Ba: 503,
-  Au: 890, Hg: 1007, Pb: 716,
+  Au: 890, Hg: 1007, Pb: 716, Y: 600, Zr: 640, Nb: 652, Mo: 684, Tc: 702, Ru: 710, Rh: 720, Pd: 804, Pt: 870,
+  Tl: 589, Bi: 703, Po: 812, At: 899, Rn: 1037, Fr: 393, Ra: 509,
 };
 
 // Perioda i skupina iz Z (lantanoidi i aktinoidi: skupina null, kao u tablici gdje su izdvojeni).
