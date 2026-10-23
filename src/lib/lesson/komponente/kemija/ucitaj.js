@@ -3,6 +3,7 @@ export const UCITAJ_KEMIJA = {
   jednadzba: () => import("./Jednadzba.svelte"),
   mol_racun: () => import("./MolRacun.svelte"),
   periodni_sustav: () => import("./PeriodniSustav.svelte"),
+  molekula: () => import("./Molekula.svelte"),
   ph_skala: () => import("./PhSkala.svelte"),
   pokus: () => import("./Pokus.svelte"),
 };

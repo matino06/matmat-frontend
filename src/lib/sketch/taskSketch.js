@@ -770,19 +770,22 @@ function allowedValence(el, q) {
   return 0;
 }
 
-function structure(s, text) {
+// Raspored strukturne formule: atomi s koordinatama (prsten i „uz“ izračunati), veze i problemi geometrije (duljina
+// veze, preklapanje). Zajedničko skici i widgetu lekcije „molekula“ (katalog/kemija/molekula.js), pa se ista
+// molekula u objašnjenju i u lekciji složi jednako. Vraća { greska } ako se opis ne da složiti.
+export function structureLayout(s) {
   const atoms = (s.atomi ?? []).map((a) => ({ ...a, id: String(a.id) }));
-  if (!atoms.length || atoms.length > 40) return { checks: [fail("formula treba 1 do 40 atoma")] };
+  if (!atoms.length || atoms.length > 40) return { greska: "formula treba 1 do 40 atoma" };
   const byId = new Map();
   for (const a of atoms) {
-    if (a.id === "undefined" || byId.has(a.id)) return { checks: [fail(`atom bez oznake ili s ponovljenom oznakom „${a.id}“`)] };
+    if (a.id === "undefined" || byId.has(a.id)) return { greska: `atom bez oznake ili s ponovljenom oznakom „${a.id}“` };
     byId.set(a.id, a);
   }
   const rings = [].concat(s.prsten ?? []);
   for (const r of rings) {
     const ids = (r.atomi ?? []).map(String);
     if (ids.length < 3 || ids.length > 8 || !ids.every((id) => byId.has(id))) {
-      return { checks: [fail("prsten treba 3 do 8 postojećih atoma")] };
+      return { greska: "prsten treba 3 do 8 postojećih atoma" };
     }
     const [c0, c1] = r.sredina ?? [0, 0];
     const R = 1 / (2 * Math.sin(Math.PI / ids.length));
@@ -797,39 +800,96 @@ function structure(s, text) {
   for (const a of atoms) {
     if (typeof a.x === "number" || a.uz == null) continue;
     const b = byId.get(String(a.uz));
-    if (!b?.ring) return { checks: [fail(`„uz“ atoma ${a.id} mora biti atom prstena`)] };
+    if (!b?.ring) return { greska: `„uz“ atoma ${a.id} mora biti atom prstena` };
     const d = [b.x - b.ring[0], b.y - b.ring[1]];
     const l = Math.hypot(...d) || 1;
     [a.x, a.y] = [b.x + d[0] / l, b.y + d[1] / l];
   }
   if (!atoms.every((a) => typeof a.x === "number" && typeof a.y === "number" && isFinite(a.x) && isFinite(a.y))) {
-    return { checks: [fail("svaki atom treba koordinate x, y (ili je u prstenu)")] };
+    return { greska: "svaki atom treba koordinate x, y (ili je u prstenu)" };
   }
   const bonds = [];
   for (const b of s.veze ?? []) {
     const [a, c, red] = Array.isArray(b) ? b : [b.od, b.do, b.red];
     const order = red ?? 1;
     if (!byId.has(String(a)) || !byId.has(String(c)) || String(a) === String(c)) {
-      return { checks: [fail(`veza ${a}–${c} spaja atom koji ne postoji`)] };
+      return { greska: `veza ${a}–${c} spaja atom koji ne postoji` };
     }
-    if (!(order in BOND_ORDER)) return { checks: [fail(`nepoznata vrsta veze „${order}“ (1, 2, 3, klin, crtkano, vodikova)`)] };
+    if (!(order in BOND_ORDER)) return { greska: `nepoznata vrsta veze „${order}“ (1, 2, 3, klin, crtkano, vodikova)` };
     if (bonds.some((x) => (x.a === String(a) && x.b === String(c)) || (x.a === String(c) && x.b === String(a)))) {
-      return { checks: [fail(`veza ${a}–${c} navedena je dvaput`)] };
+      return { greska: `veza ${a}–${c} navedena je dvaput` };
     }
     bonds.push({ a: String(a), b: String(c), red: order });
   }
-  const checks = [];
+  const problemi = [];
   for (const b of bonds) {
     const [p, q] = [byId.get(b.a), byId.get(b.b)];
     const d = Math.hypot(p.x - q.x, p.y - q.y);
     const ok = b.red === "vodikova" ? d <= 3 : d >= 0.6 && d <= 1.8;
-    if (!ok) checks.push(fail(`veza ${b.a}–${b.b} duga je ${num(d)} (treba oko 1)`));
+    if (!ok) problemi.push(`veza ${b.a}–${b.b} duga je ${num(d)} (treba oko 1)`);
   }
   for (let i = 0; i < atoms.length; i++) {
     for (let j = i + 1; j < atoms.length; j++) {
-      if (Math.hypot(atoms[i].x - atoms[j].x, atoms[i].y - atoms[j].y) < 0.5) checks.push(fail(`atomi ${atoms[i].id} i ${atoms[j].id} preklapaju se`));
+      if (Math.hypot(atoms[i].x - atoms[j].x, atoms[i].y - atoms[j].y) < 0.5) problemi.push(`atomi ${atoms[i].id} i ${atoms[j].id} preklapaju se`);
     }
   }
+  return { atoms, byId, rings, bonds, problemi };
+}
+
+// Pola širine oznake atoma u pikselima (font skice), za skraćivanje veze do oznake.
+export function labelHalfWidth(t) {
+  const c = [...String(t ?? "")];
+  if (!c.length) return 0;
+  return 5 + c.reduce((w, ch) => w + (SUB.includes(ch) || SUP[ch] ? 2.6 : 4.4), 0);
+}
+
+// Slobodan smjer za nevezni par oko atoma: najdalje od veza i već zauzetih smjerova (prvo gore, dolje, lijevo,
+// desno). taken = kutovi (rad) veza i već postavljenih parova; novi smjer se dodaje u taken.
+const PAIR_CAND = [-90, 90, 180, 0, -45, -135, 45, 135].map((d) => (d * Math.PI) / 180);
+const angDist = (x, y) => {
+  const d = Math.abs(x - y) % (2 * Math.PI);
+  return d > Math.PI ? 2 * Math.PI - d : d;
+};
+export function freePairDirection(taken) {
+  let best = PAIR_CAND[0];
+  let score = -1;
+  for (const c of PAIR_CAND) {
+    const sc2 = taken.length ? Math.min(...taken.map((t) => angDist(c, t))) : Math.PI;
+    if (sc2 > score + 1e-6) [best, score] = [c, sc2];
+  }
+  taken.push(best);
+  return best;
+}
+// Dvije točke neveznog para u smjeru t (rad, y prema dolje) od središta p; r = razmak od središta oznake.
+export function pairDots(p, t, r) {
+  const u = [Math.cos(t), Math.sin(t)];
+  const rr = Math.abs(u[0]) > 0.5 ? r : 13;
+  const c = [p[0] + u[0] * rr, p[1] + u[1] * rr];
+  return [
+    [c[0] - u[1] * 3.4, c[1] + u[0] * 3.4],
+    [c[0] + u[1] * 3.4, c[1] - u[0] * 3.4],
+  ];
+}
+
+// Crte jedne veze od točke a do c (već skraćene do oznaka): dvostruka i trostruka kao usporedne crte, klin kao
+// trokut. [{crta: [p, q], cls}] ili [{klin: [točke]}].
+export function bondParts(a, c, red) {
+  const L = Math.hypot(c[0] - a[0], c[1] - a[1]) || 1;
+  const n = [-(c[1] - a[1]) / L, (c[0] - a[0]) / L];
+  const off = (pt, d) => [pt[0] + n[0] * d, pt[1] + n[1] * d];
+  if (red === 2) return [{ crta: [off(a, 3), off(c, 3)], cls: "ln" }, { crta: [off(a, -3), off(c, -3)], cls: "ln" }];
+  if (red === 3) return [{ crta: [a, c], cls: "ln" }, { crta: [off(a, 4.5), off(c, 4.5)], cls: "ln" }, { crta: [off(a, -4.5), off(c, -4.5)], cls: "ln" }];
+  if (red === "klin") return [{ klin: [a, off(c, 4.5), off(c, -4.5)] }];
+  if (red === "crtkano") return [{ crta: [a, c], cls: "ln dash" }];
+  if (red === "vodikova") return [{ crta: [a, c], cls: "ln dot acc" }];
+  return [{ crta: [a, c], cls: "ln" }];
+}
+
+function structure(s, text) {
+  const L = structureLayout(s);
+  if (L.greska) return { checks: [fail(L.greska)] };
+  const { atoms, byId, rings, bonds } = L;
+  const checks = L.problemi.map(fail);
   const bondSum = (id) => bonds.reduce((t, b) => t + (b.a === id || b.b === id ? BOND_ORDER[b.red] : 0), 0);
   const lewis = atoms.some((a) => typeof a.nevezni === "number");
   const perAtomCharge = atoms.some((a) => a.naboj);
@@ -903,11 +963,7 @@ function structure(s, text) {
   const P = new Map(all.map((a) => [a.id, T(a.x, a.y)]));
   const A = new Map(all.map((a) => [a.id, a]));
   const shown = (a) => `${a.simbol ?? ""}${a.zvjezdica ? "*" : ""}`;
-  const halfW = (a) => {
-    const t = [...shown(a)];
-    if (!t.length) return 0;
-    return 5 + t.reduce((w, c) => w + (SUB.includes(c) || SUP[c] ? 2.6 : 4.4), 0);
-  };
+  const halfW = (a) => labelHalfWidth(shown(a));
   const trim = (id, u) => {
     const a = A.get(id);
     const hw = halfW(a);
@@ -930,42 +986,14 @@ function structure(s, text) {
     const t2 = trim(b.b, u) + (b.red === "vodikova" ? 3 : 1);
     const a = [p[0] + u[0] * t1, p[1] + u[1] * t1];
     const c = [q[0] - u[0] * t2, q[1] - u[1] * t2];
-    const n = [-u[1], u[0]];
-    const off = (pt, d) => [pt[0] + n[0] * d, pt[1] + n[1] * d];
-    if (b.red === 2) body += line(off(a, 3), off(c, 3)) + line(off(a, -3), off(c, -3));
-    else if (b.red === 3) body += line(a, c) + line(off(a, 4.5), off(c, 4.5)) + line(off(a, -4.5), off(c, -4.5));
-    else if (b.red === "klin") body += poly([a, off(c, 4.5), off(c, -4.5)], "wedge");
-    else if (b.red === "crtkano") body += line(a, c, "ln dash");
-    else if (b.red === "vodikova") body += line(a, c, "ln dot acc");
-    else body += line(a, c);
+    for (const x of bondParts(a, c, b.red)) body += x.klin ? poly(x.klin, "wedge") : line(x.crta[0], x.crta[1], x.cls);
   }
-  // slobodan smjer oko atoma: najdalje od veza i već zauzetih smjerova (prvo gore, dolje, lijevo, desno)
-  const CAND = [-90, 90, 180, 0, -45, -135, 45, 135].map((d) => (d * Math.PI) / 180);
-  const angDist = (x, y) => {
-    const d = Math.abs(x - y) % (2 * Math.PI);
-    return d > Math.PI ? 2 * Math.PI - d : d;
-  };
-  const free = (id) => {
-    const taken = dirs.get(id);
-    let best = CAND[0];
-    let score = -1;
-    for (const c of CAND) {
-      const sc2 = taken.length ? Math.min(...taken.map((t) => angDist(c, t))) : Math.PI;
-      if (sc2 > score + 1e-6) [best, score] = [c, sc2];
-    }
-    taken.push(best);
-    return best;
-  };
+  const free = (id) => freePairDirection(dirs.get(id));
   for (const a of all) {
     const p = P.get(a.id);
     const r = Math.max(13, halfW(a) + 5);
     for (let k = 0; k < (a.nevezni ?? 0); k++) {
-      const t = free(a.id);
-      const u = [Math.cos(t), Math.sin(t)];
-      const rr = Math.abs(u[0]) > 0.5 ? r : 13;
-      const c = [p[0] + u[0] * rr, p[1] + u[1] * rr];
-      body += `<circle class="pt" cx="${f(c[0] - u[1] * 3.4)}" cy="${f(c[1] + u[0] * 3.4)}" r="1.9"/>`;
-      body += `<circle class="pt" cx="${f(c[0] + u[1] * 3.4)}" cy="${f(c[1] - u[0] * 3.4)}" r="1.9"/>`;
+      for (const d of pairDots(p, free(a.id), r)) body += `<circle class="pt" cx="${f(d[0])}" cy="${f(d[1])}" r="1.9"/>`;
     }
     if (shown(a)) body += label([p[0], p[1] + 1], shown(a), a.istaknut ? "lbl acc-t" : "lbl");
     if (a.naboj) body += label([p[0] + halfW(a) + 3, p[1] - 10], a.naboj, "lbl small", "start");

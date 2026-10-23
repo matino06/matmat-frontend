@@ -4,6 +4,7 @@
 import { jednadzba } from "./jednadzba.js";
 import { mol_racun } from "./mol_racun.js";
 import { periodni_sustav } from "./periodni_sustav.js";
+import { molekula } from "./molekula.js";
 import { ph_skala } from "./ph_skala.js";
 import { pokus } from "./pokus.js";
 
@@ -11,6 +12,7 @@ export const KEMIJA = [
   jednadzba,
   mol_racun,
   periodni_sustav,
+  molekula,
   ph_skala,
   pokus,
 ];
