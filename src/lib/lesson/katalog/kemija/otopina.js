@@ -85,6 +85,8 @@ export function oznaka(k, s, kratko = false) {
   const X = s?.tvar ? formulaZapis(s.tvar) : null;
   let z = v.zagrada ?? null;
   if (!z && v.tvar && !kratko && !r.ind) z = X ?? (r.baza === "m" ? "tvari" : null);
+  // otopina hidrata (CuSO₄·5H₂O) je otopina bezvodne soli: c(CuSO₄), a masa i množina ostaju hidrata
+  if (z && z === X && r.baza === "c" && /·/.test(z)) z = z.split("·")[0];
   return `${v.sim}${IND[r.ind]}${z ? `(${z})` : ""}`;
 }
 const DIO = {

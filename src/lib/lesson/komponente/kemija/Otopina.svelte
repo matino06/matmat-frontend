@@ -353,7 +353,7 @@
       {/if}
     </figcaption>
     {/if}
-    <p class="ot-faza" aria-live="polite">{faze[faza]}{#if boja && faza === ZADNJA && (istrazi || rijeseno) && boja.naziv}&#32;Otopina je {boja.naziv}.{/if}</p>
+    <p class="ot-faza" aria-live="polite">{faze[faza]}{#if boja && faza === ZADNJA && (istrazi || rijeseno) && boja.naziv}{" "}Otopina je {boja.naziv}.{/if}</p>
   </figure>
 {/snippet}
 
@@ -397,7 +397,7 @@
         </li>
       {/each}
       {#if pokaziM}<li><span class="ot-nr"><Formula f={`M(${F}) = ${formatNumber(Math.round(M * 100) / 100)} g/mol`} /></span></li>{/if}
-      {#if s.ioni}<li class="ot-dim">ioni: {#each s.ioni as x, j (j)}{j ? " + " : ""}<span class="ot-nr">{(x.broj ?? 1) > 1 ? `${x.broj} ` : ""}<Formula f={x.ion} /></span>{/each}</li>{/if}
+      {#if s.ioni && (istrazi || rijeseno)}<li class="ot-dim">ioni: {#each s.ioni as x, j (j)}{j ? " + " : ""}<span class="ot-nr">{(x.broj ?? 1) > 1 ? `${x.broj} ` : ""}<Formula f={x.ion} /></span>{/each}</li>{/if}
     </ul>
 
     {#if klizaci.length}
