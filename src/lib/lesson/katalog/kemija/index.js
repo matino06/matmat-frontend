@@ -17,6 +17,7 @@ import { brzina_reakcije } from "./brzina_reakcije.js";
 import { elektronska_konfiguracija } from "./elektronska_konfiguracija.js";
 import { otopina } from "./otopina.js";
 import { topljivost } from "./topljivost.js";
+import { kromatografija } from "./kromatografija.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -35,4 +36,5 @@ export const KEMIJA = [
   elektronska_konfiguracija,
   otopina,
   topljivost,
+  kromatografija,
 ];

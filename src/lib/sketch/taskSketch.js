@@ -1299,37 +1299,54 @@ function particles(s, text) {
 
 // Kromatogram: traka (kreda ili papir) u čaši s otapalom, startna linija, fronta otapala i mrlje na
 // udaljenostima od startne linije; kote prikazuju te udaljenosti.
-const SPOT = { "žuta": "k2 light", "narančasta": "k2", zelena: "k3", plava: "k1", crvena: "k4", "ljubičasta": "k1", siva: "k5" };
+export const SPOT = { "žuta": "k2 light", "narančasta": "k2", zelena: "k3", plava: "k1", crvena: "k4", "ljubičasta": "k1", siva: "k5" };
+export const SKETCH_DEFS = defs;
 
-function chromatogram(s, text) {
+// Raspored kromatograma, zajednički skici i widgetu „kromatografija“ (lekcije). Neobavezno (samo widget):
+// napredak 0–1 (koliko se otapalo već podiglo), staze (broj uzoraka na širokom papiru), kreda (oblik trake).
+export function chromatogramLayout(s, o = {}) {
+  const [ys, yf] = [202, 62];
+  const p = o.napredak ?? 1;
+  const Y = (d) => ys - ((d * p) / s.fronta) * (ys - yf);
+  const chalk = o.kreda ?? s.podloga !== "papir";
+  const n = o.staze ?? 1;
+  const pitch = n > 3 ? 30 : n > 2 ? 38 : 44;
+  const [sx0, sx1] = n > 1 ? [160 - (pitch * n) / 2 - 4, 160 + (pitch * n) / 2 + 4] : chalk ? [146, 174] : [142, 178];
+  const cx = Array.from({ length: n }, (_, i) => 160 + (i - (n - 1) / 2) * pitch);
+  return { ys, yf, Y, yFronta: ys - p * (ys - yf), chalk, sx0, sx1, cx, rx: chalk || n > 1 ? 11 : 13 };
+}
+
+// Tijelo SVG-a kromatograma. Bez opcija crta točno skicu; widget dodaje: napredak, staze [{naziv, mrlje}], kote,
+// razina (y površine otapala), mokro (navlaženi dio trake), vidljivost (0–1, mrlje otopljene u čaši), tinta
+// (startna linija kemijskom olovkom: tinta se razdvaja s otapalom), fronta: false (otapalo još nije krenulo).
+export function chromatogramBody(s, o = {}) {
   const spots = s.mrlje ?? [];
-  const checks = [];
-  if (!positive(s.fronta)) return { checks: [fail("fronta otapala mora biti pozitivan broj")] };
-  if (spots.length < 1 || spots.length > 5) checks.push(fail("kromatogram treba 1 do 5 mrlja"));
-  for (const m of spots) {
-    const ok = typeof m.udaljenost === "number" && m.udaljenost > 0 && m.udaljenost < s.fronta;
-    checks.push({ ok, text: `mrlja ${m.oznaka ?? ""} na ${num(m.udaljenost)} ${ok ? "je" : "NIJE"} između startne linije i fronte (${num(s.fronta)})` });
-  }
-  if (s.kote !== false) checks.push(...numbersInText([s.fronta, ...spots.map((m) => m.udaljenost)].map(String), text));
-  if (checks.some((x) => !x.ok)) return { checks };
+  const staze = o.staze ?? null;
+  const L = chromatogramLayout(s, { ...o, staze: staze ? staze.length : 1 });
+  const { ys, Y, chalk, sx0, sx1, cx, rx } = L;
+  const yf = L.yFronta;
+  const kote = o.kote ?? s.kote !== false;
   const unit = s.jedinica ? ` ${s.jedinica}` : "";
   const dec = Math.max(...[s.fronta, ...spots.map((m) => m.udaljenost)].map((v) => (String(v).split(".")[1] ?? "").length));
   const fmt = (v) => v.toFixed(dec).replace(".", ",");
-  const [ys, yf] = [202, 62];
-  const Y = (d) => ys - (d / s.fronta) * (ys - yf);
-  const chalk = s.podloga !== "papir";
-  const [sx0, sx1] = chalk ? [146, 174] : [142, 178];
-  let body = `<rect class="liquid" x="92" y="218" width="136" height="24"/>`;
+  const razina = o.razina ?? 218;
+  let body = `<rect class="liquid" x="92" y="${f(razina)}" width="136" height="${f(242 - razina)}"/>`;
   body += `<path class="ln" d="M90,40 V244 H230 V40"/>`;
   body += `<rect class="strip" x="${sx0}" y="20" width="${sx1 - sx0}" height="220" rx="${chalk ? 10 : 1}"/>`;
-  body += line([sx0 - 6, ys], [sx1 + 6, ys], "ln thin") + label([84, ys], "startna linija", "lbl small dim-t", "end");
-  body += line([sx0 - 6, yf], [sx1 + 6, yf], "ln dash acc") + label([84, yf], "fronta otapala", "lbl small acc-t", "end");
-  spots.forEach((m) => {
+  if (o.mokro && o.fronta !== false) body += `<rect class="wet" x="${sx0}" y="${f(yf)}" width="${sx1 - sx0}" height="${f(240 - yf)}" rx="${chalk ? 10 : 1}"/>`;
+  // nazivi staza iznad trake; dugi nazivi naizmjence i u retku na vrhu trake, da se ne preklapaju
+  const gusto = staze && staze.some((t, i) => i && (String(t.naziv ?? "").length + String(staze[i - 1].naziv ?? "").length) * 3.6 > cx[1] - cx[0] - 4);
+  if (staze) staze.forEach((t, i) => t.naziv && (body += label([cx[i], gusto && i % 2 ? 31 : 11], t.naziv, "lbl small", "middle")));
+  body += line([sx0 - 6, ys], [sx1 + 6, ys], o.tinta ? "ln thin ink" : "ln thin") + label([84, ys], "startna linija", "lbl small dim-t", "end");
+  if (o.fronta !== false) body += line([sx0 - 6, yf], [sx1 + 6, yf], "ln dash acc") + label([84, yf], "fronta otapala", "lbl small acc-t", "end");
+  if (o.tinta && o.fronta !== false && yf < ys - 4) body += `<rect class="spot k1 ink-band" x="${sx0 + 2}" y="${f(Y(0.55 * s.fronta) - 4)}" width="${sx1 - sx0 - 4}" height="8" rx="4"/>`;
+  const op = o.vidljivost != null && o.vidljivost < 1 ? ` opacity="${f(Math.max(0, o.vidljivost) * 100) / 100}"` : "";
+  (staze ?? [{ mrlje: spots }]).forEach((t, i) => (t.mrlje ?? []).forEach((m) => {
     const y = Y(m.udaljenost);
-    body += `<ellipse class="spot ${SPOT[m.boja] ?? "k5"}" cx="160" cy="${f(y)}" rx="${chalk ? 11 : 13}" ry="6"/>`;
-    if (m.oznaka) body += label([136, y], m.oznaka, "lbl small", "end");
-  });
-  if (s.kote !== false) {
+    body += `<ellipse class="spot ${SPOT[m.boja] ?? "k5"}" cx="${f(cx[i])}" cy="${f(y)}" rx="${rx}" ry="6"${op}/>`;
+    if (m.oznaka && !staze) body += label([136, y], m.oznaka, "lbl small", "end");
+  }));
+  if (kote && !staze) {
     const marks = [...spots.map((m) => ({ d: m.udaljenost, t: `d${SUB[1]}` })), { d: s.fronta, t: `d${SUB[2]}` }];
     marks.forEach((m, i) => {
       const x = 244 + 15 * i;
@@ -1347,7 +1364,21 @@ function chromatogram(s, text) {
       body += label([lx, ly[i]], `${m.t} = ${fmt(m.d)}${unit}`, i === marks.length - 1 ? "lbl small acc-t" : "lbl small c2-t", "start");
     });
   }
-  return { svg: svg(body, 252), checks };
+  return body;
+}
+
+function chromatogram(s, text) {
+  const spots = s.mrlje ?? [];
+  const checks = [];
+  if (!positive(s.fronta)) return { checks: [fail("fronta otapala mora biti pozitivan broj")] };
+  if (spots.length < 1 || spots.length > 5) checks.push(fail("kromatogram treba 1 do 5 mrlja"));
+  for (const m of spots) {
+    const ok = typeof m.udaljenost === "number" && m.udaljenost > 0 && m.udaljenost < s.fronta;
+    checks.push({ ok, text: `mrlja ${m.oznaka ?? ""} na ${num(m.udaljenost)} ${ok ? "je" : "NIJE"} između startne linije i fronte (${num(s.fronta)})` });
+  }
+  if (s.kote !== false) checks.push(...numbersInText([s.fronta, ...spots.map((m) => m.udaljenost)].map(String), text));
+  if (checks.some((x) => !x.ok)) return { checks };
+  return { svg: svg(chromatogramBody(s), 252), checks };
 }
 
 // Titracijska krivulja: pH otopine kiseline dok joj se dodaje lužina, izračunan iz koncentracija (jaka kiselina,

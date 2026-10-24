@@ -16,4 +16,5 @@ export const UCITAJ_KEMIJA = {
   elektronska_konfiguracija: () => import("./ElektronskaKonfiguracija.svelte"),
   otopina: () => import("./Otopina.svelte"),
   topljivost: () => import("./Topljivost.svelte"),
+  kromatografija: () => import("./Kromatografija.svelte"),
 };
