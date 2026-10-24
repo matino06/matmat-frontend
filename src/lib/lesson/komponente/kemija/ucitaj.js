@@ -12,4 +12,5 @@ export const UCITAJ_KEMIJA = {
   redoks: () => import("./Redoks.svelte"),
   energijski_dijagram: () => import("./EnergijskiDijagram.svelte"),
   kalorimetar: () => import("./Kalorimetar.svelte"),
+  brzina_reakcije: () => import("./BrzinaReakcije.svelte"),
 };
