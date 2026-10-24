@@ -1164,7 +1164,8 @@ function shells(s, text) {
     const want = p.protoni - chargeOf(p.simbol);
     checks.push({ ok: total === want, text: `${p.simbol}: ${total} elektrona ${total === want ? "=" : "≠"} ${p.protoni} protona − naboj (${want})` });
     e.forEach((n, i) => {
-      const max = Math.min(2 * (i + 1) ** 2, i === e.length - 1 ? 8 : Infinity, i === 0 ? 2 : Infinity);
+      // prijelazni: true (kation prijelaznog metala, npr. Fe³⁺ 2, 8, 13): vanjska ljuska smije imati više od 8
+      const max = Math.min(2 * (i + 1) ** 2, i === e.length - 1 && !p.prijelazni ? 8 : Infinity, i === 0 ? 2 : Infinity);
       if (n > max) checks.push(fail(`${p.simbol}: u ${i + 1}. ljusci ${n} elektrona (najviše ${max})`));
     });
   }

@@ -13,4 +13,5 @@ export const UCITAJ_KEMIJA = {
   energijski_dijagram: () => import("./EnergijskiDijagram.svelte"),
   kalorimetar: () => import("./Kalorimetar.svelte"),
   brzina_reakcije: () => import("./BrzinaReakcije.svelte"),
+  elektronska_konfiguracija: () => import("./ElektronskaKonfiguracija.svelte"),
 };
