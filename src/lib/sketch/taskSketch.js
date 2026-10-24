@@ -639,14 +639,19 @@ function energyDiagram(s, text) {
   checks.push(...numbersInText(allLabels.filter(Boolean).flatMap(lines), text));
   if (checks.some((x) => !x.ok)) return { checks };
 
-  const far = steps.filter((t) => t.vrh == null && Math.abs(t.do - t.od) > 1);
+  // desno: true crta i prijelaz između susjednih razina desno od dijagrama (ΔH uz energijski profil, da ne
+  // leži na strelici energije aktivacije); raspon: [od, do] drži mjerilo osi stalnim dok se razine pomiču
+  const far = steps.filter((t) => t.vrh == null && (Math.abs(t.do - t.od) > 1 || t.desno === true));
   const left = 46;
-  const right = far.length ? 124 : 16;
+  const onlySide = far.length > 0 && far.every((t) => t.desno === true);
+  const sideW = onlySide ? Math.max(0, ...far.flatMap((t) => lines(t.oznaka).map((l) => [...l].length * 6.6))) : 0;
+  const right = far.length ? (onlySide ? Math.min(124, 34 + 30 * (far.length - 1) + sideW) : 124) : 16;
   const top = 46;
   const bottom = 232;
   const vals = [...levels.map((l) => l.vrijednost), ...peaks.map((p) => p.vrijednost)];
-  let lo = Math.min(...vals);
-  let hi = Math.max(...vals);
+  const span = Array.isArray(s.raspon) ? s.raspon.filter((v) => typeof v === "number" && isFinite(v)) : [];
+  let lo = Math.min(...vals, ...span);
+  let hi = Math.max(...vals, ...span);
   if (hi - lo < 1e-9) [lo, hi] = [lo - 1, hi + 1];
   const Y = (v) => bottom - ((v - lo) / (hi - lo)) * (bottom - top);
   const colW = (W - left - right) / levels.length;
@@ -697,7 +702,7 @@ function energyDiagram(s, text) {
   const shafts = steps
     .filter((t) => t.vrh == null && isLevel(t.do))
     .map((t) => {
-      const x = Math.abs(t.do - t.od) === 1 ? left + colW * Math.max(t.od, t.do) : W - right + 22 + 30 * far.indexOf(t);
+      const x = !far.includes(t) ? left + colW * Math.max(t.od, t.do) : W - right + 22 + 30 * far.indexOf(t);
       return [x, Y(levels[t.od].vrijednost), Y(levels[t.do].vrijednost)];
     });
   const crosses = (x0, x1, y0, y1) =>
@@ -734,7 +739,7 @@ function energyDiagram(s, text) {
       return;
     }
     const y1 = Y(levels[t.do].vrijednost);
-    if (Math.abs(t.do - t.od) === 1) {
+    if (!far.includes(t)) {
       const bx = left + colW * Math.max(t.od, t.do);
       body += line([ends(t.od)[t.od < t.do ? 1 : 0], y0], [bx, y0], "ln thin dash");
       body += line([bx, y1], [ends(t.do)[t.od < t.do ? 0 : 1], y1], "ln thin dash");

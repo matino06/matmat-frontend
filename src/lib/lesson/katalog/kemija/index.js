@@ -11,6 +11,7 @@ import { pokus } from "./pokus.js";
 import { ravnoteza } from "./ravnoteza.js";
 import { elektrokemija } from "./elektrokemija.js";
 import { redoks } from "./redoks.js";
+import { energijski_dijagram } from "./energijski_dijagram.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -23,4 +24,5 @@ export const KEMIJA = [
   ravnoteza,
   elektrokemija,
   redoks,
+  energijski_dijagram,
 ];
