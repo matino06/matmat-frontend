@@ -110,6 +110,22 @@
 
   // brojevi iznad atoma u ulogama i polureakcijama: po želji autora, ili nakon provjere / „Pokaži odgovor“
   let vidiOks = $derived(istrazi || nacin === "oks_broj" || spec.prikazi_oks === true || !!ishod?.tocno || pokazi);
+  // boje oksidacije/redukcije odaju odgovor, pa ih u „Tvoj red“ nema prije provjere
+  let vidiBoje = $derived(istrazi || !!ishod?.tocno || pokazi);
+  // polureakcija u istraživanju: koeficijent i „+“/strelica idu uz tvar iza sebe, da se redak lomi samo između članova
+  function clanovi(z) {
+    const out = [];
+    let buf = "";
+    for (const t of String(z).split(" ").filter(Boolean)) {
+      if (["+", "→", "⇌"].includes(t) || /^\d+$/.test(t)) buf += t + " ";
+      else {
+        out.push(buf + t);
+        buf = "";
+      }
+    }
+    if (buf.trim()) out.push(buf.trim());
+    return out;
+  }
   const krivo = (k) => !!ishod && !ishod.tocno && (ishod.krivi ?? []).includes(k);
   const W = Math.max(44, Math.round([...iznad].length * 7.4 + 18));
 </script>
@@ -155,7 +171,7 @@
               <span class="rd-sim"><Formula f={t.tekst} /></span>
             </button>
           {:else}
-            <span class="rd-at" class:oks={vidiOks && pr.oks} class:red={vidiOks && pr.red}>
+            <span class="rd-at" class:oks={vidiBoje && pr.oks} class:red={vidiBoje && pr.red}>
               {#if gore && trazeno.has(kl)}
                 <input
                   class="inp rd-inp"
@@ -264,8 +280,8 @@
     </p>
     {#if P && !P.greska}
       <div class="rd-polu-pregled">
-        <p><span class="rd-lbl">oksidacija</span> <Md text={zapisJednadzbe({ reaktanti: P.oksidacija.reaktanti, produkti: P.oksidacija.produkti }, P.oksidacija.koef)} inline />{#if P.puta.oksidacija > 1} <span class="rd-puta">/ ·{P.puta.oksidacija}</span>{/if}</p>
-        <p><span class="rd-lbl">redukcija</span> <Md text={zapisJednadzbe({ reaktanti: P.redukcija.reaktanti, produkti: P.redukcija.produkti }, P.redukcija.koef)} inline />{#if P.puta.redukcija > 1} <span class="rd-puta">/ ·{P.puta.redukcija}</span>{/if}</p>
+        <p><span class="rd-lbl">oksidacija</span> <span class="rd-polu-j">{#each clanovi(zapisJednadzbe({ reaktanti: P.oksidacija.reaktanti, produkti: P.oksidacija.produkti }, P.oksidacija.koef)) as c, n (n)}{#if n} {/if}<Formula f={c} />{/each}</span>{#if P.puta.oksidacija > 1} <span class="rd-puta">/ ·{P.puta.oksidacija}</span>{/if}</p>
+        <p><span class="rd-lbl">redukcija</span> <span class="rd-polu-j">{#each clanovi(zapisJednadzbe({ reaktanti: P.redukcija.reaktanti, produkti: P.redukcija.produkti }, P.redukcija.koef)) as c, n (n)}{#if n} {/if}<Formula f={c} />{/each}</span>{#if P.puta.redukcija > 1} <span class="rd-puta">/ ·{P.puta.redukcija}</span>{/if}</p>
       </div>
     {/if}
   {/if}
@@ -391,6 +407,9 @@
   }
   .rd-tx {
     padding-bottom: 2px;
+  }
+  .rd-eq:not(.gore) .rd-at {
+    padding: 0 0 2px;
   }
   /* atom: broj gore, simbol dolje */
   .rd-at {
