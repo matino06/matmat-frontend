@@ -10,6 +10,7 @@ import { titracija } from "./titracija.js";
 import { pokus } from "./pokus.js";
 import { ravnoteza } from "./ravnoteza.js";
 import { elektrokemija } from "./elektrokemija.js";
+import { redoks } from "./redoks.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -21,4 +22,5 @@ export const KEMIJA = [
   pokus,
   ravnoteza,
   elektrokemija,
+  redoks,
 ];

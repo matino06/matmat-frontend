@@ -9,4 +9,5 @@ export const UCITAJ_KEMIJA = {
   pokus: () => import("./Pokus.svelte"),
   ravnoteza: () => import("./Ravnoteza.svelte"),
   elektrokemija: () => import("./Elektrokemija.svelte"),
+  redoks: () => import("./Redoks.svelte"),
 };
