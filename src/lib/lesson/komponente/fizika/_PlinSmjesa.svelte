@@ -255,8 +255,15 @@
     return out;
   });
   const ZAGLAVLJE = $derived({ m: "m / g", n: "n / mol", x: "x", p: `p / ${jed.p}` });
+  // izračunate vrijednosti u tablici: tri značajne znamenke s nulama na kraju (0,150 mol, 6,30 g), kao u zadatku
+  function znacajne(v) {
+    if (v === 0) return "0";
+    const e = Math.floor(Math.log10(Math.abs(Number(v.toPrecision(3)))));
+    if (e < -3 || e >= 6) return formatSci(v);
+    return v.toFixed(Math.max(0, 2 - e)).replace("-", "−").replace(".", ",");
+  }
   const broj = (q, v) =>
-    !isNum(v) ? "—" : q === "x" ? formatNumber(Number(v.toPrecision(3))) : formatSci(v);
+    !isNum(v) ? "—" : q === "x" ? formatNumber(Number(v.toPrecision(3))) : znacajne(v);
   // ćelija: {t: tekst, k: "zadano" | "pitanje" | "izracunato" | "odgovor" | "prazno"}
   function celija(i, q) {
     const g = i == null ? null : st.plinovi[i];
@@ -433,7 +440,7 @@
 
 {#if pokaziPravila && (uvjeti.length || mase.length)}
   <p class="ps-konst">
-    {#if uvjeti.length}Iz tablica: <span class="ps-nw"><i>R</i> = <Formula f={iznosR} /></span>{#if isNum(sm.t)}, <span class="ps-nw"><i>T</i> = <i>t</i> + 273 K</span>{/if}{#if mase.length}. {/if}{/if}{#if mase.length}Iz Ar s lista:{#each mase as g, k (g.formula)}{k ? "," : ""} <span class="ps-nw"><i>M</i>(<Formula f={g.formula} />) = {formatNumber(Math.round(g.M * 100) / 100)} g/mol</span>{/each}{/if}
+    {#if uvjeti.length}Iz tablica: <span class="ps-nw"><i>R</i> = <Formula f={iznosR} /></span>{#if isNum(sm.t)}, <span class="ps-nw"><i>T</i> = <i>t</i> + 273 K</span>{/if}{#if mase.length}. {/if}{/if}{#if mase.length}Iz Ar s lista:{#each mase as g, k (g.formula)}{k ? "," : ""} <span class="ps-nw"><i>M</i>(<Formula f={g.formula} />) = {g.M.toFixed(2).replace(".", ",")} g/mol</span>{/each}{/if}
   </p>
 {/if}
 
