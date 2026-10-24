@@ -1000,7 +1000,7 @@ kPa umjesto Pa, L umjesto m³, mmol/mol, mg/g, mL/dm³ kod c, potencija N_A) ra�
     const zad = zadaniOf(s)
       .map(
         (z) =>
-          `${z.velicina} = ${formatNumber(z.vrijednost)}${z.jedinica ? ` ${z.jedinica}` : ""}`,
+          `${z.velicina} = ${z.zapis ?? formatNumber(z.vrijednost)}${z.jedinica ? ` ${z.jedinica}` : ""}`,
       )
       .join(", ");
     const kor = lanac(s).koraci.map((k) =>
