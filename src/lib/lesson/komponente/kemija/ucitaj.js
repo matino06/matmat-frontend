@@ -11,4 +11,5 @@ export const UCITAJ_KEMIJA = {
   elektrokemija: () => import("./Elektrokemija.svelte"),
   redoks: () => import("./Redoks.svelte"),
   energijski_dijagram: () => import("./EnergijskiDijagram.svelte"),
+  kalorimetar: () => import("./Kalorimetar.svelte"),
 };

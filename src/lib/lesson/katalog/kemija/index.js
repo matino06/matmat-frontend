@@ -12,6 +12,7 @@ import { ravnoteza } from "./ravnoteza.js";
 import { elektrokemija } from "./elektrokemija.js";
 import { redoks } from "./redoks.js";
 import { energijski_dijagram } from "./energijski_dijagram.js";
+import { kalorimetar } from "./kalorimetar.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -25,4 +26,5 @@ export const KEMIJA = [
   elektrokemija,
   redoks,
   energijski_dijagram,
+  kalorimetar,
 ];
