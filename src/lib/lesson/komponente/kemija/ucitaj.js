@@ -14,4 +14,5 @@ export const UCITAJ_KEMIJA = {
   kalorimetar: () => import("./Kalorimetar.svelte"),
   brzina_reakcije: () => import("./BrzinaReakcije.svelte"),
   elektronska_konfiguracija: () => import("./ElektronskaKonfiguracija.svelte"),
+  otopina: () => import("./Otopina.svelte"),
 };

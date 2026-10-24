@@ -15,6 +15,7 @@ import { energijski_dijagram } from "./energijski_dijagram.js";
 import { kalorimetar } from "./kalorimetar.js";
 import { brzina_reakcije } from "./brzina_reakcije.js";
 import { elektronska_konfiguracija } from "./elektronska_konfiguracija.js";
+import { otopina } from "./otopina.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -31,4 +32,5 @@ export const KEMIJA = [
   kalorimetar,
   brzina_reakcije,
   elektronska_konfiguracija,
+  otopina,
 ];
