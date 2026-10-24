@@ -17,4 +17,5 @@ export const UCITAJ_KEMIJA = {
   otopina: () => import("./Otopina.svelte"),
   topljivost: () => import("./Topljivost.svelte"),
   kromatografija: () => import("./Kromatografija.svelte"),
+  fazni_dijagram: () => import("./FazniDijagram.svelte"),
 };

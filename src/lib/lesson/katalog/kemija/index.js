@@ -18,6 +18,7 @@ import { elektronska_konfiguracija } from "./elektronska_konfiguracija.js";
 import { otopina } from "./otopina.js";
 import { topljivost } from "./topljivost.js";
 import { kromatografija } from "./kromatografija.js";
+import { fazni_dijagram } from "./fazni_dijagram.js";
 
 export const KEMIJA = [
   jednadzba,
@@ -37,4 +38,5 @@ export const KEMIJA = [
   otopina,
   topljivost,
   kromatografija,
+  fazni_dijagram,
 ];
