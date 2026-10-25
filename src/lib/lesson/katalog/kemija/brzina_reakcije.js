@@ -1087,6 +1087,16 @@ function validateGraf(s, need, list, { trebaInterval }) {
           T.vrijednosti[f].every((v) => isNum(v) && v >= 0),
         `tablica.vrijednosti[„${f}“] mora imati ${T.t.length} nenegativnih brojeva (kao t)`,
       );
+      // reaktant se troši, produkt nastaje: inače bi brzina izašla s krivim predznakom
+      const nu = R.vrste.find((v) => v.f === f)?.nu ?? 0;
+      const niz = T.vrijednosti[f];
+      if (nu && Array.isArray(niz) && niz.every(isNum))
+        need(
+          !niz.some((x, i) => i && (nu < 0 ? x > niz[i - 1] : x < niz[i - 1])),
+          nu < 0
+            ? `tablica.vrijednosti[„${f}“]: ${f} je reaktant i troši se, pa vrijednosti s vremenom ne smiju rasti`
+            : `tablica.vrijednosti[„${f}“]: ${f} je produkt i nastaje, pa vrijednosti s vremenom ne smiju padati`,
+        );
     }
     if (T.zapisi != null) {
       if (
