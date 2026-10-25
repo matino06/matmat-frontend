@@ -81,7 +81,11 @@ pogledati u pregledniku (`/lab/lekcija?z=katalog&tip=<tip>`; stranica čita `lab
 
 ## Boje u ravnoteži (za lekcije)
 
-Bez zadanih koncentracija `ravnoteza` boju određuje omjerom obojenih tvari: dodatak ili uklanjanje obojene tvari
-pomiče boju prema dodanoj (od uklonjene), ostale promjene prate smjer pomaka. Kad su obje strane obojene, omjer
-može ići suprotno od školskog opisa: kod Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺ dodatak Fe³⁺ smanji omjer [Fe(SCN)]²⁺ : Fe³⁺.
-Za školski odgovor „crvena postaje jača“ označi Fe³⁺ kao `bezbojna` (blijeda otopina), kao u udžbeniku.
+Kad su obje strane obojene, `ravnoteza` daje školski odgovor sam: boja prati smjer pomaka. Pomak udesno → boja
+obojenog produkta postaje jača, ulijevo → slabi (opcije „crvena boja ([Fe(SCN)]²⁺) postaje jača / slabi“). Tako je i
+kad se doda ili ukloni obojeni reaktant: kod Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺ dodatak Fe³⁺ ili SCN⁻ → crvena postaje jača,
+uklanjanje Fe³⁺ → crvena slabi; zagrijavanje, hlađenje, tlak i razrjeđivanje isto prate pomak. Obje boje upiši kako
+izgledaju (Fe³⁺ `zuckasta`), bez trikova. Pitanje o boji validate odbija kad nije jednoznačno: dodaje se ili uklanja sam
+obojeni produkt (dodatak [Fe(SCN)]²⁺ pomiče ravnotežu ulijevo, a crvenog je ipak više nego prije), ili tlak /
+razrjeđivanje mijenja količinu obojenog produkta suprotno od pomaka; tada pitaj smjer ili koncentraciju. Crtež u
+widgetu ide u istom smjeru kao odgovor.

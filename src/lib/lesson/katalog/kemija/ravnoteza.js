@@ -203,6 +203,9 @@ export function opisPromjene(k) {
   if (p.vrsta === "ukloni") return `Iz ravnotežne smjese ukloni se dio ⟦${p.formula}⟧.`;
   return OPIS_PROMJENE[p.vrsta];
 }
+// „Dodatak Fe³⁺“, „Zagrijavanje“ … (za poruke)
+const IME_PROMJENE = { zagrijavanje: "Zagrijavanje", hladenje: "Hlađenje", povecanje_tlaka: "Povećanje tlaka", smanjenje_tlaka: "Smanjenje tlaka", razrjedivanje: "Razrjeđivanje", katalizator: "Katalizator", inertni_plin: "Inertni plin" };
+const imePromjene = (p) => (p?.vrsta === "dodaj" ? `Dodatak ${p.formula}` : p?.vrsta === "ukloni" ? `Uklanjanje ${p.formula}` : (IME_PROMJENE[p?.vrsta] ?? "Promjena"));
 // ⟦formula⟧ → formula (za markdown poruke); komponenta crta ⟦…⟧ kroz Formula.svelte
 export const bezOznaka = (t) => String(t ?? "").replace(/⟦([^⟧]*)⟧/g, "$1");
 export const dijelovi = (t) => String(t ?? "").split(/⟦([^⟧]*)⟧/).map((z, i) => ({ formula: i % 2 === 1, z })).filter((d) => d.z);
@@ -326,7 +329,8 @@ export function pocetnoStanje(s) {
   // eksponent velik
   const def = jeKp(s) ? 1 : 0.5;
   const c = Object.fromEntries(ukljucene(s).map((x) => [x.formula, zad[x.formula]?.v ?? def * x.koef]));
-  return { c, K: kvocijent(s, c), V: 1, T: 0, zamisljeno: !s.ravnotezne };
+  // cb: sastav za boju smjese (vidi bojaSmjese); na početku jednak c
+  return { c, cb: { ...c }, K: kvocijent(s, c), V: 1, T: 0, zamisljeno: !s.ravnotezne };
 }
 const FAKTOR_T = 3; // koliko se puta K promijeni po koraku zagrijavanja (zamišljeno, samo za crtež)
 
@@ -334,12 +338,23 @@ const FAKTOR_T = 3; // koliko se puta K promijeni po koraku zagrijavanja (zamiš
 export function poremeti(s, st, k) {
   const p = procitajPromjenu(k);
   const c = { ...st.c };
+  const cb = { ...(st.cb ?? st.c) };
   let { K, V, T } = st;
   const v = ukljucene(s);
   const sr = v.reduce((a, x) => a + (c[x.formula] ?? 0), 0) / Math.max(1, v.length);
   if (!p) return { ...st };
-  if (p.vrsta === "dodaj" && p.formula in c) c[p.formula] += Math.max(0.5 * c[p.formula], 0.25 * sr);
-  if (p.vrsta === "ukloni" && p.formula in c) c[p.formula] *= 0.5;
+  // dodana ili uklonjena obojena vrsta reaktanata ne ulazi u boju smjese (cb): boju kao u školi daje pomak, tj. obojeni
+  // produkt koji nastaje ili se troši (dodatak Fe³⁺ → crvena [Fe(SCN)]²⁺ jača)
+  const uBoju = (f) => !(vrstaBoje(s) === "dvije" && obojena(s).some((x) => x.formula === f && x.strana === "L"));
+  if (p.vrsta === "dodaj" && p.formula in c) {
+    const d = Math.max(0.5 * c[p.formula], 0.25 * sr);
+    c[p.formula] += d;
+    if (uBoju(p.formula)) cb[p.formula] += d;
+  }
+  if (p.vrsta === "ukloni" && p.formula in c) {
+    cb[p.formula] -= uBoju(p.formula) ? 0.5 * c[p.formula] : 0;
+    c[p.formula] *= 0.5;
+  }
   if (p.vrsta === "zagrijavanje" || p.vrsta === "hladenje") {
     const gore = p.vrsta === "zagrijavanje";
     T += gore ? 1 : -1;
@@ -348,13 +363,21 @@ export function poremeti(s, st, k) {
   if (p.vrsta === "povecanje_tlaka" || p.vrsta === "smanjenje_tlaka") {
     const f = p.vrsta === "povecanje_tlaka" ? 2 : 0.5;
     V /= f;
-    for (const x of v) if (jePlin(s, x)) c[x.formula] *= f;
+    for (const x of v)
+      if (jePlin(s, x)) {
+        c[x.formula] *= f;
+        cb[x.formula] *= f;
+      }
   }
   if (p.vrsta === "razrjedivanje") {
     V *= 2;
-    for (const x of v) if (x.stanje === "aq") c[x.formula] /= 2;
+    for (const x of v)
+      if (x.stanje === "aq") {
+        c[x.formula] /= 2;
+        cb[x.formula] /= 2;
+      }
   }
-  return { c, K, V, T, zamisljeno: st.zamisljeno };
+  return { c, cb, K, V, T, zamisljeno: st.zamisljeno };
 }
 export const mozeT = (st, k) => (k === "zagrijavanje" ? st.T < NAJVISE_KLIKOVA_T : k === "hladenje" ? st.T > -NAJVISE_KLIKOVA_T : true);
 
@@ -366,7 +389,7 @@ export function simuliraj(s, st, k) {
   const rel = Math.log(Q / por.K);
   const smjer = Math.abs(rel) < 1e-9 ? "nema" : rel < 0 ? "udesno" : "ulijevo";
   const x = Math.abs(rel) < 1e-9 ? 0 : xi;
-  return { prije: st, poremeceno: por, poslije: { ...por, c: pomakni(s, por.c, x) }, xi: x, Q, smjer };
+  return { prije: st, poremeceno: por, poslije: { ...por, c: pomakni(s, por.c, x), cb: pomakni(s, por.cb, x) }, xi: x, Q, smjer };
 }
 
 // ── boje ──
@@ -389,13 +412,15 @@ export function vrstaBoje(s) {
 // Boja smjese za crtež: hex i jakost (0–1). Kad su obojene vrste s obje strane, boja je mješavina boje lijeve i
 // desne strane po udjelu; promjena udjela prema početnoj smjesi crta se dvostruko (u epruveti je promjena boje jasna,
 // a linearna mješavina dviju sličnih boja jedva se vidi). Jakost raste s ukupnom količinom obojenih čestica.
+// cb, cb0: sastav za ton boje (stanje.cb): kao c, ali bez dodane ili uklonjene obojene vrste reaktanata, pa ton prati
+// pomak (isto kao promjenaBoje i odgovor).
 const rgbOd = (hex) => [0, 1, 2].map((k) => parseInt(hex.slice(1 + 2 * k, 3 + 2 * k), 16));
 const hexOd = (rgb) => `#${rgb.map((x) => Math.round(Math.max(0, Math.min(255, x))).toString(16).padStart(2, "0")).join("")}`;
 function mjesavina(par) {
   const w = par.reduce((a, p) => a + p.w, 0) || 1;
   return [0, 1, 2].map((k) => par.reduce((a, p) => a + rgbOd(p.hex)[k] * p.w, 0) / w);
 }
-export function bojaSmjese(s, c, c0 = c) {
+export function bojaSmjese(s, c, c0 = c, cb = c, cb0 = c0) {
   const o = obojena(s);
   if (!o.length) return null;
   const tez = (cc, strana) => o.filter((x) => strana == null || x.strana === strana).map((x) => ({ hex: BOJE[bojaVrste(s, x.formula)].hex, w: Math.max(0, cc[x.formula] ?? 0) }));
@@ -404,8 +429,8 @@ export function bojaSmjese(s, c, c0 = c) {
   const jakost = Math.max(0.06, Math.min(0.95, 0.72 * Math.sqrt(ukupno / (zb(c0) || 1))));
   let rgb;
   if (vrstaBoje(s) === "dvije") {
-    const u0 = zb(c0, "D") / (zb(c0) || 1);
-    const u = zb(c, "D") / (ukupno || 1);
+    const u0 = zb(cb0, "D") / (zb(cb0) || 1);
+    const u = zb(cb, "D") / (zb(cb) || 1);
     const prikaz = Math.max(0, Math.min(1, u0 + 2 * (u - u0)));
     const L = mjesavina(tez(c0, "L"));
     const D = mjesavina(tez(c0, "D"));
@@ -413,20 +438,20 @@ export function bojaSmjese(s, c, c0 = c) {
   } else rgb = mjesavina(tez(c));
   return { hex: hexOd(rgb), jakost };
 }
-// Kako se boja promijeni od ravnoteže do nove ravnoteže: "L" | "D" (boja se mijenja prema boji te strane), "jaca" |
-// "slabija", "ista".
+// Kako se boja promijeni od ravnoteže do nove ravnoteže (stanja s c i cb): "D" | "L" (boja obojenog produkta postaje
+// jača | slabi, s dvije obojene vrste: ton iz cb), "jaca" | "slabija" (jedna obojena strana), "ista".
 export function promjenaBoje(s, prije, poslije) {
   const vr = vrstaBoje(s);
   if (!vr) return null;
   const o = obojena(s);
   const zb = (c, strana) => o.filter((x) => strana == null || x.strana === strana).reduce((a, x) => a + (c[x.formula] ?? 0), 0);
   if (vr === "dvije") {
-    const u0 = zb(prije, "D") / (zb(prije) || 1);
-    const u1 = zb(poslije, "D") / (zb(poslije) || 1);
+    const u0 = zb(prije.cb, "D") / (zb(prije.cb) || 1);
+    const u1 = zb(poslije.cb, "D") / (zb(poslije.cb) || 1);
     return Math.abs(u1 - u0) < 1e-6 ? "ista" : u1 > u0 ? "D" : "L";
   }
-  const a0 = zb(prije);
-  const a1 = zb(poslije);
+  const a0 = zb(prije.c);
+  const a1 = zb(poslije.c);
   return Math.abs(a1 - a0) <= 1e-6 * Math.max(a0, 1e-12) ? "ista" : a1 > a0 ? "jaca" : "slabija";
 }
 // Opcije za pitanje o boji: [{kljuc, tekst}]
@@ -434,12 +459,17 @@ export function opcijeBoje(s) {
   const vr = vrstaBoje(s);
   if (!vr) return [];
   const o = obojena(s);
-  const naStrani = (strana) => {
-    const x = o.filter((v) => v.strana === strana);
-    const b = bojaVrste(s, x[0].formula);
-    return `boja se mijenja prema ${BOJE[b].z.replace(/a$/, "oj")} (${x.map((v) => `⟦${v.formula}⟧`).join(", ")})`;
-  };
-  if (vr === "dvije") return [{ kljuc: "L", tekst: naStrani("L") }, { kljuc: "D", tekst: naStrani("D") }, { kljuc: "ista", tekst: "boja se ne mijenja" }];
+  if (vr === "dvije") {
+    // boja obojenog produkta, kao u školskom odgovoru („crvena boja postaje jača“); ključevi L/D ostaju (L: slabi)
+    const P = o.filter((v) => v.strana === "D");
+    const bP = BOJE[bojaVrste(s, P[0].formula)].z;
+    const imenaP = P.map((v) => `⟦${v.formula}⟧`).join(", ");
+    return [
+      { kljuc: "L", tekst: `${bP} boja (${imenaP}) slabi` },
+      { kljuc: "D", tekst: `${bP} boja (${imenaP}) postaje jača` },
+      { kljuc: "ista", tekst: "boja se ne mijenja" },
+    ];
+  }
   const b = BOJE[bojaVrste(s, o[0].formula)].z;
   const imena = o.map((v) => `⟦${v.formula}⟧`).join(", ");
   return [
@@ -461,17 +491,25 @@ export const OPCIJE_SMJERA = [
 
 export const pitanjaOd = (s) => (Array.isArray(s.pitaj) && s.pitaj.length ? s.pitaj : ["smjer"]);
 
-// Pravilo boje s dvije obojene vrste bez zadanih koncentracija: kad promjena doda ili ukloni samu obojenu vrstu, pomak
-// to samo djelomično poništi, pa boja ide prema dodanoj vrsti (od uklonjene), iako se ravnoteža pomiče na drugu stranu;
-// inače (bezbojna vrsta, temperatura, tlak, razrjeđivanje) boja prati smjer pomaka. Vraća "L" | "D" | "ista" ili null
-// (nije slučaj za pravilo). validate traži da se pravilo slaže sa zamišljenom smjesom (crtež i odgovor), inače boja
-// bez koncentracija nije jednoznačna.
-export function praviloBoje(s, p = pomak(s, s.promjena)) {
-  if (vrstaBoje(s) !== "dvije" || s.ravnotezne) return null;
+// Pitanje o boji s dvije obojene vrste: boja prati smjer pomaka (udesno: boja obojenog produkta postaje jača, ulijevo:
+// slabi), kao u školskom odgovoru, i kad se doda ili ukloni obojeni reaktant (dodatak Fe³⁺ → više crvenog
+// [Fe(SCN)]²⁺). Nije jednoznačno, pa validate odbija: (a) dodaje se ili uklanja sam obojeni produkt (dodatak
+// [Fe(SCN)]²⁺ pomiče ravnotežu ulijevo, a crvenog je ipak više nego prije); (b) količina obojenog produkta ide suprotno
+// od tona (tlak ili razrjeđivanje najprije zgusne ili razrijedi sve, a pomak to samo djelomično poništi). Vraća tekst
+// problema ili null.
+export function problemBoje(s, rj = rjesenjePomaka(s)) {
+  if (vrstaBoje(s) !== "dvije") return null;
+  const o = obojena(s);
+  const P = o.filter((x) => x.strana === "D");
   const pr = procitajPromjenu(s.promjena);
-  const x = (pr?.vrsta === "dodaj" || pr?.vrsta === "ukloni") && obojena(s).find((y) => y.formula === pr.formula);
-  if (x) return pr.vrsta === "dodaj" ? x.strana : x.strana === "L" ? "D" : "L";
-  return { udesno: "D", ulijevo: "L", nema: "ista" }[p?.smjer] ?? null;
+  if ((pr?.vrsta === "dodaj" || pr?.vrsta === "ukloni") && P.some((x) => x.formula === pr.formula))
+    return `${pr.vrsta === "dodaj" ? "dodatak" : "uklanjanje"} obojenog produkta ${pr.formula} pomiče ravnotežu ${rj.smjer === "udesno" ? "udesno" : "ulijevo"}, ali ga ipak ostane ${pr.vrsta === "dodaj" ? "više" : "manje"} nego prije: boja nije jednoznačna, pa pitaj smjer ili koncentraciju`;
+  const zb = (c) => P.reduce((a, x) => a + (c[x.formula] ?? 0), 0);
+  const a0 = zb(rj.sim.prije.c);
+  const a1 = zb(rj.sim.poslije.c);
+  const kol = Math.abs(a1 - a0) <= 1e-6 * Math.max(a0, 1e-12) ? "ista" : a1 > a0 ? "D" : "L";
+  if (kol !== rj.boja) return `uz ovu promjenu ${P.map((x) => x.formula).join(", ")} ${kol === "D" ? "ima više" : kol === "L" ? "ima manje" : "ima jednako"} nego prije, a ravnoteža se pomiče ${SMJER[rj.smjer]}: boja nije jednoznačna, pa pitaj smjer ili koncentraciju`;
+  return null;
 }
 
 // Točni odgovori za „pomak“: {smjer, boja, koncentracija, sim}
@@ -480,8 +518,7 @@ export function rjesenjePomaka(s) {
   const sim = simuliraj(s, st, s.promjena);
   const p = pomak(s, s.promjena);
   const out = { smjer: p?.smjer, sim, pomak: p };
-  out.boja = promjenaBoje(s, st.c, sim.poslije.c);
-  out.pravilo = praviloBoje(s, p);
+  out.boja = promjenaBoje(s, st, sim.poslije);
   if (isText(s.tvar) && s.tvar in st.c) {
     const a = st.c[s.tvar];
     const b = sim.poslije.c[s.tvar];
@@ -714,6 +751,15 @@ tekst, nacin:
     },
     {
       tip: "ravnoteza",
+      nacin: "pomak",
+      tekst: "U epruveti je crvena ravnotežna otopina željezovih(III) i tiocijanatnih iona. Doda se nekoliko kapi otopine željezova(III) klorida. Kamo se pomiče ravnoteža i kako se mijenja boja?",
+      reakcija: { reaktanti: ["Fe³⁺", "SCN⁻"], produkti: ["[Fe(SCN)]²⁺"], stanja: ["aq", "aq", "aq"] },
+      boje: { "Fe³⁺": "zuckasta", "[Fe(SCN)]²⁺": "crvena" },
+      promjena: "dodaj Fe³⁺",
+      pitaj: ["smjer", "boja"],
+    },
+    {
+      tip: "ravnoteza",
       nacin: "istrazi",
       tekst: "U zatvorenoj posudi je ravnotežna smjesa bezbojnog N₂O₄ i smeđeg NO₂. Mijenjaj tlak i temperaturu i gledaj boju, koncentracije i Kc.",
       reakcija: { reaktanti: ["N₂O₄"], produkti: ["NO₂"], stanja: ["g", "g"] },
@@ -873,8 +919,8 @@ tekst, nacin:
         if (need(vr, "pitanje o boji treba boje obojenih vrsta koje ulaze u ravnotežu")) {
           const p = procitajPromjenu(s.promjena);
           need(!(vr === "jedna" && ["povecanje_tlaka", "smanjenje_tlaka", "razrjedivanje"].includes(p.vrsta)), "uz promjenu tlaka ili razrjeđivanje boja jedne obojene tvari nije jednoznačna (smjesa se najprije zgusne ili razrijedi, a pomak to samo djelomično poništi): pitaj smjer ili koncentraciju");
-          const rj = rjesenjePomaka(s);
-          need(rj.pravilo == null || rj.pravilo === rj.boja, `boja bez zadanih koncentracija ovdje nije jednoznačna (omjer obojenih tvari ${rj.boja === "ista" ? "ostaje isti" : "ne slijedi pravilo"}): zadaj ravnotezne ili pitaj smjer`);
+          const pb = problemBoje(s);
+          need(!pb, `pitanje o boji: ${pb}`);
         }
       }
       if (pit.includes("koncentracija")) {
@@ -933,10 +979,13 @@ tekst, nacin:
         const p = procitajPromjenu(s.promjena);
         const x = p.formula && vrste(s).find((y) => y.formula === p.formula);
         let poruka;
-        if (x && bojaVrste(s, x.formula) && bojaVrste(s, x.formula) !== "bezbojna" && (p.vrsta === "dodaj" || p.vrsta === "ukloni"))
+        if (vrstaBoje(s) === "dvije" && rj.smjer !== "nema") {
+          const P = obojena(s).filter((y) => y.strana === "D");
+          const imenaP = P.map((y) => y.formula).join(", ");
+          const bP = BOJE[bojaVrste(s, P[0].formula)].z;
+          poruka = `${imePromjene(p)} pomiče ravnotežu ${rj.smjer}, ${rj.smjer === "udesno" ? `nastaje više ${imenaP}` : `${imenaP} se troši`}, pa ${bP} boja ${rj.smjer === "udesno" ? "postaje jača" : "slabi"}.`;
+        } else if (x && bojaVrste(s, x.formula) && bojaVrste(s, x.formula) !== "bezbojna" && (p.vrsta === "dodaj" || p.vrsta === "ukloni"))
           poruka = `Ravnoteža se pomiče ${rj.smjer === "udesno" ? "udesno" : "ulijevo"}, ali pomak samo djelomično poništi promjenu: ${x.formula} (${BOJE[bojaVrste(s, x.formula)].z} boja) ipak ostane ${p.vrsta === "dodaj" ? "više" : "manje"} nego prije.`;
-        else if (vrstaBoje(s) === "dvije" && rj.smjer !== "nema")
-          poruka = "Boja prati pomak ravnoteže: strana prema kojoj se ravnoteža pomiče dobiva više svoje obojene tvari, pa se boja mijenja prema boji te strane.";
         else if (rj.smjer === "nema") poruka = "Ravnoteža se ne pomiče, pa ni omjer obojenih tvari ostaje isti.";
         else poruka = `Boju daju obojene tvari (${obojena(s).map((y) => `${y.formula} ${BOJE[bojaVrste(s, y.formula)].z}`).join(", ")}): kojih ima više kad se ravnoteža pomakne?`;
         return { tocno: false, poruka, krivo: "boja" };
