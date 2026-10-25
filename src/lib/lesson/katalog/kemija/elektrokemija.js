@@ -52,6 +52,14 @@ const S_VODOM = new Set(["Na", "K", "Ca", "Ba", "Cs"]);
 // parovi s kisikom i vodom: na listu su, ali nisu polučlanci školskog članka
 const SAMO_ELEKTROLIZA = new Set(["O₂/H₂O", "O₂/OH⁻", "H₂O/H₂"]);
 const NEMETALNI = { "H⁺/H₂": "vodikova elektroda", "Cl₂/Cl⁻": "klorova elektroda", "Br₂/Br⁻": "bromova elektroda", "I₂/I⁻": "jodova elektroda" };
+// ioni s lista koji se u vodenoj otopini uronjenim metalom ne reduciraju do metala: istiskivanje ih odbija
+// (Cu + FeCl₃: Cu se otapa, a Fe³⁺ prelazi u Fe²⁺, ne u Fe, pa odgovor po paru Fe³⁺/Fe, „ne reagira“, bio bi kriv)
+const NE_DO_METALA = {
+  "Fe³⁺": "se metalom najprije reducira do Fe²⁺, a ne do željeza (npr. Cu + 2 Fe³⁺ → Cu²⁺ + 2 Fe²⁺)",
+  "Cu⁺": "nije postojan u vodi (prelazi u Cu²⁺ i Cu) i njegove soli su slabo topljive",
+  "Cr²⁺": "nije postojan (oksidira se u Cr³⁺)",
+  "Ti²⁺": "nije postojan (reducira vodu)",
+};
 // ion koji metal daje kad se oksidira (za metale s više parova na listu)
 const ION_METALA = { Cu: "Cu²⁺", Fe: "Fe²⁺", Cr: "Cr³⁺" };
 
@@ -748,6 +756,8 @@ function validateClanak(s, need, list) {
     if (!need(ioni, `otopina „${s.otopina}“ mora biti formula soli ili kiseline s kationom s lista (npr. "CuSO₄", "AgNO₃", "HCl")`)) return;
     need(ioni.anion !== "OH⁻" && ioni.anion !== "O²⁻", "otopina mora biti sol ili kiselina, ne lužina ili oksid");
     need(ioni.par.red !== s.metal, `${pm.naziv} u otopini vlastite soli ne reagira: to nije pitanje istiskivanja`);
+    const ne = NE_DO_METALA[ioni.kation];
+    need(!ne, `${ioni.kation} u otopini ${s.otopina} ${ne}: to nije istiskivanje metala po paru ${ioni.par.kljuc}; zadaj sol iona koji se reducira do metala (npr. ${ioni.kation === "Fe³⁺" ? "FeSO₄" : "CuSO₄"})`);
     if (s.jednadzba != null) need(typeof s.jednadzba === "boolean", "jednadzba je true ili false");
     if (s.jednadzba) need(istiskivanje(s.metal, s.otopina)?.jednadzba, "ionska jednadžba istiskivanja ne može se izjednačiti");
     return;
@@ -922,7 +932,7 @@ otopine?: [formula, formula] (npr. ["ZnSO₄", "CuSO₄"]; zadano piše samo ion
 - "istrazi" (nije zadatak): padajući popis za svaku čašu (izbor?: parovi, zadano ${IZBOR_CLANKA.join(", ")}), crtež s elektronima u žici i ionima u mostu, voltmetar s ΔE°, polureakcije, ukupno, shema, Voltin niz i istiskivanje u oba smjera;
 - "polovi": učenik označi anodu/katodu, pol (+/−) i smjer elektrona; pitaj?: podskup ["uloge", "polovi", "elektroni", "most"] (zadano prva tri; "most" = kamo idu kationi iz mosta). Prije provjere crtež nema oznaka ni strelica;
 - "napon": učenik upisuje ΔE° (tri decimale kao na listu); poruke za negativan napon (zamijenjene elektrode), zbrojene potencijale, potencijal pomnožen koeficijentom ili brojem elektrona, samo E° jedne elektrode; krivo?: [{vrijednost, poruka}];
-- "istiskivanje": metal ("Zn") uronjen u otopina (sol "CuSO₄" ili kiselina "HCl"); učenik bira reagira li; jednadzba?: true – uz „reagira“ upisuje i koeficijente ionske jednadžbe (npr. Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag). Bez elektrode i otopine istog metala.
+- "istiskivanje": metal ("Zn") uronjen u otopina (sol "CuSO₄" ili kiselina "HCl"); učenik bira reagira li (sol iona koji se ne reducira do metala, Fe³⁺ ili Cu⁺, validate odbija: Cu + FeCl₃ ide u Fe²⁺); jednadzba?: true – uz „reagira“ upisuje i koeficijente ionske jednadžbe (npr. Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag). Bez elektrode i otopine istog metala.
 Elektroliza: elektrolit (formula: "CuSO₄", "NaCl", "Na₂SO₄", "H₂SO₄", "NaOH", "Al₂O₃", "AgNO₃", "ZnCl₂"…), stanje: "aq" (vodena otopina) | "l" (talina), anoda?/katoda?: "grafit" (zadano) | "Pt" | simbol metala (metalna anoda se otapa, npr. "Cu" za pročišćavanje bakra).
 Školska pravila: katoda u talini – metal; u otopini – metal ako mu je E° veći od E°(H₂O/H₂) = −0,828 V (Zn, Fe, Ni, Cu, Ag…), inače vodik (alkalijski i zemnoalkalijski metali, Al); kiselina – vodik. Anoda: Cl⁻, Br⁻, I⁻ daju halogen; SO₄²⁻, NO₃⁻ (u otopini) ne, nego kisik iz vode; O²⁻ i OH⁻ daju kisik; metalna anoda se otapa.
 serijski?: {elektrolit, stanje, anoda?, katoda?} – drugi članak spojen serijski (isti naboj); plin?: {uvjeti: "normirani"} ili {p, jedinica ("kPa"…), t (°C) ili T (K)} za volumen plina.
