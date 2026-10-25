@@ -4,10 +4,12 @@
 //
 // Sve računa kod iz formula:
 // - oksidacijski brojevi anorganskih formula po školskim pravilima (element 0; jednoatomni ion = naboj; F −1;
-//   alkalijski +1, zemnoalkalijski +2; H +1, uz metal −1; O −2, u peroksidu −1, s fluorom +2; zbroj = naboj),
+//   alkalijski +1, zemnoalkalijski +2; H +1, uz metal ili manje elektronegativan element (SiH₄, B₂H₆) −1; O −2, u
+//   peroksidu −1, s fluorom +2; zbroj = naboj),
 //   a kad ostanu dvije nepoznanice, preko poznatog višeatomnog iona (CuSO₄ = Cu²⁺ + SO₄²⁻) ili u binarnom spoju
-//   (elektronegativniji element ima negativan broj kao u svom ionu). Što pravila ne daju jednoznačno (Fe₃O₄, prosjek
-//   8/3), validate odbija;
+//   (elektronegativniji element ima negativan broj kao u svom ionu; disulfid FeS₂: S₂²⁻). Što pravila ne daju
+//   jednoznačno (Fe₃O₄, prosjek 8/3; CaOCl₂, prosjek Cl 0; metal s neuobičajenim brojem), validate odbija;
+// - oksalat (H₂C₂O₄, Na₂C₂O₄, C₂O₄²⁻) po istim pravilima: oba C-atoma su jednaka, svaki +3;
 // - formule s više C-atoma po strukturi: sažeta strukturna formula („CH₃CH₂CHO“) čita se istim kodom kao widget
 //   molekula (skupina), a svaki atom dobiva broj po vezama (elektronegativniji atom uzima elektrone veze);
 // - polureakcije i ukupna jednadžba izjednačuju se logikom widgeta jednadzba (izjednaci, provjeriKoef), a H⁺/H₂O ili
@@ -102,6 +104,19 @@ export function tokeni(formula) {
 const ALKALIJSKI = new Set(["Li", "Na", "K", "Rb", "Cs", "Fr"]);
 const ZEMNOALKALIJSKI = new Set(["Be", "Mg", "Ca", "Sr", "Ba", "Ra"]);
 const jeMetal = (el) => element(el)?.vrsta === "metal";
+// Element jasno manje elektronegativan od vodika (Si 1,90, B 2,04 prema H 2,20): vodik uz njega ima −1 (SiH₄, B₂H₆,
+// NaBH₄). P (2,19) i As (2,18) su praktički jednaki vodiku, pa u PH₃ i AsH₃ vodik ostaje +1, kao u školi.
+const manjeEnOdH = (el) => (element(el)?.en ?? 9) < (element("H")?.en ?? 2.2) - 0.1;
+// Oksidacijski brojevi koje prijelazni i p-metali imaju u školskim spojevima. Broj izvan popisa (Fe +4 u FeS₂ po pravilu
+// za binarni spoj) znači da pravila ovdje ne vrijede, pa validate formulu odbija umjesto da da krivi broj.
+const OKS_METALA = {
+  Al: [3], Ti: [2, 3, 4], V: [2, 3, 4, 5], Cr: [2, 3, 6], Mn: [2, 3, 4, 6, 7], Fe: [2, 3, 6], Co: [2, 3], Ni: [2, 3],
+  Cu: [1, 2], Zn: [2], Ag: [1], Cd: [2], Sn: [2, 4], Pb: [2, 4], Hg: [1, 2], Au: [1, 3],
+};
+const obicanZaMetal = (el, v) => !OKS_METALA[el] || v === 0 || OKS_METALA[el].includes(v);
+// Binarni spoj metala i sumpora s dva S po atomu metala, u kojem bi metal sa S −2 imao neobičan broj: disulfid s ionom
+// S₂²⁻ (pirit FeS₂: Fe +2, S −1).
+const DISULFIDNI_METALI = new Set(["Fe", "Co", "Ni", "Mn", "Cu", "Zn"]);
 
 // Najmanji i najveći oksidacijski broj koji element može imati (za provjeru da pravila nisu dala besmislicu).
 function raspon(el) {
@@ -168,6 +183,7 @@ function rijesiJedinku(T, ks, Q, opis, dubina = 0, dijeli = 1) {
   if (n.H != null) {
     const ostali = els.filter((e) => e !== "H");
     if (ostali.every(jeMetal)) postavi("H", -1, "hidrid", `Vodik vezan samo na metal (hidrid metala) ima −1: metal je manje elektronegativan od vodika.`);
+    else if (ostali.every(manjeEnOdH)) postavi("H", -1, "hidrid", `Vodik je ovdje vezan na ${nabrajanje(ostali.map(naziv))}, ${ostali.length > 1 ? "koji su manje elektronegativni" : "koji je manje elektronegativan"} od vodika, pa vodik ima −1 (kao u hidridu).`);
     else postavi("H", 1, "H", "Vodik vezan na nemetal ima +1.");
   }
   const zbrojPoznatih = () => Object.entries(ox).reduce((a, [el, v]) => a + n[el] * v, 0);
@@ -203,11 +219,17 @@ function rijesiJedinku(T, ks, Q, opis, dubina = 0, dijeli = 1) {
     const [a, b] = U;
     const en = (e) => element(e)?.en ?? 0;
     const neg = en(a) >= en(b) ? a : b;
+    const pos = neg === a ? b : a;
     const g = element(neg)?.skupina;
     if (g >= 15 && g <= 17) {
       const v = g - 18;
-      const ion = zapisIona(neg, v);
-      postavi(neg, v, "binarni", `U ${opis} je ${naziv(neg)} elektronegativniji element, pa ima negativan oksidacijski broj kao u ionu ${ion}: ${zapisOks(v)}.`);
+      const vPos = (Q - n[neg] * v) / n[pos];
+      if (neg === "S" && Q === 0 && n.S === 2 * n[pos] && DISULFIDNI_METALI.has(pos) && !obicanZaMetal(pos, vPos)) {
+        postavi("S", -1, "disulfid", `${velikoSlovo(opis)} je disulfid (kao pirit FeS₂): sumpor je u ionu S₂²⁻ (veza S–S), pa naboj −2 dijele dva atoma sumpora, svaki −1.`);
+      } else {
+        const ion = zapisIona(neg, v);
+        postavi(neg, v, "binarni", `U ${opis} je ${naziv(neg)} elektronegativniji element, pa ima negativan oksidacijski broj kao u ionu ${ion}: ${zapisOks(v)}.`);
+      }
       U = nepoznati();
     }
   }
@@ -216,11 +238,14 @@ function rijesiJedinku(T, ks, Q, opis, dubina = 0, dijeli = 1) {
     const [el] = U;
     const v = (Q - zbrojPoznatih()) / n[el];
     if (!Number.isInteger(v)) return { greska: `u ${opis} ${naziv(el)} bi imao prosjek ${Q - zbrojPoznatih()}/${n[el]}: pravila ne daju cijeli broj (atomi imaju različite oksidacijske brojeve)` };
+    // više atoma istog elementa s prosjekom 0 u spoju (CaOCl₂: jedan Cl +1, drugi −1): prosjek nije oksidacijski broj atoma
+    if (v === 0 && n[el] > 1) return { greska: `u ${opis} ${naziv(el)} bi imao prosjek 0: atomi imaju različite oksidacijske brojeve (npr. +1 i −1), a pravila daju samo prosjek` };
     postavi(el, v, "racun", racun(el, v));
   }
   for (const el of els) {
     const [min, max] = raspon(el);
     if (ox[el] < min || ox[el] > max) return { greska: `u ${opis} ${naziv(el)} bi imao ${zapisOks(ox[el])}, a to ne može: pravila ovdje ne daju smislen rezultat (provjeri formulu i naboj)` };
+    if (!obicanZaMetal(el, ox[el])) return { greska: `u ${opis} ${naziv(el)} bi imao ${zapisOks(ox[el])}, a taj oksidacijski broj ${genitiv(naziv(el))} nije uobičajen: pravila ovdje ne daju pouzdan rezultat` };
   }
   if (zbrojPoznatih() !== Q) return { greska: `u ${opis} zbroj oksidacijskih brojeva (${zapisOks(zbrojPoznatih())}) nije jednak naboju (${zapisOks(Q)}): provjeri formulu` };
   return { ox, pravilo };
@@ -266,7 +291,7 @@ function rastaviNaIone(T, ks, Q, opis) {
       const n = ostatak.reduce((a, k) => a + T[k].eff, 0);
       const v = Qo / n;
       const [min, max] = raspon(el);
-      if (!Number.isInteger(v) || v < min || v > max) return null;
+      if (!Number.isInteger(v) || v < min || v > max || !obicanZaMetal(el, v)) return null;
       const tekst = `${velikoSlovo(opis)} sadrži ${ioni}; ${nadeni.length === 1 && nadeni[0].puta === 1 ? "on nosi" : "oni nose"} ukupno ${zapisOks(nabojIona)}, pa ${n > 1 ? `${n} atoma ${genitiv(naziv(el))} nose ${zapisOks(Qo)}, svaki` : naziv(el)} ${zapisOks(v)} (zbroj ${Q === 0 ? "u neutralnoj tvari je 0" : `je ${zapisOks(Q)}`}).`;
       for (const k of ostatak) poTokenu[k] = { v, vrsta: "ionski", tekst, jedinka: { ks, Q, opis } };
     } else {
@@ -414,7 +439,9 @@ function racunajFormulu(formula) {
   if (T.some((t) => t.t === "tekst")) return { greska: `formula „${f}“ ima znak koji nije dio formule` };
   const Q = c.naboj;
   const brojC = c.atomi.C ?? 0;
-  if (brojC >= 2) {
+  // oksalat (H₂C₂O₄, Na₂C₂O₄, C₂O₄²⁻): oba C-atoma su jednaka (−OOC–COO−), pa prosjek iz pravila je broj svakog
+  const oksalat = T.some((t, k) => t.t === "el" && t.el === "C" && t.n === 2 && T[k + 1]?.t === "el" && T[k + 1].el === "O" && T[k + 1].n === 4);
+  if (brojC >= 2 && !(brojC === 2 && oksalat)) {
     const s = poStrukturi(f, T);
     if (s.greska) return s;
     T.forEach((t, k) => t.t === "el" && Object.assign(t, razlogOd(s.poTokenu[k])));
@@ -906,7 +933,7 @@ export const redoks = {
   uloga: (s) => (s.nacin === "istrazi" ? POGLEDAJ : ODGOVOR),
   istrazi: (s) => s.nacin === "istrazi",
   opis: `Oksidacijski brojevi i redoks-reakcije. Brojevi se pišu iznad simbola, arapski s predznakom (+6, −2, 0); učenik smije upisati i rimski (VI, −II).
-Kod sve računa sam: oksidacijske brojeve po školskim pravilima (element 0; jednoatomni ion = naboj; F −1; alkalijski +1, zemnoalkalijski +2; H +1, uz metal −1; O −2, u peroksidu −1, s fluorom +2; zbroj = naboj; s dvije nepoznanice preko poznatog iona (CuSO₄ = Cu²⁺ + SO₄²⁻, NH₄NO₃) ili u binarnom spoju), za formule s više C-atoma po vezama iz sažete strukturne formule (CH₃CH₂CHO, CH₃COOH, (CH₃)₂CHCH₂CH₂OH; ne C₃H₆O), što se oksidira i reducira, sredstva, polureakcije i ukupnu jednadžbu (logika widgeta jednadzba). Formula za koju pravila daju samo prosjek (Fe₃O₄) se odbija.
+Kod sve računa sam: oksidacijske brojeve po školskim pravilima (element 0; jednoatomni ion = naboj; F −1; alkalijski +1, zemnoalkalijski +2; H +1, uz metal ili manje elektronegativan element −1 (NaH, SiH₄); O −2, u peroksidu −1, s fluorom +2; zbroj = naboj; s dvije nepoznanice preko poznatog iona (CuSO₄ = Cu²⁺ + SO₄²⁻, NH₄NO₃) ili u binarnom spoju; disulfid FeS₂: Fe +2, S −1), za formule s više C-atoma po vezama iz sažete strukturne formule (CH₃CH₂CHO, CH₃COOH, (CH₃)₂CHCH₂CH₂OH; ne C₃H₆O), što se oksidira i reducira, sredstva, polureakcije i ukupnu jednadžbu (logika widgeta jednadzba). Oksalat (H₂C₂O₄, C₂O₄²⁻) ide po pravilima (C +3). Formula za koju pravila daju samo prosjek (Fe₃O₄, CaOCl₂) ili metal s neuobičajenim oksidacijskim brojem se odbija.
 Formula: Unicode indeksi i naboj („K₂Cr₂O₇“, „SO₄²⁻“, „CuSO₄·5H₂O“, „H₂O₂“, „NaH“). Reakcija: reaktanti, produkti, strelica?, iznad?, koeficijenti?, stanja? kao u widgetu jednadzba (kod je izjednačuje i prikazuje s koeficijentima).
 tekst, nacin:
 - "istrazi" (nije zadatak): formula, ili formule: [do ${NAJVISE_FORMULA}] (učenik ih prebacuje), ili reakcija. Brojevi stoje iznad atoma; dodir atoma pokaže pravilo i račun. Uz reakciju: koji se element oksidira, a koji reducira (boje), koliko elektrona, sredstva i polureakcije (ako ih kod može sastaviti ili ih autor zada);
