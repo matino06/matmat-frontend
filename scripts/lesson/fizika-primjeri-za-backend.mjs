@@ -47,5 +47,5 @@ for (const w of FIZIKA) {
     k++;
   }
 }
-writeFileSync(process.argv[2], JSON.stringify(out));
+writeFileSync(process.argv[2], JSON.stringify(out, null, 1) + "\n");
 console.log(k, "lekcija; loših:", lose);
