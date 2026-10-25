@@ -1811,7 +1811,11 @@ function oznakaOcitanja(M, r, dio, x) {
 function provjeriOcitanje(M, r, dio, ulaz, tol, s, i) {
   const pitaT = r.pita === "t" || (r.pita === "trojna" && dio === 0);
   const jed = pitaT ? (r.pita === "t" ? r.jed : M.os.jx) : M.os.jy;
-  const tocno = tocnoOcitanja(M, r, dio);
+  // temperatura: tolerancija oko zaokruženog očitanja koje se pokazuje kao odgovor (−15 °C, a ne −15,4), da je
+  // jednaka u oba smjera
+  const tocno = pitaT
+    ? Number(zaokruzi(tocnoOcitanja(M, r, dio), ZAOKRUZI(M)[0]).toPrecision(10))
+    : tocnoOcitanja(M, r, dio);
   const krivo = [];
   const autor = (s.krivo ?? []).filter(
     (k) => (k.korak ?? traziOf(s).length - 1) === i,
