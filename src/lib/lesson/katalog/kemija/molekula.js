@@ -1294,7 +1294,7 @@ function provjeriParove(s, M, odgovor) {
       poruka: `Svi atomi imaju oktet, ali u ključu mature ${naziv(sredisnjiProsiren.el)} ima prošireni oktet (${M.lewis.ljuska[sredisnjiProsiren.spoj]} elektrona): ${ime(M)} se crta s ${opisVisestrukih(M, tocniRed)}.`,
       krivi: [],
     };
-  return { tocno: false, poruka: `Svi atomi imaju oktet, ali tražena je struktura s ${opisVisestrukih(M, tocniRed)}. Rasporedi veze drukčije.`, krivi: [] };
+  return { tocno: false, poruka: `${M.atomi.some((a) => a.golo && a.el !== "H" && (M.lewis.ljuska[a.spoj] ?? 8) < 8) ? "Svaki atom ima dopušten broj elektrona" : "Svi atomi imaju oktet"}, ali tražena je struktura s ${opisVisestrukih(M, tocniRed)}. Rasporedi veze drukčije.`, krivi: [] };
 }
 
 function porukaOblika(M, ob, kriv) {
@@ -1655,7 +1655,13 @@ nacin:
       const crtica = r.reduce((a, b) => a + b, 0);
       const par = Object.values(tocniParovi(M)).reduce((a, b) => a + b, 0);
       const prosiren = M.atomi.find((a) => a.golo && (M.lewis.ljuska[a.spoj] ?? 8) > 8);
-      return `${ime(M)}: ${mn(crtica, ["vezna crtica", "vezne crtice", "veznih crtica"])} (s ${opisVisestrukih(M, r)}) i ${mn(par, ["nevezni par", "nevezna para", "neveznih parova"])}; ${prosiren ? `${naziv(prosiren.el)} ima prošireni oktet (${M.lewis.ljuska[prosiren.spoj]} elektrona), ostali atomi oktet` : "svi atomi imaju oktet"}${M.atomi.some((a) => a.el === "H") ? " (vodik duet)" : ""}.`;
+      // nepotpuni oktet (BF₃, BeCl₂, BH₃): bor i berilij imaju manje od 8 elektrona
+      const nepotpun = M.atomi.find((a) => a.golo && a.el !== "H" && (M.lewis.ljuska[a.spoj] ?? 8) < 8);
+      const iznimka = prosiren ? `${naziv(prosiren.el)} ima prošireni oktet (${M.lewis.ljuska[prosiren.spoj]} elektrona)` : nepotpun ? `${naziv(nepotpun.el)} ima nepotpuni oktet (${M.lewis.ljuska[nepotpun.spoj]} elektrona)` : null;
+      const imaH = M.atomi.some((a) => a.el === "H");
+      const samoH = iznimka && M.atomi.every((a) => a === (prosiren ?? nepotpun) || a.el === "H");
+      const oktet = !iznimka ? `svi atomi imaju oktet${imaH ? " (vodik duet)" : ""}` : samoH ? `${iznimka}, vodik duet` : `${iznimka}, ostali atomi oktet${imaH ? " (vodik duet)" : ""}`;
+      return `${ime(M)}: ${mn(crtica, ["vezna crtica", "vezne crtice", "veznih crtica"])} (s ${opisVisestrukih(M, r)}) i ${mn(par, ["nevezni par", "nevezna para", "neveznih parova"])}; ${oktet}.`;
     }
     if (s.nacin === "oblik") {
       const p = pitajOd(s);
