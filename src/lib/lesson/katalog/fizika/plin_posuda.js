@@ -2,6 +2,8 @@
 // zaključan klip → stalan volumen, pomičan klip s utegom → stalan tlak, ručni klip → volumen mijenja učenik
 // (uz termostat stalna T, u izoliranoj posudi adijabatski: TV^(γ−1) = konst.). Tlak se računa iz pV = nRT, a ne
 // iz brojanja udaraca; animacija samo prikazuje ono što ovaj modul izračuna.
+// Spec s poljem „smjesa“ (kemija: smjesa plinova, Daltonov zakon) ide zasebnim putem u _smjesa.js; ostali specovi
+// ovim kodom, nepromijenjeno.
 import { isNum, parseNumber, formatNumber } from "../../core/number.js";
 import {
   POGLEDAJ,
@@ -21,6 +23,14 @@ import {
   iznos,
   raspon,
 } from "./_plin.js";
+import {
+  jeSmjesa,
+  validateSmjesa,
+  checkSmjesa,
+  tocanOdgovorSmjesa,
+  OPIS_SMJESE,
+  PRIMJERI_SMJESE,
+} from "./_smjesa.js";
 
 const NACINI = ["istrazi", "predvidi", "odaberi"];
 const KLIPOVI = ["zakljucan", "pomican", "rucni"];
@@ -279,7 +289,7 @@ prikazi?: popis od ${PRIKAZI.join(", ")} (očitanja; zadano p, V, T; Ek = srednj
   pitaj: popis od ${PITAJ.join(", ")} – za svaku učenik bira raste / pada / ostaje isti; faktor?: veličina ili popis veličina za koje upisuje i faktor (npr. p × 1,5).
   Točne faktore računa aplikacija; krivi faktori (zanemarena jedna promjena, zbroj umjesto umnoška, obrnut omjer, izotermno umjesto adijabatski) dodaju se sami;
   krivo?: [{velicina, faktor, poruka}]. Nakon točnog odgovora animacija izvede promjenu;
-- "odaberi": dvije posude, pitanje: ${ODABERI.join(" | ")}, manja?: true (traži se manja vrijednost); učenik dodirne posudu ili „jednako“.`,
+- "odaberi": dvije posude, pitanje: ${ODABERI.join(" | ")}, manja?: true (traži se manja vrijednost); učenik dodirne posudu ili „jednako“.${OPIS_SMJESE}`,
   primjer: {
     tip: "plin_posuda",
     nacin: "predvidi",
@@ -377,9 +387,11 @@ prikazi?: popis od ${PRIKAZI.join(", ")} (očitanja; zadano p, V, T; Ek = srednj
       ],
       pitanje: "vef",
     },
+    ...PRIMJERI_SMJESE,
   ],
 
   validate(s) {
+    if (jeSmjesa(s)) return validateSmjesa(s);
     const { list, need } = problems();
     need(
       NACINI.includes(s.nacin),
@@ -581,12 +593,14 @@ prikazi?: popis od ${PRIKAZI.join(", ")} (očitanja; zadano p, V, T; Ek = srednj
   },
 
   check(s, odgovor) {
+    if (jeSmjesa(s)) return checkSmjesa(s, odgovor);
     if (s.nacin === "odaberi") return checkOdaberi(s, odgovor);
     if (s.nacin === "predvidi") return checkPredvidi(s, odgovor);
     return { tocno: false, poruka: "Ovaj korak nema provjeru." };
   },
 
   tocanOdgovor(s) {
+    if (jeSmjesa(s)) return tocanOdgovorSmjesa(s);
     if (s.nacin === "odaberi") {
       const t = tocnaPosuda(s);
       return t === "jednako" ? "jednako u obje posude" : s.posude[t].oznaka;
