@@ -326,7 +326,8 @@ export function pocetnoStanje(s) {
   // eksponent velik
   const def = jeKp(s) ? 1 : 0.5;
   const c = Object.fromEntries(ukljucene(s).map((x) => [x.formula, zad[x.formula]?.v ?? def * x.koef]));
-  return { c, K: kvocijent(s, c), V: 1, T: 0, zamisljeno: !s.ravnotezne };
+  // xiBoje: zbroj pomaka od početka (samo uz zamišljene koncentracije; boja dviju obojenih vrsta tada prati pomak)
+  return { c, K: kvocijent(s, c), V: 1, T: 0, zamisljeno: !s.ravnotezne, xiBoje: s.ravnotezne ? null : 0 };
 }
 const FAKTOR_T = 3; // koliko se puta K promijeni po koraku zagrijavanja (zamišljeno, samo za crtež)
 
@@ -354,7 +355,7 @@ export function poremeti(s, st, k) {
     V *= 2;
     for (const x of v) if (x.stanje === "aq") c[x.formula] /= 2;
   }
-  return { c, K, V, T, zamisljeno: st.zamisljeno };
+  return { c, K, V, T, zamisljeno: st.zamisljeno, xiBoje: st.xiBoje ?? null };
 }
 export const mozeT = (st, k) => (k === "zagrijavanje" ? st.T < NAJVISE_KLIKOVA_T : k === "hladenje" ? st.T > -NAJVISE_KLIKOVA_T : true);
 
@@ -365,7 +366,8 @@ export function simuliraj(s, st, k) {
   const xi = dosegDoRavnoteze(s, por.c, por.K);
   const rel = Math.log(Q / por.K);
   const smjer = Math.abs(rel) < 1e-9 ? "nema" : rel < 0 ? "udesno" : "ulijevo";
-  return { prije: st, poremeceno: por, poslije: { ...por, c: pomakni(s, por.c, Math.abs(rel) < 1e-9 ? 0 : xi) }, xi: Math.abs(rel) < 1e-9 ? 0 : xi, Q, smjer };
+  const x = Math.abs(rel) < 1e-9 ? 0 : xi;
+  return { prije: st, poremeceno: por, poslije: { ...por, c: pomakni(s, por.c, x), xiBoje: por.xiBoje == null ? null : por.xiBoje + x }, xi: x, Q, smjer };
 }
 
 // ── boje ──
@@ -388,13 +390,16 @@ export function vrstaBoje(s) {
 // Boja smjese za crtež: hex i jakost (0–1). Kad su obojene vrste s obje strane, boja je mješavina boje lijeve i
 // desne strane po udjelu; promjena udjela prema početnoj smjesi crta se dvostruko (u epruveti je promjena boje jasna,
 // a linearna mješavina dviju sličnih boja jedva se vidi). Jakost raste s ukupnom količinom obojenih čestica.
+// xiBoje (zamišljene koncentracije, bez zadanih ravnotežnih): udio se računa samo iz pomaka ravnoteže od početka
+// (c0 + ν·ξ), ne iz dodane tvari: boja prati smjer pomaka kao u udžbeniku (dodatak Fe³⁺ → crvena boja [Fe(SCN)]²⁺
+// jača), jer zamišljeni omjeri 1 : 1 ne govore koliko je koja boja jaka.
 const rgbOd = (hex) => [0, 1, 2].map((k) => parseInt(hex.slice(1 + 2 * k, 3 + 2 * k), 16));
 const hexOd = (rgb) => `#${rgb.map((x) => Math.round(Math.max(0, Math.min(255, x))).toString(16).padStart(2, "0")).join("")}`;
 function mjesavina(par) {
   const w = par.reduce((a, p) => a + p.w, 0) || 1;
   return [0, 1, 2].map((k) => par.reduce((a, p) => a + rgbOd(p.hex)[k] * p.w, 0) / w);
 }
-export function bojaSmjese(s, c, c0 = c) {
+export function bojaSmjese(s, c, c0 = c, xiBoje = null) {
   const o = obojena(s);
   if (!o.length) return null;
   const tez = (cc, strana) => o.filter((x) => strana == null || x.strana === strana).map((x) => ({ hex: BOJE[bojaVrste(s, x.formula)].hex, w: Math.max(0, cc[x.formula] ?? 0) }));
@@ -404,7 +409,8 @@ export function bojaSmjese(s, c, c0 = c) {
   let rgb;
   if (vrstaBoje(s) === "dvije") {
     const u0 = zb(c0, "D") / (zb(c0) || 1);
-    const u = zb(c, "D") / (ukupno || 1);
+    const cu = xiBoje == null ? c : Object.fromEntries(Object.entries(pomakni(s, c0, xiBoje)).map(([f, v]) => [f, Math.max(0, v)]));
+    const u = zb(cu, "D") / (zb(cu) || 1);
     const prikaz = Math.max(0, Math.min(1, u0 + 2 * (u - u0)));
     const L = mjesavina(tez(c0, "L"));
     const D = mjesavina(tez(c0, "D"));
@@ -412,13 +418,15 @@ export function bojaSmjese(s, c, c0 = c) {
   } else rgb = mjesavina(tez(c));
   return { hex: hexOd(rgb), jakost };
 }
-// Kako se boja promijeni od ravnoteže do nove ravnoteže: "L" | "D" (prevladava boja te strane), "jaca" | "slabija",
-// "ista".
-export function promjenaBoje(s, prije, poslije) {
+// Kako se boja promijeni od ravnoteže do nove ravnoteže: "L" | "D" (boja se mijenja prema boji te strane), "jaca" |
+// "slabija", "ista". smjer (uz zamišljene koncentracije): s dvije obojene vrste boja prati smjer pomaka (strana prema
+// kojoj se ravnoteža pomiče dobiva svoju boju), a ne izmišljene udjele 1 : 1.
+export function promjenaBoje(s, prije, poslije, smjer = null) {
   const vr = vrstaBoje(s);
   if (!vr) return null;
   const o = obojena(s);
   const zb = (c, strana) => o.filter((x) => strana == null || x.strana === strana).reduce((a, x) => a + (c[x.formula] ?? 0), 0);
+  if (vr === "dvije" && smjer) return { udesno: "D", ulijevo: "L", nema: "ista" }[smjer] ?? null;
   if (vr === "dvije") {
     const u0 = zb(prije, "D") / (zb(prije) || 1);
     const u1 = zb(poslije, "D") / (zb(poslije) || 1);
@@ -436,7 +444,7 @@ export function opcijeBoje(s) {
   const naStrani = (strana) => {
     const x = o.filter((v) => v.strana === strana);
     const b = bojaVrste(s, x[0].formula);
-    return `prevladava ${BOJE[b].z} boja (${x.map((v) => `⟦${v.formula}⟧`).join(", ")})`;
+    return `boja se mijenja prema ${BOJE[b].z.replace(/a$/, "oj")} (${x.map((v) => `⟦${v.formula}⟧`).join(", ")})`;
   };
   if (vr === "dvije") return [{ kljuc: "L", tekst: naStrani("L") }, { kljuc: "D", tekst: naStrani("D") }, { kljuc: "ista", tekst: "boja se ne mijenja" }];
   const b = BOJE[bojaVrste(s, o[0].formula)].z;
@@ -466,7 +474,7 @@ export function rjesenjePomaka(s) {
   const sim = simuliraj(s, st, s.promjena);
   const p = pomak(s, s.promjena);
   const out = { smjer: p?.smjer, sim, pomak: p };
-  out.boja = promjenaBoje(s, st.c, sim.poslije.c);
+  out.boja = promjenaBoje(s, st.c, sim.poslije.c, st.zamisljeno ? p?.smjer : null);
   if (isText(s.tvar) && s.tvar in st.c) {
     const a = st.c[s.tvar];
     const b = sim.poslije.c[s.tvar];
@@ -916,7 +924,9 @@ tekst, nacin:
         const p = procitajPromjenu(s.promjena);
         const x = p.formula && vrste(s).find((y) => y.formula === p.formula);
         let poruka;
-        if (x && bojaVrste(s, x.formula) && bojaVrste(s, x.formula) !== "bezbojna" && (p.vrsta === "dodaj" || p.vrsta === "ukloni"))
+        if (vrstaBoje(s) === "dvije" && !s.ravnotezne && rj.smjer !== "nema")
+          poruka = "Boja prati pomak ravnoteže: strana prema kojoj se ravnoteža pomiče dobiva više svoje obojene tvari, pa se boja mijenja prema boji te strane.";
+        else if (x && bojaVrste(s, x.formula) && bojaVrste(s, x.formula) !== "bezbojna" && (p.vrsta === "dodaj" || p.vrsta === "ukloni"))
           poruka = `Pomak samo djelomično poništi promjenu: ${x.formula} (${BOJE[bojaVrste(s, x.formula)].z} boja) ostane ${p.vrsta === "dodaj" ? "više" : "manje"} nego prije.`;
         else if (rj.smjer === "nema") poruka = "Ravnoteža se ne pomiče, pa ni omjer obojenih tvari ostaje isti.";
         else poruka = `Boju daju obojene tvari (${obojena(s).map((y) => `${y.formula} ${BOJE[bojaVrste(s, y.formula)].z}`).join(", ")}): kojih ima više kad se ravnoteža pomakne?`;
