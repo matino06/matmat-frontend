@@ -111,7 +111,8 @@
       const korak = (now) => {
         const t = Math.min(1, (now - t0) / 1500);
         const e = 1 - (1 - t) ** 3;
-        prikaz = { ...sim.poremeceno, c: Object.fromEntries(u.map((x) => [x.formula, sim.poremeceno.c[x.formula] + x.nu * sim.xi * e])) };
+        const korakom = (cc) => Object.fromEntries(u.map((x) => [x.formula, cc[x.formula] + x.nu * sim.xi * e]));
+        prikaz = { ...sim.poremeceno, c: korakom(sim.poremeceno.c), cb: korakom(sim.poremeceno.cb) };
         if (t < 1) raf = requestAnimationFrame(korak);
         else {
           prikaz = sim.poslije;
@@ -282,6 +283,8 @@
     {spec}
     c={prikaz.c}
     c0={pocetak.c}
+    cb={prikaz.cb}
+    cb0={pocetak.cb}
     prije={nacin === "pomak" && !otkriveno ? null : prije}
     V={prikaz.V}
     T={prikaz.T}

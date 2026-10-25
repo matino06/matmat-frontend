@@ -6,13 +6,13 @@
   import { BOJE } from "$lib/lesson/katalog/kemija/_reakcije.js";
   import { ukljucene, bojaSmjese, bojaVrste, kvocijent, jedinicaK, jedinicaVelicine, simbolK, slovo, zapisBroja, zapisSmjera } from "$lib/lesson/katalog/kemija/ravnoteza.js";
 
-  // c0: početna ravnoteža (mjerilo boje), prije: prethodna ravnoteža (crtica na stupcu), faza: "ravnoteza" |
+  // c0: početna ravnoteža (mjerilo boje), cb / cb0: sastav za ton boje (vidi bojaSmjese), prije: prethodna ravnoteža (crtica na stupcu), faza: "ravnoteza" |
   // "poremeceno" | "pomak", smjer: smjer pomaka koji je u tijeku, K0: K početne smjese
-  let { spec, c, c0, prije = null, V = 1, T = 0, K, K0 = K, skala, faza = "ravnoteza", smjer = null, pokaziKQ = true, zamisljeno = false } = $props();
+  let { spec, c, c0, cb = c, cb0 = c0, prije = null, V = 1, T = 0, K, K0 = K, skala, faza = "ravnoteza", smjer = null, pokaziKQ = true, zamisljeno = false } = $props();
 
   const u = $derived(ukljucene(spec));
   const plin = $derived(u.every((x) => x.stanje === "g" || (spec.konstanta === "Kp" && x.stanje == null)));
-  const boja = $derived(bojaSmjese(spec, c, c0));
+  const boja = $derived(bojaSmjese(spec, c, c0, cb, cb0));
   const Q = $derived(kvocijent(spec, c));
   const jedK = $derived(jedinicaK(spec));
   const jedC = $derived(jedinicaVelicine(spec));
