@@ -97,16 +97,26 @@ export function opcijeOpazanja(s) {
     const c = BOJE_TALOGA.find((b) => b !== o.talog.boja && !iz.slice(0, 2).some((x) => x.kljuc.includes(`talog:${b}`)));
     if (c) kandidati.push(sint({ ...prazno, talog: { boja: c }, boja: o.boja }, `Talog nastaje, ali nije ${BOJE[c].m}.`));
   }
+  if (o.zamucenje) {
+    // „bijeli talog“ bi bio točan opis zamućenja (vidi isto niže), pa krivi talog druge boje
+    const c = BOJE_TALOGA.find((b) => b !== o.zamucenje.boja);
+    if (c) kandidati.push(sint({ ...prazno, talog: { boja: c }, boja: o.boja }, `Nastaju sitne čestice, ali nisu ${BOJE[c].z.replace(/a$/, "e")}.`));
+  }
   if (!o.plamen) {
     if (!o.plin && !o.indikator) kandidati.push(sint({ ...prazno, plin: { formula: "?", jakost: 3 } }, "Ovdje se ne razvija plin."));
     if (imaPromjenu(o)) kandidati.push(sint(prazno, "Ovdje se vidi promjena."));
     if (!o.talog && !o.indikator) kandidati.push(sint({ ...prazno, talog: { boja: "bijela" } }, "Ovdje ne nastaje talog."));
   }
   kandidati.push(...iz.slice(2));
+  // „Nastaje bijeli talog.“ uz točno „Otopina se zamuti.“ (CO₂ u vapnenoj vodi: zamućenje je sitni talog CaCO₃) i
+  // obrnuto opisuju isto, pa nisu krivi odgovor
+  const isto = (kljuc) =>
+    (o.zamucenje && kljuc.replace(`talog:${o.zamucenje.boja}`, "zamucenje") === tocna.kljuc) ||
+    (o.talog && kljuc.replace("zamucenje", `talog:${o.talog.boja}`) === tocna.kljuc);
   const krive = [];
   for (const k of kandidati) {
     if (krive.length >= n - 1) break;
-    if (vidjeno.has(k.kljuc) || tekstovi.has(k.tekst)) continue;
+    if (vidjeno.has(k.kljuc) || tekstovi.has(k.tekst) || isto(k.kljuc)) continue;
     vidjeno.add(k.kljuc);
     tekstovi.add(k.tekst);
     krive.push(k);
