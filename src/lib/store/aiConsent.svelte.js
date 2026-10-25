@@ -2,7 +2,7 @@ import { apiClient } from "$lib/api/apiClient";
 
 // AI consent (GET/POST /account/ai-consent): whether the student allows their data to be sent to the AI. The same
 // text and version as the iOS app; the backend stores the decision with the version, time and source.
-export const AI_CONSENT_VERSION = "2026-10-15";
+export const AI_CONSENT_VERSION = "2026-10-23";
 
 export const AI_CONSENT_TITLE = "AI asistent i tvoji podaci";
 
@@ -15,12 +15,23 @@ export const AI_CONSENT_SECTIONS = [
     heading: "Kome",
     text: "MatMat to šalje preko usluge OpenRouter modelima tvrtki Anthropic, OpenAI, Google i Xiaomi, i to samo pružateljima koji podatke ne čuvaju i ne uče na njima.",
   },
-  { heading: "Što se ne šalje", text: "Tvoje ime i e-mail adresa ne šalju se nikad." },
+  {
+    heading: "Što se ne šalje",
+    text: "Tvoje ime i e-mail adresa ne šalju se nikad.",
+  },
+  {
+    heading: "Ako imaš manje od 16 godina",
+    text: "AI uključi samo ako se tvoj roditelj ili skrbnik slaže.",
+  },
   {
     heading: "Ako ne pristaneš",
     text: "I dalje rješavaš zadatke, mapu, ponavljanje i višestruki izbor na probnoj maturi. AI asistent i AI ocjenjivanje bit će isključeni.",
   },
 ];
+
+// Ticked before AI is turned on: consent to processing is valid from 16 in Croatia; younger students need a parent's.
+export const AI_CONSENT_AGE =
+  "Imam 16 ili više godina, ili se moj roditelj ili skrbnik slaže.";
 
 // granted: true / false once decided, null while undecided; loaded: the answer arrived (an error leaves it unknown,
 // so nobody is asked twice because of a bad connection).
@@ -46,7 +57,11 @@ export const decideAiConsent = async (granted) => {
   const r = await apiClient("/account/ai-consent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ granted, version: AI_CONSENT_VERSION, source: "web" }),
+    body: JSON.stringify({
+      granted,
+      version: AI_CONSENT_VERSION,
+      source: "web",
+    }),
   });
   if (!r.ok) throw new Error(String(r.status));
   const body = await r.json();
