@@ -78,3 +78,10 @@ pogledati u pregledniku (`/lab/lekcija?z=katalog&tip=<tip>`; stranica čita `lab
 - Boje koje se spominju u tekstu primjera neka se zovu isto kao u widgetu (npr. fenolftalein „ljubičast“, ne jednom „ružičast“).
 - Pregled u pregledniku: `npx vite dev --config vite.pregled.config.mjs --port <tvoj port>` u worktreeju (config je
   lokalan, ne commitaj ga; `lab-out` je link). Ne koristi portove 5173 i 5181.
+
+## Boje u ravnoteži (za lekcije)
+
+Bez zadanih koncentracija `ravnoteza` boju određuje omjerom obojenih tvari: dodatak ili uklanjanje obojene tvari
+pomiče boju prema dodanoj (od uklonjene), ostale promjene prate smjer pomaka. Kad su obje strane obojene, omjer
+može ići suprotno od školskog opisa: kod Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺ dodatak Fe³⁺ smanji omjer [Fe(SCN)]²⁺ : Fe³⁺.
+Za školski odgovor „crvena postaje jača“ označi Fe³⁺ kao `bezbojna` (blijeda otopina), kao u udžbeniku.
