@@ -976,7 +976,10 @@ provjerava da se zadani podaci slažu i daje poruke za tipične greške: zamijen
       const f = faktor(kor.velicina, kor.jedinica);
       const izUcenika = kor.pravilo.f(k) / f;
       const ulaz = String(unosi[i] ?? "");
-      const broj = parseNumber(ulaz, kor.jedinica);
+      // maseni udio traži se kao decimalni broj, ali „10 %“ je isti udio kao 0,10
+      const uPostocima = kor.jedinica === "" && rastavi(kor.velicina)?.baza === "w" && /%\s*$/.test(ulaz);
+      const uPost = uPostocima ? parseNumber(ulaz.replace(/\s*%\s*$/, "")) : null;
+      const broj = uPostocima ? (isNum(uPost) ? uPost / 100 : null) : parseNumber(ulaz, kor.jedinica);
       const ime = kor.oznaka ?? oznaka(kor.velicina, s);
       const prihvati = (b) => near(b, kor.vrijednost, Math.abs(kor.vrijednost) * pct) || near(b, izUcenika, Math.abs(izUcenika) * pct);
       if (isNum(broj) && prihvati(broj)) {
@@ -996,7 +999,7 @@ provjerava da se zadani podaci slažu i daje poruke za tipične greške: zamijen
         }
       } else
         r = checkNumber({
-          input: ulaz,
+          input: uPostocima && isNum(broj) ? broj : ulaz,
           answer: izUcenika,
           tol: Math.abs(izUcenika) * pct,
           unit: kor.jedinica,
