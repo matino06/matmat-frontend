@@ -278,11 +278,15 @@ const traziOf = (s) => [].concat(s?.trazi ?? []).map((t) => (typeof t === "strin
 export const traziPopis = traziOf;
 const jeTrazenKw = (s) => traziOf(s).includes("Kw");
 
+const OPCE_KISELINE = ["HA", "HX"];
 // Otopina iz speca: {formula, naziv, vrsta, n, c, K, Kzadan, alfa, priroda: "kiselina"|"baza"|"neutralno"} ili {greska}
 export function otopinaOf(o) {
   if (!o || typeof o !== "object") return { greska: "otopina mora biti {formula, c, …}" };
   if (!isText(o.formula)) return { greska: "otopina treba formulu (npr. \"HCl\", \"CH₃COOH\")" };
-  if (!atomiOd(o.formula.replace(/[⁺⁻+−-]+$/, ""))) return { greska: `formula „${o.formula}“ se ne da pročitati` };
+  // opća slaba kiselina iz udžbenika (HA, HX): nije prava formula, ali uz Ka ili alfa i vrsta račun je isti
+  const opca = OPCE_KISELINE.includes(o.formula);
+  if (opca && !isNum(o.Ka) && o.vrsta !== "kiselina") return { greska: `„${o.formula}“ je opća slaba kiselina: zadaj Ka ili vrsta: "kiselina" (uz alfa ili izmjereni pH)` };
+  if (!opca && !atomiOd(o.formula.replace(/[⁺⁻+−-]+$/, ""))) return { greska: `formula „${o.formula}“ se ne da pročitati` };
   const t = tvar(o.formula);
   const Kzadan = isNum(o.Ka) ? o.Ka : isNum(o.Kb) ? o.Kb : null;
   let vrsta = t?.vrsta ?? null;
@@ -290,6 +294,7 @@ export function otopinaOf(o) {
     if (isNum(o.Ka)) vrsta = "slaba_kiselina";
     else if (isNum(o.Kb)) vrsta = "slaba_baza";
     else if (isNum(o.alfa) && (o.vrsta === "kiselina" || o.vrsta === "baza")) vrsta = o.vrsta === "kiselina" ? "slaba_kiselina" : "slaba_baza";
+    else if (opca) vrsta = "slaba_kiselina";
     else
       return {
         greska: `„${o.formula}“ nije u popisu jakih kiselina, lužina, slabih kiselina i baza ni soli; za slabu kiselinu zadaj Ka, za slabu bazu Kb (ili alfa i vrsta: "kiselina" | "baza")`,
