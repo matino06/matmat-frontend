@@ -144,6 +144,8 @@ export const POTENCIJALI = [
   { oks: "Sn²⁺", red: "Sn", e: 2, E: -0.137, reakcija: "Sn²⁺ + 2 e⁻ ⇌ Sn" },
   { oks: "Ni²⁺", red: "Ni", e: 2, E: -0.257, reakcija: "Ni²⁺ + 2 e⁻ ⇌ Ni" },
   { oks: "Co²⁺", red: "Co", e: 2, E: -0.28, reakcija: "Co²⁺ + 2 e⁻ ⇌ Co" },
+  // −0,352 V kako piše na ispitnom listu (provjereno 2026-10-25 na dvije stranice lista); literaturna vrijednost je
+  // −0,403 V, ali učenik na maturi računa s brojem s lista
   { oks: "Cd²⁺", red: "Cd", e: 2, E: -0.352, reakcija: "Cd²⁺ + 2 e⁻ ⇌ Cd" },
   { oks: "Fe²⁺", red: "Fe", e: 2, E: -0.447, reakcija: "Fe²⁺ + 2 e⁻ ⇌ Fe" },
   { oks: "Cr³⁺", red: "Cr", e: 3, E: -0.744, reakcija: "Cr³⁺ + 3 e⁻ ⇌ Cr" },
