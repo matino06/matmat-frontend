@@ -361,6 +361,12 @@ function greske(id, k, s, m) {
 // ── zapisi ──
 export const zapisMl = (v, dec = 2) => (isNum(v) ? v.toFixed(dec).replace(".", ",") : "");
 const zapisN = (v) => zapisC(v);
+const JEDINICA_KORAKA = {
+  V_t: /\s*(mL|ml)\s*$/,
+  c_a: /\s*(mol\s*\/\s*dm³|mol\s*\/\s*dm3|mol\s*dm⁻³|mol\/L)\s*$/i,
+  n: /\s*mol\s*$/i,
+  sve: /\s*(mol\s*\/\s*dm³|mol\s*\/\s*dm3|mol\s*dm⁻³|mol\/L|mol|mL|ml|L|dm³|g)\s*$/i,
+};
 export const zapisVrijednosti = (id, v) => (id === "V_t" ? `${zapisMl(v, 1)} mL` : id === "c_a" ? `${zapisC(v)} mol/dm³` : `${zapisN(v)} mol`);
 const zapisZadan = (zapis, v) => zapis ?? formatNumber(v);
 
@@ -649,7 +655,7 @@ tekst, nacin:
         const poslije = zapisPH(m.pH(m.Vekv + KAP));
         return {
           tocno: false,
-          poruka: `Nije sve. Kod titracije jake kiseline jakom lužinom pH oko točke ekvivalencije skoči naglo: kap prije je pH ${prije}, a kap poslije ${poslije}. U tom skoku boju mijenja i ${INDIKATORI[nedostaju[0]].naziv}.`,
+          poruka: `Nije sve. Kod titracije ${m.an.priroda === "kiselina" ? "jake kiseline jakom lužinom" : "jake lužine jakom kiselinom"} pH oko točke ekvivalencije skoči naglo: kap prije je pH ${prije}, a kap poslije ${poslije}. U tom skoku boju mijenja i ${INDIKATORI[nedostaju[0]].naziv}.`,
           nedostaju,
         };
       }
@@ -675,10 +681,13 @@ tekst, nacin:
         .map((g) => ({ vrijednost: g.v, poruka: g.poruka, tolerancija: tol(g.v) }));
       let ulaz = String(unosi[i] ?? "").trim();
       if (ulaz.includes("=")) ulaz = ulaz.slice(ulaz.lastIndexOf("=") + 1).trim();
-      ulaz = ulaz.replace(/\s*(mol\s*\/\s*dm³|mol\s*\/\s*dm3|mol\s*dm⁻³|mol\/L|mol|mL|ml)\s*$/i, "").trim();
+      // skida se samo jedinica tog koraka („40 mol“ nije V = 40 mL)
+      ulaz = ulaz.replace(JEDINICA_KORAKA[kor.id === "V_t" || kor.id === "c_a" ? kor.id : "n"], "").trim();
       const broj = parseNumber(ulaz);
       let r;
-      if (isNum(broj) && prihvaceno.some((v) => near(broj, v, tol(v)))) r = { tocno: true };
+      const tuda = ulaz.match(JEDINICA_KORAKA.sve);
+      if (!isNum(broj) && tuda && isNum(parseNumber(ulaz.slice(0, tuda.index)))) r = { tocno: false, poruka: `Jedinica nije dobra: ${kor.oznaka} je u ${kor.jed}, a ne u ${tuda[1]}.` };
+      else if (isNum(broj) && prihvaceno.some((v) => near(broj, v, tol(v)))) r = { tocno: true };
       else r = checkNumber({ input: broj ?? ulaz, answer: kor.vrijednost, tol: tol(kor.vrijednost), unit: "", krivo, savjet: s.savjet || `Pogledaj: ${kor.formula}.` });
       if (!r.tocno) return koraci.length > 1 ? { ...r, praznina: i, poruka: `${kor.oznaka}: ${r.poruka}` } : { ...r, praznina: 0 };
       k[kor.id] = broj;
