@@ -259,7 +259,8 @@
   function znacajne(v) {
     if (v === 0) return "0";
     const e = Math.floor(Math.log10(Math.abs(Number(v.toPrecision(3)))));
-    if (e < -3 || e >= 6) return formatSci(v);
+    if (e < -3 || e >= 4) return formatSci(v);
+    if (e === 3) return String(Number(v.toPrecision(3)));
     return v.toFixed(Math.max(0, 2 - e)).replace("-", "−").replace(".", ",");
   }
   const broj = (q, v) =>
