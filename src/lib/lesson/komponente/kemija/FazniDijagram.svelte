@@ -372,7 +372,8 @@
       out.putevi.push({ A: [P.A.u, P.A.w], B: [P.B.u, P.B.w], klasa: "put" });
       if (rijeseno && !izravno)
         P.koraci.forEach((k, i) => {
-          out.tocke.push({ u: k.u, w: k.w, klasa: "ok", oznaka: String(i + 1) });
+          // uz vrijednost broj koraka ne stane na isto mjesto (prekrivali bi se)
+          out.tocke.push({ u: k.u, w: k.w, klasa: "ok", oznaka: vrijednosti ? "" : String(i + 1) });
           if (vrijednosti) out.oznake.push({ u: k.u, w: k.w, z: sJ(zapisKoraka(M, P, k), jedinicaKoraka(M, P)) });
         });
     }
