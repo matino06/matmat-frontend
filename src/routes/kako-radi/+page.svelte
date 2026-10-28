@@ -58,11 +58,6 @@
   ];
 </script>
 
-<svelte:head>
-  <title>MatMat — Kako radi</title>
-  <meta name="description" content="MatMat te vraća na gradivo baš kad ga počneš zaboravljati i vodi te redom, od osnova prema složenijem. Evo kako radi razmaknuto ponavljanje i zašto je bolje od bubanja." />
-</svelte:head>
-
 <MarketingShell>
   <section class="kr-hero hm-wrap">
     <h1>Ono što naučiš danas, znat ćeš i na maturi</h1>

@@ -1,0 +1,83 @@
+<!doctype html>
+<!--
+  Link preview images (og:image), drawn in the landing page's look.
+  scripts/og/render.sh opens this file with ?v=<variant> in headless Chrome and
+  saves the screenshot to static/og/. Variants: home, kako-radi (1200×630).
+-->
+<html lang="hr">
+<head>
+<meta charset="utf-8" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/500.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/600.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.0.1/600.css" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: #0a0a0b; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: "Geist Sans", system-ui, sans-serif; color: #ededef; }
+  .card { position: relative; width: 1200px; height: 630px; overflow: hidden; display: none; }
+  body[data-v="home"] #home, body[data-v="kako-radi"] #kako-radi { display: block; }
+
+  /* the hero's faint grid, fading out to the right */
+  .card::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 90% at 30% 40%, #000 20%, transparent 75%);
+  }
+  .card::after {
+    content: ""; position: absolute; right: -120px; bottom: -200px; width: 760px; height: 620px;
+    background: radial-gradient(ellipse 50% 50% at 50% 50%, hsl(239 60% 50% / .30), transparent 70%);
+  }
+  .text { position: absolute; left: 72px; top: 64px; bottom: 60px; width: 640px; display: flex; flex-direction: column; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 600; letter-spacing: -.02em; }
+  .mark { width: 52px; height: 52px; border-radius: 16px; background: #6467f2; display: grid; place-items: center; font-family: "Geist Mono", monospace; font-weight: 600; font-size: 26px; color: #fff; }
+  h1 { margin-top: auto; font-size: 66px; line-height: 1.02; font-weight: 600; letter-spacing: -.045em; text-wrap: balance; }
+  .sub { margin-top: 22px; font-size: 26px; line-height: 1.35; color: #a1a1a8; font-weight: 500; letter-spacing: -.01em; }
+  .url { margin-top: auto; font-size: 22px; color: #6b6b73; font-weight: 500; }
+
+  /* home: the iPhone app's Danas screen, bleeding off the bottom */
+  .phone { position: absolute; z-index: 1; right: 86px; top: 70px; width: 330px; padding: 10px; border-radius: 54px; background: #1b1b1f; box-shadow: 0 0 0 1.5px #2e2e34, 0 40px 100px rgba(0,0,0,.6); }
+  .phone img { display: block; width: 100%; border-radius: 44px; }
+
+  /* kako-radi: when each topic comes back */
+  .plan { position: absolute; z-index: 1; right: 72px; top: 150px; width: 400px; border: 1.5px solid #2e2e34; border-radius: 22px; background: #111113; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,.6); }
+  .row { display: flex; align-items: center; gap: 14px; padding: 19px 22px; font-size: 21px; font-weight: 500; }
+  .row + .row { border-top: 1.5px solid #232328; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .row .name { flex: 1; }
+  .row .when { color: #6b6b73; font-size: 19px; }
+
+</style>
+</head>
+<body>
+  <div class="card" id="home">
+    <div class="text">
+      <div class="brand"><span class="mark">M</span>MatMat</div>
+      <h1>Priprema za maturu koja pamti umjesto tebe</h1>
+      <p class="sub">Matematika A i B te fizika za državnu maturu</p>
+      <p class="url">matmat.online</p>
+    </div>
+    <div class="phone"><img src="../../static/images/app/01-zadaci.jpg" alt="" /></div>
+  </div>
+
+  <div class="card" id="kako-radi">
+    <div class="text">
+      <div class="brand"><span class="mark">M</span>MatMat</div>
+      <h1>Ono što naučiš danas, znat ćeš i na maturi</h1>
+      <p class="sub">Zadatak se vraća baš kad ga počneš zaboravljati</p>
+      <p class="url">matmat.online/kako-radi</p>
+    </div>
+    <div class="plan">
+      <div class="row"><span class="dot" style="background:#fbbf24"></span><span class="name">Logaritmi</span><span class="when">sutra</span></div>
+      <div class="row"><span class="dot" style="background:#6467f2"></span><span class="name">Kompleksni brojevi</span><span class="when">za 3 dana</span></div>
+      <div class="row"><span class="dot" style="background:#6467f2"></span><span class="name">Graf funkcije</span><span class="when">za 11 dana</span></div>
+      <div class="row"><span class="dot" style="background:#34d399"></span><span class="name">Kvadratna funkcija</span><span class="when">za 46 dana</span></div>
+    </div>
+  </div>
+
+
+  <script>
+    document.body.dataset.v = new URLSearchParams(location.search).get("v") || "home";
+  </script>
+</body>
+</html>

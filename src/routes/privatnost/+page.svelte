@@ -54,11 +54,6 @@
   ];
 </script>
 
-<svelte:head>
-  <title>MatMat — Pravila privatnosti</title>
-  <meta name="description" content="Koje podatke MatMat prikuplja, zašto, s kim ih dijeli, koliko ih čuva i kako ih možeš obrisati." />
-</svelte:head>
-
 <LegalPage title="Pravila privatnosti" lead="Vrijede za web matmat.online i iOS aplikaciju MatMat. Zadnja izmjena: 21. listopada 2026.">
   <h2>Ukratko</h2>
   <ul>
