@@ -2,10 +2,12 @@
   import { onMount } from "svelte";
   import { userData, handleLogIn } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
+  import { page } from "$app/state";
   import MarketingShell from "$lib/components/marketing/MarketingShell.svelte";
-  import GoogleButton from "$lib/components/marketing/GoogleButton.svelte";
+  import StartCta from "$lib/components/marketing/StartCta.svelte";
   import ClosingCta from "$lib/components/marketing/ClosingCta.svelte";
   import AppDemo from "$lib/components/landing/AppDemo.svelte";
+  import AppShowcase from "$lib/components/landing/AppShowcase.svelte";
   import DemoView from "$lib/components/landing/DemoView.svelte";
   import DemoChat from "$lib/components/landing/DemoChat.svelte";
   import HeroTiles from "$lib/components/landing/HeroTiles.svelte";
@@ -17,8 +19,14 @@
     else handleLogIn();
   }
 
+  // A phone that uses the app gets the app's story instead of the web app's
+  // preview (the web app is closed there), and stays here when signed in.
+  let platform = $derived(page.data.platform ?? { os: "other", phone: false, appUrl: null });
+  let appPhone = $derived(!!platform.appUrl);
+  let androidPhone = $derived(platform.os === "android" && platform.phone && !platform.appUrl);
+
   $effect(() => {
-    if (!userData.loading && userData.user) goto("/tasks");
+    if (!userData.loading && userData.user && !appPhone) goto("/tasks");
   });
 
   function toDemo(e) {
@@ -37,17 +45,30 @@
   const LEVELS = [
     {
       id: "A",
-      name: "Viša razina",
+      title: "Matematika A",
+      kind: "Viša razina",
       badge: "MA",
       color: "239",
-      text: "Za učenike koji polažu A razinu. Sve gradivo, a algebra i funkcije nose pola bodova, pa ih dobivaš najčešće.",
+      text: "Sve gradivo, a algebra i funkcije nose pola bodova, pa ih dobivaš najčešće.",
+      cta: "Odaberi Matematiku A",
     },
     {
       id: "B",
-      name: "Osnovna razina",
+      title: "Matematika B",
+      kind: "Osnovna razina",
       badge: "MB",
       color: "215",
-      text: "Za učenike koji polažu B razinu. Zadaci prate bodovanje B ispita, s više brojeva i statistike.",
+      text: "Zadaci prate bodovanje B ispita, s više brojeva i statistike.",
+      cta: "Odaberi Matematiku B",
+    },
+    {
+      id: "F",
+      title: "Fizika",
+      kind: "Državna matura",
+      badge: "FIZ",
+      color: "280",
+      text: "Lekcije s pokusima koje pokrećeš sam, od titranja i valova do leća i strujnih krugova.",
+      cta: "Odaberi Fiziku",
     },
   ];
 
@@ -108,21 +129,31 @@
     <HeroTiles />
     <h1>Priprema za maturu koja pamti umjesto tebe</h1>
     <p class="hm-lead">
-      Svaki dan dobiješ zadatke iz matematike s rješenjima korak po korak. Ocijeniš kako ti je išlo, a MatMat odredi kad ti isti ishod treba ponovno. Za A i B razinu državne mature.
+      Svaki dan dobiješ zadatke s rješenjima korak po korak. Ocijeniš kako ti je išlo, a MatMat odredi kad ti isti ishod treba ponovno. Matematika A i B te fizika za državnu maturu.
     </p>
     <div class="hm-cta">
-      <GoogleButton />
-      <span class="hm-cta-note">Besplatno, bez kartice i instalacije.</span>
+      <StartCta placement="hero" />
+      {#if appPhone}
+        <span class="hm-cta-note">Besplatno i bez oglasa. Isti račun radi i na računalu.</span>
+      {:else if androidPhone}
+        <span class="hm-cta-note">Besplatno. Android aplikacija stiže uskoro, a do tada sve radi ovdje u pregledniku.</span>
+      {:else}
+        <span class="hm-cta-note">Besplatno, bez kartice. Imaš iPhone? <a href="#aplikacija">Preuzmi aplikaciju</a></span>
+      {/if}
     </div>
   </section>
 
-  <p class="hm-try hm-wrap">Ispod je aplikacija kakvu vidiš nakon prijave. Riješi zadatak i ocijeni ga, ili označi dio zadatka i pitaj AI.</p>
+  {#if appPhone}
+    <div class="hm-app-first"><AppShowcase /></div>
+  {:else}
+    <p class="hm-try hm-wrap">Ispod je aplikacija kakvu vidiš nakon prijave. Riješi zadatak i ocijeni ga, ili označi dio zadatka i pitaj AI.</p>
 
-  <div class="hm-stage" id="demo">
-    <div class="hm-window hm-wrap-wide">
-      <AppDemo />
+    <div class="hm-stage" id="demo">
+      <div class="hm-window hm-wrap-wide">
+        <AppDemo />
+      </div>
     </div>
-  </div>
+  {/if}
 
   <section class="hm-features hm-wrap" aria-labelledby="hm-features-h">
     <h2 id="hm-features-h">Ti rješavaš zadatke. MatMat vodi računa o svemu ostalom.</h2>
@@ -184,33 +215,53 @@
     </div>
   </section>
 
+  {#if !appPhone}
+    <AppShowcase />
+  {/if}
+
+  <!-- On a phone that uses the app the subject is picked in the app, so the
+       columns only say what's in it. -->
   <section class="hm-levels hm-wrap" aria-labelledby="hm-levels-h">
-    <h2 id="hm-levels-h">Koju razinu polažeš?</h2>
+    <h2 id="hm-levels-h">Što polažeš?</h2>
     <div class="hm-levels-grid">
       {#each LEVELS as l (l.id)}
-        <button class="hm-level" onclick={() => chooseLevel(l.id)}>
+        <svelte:element
+          this={appPhone ? "div" : "button"}
+          class="hm-level"
+          class:static={appPhone}
+          onclick={appPhone ? undefined : () => chooseLevel(l.id)}
+        >
           <span class="hm-level-head">
             <span class="badge-sq" style="background: hsl({l.color} 75% 55%)">{l.badge}</span>
             <span class="hm-level-title">
-              <span class="hm-level-name">{l.id} razina</span>
-              <span class="hm-level-kind">{l.name}</span>
+              <span class="hm-level-name">{l.title}</span>
+              <span class="hm-level-kind">{l.kind}</span>
             </span>
           </span>
           <span class="hm-level-text">{l.text}</span>
-          <span class="hm-level-cta">
-            Odaberi {l.id} razinu
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
-          </span>
-        </button>
+          {#if !appPhone}
+            <span class="hm-level-cta">
+              {l.cta}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+            </span>
+          {/if}
+        </svelte:element>
       {/each}
     </div>
   </section>
 
-  <ClosingCta
-    title="Prvi zadatak te čeka."
-    text="MatMat je besplatan i radi u pregledniku. Prijavi se Googleom i odmah dobiješ današnje zadatke."
-    secondary={{ label: "Isprobaj aplikaciju", href: "#demo", onclick: toDemo }}
-  />
+  {#if appPhone}
+    <ClosingCta
+      title="Prvi zadatak te čeka."
+      text="Preuzmi MatMat i odmah dobiješ današnje zadatke. Besplatno je i bez oglasa."
+    />
+  {:else}
+    <ClosingCta
+      title="Prvi zadatak te čeka."
+      text="MatMat je besplatan i radi u pregledniku. Prijavi se Googleom i odmah dobiješ današnje zadatke."
+      secondary={{ label: "Isprobaj aplikaciju", href: "#demo", onclick: toDemo }}
+    />
+  {/if}
 </MarketingShell>
 
 <style>
@@ -269,7 +320,10 @@
     align-items: center;
     gap: 14px;
   }
-  .hm-cta-note { font-size: 13px; color: var(--text-faint); }
+  .hm-cta-note { font-size: 13px; line-height: 1.5; color: var(--text-faint); max-width: 34em; text-wrap: pretty; }
+  .hm-cta-note a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+  .hm-cta-note a:hover { color: var(--text); }
+  .hm-app-first { margin-top: 56px; }
   .hm-try {
     margin: 36px auto 0;
     text-align: center;
@@ -359,7 +413,7 @@
 
   /* Levels */
   .hm-levels { padding-top: 64px; padding-bottom: 120px; border-top: 1px solid var(--border); }
-  .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .hm-levels .badge-sq { width: 32px; height: 32px; font-size: 11px; }
   /* The whole column is the button: no card fill until hover, so the section
      stays as light as the rest of the page. */
@@ -374,7 +428,7 @@
     text-align: left;
     transition: background 0.15s, border-color 0.15s;
   }
-  .hm-level:hover { background: var(--bg-elev); border-color: var(--primary-border); }
+  .hm-level:not(.static):hover { background: var(--bg-elev); border-color: var(--primary-border); }
   .hm-level-head { display: flex; align-items: center; gap: 12px; }
   .hm-level-title { display: flex; flex-direction: column; line-height: 1.25; }
   .hm-level-name { font-size: 17px; font-weight: 500; color: var(--text); }
@@ -392,12 +446,12 @@
   }
   .hm-level-cta svg { transition: transform 0.15s; }
   .hm-level:hover .hm-level-cta svg { transform: translateX(3px); }
-  .hm-levels .hm-levels-note { margin-top: 28px; font-size: 14px; color: var(--text-faint); }
 
   .hm-feat-inline { padding: 4px 0 20px 20px; border-left: 2px solid var(--primary); animation: hm-fade 0.2s ease-out; }
   @keyframes hm-fade { from { opacity: 0; } }
 
   @media (max-width: 900px) {
+    .hm-levels-grid { grid-template-columns: 1fr; gap: 12px; }
     .hm-feat { grid-template-columns: 1fr; margin-top: 32px; }
     .hm-feat-tab { padding: 16px 0 12px 18px; }
     .hm-feat-tab.active { padding-bottom: 14px; }
@@ -412,7 +466,6 @@
     .hm-features, .hm-levels { padding-top: 48px; padding-bottom: 72px; }
     .hm-feat-lead { font-size: 16px; }
     .hm-feat-text { font-size: 15px; }
-    .hm-levels-grid { grid-template-columns: 1fr; gap: 12px; }
     .hm-level { padding: 18px 20px; }
 
   }

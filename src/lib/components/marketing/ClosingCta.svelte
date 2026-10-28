@@ -1,8 +1,8 @@
 <script>
-  import GoogleButton from "./GoogleButton.svelte";
+  import StartCta from "./StartCta.svelte";
 
-  // The last section of a marketing page: one line, one sentence, sign in or a
-  // second way in (`secondary`: { label, href, onclick? }).
+  // The last section of a marketing page: one line, one sentence, the way in
+  // for this device and maybe a second one (`secondary`: { label, href, onclick? }).
   let { title, text, secondary } = $props();
 </script>
 
@@ -10,7 +10,7 @@
   <h2>{title}</h2>
   <p>{text}</p>
   <div class="cc-actions">
-    <GoogleButton />
+    <StartCta placement="closing" />
     {#if secondary}
       <a class="cc-ghost" href={secondary.href} onclick={secondary.onclick}>{secondary.label}</a>
     {/if}

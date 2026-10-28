@@ -7,12 +7,12 @@
   import { showErrorAlert } from "$lib/store/errorAlert.svelte";
   import SubjectPicker from "$lib/components/subjects/SubjectPicker.svelte";
 
-  // A level picked on the landing page preselects that maths level. If maths is
-  // all there is to pick, the subject step has nothing left to ask and is
-  // skipped; "Nazad" still lets the student change it.
+  // A level picked on the landing page preselects that maths level (or Fizika).
+  // If maths is all there is to pick, the subject step has nothing left to ask
+  // and is skipped; "Nazad" still lets the student change it.
   const remembered = readRememberedLevel();
   const onlyMaths = PROGRAMS.filter((p) => isSelectableProgram(p, userData.isAdmin)).every((p) => p.subject === "matematika");
-  let picked = $state([remembered === "B" ? 2 : 1]);
+  let picked = $state([remembered === "B" ? 2 : remembered === "F" ? 4 : 1]);
   let step = $state(remembered && onlyMaths ? 1 : 0);
   let startId = $state(null);
   let saving = $state(false);
