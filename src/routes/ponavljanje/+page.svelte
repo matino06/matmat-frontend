@@ -21,7 +21,6 @@
   import { playSound } from "$lib/sound.svelte.js";
 
   let task = $state(null);
-  let selectedTempo = $state(null);
   let isLoading = $state(false);
   let revealed = $state(false);
   let answered = $state(false);
@@ -132,7 +131,6 @@
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
           device,
-          tempo: selectedTempo,
         }),
       });
     } catch {
@@ -191,8 +189,7 @@
     if (userData.user && !loaded) {
       loaded = true;
       (async () => {
-        const [tempoRes] = await Promise.all([apiClient("/account/tempo", { method: "GET" }), mastery.load()]);
-        if (tempoRes.ok) selectedTempo = await tempoRes.json();
+        await mastery.load();
         await fetchTask();
       })();
     }
