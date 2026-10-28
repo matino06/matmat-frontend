@@ -431,8 +431,8 @@
       <p class="lx-summary-note">
         {#if cijeli.rezultat === ODMAH}Riješio si ga sam iz prve. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else if lekcija.cijeli && cijeli.zavrsni.rezultat === ODMAH}Uz korake si shvatio postupak i sličan zadatak riješio sam. Vratit ćemo ti ga uskoro da provjerimo je li ostalo.{:else if lekcija.cijeli}Ovaj tip zadatka vratit ćemo ti uskoro, pa ćeš ga ponovno vježbati.{:else if stanja.every((s) => s.rezultat === ODMAH)}Sve si znao odmah. Ovo ćemo ti ponoviti tek za dulje vrijeme.{:else}Ono što si naučio uz pomoć vratit će se ranije u ponavljanju.{/if}
       </p>
-      <!-- cijelo rješenje na jednom mjestu, kao u tekstualnom zadatku: i za učenika koji je sve znao odmah -->
-      <details class="lx-more lx-rjesenje" open>
+      <!-- cijelo rješenje na jednom mjestu, kao u tekstualnom zadatku: i za učenika koji je sve znao odmah; zatvoreno dok ga ne otvori -->
+      <details class="lx-more lx-rjesenje">
         <summary>Cijelo rješenje</summary>
         {#if lekcija.cijeli && rjesenje}
           <!-- autorovo objašnjenje u komadu, kao u tekstualnom zadatku -->
