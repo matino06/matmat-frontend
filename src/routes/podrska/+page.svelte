@@ -30,11 +30,6 @@
   ];
 </script>
 
-<svelte:head>
-  <title>MatMat — Podrška</title>
-  <meta name="description" content="Pomoć za MatMat: prijava, AI asistent, podsjetnici, brisanje računa i kontakt." />
-</svelte:head>
-
 <LegalPage title="Podrška" lead="Nešto ne radi ili imaš pitanje? Javi nam se, odgovaramo na hrvatskom.">
   <h2>Kontakt</h2>
   <p>Piši na <a href="mailto:info@matmat.online"><strong>info@matmat.online</strong></a>. Napiši s koje adrese se prijavljuješ, koristiš li web ili aplikaciju i, ako možeš, dodaj sliku zaslona.</p>

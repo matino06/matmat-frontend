@@ -26,6 +26,7 @@
   import { savjeti, ponudiSavjet } from "$lib/store/savjeti.svelte";
   import MobileAppGate from "$lib/components/marketing/MobileAppGate.svelte";
   import { APP_STORE_ID } from "$lib/config/apps";
+  import { SITE, PAGES, PRIVATE_PAGE, STRUCTURED_DATA } from "$lib/config/seo";
 
   const GA_ID = "G-E6F6X4X2XG";
 
@@ -109,6 +110,11 @@
   const PUBLIC_PATHS = ["/", "/kako-radi", "/privatnost", "/podrska"];
   let appOnly = $derived(!!data.platform?.appUrl && !PUBLIC_PATHS.includes(path));
 
+  let seo = $derived(PAGES[path] ?? PRIVATE_PAGE);
+  // The page's address without the query, so shared links with ?utm=… count as one page.
+  let canonical = $derived(SITE + (PAGES[path] ? path : "/"));
+  let structuredData = `<script type="application/ld+json">${JSON.stringify(STRUCTURED_DATA)}</` + `script>`;
+
   $effect(() => {
     if (typeof document === "undefined") return;
     document.body.classList.toggle("app-shell", showSidebar && !appOnly);
@@ -166,13 +172,35 @@
 </script>
 
 <svelte:head>
-  <title>MatMat — Priprema za maturu iz matematike i fizike</title>
-  <meta name="description" content="Svaki dan zadaci s rješenjima korak po korak, a MatMat pamti kad ti što treba ponoviti. Matematika A i B i fizika za državnu maturu, besplatno na webu i iPhoneu." />
-  <meta property="og:title" content="MatMat — Priprema za maturu iz matematike i fizike" />
-  <meta property="og:description" content="Svaki dan zadaci s rješenjima korak po korak, a MatMat pamti kad ti što treba ponoviti. Matematika A i B i fizika za državnu maturu, besplatno na webu i iPhoneu." />
-  <meta property="og:image" content="https://matmat.online/images/landing_page_dark.png" />
+  <title>{seo.title}</title>
+  <meta name="description" content={seo.description} />
+  {#if seo.noindex}
+    <meta name="robots" content="noindex" />
+  {:else}
+    <link rel="canonical" href={canonical} />
+  {/if}
+
+  <!-- Link previews: Open Graph is read by WhatsApp, iMessage, Instagram, Facebook, Discord, Slack and LinkedIn; X reads twitter:card. -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://matmat.online/" />
+  <meta property="og:site_name" content="MatMat" />
+  <meta property="og:locale" content="hr_HR" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={seo.ogTitle ?? seo.title} />
+  <meta property="og:description" content={seo.description} />
+  <meta property="og:image" content={SITE + seo.image.url} />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={seo.image.alt} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={seo.ogTitle ?? seo.title} />
+  <meta name="twitter:description" content={seo.description} />
+  <meta name="twitter:image" content={SITE + seo.image.url} />
+  <meta name="twitter:image:alt" content={seo.image.alt} />
+  {#if path === "/"}
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -- our own constant, serialised -->
+    {@html structuredData}
+  {/if}
   <!-- Safari on iPhone and iPad shows its own small banner with "Otvori" or "Preuzmi" for the app. -->
   <meta name="apple-itunes-app" content="app-id={APP_STORE_ID}" />
 </svelte:head>
