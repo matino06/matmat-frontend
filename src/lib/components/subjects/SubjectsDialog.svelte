@@ -3,7 +3,7 @@
   import { userData } from "$lib/store/user.svelte";
   import { closeSubjects } from "$lib/store/ui.svelte";
   import { courseState, saveChosenCourses, saveCurrentCourse } from "$lib/store/course.svelte";
-  import { getProgram, isVisibleProgram } from "$lib/config/programs";
+  import { getProgram, isVisibleProgram } from "$lib/config/programs.svelte";
   import SubjectPicker from "./SubjectPicker.svelte";
 
   // Before the student ever chose (older accounts), the current course stands in.

@@ -5,7 +5,7 @@
   import { panelState, openAI, openFormule, showPomoWidget } from '$lib/store/panels.svelte';
   import { uiState, closeSidebar, setSidebarCollapsed, toggleSidebarCollapsed, openSubjects } from '$lib/store/ui.svelte';
   import { courseState, setCurrentCourse } from '$lib/store/course.svelte';
-  import { PROGRAMS, isSelectableProgram } from '$lib/config/programs';
+  import { PROGRAMS, isSelectableProgram } from '$lib/config/programs.svelte';
   import { ownCourses, findOwnCourse, courseBadge, courseHue } from '$lib/store/ownCourses.svelte';
   import { apiClient } from '$lib/api/apiClient';
   import { uvod } from '$lib/store/uvod.svelte';

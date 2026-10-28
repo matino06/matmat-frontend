@@ -1,5 +1,5 @@
 <script>
-  import { PROGRAMS, subjectsFor, isSelectableProgram } from "$lib/config/programs";
+  import { PROGRAMS, subjectsFor, isSelectableProgram } from "$lib/config/programs.svelte";
 
   // `value`: ids of the picked programs, at most one per subject (a level).
   let { value = $bindable([]), isAdmin = false } = $props();
