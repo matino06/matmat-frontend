@@ -20,12 +20,9 @@
 
   let learningReminders = $state(false);
   let featureAnnouncements = $state(false);
-  let selectedTempo = $state(null);
 
   let notifLoading = $state(true);
-  let tempoLoading = $state(true);
   let savingNotifs = $state(false);
-  let savingTempo = $state(false);
   let notifSavedTimer = $state(null);
   let notifJustSaved = $state(false);
 
@@ -82,11 +79,6 @@
     }
   }
 
-  const TEMPO_OPTIONS = [
-    { value: 1, name: "Ubrzani", desc: "Brže otključavanje novih lekcija — više izazova" },
-    { value: 2, name: "Temeljiti", desc: "Sporije otključavanje — više vježbe na svakoj cjelini" },
-  ];
-
   async function fetchNotifs() {
     notifLoading = true;
     try {
@@ -98,16 +90,6 @@
       }
     } finally {
       notifLoading = false;
-    }
-  }
-
-  async function fetchTempo() {
-    tempoLoading = true;
-    try {
-      const r = await apiClient("/account/tempo", { method: "GET" });
-      if (r.ok) selectedTempo = await r.json();
-    } finally {
-      tempoLoading = false;
     }
   }
 
@@ -132,25 +114,9 @@
     }
   }
 
-  async function setTempo(value) {
-    if (selectedTempo === value || savingTempo) return;
-    savingTempo = true;
-    try {
-      const r = await apiClient("/account/tempo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(value),
-      });
-      if (r.ok) selectedTempo = value;
-    } finally {
-      savingTempo = false;
-    }
-  }
-
   $effect(() => {
     if (userData.user) {
       fetchNotifs();
-      fetchTempo();
     }
   });
 </script>
@@ -159,7 +125,7 @@
   <div class="zadaci-head" style="margin-bottom: 20px">
     <div>
       <h1>Postavke</h1>
-      <div class="sub">Predmeti, tempo učenja i obavijesti</div>
+      <div class="sub">Predmeti i obavijesti</div>
     </div>
   </div>
 
@@ -190,47 +156,8 @@
     {/if}
   </div>
 
-  <!-- Tempo card -->
-  <div class="card card-pad">
-    <div class="settings-head">
-      <div>
-        <h2 class="settings-title">Tempo učenja</h2>
-        <p class="settings-desc">Određuje brzinu otključavanja novih lekcija.</p>
-      </div>
-      {#if savingTempo}
-        <span class="settings-saving">Spremanje…</span>
-      {/if}
-    </div>
-
-    {#if tempoLoading}
-      <div class="settings-loading"><div class="spinner"></div> Učitavanje…</div>
-    {:else}
-      <div class="tempo-grid">
-        {#each TEMPO_OPTIONS as opt (opt.value)}
-          <button
-            class="tempo-card {selectedTempo === opt.value ? 'active' : ''}"
-            onclick={() => setTempo(opt.value)}
-            disabled={savingTempo}
-          >
-            <div class="tempo-card-top">
-              <div class="tempo-name">{opt.name}</div>
-              {#if selectedTempo === opt.value}
-                <div class="tempo-check">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </div>
-              {/if}
-            </div>
-            <div class="tempo-desc">{opt.desc}</div>
-          </button>
-        {/each}
-      </div>
-    {/if}
-  </div>
-
   <!-- Notifications card -->
-  <div class="card card-pad" style="margin-top: 16px">
+  <div class="card card-pad">
     <div class="settings-head">
       <div>
         <h2 class="settings-title">Obavijesti</h2>
@@ -415,38 +342,6 @@
     padding: 12px 0;
   }
 
-  .tempo-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .tempo-card {
-    text-align: left;
-    padding: 14px 16px;
-    border-radius: var(--r-lg);
-    border: 1px solid var(--border);
-    background: var(--bg-elev);
-    cursor: pointer;
-    transition: border-color .12s, background .12s;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .tempo-card:hover { border-color: var(--border-strong); background: var(--bg-hover); }
-  .tempo-card.active { border-color: var(--primary); background: var(--primary-dim); }
-  .tempo-card:disabled { cursor: not-allowed; opacity: 0.7; }
-  .tempo-card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .tempo-name { font-size: 14px; font-weight: 500; color: var(--text); }
-  .tempo-card.active .tempo-name { color: var(--primary); }
-  .tempo-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-  .tempo-check {
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: #fff;
-    display: grid; place-items: center;
-    flex-shrink: 0;
-  }
 
   .subject-row {
     display: flex;
@@ -560,7 +455,6 @@
   .actions { display: flex; justify-content: flex-end; gap: 8px; }
 
   @media (max-width: 600px) {
-    .tempo-grid { grid-template-columns: 1fr; }
     .danger-zone { flex-direction: column; align-items: flex-start; }
   }
 </style>

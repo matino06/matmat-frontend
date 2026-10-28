@@ -3,7 +3,7 @@
   import { apiClient } from "$lib/api/apiClient";
   import Sketch from "$lib/sketch/Sketch.svelte";
   import CourseLabel from "$lib/components/layout/CourseLabel.svelte";
-  import { onMount, onDestroy, tick, untrack } from "svelte";
+  import { onDestroy, tick, untrack } from "svelte";
   import { fetchReadiness } from "$lib/api/progress";
   import { renderTaskHtml } from "$lib/utils/markdownRenderer";
   import { fitMath } from "$lib/utils/fitMath";
@@ -26,7 +26,6 @@
   import { DANA_DO_ISPITA, ZADACI, lekcijeNakon, kada } from "$lib/uvod/scenarij";
 
   let task = $state(null);
-  let selectedTempo = $state(null);
   let noMoreTasks = $state(false);
   let isLoading = $state(false);
   let revealed = $state(false);
@@ -44,7 +43,6 @@
   let startTime = $state(null);
   let pendingRating = $state(null);
   let ratingKey = $state(0);
-  let switchingTempo = $state(false);
   // Vlastiti predmet: učenik je dobio zadatak koji je već riješio, a nova varijacija se upravo izrađuje.
   let waitingVariation = $state(false);
   let variationTimer;
@@ -254,7 +252,6 @@
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
           device,
-          tempo: selectedTempo,
         }),
       });
     } catch {
@@ -294,29 +291,6 @@
     showCelebration = true;
   }
 
-  async function switchToUbrzaniAndRetry() {
-    if (switchingTempo) return;
-    switchingTempo = true;
-    try {
-      const r = await apiClient("/account/tempo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(1),
-      });
-      if (!r.ok) {
-        showErrorAlert("Promjena tempa nije uspjela. Pokušaj ponovo.");
-        return;
-      }
-      selectedTempo = 1;
-      noMoreTasks = false;
-      await fetchNewTask();
-    } catch {
-      showErrorAlert("Nema veze sa serverom. Pokušaj ponovo.");
-    } finally {
-      switchingTempo = false;
-    }
-  }
-
   function getDeviceType() {
     const ua = navigator.userAgent;
     if (/iPad/.test(ua)) return "ipad";
@@ -332,14 +306,6 @@
   function renderSolution(text) {
     return renderTaskHtml(text, task?.id);
   }
-
-  onMount(async () => {
-    if (uvod.active) return;
-    const response = await apiClient("/account/tempo", { method: "GET" });
-    if (response.ok) {
-      selectedTempo = await response.json();
-    }
-  });
 
   // Load user-specific data once the user is authenticated (Auth0 has no
   // onAuthStateChanged listener, so we react to the store instead).
@@ -527,14 +493,6 @@
       <div style="font-size:48px;margin-bottom:12px">🎉</div>
       <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Nema više zadataka za danas!</h2>
       <p style="color:var(--text-dim)">Algoritam je planirao sve zadatke. Vrati se sutra.</p>
-      {#if selectedTempo === 2}
-        <div class="no-tasks-offer">
-          <p>Trenutno koristiš <strong>Temeljiti</strong> tempo. Prelaskom na <strong>Ubrzani</strong> tempo možda ima još zadataka za danas.</p>
-          <button class="btn btn-primary" onclick={switchToUbrzaniAndRetry} disabled={switchingTempo}>
-            {switchingTempo ? "Mijenjam tempo…" : "Prijeđi na Ubrzani tempo"}
-          </button>
-        </div>
-      {/if}
     </div>
 
   {:else if task}
@@ -730,17 +688,6 @@
   }
   .solution-close:hover { color: var(--text); }
 
-  .no-tasks-offer {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-  .no-tasks-offer p {
-    color: var(--text-dim);
-    font-size: 13px;
-    margin-bottom: 14px;
-    line-height: 1.55;
-  }
   .task-body::after { content: ""; display: block; clear: both; }
   .task-sketch-side { float: right; width: 44%; max-width: 420px; margin: 0 0 12px 20px; }
   @media (max-width: 700px) { .task-sketch-side { float: none; width: 100%; max-width: none; margin: 0 0 12px; } }
