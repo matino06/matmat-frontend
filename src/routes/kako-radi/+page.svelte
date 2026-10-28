@@ -1,6 +1,6 @@
 <script>
   import MarketingShell from "$lib/components/marketing/MarketingShell.svelte";
-  import GoogleButton from "$lib/components/marketing/GoogleButton.svelte";
+  import StartCta from "$lib/components/marketing/StartCta.svelte";
   import ClosingCta from "$lib/components/marketing/ClosingCta.svelte";
   import ForgettingCurve from "$lib/components/marketing/ForgettingCurve.svelte";
   import PrereqPath from "$lib/components/marketing/PrereqPath.svelte";
@@ -70,7 +70,7 @@
       MatMat ne slaže zadatke nasumično. Vraća te na gradivo baš kad ga počneš zaboravljati i vodi te redom, od osnova prema složenijem. Evo kako to radi i zašto.
     </p>
     <div class="kr-actions">
-      <GoogleButton />
+      <StartCta placement="kako-radi" />
       <a class="kr-ghost" href="/#demo">Isprobaj aplikaciju</a>
     </div>
   </section>

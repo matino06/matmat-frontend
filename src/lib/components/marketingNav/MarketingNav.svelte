@@ -9,6 +9,12 @@
   }
 
   let path = $derived(page.url.pathname);
+  // A phone that uses the app has nothing to sign in to here: the bar offers the app.
+  let appUrl = $derived(page.data.platform?.appUrl);
+
+  function trackApp() {
+    window.gtag?.("event", "app_store_click", { placement: "nav" });
+  }
 </script>
 
 <nav class="mn-nav">
@@ -19,8 +25,13 @@
     </a>
     <div class="mn-links">
       <a class="mn-link" class:active={path === '/kako-radi'} href="/kako-radi">Kako radi</a>
-      <button class="mn-btn-outline" onclick={start}>Prijava</button>
-      <button class="mn-btn-primary" onclick={start}>Počni besplatno</button>
+      {#if appUrl}
+        <a class="mn-btn-primary" href={appUrl} onclick={trackApp}>Preuzmi aplikaciju</a>
+      {:else}
+        <a class="mn-link" href="/#aplikacija">Aplikacija</a>
+        <button class="mn-btn-outline" onclick={start}>Prijava</button>
+        <button class="mn-btn-primary" onclick={start}>Počni besplatno</button>
+      {/if}
     </div>
   </div>
 </nav>

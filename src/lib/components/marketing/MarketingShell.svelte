@@ -18,10 +18,12 @@
       <nav class="hm-footer-links" aria-label="Podnožje">
         <a href="/">Početna</a>
         <a href="/kako-radi">Kako radi</a>
+        <a href="/#aplikacija">Aplikacija</a>
         <a href="/podrska">Podrška</a>
         <a href="/privatnost">Privatnost</a>
       </nav>
     </div>
+    <p class="hm-footer-legal">Apple, iPhone i iPad zaštitni su znakovi tvrtke Apple Inc., registrirani u SAD-u i drugim zemljama. App Store je uslužni znak tvrtke Apple Inc.</p>
   </footer>
 </div>
 
@@ -78,10 +80,22 @@
   .hm-footer-brand .brand-mark { width: 20px; height: 20px; font-size: 10px; border-radius: 6px; }
   .hm-footer-links { display: flex; gap: 22px; }
   .hm-footer a:hover { color: var(--text); }
+  .hm-footer-legal {
+    max-width: 1240px;
+    margin: -10px auto 0;
+    padding: 0 24px 26px;
+    box-sizing: content-box;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-faint);
+    opacity: 0.8;
+  }
 
   @media (max-width: 640px) {
     .hm :global(:where(.hm-wrap)) { padding-inline: 20px; }
     .hm-footer-inner { padding-inline: 16px; }
     .hm-footer-links { gap: 16px; }
+    .hm-footer-inner { flex-direction: column; align-items: flex-start; }
+    .hm-footer-legal { padding-inline: 16px; }
   }
 </style>

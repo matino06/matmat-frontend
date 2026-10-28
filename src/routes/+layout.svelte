@@ -24,6 +24,8 @@
   import UvodVodic from "$lib/components/uvod/UvodVodic.svelte";
   import Savjet from "$lib/components/uvod/Savjet.svelte";
   import { savjeti, ponudiSavjet } from "$lib/store/savjeti.svelte";
+  import MobileAppGate from "$lib/components/marketing/MobileAppGate.svelte";
+  import { APP_STORE_ID } from "$lib/config/apps";
 
   const GA_ID = "G-E6F6X4X2XG";
 
@@ -94,7 +96,7 @@
     return () => window.removeEventListener("resize", onResize);
   });
 
-  let { children } = $props();
+  let { children, data } = $props();
 
   let path = $derived(page.url.pathname);
   // Public pages: no sign-in needed (the privacy policy and support are linked from the App Store and the app).
@@ -103,14 +105,17 @@
   // /lab (interaktivne lekcije) postoji samo u dev načinu i radi bez prijave, kao marketinške stranice
   let isLanding = $derived(MARKETING_PATHS.includes(path) || (dev && (path === "/lab" || path.startsWith("/lab/"))));
   let showSidebar = $derived(!isLanding && (!!userData.user || uvod.active));
+  // A phone that can install our app uses the app: only the pages anyone can read stay open on it.
+  const PUBLIC_PATHS = ["/", "/kako-radi", "/privatnost", "/podrska"];
+  let appOnly = $derived(!!data.platform?.appUrl && !PUBLIC_PATHS.includes(path));
 
   $effect(() => {
     if (typeof document === "undefined") return;
-    document.body.classList.toggle("app-shell", showSidebar);
+    document.body.classList.toggle("app-shell", showSidebar && !appOnly);
   });
 
   $effect(() => {
-    if (!userData.loading && !userData.user && !isLanding && !uvod.active) {
+    if (!userData.loading && !userData.user && !isLanding && !uvod.active && !appOnly) {
       goto("/");
     }
   });
@@ -161,13 +166,15 @@
 </script>
 
 <svelte:head>
-  <title>MatMat — Priprema za maturu iz matematike</title>
-  <meta name="description" content="Vježbaj matematiku za maturu BESPLATNO uz personalizirane zadatke, objašnjenja, AI asistenta i praćenje napretka." />
-  <meta property="og:title" content="MatMat — Priprema za maturu iz matematike" />
-  <meta property="og:description" content="Vježbaj matematiku za maturu BESPLATNO uz personalizirane zadatke, objašnjenja, AI asistenta i praćenje napretka." />
+  <title>MatMat — Priprema za maturu iz matematike i fizike</title>
+  <meta name="description" content="Svaki dan zadaci s rješenjima korak po korak, a MatMat pamti kad ti što treba ponoviti. Matematika A i B i fizika za državnu maturu, besplatno na webu i iPhoneu." />
+  <meta property="og:title" content="MatMat — Priprema za maturu iz matematike i fizike" />
+  <meta property="og:description" content="Svaki dan zadaci s rješenjima korak po korak, a MatMat pamti kad ti što treba ponoviti. Matematika A i B i fizika za državnu maturu, besplatno na webu i iPhoneu." />
   <meta property="og:image" content="https://matmat.online/images/landing_page_dark.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://matmat.online/" />
+  <!-- Safari on iPhone and iPad shows its own small banner with "Otvori" or "Preuzmi" for the app. -->
+  <meta name="apple-itunes-app" content="app-id={APP_STORE_ID}" />
 </svelte:head>
 
 <!-- Turnstile overlay — always in DOM; hidden via opacity/pointer-events so Cloudflare can render into it before the overlay is shown -->
@@ -180,17 +187,19 @@
 </div>
 
 <!-- Loading -->
-{#if userData.loading}
+{#if userData.loading && !appOnly}
   <LoadingOverlay title="Učitavanje MatMat-a" message="Pripremamo tvoje personalizirano iskustvo učenja"/>
 {/if}
 
 <ErrorAlert/>
 
-{#if uiState.subjectsOpen && showSidebar}
+{#if uiState.subjectsOpen && showSidebar && !appOnly}
   <SubjectsDialog/>
 {/if}
 
-{#if userData.needsOnboarding && userData.user}
+{#if appOnly}
+  <MobileAppGate/>
+{:else if userData.needsOnboarding && userData.user}
   <Onboarding/>
 {:else if askAiConsent}
   <AiConsentPrompt/>
