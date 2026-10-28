@@ -9,7 +9,7 @@
   import { uiState, toggleSidebar, closeSidebar, initSidebarCollapsed } from "$lib/store/ui.svelte";
   import { courseState, loadCurrentCourse, courseLabel as labelFor } from "$lib/store/course.svelte";
   import { ownCourses, loadOwnCourses, findOwnCourse, loadExamMaterials } from "$lib/store/ownCourses.svelte";
-  import { getProgram } from "$lib/config/programs";
+  import { getProgram } from "$lib/config/programs.svelte";
   import ErrorAlert from "$lib/components/alert/ErrorAlert.svelte";
   import LoadingOverlay from "$lib/components/loadingOverlay/LoadingOverlay.svelte";
   import Sidebar from "$lib/components/layout/Sidebar.svelte";

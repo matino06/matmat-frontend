@@ -7,7 +7,7 @@
   import { feedbackSound, setFeedbackSound } from "$lib/sound.svelte.js";
   import { courseState } from "$lib/store/course.svelte";
   import { openSubjects } from "$lib/store/ui.svelte";
-  import { getProgram } from "$lib/config/programs";
+  import { getProgram } from "$lib/config/programs.svelte";
   import { resetirajSavjete } from "$lib/store/savjeti.svelte";
 
   // "Ponovno prikaži savjete": the one-time tips (AI asistent, Formule…) show again where they apply.

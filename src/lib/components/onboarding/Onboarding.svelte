@@ -2,7 +2,7 @@
   import { userData } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
   import { readRememberedLevel, clearRememberedLevel } from "$lib/utils/levelChoice";
-  import { getProgram, PROGRAMS, isSelectableProgram, shortName } from "$lib/config/programs";
+  import { getProgram, PROGRAMS, isSelectableProgram, shortName } from "$lib/config/programs.svelte";
   import { saveChosenCourses, saveCurrentCourse } from "$lib/store/course.svelte";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte";
   import SubjectPicker from "$lib/components/subjects/SubjectPicker.svelte";
@@ -11,7 +11,7 @@
   // If maths is all there is to pick, the subject step has nothing left to ask
   // and is skipped; "Nazad" still lets the student change it.
   const remembered = readRememberedLevel();
-  const onlyMaths = PROGRAMS.filter((p) => isSelectableProgram(p, userData.isAdmin)).every((p) => p.subject === "matematika");
+  let onlyMaths = $derived(PROGRAMS.filter((p) => isSelectableProgram(p, userData.isAdmin)).every((p) => p.subject === "matematika"));
   let picked = $state([remembered === "B" ? 2 : remembered === "F" ? 4 : 1]);
   let step = $state(remembered && onlyMaths ? 1 : 0);
   let startId = $state(null);

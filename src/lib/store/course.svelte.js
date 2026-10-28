@@ -1,5 +1,5 @@
 import { apiClient } from "$lib/api/apiClient";
-import { getProgram } from "$lib/config/programs";
+import { getProgram, loadPrograms } from "$lib/config/programs.svelte";
 import { ownCourses, findOwnCourse } from "$lib/store/ownCourses.svelte";
 
 // The course the user is currently studying. Shared because the root layout
@@ -15,7 +15,7 @@ export const loadCurrentCourse = async () => {
     const res = await apiClient("/account/current-course", { method: "GET" });
     if (res.ok) courseState.courseId = (await res.json())?.courseId ?? null;
   };
-  await Promise.allSettled([current(), loadChosenCourses()]);
+  await Promise.allSettled([current(), loadChosenCourses(), loadPrograms()]);
   courseState.loaded = true;
 };
 
