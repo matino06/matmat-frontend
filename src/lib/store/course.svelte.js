@@ -8,6 +8,7 @@ import { ownCourses, findOwnCourse } from "$lib/store/ownCourses.svelte";
 // pattern.
 // `chosen` lists the official courses the student picked to study (the switcher
 // shows only those); null while unknown, e.g. on a backend without the list.
+// A creator with an own course may choose none.
 export const courseState = $state({ courseId: null, loaded: false, chosen: null });
 
 export const loadCurrentCourse = async () => {
@@ -22,7 +23,8 @@ export const loadCurrentCourse = async () => {
 const loadChosenCourses = async () => {
   const res = await apiClient("/account/courses", { method: "GET" });
   const ids = res.ok ? await res.json() : null;
-  courseState.chosen = Array.isArray(ids) && ids.length ? ids : null;
+  // [] is a creator who takes no matura subject and studies only own courses.
+  courseState.chosen = Array.isArray(ids) ? ids : null;
 };
 
 // Throws when the list isn't saved, so the caller can say so.

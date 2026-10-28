@@ -4,6 +4,7 @@
   import { closeSubjects } from "$lib/store/ui.svelte";
   import { courseState, saveChosenCourses, saveCurrentCourse } from "$lib/store/course.svelte";
   import { getProgram, isVisibleProgram } from "$lib/config/programs.svelte";
+  import { ownCourses } from "$lib/store/ownCourses.svelte";
   import SubjectPicker from "./SubjectPicker.svelte";
 
   // Before the student ever chose (older accounts), the current course stands in.
@@ -21,16 +22,23 @@
   // Taking away the course being studied moves the student to another one,
   // the same subject's other level if there is one.
   let current = $derived(getProgram(courseState.courseId));
+  // A creator with an own course may take no matura subject (e.g. 7th grade) and
+  // studies only own courses; without one, there would be nothing left to study.
+  let mayChooseNone = $derived(ownCourses.isCreator && ownCourses.courses.length > 0);
   let moveTo = $derived.by(() => {
-    if (!current || !value.length || value.includes(current.id)) return null;
+    if (!current || value.includes(current.id)) return null;
+    if (!value.length) {
+      return mayChooseNone ? { id: ownCourses.courses[0].courseId, label: ownCourses.courses[0].courseName } : null;
+    }
     const picked = value.map(getProgram);
     return picked.find((p) => p.subject === current.subject) ?? picked[0];
   });
+  let canSave = $derived(value.length > 0 || mayChooseNone);
 
   onMount(() => dialog?.focus());
 
   async function save() {
-    if (busy || !value.length) return;
+    if (busy || !canSave) return;
     busy = true;
     error = "";
     try {
@@ -72,8 +80,13 @@
 
     <SubjectPicker bind:value isAdmin={userData.isAdmin} />
 
-    {#if !value.length}
-      <p class="note">Odaberi barem jedan predmet.</p>
+    {#if !value.length && !mayChooseNone}
+      <p class="note">{ownCourses.isCreator ? "Odaberi barem jedan predmet ili prvo napravi vlastiti." : "Odaberi barem jedan predmet."}</p>
+    {:else if !value.length}
+      <p class="note">
+        Bez predmeta s mature: učiš samo svoje predmete.
+        {#if moveTo}Nakon spremanja učiš: <b>{moveTo.label}</b>.{/if}
+      </p>
     {:else if moveTo || removed.length}
       <p class="note">
         {#if moveTo}Nakon spremanja učiš: <b>{moveTo.label}</b>.{/if}
@@ -84,7 +97,7 @@
 
     <div class="actions">
       <button class="btn btn-ghost" disabled={busy} onclick={close}>Odustani</button>
-      <button class="btn btn-primary" disabled={busy || !value.length} onclick={save}>
+      <button class="btn btn-primary" disabled={busy || !canSave} onclick={save}>
         {busy ? "Spremam…" : "Spremi"}
       </button>
     </div>

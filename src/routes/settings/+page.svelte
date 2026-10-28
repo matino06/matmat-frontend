@@ -183,6 +183,7 @@
               {p.label}
             </li>
           {/each}
+          {#if !myPrograms.length}<li class="subject-none">Nijedan predmet s mature: učiš samo svoje predmete.</li>{/if}
         </ul>
         <button class="btn btn-ghost" onclick={openSubjects}>Dodaj ili makni predmet</button>
       </div>
@@ -472,6 +473,10 @@
     background: var(--bg-elev);
     font-size: 13px;
     color: var(--text);
+  }
+  .subject-none {
+    font-size: 13px;
+    color: var(--text-dim);
   }
   .chip-badge {
     width: 24px;
