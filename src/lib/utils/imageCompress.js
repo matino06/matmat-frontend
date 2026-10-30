@@ -1,6 +1,6 @@
 const HEIC_MIME = /^image\/(heic|heif)$/i;
 
-async function heicToJpegFile(file) {
+export async function heicToJpegFile(file) {
   const { default: heic2any } = await import("heic2any");
   const blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
   return new File([blob], file.name.replace(/\.(heic|heif)$/i, ".jpg"), { type: "image/jpeg" });

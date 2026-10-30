@@ -26,7 +26,7 @@
     },
     {
       what: "Vlastiti predmeti",
-      detail: "Materijali koje kreator učita (PDF, slike) i lekcije i zadaci izrađeni iz njih.",
+      detail: "Materijali koje kreator učita (PDF, Word, PowerPoint, slike) i lekcije i zadaci izrađeni iz njih.",
       why: "Izrada i korištenje vlastitog predmeta.",
     },
     {
