@@ -23,7 +23,8 @@
   // taskId: when set, each button shows the backend's real FSRS interval for this
   // user; without it (marketing demos) the static RATINGS values are shown.
   // najvise: a finished interactive lesson's limit; higher ratings can't be chosen (lowering always can).
-  // days: intervals to show instead, indexed by grade - 1 (the walkthrough, which has no backend).
+  // days: intervals to show instead, indexed by grade - 1 (the walkthrough, which has no backend, and a lesson whose
+  // grade is already saved, where the backend's preview would count that grade too); a null entry shows nothing.
   let { onSelect, taskId = null, najvise = 4, days = null } = $props();
 
   // Days until the objective returns, indexed by grade - 1; null until loaded.
@@ -41,7 +42,7 @@
   });
 
   function subFor(r) {
-    if (days) return formatDays(days[r.k - 1]);
+    if (days) return days[r.k - 1] == null ? null : formatDays(days[r.k - 1]);
     if (taskId == null) return r.sub;
     return intervals ? formatDays(intervals[r.k - 1]) : null;
   }

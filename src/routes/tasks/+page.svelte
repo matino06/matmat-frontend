@@ -15,6 +15,8 @@
   import LessonRunner from "$lib/lesson/LessonRunner.svelte";
   import { interaktivnaLekcija } from "$lib/lesson/zadatak.js";
   import { objasnjenjeOcjene } from "$lib/lesson/ocjena.js";
+  import SpremljenaOcjena from "$lib/components/ratingPicker/SpremljenaOcjena.svelte";
+  import { saveRating, changeRating } from "$lib/api/solvedTask";
   import { fetchIsReview } from "$lib/api/reviewState";
   import GoalCelebration from "$lib/components/celebration/GoalCelebration.svelte";
   import LessonMasteredToast from "$lib/components/lessonMastered/LessonMasteredToast.svelte";
@@ -54,10 +56,15 @@
   let lekcija = $derived(tekstualno ? null : interaktivna);
   // Kako je prošla interaktivna lekcija: prijedlog ocjene i najviše do čega se smije podići.
   let lekcijaSazetak = $state(null);
+  // Ocjena lekcije spremljena čim je gotova: { id, grade, days }.
+  let spremljena = $state(null);
+  let lekcijaOcijenjena = false;
   $effect(() => {
     task?.id;
     tekstualno = !!task?.uvodLekcija?.kaoTekst;
     lekcijaSazetak = null;
+    spremljena = null;
+    lekcijaOcijenjena = false;
   });
   // Lekcija na ponavljanju (već ocijenjena) predlaže strožu ocjenu kad su učeniku trebali koraci.
   let ponavljanje = $state(false);
@@ -71,12 +78,17 @@
     return () => (otkazano = true);
   });
 
-  // Kraj interaktivne lekcije: ocjena se predlaže iz izvedbe (LessonRunner broji dijelove riješene odmah),
-  // a učenik je potvrđuje, spušta ili podiže najviše do granice iz lekcije. AI od tada smije davati cijela rješenja.
+  // Kraj interaktivne lekcije: ocjena se predlaže iz izvedbe (LessonRunner broji dijelove riješene odmah) i odmah
+  // sprema; učenik je zatim smije spustiti ili podići najviše do granice iz lekcije. AI od tada smije davati cijela
+  // rješenja.
+  // Lekcija riješena ispočetka ne mijenja spremljenu ocjenu: pamćenje pokazuje prvi put.
   function lekcijaGotova(sazetak) {
     revealed = true;
+    if (lekcijaOcijenjena) return;
+    lekcijaOcijenjena = true;
     lekcijaSazetak = sazetak;
-    pendingRating = RATINGS.find((r) => r.k === sazetak.q) ?? null;
+    const rating = RATINGS.find((r) => r.k === sazetak.q);
+    if (rating) spremiLekciju(rating);
   }
 
   async function fetchUserGoal() {
@@ -217,54 +229,12 @@
       : null;
   }
 
-  async function rateUvod(rating) {
-    answered = true;
-    const from = readinessPct;
-    ocijeniUvod(task.uvodLekcija.id, rating.k);
-    uvodDogadaj("ocijenjeno");
-    completedToday += 1;
-    readinessPct = uvodSpremnost();
-    if (readinessPct > from) progressBump = { from, to: readinessPct, key: Date.now() };
-    showToast = false;
-    await tick();
-    showToast = true;
-    setTimeout(() => showToast = false, 2200);
-    setTimeout(uvodZadatak, 600);
-  }
-
-  async function handleRate(rating) {
-    if (!task) return;
-    if (uvod.active) return rateUvod(rating);
-    answered = true;
+  // Spremi ocjenu i pokaži napredak (cilj za danas, svladana lekcija), bez prelaska na sljedeći zadatak.
+  // Vraća spremljenu ocjenu ({ id, grade, days }) ili baca grešku s porukom za učenika.
+  async function spremi(rating) {
+    if (uvod.active) return spremiUvod(rating);
     const objective = task.objective;
-
-    const endTime = Date.now();
-    const device = getDeviceType();
-
-    let response;
-    try {
-      response = await apiClient("/solved-task/set-new", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          taskId: task.id,
-          grade: rating.k,
-          startTime: new Date(startTime).toISOString(),
-          endTime: new Date(endTime).toISOString(),
-          device,
-        }),
-      });
-    } catch {
-      showErrorAlert("Nema veze sa serverom. Pokušaj ponovo.");
-      answered = false;
-      return;
-    }
-
-    if (!response.ok) {
-      showErrorAlert("Spremanje zadatka nije uspjelo. Pokušaj ponovo.");
-      answered = false;
-      return;
-    }
+    const saved = await saveRating({ taskId: task.id, grade: rating.k, startTime });
 
     const newlyMastered = mastery.rated(objective, rating.k);
     const oldCount = completedToday;
@@ -280,23 +250,81 @@
       setTimeout(() => showToast = false, 2200);
     }
 
-    setTimeout(() => fetchNewTask().catch(reportTaskLoadError), 600);
-
     // the goal celebration takes priority over the lesson card
-    const m = await newlyMastered;
-    if (m && !justReachedGoal && !showCelebration) masteredLesson = { ...m, key: Date.now() };
+    newlyMastered.then((m) => {
+      if (m && !justReachedGoal && !showCelebration) masteredLesson = { ...m, key: Date.now() };
+    });
+    return saved;
+  }
+
+  async function spremiUvod(rating) {
+    const from = readinessPct;
+    ocijeniUvod(task.uvodLekcija.id, rating.k);
+    completedToday += 1;
+    readinessPct = uvodSpremnost();
+    if (readinessPct > from) progressBump = { from, to: readinessPct, key: Date.now() };
+    showToast = false;
+    await tick();
+    showToast = true;
+    setTimeout(() => showToast = false, 2200);
+    return { id: null, grade: rating.k, days: task.uvodLekcija.dani };
+  }
+
+  // Tekstualni zadatak: učenik odabere i potvrdi ocjenu, pa odmah sljedeći zadatak.
+  async function handleRate(rating) {
+    if (!task) return;
+    answered = true;
+    try {
+      await spremi(rating);
+    } catch (e) {
+      showErrorAlert(e.message);
+      answered = false;
+      return;
+    }
+    dalje();
+  }
+
+  // Interaktivna lekcija je gotova: predložena ocjena sprema se odmah. Ako spremanje ne uspije, učenik je potvrđuje
+  // kao kod tekstualnog zadatka.
+  async function spremiLekciju(rating) {
+    try {
+      spremljena = await spremi(rating);
+    } catch (e) {
+      showErrorAlert(e.message);
+      pendingRating = rating;
+    }
+  }
+
+  async function promijeniOcjenu(rating) {
+    if (uvod.active) {
+      ocijeniUvod(task.uvodLekcija.id, rating.k);
+      readinessPct = uvodSpremnost();
+      spremljena = { ...spremljena, grade: rating.k };
+      return;
+    }
+    const objective = task.objective;
+    try {
+      spremljena = await changeRating(spremljena.id, rating.k);
+    } catch (e) {
+      showErrorAlert(e.message);
+      throw e;
+    }
+    const m = await mastery.rated(objective, rating.k);
+    if (m && !showCelebration) masteredLesson = { ...m, key: Date.now() };
+  }
+
+  function dalje() {
+    answered = true;
+    if (uvod.active) {
+      uvodDogadaj("ocijenjeno");
+      setTimeout(uvodZadatak, 600);
+    } else {
+      setTimeout(() => fetchNewTask().catch(reportTaskLoadError), 600);
+    }
   }
 
   function setShowCelebration() {
     showCelebration = true;
-  }
-
-  function getDeviceType() {
-    const ua = navigator.userAgent;
-    if (/iPad/.test(ua)) return "ipad";
-    if (/iPhone/.test(ua)) return "iphone";
-    if (/Android/.test(ua)) return "android";
-    return "desktop";
   }
 
   function renderTask(text) {
@@ -372,7 +400,9 @@
 {/snippet}
 
 {#snippet ocjena()}
-    {#if !answered}
+    {#if spremljena && !answered}
+      <SpremljenaOcjena {spremljena} sazetak={lekcijaSazetak} onpromijeni={spremljena.id != null || uvod.active ? promijeniOcjenu : null} ondalje={dalje} />
+    {:else if !answered}
       <div class="rating-row" data-tour="ocjena">
         <!-- after a lesson the suggestion only asks to be confirmed; "Promijeni" shows why and the ratings -->
         <div class="rating-label">{lekcijaSazetak && pendingRating ? "Predložena ocjena. Slažeš li se?" : "Kako ti je išlo?"}</div>
