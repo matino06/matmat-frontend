@@ -6,13 +6,40 @@
   import { ownCourses, SUBJECTS, LEVELS } from "$lib/store/ownCourses.svelte";
   import { setCurrentCourse } from "$lib/store/course.svelte";
   import PlanEditor from "$lib/components/ownCourse/PlanEditor.svelte";
+  import { heicToJpegFile } from "$lib/utils/imageCompress";
   import Upload from "@lucide/svelte/icons/upload";
   import FileText from "@lucide/svelte/icons/file-text";
   import Trash2 from "@lucide/svelte/icons/trash-2";
   import Check from "@lucide/svelte/icons/check";
 
   const courseId = page.params.id;
-  const ACCEPT = { "application/pdf": "PDF", "image/jpeg": "JPG", "image/png": "PNG" };
+  const WORD = "Word";
+  const POWERPOINT = "PowerPoint";
+  const ACCEPT = {
+    "application/pdf": "PDF",
+    "image/jpeg": "JPG",
+    "image/png": "PNG",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": WORD,
+    "application/msword": WORD,
+    "application/vnd.oasis.opendocument.text": WORD,
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": POWERPOINT,
+    "application/vnd.ms-powerpoint": POWERPOINT,
+    "application/vnd.oasis.opendocument.presentation": POWERPOINT,
+  };
+  // Preglednik ponekad ne zna vrstu Word ili PowerPoint datoteke (prazan file.type), pa se uzima iz nastavka.
+  const BY_EXTENSION = {
+    pdf: "application/pdf",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    png: "image/png",
+    docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    doc: "application/msword",
+    odt: "application/vnd.oasis.opendocument.text",
+    pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ppt: "application/vnd.ms-powerpoint",
+    odp: "application/vnd.oasis.opendocument.presentation",
+  };
+  const NOT_ALLOWED = "Dopušteni su PDF, Word, PowerPoint, JPG i PNG.";
 
   let course = $state(null);
   let notFound = $state(false);
@@ -70,11 +97,11 @@
   });
   onDestroy(() => clearInterval(timer));
 
-  function putToS3(url, file, row) {
+  function putToS3(url, file, type, row) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open("PUT", url);
-      xhr.setRequestHeader("Content-Type", file.type);
+      xhr.setRequestHeader("Content-Type", type);
       xhr.upload.onprogress = (e) => e.lengthComputable && (row.percent = Math.round((100 * e.loaded) / e.total));
       xhr.onload = () => (xhr.status < 300 ? resolve() : reject(new Error("upload")));
       xhr.onerror = () => reject(new Error("upload"));
@@ -84,24 +111,38 @@
 
   async function uploadFiles(files) {
     error = "";
-    for (const file of files) {
-      const row = { name: file.name, percent: 0, error: "" };
+    for (let file of files) {
+      const row = { name: file.name, percent: 0, error: "", converting: false };
       uploads = [...uploads, row];
       const r = uploads[uploads.length - 1];
-      if (!ACCEPT[file.type]) {
-        r.error = "Dopušteni su samo PDF, JPG i PNG.";
+      const extension = file.name.split(".").pop().toLowerCase();
+      // Fotografija s iPhonea (HEIC) pretvara se u JPG prije uploada.
+      if (/^image\/hei[cf]$/i.test(file.type) || extension === "heic" || extension === "heif") {
+        try {
+          file = await heicToJpegFile(file);
+        } catch {
+          r.error = "Fotografiju nije moguće pretvoriti u JPG. Pošalji je kao JPG ili PNG.";
+          continue;
+        }
+      }
+      const type = ACCEPT[file.type] ? file.type : BY_EXTENSION[extension];
+      if (!type) {
+        r.error = NOT_ALLOWED;
         continue;
       }
+      const office = ACCEPT[type] === WORD || ACCEPT[type] === POWERPOINT;
       try {
         const urlRes = await apiClient(`/own-courses/${courseId}/materials/upload-url`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fileName: file.name, contentType: file.type, sizeBytes: file.size }),
+          body: JSON.stringify({ fileName: file.name, contentType: type, sizeBytes: file.size }),
         });
         if (!urlRes.ok) throw new Error(await message(urlRes, "Upload nije dopušten."));
         const { uploadUrl, key } = await urlRes.json();
-        await putToS3(uploadUrl, file, r);
+        await putToS3(uploadUrl, file, type, r);
         r.percent = 100;
+        // Word i PowerPoint backend sad pretvara u PDF; to traje nekoliko sekundi.
+        if (office) r.converting = true;
         const reg = await apiClient(`/own-courses/${courseId}/materials`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -237,7 +278,7 @@
         <section class="card block" aria-labelledby="mat-h">
           <div class="block-head">
             <h2 id="mat-h">Materijali</h2>
-            <p>Skripte, kurikulum ili katalog i stari ispiti, kao PDF, JPG ili PNG. Iz njih nastaje plan lekcija, a zadaci se iz njih nikad ne prepisuju.</p>
+            <p>Skripte, kurikulum ili katalog i stari ispiti, kao PDF, Word, PowerPoint, JPG ili PNG. Iz njih nastaje plan lekcija, a zadaci se iz njih nikad ne prepisuju.</p>
           </div>
 
           <label
@@ -247,7 +288,7 @@
             ondragleave={() => (dragging = false)}
             ondrop={(e) => { e.preventDefault(); dragging = false; uploadFiles([...e.dataTransfer.files]); }}
           >
-            <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" onchange={(e) => { uploadFiles([...e.currentTarget.files]); e.currentTarget.value = ""; }} />
+            <input type="file" multiple accept=".pdf,.docx,.doc,.odt,.pptx,.ppt,.odp,.jpg,.jpeg,.png,.heic,.heif" onchange={(e) => { uploadFiles([...e.currentTarget.files]); e.currentTarget.value = ""; }} />
             <Upload size={20} />
             <span><b>Odaberi datoteke</b> ili ih povuci ovamo</span>
             <span class="hint">Do 100 MB po datoteci, ukupno najviše 300 stranica i 300 MB</span>
@@ -259,7 +300,7 @@
                 <div class="file">
                   <FileText size={16} />
                   <span class="file-main"><span class="file-name">{u.name}</span>
-                    {#if u.error}<span class="err">{u.error}</span>{:else}<span class="bar"><span style="width:{u.percent}%"></span></span>{/if}
+                    {#if u.error}<span class="err">{u.error}</span>{:else if u.converting}<span class="file-meta">Pretvaram u PDF…</span>{:else}<span class="bar"><span style="width:{u.percent}%"></span></span>{/if}
                   </span>
                 </div>
               {/each}
