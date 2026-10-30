@@ -58,7 +58,7 @@ export const KORACI = [
     strana: "iznad",
     naslov: "Ocjena određuje kad se vraća",
     tekst: () =>
-      `Ocjenu ti predlaže MatMat, prema tome kako je išlo. Uz „Nisam riješio“ lekcija se vraća sutra, dan prije ispita, a uz ostale ocjene tek nakon ispita (uz „Dobro“ ${kada(ZADACI[0].dani[2])}). Potvrdi je ili klikni Promijeni.`,
+      `MatMat je ocjenu spremio čim si riješio, prema tome kako je išlo. Uz „Nisam riješio“ lekcija se vraća sutra, dan prije ispita, a uz ostale ocjene tek nakon ispita (uz „Dobro“ ${kada(ZADACI[0].dani[2])}). Ako se ne slažeš, promijeni je, pa idi na sljedeći zadatak.`,
   },
   {
     meta: "zadatak",
