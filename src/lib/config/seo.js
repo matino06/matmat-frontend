@@ -6,10 +6,10 @@ import { APP_STORE_URL } from "$lib/config/apps";
 // `title` is the browser tab and the Google result; `ogTitle` is the bold line
 // of a shared link, where the brand name already shows as og:site_name.
 // Images are 1200×630 JPEGs under 300 KB (WhatsApp skips bigger ones), drawn by
-// scripts/og/render.sh.
+// scripts/og/render.sh. When one is redrawn, bump its ?v= so apps that cached the old image fetch it again.
 export const SITE = "https://matmat.online";
 
-const HOME_IMAGE = { url: "/og/matmat.jpg", alt: "MatMat: priprema za maturu koja pamti umjesto tebe, uz zaslon Zadaci za danas iz aplikacije" };
+const HOME_IMAGE = { url: "/og/matmat.jpg?v=2", alt: "MatMat: priprema za maturu koja pamti umjesto tebe, uz zaslon Zadaci za danas iz aplikacije" };
 
 export const PAGES = {
   "/": {
