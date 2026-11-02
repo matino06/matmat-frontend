@@ -1,5 +1,5 @@
 // What a visitor picked on the landing page before signing in: maths level "A"
-// or "B", or "F" for Fizika, so the onboarding can start on it instead of asking
+// or "B", "F" for Fizika or "K" for Kemija, so the onboarding can start on it instead of asking
 // again. Kept for the tab's session only; the onboarding clears it once the
 // course is saved.
 const KEY = "mm-level";
@@ -13,7 +13,7 @@ export function rememberLevel(level) {
 export function readRememberedLevel() {
   try {
     const level = sessionStorage.getItem(KEY);
-    return level === "A" || level === "B" || level === "F" ? level : null;
+    return ["A", "B", "F", "K"].includes(level) ? level : null;
   } catch {
     return null;
   }

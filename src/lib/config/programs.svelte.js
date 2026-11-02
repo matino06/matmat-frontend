@@ -44,6 +44,16 @@ export const PROGRAMS = $state([
     pdf: "/pdfs/FIZ-FORMULE.pdf",
   },
   {
+    id: 13,
+    subject: "kemija",
+    label: "Kemija",
+    short: "Kemija",
+    badge: "KEM",
+    color: "25",
+    sub: "Državna matura",
+    pdf: "/pdfs/KEM-TABLICE.pdf",
+  },
+  {
     id: 3,
     subject: "ekonomska-matematika",
     label: "Ekonomska Matematika EFZG",

@@ -70,6 +70,15 @@
       text: "Lekcije s pokusima koje pokrećeš sam, od titranja i valova do leća i strujnih krugova.",
       cta: "Odaberi Fiziku",
     },
+    {
+      id: "K",
+      title: "Kemija",
+      kind: "Državna matura",
+      badge: "KEM",
+      color: "25",
+      text: "Lekcije u kojima sam slažeš molekule i jednadžbe, od periodnog sustava do titracije i kemijske ravnoteže.",
+      cta: "Odaberi Kemiju",
+    },
   ];
 
   // `lead` is the one-line benefit, readable without opening the item; `text`
@@ -129,7 +138,7 @@
     <HeroTiles />
     <h1>Priprema za maturu koja pamti umjesto tebe</h1>
     <p class="hm-lead">
-      Svaki dan dobiješ zadatke s rješenjima korak po korak. Ocijeniš kako ti je išlo, a MatMat odredi kad ti isti ishod treba ponovno. Matematika A i B te fizika za državnu maturu.
+      Svaki dan dobiješ zadatke s rješenjima korak po korak. Ocijeniš kako ti je išlo, a MatMat odredi kad ti isti ishod treba ponovno. Matematika A i B, fizika i kemija za državnu maturu.
     </p>
     <div class="hm-cta">
       <StartCta placement="hero" />
@@ -413,7 +422,7 @@
 
   /* Levels */
   .hm-levels { padding-top: 64px; padding-bottom: 120px; border-top: 1px solid var(--border); }
-  .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .hm-levels-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .hm-levels .badge-sq { width: 32px; height: 32px; font-size: 11px; }
   /* The whole column is the button: no card fill until hover, so the section
      stays as light as the rest of the page. */
@@ -450,6 +459,9 @@
   .hm-feat-inline { padding: 4px 0 20px 20px; border-left: 2px solid var(--primary); animation: hm-fade 0.2s ease-out; }
   @keyframes hm-fade { from { opacity: 0; } }
 
+  @media (max-width: 1100px) {
+    .hm-levels-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 900px) {
     .hm-levels-grid { grid-template-columns: 1fr; gap: 12px; }
     .hm-feat { grid-template-columns: 1fr; margin-top: 32px; }

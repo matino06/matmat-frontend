@@ -13,10 +13,10 @@ const HOME_IMAGE = { url: "/og/matmat.jpg", alt: "MatMat: priprema za maturu koj
 
 export const PAGES = {
   "/": {
-    title: "MatMat — priprema za maturu iz matematike i fizike",
+    title: "MatMat — priprema za maturu iz matematike, fizike i kemije",
     ogTitle: "Priprema za maturu koja pamti umjesto tebe",
     description:
-      "Svaki dan zadaci iz matematike i fizike s rješenjem korak po korak, a MatMat pamti kad ti što treba ponoviti. Besplatno, na webu i iPhoneu.",
+      "Svaki dan zadaci iz matematike, fizike i kemije s rješenjem korak po korak, a MatMat pamti kad ti što treba ponoviti. Besplatno, na webu i iPhoneu.",
     image: HOME_IMAGE,
   },
   "/kako-radi": {
