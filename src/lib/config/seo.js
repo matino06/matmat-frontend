@@ -9,7 +9,7 @@ import { APP_STORE_URL } from "$lib/config/apps";
 // scripts/og/render.sh. When one is redrawn, bump its ?v= so apps that cached the old image fetch it again.
 export const SITE = "https://matmat.online";
 
-const HOME_IMAGE = { url: "/og/matmat.jpg?v=2", alt: "MatMat: priprema za maturu koja pamti umjesto tebe, uz zaslon Zadaci za danas iz aplikacije" };
+const HOME_IMAGE = { url: "/og/matmat.jpg?v=3", alt: "MatMat: priprema za maturu koja pamti umjesto tebe, uz zaslon Zadaci za danas iz aplikacije" };
 
 export const PAGES = {
   "/": {
