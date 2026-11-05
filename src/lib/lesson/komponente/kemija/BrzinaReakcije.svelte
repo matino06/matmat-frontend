@@ -8,7 +8,7 @@
   import { prefersReducedMotion } from "svelte/motion";
   import Md from "../Md.svelte";
   import Formula from "./Formula.svelte";
-  import { formatNumber } from "$lib/lesson/core/number.js";
+  import { formatNumber, dodajPotenciju } from "$lib/lesson/core/number.js";
   import {
     brzina_reakcije,
     modelOf,
@@ -249,7 +249,7 @@
   const jePotencija = (k) => /⁻¹$/.test(k.jed) || (k.citanje && Math.abs(k.vrijednost) < 0.01);
   function potencija(i) {
     const v = String(unosi[i]).trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^-`;
+    unosi[i] = dodajPotenciju(v, true);
     document.getElementById(`br-${uid}-${i}`)?.focus();
   }
   function predajLanac(e) {
@@ -260,10 +260,10 @@
     if (!pokazi || !koraci.length) return;
     untrack(() => {
       const L = nacin === "prosjecna" ? lanacOf(s, mLanca) : lanacOmjera(s, pm);
-      unosi = L.map((k) => (k.id === "puta" ? formatNumber(Number(k.vrijednost.toPrecision(3))) : /⁻¹$/.test(k.jed) ? zapisBrzine(k.vrijednost).replace(/·10([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)/, (_, e) => `·10^${[...e].map((c) => ({ "⁻": "-" })[c] ?? "⁰¹²³⁴⁵⁶⁷⁸⁹".indexOf(c)).join("")}`) : zapisBroja(k.vrijednost)));
+      unosi = L.map((k) => (k.id === "puta" ? formatNumber(Number(k.vrijednost.toPrecision(3))) : /⁻¹$/.test(k.jed) ? zapisBrzine(k.vrijednost) : zapisBroja(k.vrijednost)));
     });
   });
-  const primjerN = "2,5·10^-4";
+  const primjerN = "2,5·10⁻⁴";
   let sirinaLanca = $state(0);
   const vodoravno = $derived(sirinaLanca >= 200 * koraci.length);
   const prikaziOperacije = $derived(s.operacije === true || rijeseno);

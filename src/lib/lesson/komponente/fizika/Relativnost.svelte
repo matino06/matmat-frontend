@@ -28,7 +28,7 @@
     trebaPotenciju,
     BETA_MAX_POSTAVI,
   } from "$lib/lesson/katalog/fizika/relativnost.js";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import { eksponent } from "../eksponent.js";
 
   let {
@@ -113,7 +113,7 @@
   }
   function potencija(i) {
     const v = unosi[i].trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
   }
 
   // ── što se vidi ──

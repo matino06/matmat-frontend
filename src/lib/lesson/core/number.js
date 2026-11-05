@@ -135,3 +135,9 @@ export function eksponentUnosa(unos) {
     e ? `10${[...e].map((c) => SUPERSKRIPT[c === "−" ? "-" : c] ?? c).join("")}` : m,
   );
 }
+
+// Gumb „·10ⁿ“: dopiše „·10^“ (uz negativno „·10⁻“, za male veličine) iza broja, osim ako potencija već postoji.
+export function dodajPotenciju(unos, negativno = false) {
+  const v = String(unos ?? "").trim();
+  return /10[\^⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(v) ? v : eksponentUnosa(`${v || "1"}·10^${negativno ? "-" : ""}`);
+}

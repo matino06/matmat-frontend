@@ -41,6 +41,7 @@
     OPCIJE_SMJERA,
   } from "$lib/lesson/katalog/kemija/ravnoteza.js";
   import { eksponent } from "../eksponent.js";
+  import { dodajPotenciju } from "../../core/number.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -209,7 +210,7 @@
   }
   function potencija(i) {
     const x = String(unosi[i]).trim();
-    if (!/10\^/.test(x)) unosi[i] = `${x || "1"}·10^`;
+    unosi[i] = dodajPotenciju(x);
     document.getElementById(`rv-${uid}-${i}`)?.focus();
   }
   const okKorak = (i) => !!ishod?.tocno || (ishod != null && ishod.praznina > i);

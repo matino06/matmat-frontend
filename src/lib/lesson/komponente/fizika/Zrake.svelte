@@ -5,7 +5,7 @@
   import { untrack, onMount } from "svelte";
   import { prefersReducedMotion } from "svelte/motion";
   import Md from "../Md.svelte";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import {
     geometrija,
     ocitanja,
@@ -233,7 +233,7 @@
   }
   function potencija(i) {
     const v = unosi[i].trim();
-    if (!/10[\^⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
   }
   function provjeriOdabir() {
     if (locked || !odabrano) return;

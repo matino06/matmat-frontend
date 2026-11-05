@@ -7,7 +7,7 @@
   import Md from "../Md.svelte";
   import BrojUnos from "../BrojUnos.svelte";
   import Formula from "./Formula.svelte";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import { KONSTANTE } from "$lib/lesson/katalog/kemija/_tablice.js";
   import {
     mol_racun,
@@ -80,7 +80,7 @@
   }
   function potencija(i) {
     const v = String(unosi[i]).trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
     document.getElementById(`mr-${uid}-${i}`)?.focus();
   }
   const ok = (i) => !!ishod?.tocno || (ishod != null && ishod.praznina > i);
@@ -175,7 +175,7 @@
             {#if t.velicina === "N" && !locked}
               <div class="mr-pot">
                 <button type="button" class="btn btn-quiet" onclick={() => potencija(i)} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>
-                <span>npr. 6,02·10^23</span>
+                <span>npr. 6,02·10²³</span>
               </div>
             {/if}
           {/if}

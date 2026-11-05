@@ -621,7 +621,7 @@
           <div class="fd-kartica" class:ok={okK(j)} class:bad={badK(j)}>
             <label class="fd-glava" for="fd-{uid}-o{j}"><span class="fd-sym"><i>{g.sym}</i></span><span class="fd-ime">{@render tx(g.ime)}</span></label>
             <span class="fd-polje">
-              <input id="fd-{uid}-o{j}" class="inp fd-inp" class:ok={okK(j)} class:bad={badK(j)} inputmode={M.log && g.sym === "p" ? "text" : "decimal"} autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[j]} />
+              <input id="fd-{uid}-o{j}" class="inp fd-inp" class:ok={okK(j)} class:bad={badK(j)} inputmode={M.log && g.sym === "p" ? "text" : "decimal"} use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[j]} />
               <span class="lx-unit">{g.jed}</span>
             </span>
           </div>

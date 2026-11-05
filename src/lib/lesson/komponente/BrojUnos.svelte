@@ -5,6 +5,7 @@
   // Widgeti fizike umjesto toga zadaju `gumbPredznak` / `gumbPotencija` prema traženoj veličini, da gumbi ne odaju
   // predznak ni red veličine odgovora. Potencija se piše kao na papiru (use:eksponent): „10^-19“ postaje „10⁻¹⁹“.
   import { eksponent } from "./eksponent.js";
+  import { dodajPotenciju } from "../core/number.js";
   let { jedinica = "", locked = false, ishod = null, vrijednost = $bindable(""), onodgovor, oznaka = "Odgovor", odgovor = null, gumbPredznak = null, gumbPotencija = null } = $props();
 
   let polje;
@@ -24,7 +25,7 @@
 
   function potencija() {
     const v = vrijednost.trim();
-    if (!/10[\^⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(v)) vrijednost = `${v || "1"}·10^`;
+    vrijednost = dodajPotenciju(v);
     polje?.focus();
   }
 </script>

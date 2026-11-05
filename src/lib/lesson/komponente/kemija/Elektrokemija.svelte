@@ -9,7 +9,7 @@
   import BrojUnos from "../BrojUnos.svelte";
   import Formula from "./Formula.svelte";
   import { tocanOdgovor } from "../../katalog/index.js";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import { seededShuffle } from "$lib/lesson/core/shuffle.js";
   import { KONSTANTE } from "$lib/lesson/katalog/kemija/_tablice.js";
   import { BOJE } from "$lib/lesson/katalog/kemija/_reakcije.js";
@@ -249,7 +249,7 @@
   const badK = (i) => ishod != null && !ishod.tocno && ishod.praznina === i && !ishod.prazno;
   function potencija(i) {
     const v = String(unosi[i]).trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
     document.getElementById(`ek-${uid}-${i}`)?.focus();
   }
   const konstante = untrack(() => {

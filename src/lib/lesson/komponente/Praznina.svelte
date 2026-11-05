@@ -8,6 +8,7 @@
   import { tocanOdgovor } from "../katalog/index.js";
   import Md from "./Md.svelte";
   import { eksponent } from "./eksponent.js";
+  import { dodajPotenciju } from "../core/number.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -33,7 +34,7 @@
     el.focus();
   }
   const promijeniPredznak = () => uredi((v) => (/^[-−]/.test(v) ? v.replace(/^[-−]\s*/, "") : `−${v}`));
-  const potencija = () => uredi((v) => (/10[\^⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(v) ? v : `${v || "1"}·10^`));
+  const potencija = () => uredi((v) => dodajPotenciju(v));
   const kroz = () => uredi((v) => (v.includes("/") ? v : `${v}/`));
 
   // polja se stvaraju jednom po iscrtanom tekstu; stanje (zaključano, točno/krivo) osvježava se zasebno

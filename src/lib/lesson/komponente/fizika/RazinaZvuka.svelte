@@ -25,6 +25,7 @@
     ravnaloZvuka,
   } from "$lib/lesson/katalog/fizika/razina_zvuka.js";
   import { eksponent } from "../eksponent.js";
+  import { dodajPotenciju } from "../../core/number.js";
 
   let {
     spec,
@@ -231,7 +232,7 @@
   }
   function potencija(i) {
     const v = unosi[i].trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
     elPolja[i]?.focus();
   }
 
