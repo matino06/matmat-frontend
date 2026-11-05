@@ -4,9 +4,11 @@
 import { relacija } from "./relacija.js";
 import { tablica } from "./tablica.js";
 import { niz } from "./niz.js";
+import { ravnina } from "./ravnina.js";
 
 export const ANALIZA = [
   tablica,
   relacija,
   niz,
+  ravnina,
 ];
