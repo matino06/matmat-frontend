@@ -28,12 +28,13 @@ const potencija = { label: "xⁿ", insert: "#@^{#?}", tooltip: "Potencija" };
 const korijen = { latex: "\\sqrt{\\placeholder{}}", insert: "\\sqrt{#0}", tooltip: "Drugi korijen", variants: [{ latex: "\\sqrt[n]{\\placeholder{}}", insert: "\\sqrt[#?]{#0}" }] };
 const funkcija = (ime) => ({ latex: `\\${ime}`, insert: `\\${ime}\\left(#0\\right)` });
 
-export const brojevi = kartica("123", "Brojevi", [
+const REDOVI_BROJEVA = [
   [k("7"), k("8"), k("9"), k("+"), kvadrat],
   [k("4"), k("5"), k("6"), k("-"), potencija],
   [k("1"), k("2"), k("3"), k("\\cdot", "\\times", "\\div"), korijen],
   [k("0"), k("."), k(","), k("=", "\\neq", "\\approx"), k("x", "y", "a", "b", "n", "k")],
-]);
+];
+export const brojevi = kartica("123", "Brojevi", REDOVI_BROJEVA);
 
 export const funkcije = kartica("f(x)", "Funkcije", [
   [funkcija("sin"), funkcija("cos"), funkcija("tan"), k("^{\\circ}", "'")],
@@ -49,6 +50,35 @@ export const skupovi = kartica("∈ℝ", "Skupovi i intervali", [
   [k("<", "\\le"), k(">", "\\ge"), k("-"), k(","), k("x")],
 ]);
 
+// Kartica s arkus, hiperbolnim i area funkcijama (Matematička analiza), samo uz izraz s vise_funkcija: true.
+// Hrvatski zapis kao na FER-u: arctg, ctg, sh, ch, th, arsh…
+// Četiri tipke po redu; arkus i area imena (arcsin, arcctg, arsh…) imaju manja slova da stanu na 360 px.
+const op = (ime) => ({ latex: `\\operatorname{${ime}}`, insert: `\\operatorname{${ime}}\\left(#0\\right)` });
+const sitno = (t) => (/arc|arsh|arch|arth/.test(t.latex) ? { ...t, class: "small" } : t);
+export const viseFunkcija = kartica(
+  "arc sh",
+  "Arkus, hiperbolne i area funkcije",
+  [
+    [funkcija("arcsin"), funkcija("arccos"), op("arctg"), op("arcctg")],
+    [op("sh"), op("ch"), op("th"), op("cth")],
+    [op("arsh"), op("arch"), op("arth"), op("arcth")],
+    [op("ctg"), { latex: "\\log_{\\placeholder{}}", insert: "\\log_{#?}\\left(#0\\right)", tooltip: "Logaritam s bazom" }, { latex: "e^{n}", insert: "e^{#?}" }, k("\\pi")],
+  ].map((red) => red.map(sitno)),
+);
+
+// Dodatni red kartice 123: ∞ (uz beskonacno) te i i crta konjugata (uz kompleksno).
+function brojeviS({ beskonacno, kompleksno }) {
+  const red = [
+    ...(kompleksno ? [{ latex: "i", tooltip: "Imaginarna jedinica" }, { latex: "\\overline{z}", insert: "\\overline{#0}", tooltip: "Konjugat (crta iznad)" }, { latex: "e^{n}", insert: "e^{#?}" }, { latex: "|z|", insert: "\\left|#0\\right|", tooltip: "Modul" }] : []),
+    ...(beskonacno ? [{ latex: "\\infty", tooltip: "Beskonačno (uz + ili −)" }] : []),
+  ];
+  // red je poravnat ulijevo, ispod brojeva: prazna mjesta do 5 tipki i ispod stupca s razlomkom
+  const praznina = (w) => ({ class: `separator w${w}` });
+  const k = kartica("123", "Brojevi", [...REDOVI_BROJEVA, [...red, ...Array.from({ length: Math.max(0, 5 - red.length) }, () => praznina(10))]]);
+  k.rows.at(-1).push(praznina(20));
+  return k;
+}
+
 // slovo s velikim slovom na Shift (oznake točaka i skupova: A, B, S…)
 const slovo = (c) => ({ latex: c, shift: c.toUpperCase() });
 export const slova = kartica("abc", "Slova", [
@@ -61,9 +91,21 @@ const KARTICE = { brojevi, funkcije, skupovi, slova };
 
 // Redoslijed kartica: prva je ona koja se otvara (npr. „skupovi“ za upis intervala). Ista tipkovnica je zajednička
 // svim poljima na stranici, pa polje koje želi drugu prvu karticu to postavi kad dobije fokus.
-export function postaviKartice(prva = "brojevi") {
+// opcije (polje izraza): { beskonacno, kompleksno } dodaju red tipki na karticu 123, { viseFunkcija } karticu
+// „arc sh“ iza f(x). Bez opcija tipkovnica je ista kao na probnoj maturi.
+export function postaviKartice(prva = "brojevi", opcije = {}) {
   if (typeof window === "undefined" || !window.mathVirtualKeyboard) return;
-  window.mathVirtualKeyboard.layouts = [KARTICE[prva], ...Object.values(KARTICE).filter((k) => k !== KARTICE[prva])];
+  let kartice = KARTICE;
+  if (opcije.beskonacno || opcije.kompleksno || opcije.viseFunkcija) {
+    const { brojevi: b, funkcije: f, ...ostale } = KARTICE;
+    kartice = {
+      brojevi: opcije.beskonacno || opcije.kompleksno ? brojeviS(opcije) : b,
+      funkcije: f,
+      ...(opcije.viseFunkcija ? { viseFunkcija } : {}),
+      ...ostale,
+    };
+  }
+  window.mathVirtualKeyboard.layouts = [kartice[prva], ...Object.values(kartice).filter((k) => k !== kartice[prva])];
 }
 
 let ucitano;
