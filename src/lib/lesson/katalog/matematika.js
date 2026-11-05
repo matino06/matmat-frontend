@@ -3,7 +3,7 @@
 // (prompt.js ih preskače), ali ih validator i aplikacija znaju provjeriti i nacrtati.
 import { compile } from "../core/expr.js";
 import { isNum } from "../core/number.js";
-import { ucitaj, ucitajLatex, jednako, vrijednost, texIzraza } from "../core/izraz.js";
+import { ucitaj, ucitajLatex, jednako, jednakoC, vrijednost, texIzraza, izLatexa } from "../core/izraz.js";
 import { parseSkup, jednakiSkupovi, sadrzi, texSkupa, sredi, komplement, ucitajSkupLatex } from "../core/skup.js";
 import { POGLEDAJ, ODGOVOR, isText, problems, noAnswerFields } from "./zajednicko.js";
 
@@ -13,10 +13,98 @@ const PRIBLIZNO = 0.01;
 
 // ── unos izraza ───────────────────────────────────────────────────────────────────────────────────
 // Polje je izraz kao na papiru; točno je sve što ima istu vrijednost (za izraze s x: iste vrijednosti za svaki x).
+// Uz beskonacno: true odgovor smije biti i +∞, −∞ ili „ne postoji“ (limesi), a uz kompleksno: true izraz se računa
+// u ℂ (i, re, im, arg, conj, exp), pa je točan svaki zapis istog kompleksnog broja.
 const varijableIzraza = (s) => s.varijable ?? [];
+const opcijeIzraza = (s) => (s.kompleksno ? { kompleksno: true, argOdNule: !!s.arg_od_nule } : {});
 
-function poljeOdgovor(s, p) {
-  return ucitaj(String(p.odgovor), varijableIzraza(s));
+// „inf“, „+∞“, „-inf“, „ne postoji“ (spec) ili „\infty“, „-\infty“, „\text{ne postoji}“ (matematičko polje) → "inf" | "-inf" | "np" | null
+export function posebnaVrijednost(unos, latex = false) {
+  const t = String(unos ?? "").trim();
+  const rijeci = t.replace(/\\(?:text|textrm|mathrm|operatorname)\s*\{([^}]*)\}/g, " $1 ").replace(/\\[ ,;:]|~/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+  if (rijeci === "ne postoji") return "np";
+  let z = t;
+  if (latex) {
+    try {
+      z = izLatexa(t);
+    } catch {
+      return null;
+    }
+  }
+  z = z.replace(/[−–]/g, "-").replace(/∞/g, "inf").replace(/[\s()]/g, "");
+  if (/^\+?inf$/.test(z)) return "inf";
+  if (z === "-inf") return "-inf";
+  return null;
+}
+const TEX_POSEBNE = { inf: "+\\infty", "-inf": "-\\infty" };
+
+// Izraz iz speca (odgovor, krivo, izracun) → učitan izraz, ili { posebno } za ∞ i „ne postoji“ uz beskonacno.
+function izSpeca(s, izraz) {
+  const k = s.beskonacno ? posebnaVrijednost(izraz) : null;
+  return k ? { posebno: k } : ucitaj(String(izraz), varijableIzraza(s), opcijeIzraza(s));
+}
+const poljeOdgovor = (s, p) => izSpeca(s, p.odgovor);
+
+// Učenikov unos (LaTeX iz matematičkog polja) → učitan izraz, { posebno } ili { greska }. Koristi ga i komponenta
+// (greška čitanja vidi se odmah, prije provjere).
+export function procitajUnos(s, p, latex) {
+  if (s.beskonacno) {
+    const k = posebnaVrijednost(latex, true);
+    if (k) return { posebno: k };
+  }
+  // % iza polja već piše, pa ga učenik ne mora
+  const u = ucitajLatex(String(p?.iza ?? "").includes("%") ? String(latex).replace(/\\%/g, "") : latex, varijableIzraza(s), opcijeIzraza(s));
+  if (u.greska && s.beskonacno && /\binf\b/.test(u.greska + (safeLatex(latex) ?? ""))) return { greska: "∞ upiši samo s predznakom, kao +∞ ili −∞" };
+  return u;
+}
+function safeLatex(latex) {
+  try {
+    return izLatexa(latex);
+  } catch {
+    return null;
+  }
+}
+
+// Isti odgovor? ∞ i „ne postoji“ samo sami sa sobom, brojevi i izrazi po vrijednosti.
+function isti(u, t, vars, rel) {
+  if (u.posebno || t.posebno) return u.posebno === t.posebno;
+  return jednako(u, t, vars, rel);
+}
+
+// Poruke kad se ∞ ili „ne postoji“ razlikuju od točnog odgovora (ili broj od njih).
+function porukaBeskonacno(u, t) {
+  const [a, b] = [u.posebno, t.posebno];
+  if (b === "inf" && a === "-inf") return "Pazi na predznak: vrijednosti ovdje rastu preko svake granice, pa je to $+\\infty$.";
+  if (b === "-inf" && a === "inf") return "Pazi na predznak: vrijednosti ovdje padaju ispod svake granice, pa je to $-\\infty$.";
+  if ((b === "inf" || b === "-inf") && a === "np") return "Vrijednosti ovdje teže u beskonačnost s jednim predznakom, a to se piše kao $+\\infty$ ili $-\\infty$, ne „ne postoji“.";
+  if (b === "inf" || b === "-inf") return "Rezultat nije konačan broj: vrijednosti ovdje rastu ili padaju preko svake granice.";
+  if (b === "np") return "Ovdje vrijednosti ne teže ni jednom broju ni jednoj beskonačnosti (npr. slijeva i zdesna nije isto, ili titraju).";
+  if (a === "np") return "Rezultat postoji: to je konačan broj.";
+  return "Rezultat je konačan broj, a ne beskonačnost.";
+}
+
+// Tipične greške s kompleksnim brojevima: konjugat, suprotan broj, zamijenjeni dijelovi, dobar samo jedan dio,
+// dobar modul ili kut; za realan rezultat (modul, argument) kut s drugim prikazom (−2π/3 umjesto 4π/3).
+function porukaKompleksno(s, u, t) {
+  const [x, y] = [u.fn({}), t.fn({})];
+  if (![x.re, x.im, y.re, y.im].every(Number.isFinite)) return null;
+  const C = (re, im) => ({ re, im });
+  const blizu = (a, b) => Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(b));
+  const mod = (z) => Math.hypot(z.re, z.im);
+  if (blizu(x.im, 0) && blizu(y.im, 0)) {
+    const k = (x.re - y.re) / (2 * Math.PI);
+    if (Math.round(k) !== 0 && blizu(k, Math.round(k))) return s.arg_od_nule ? "To je isti kut, ali argument se ovdje uzima iz $[0, 2\\pi\\rangle$." : "To je isti kut, ali glavni argument je iz $\\langle -\\pi, \\pi]$.";
+    return null;
+  }
+  if (jednakoC(x, C(y.re, -y.im))) return "To je konjugirani broj: imaginarni dio ima suprotan predznak.";
+  if (jednakoC(x, C(-y.re, -y.im))) return "Oba dijela imaju suprotan predznak: to je suprotan broj.";
+  if (jednakoC(x, C(y.im, y.re))) return "Realni i imaginarni dio su zamijenjeni.";
+  if (blizu(x.re, y.re)) return "Realni dio je dobar, ali imaginarni nije.";
+  if (blizu(x.im, y.im)) return "Imaginarni dio je dobar, ali realni nije.";
+  if (blizu(mod(x), mod(y))) return "Modul (udaljenost od ishodišta) je dobar, ali kut (argument) nije.";
+  const kut = Math.atan2(x.im, x.re) - Math.atan2(y.im, y.re);
+  if (mod(x) > 0 && blizu(Math.cos(kut), 1) && Math.abs(Math.sin(kut)) < 1e-9) return "Kut (argument) je dobar, ali modul nije.";
+  return null;
 }
 
 // Rješenja s cijelim k („π/12 + kπ“): isti skup je i zapis pomaknut za cijeli broj perioda („13π/12 + kπ“, „π/12 − kπ“).
@@ -36,26 +124,43 @@ function istaObitelj(u, tocan, vars) {
 function provjeriPolje(s, p, unos) {
   const vars = varijableIzraza(s);
   if (!String(unos ?? "").trim()) return { tocno: false, poruka: "Upiši odgovor.", prazno: true };
-  // unos je LaTeX iz matematičkog polja (MathLive), kao na probnoj maturi; % iza polja već piše, pa ga učenik ne mora
-  const u = ucitajLatex(String(p.iza ?? "").includes("%") ? String(unos).replace(/\\%/g, "") : unos, vars);
+  // unos je LaTeX iz matematičkog polja (MathLive), kao na probnoj maturi
+  const u = procitajUnos(s, p, unos);
   if (u.greska) return { tocno: false, poruka: `Ne mogu pročitati izraz: ${u.greska}.`, prazno: true };
   const tocan = poljeOdgovor(s, p);
-  if (jednako(u, tocan, vars) || istaObitelj(u, tocan, vars)) return { tocno: true };
+  if (isti(u, tocan, vars) || (!u.posebno && !tocan.posebno && istaObitelj(u, tocan, vars))) return { tocno: true };
   for (const k of p.krivo ?? []) {
-    const kr = ucitaj(String(k.odgovor), vars);
+    const kr = izSpeca(s, k.odgovor);
     // „krivo“ zadan decimalno (npr. 10.73) prepoznaje se i kad ga učenik zaokruži malo drukčije
     const rel = /\d\.\d/.test(String(k.odgovor)) && !vars.length ? 0.002 : 1e-9;
-    if (!kr.greska && jednako(u, kr, vars, rel) && !jednako(u, tocan, vars, rel)) return { tocno: false, poruka: k.poruka };
+    if (!kr.greska && isti(u, kr, vars, rel) && !isti(u, tocan, vars, rel)) return { tocno: false, poruka: k.poruka };
   }
+  if (u.posebno || tocan.posebno) return { tocno: false, poruka: porukaBeskonacno(u, tocan) };
   if (!vars.length && !s.priblizno && jednako(u, tocan, vars, PRIBLIZNO)) {
     // točan odgovor s konačno decimala (cijena, postotak) nema π ni korijen, pa ga ne treba ni spominjati
     const t = tocan.fn({});
-    const decimalan = Math.abs(t * 1e4 - Math.round(t * 1e4)) < 1e-6;
+    const dec = (x) => Math.abs(x * 1e4 - Math.round(x * 1e4)) < 1e-6;
+    const decimalan = typeof t === "number" ? dec(t) : dec(t.re) && dec(t.im);
     return { tocno: false, poruka: decimalan ? "To je zaokružena vrijednost. Upiši točan rezultat, bez zaokruživanja." : "To je približna vrijednost. Upiši točnu (npr. s π, korijenom ili razlomkom)." };
   }
   if (s.priblizno && jednako(u, tocan, vars, PRIBLIZNO / 2)) return { tocno: true };
+  if (s.kompleksno) {
+    const poruka = porukaKompleksno(s, u, tocan);
+    if (poruka) return { tocno: false, poruka };
+  }
   return { tocno: false, poruka: p.savjet || s.savjet || "Nije točno." };
 }
+
+// Ključ vrijednosti (za različitost polja i usporedbu blizanca): ∞ i „ne postoji“ po imenu, ℂ po oba dijela.
+function kljucVrijednosti(s, t, uzorak) {
+  if (t.posebno) return t.posebno;
+  if (t.greska) return "?";
+  const v = t.fn(uzorak);
+  if (typeof v === "number") return String(Number(v.toPrecision(9)));
+  const r = (x) => String(Number((Math.abs(x) < 1e-12 ? 0 : x).toPrecision(9)));
+  return `${r(v.re)}${v.im === 0 || Math.abs(v.im) < 1e-12 ? "" : `${v.im < 0 ? "" : "+"}${r(v.im)}i`}`;
+}
+const MAX_POLJA = (s) => (s.bilo_kojim_redom ? 8 : 4);
 
 export const izraz = {
   tip: "izraz",
@@ -63,9 +168,22 @@ export const izraz = {
   uloga: () => ODGOVOR,
   opis: `Matematički odgovor koji učenik upisuje u matematičko polje s tipkovnicom probne mature (razlomak, korijen, π, potencija
 se odmah iscrtavaju). Polja: tekst, polja: [{oznaka
-(markdown ispred polja, npr. "$x_1 =$"), iza? (markdown iza polja, npr. "$> 0$"), odgovor (izraz, npr. "pi/6", "2-sqrt(3)", "x^2-4*x+3"), krivo?: [{odgovor, poruka}], savjet?}] (1–4),
-varijable?: ["x"] (ako je odgovor izraz s varijablom), bilo_kojim_redom?: true (npr. dvije nultočke), priblizno?: true (prihvati decimalni
-zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve što ima istu vrijednost.`,
+(markdown ispred polja, npr. "$x_1 =$"), iza? (markdown iza polja, npr. "$> 0$"), odgovor (izraz, npr. "pi/6", "2-sqrt(3)", "x^2-4*x+3"), krivo?: [{odgovor, poruka}], savjet?,
+izracun? (izraz koji kod izračuna, npr. "arg(conj(-1+sqrt(3)*i))": validate provjerava da odgovor ima istu vrijednost)}] (1–4, uz bilo_kojim_redom do 8),
+varijable?: ["x"] (ako je odgovor izraz s varijablom), bilo_kojim_redom?: true (npr. dvije nultočke ili n-ti korijeni), priblizno?: true (prihvati decimalni
+zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve što ima istu vrijednost.
+Funkcije (u odgovoru i u učenikovu unosu): sin, cos, tan/tg, ctg/cot, arcsin/asin, arccos/acos, arctg/arctan/atan, arcctg, sh/sinh, ch/cosh,
+th/tanh, cth, arsh, arch, arth, arcth, ln, log, log s bazom (\\log_a), exp, sqrt, abs. vise_funkcija?: true doda na tipkovnicu karticu „arc sh“
+s arkus, hiperbolnim i area funkcijama (kad ih učenik treba upisati).
+beskonacno?: true: odgovor polja smije biti "inf", "-inf" ili "ne postoji" (limesi, asimptote). Učenik tada ima tipku ∞ i gumb „ne postoji“ uz
+svako polje (svako polje, da gumb ne oda odgovor); krivo smije biti i "inf", "-inf", "ne postoji". Kod sam javlja krivi predznak beskonačnosti,
+broj umjesto ∞ i obrnuto. Bez beskonacno ∞ nije broj.
+kompleksno?: true: izraz se računa u ℂ. i je imaginarna jedinica; re(z), im(z), abs(z) = |z|, arg(z) (glavna vrijednost u ⟨−π, π], uz
+arg_od_nule?: true u [0, 2π⟩), conj(z) (učenik: crta iznad), exp(z) = e^z, potencije i korijeni (glavna vrijednost). Odgovor, npr. "-11-2i",
+"2*exp(i*pi/3)", "sqrt(2)+sqrt(2)*i", točan je u bilo kojem obliku (algebarski, trigonometrijski, eksponencijalni) ako je isti broj. Tipkovnica
+dobiva i i crtu konjugata. Varijable uz kompleksno nisu podržane. Kod sam javlja konjugat, suprotan broj, zamijenjene dijelove, dobar samo
+realni ili samo imaginarni dio, dobar modul a krivi kut i obrnuto, te kut s drugim prikazom (−2π/3 umjesto 4π/3).
+Svi korijeni (z^n = w): n polja s bilo_kojim_redom (do 8); učenik svaki korijen upisuje u svoje polje.`,
   primjer: {
     tip: "izraz",
     tekst: "Koje su nultočke funkcije $f(x) = x^2 - 4x + 3$?",
@@ -75,38 +193,109 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
     ],
     bilo_kojim_redom: true,
   },
+  // primjeri iz Matematičke analize 1 (lekcije 77, 62, 16, 38, 39)
+  primjeri: [
+    {
+      tip: "izraz",
+      tekst: "Deriviraj funkciju $f(x) = \\operatorname{sh}^2 x$.",
+      varijable: ["x"],
+      vise_funkcija: true,
+      polja: [{ oznaka: "$f'(x) =$", odgovor: "2*sh(x)*ch(x)", krivo: [{ odgovor: "2*sh(x)", poruka: "Fali derivacija unutarnje funkcije: $(\\operatorname{sh} x)' = \\operatorname{ch} x$." }, { odgovor: "2*ch(x)", poruka: "To je derivacija samo vanjskog dijela s krivom funkcijom. Kvadrat deriviraš kao $2u \\cdot u'$, uz $u = \\operatorname{sh} x$." }] }],
+    },
+    {
+      tip: "izraz",
+      tekst: "Zadana je funkcija $f(x)=\\dfrac{x^2+3}{x^2-5x+6}$. Kamo teži $f(x)$ kad se $x$ približava broju $3$?",
+      beskonacno: true,
+      polja: [
+        { oznaka: "$\\lim\\limits_{x\\to3^-}f(x) =$", odgovor: "-inf", krivo: [{ odgovor: "inf", poruka: "Pazi na predznak: slijeva je $x - 3 < 0$, a brojnik i $x - 2$ su pozitivni." }] },
+        { oznaka: "$\\lim\\limits_{x\\to3^+}f(x) =$", odgovor: "inf" },
+        { oznaka: "$\\lim\\limits_{x\\to3}f(x) =$", odgovor: "ne postoji", krivo: [{ odgovor: "inf", poruka: "Zdesna teži $+\\infty$, ali slijeva $-\\infty$, pa limes ne postoji." }] },
+      ],
+    },
+    {
+      tip: "izraz",
+      tekst: "Zadan je kompleksni broj $z = 1 + 2i$. Izračunaj $z^3$ i $(\\bar z)^3$.",
+      kompleksno: true,
+      polja: [
+        { oznaka: "$z^3 =$", odgovor: "-11-2i", izracun: "(1+2*i)^3" },
+        { oznaka: "$(\\bar z)^3 =$", odgovor: "-11+2i", izracun: "conj(1+2*i)^3" },
+      ],
+    },
+    {
+      tip: "izraz",
+      tekst: "Odredi sva rješenja jednadžbe $z^4 = -16$ u skupu $\\mathbb{C}$.",
+      kompleksno: true,
+      bilo_kojim_redom: true,
+      polja: [
+        { oznaka: "$z_1 =$", odgovor: "sqrt(2)+sqrt(2)*i" },
+        { oznaka: "$z_2 =$", odgovor: "-sqrt(2)+sqrt(2)*i" },
+        { oznaka: "$z_3 =$", odgovor: "-sqrt(2)-sqrt(2)*i" },
+        { oznaka: "$z_4 =$", odgovor: "sqrt(2)-sqrt(2)*i" },
+      ],
+    },
+    {
+      tip: "izraz",
+      tekst: "Zadan je $z = -1 + \\sqrt{3}\\,i$. Koliki su modul i argument broja $\\bar z$, uz argument iz $[0, 2\\pi\\rangle$?",
+      kompleksno: true,
+      arg_od_nule: true,
+      polja: [
+        { oznaka: "$|\\bar z| =$", odgovor: "2", izracun: "abs(conj(-1+sqrt(3)*i))" },
+        { oznaka: "$\\arg \\bar z =$", odgovor: "4*pi/3", izracun: "arg(conj(-1+sqrt(3)*i))" },
+      ],
+    },
+  ],
   validate(s) {
     const { list, need } = problems();
     need(isText(s.tekst), "izraz treba „tekst“ (pitanje)");
     const vars = varijableIzraza(s);
     need(Array.isArray(vars) && vars.every((v) => /^[a-z]$/.test(v) && v !== "e"), "varijable su popis slova, npr. [\"x\"]");
+    for (const z of ["beskonacno", "kompleksno", "arg_od_nule", "vise_funkcija"]) if (s[z] != null) need(typeof s[z] === "boolean", `izraz.${z} je true ili false`);
+    if (s.arg_od_nule) need(!!s.kompleksno, "arg_od_nule vrijedi samo uz kompleksno: true");
+    if (s.kompleksno) {
+      need(!vars.length, "uz kompleksno varijable nisu podržane (i je imaginarna jedinica)");
+      need(!s.beskonacno, "kompleksno i beskonacno ne idu zajedno");
+    }
     if (s.graf != null) {
       need(s.graf?.nacin === "prikaz", "izraz.graf mora biti graf_funkcije s nacin \"prikaz\"");
       for (const p of graf_funkcije.validate({ tip: "graf_funkcije", tekst: "-", ...s.graf, nacin: "prikaz" })) list.push(`graf: ${p}`);
     }
-    if (!need(Array.isArray(s.polja) && s.polja.length >= 1 && s.polja.length <= 4, "izraz treba 1–4 polja")) return list;
+    if (!need(Array.isArray(s.polja) && s.polja.length >= 1 && s.polja.length <= MAX_POLJA(s), s.bilo_kojim_redom ? "izraz uz bilo_kojim_redom treba 1–8 polja" : "izraz treba 1–4 polja (uz bilo_kojim_redom do 8)")) return list;
     const tocni = [];
+    const uzorak = Object.fromEntries(vars.map((n, i) => [n, 0.731 + 0.639 * i]));
+    const konacan = (t) => {
+      if (t.posebno) return true;
+      const v = t.fn({});
+      return typeof v === "number" ? Number.isFinite(v) : Number.isFinite(v.re) && Number.isFinite(v.im);
+    };
     s.polja.forEach((p, i) => {
       if (p?.oznaka != null) need(isText(p.oznaka), `polja[${i}].oznaka mora biti tekst`);
       if (p?.iza != null) need(isText(p.iza), `polja[${i}].iza mora biti tekst`);
-      const t = ucitaj(String(p?.odgovor ?? ""), vars);
+      if (!s.beskonacno && posebnaVrijednost(p?.odgovor)) {
+        need(false, `polja[${i}].odgovor je ∞ ili „ne postoji“: to smije samo uz beskonacno: true`);
+        return;
+      }
+      const t = p?.odgovor == null ? { greska: "nedostaje" } : poljeOdgovor(s, p);
       if (!need(!t.greska && p?.odgovor != null, `polja[${i}].odgovor nije ispravan izraz: ${t.greska ?? "nedostaje"}`)) return;
-      if (!vars.length) need(Number.isFinite(t.fn({})), `polja[${i}].odgovor nema vrijednost`);
+      if (!vars.length) need(konacan(t), `polja[${i}].odgovor nema vrijednost`);
       tocni.push(t);
+      if (p.izracun != null) {
+        const iz = izSpeca(s, p.izracun);
+        if (need(!iz.greska, `polja[${i}].izracun nije ispravan izraz: ${iz.greska}`))
+          need(isti(iz, t, vars), `polja[${i}].odgovor (${kljucVrijednosti(s, t, uzorak)}) nije jednak izračunu ${p.izracun} (${kljucVrijednosti(s, iz, uzorak)})`);
+      }
       const krivi = [];
       for (const [j, k] of (p.krivo ?? []).entries()) {
-        const kr = ucitaj(String(k?.odgovor ?? ""), vars);
+        const kr = izSpeca(s, String(k?.odgovor ?? ""));
         if (!need(!kr.greska, `polja[${i}].krivo[${j}].odgovor nije ispravan izraz`)) continue;
         need(isText(k.poruka), `polja[${i}].krivo[${j}] treba „poruka“`);
-        need(!jednako(kr, t, vars), `polja[${i}].krivo[${j}] jednak je točnom odgovoru`);
+        need(!isti(kr, t, vars), `polja[${i}].krivo[${j}] jednak je točnom odgovoru`);
         // provjera uzima prvu „krivo“ iste vrijednosti, pa poruka kasnije nikad ne dođe do učenika
-        const isti = krivi.findIndex((x) => jednako(kr, x, vars));
-        need(isti < 0, `polja[${i}].krivo[${j}] ima istu vrijednost kao krivo[${isti}], pa se njegova poruka nikad ne pokaže; spoji ih u jednu poruku`);
+        const isto = krivi.findIndex((x) => isti(kr, x, vars));
+        need(isto < 0, `polja[${i}].krivo[${j}] ima istu vrijednost kao krivo[${isto}], pa se njegova poruka nikad ne pokaže; spoji ih u jednu poruku`);
         krivi.push(kr);
       }
     });
-    const uzorak = Object.fromEntries(vars.map((n, i) => [n, 0.731 + 0.639 * i]));
-    if (s.bilo_kojim_redom && tocni.length > 1) need(new Set(tocni.map((t) => t.fn(uzorak))).size === tocni.length, "uz bilo_kojim_redom odgovori moraju biti različiti");
+    if (s.bilo_kojim_redom && tocni.length > 1) need(new Set(tocni.map((t) => (t.posebno || t.kompleksno ? kljucVrijednosti(s, t, uzorak) : t.fn(uzorak)))).size === tocni.length, "uz bilo_kojim_redom odgovori moraju biti različiti");
     return list;
   },
   check(s, unosi) {
@@ -117,11 +306,18 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
     if (s.bilo_kojim_redom && polja.length > 1) {
       // svaki unos mora pogoditi drugo polje; poruka za krivo se traži u polju koje još nije pogođeno
       const slobodna = polja.map((_, i) => i);
+      const pogodeno = [];
       for (let i = 0; i < vals.length; i++) {
         const k = slobodna.findIndex((j) => provjeriPolje(s, polja[j], vals[i]).tocno);
         if (k >= 0) {
+          pogodeno.push([i, slobodna[k]]);
           slobodna.splice(k, 1);
           continue;
+        }
+        // ℂ (n-ti korijeni): isti broj dvaput nije novi korijen
+        if (s.kompleksno) {
+          const ranije = pogodeno.find(([, j]) => provjeriPolje(s, polja[j], vals[i]).tocno);
+          if (ranije) return { tocno: false, polje: i, poruka: `U ${i + 1}. polju: Taj broj već je upisan u ${ranije[0] + 1}. polju. Svako polje traži drugo rješenje.` };
         }
         const r = slobodna.map((j) => provjeriPolje(s, polja[j], vals[i])).find((x) => x.poruka && !x.prazno && x.poruka !== (s.savjet || "Nije točno.")) ?? provjeriPolje(s, polja[slobodna[0]], vals[i]);
         return { ...r, polje: i, poruka: `${polja.length > 1 ? `U ${i + 1}. polju: ` : ""}${r.poruka}` };
@@ -134,7 +330,14 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
     }
     return { tocno: true };
   },
-  tocanOdgovor: (s) => s.polja.map((p) => `${p.oznaka ? `${p.oznaka} ` : ""}$${texIzraza(p.odgovor, varijableIzraza(s))}$`).join(", "),
+  tocanOdgovor: (s) =>
+    s.polja
+      .map((p) => {
+        const k = s.beskonacno ? posebnaVrijednost(p.odgovor) : null;
+        const zapis = k === "np" ? "ne postoji" : k ? `$${TEX_POSEBNE[k]}$` : `$${texIzraza(p.odgovor, varijableIzraza(s), opcijeIzraza(s))}$`;
+        return `${p.oznaka ? `${p.oznaka} ` : ""}${zapis}`;
+      })
+      .join(", "),
   // ključ za usporedbu blizanca s pitanjem: iste vrijednosti = isti odgovor
   kljucOdgovora: (s) =>
     s.polja
@@ -142,7 +345,7 @@ zapis), graf?: graf_funkcije "prikaz" koji se crta iznad polja. Točno je sve š
         const t = poljeOdgovor(s, p);
         // svaka varijabla dobiva svoju „nasumičnu“ vrijednost (ne samo x i y)
         const v = Object.fromEntries(varijableIzraza(s).map((n, i) => [n, 0.731 + 0.639 * i]));
-        return t.greska ? "?" : String(Number(t.fn(v).toPrecision(9)));
+        return kljucVrijednosti(s, t, v);
       })
       .sort()
       .join("|"),

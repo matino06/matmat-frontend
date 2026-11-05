@@ -1,5 +1,7 @@
 // Siguran kalkulator izraza iz speca („m/V“, „2.4*x“, „sqrt(a^2+b^2)“): spec piše model, pa se nikad ne
-// izvršava kao JavaScript. Podržava + − * / ^, zagrade, varijable i nekoliko funkcija.
+// izvršava kao JavaScript. Podržava + − * / ^, zagrade, varijable i nekoliko funkcija; uz compileKompleksno
+// i račun u ℂ (imaginarna jedinica i, re, im, arg, conj).
+import { C, FUNKCIJE_C, SAMO_KOMPLEKSNE, realnaUC, dodaj, oduzmi, pomnozi, podijeli, potencija } from "./kompleksno.js";
 
 const FUNCS = {
   sqrt: Math.sqrt,
@@ -26,6 +28,38 @@ const FUNCS = {
     return f;
   },
 };
+// Arkus, kotangens, hiperbolne i area funkcije (Matematička analiza). Odvojene od FUNKCIJE: učenikov unos ih
+// prepoznaje tek kad se riječ ne da pročitati starim funkcijama i varijablama (core/izraz.js), pa se čitanje
+// postojećih unosa („th“ uz varijable t i h) ne mijenja.
+const arkus = { asin: Math.asin, acos: Math.acos, atan: Math.atan };
+const NOVE = {
+  asin: arkus.asin,
+  acos: arkus.acos,
+  atan: arkus.atan,
+  arcsin: arkus.asin,
+  arccos: arkus.acos,
+  arctan: arkus.atan,
+  arctg: arkus.atan,
+  arcctg: (x) => Math.PI / 2 - Math.atan(x),
+  arccot: (x) => Math.PI / 2 - Math.atan(x),
+  ctg: (x) => 1 / Math.tan(x),
+  cot: (x) => 1 / Math.tan(x),
+  sh: Math.sinh,
+  ch: Math.cosh,
+  th: Math.tanh,
+  cth: (x) => 1 / Math.tanh(x),
+  sinh: Math.sinh,
+  cosh: Math.cosh,
+  tanh: Math.tanh,
+  coth: (x) => 1 / Math.tanh(x),
+  arsh: Math.asinh,
+  arch: Math.acosh,
+  arth: Math.atanh,
+  // arcth x = ½ ln((x+1)/(x−1)), za |x| > 1
+  arcth: (x) => (Math.abs(x) > 1 ? Math.atanh(1 / x) : NaN),
+};
+const STARE = Object.keys(FUNCS);
+Object.assign(FUNCS, NOVE);
 const CONSTS = { pi: Math.PI, e: Math.E };
 
 function tokenize(src) {
@@ -48,7 +82,7 @@ function tokenize(src) {
 }
 
 // Rekurzivni spust; vraća stablo koje se poslije računa za zadane varijable.
-function parse(tokens) {
+function parse(tokens, funkcije = FUNCS) {
   let p = 0;
   const peek = () => tokens[p];
   const eat = (v) => {
@@ -94,7 +128,7 @@ function parse(tokens) {
     if (tk.t === "num") return { num: tk.v };
     if (tk.t === "id") {
       if (peek()?.v === "(") {
-        if (!FUNCS[tk.v]) throw new Error(`nepoznata funkcija „${tk.v}“`);
+        if (!funkcije[tk.v]) throw new Error(`nepoznata funkcija „${tk.v}“`);
         eat("(");
         const a = expr();
         eat(")");
@@ -155,7 +189,47 @@ export function compile(src) {
   return { fn: (vars = {}) => evaluate(tree, vars), vars: [...variables(tree)], tree };
 }
 
-export const FUNKCIJE = Object.keys(FUNCS);
+export const FUNKCIJE = STARE;
+export const FUNKCIJE_NOVE = Object.keys(NOVE);
+
+// ── račun u ℂ ─────────────────────────────────────────────────────────────────────────────────────
+const FUNCS_C = { ...Object.fromEntries(Object.entries(FUNCS).map(([k, f]) => [k, realnaUC(f)])), ...FUNKCIJE_C };
+const CONSTS_C = { pi: C(Math.PI), e: C(Math.E), i: C(0, 1) };
+
+function evaluateC(n, vars, o) {
+  if ("num" in n) return C(n.num);
+  if ("id" in n) {
+    if (n.id in vars) return typeof vars[n.id] === "number" ? C(vars[n.id]) : vars[n.id];
+    if (n.id in CONSTS_C) return CONSTS_C[n.id];
+    throw new Error(`nepoznata varijabla „${n.id}“`);
+  }
+  if (n.fn) return FUNCS_C[n.fn](evaluateC(n.a, vars, o), o);
+  const a = evaluateC(n.a, vars, o);
+  if (n.op === "neg") return C(-a.re, -a.im);
+  const b = evaluateC(n.b, vars, o);
+  switch (n.op) {
+    case "+":
+      return dodaj(a, b);
+    case "-":
+      return oduzmi(a, b);
+    case "*":
+      return pomnozi(a, b);
+    case "/":
+      return podijeli(a, b);
+    case "^":
+      return potencija(a, b);
+  }
+  throw new Error(`nepoznata operacija ${n.op}`);
+}
+
+// compileKompleksno("2*exp(i*pi/3)") → { fn(vars, {argOdNule}) → {re, im}, vars, tree }; i je imaginarna jedinica.
+export function compileKompleksno(src) {
+  if (typeof src !== "string" || !src.trim()) throw new Error("izraz je prazan");
+  const tree = parse(tokenize(src), FUNCS_C);
+  const vars = [...variables(tree)].filter((v) => v !== "i");
+  return { fn: (v = {}, o = {}) => evaluateC(tree, v, o), vars, tree, kompleksno: true };
+}
+export const FUNKCIJE_KOMPLEKSNE = SAMO_KOMPLEKSNE;
 // Funkcije u stupnjevima su samo za izraze iz speca; učenikov unos „sind“ i dalje znači sin(d) (core/izraz.js).
 export const FUNKCIJE_STUPNJEVI = ["sind", "cosd", "tand", "asind", "acosd", "atand"];
 export const KONSTANTE = Object.keys(CONSTS);

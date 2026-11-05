@@ -1,9 +1,10 @@
 // Matematički unos učenika kao na papiru („2π/3“, „√3 − 1“, „2x+1“, „x²“, „sin x“) → izraz za siguran kalkulator
 // (core/expr.js), zapis u LaTeX-u i usporedba s točnim odgovorom. Uspoređuju se vrijednosti, a ne zapis, pa
 // „1+2x“ i „2x+1“ ili „π/6“ i „pi/6“ vrijede jednako. Isti kod radi i u validatoru, pa ovdje nema preglednika.
-import { compile, FUNKCIJE as SVE_FUNKCIJE, FUNKCIJE_STUPNJEVI, KONSTANTE } from "./expr.js";
+import { compile, compileKompleksno, FUNKCIJE as SVE_FUNKCIJE, FUNKCIJE_STUPNJEVI, FUNKCIJE_NOVE, FUNKCIJE_KOMPLEKSNE, KONSTANTE } from "./expr.js";
 
 const FUNKCIJE = SVE_FUNKCIJE.filter((f) => !FUNKCIJE_STUPNJEVI.includes(f));
+// opcije: { kompleksno } čita i (imaginarna jedinica), re, im, arg i conj; { argOdNule } bira arg u [0, 2π⟩
 
 const ZNAKOVI = [
   [/[−–—]/g, "-"],
@@ -38,10 +39,15 @@ function rastavi(rijec, poznato) {
 
 // Unos → izraz koji razumije expr.js: znakovi s tipkovnice, implicitno množenje („2x“, „2(x+1)“, „x(x−1)“)
 // i funkcija bez zagrada („sin x“). Baca grešku s porukom za učenika.
-export function pripremi(unos, varijable = []) {
+export function pripremi(unos, varijable = [], opcije = {}) {
   let s = String(unos ?? "");
   for (const [re, z] of ZNAKOVI) s = s.replace(re, z);
   const poznato = [...FUNKCIJE, ...KONSTANTE, ...varijable, "inf"];
+  // nove funkcije (arcsin, sh, ch, th…) i u ℂ i, re, im…: samo za riječ koja se starima ne da pročitati, pa
+  // „th“ uz varijable t i h i dalje znači t·h
+  const dodatne = [...FUNKCIJE_NOVE, ...(opcije.kompleksno ? ["i", ...FUNKCIJE_KOMPLEKSNE] : [])];
+  const prosireno = [...poznato, ...dodatne];
+  const funkcije = [...FUNKCIJE, ...FUNKCIJE_NOVE, ...(opcije.kompleksno ? FUNKCIJE_KOMPLEKSNE : [])];
   const tokeni = [];
   // ° je u izrazu sa sin/cos/tg kut u stupnjevima (sin 53° = sin(53π/180)), inače samo oznaka mjere (70° = 70)
   const trig = /sin|cos|tan/.test(s);
@@ -53,9 +59,9 @@ export function pripremi(unos, varijable = []) {
     if (m[4]) throw new Error(`ne razumijem znak „${m[4]}“`);
     if (m[1]) tokeni.push({ t: "num", v: m[1] });
     else if (m[2]) {
-      const dijelovi = poznato.includes(m[2]) ? [m[2]] : rastavi(m[2], poznato);
+      const dijelovi = poznato.includes(m[2]) ? [m[2]] : (rastavi(m[2], poznato) ?? (prosireno.includes(m[2]) ? [m[2]] : rastavi(m[2], prosireno)));
       if (!dijelovi) throw new Error(`ne razumijem „${m[2]}“`);
-      for (const d of dijelovi) tokeni.push({ t: FUNKCIJE.includes(d) ? "fn" : "id", v: d });
+      for (const d of dijelovi) tokeni.push({ t: funkcije.includes(d) ? "fn" : "id", v: d });
     } else if (m[3]) tokeni.push({ t: "op", v: m[3] });
   }
   if (!tokeni.length) throw new Error("upiši izraz");
@@ -123,11 +129,15 @@ const NAREDBE = {
   pi: " pi ", infty: " inf ", cdot: "*", times: "*", ast: "*", div: "/", exponentialE: " e ",
   sin: " sin ", cos: " cos ", tan: " tan ", tg: " tan ", ln: " ln ", log: " log ", exp: " exp ",
   vert: "|", lvert: "|", rvert: "|", mid: "|",
+  arcsin: " arcsin ", arccos: " arccos ", arctan: " arctan ", cot: " cot ", sinh: " sinh ", cosh: " cosh ", tanh: " tanh ", coth: " coth ",
   ",": "", ";": "", ":": "", "!": "", " ": "", quad: "", qquad: "", degree: " ° ", "%": "/100",
 };
 const OGRADE = { "(": "(", ")": ")", "[": "(", "]": ")", "|": "|", ".": "", "\\{": "(", "\\}": ")", "\\vert": "|", "\\lvert": "|", "\\rvert": "|", "\\langle": "(", "\\rangle": ")" };
 
-export function izLatexa(latex) {
+// Samo u kompleksnom načinu (u realnom ostaju greška, kao prije).
+const NAREDBE_C = { imaginaryI: " i ", arg: " arg ", Re: " re ", Im: " im " };
+
+export function izLatexa(latex, opcije = {}) {
   const s = String(latex ?? "").replace(/\{,\}/g, ".");
   let i = 0;
   const naredba = () => {
@@ -176,7 +186,7 @@ export function izLatexa(latex) {
         const cijeli = /(?:^|[^\w.^_}\\])(\d+)\s*$/.exec(s.slice(0, pocetak));
         if (cijeli && /^\s*\d+\s*$/.test(gore) && /^\s*\d+\s*$/.test(dolje)) {
           out = out.replace(/\d+\s*$/, "") + `((${cijeli[1]})+(${gore})/(${dolje}))`;
-        } else out += `((${izLatexa(gore)})/(${izLatexa(dolje)}))`;
+        } else out += `((${izLatexa(gore, opcije)})/(${izLatexa(dolje, opcije)}))`;
       }
       else if (n === "sqrt") {
         let korijen = null;
@@ -185,28 +195,35 @@ export function izLatexa(latex) {
           korijen = s.slice(i + 1, kraj);
           i = kraj + 1;
         }
-        const pod = izLatexa(grupa());
-        out += korijen ? `((${pod})^(1/(${izLatexa(korijen)})))` : ` sqrt(${pod})`;
+        const pod = izLatexa(grupa(), opcije);
+        out += korijen ? `((${pod})^(1/(${izLatexa(korijen, opcije)})))` : ` sqrt(${pod})`;
       } else if (["left", "right", "mleft", "mright", "bigl", "bigr", "Bigl", "Bigr"].includes(n)) out += ograda();
-      else if (["operatorname", "mathrm", "text", "mathit", "textrm"].includes(n)) out += ` ${grupa()} `;
+      else if (["operatorname", "mathrm", "text", "mathit", "textrm"].includes(n)) {
+        // MathLive piše tipku „sh“ kao \operatorname{\mathrm{sh}}: naredba unutar imena čita se iznova
+        const g = grupa();
+        out += ` ${g.includes("\\") ? izLatexa(g, opcije) : g} `;
+      }
       else if (n === "pm" || n === "mp") throw new Error("umjesto ± upiši jedan predznak (+ ili −)");
       else if (n === "placeholder") throw new Error("dovrši izraz (ostalo je prazno mjesto)");
       else if (n === "binom" || n === "dbinom" || n === "tbinom") {
-        const [gore, dolje] = [izLatexa(grupa()), izLatexa(grupa())];
+        const [gore, dolje] = [izLatexa(grupa(), opcije), izLatexa(grupa(), opcije)];
         out += ` ((fact(${gore}))/((fact(${dolje}))*(fact((${gore})-(${dolje})))))`;
       }
       // \log_{b} x = log x / log b
       else if (n === "log" && s[i] === "_") {
         i++;
-        out += ` ((1)/(log(${izLatexa(grupa())})))*log `;
+        out += ` ((1)/(log(${izLatexa(grupa(), opcije)})))*log `;
       }
+      // konjugat: \overline{z}
+      else if (opcije.kompleksno && (n === "overline" || n === "bar")) out += ` conj(${izLatexa(grupa(), opcije)})`;
+      else if (opcije.kompleksno && n in NAREDBE_C) out += NAREDBE_C[n];
       else if (n in NAREDBE) out += NAREDBE[n];
       else throw new Error(`ne razumijem „\\${n}“`);
     } else if (c === "^") {
       i++;
       const g = grupa();
       // „70^{\circ}“: stupnjevi (pripremi odlučuje jesu li samo oznaka mjere)
-      out += g.trim() === "\\circ" ? " ° " : `^(${izLatexa(g)})`;
+      out += g.trim() === "\\circ" ? " ° " : `^(${izLatexa(g, opcije)})`;
     } else if (c === "!") {
       // n! i (n-1)!: faktorijel uzima broj, slovo ili zagradu ispred sebe
       i++;
@@ -222,7 +239,7 @@ export function izLatexa(latex) {
       if (od < 0 || od >= t.length) throw new Error("ispred ! treba broj ili zagrada");
       out = `${t.slice(0, od)} fact(${t.slice(od)})`;
     } else if (c === "_") throw new Error("indeks ovdje ne pripada (baza ide samo uz log)");
-    else if (c === "{") out += `(${izLatexa(grupa())})`;
+    else if (c === "{") out += `(${izLatexa(grupa(), opcije)})`;
     else {
       out += c;
       i++;
@@ -237,19 +254,25 @@ export function izLatexa(latex) {
 }
 
 // Unos iz matematičkog polja (LaTeX) → isto kao ucitaj().
-export function ucitajLatex(latex, varijable = []) {
+export function ucitajLatex(latex, varijable = [], opcije = {}) {
   try {
-    return ucitaj(izLatexa(latex), varijable);
+    return ucitaj(izLatexa(latex, opcije), varijable, opcije);
   } catch (e) {
     return { greska: e.message };
   }
 }
 
 // Unos → { izraz, fn, vars, tex } ili { greska }. Varijable koje nisu dopuštene su greška za učenika.
-export function ucitaj(unos, varijable = []) {
+export function ucitaj(unos, varijable = [], opcije = {}) {
   try {
-    const izraz = pripremi(unos, varijable);
+    const izraz = pripremi(unos, varijable, opcije);
     if (/\binf\b/.test(izraz)) throw new Error("beskonačnost ovdje nije broj");
+    if (opcije.kompleksno) {
+      const c = compileKompleksno(izraz);
+      if (c.vars.length) throw new Error(`ne razumijem „${c.vars[0]}“`);
+      const o = { argOdNule: !!opcije.argOdNule };
+      return { izraz, fn: (v = {}) => c.fn(v, o), vars: [], tex: tex(c.tree, { kompleksno: true }), kompleksno: true };
+    }
     const c = compile(izraz);
     const strane = c.vars.filter((v) => !varijable.includes(v));
     if (strane.length) throw new Error(`ne razumijem „${strane[0]}“`);
@@ -264,6 +287,7 @@ const UZORCI = [0.731, -1.37, 2.19, 3.71, -0.43, 1.618, -2.9, 0.217];
 
 // Jesu li dva učitana izraza jednaka (za sve vrijednosti varijabli)? rel je dopušteno relativno odstupanje.
 export function jednako(a, b, varijable = [], rel = 1e-9) {
+  if (a.kompleksno || b.kompleksno) return jednakoC(a.fn({}), b.fn({}), rel);
   const isto = (x, y) => Math.abs(x - y) <= rel * Math.max(1, Math.abs(x), Math.abs(y));
   if (!varijable.length) {
     const [x, y] = [a.fn({}), b.fn({})];
@@ -281,6 +305,14 @@ export function jednako(a, b, varijable = [], rel = 1e-9) {
   return valjanih >= 3;
 }
 
+// Dva kompleksna broja {re, im} (ili realna) jednaka do relativnog odstupanja rel.
+export function jednakoC(x, y, rel = 1e-9) {
+  const c = (z) => (typeof z === "number" ? { re: z, im: 0 } : z);
+  [x, y] = [c(x), c(y)];
+  if (![x.re, x.im, y.re, y.im].every(Number.isFinite)) return false;
+  return Math.hypot(x.re - y.re, x.im - y.im) <= rel * Math.max(1, Math.hypot(x.re, x.im), Math.hypot(y.re, y.im));
+}
+
 // Vrijednost izraza bez varijabli (npr. kraj intervala „2-sqrt(3)“), ili null.
 export function vrijednost(izraz) {
   const r = ucitaj(String(izraz));
@@ -293,8 +325,17 @@ export function vrijednost(izraz) {
 const RAZINA = { "+": 1, "-": 1, "*": 2, "/": 2, neg: 3, "^": 4 };
 const razina = (n) => (n.op ? RAZINA[n.op] : 5);
 const zagrade = (t) => `\\left(${t}\\right)`;
-const omot = (n, min) => (razina(n) < min ? zagrade(tex(n)) : tex(n));
+const omot = (n, min, o) => (razina(n) < min ? zagrade(tex(n, o)) : tex(n, o));
 const TEX_FN = { sin: "\\sin", cos: "\\cos", tan: "\\tan", ln: "\\ln", log: "\\log", exp: "\\exp" };
+// hrvatski zapis (FER): arctg, ctg, sh, ch, th, arsh…
+const op = (ime) => `\\operatorname{${ime}}`;
+const TEX_NOVE = {
+  asin: "\\arcsin", arcsin: "\\arcsin", acos: "\\arccos", arccos: "\\arccos",
+  atan: op("arctg"), arctan: op("arctg"), arctg: op("arctg"), arcctg: op("arcctg"), arccot: op("arcctg"),
+  ctg: op("ctg"), cot: op("ctg"), sh: op("sh"), sinh: op("sh"), ch: op("ch"), cosh: op("ch"), th: op("th"), tanh: op("th"),
+  cth: op("cth"), coth: op("cth"), arsh: op("arsh"), arch: op("arch"), arth: op("arth"), arcth: op("arcth"),
+  re: op("Re"), Re: op("Re"), im: op("Im"), Im: op("Im"), arg: "\\arg",
+};
 
 export function broj(n) {
   const t = String(Number(n.toPrecision(12)));
@@ -310,39 +351,42 @@ function pocinjeSlovom(n) {
   return false;
 }
 
-export function tex(n) {
+// o: { kompleksno } piše exp(z) kao e^{z} i conj(z) kao \\overline{z}
+export function tex(n, o = {}) {
   if ("num" in n) return broj(n.num);
   if ("id" in n) return n.id === "pi" ? "\\pi " : n.id === "e" ? "e" : n.id.length > 1 ? `\\mathrm{${n.id}}` : n.id;
   if (n.fn) {
-    if (n.fn === "sqrt") return `\\sqrt{${tex(n.a)}}`;
-    if (n.fn === "abs") return `\\left|${tex(n.a)}\\right|`;
-    if (n.fn === "fact") return `${razina(n.a) < 5 ? zagrade(tex(n.a)) : tex(n.a)}!`;
-    return `${TEX_FN[n.fn] ?? `\\mathrm{${n.fn}}`}${zagrade(tex(n.a))}`;
+    if (n.fn === "sqrt") return `\\sqrt{${tex(n.a, o)}}`;
+    if (n.fn === "abs") return `\\left|${tex(n.a, o)}\\right|`;
+    if (n.fn === "fact") return `${razina(n.a) < 5 ? zagrade(tex(n.a, o)) : tex(n.a, o)}!`;
+    if (n.fn === "conj") return `\\overline{${tex(n.a, o)}}`;
+    if (n.fn === "exp" && o.kompleksno) return `e^{${tex(n.a, o)}}`;
+    return `${TEX_FN[n.fn] ?? TEX_NOVE[n.fn] ?? `\\mathrm{${n.fn}}`}${zagrade(tex(n.a, o))}`;
   }
   switch (n.op) {
     case "+":
-      return `${tex(n.a)} + ${n.b.op === "neg" ? zagrade(tex(n.b)) : tex(n.b)}`;
+      return `${tex(n.a, o)} + ${n.b.op === "neg" ? zagrade(tex(n.b, o)) : tex(n.b, o)}`;
     case "-":
-      return `${tex(n.a)} - ${n.b.op === "neg" ? zagrade(tex(n.b)) : omot(n.b, 2)}`;
+      return `${tex(n.a, o)} - ${n.b.op === "neg" ? zagrade(tex(n.b, o)) : omot(n.b, 2, o)}`;
     case "*": {
-      const a = omot(n.a, 2);
-      const b = n.b.op === "neg" ? zagrade(tex(n.b)) : omot(n.b, 3);
+      const a = omot(n.a, 2, o);
+      const b = n.b.op === "neg" ? zagrade(tex(n.b, o)) : omot(n.b, 3, o);
       // „2x“, „2\pi x“, „\frac{\pi}{6}x“, „(x-1)(x-3)“; točka samo ispred broja i negativnog faktora
       const spoj = !("num" in n.b) && n.b.op !== "neg" && (pocinjeSlovom(n.b) || razina(n.b) < 3);
       return spoj ? `${a}${b}` : `${a} \\cdot ${b}`;
     }
     case "/":
-      return `\\frac{${tex(n.a)}}{${tex(n.b)}}`;
+      return `\\frac{${tex(n.a, o)}}{${tex(n.b, o)}}`;
     case "^":
-      return `${razina(n.a) < 5 || n.a.fn ? zagrade(tex(n.a)) : tex(n.a)}^{${tex(n.b)}}`;
+      return `${razina(n.a) < 5 || n.a.fn ? zagrade(tex(n.a, o)) : tex(n.a, o)}^{${tex(n.b, o)}}`;
     case "neg":
-      return `-${razina(n.a) < 3 && n.a.op !== "/" ? zagrade(tex(n.a)) : tex(n.a)}`;
+      return `-${razina(n.a) < 3 && n.a.op !== "/" ? zagrade(tex(n.a, o)) : tex(n.a, o)}`;
   }
   return "";
 }
 
 // LaTeX izraza iz speca („pi/6“ → „\frac{\pi}{6}“); neispravan izraz ostaje kakav jest.
-export function texIzraza(izraz, varijable = []) {
-  const r = ucitaj(String(izraz), varijable);
+export function texIzraza(izraz, varijable = [], opcije = {}) {
+  const r = ucitaj(String(izraz), varijable, opcije);
   return r.greska ? String(izraz) : r.tex;
 }

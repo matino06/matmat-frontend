@@ -1,12 +1,13 @@
 <script>
   // Matematički odgovor u matematičkom polju (MathLive) s istom tipkovnicom kao na probnoj maturi: razlomak,
   // korijen, π i potencija iscrtavaju se odmah u polju, kao na papiru. Polje daje LaTeX, a provjera ga čita
-  // (core/izraz.js: izLatexa) i uspoređuje vrijednosti.
+  // (core/izraz.js: izLatexa) i uspoređuje vrijednosti. Uz beskonacno polje prima i ±∞ (tipka ∞) i „ne postoji“
+  // (gumb ispod polja), a uz kompleksno tipkovnica ima i i crtu konjugata.
   import { onMount } from "svelte";
   import Md from "./Md.svelte";
   import GrafFunkcije from "./GrafFunkcije.svelte";
-  import { ucitajLatex } from "../core/izraz.js";
   import { tocanOdgovor } from "../katalog/index.js";
+  import { procitajUnos, posebnaVrijednost } from "../katalog/matematika.js";
   import { ucitajMatematickiUnos, postaviKartice } from "$lib/utils/maturaTipkovnica.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
@@ -16,9 +17,11 @@
   let polja = $state([]);
   let spremno = $state(false);
 
-  const vars = $derived(spec.varijable ?? []);
   // greška čitanja (npr. prazno mjesto u razlomku) vidi se odmah, prije provjere
-  const greske = $derived(vrijednosti.map((v) => (String(v).trim() ? ucitajLatex(v, vars).greska : null)));
+  const greske = $derived(vrijednosti.map((v, i) => (String(v).trim() ? procitajUnos(spec, spec.polja[i], v).greska : null)));
+  const NE_POSTOJI = "\\text{ne postoji}";
+  const nePostoji = $derived(vrijednosti.map((v) => !!spec.beskonacno && posebnaVrijednost(v, true) === "np"));
+  const kartice = $derived({ beskonacno: !!spec.beskonacno, kompleksno: !!spec.kompleksno, viseFunkcija: !!spec.vise_funkcija });
   const potpuno = $derived(vrijednosti.every((v) => String(v).trim()));
 
   onMount(async () => {
@@ -32,6 +35,14 @@
 
   function predaj() {
     if (!locked && potpuno) onodgovor($state.snapshot(vrijednosti));
+  }
+
+  // „ne postoji“ je zapis u polju (payload je LaTeX \text{ne postoji}); drugi dodir ga briše
+  function prebaciNePostoji(i) {
+    if (locked) return;
+    const v = nePostoji[i] ? "" : NE_POSTOJI;
+    if (polja[i]) polja[i].value = v;
+    vrijednosti[i] = v;
   }
 
   function tipka(e) {
@@ -60,7 +71,7 @@
             class:bad={losePolje(i)}
             aria-label={p.oznaka ? p.oznaka.replace(/\$/g, "") : "Odgovor"}
             bind:this={polja[i]}
-            onfocus={() => postaviKartice("brojevi")}
+            onfocus={() => postaviKartice("brojevi", kartice)}
             oninput={(e) => (vrijednosti[i] = e.target.value)}
             onkeydown={tipka}
           ></math-field>
@@ -69,6 +80,17 @@
         {/if}
         {#if p.iza}<span class="iz-iza"><Md text={p.iza} inline /></span>{/if}
         {#if greske[i]}<p class="iz-greska">{greske[i]}</p>{/if}
+        {#if spec.beskonacno}
+          <button
+            type="button"
+            class="iz-np"
+            class:on={nePostoji[i]}
+            aria-pressed={nePostoji[i]}
+            aria-label={spec.polja.length > 1 ? `${i + 1}. polje: ne postoji` : "Odgovor: ne postoji"}
+            disabled={locked || !spremno}
+            onclick={() => prebaciNePostoji(i)}>ne postoji</button
+          >
+        {/if}
       </div>
     </div>
   {/each}
@@ -135,6 +157,32 @@
   }
   .iz-iza {
     white-space: nowrap;
+  }
+  .iz-np {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 6px;
+    min-height: 36px;
+    padding: 4px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .iz-np.on {
+    border-color: var(--primary-border);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    color: var(--text);
+  }
+  .iz-np:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+  .iz-np:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
   }
   .iz-greska {
     grid-column: 1 / -1;
