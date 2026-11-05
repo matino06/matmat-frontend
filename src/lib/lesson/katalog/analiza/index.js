@@ -3,8 +3,10 @@
 // Registracija: jedan import i jedan redak u popisu po widgetu (dodaje ga autor widgeta alatom Edit).
 import { relacija } from "./relacija.js";
 import { tablica } from "./tablica.js";
+import { niz } from "./niz.js";
 
 export const ANALIZA = [
   tablica,
   relacija,
+  niz,
 ];

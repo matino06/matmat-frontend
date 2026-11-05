@@ -2,4 +2,5 @@
 export const UCITAJ_ANALIZA = {
   tablica: () => import("./Tablica.svelte"),
   relacija: () => import("./Relacija.svelte"),
+  niz: () => import("./Niz.svelte"),
 };
