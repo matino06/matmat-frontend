@@ -39,6 +39,7 @@
     otopinaOf,
     zapisZadanog,
   } from "$lib/lesson/katalog/kemija/topljivost.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -493,7 +494,7 @@
             {/if}
           </label>
           <span class="tp-polje">
-            <input id="tp-{uid}-o{i}" class="inp tp-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[i]} />
+            <input id="tp-{uid}-o{i}" class="inp tp-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[i]} />
             <span class="lx-unit">{r.pita === "vrijednost" ? jedV : "°C"}</span>
           </span>
         </div>
@@ -517,7 +518,7 @@
         <div class="tp-kartica" class:ok={okK(1)} class:bad={badK(1)}>
           <label class="tp-glava" for="tp-{uid}-jos"><span class="tp-sym">Δm</span><span class="tp-ime">koliko se <Formula f={K.tvar} /> još može otopiti pri {zapisT(V.t1)} °C</span></label>
           <span class="tp-polje">
-            <input id="tp-{uid}-jos" class="inp tp-inp" class:ok={okK(1)} class:bad={badK(1)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={jos} />
+            <input id="tp-{uid}-jos" class="inp tp-inp" class:ok={okK(1)} class:bad={badK(1)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={jos} />
             <span class="lx-unit">g</span>
           </span>
         </div>
@@ -541,7 +542,7 @@
         <div class="tp-kartica" class:ok={okK(i)} class:bad={badK(i)}>
           <label class="tp-glava" for="tp-{uid}-{i}"><span class="tp-sym">{@render oz(oznakaKoraka(id, M))}</span><span class="tp-ime">{imeKoraka(id, M)}</span></label>
           <span class="tp-polje">
-            <input id="tp-{uid}-{i}" class="inp tp-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
+            <input id="tp-{uid}-{i}" class="inp tp-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
             <span class="lx-unit">{jedinicaKoraka(id, M, postotak)}</span>
           </span>
         </div>
@@ -560,7 +561,7 @@
         {#each redovi as r, i (i)}
           <div class="tp-tr" class:ok={okK(i)} class:bad={badK(i)} role="row">
             <span role="cell">{r.zapis.m_sol}</span><span role="cell">{r.zapis.m_vode}</span><span role="cell">{r.zapis.t ?? zapisT(r.t)}</span>
-            <span role="cell"><input class="inp tp-inp tp-inp-s" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="w_sat za {i + 1}. mjerenje" disabled={!aktivno} bind:value={unosiP[i]} /></span>
+            <span role="cell"><input class="inp tp-inp tp-inp-s" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="w_sat za {i + 1}. mjerenje" disabled={!aktivno} bind:value={unosiP[i]} /></span>
           </div>
         {/each}
       </div>

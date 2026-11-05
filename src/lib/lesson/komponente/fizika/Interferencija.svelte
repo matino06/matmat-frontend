@@ -40,6 +40,8 @@
     fmt,
     fmtSci,
   } from "$lib/lesson/katalog/fizika/_interferencija.js";
+  import { eksponent } from "../eksponent.js";
+  import { dodajPotenciju } from "../../core/number.js";
 
   let {
     spec,
@@ -154,7 +156,7 @@
   }
   function potencija(i) {
     const v = unosi[i].trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
   }
   const jedPolja = (q) => {
     const r = izracun(spec, q);
@@ -375,6 +377,7 @@
             class:ok={stanjaPolja[i] === "ok"}
             class:bad={stanjaPolja[i] === "bad"}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

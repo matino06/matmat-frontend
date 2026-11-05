@@ -52,6 +52,7 @@
     tocnoStavke,
     velicineTitranja,
   } from "$lib/lesson/katalog/fizika/titranje.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -1223,6 +1224,7 @@
             class="inp tt-inp"
             class:ok={poljaOk}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={zakljucano}

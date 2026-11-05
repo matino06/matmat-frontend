@@ -7,6 +7,8 @@
   import { renderMd } from "$lib/utils/markdownRenderer.js";
   import { tocanOdgovor } from "../katalog/index.js";
   import Md from "./Md.svelte";
+  import { eksponent } from "./eksponent.js";
+  import { dodajPotenciju } from "../core/number.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -32,7 +34,7 @@
     el.focus();
   }
   const promijeniPredznak = () => uredi((v) => (/^[-−]/.test(v) ? v.replace(/^[-−]\s*/, "") : `−${v}`));
-  const potencija = () => uredi((v) => (/10\^/.test(v) ? v : `${v || "1"}·10^`));
+  const potencija = () => uredi((v) => dodajPotenciju(v));
   const kroz = () => uredi((v) => (v.includes("/") ? v : `${v}/`));
 
   // polja se stvaraju jednom po iscrtanom tekstu; stanje (zaključano, točno/krivo) osvježava se zasebno
@@ -50,6 +52,7 @@
         el.inputMode = "decimal";
         el.autocomplete = "off";
         el.placeholder = "?";
+        eksponent(el);
       }
       el.className = "inp lx-slot-inp";
       el.setAttribute("aria-label", `${i + 1}. praznina`);
@@ -80,7 +83,7 @@
     {#if predznak}<button type="button" class="btn btn-quiet" onclick={promijeniPredznak} aria-label="Promijeni predznak">±</button>{/if}
     {#if znanstveni}<button type="button" class="btn btn-quiet" onclick={potencija} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>{/if}
     {#if razlomak}<button type="button" class="btn btn-quiet" onclick={kroz} aria-label="Razlomačka crta">/</button>{/if}
-    {#if znanstveni}<span class="lx-broj-primjer">npr. 1,6·10^-19</span>{:else if razlomak}<span class="lx-broj-primjer">npr. 2/3</span>{/if}
+    {#if znanstveni}<span class="lx-broj-primjer">npr. 1,6·10⁻¹⁹</span>{:else if razlomak}<span class="lx-broj-primjer">npr. 2/3</span>{/if}
   </div>
 {/if}
 <div class="lx-actions">

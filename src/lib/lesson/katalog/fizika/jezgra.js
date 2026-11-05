@@ -1471,7 +1471,7 @@ function checkIzracunaj(s, odg) {
     if (n == null)
       return {
         tocno: false,
-        poruka: `${pre}upiši broj (decimalni zarez, a za potencije npr. 4,54·10^-12).`,
+        poruka: `${pre}upiši broj (decimalni zarez, a za potencije npr. 4,54·10⁻¹²).`,
         prazno: true,
       };
     const ans = r[q.velicina];

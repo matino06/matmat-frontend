@@ -32,6 +32,7 @@
     redMrlja,
     pitanjePostupka,
   } from "$lib/lesson/katalog/kemija/kromatografija.js";
+  import { eksponent } from "../eksponent.js";
 
   const SPOT_KLASA = (m) => SPOT[m?.boja] ?? "k5";
 
@@ -306,7 +307,7 @@
         {@const m = C.mrlje[mi]}
         <label class="kr-unos">
           <span class="kr-oznaka">{@render Rf()}<span class="kr-nr">({oznakaRf(m, mi)}) =</span></span>
-          <input class="inp kr-inp" class:ok={ok(k)} class:bad={bad(k)} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="R f ({oznakaRf(m, mi)})" disabled={locked} bind:value={unosi[k]} />
+          <input class="inp kr-inp" class:ok={ok(k)} class:bad={bad(k)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="R f ({oznakaRf(m, mi)})" disabled={locked} bind:value={unosi[k]} />
         </label>
         {#if rijeseno}
           <div class="kr-rjesenje">

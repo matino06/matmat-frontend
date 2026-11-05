@@ -34,6 +34,7 @@
     C_VODE_ZAPIS,
     OCITAJ_JED,
   } from "$lib/lesson/katalog/kemija/kalorimetar.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -405,7 +406,7 @@
         <div class="kl-korak" class:ok={okK(i)} class:bad={badK(i)}>
           <label class="kl-korak-oz" for="kl-{uid}-o{i}"><span class="kl-sym"><Formula f={OZ[id]} /></span> <span class="kl-ime">{OPIS_O[id]}</span></label>
           <span class="kl-polje">
-            <input id="kl-{uid}-o{i}" class="inp kl-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[i]} />
+            <input id="kl-{uid}-o{i}" class="inp kl-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[i]} />
             <span class="lx-unit">{OCITAJ_JED[id]}</span>
             {#if id === "dT" && aktivno}<button type="button" class="btn btn-quiet kl-pm" onclick={() => (unosiO[i] = predznak(unosiO[i]))} aria-label="Promijeni predznak">±</button>{/if}
           </span>
@@ -438,7 +439,7 @@
         <div class="kl-kartica" class:ok={okK(i)} class:bad={badK(i)}>
           <label class="kl-glava" for="kl-{uid}-{i}"><span class="kl-sym">{@render oznakaK(k.id)}</span><span class="kl-ime">{k.ime}</span></label>
           <span class="kl-polje">
-            <input id="kl-{uid}-{i}" class="inp kl-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
+            <input id="kl-{uid}-{i}" class="inp kl-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
             <span class="lx-unit"><Formula f={KORACI[k.id].prikaz[k.jedinica]} /></span>
             {#if KORACI[k.id].predznak && aktivno}<button type="button" class="btn btn-quiet kl-pm" onclick={() => (unosi[i] = predznak(unosi[i]))} aria-label="Promijeni predznak">±</button>{/if}
           </span>

@@ -7,7 +7,7 @@
   import Md from "../Md.svelte";
   import Formula from "./Formula.svelte";
   import { seededShuffle } from "../../core/shuffle.js";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import {
     ph_skala,
     stanje,
@@ -35,6 +35,7 @@
     KW_25,
     KW_ZAPIS,
   } from "$lib/lesson/katalog/kemija/ph_skala.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -120,7 +121,7 @@
   const badKorak = (i) => ishod != null && !ishod.tocno && ishod.praznina === i && !ishod.prazno;
   function potencija(i) {
     const v = String(unosi[i]).trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^-`;
+    unosi[i] = dodajPotenciju(v, true);
     document.getElementById(`ps-${uid}-${i}`)?.focus();
   }
   let sirina = $state(0);
@@ -342,6 +343,7 @@
                 class:ok={okKorak(i)}
                 class:bad={badKorak(i)}
                 inputmode="decimal"
+                use:eksponent
                 autocomplete="off"
                 aria-label="{IME[q]}{JEDINICA[q] ? ` u ${JEDINICA[q]}` : ''}"
                 placeholder="?"
@@ -353,7 +355,7 @@
             {#if !JE_P(q) && q !== "alfa" && aktivno}
               <div class="ps-pot">
                 <button type="button" class="btn btn-quiet" onclick={() => potencija(i)} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>
-                <span>npr. 1,32·10^-3</span>
+                <span>npr. 1,32·10⁻³</span>
               </div>
             {:else if q === "alfa" && aktivno}
               <div class="ps-pot"><span>udio (0,0132) ili postotak (1,32 %)</span></div>

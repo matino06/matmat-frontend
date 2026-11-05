@@ -38,6 +38,8 @@
     kadarDeBroglie,
     LOPTICA,
   } from "$lib/lesson/katalog/fizika/_kvant.js";
+  import { eksponent } from "../eksponent.js";
+  import { dodajPotenciju } from "../../core/number.js";
 
   let {
     spec,
@@ -134,7 +136,7 @@
   }
   function potencija(i) {
     const v = unosi[i].trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
     document.getElementById(`kv-${uid}-${i}`)?.focus();
   }
 
@@ -408,6 +410,7 @@
             class="inp lx-broj-inp"
             class:ok={otkriveno}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

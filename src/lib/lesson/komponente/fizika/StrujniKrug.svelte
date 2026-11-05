@@ -26,6 +26,7 @@
     PROMJENE,
   } from "$lib/lesson/katalog/fizika/strujni_krug.js";
   import { stablo, rijesi, pocetnoStanje, vrijednost, rasporedi, tockaNa, duljina, naziv, GEOM, JEDINICA, fmt, zatvorena, vrstaSkupine } from "$lib/lesson/katalog/fizika/_krug.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -439,6 +440,7 @@
             class="inp lx-broj-inp"
             class:ok={pokazi || ishod?.tocno}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

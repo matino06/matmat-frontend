@@ -46,6 +46,7 @@
     SLOVA,
     znakPrijelaza,
   } from "$lib/lesson/katalog/kemija/fazni_dijagram.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -620,7 +621,7 @@
           <div class="fd-kartica" class:ok={okK(j)} class:bad={badK(j)}>
             <label class="fd-glava" for="fd-{uid}-o{j}"><span class="fd-sym"><i>{g.sym}</i></span><span class="fd-ime">{@render tx(g.ime)}</span></label>
             <span class="fd-polje">
-              <input id="fd-{uid}-o{j}" class="inp fd-inp" class:ok={okK(j)} class:bad={badK(j)} inputmode={M.log && g.sym === "p" ? "text" : "decimal"} autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[j]} />
+              <input id="fd-{uid}-o{j}" class="inp fd-inp" class:ok={okK(j)} class:bad={badK(j)} inputmode={M.log && g.sym === "p" ? "text" : "decimal"} use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosiO[j]} />
               <span class="lx-unit">{g.jed}</span>
             </span>
           </div>
@@ -652,7 +653,7 @@
                     {#if vrijednosti}
                       <span class="fd-polje">
                         <span class="fd-mali">pri</span>
-                        <input class="inp fd-inp fd-inp-s" class:ok={okK(1 + i)} class:bad={badK(1 + i)} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="{P.vrsta === 'izobara' ? 'temperatura' : 'tlak'} za {PRIJELAZ_IME[k]}" disabled={!aktivno} bind:value={vr[i]} />
+                        <input class="inp fd-inp fd-inp-s" class:ok={okK(1 + i)} class:bad={badK(1 + i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="{P.vrsta === 'izobara' ? 'temperatura' : 'tlak'} za {PRIJELAZ_IME[k]}" disabled={!aktivno} bind:value={vr[i]} />
                         <span class="lx-unit">{jedinicaKoraka(M, P)}</span>
                       </span>
                     {/if}

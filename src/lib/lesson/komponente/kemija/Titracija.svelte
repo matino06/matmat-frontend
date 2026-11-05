@@ -7,7 +7,7 @@
   import { untrack } from "svelte";
   import Md from "../Md.svelte";
   import Formula from "./Formula.svelte";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import { INDIKATORI, bojaNaPH, bojeZa, bojaPoId, zapisPH } from "$lib/lesson/katalog/kemija/ph_skala.js";
   import {
     titracija,
@@ -23,6 +23,7 @@
     zapisV,
     zapisCZadan,
   } from "$lib/lesson/katalog/kemija/titracija.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -135,7 +136,7 @@
   const badKorak = (i) => ishod != null && !ishod.tocno && ishod.praznina === i && !ishod.prazno;
   function potencija(i) {
     const v = String(unosi[i]).trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^-`;
+    unosi[i] = dodajPotenciju(v, true);
     document.getElementById(`tt-${uid}-${i}`)?.focus();
   }
   function predajRacun(e) {
@@ -143,7 +144,7 @@
     if (aktivno && potpun) onodgovor({ koraci: $state.snapshot(unosi) });
   }
   // primjer zapisa uz ·10ⁿ: broj koji nije ni blizu nijednog točnog odgovora
-  const primjerN = ["3,25·10^-4", "7,5·10^-3", "1,16·10^-2"].find((t, i) => koraci.every((k) => Math.abs(Math.log10(k.vrijednost) - Math.log10([3.25e-4, 7.5e-3, 1.16e-2][i])) > 0.3)) ?? "3,25·10^-4";
+  const primjerN = ["3,25·10⁻⁴", "7,5·10⁻³", "1,16·10⁻²"].find((t, i) => koraci.every((k) => Math.abs(Math.log10(k.vrijednost) - Math.log10([3.25e-4, 7.5e-3, 1.16e-2][i])) > 0.3)) ?? "3,25·10⁻⁴";
   let sirinaLanca = $state(0);
   const vodoravno = $derived(sirinaLanca >= 190 * koraci.length);
 
@@ -456,6 +457,7 @@
                   class:ok={okKorak(i)}
                   class:bad={badKorak(i)}
                   inputmode="decimal"
+                  use:eksponent
                   autocomplete="off"
                   aria-label="{k.oznaka} u {k.jed}"
                   placeholder="?"

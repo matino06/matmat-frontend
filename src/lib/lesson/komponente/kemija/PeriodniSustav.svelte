@@ -28,6 +28,7 @@
     cesticaOd,
     zapisCestice,
   } from "$lib/lesson/katalog/kemija/periodni_sustav.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -361,6 +362,7 @@
           class:ok={ishod?.tocno || pokazi}
           class:bad={ishod && !ishod.tocno && !ishod.prazno && ishod.polje === q}
           inputmode="decimal"
+          use:eksponent
           autocomplete="off"
           placeholder="?"
           aria-label={IME_PITAJ[q]}

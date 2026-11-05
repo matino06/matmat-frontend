@@ -3,6 +3,7 @@
   // ostale se upisuje broj ili kratak tekst. Nakon provjere krive ćelije su istaknute dok ih učenik ne promijeni.
   // Široka tablica pomiče se vodoravno unutar svog okvira, nikad cijela stranica.
   import Md from "../Md.svelte";
+  import { eksponent } from "../eksponent.js";
   import { modelTablice, tocnaMatrica, ariaCelije } from "../../katalog/analiza/tablica.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
@@ -114,6 +115,7 @@
                     class:bad={st === "bad"}
                     type="text"
                     inputmode={c.broj ? "decimal" : "text"}
+                    use:eksponent
                     enterkeyhint="done"
                     autocomplete="off"
                     autocapitalize="off"

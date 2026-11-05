@@ -16,6 +16,7 @@
     JEDINICE_MASE,
   } from "$lib/lesson/katalog/fizika/sudar.js";
   import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -938,6 +939,7 @@
           class="inp lx-broj-inp"
           class:ok={status === "ok"}
           inputmode="decimal"
+          use:eksponent
           autocomplete="off"
           placeholder="?"
           disabled={locked}

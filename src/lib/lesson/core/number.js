@@ -126,3 +126,18 @@ export function formatSci(n, sig = 3) {
 }
 
 export const isNum = (v) => typeof v === "number" && Number.isFinite(v);
+
+// Unos s potencijom kako se tipka („1,6·10^-19“) → kako se piše na papiru („1,6·10⁻¹⁹“), dok učenik tipka: minus i
+// znamenke odmah iza „10^“ ili iza već napisanog eksponenta idu u eksponent. Prazan eksponent („1,6·10^“) zadržava
+// „^“, da se vidi što slijedi. parseNumber čita oba zapisa.
+export function eksponentUnosa(unos) {
+  return String(unos ?? "").replace(/10(?:\^|(?=[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]))([⁻\-−]?[⁰¹²³⁴⁵⁶⁷⁸⁹\d]*)/g, (m, e) =>
+    e ? `10${[...e].map((c) => SUPERSKRIPT[c === "−" ? "-" : c] ?? c).join("")}` : m,
+  );
+}
+
+// Gumb „·10ⁿ“: dopiše „·10^“ (uz negativno „·10⁻“, za male veličine) iza broja, osim ako potencija već postoji.
+export function dodajPotenciju(unos, negativno = false) {
+  const v = String(unos ?? "").trim();
+  return /10[\^⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(v) ? v : eksponentUnosa(`${v || "1"}·10^${negativno ? "-" : ""}`);
+}

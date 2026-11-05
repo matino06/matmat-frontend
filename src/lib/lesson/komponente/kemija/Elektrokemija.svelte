@@ -9,7 +9,7 @@
   import BrojUnos from "../BrojUnos.svelte";
   import Formula from "./Formula.svelte";
   import { tocanOdgovor } from "../../katalog/index.js";
-  import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { formatNumber, formatSci, dodajPotenciju } from "$lib/lesson/core/number.js";
   import { seededShuffle } from "$lib/lesson/core/shuffle.js";
   import { KONSTANTE } from "$lib/lesson/katalog/kemija/_tablice.js";
   import { BOJE } from "$lib/lesson/katalog/kemija/_reakcije.js";
@@ -35,6 +35,7 @@
     formulaKoraka,
     NAZIV_ELEKTRODE,
   } from "$lib/lesson/katalog/kemija/elektrokemija.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -248,7 +249,7 @@
   const badK = (i) => ishod != null && !ishod.tocno && ishod.praznina === i && !ishod.prazno;
   function potencija(i) {
     const v = String(unosi[i]).trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
     document.getElementById(`ek-${uid}-${i}`)?.focus();
   }
   const konstante = untrack(() => {
@@ -699,7 +700,7 @@
           <div class="ek-kartica" class:ok={okK(i)} class:bad={badK(i)}>
             <div><span class="ek-sym">{#if t.velicina === "ne"}n(e<sup>−</sup>){:else if t.tvar}{t.velicina}(<Formula f={t.tvar} />){:else}{t.velicina}{/if}</span><span class="ek-ime">{IME[t.velicina]}{t.velicina === "ne" ? "" : ""}</span></div>
             <div class="ek-unos">
-              <input id="ek-{uid}-{i}" class="inp ek-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="{oznaka(t.velicina, t.tvar)} u {t.jedinica}" disabled={locked} bind:value={unosi[i]} />
+              <input id="ek-{uid}-{i}" class="inp ek-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="{oznaka(t.velicina, t.tvar)} u {t.jedinica}" disabled={locked} bind:value={unosi[i]} />
               <span class="lx-unit">{t.jedinica}</span>
               {#if !locked}<button type="button" class="btn btn-quiet ek-pot" onclick={() => potencija(i)} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>{/if}
             </div>

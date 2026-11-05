@@ -42,6 +42,7 @@
     JEDINICA,
     SVOJSTVA,
   } from "$lib/lesson/katalog/fizika/leca.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -1075,6 +1076,7 @@
               class="inp lx-broj-inp"
               class:ok={pokazi || !!ishod?.tocno}
               inputmode="decimal"
+              use:eksponent
               autocomplete="off"
               placeholder="?"
               disabled={locked}

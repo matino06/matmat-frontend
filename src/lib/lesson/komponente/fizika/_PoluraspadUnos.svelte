@@ -2,6 +2,8 @@
   // poluraspad: polja za upis odgovora (izracunaj). Oznake i jedinice dolaze iz kataloga (poljaIzracunaj).
   // Nakon krivog odgovora polja se ne boje: poruka ispod widgeta kaže što ne valja.
   import Md from "../Md.svelte";
+  import { eksponent } from "../eksponent.js";
+  import { dodajPotenciju } from "../../core/number.js";
 
   let {
     polja = [],
@@ -15,7 +17,7 @@
 
   function potencija(i) {
     const v = unosi[i].trim();
-    if (!/10\^/.test(v)) unosi[i] = `${v || "1"}·10^`;
+    unosi[i] = dodajPotenciju(v);
     el[i]?.focus();
   }
   function posalji(e) {
@@ -38,6 +40,7 @@
           class="inp lx-broj-inp"
           class:ok={tocno}
           inputmode={p.razlomak ? "text" : "decimal"}
+          use:eksponent
           autocomplete="off"
           placeholder={p.razlomak ? "npr. 1/3" : "?"}
           disabled={locked}
@@ -61,7 +64,7 @@
     </p>
   {/if}
   {#if !locked && polja.some((p) => p.znanstveni)}
-    <p class="pr-napomena">Velike i male brojeve piši ovako: 3,01·10^-6.</p>
+    <p class="pr-napomena">Velike i male brojeve piši ovako: 3,01·10⁻⁶.</p>
   {/if}
   <div class="lx-actions">
     <button

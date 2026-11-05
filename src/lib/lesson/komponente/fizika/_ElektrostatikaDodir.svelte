@@ -9,6 +9,7 @@
   import { nakonDodira } from "$lib/lesson/katalog/fizika/_elektrostatika.js";
   import { formatNumber, parseNumber } from "$lib/lesson/core/number.js";
   import { glatko, ogranici } from "./_elektrostatika.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -378,6 +379,7 @@
           class="inp lx-broj-inp dz-inp"
           class:ok={stanje === "ok"}
           inputmode="decimal"
+          use:eksponent
           autocomplete="off"
           placeholder="?"
           disabled={locked}
