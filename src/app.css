@@ -96,8 +96,16 @@ html[data-theme="dark"]
   --pad-5: calc(28px * var(--density));
   --pad-6: calc(40px * var(--density));
 
-  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: "MM eksponent", "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "MM eksponent", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Eksponenti (10⁻¹⁹, cm³): Geistove znamenke u eksponentu su široko razmaknute i neujednačene, pa ih daje sistemski
+   font, zbijene kao na papiru. Sve ostalo ostaje Geist. */
+@font-face {
+  font-family: "MM eksponent";
+  src: local("Helvetica Neue"), local("Segoe UI"), local("Roboto"), local("Arial");
+  unicode-range: U+00B2-00B3, U+00B9, U+2070-207F;
 }
 
 /* ─── Reset & Base ─── */

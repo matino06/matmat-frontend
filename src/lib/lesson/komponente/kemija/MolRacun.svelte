@@ -24,6 +24,7 @@
     zapisVrijednosti,
     IME,
   } from "$lib/lesson/katalog/kemija/mol_racun.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -162,6 +163,7 @@
                 class:ok={ok(i)}
                 class:bad={bad(i)}
                 inputmode="decimal"
+                use:eksponent
                 autocomplete="off"
                 aria-label="{IME[t.velicina]}{t.jedinica ? ` u ${t.jedinica}` : ''}"
                 placeholder="?"

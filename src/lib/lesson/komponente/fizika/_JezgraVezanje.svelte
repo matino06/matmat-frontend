@@ -19,6 +19,7 @@
     MASE_JEZGARA,
   } from "$lib/lesson/katalog/fizika/jezgra.js";
   import { formatNumber } from "$lib/lesson/core/number.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -244,6 +245,7 @@
           class="inp lx-broj-inp"
           type="text"
           inputmode="decimal"
+          use:eksponent
           autocomplete="off"
           aria-label="{ozn(q).naziv} u {ozn(q).jedinica}"
           bind:value={unos[q.velicina]}

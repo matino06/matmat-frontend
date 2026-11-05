@@ -3,6 +3,7 @@
   // Polja se označe (zeleno) tek nakon točnog odgovora; nakon krivog nijedno polje ne dobiva zeleno/crveno jer bi
   // odalo koje je polje krivo (zaključana kopija pitanja ostaje vidljiva iznad koraka pomoći), samo poruka.
   import Md from "../Md.svelte";
+  import { eksponent } from "../eksponent.js";
 
   let {
     polja = [], // [{oznaka, jedinica}]
@@ -40,6 +41,7 @@
         class="inp lx-broj-inp"
         class:ok={dobro}
         inputmode="decimal"
+        use:eksponent
         autocomplete="off"
         placeholder="?"
         disabled={locked}

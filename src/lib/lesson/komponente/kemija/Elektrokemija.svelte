@@ -35,6 +35,7 @@
     formulaKoraka,
     NAZIV_ELEKTRODE,
   } from "$lib/lesson/katalog/kemija/elektrokemija.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -699,7 +700,7 @@
           <div class="ek-kartica" class:ok={okK(i)} class:bad={badK(i)}>
             <div><span class="ek-sym">{#if t.velicina === "ne"}n(e<sup>−</sup>){:else if t.tvar}{t.velicina}(<Formula f={t.tvar} />){:else}{t.velicina}{/if}</span><span class="ek-ime">{IME[t.velicina]}{t.velicina === "ne" ? "" : ""}</span></div>
             <div class="ek-unos">
-              <input id="ek-{uid}-{i}" class="inp ek-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="{oznaka(t.velicina, t.tvar)} u {t.jedinica}" disabled={locked} bind:value={unosi[i]} />
+              <input id="ek-{uid}-{i}" class="inp ek-inp" class:ok={okK(i)} class:bad={badK(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="{oznaka(t.velicina, t.tvar)} u {t.jedinica}" disabled={locked} bind:value={unosi[i]} />
               <span class="lx-unit">{t.jedinica}</span>
               {#if !locked}<button type="button" class="btn btn-quiet ek-pot" onclick={() => potencija(i)} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>{/if}
             </div>

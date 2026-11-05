@@ -1870,7 +1870,7 @@ function provjeriOcitanje(M, r, dio, ulaz, tol, s, i) {
       return {
         tocno: false,
         prazno: true,
-        poruka: "Upiši broj (npr. 5·10^6 ili 5e6).",
+        poruka: "Upiši broj (npr. 5·10⁶ ili 5e6).",
       };
     if (n > 0 && Math.abs(Math.log10(n) - Math.log10(tocno)) <= tol.p)
       return { tocno: true };

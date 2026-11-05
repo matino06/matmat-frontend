@@ -21,6 +21,7 @@
     SMJEROVI,
     iznos,
   } from "$lib/lesson/katalog/fizika/plin_posuda.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -911,6 +912,7 @@
               <input
                 class="inp pp-faktor-inp"
                 inputmode="decimal"
+                use:eksponent
                 autocomplete="off"
                 placeholder="?"
                 aria-label="Koliko puta: {IME_PITAJ[q]}"

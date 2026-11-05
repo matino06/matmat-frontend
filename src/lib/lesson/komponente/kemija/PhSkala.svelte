@@ -35,6 +35,7 @@
     KW_25,
     KW_ZAPIS,
   } from "$lib/lesson/katalog/kemija/ph_skala.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -342,6 +343,7 @@
                 class:ok={okKorak(i)}
                 class:bad={badKorak(i)}
                 inputmode="decimal"
+                use:eksponent
                 autocomplete="off"
                 aria-label="{IME[q]}{JEDINICA[q] ? ` u ${JEDINICA[q]}` : ''}"
                 placeholder="?"

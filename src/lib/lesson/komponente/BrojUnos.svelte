@@ -3,7 +3,8 @@
   // Decimalna tipkovnica na iPhoneu nema minus ni potenciju, pa uz odgovor koji ih treba (negativan, ili tako velik ili
   // malen da se piše znanstvenim zapisom) polje dobiva gumbe „±“ i „·10ⁿ“. `odgovor` služi samo da se to odluči.
   // Widgeti fizike umjesto toga zadaju `gumbPredznak` / `gumbPotencija` prema traženoj veličini, da gumbi ne odaju
-  // predznak ni red veličine odgovora.
+  // predznak ni red veličine odgovora. Potencija se piše kao na papiru (use:eksponent): „10^-19“ postaje „10⁻¹⁹“.
+  import { eksponent } from "./eksponent.js";
   let { jedinica = "", locked = false, ishod = null, vrijednost = $bindable(""), onodgovor, oznaka = "Odgovor", odgovor = null, gumbPredznak = null, gumbPotencija = null } = $props();
 
   let polje;
@@ -23,7 +24,7 @@
 
   function potencija() {
     const v = vrijednost.trim();
-    if (!/10\^/.test(v)) vrijednost = `${v || "1"}·10^`;
+    if (!/10[\^⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(v)) vrijednost = `${v || "1"}·10^`;
     polje?.focus();
   }
 </script>
@@ -35,6 +36,7 @@
     class:ok={ishod?.tocno}
     class:bad={ishod && !ishod.tocno && !ishod.prazno}
     inputmode="decimal"
+    use:eksponent
     autocomplete="off"
     aria-label={oznaka}
     placeholder="?"
@@ -48,7 +50,7 @@
   <div class="lx-broj-pomoc">
     {#if predznak}<button type="button" class="btn btn-quiet" onclick={promijeniPredznak} aria-label="Promijeni predznak">±</button>{/if}
     {#if znanstveni}<button type="button" class="btn btn-quiet" onclick={potencija} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>{/if}
-    {#if znanstveni}<span class="lx-broj-primjer">npr. 1,6·10^-19</span>{/if}
+    {#if znanstveni}<span class="lx-broj-primjer">npr. 1,6·10⁻¹⁹</span>{/if}
   </div>
 {/if}
 

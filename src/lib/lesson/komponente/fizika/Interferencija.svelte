@@ -40,6 +40,7 @@
     fmt,
     fmtSci,
   } from "$lib/lesson/katalog/fizika/_interferencija.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -375,6 +376,7 @@
             class:ok={stanjaPolja[i] === "ok"}
             class:bad={stanjaPolja[i] === "bad"}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

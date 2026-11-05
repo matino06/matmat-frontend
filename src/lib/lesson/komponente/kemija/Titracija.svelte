@@ -23,6 +23,7 @@
     zapisV,
     zapisCZadan,
   } from "$lib/lesson/katalog/kemija/titracija.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -456,6 +457,7 @@
                   class:ok={okKorak(i)}
                   class:bad={badKorak(i)}
                   inputmode="decimal"
+                  use:eksponent
                   autocomplete="off"
                   aria-label="{k.oznaka} u {k.jed}"
                   placeholder="?"

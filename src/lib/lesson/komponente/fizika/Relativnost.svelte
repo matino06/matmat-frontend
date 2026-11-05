@@ -29,6 +29,7 @@
     BETA_MAX_POSTAVI,
   } from "$lib/lesson/katalog/fizika/relativnost.js";
   import { formatNumber, formatSci } from "$lib/lesson/core/number.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -451,6 +452,7 @@
             class="inp lx-broj-inp"
             class:ok={otkrivenoSve}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

@@ -42,6 +42,7 @@
     eVz,
     broj,
   } from "$lib/lesson/katalog/fizika/atom.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -1040,6 +1041,7 @@
           class="inp at-inp"
           class:ok={otkriveno}
           inputmode="decimal"
+          use:eksponent
           autocomplete="off"
           placeholder="?"
           disabled={zakljucano}

@@ -34,6 +34,7 @@
     zadanoOd,
     traziOd,
   } from "$lib/lesson/katalog/kemija/energijski_dijagram.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -186,7 +187,7 @@
   <div class="ed-korak" class:ok class:bad>
     <label class="ed-korak-oz" for={id}>{@render label()} =</label>
     <span class="ed-polje">
-      <input {id} class="inp ed-inp" class:ok class:bad inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} value={vrijednost} oninput={(e) => postavi(e.currentTarget.value)} />
+      <input {id} class="inp ed-inp" class:ok class:bad inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} value={vrijednost} oninput={(e) => postavi(e.currentTarget.value)} />
       <span class="lx-unit">{jed}</span>
       {#if aktivno}<button type="button" class="btn btn-quiet ed-pm" onclick={() => postavi(predznak(vrijednost))} aria-label="Promijeni predznak">±</button>{/if}
     </span>

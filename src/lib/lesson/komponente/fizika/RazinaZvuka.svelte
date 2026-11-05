@@ -24,6 +24,7 @@
     opisPromjene,
     ravnaloZvuka,
   } from "$lib/lesson/katalog/fizika/razina_zvuka.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -654,6 +655,7 @@
             class="inp lx-broj-inp"
             class:ok={stanje === "ok"}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

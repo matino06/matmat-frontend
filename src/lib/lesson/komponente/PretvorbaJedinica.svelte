@@ -7,6 +7,7 @@
   import { formatNumber } from "../core/number.js";
   import { normUnit } from "../core/units.js";
   import { pretvorba_jedinica } from "../katalog/istrazivanje.js";
+  import { eksponent } from "./eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -74,6 +75,7 @@
           class:ok={ishod?.tocno || (ishod && ishod.praznina > i)}
           class:bad={ishod && !ishod.tocno && ishod.praznina === i && !ishod.prazno}
           inputmode="decimal"
+          use:eksponent
           autocomplete="off"
           aria-label="Vrijednost u {j}"
           placeholder="?"

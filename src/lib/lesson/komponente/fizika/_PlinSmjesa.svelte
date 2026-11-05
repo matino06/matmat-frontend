@@ -21,6 +21,7 @@
     rasponPlina,
     kontroleSmjese,
   } from "$lib/lesson/katalog/fizika/_smjesa.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -426,7 +427,7 @@
           {#if t.velicina === "M" || t.velicina === "Mr"}<i>M</i>{#if t.velicina === "Mr"}<sub>r</sub>{/if}(smjese){:else}<i>{t.velicina}</i>{#if f}(<Formula {f} />){/if}{/if}&nbsp;=
         </label>
         <span class="ps-unos">
-          <input id="ps-{uid}-u{i}" class="inp ps-inp" class:ok={ok(i)} class:bad={bad(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={locked} bind:value={unosi[i]} />
+          <input id="ps-{uid}-u{i}" class="inp ps-inp" class:ok={ok(i)} class:bad={bad(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={locked} bind:value={unosi[i]} />
           {#if u}<span class="lx-unit"><Formula f={u} /></span>{/if}
         </span>
         {#if pokaziPravila}<span class="ps-pravilo">{#each praviloTrazenog(spec, t).split("Mr") as dio, k (k)}{#if k}M<sub>r</sub>{/if}<Formula f={dio} />{/each}</span>{/if}

@@ -40,6 +40,7 @@
     OPCIJE_KONCENTRACIJE,
     OPCIJE_SMJERA,
   } from "$lib/lesson/katalog/kemija/ravnoteza.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -407,7 +408,7 @@
     {#each tr as t, i (t)}
       <div class="rv-korak" class:ok={okKorak(i)} class:bad={badKorak(i)}>
         <label class="rv-korak-oz" for="rv-{uid}-{i}">{#if t === "K"}<span class="rv-k">K<sub>{K_.slice(1)}</sub></span>{:else}{sl}(<Formula f={t} />){/if} =</label>
-        <input id="rv-{uid}-{i}" class="inp rv-inp" class:ok={okKorak(i)} class:bad={badKorak(i)} inputmode="decimal" autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
+        <input id="rv-{uid}-{i}" class="inp rv-inp" class:ok={okKorak(i)} class:bad={badKorak(i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" disabled={!aktivno} bind:value={unosi[i]} />
         {#if jedinicaKoraka(spec, t)}<span class="lx-unit"><Formula f={jedinicaKoraka(spec, t)} /></span>{/if}
         {#if aktivno}<button type="button" class="btn btn-quiet rv-pot" onclick={() => potencija(i)} aria-label="Dodaj potenciju broja 10">·10ⁿ</button>{/if}
       </div>

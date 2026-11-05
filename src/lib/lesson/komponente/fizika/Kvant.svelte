@@ -38,6 +38,7 @@
     kadarDeBroglie,
     LOPTICA,
   } from "$lib/lesson/katalog/fizika/_kvant.js";
+  import { eksponent } from "../eksponent.js";
 
   let {
     spec,
@@ -408,6 +409,7 @@
             class="inp lx-broj-inp"
             class:ok={otkriveno}
             inputmode="decimal"
+            use:eksponent
             autocomplete="off"
             placeholder="?"
             disabled={locked}

@@ -46,6 +46,7 @@
     SLOVA,
     znakPrijelaza,
   } from "$lib/lesson/katalog/kemija/fazni_dijagram.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -652,7 +653,7 @@
                     {#if vrijednosti}
                       <span class="fd-polje">
                         <span class="fd-mali">pri</span>
-                        <input class="inp fd-inp fd-inp-s" class:ok={okK(1 + i)} class:bad={badK(1 + i)} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="{P.vrsta === 'izobara' ? 'temperatura' : 'tlak'} za {PRIJELAZ_IME[k]}" disabled={!aktivno} bind:value={vr[i]} />
+                        <input class="inp fd-inp fd-inp-s" class:ok={okK(1 + i)} class:bad={badK(1 + i)} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="{P.vrsta === 'izobara' ? 'temperatura' : 'tlak'} za {PRIJELAZ_IME[k]}" disabled={!aktivno} bind:value={vr[i]} />
                         <span class="lx-unit">{jedinicaKoraka(M, P)}</span>
                       </span>
                     {/if}

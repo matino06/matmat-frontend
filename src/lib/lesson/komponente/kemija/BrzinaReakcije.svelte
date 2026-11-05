@@ -42,6 +42,7 @@
     EA_SLIKA,
     lijepKorak,
   } from "$lib/lesson/katalog/kemija/brzina_reakcije.js";
+  import { eksponent } from "../eksponent.js";
 
   let { spec, locked = false, pokazi = false, ishod = null, onodgovor = () => {} } = $props();
 
@@ -697,6 +698,7 @@
               class:ok={okKorak(i)}
               class:bad={badKorak(i)}
               inputmode="decimal"
+              use:eksponent
               autocomplete="off"
               aria-label={k.id === "puta" ? "Koliko puta" : `${k.oznaka}${k.citanje ? ` pri ${k.pri}` : ""} u ${k.jed}`}
               placeholder="?"
@@ -926,7 +928,7 @@
             {#if s.promjene}
               <label class="br-ig-p">
                 <span>Δ{m.vel.simbol} =</span>
-                <input class="inp br-inp sm" class:bad={losePolje(i, "promjena")} inputmode="decimal" autocomplete="off" placeholder="?" aria-label="Promjena {m.vel.naziv} tvari {v.f}" disabled={!aktivno} bind:value={promjeneU[i]} />
+                <input class="inp br-inp sm" class:bad={losePolje(i, "promjena")} inputmode="decimal" use:eksponent autocomplete="off" placeholder="?" aria-label="Promjena {m.vel.naziv} tvari {v.f}" disabled={!aktivno} bind:value={promjeneU[i]} />
                 <span class="lx-unit"><Formula f={m.vel.jed} /></span>
               </label>
             {/if}
