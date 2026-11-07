@@ -2,7 +2,8 @@
   import { userData } from "$lib/store/user.svelte";
   import { goto } from "$app/navigation";
   import { readRememberedLevel, clearRememberedLevel } from "$lib/utils/levelChoice";
-  import { getProgram, PROGRAMS, isSelectableProgram, shortName } from "$lib/config/programs.svelte";
+  import { getProgram, PROGRAMS, isSelectableProgram, shortName, loadPrograms } from "$lib/config/programs.svelte";
+  import { onMount } from "svelte";
   import { saveChosenCourses, saveCurrentCourse } from "$lib/store/course.svelte";
   import { showErrorAlert } from "$lib/store/errorAlert.svelte";
   import SubjectPicker from "$lib/components/subjects/SubjectPicker.svelte";
@@ -19,6 +20,13 @@
 
   let programs = $derived(picked.map(getProgram));
   let start = $derived(programs.find((p) => p.id === startId) ?? programs[0]);
+
+  // The layout loads the course list as soon as there is a signed-in user, which for a new account is before
+  // /account/create, so that call fails and the built-in list (matura subjects only) stays. The account exists
+  // by the time onboarding shows, so ask again: a course published since the last release (e.g. Matan) appears.
+  onMount(() => {
+    loadPrograms().catch(() => {});
+  });
 
   async function finish() {
     saving = true;
@@ -53,7 +61,7 @@
     <div class="onboard-body">
       {#if step === 0}
         <div class="intro">
-          <h2>Što polažeš na maturi?</h2>
+          <h2>Što polažeš?</h2>
           <p class="lead">Odaberi sve predmete koje želiš vježbati. Kasnije ih možeš dodati ili maknuti.</p>
         </div>
         <div class="picker">
